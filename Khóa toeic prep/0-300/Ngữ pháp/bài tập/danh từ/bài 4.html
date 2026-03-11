@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Section 4: Hạn định từ - PREP.VN</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue:#1565C0;--blue-light:#1976D2;--blue-pale:#E3F2FD;
+    --green:#2E7D32;--green-light:#E8F5E9;
+    --red:#C62828;--red-light:#FFEBEE;
+    --yellow:#FFF8E1;--grey:#F5F7FA;
+    --border:#BBDEFB;--text:#1A237E;--subtext:#455A64;
+    --white:#fff;--radius:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Nunito',sans-serif;background:linear-gradient(135deg,#E3F2FD 0%,#F8FBFF 60%,#E8F5E9 100%);min-height:100vh;color:var(--text);}
+  header{background:var(--blue);padding:18px 28px;display:flex;align-items:center;gap:16px;box-shadow:0 3px 12px rgba(21,101,192,.18);}
+  .logo{font-family:'Baloo 2',cursive;font-size:1.7rem;font-weight:800;color:#fff;background:rgba(255,255,255,.15);border-radius:8px;padding:2px 14px;}
+  header h1{font-family:'Baloo 2',cursive;font-size:1.15rem;font-weight:700;color:rgba(255,255,255,.92);}
+  .container{max-width:860px;margin:34px auto 60px;padding:0 18px;}
+  .sec-title{font-family:'Baloo 2',cursive;font-size:1.3rem;font-weight:800;color:var(--blue);background:var(--blue-pale);border-left:5px solid var(--blue);padding:11px 20px;border-radius:0 var(--radius) var(--radius) 0;margin:34px 0 20px;line-height:1.4;}
+  .card{background:var(--white);border-radius:var(--radius);box-shadow:0 2px 12px rgba(21,101,192,.07);padding:22px 26px;margin-bottom:18px;border:1.5px solid var(--border);}
+  .q-label{font-weight:700;color:var(--subtext);font-size:.93rem;margin-bottom:6px;}
+  .q-text{font-size:1.05rem;font-weight:700;color:var(--text);margin-bottom:13px;line-height:1.55;}
+  .q-italic{font-size:.93rem;color:var(--subtext);font-style:italic;margin-bottom:10px;line-height:1.5;}
+  /* Radio buttons */
+  .options{display:flex;flex-direction:column;gap:9px;}
+  .opt{display:flex;align-items:center;gap:11px;padding:11px 16px;border:2px solid var(--border);border-radius:10px;background:var(--grey);cursor:pointer;font-family:'Nunito',sans-serif;font-size:1rem;font-weight:600;color:var(--text);transition:background .15s,border-color .15s,transform .1s;outline:none;text-align:left;}
+  .opt:hover:not(:disabled){background:var(--blue-pale);border-color:var(--blue-light);transform:translateX(3px);}
+  .opt.selected{background:var(--blue-pale);border-color:var(--blue);color:var(--blue);}
+  .opt.correct{background:var(--green-light);border-color:var(--green);color:var(--green);}
+  .opt.wrong{background:var(--red-light);border-color:var(--red);color:var(--red);}
+  .circle{width:24px;height:24px;border-radius:50%;border:2px solid currentColor;display:flex;align-items:center;justify-content:center;font-size:.76rem;font-weight:800;flex-shrink:0;}
+  /* Checkbox */
+  .chk-list{display:flex;flex-direction:column;gap:9px;}
+  .chk-btn{display:flex;align-items:flex-start;gap:11px;padding:11px 16px;border:2px solid var(--border);border-radius:10px;background:var(--grey);cursor:pointer;font-family:'Nunito',sans-serif;font-size:.98rem;font-weight:600;color:var(--text);transition:background .15s,border-color .15s;user-select:none;}
+  .chk-btn:hover:not(.locked){background:var(--blue-pale);border-color:var(--blue-light);}
+  .chk-btn.checked{background:var(--blue-pale);border-color:var(--blue);color:var(--blue);}
+  .chk-btn.correct{background:var(--green-light);border-color:var(--green);color:var(--green);}
+  .chk-btn.wrong{background:var(--red-light);border-color:var(--red);color:var(--red);}
+  .chk-box{width:22px;height:22px;border:2px solid currentColor;border-radius:5px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.85rem;margin-top:1px;}
+  /* Match */
+  .match-pair{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:9px;align-items:start;}
+  .match-term{padding:9px 13px;background:var(--grey);border:2px solid var(--border);border-radius:9px;font-weight:700;font-size:.95rem;}
+  .msel{border:2px solid var(--border);border-radius:9px;padding:8px 11px;font-family:'Nunito',sans-serif;font-size:.93rem;font-weight:700;background:var(--grey);color:var(--text);outline:none;width:100%;cursor:pointer;}
+  .msel.correct{border-color:var(--green);background:var(--green-light);color:var(--green);}
+  .msel.wrong{border-color:var(--red);background:var(--red-light);color:var(--red);}
+  /* Fill input */
+  .fill-input{border:2px solid var(--border);border-radius:9px;padding:8px 13px;font-family:'Nunito',sans-serif;font-size:.97rem;font-weight:700;background:var(--grey);color:var(--text);outline:none;transition:border-color .15s;width:100%;margin-top:6px;}
+  .fill-input:focus{border-color:var(--blue-light);background:var(--blue-pale);}
+  .fill-input.correct{border-color:var(--green);background:var(--green-light);color:var(--green);}
+  .fill-input.wrong{border-color:var(--red);background:var(--red-light);color:var(--red);}
+  /* Demo box */
+  .demo-box{background:var(--yellow);border:2px solid #FFE082;border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:.95rem;line-height:1.6;color:#5D4037;}
+  /* Inline fill */
+  .inline-fill{border:2px solid var(--border);border-radius:7px;padding:5px 10px;font-family:'Nunito',sans-serif;font-size:.97rem;font-weight:700;background:var(--grey);color:var(--text);outline:none;width:140px;transition:border-color .15s;}
+  .inline-fill:focus{border-color:var(--blue-light);background:var(--blue-pale);}
+  .inline-fill.correct{border-color:var(--green);background:var(--green-light);color:var(--green);}
+  .inline-fill.wrong{border-color:var(--red);background:var(--red-light);color:var(--red);}
+  /* Feedback */
+  .feedback{margin-top:10px;font-size:.93rem;font-weight:700;padding:8px 13px;border-radius:8px;display:none;}
+  .feedback.show{display:block;}
+  .feedback.correct{background:var(--green-light);color:var(--green);}
+  .feedback.wrong{background:var(--red-light);color:var(--red);}
+  .ans-hint{font-size:.88rem;color:var(--green);font-weight:700;margin-top:4px;display:none;}
+  .ans-hint.show{display:block;}
+  /* Fill row */
+  .fill-row{margin-bottom:14px;}
+  .fill-orig{font-size:.97rem;font-weight:700;color:var(--text);margin-bottom:3px;}
+  /* Letter badge */
+  .badge{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;border:2px solid currentColor;font-size:.74rem;font-weight:800;flex-shrink:0;}
+  /* Ex5 sentence rows */
+  .sent-row{margin-bottom:14px;font-size:1rem;font-weight:700;line-height:2;}
+  /* Table ex2 */
+  .tbl{width:100%;border-collapse:collapse;margin-bottom:18px;}
+  .tbl th,.tbl td{border:2px solid var(--border);padding:10px 14px;text-align:center;font-weight:700;}
+  .tbl th{background:var(--blue-pale);color:var(--blue);font-family:'Baloo 2',cursive;}
+  .tbl td:first-child{background:#F0F4FF;color:var(--blue);font-weight:800;}
+  /* Letter grid for Ex2 */
+  .ex2-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px;}
+  /* Submit/Score */
+  .submit-btn{display:block;margin:34px auto 0;padding:15px 48px;background:var(--blue);color:#fff;border:none;border-radius:50px;font-family:'Baloo 2',cursive;font-size:1.2rem;font-weight:800;cursor:pointer;box-shadow:0 4px 18px rgba(21,101,192,.25);transition:background .18s,transform .12s;}
+  .submit-btn:hover{background:#0D47A1;transform:translateY(-2px);}
+  .submit-btn:disabled{background:#90A4AE;cursor:not-allowed;}
+  .score-board{background:linear-gradient(135deg,var(--blue) 0%,#1976D2 100%);color:#fff;border-radius:var(--radius);padding:30px 28px;text-align:center;margin-top:34px;box-shadow:0 6px 24px rgba(21,101,192,.22);display:none;}
+  .score-board.show{display:block;}
+  .big-score{font-family:'Baloo 2',cursive;font-size:3.4rem;font-weight:900;margin-bottom:6px;}
+  .score-msg{font-size:1.15rem;font-weight:700;opacity:.92;}
+  .reset-btn{margin-top:20px;padding:11px 34px;background:#fff;color:var(--blue);border:none;border-radius:50px;font-family:'Baloo 2',cursive;font-size:1.05rem;font-weight:800;cursor:pointer;}
+  .reset-btn:hover{background:#E3F2FD;}
+  .letter-box{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:6px;background:var(--blue-pale);color:var(--blue);font-weight:800;font-size:.9rem;border:1.5px solid var(--border);margin-right:6px;flex-shrink:0;}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">PREP.VN</div>
+  <h1>Section 4: Hạn định từ</h1>
+</header>
+<div class="container">
+
+<!-- EX 1 -->
+<div class="sec-title">Exercise 1: Chọn True nếu khẳng định là đúng, False nếu khẳng định là sai</div>
+
+<div class="card">
+  <div class="q-label">Câu 1</div>
+  <div class="q-text">Hạn định từ bao gồm từ chỉ định và lượng từ.</div>
+  <div class="options">
+    <button class="opt" onclick="pickTF(this,'e1q1','A')"><span class="circle">A</span>True</button>
+    <button class="opt" onclick="pickTF(this,'e1q1','B')"><span class="circle">B</span>False</button>
+  </div>
+  <div class="feedback" id="fb-e1q1"></div>
+</div>
+
+<div class="card">
+  <div class="q-label">Câu 2</div>
+  <div class="q-text">Từ chỉ định luôn luôn đứng trước danh từ.</div>
+  <div class="options">
+    <button class="opt" onclick="pickTF(this,'e1q2','A')"><span class="circle">A</span>True</button>
+    <button class="opt" onclick="pickTF(this,'e1q2','B')"><span class="circle">B</span>False</button>
+  </div>
+  <div class="feedback" id="fb-e1q2"></div>
+</div>
+
+<div class="card">
+  <div class="q-label">Câu 3</div>
+  <div class="q-text">Lượng từ chỉ đi cùng danh từ đếm được.</div>
+  <div class="options">
+    <button class="opt" onclick="pickTF(this,'e1q3','A')"><span class="circle">A</span>True</button>
+    <button class="opt" onclick="pickTF(this,'e1q3','B')"><span class="circle">B</span>False</button>
+  </div>
+  <div class="feedback" id="fb-e1q3"></div>
+</div>
+
+<!-- EX 2 -->
+<div class="sec-title">Exercise 2: Điền vào chỗ trống các từ chỉ định đã học để hoàn thành bảng sau</div>
+<div class="card">
+  <table class="tbl">
+    <tr><th></th><th>Danh từ số ít</th><th>Danh từ số nhiều</th></tr>
+    <tr><td>Vị trí gần</td><td>Chỗ trống (1)</td><td>Chỗ trống (2)</td></tr>
+    <tr><td>Vị trí xa</td><td>Chỗ trống (3)</td><td>Chỗ trống (4)</td></tr>
+  </table>
+  <div class="ex2-grid">
+    <div class="fill-row"><div class="fill-orig">Chỗ trống (1):</div><input type="text" class="fill-input" id="ex2-1" placeholder="..." autocomplete="off"/><div class="ans-hint" id="ex2-ans-1">✓ this</div></div>
+    <div class="fill-row"><div class="fill-orig">Chỗ trống (2):</div><input type="text" class="fill-input" id="ex2-2" placeholder="..." autocomplete="off"/><div class="ans-hint" id="ex2-ans-2">✓ these</div></div>
+    <div class="fill-row"><div class="fill-orig">Chỗ trống (3):</div><input type="text" class="fill-input" id="ex2-3" placeholder="..." autocomplete="off"/><div class="ans-hint" id="ex2-ans-3">✓ that</div></div>
+    <div class="fill-row"><div class="fill-orig">Chỗ trống (4):</div><input type="text" class="fill-input" id="ex2-4" placeholder="..." autocomplete="off"/><div class="ans-hint" id="ex2-ans-4">✓ those</div></div>
+  </div>
+  <div class="feedback" id="fb-ex2"></div>
+</div>
+
+<!-- EX 3 -->
+<div class="sec-title">Exercise 3: Chọn các đáp án đúng</div>
+<div class="card">
+  <div class="q-text">Some và any có cách dùng khác nhau như thế nào?</div>
+  <div class="chk-list" id="ex3-opts">
+    <button class="chk-btn" onclick="toggleChk(this,'ex3')"><span class="chk-box"></span>Some đi với danh từ số nhiều; any chỉ đi với danh từ số ít</button>
+    <button class="chk-btn" onclick="toggleChk(this,'ex3')"><span class="chk-box"></span>Some đi với danh từ số ít; any đi với danh từ số nhiều</button>
+    <button class="chk-btn" onclick="toggleChk(this,'ex3')"><span class="chk-box"></span>Some thường dùng trong câu khẳng định; any thường dùng trong câu phủ định và câu hỏi</button>
+    <button class="chk-btn" onclick="toggleChk(this,'ex3')"><span class="chk-box"></span>Some thường dùng trong câu phủ định và câu hỏi; any thường dùng trong câu khẳng định</button>
+    <button class="chk-btn" onclick="toggleChk(this,'ex3')"><span class="chk-box"></span>Some có thể dùng trong câu hỏi với mục đích mời ai đó làm gì; any có thể dùng trong câu khẳng định với nghĩa "bất cứ"</button>
+  </div>
+  <div class="feedback" id="fb-ex3"></div>
+</div>
+
+<!-- EX 4 -->
+<div class="sec-title">Exercise 4: Nối các lượng từ sau với loại danh từ tương ứng mà chúng đi kèm</div>
+<div class="card" id="ex4-card"></div>
+
+<!-- EX 5 -->
+<div class="sec-title">Exercise 5: Điền vào chỗ trống các demonstratives - từ chỉ định phù hợp</div>
+<div class="card">
+  <div id="ex5-rows"></div>
+  <div class="feedback" id="fb-ex5"></div>
+</div>
+
+<!-- EX 6 -->
+<div class="sec-title">Exercise 6: Đọc đoạn hội thoại giữa hai giáo viên Peter, Emma và chọn một đáp án đúng để điền vào chỗ trống trong mỗi lời thoại sau</div>
+
+<div class="card">
+  <div class="q-label">Câu 1</div>
+  <div class="q-text">Peter: Let's check that we've got everything for the exam this afternoon. I've got ... papers.</div>
+  <div class="options">
+    <button class="opt" onclick="pickMC(this,'e6q1','A')"><span class="circle">A</span>some</button>
+    <button class="opt" onclick="pickMC(this,'e6q1','B')"><span class="circle">B</span>any</button>
+  </div>
+  <div class="feedback" id="fb-e6q1"></div>
+</div>
+
+<div class="card">
+  <div class="q-label">Câu 2</div>
+  <div class="q-text">Emma: Good. Have you got ... pencils?</div>
+  <div class="options">
+    <button class="opt" onclick="pickMC(this,'e6q2','A')"><span class="circle">A</span>any</button>
+    <button class="opt" onclick="pickMC(this,'e6q2','B')"><span class="circle">B</span>some</button>
+  </div>
+  <div class="feedback" id="fb-e6q2"></div>
+</div>
+
+<div class="card">
+  <div class="q-label">Câu 3</div>
+  <div class="q-text">Peter: No. The students don't need …</div>
+  <div class="options">
+    <button class="opt" onclick="pickMC(this,'e6q3','A')"><span class="circle">A</span>some</button>
+    <button class="opt" onclick="pickMC(this,'e6q3','B')"><span class="circle">B</span>any</button>
+  </div>
+  <div class="feedback" id="fb-e6q3"></div>
+</div>
+
+<div class="card">
+  <div class="q-label">Câu 4</div>
+  <div class="q-text">Emma: OK. Everything's ready. Now I'm going to get ... food before the students arrive.</div>
+  <div class="options">
+    <button class="opt" onclick="pickMC(this,'e6q4','A')"><span class="circle">A</span>any</button>
+    <button class="opt" onclick="pickMC(this,'e6q4','B')"><span class="circle">B</span>some</button>
+  </div>
+  <div class="feedback" id="fb-e6q4"></div>
+</div>
+
+<div class="card">
+  <div class="q-label">Câu 5</div>
+  <div class="q-text">Peter: It's nearly two o'clock now. We haven't got ... time.</div>
+  <div class="options">
+    <button class="opt" onclick="pickMC(this,'e6q5','A')"><span class="circle">A</span>some</button>
+    <button class="opt" onclick="pickMC(this,'e6q5','B')"><span class="circle">B</span>any</button>
+  </div>
+  <div class="feedback" id="fb-e6q5"></div>
+</div>
+
+<!-- EX 7 -->
+<div class="sec-title">Exercise 7: Chọn câu đúng trong mỗi cặp câu sau</div>
+
+<div class="card">
+  <div class="q-label">Cặp câu (1)</div>
+  <div class="options">
+    <button class="opt" onclick="pickMC(this,'e7q1','A')"><span class="circle">A</span>We have a little money.</button>
+    <button class="opt" onclick="pickMC(this,'e7q1','B')"><span class="circle">B</span>We have a few money.</button>
+  </div>
+  <div class="feedback" id="fb-e7q1"></div>
+</div>
+
+<div class="card">
+  <div class="q-label">Cặp câu (2)</div>
+  <div class="options">
+    <button class="opt" onclick="pickMC(this,'e7q2','A')"><span class="circle">A</span>They know a few people.</button>
+    <button class="opt" onclick="pickMC(this,'e7q2','B')"><span class="circle">B</span>They know a little people.</button>
+  </div>
+  <div class="feedback" id="fb-e7q2"></div>
+</div>
+
+<div class="card">
+  <div class="q-label">Cặp câu (3)</div>
+  <div class="options">
+    <button class="opt" onclick="pickMC(this,'e7q3','A')"><span class="circle">A</span>She has a little coins.</button>
+    <button class="opt" onclick="pickMC(this,'e7q3','B')"><span class="circle">B</span>She has a few coins.</button>
+  </div>
+  <div class="feedback" id="fb-e7q3"></div>
+</div>
+
+<div class="card">
+  <div class="q-label">Cặp câu (4)</div>
+  <div class="options">
+    <button class="opt" onclick="pickMC(this,'e7q4','A')"><span class="circle">A</span>I can speak a few Spanish.</button>
+    <button class="opt" onclick="pickMC(this,'e7q4','B')"><span class="circle">B</span>I can speak a little Spanish.</button>
+  </div>
+  <div class="feedback" id="fb-e7q4"></div>
+</div>
+
+<div class="card">
+  <div class="q-label">Cặp câu (5)</div>
+  <div class="options">
+    <button class="opt" onclick="pickMC(this,'e7q5','A')"><span class="circle">A</span>Marta asked a few questions.</button>
+    <button class="opt" onclick="pickMC(this,'e7q5','B')"><span class="circle">B</span>Marta asked a little questions.</button>
+  </div>
+  <div class="feedback" id="fb-e7q5"></div>
+</div>
+
+<!-- EX 8 -->
+<div class="sec-title">Exercise 8: Tìm lỗi sai trong mỗi câu sau và viết lại câu đúng</div>
+<div class="card">
+  <div class="demo-box">
+    <b>Ví dụ:</b> There isn't some milk in the fridge. We need to buy some.<br>
+    → <i>There isn't any milk in the fridge. We need to buy some.</i>
+  </div>
+  <div id="ex8-rows"></div>
+  <div class="feedback" id="fb-ex8"></div>
+</div>
+
+<!-- EX 9 -->
+<div class="sec-title">Exercise 9: Đọc tình huống và chọn câu diễn đạt đúng nhất tình huống</div>
+<div class="card" style="margin-bottom:10px">
+  <div class="demo-box">
+    <b>Ví dụ:</b> Tình huống: Rosie was still hungry. She wanted some more rice.<br>
+    → Chọn: <b>A. Rosie wanted a little rice.</b> (vì "a little" = một chút, đủ dùng; "little" = ít, không đủ)
+  </div>
+  <div class="q-italic">Đây là bài tập cần sự suy luận và hiểu kỹ nội dung cũng như ngữ pháp, vậy nên hãy dành nhiều thời gian hơn cho bài tập này và sử dụng từ điển nếu cần thiết nhé!</div>
+</div>
+
+<div class="card">
+  <div class="q-label">Tình huống (1)</div>
+  <div class="q-text">I don't really like much salt on my food.</div>
+  <div class="options">
+    <button class="opt" onclick="pickMC(this,'e9q1','A')"><span class="circle">A</span>I add a little salt to my food.</button>
+    <button class="opt" onclick="pickMC(this,'e9q1','B')"><span class="circle">B</span>I add little salt to my food.</button>
+  </div>
+  <div class="feedback" id="fb-e9q1"></div>
+</div>
+
+<div class="card">
+  <div class="q-label">Tình huống (2)</div>
+  <div class="q-text">I have a long working day right ahead of me.</div>
+  <div class="options">
+    <button class="opt" onclick="pickMC(this,'e9q2','A')"><span class="circle">A</span>I packed a few sandwiches.</button>
+    <button class="opt" onclick="pickMC(this,'e9q2','B')"><span class="circle">B</span>I packed few sandwiches.</button>
+  </div>
+  <div class="feedback" id="fb-e9q2"></div>
+</div>
+
+<div class="card">
+  <div class="q-label">Tình huống (3)</div>
+  <div class="q-text">Mr. Hong arrived in Canada only a few days ago. He has never studied English. I think he knows how to say hello but I have never heard him say any other English words.</div>
+  <div class="options">
+    <button class="opt" onclick="pickMC(this,'e9q3','A')"><span class="circle">A</span>Mr. Hong knows a little English.</button>
+    <button class="opt" onclick="pickMC(this,'e9q3','B')"><span class="circle">B</span>Mr. Hong knows little English.</button>
+  </div>
+  <div class="feedback" id="fb-e9q3"></div>
+</div>
+
+<div class="card">
+  <div class="q-label">Tình huống (4)</div>
+  <div class="q-text">Mr. James doesn't know how to be a good boss. He has a bad temper and yells at people all the time about nothing.</div>
+  <div class="options">
+    <button class="opt" onclick="pickMC(this,'e9q4','A')"><span class="circle">A</span>A few people like working for him.</button>
+    <button class="opt" onclick="pickMC(this,'e9q4','B')"><span class="circle">B</span>Few people like working for him.</button>
+  </div>
+  <div class="feedback" id="fb-e9q4"></div>
+</div>
+
+<!-- EX 10 -->
+<div class="sec-title">Exercise 10: Mỗi câu trong đoạn văn dưới đây có thể chứa lỗi sai. Hãy chọn đáp án sửa chính xác những lỗi sai đó</div>
+
+<div class="card" style="margin-bottom:10px">
+  <div class="demo-box" style="font-style:normal;font-size:.97rem;line-height:1.7">
+    So, we have a little party every Saturday. You know, just a few friends at our house. There is a lot of talking and laughing, a bit of dancing and a little party games. But we eat too much food - I always feel ill the next day!<br><br>
+    Well, it's only two days before we move to the USA now! It's not enough time and there are too much things that we need to do - packing and cleaning the house.<br><br>
+    Come visit us - we know we won't have much friends in the States.<br><br>
+    Love,<br>Annabel
+  </div>
+</div>
+
+<div class="card">
+  <div class="q-label">Câu 1</div>
+  <div class="q-text">So, we have a little party every Saturday.</div>
+  <div class="options">
+    <button class="opt" onclick="pickMC(this,'e10q1','A')"><span class="circle">A</span>little → few</button>
+    <button class="opt" onclick="pickMC(this,'e10q1','B')"><span class="circle">B</span>little → many</button>
+    <button class="opt" onclick="pickMC(this,'e10q1','C')"><span class="circle">C</span>Saturday → Saturdays</button>
+    <button class="opt" onclick="pickMC(this,'e10q1','D')"><span class="circle">D</span>x (không có lỗi)</button>
+  </div>
+  <div class="feedback" id="fb-e10q1"></div>
+</div>
+
+<div class="card">
+  <div class="q-label">Câu 2</div>
+  <div class="q-text">You know, just a few friends at our house. There is a lot of talking and laughing, a bit of dancing and a little party games.</div>
+  <div class="options">
+    <button class="opt" onclick="pickMC(this,'e10q2','A')"><span class="circle">A</span>few friends → little friends</button>
+    <button class="opt" onclick="pickMC(this,'e10q2','B')"><span class="circle">B</span>few friends → much friends</button>
+    <button class="opt" onclick="pickMC(this,'e10q2','C')"><span class="circle">C</span>a lot of → any of</button>
+    <button class="opt" onclick="pickMC(this,'e10q2','D')"><span class="circle">D</span>little party games → few party games</button>
+  </div>
+  <div class="feedback" id="fb-e10q2"></div>
+</div>
+
+<div class="card">
+  <div class="q-label">Câu 3</div>
+  <div class="q-text">It's not enough time and there are too much things that we need to do - packing and cleaning the house.</div>
+  <div class="options">
+    <button class="opt" onclick="pickMC(this,'e10q3','A')"><span class="circle">A</span>too much things → too little things</button>
+    <button class="opt" onclick="pickMC(this,'e10q3','B')"><span class="circle">B</span>too much things → too many things</button>
+    <button class="opt" onclick="pickMC(this,'e10q3','C')"><span class="circle">C</span>not enough time → few time</button>
+    <button class="opt" onclick="pickMC(this,'e10q3','D')"><span class="circle">D</span>not enough time → many time</button>
+  </div>
+  <div class="feedback" id="fb-e10q3"></div>
+</div>
+
+<div class="card">
+  <div class="q-label">Câu 4</div>
+  <div class="q-text">Come visit us - we know we won't have much friends in the States.</div>
+  <div class="options">
+    <button class="opt" onclick="pickMC(this,'e10q4','A')"><span class="circle">A</span>much → many</button>
+    <button class="opt" onclick="pickMC(this,'e10q4','B')"><span class="circle">B</span>much → little</button>
+    <button class="opt" onclick="pickMC(this,'e10q4','C')"><span class="circle">C</span>much → some</button>
+    <button class="opt" onclick="pickMC(this,'e10q4','D')"><span class="circle">D</span>x (không có lỗi)</button>
+  </div>
+  <div class="feedback" id="fb-e10q4"></div>
+</div>
+
+<button class="submit-btn" id="submit-btn" onclick="submitAll()">✅ Chấm bài</button>
+<div class="score-board" id="score-board">
+  <div class="big-score" id="score-text"></div>
+  <div class="score-msg" id="score-msg"></div>
+  <button class="reset-btn" onclick="location.reload()">🔄 Làm lại</button>
+</div>
+
+</div><!-- /container -->
+
+<script>
+// ===== DATA =====
+const e1Ans = {e1q1:'A', e1q2:'B', e1q3:'B'};
+
+const ex2Ans = {1:'this', 2:'these', 3:'that', 4:'those'};
+
+const ex3Correct = [
+  'Some thường dùng trong câu khẳng định; any thường dùng trong câu phủ định và câu hỏi',
+  'Some có thể dùng trong câu hỏi với mục đích mời ai đó làm gì; any có thể dùng trong câu khẳng định với nghĩa "bất cứ"'
+];
+
+const ex4Data = [
+  {term:'a little', answer:'Danh từ không đếm được'},
+  {term:'a few',    answer:'Danh từ đếm được'},
+  {term:'some',     answer:'Cả danh từ đếm được và không đếm được'},
+  {term:'little',   answer:'Danh từ không đếm được'},
+  {term:'few',      answer:'Danh từ đếm được'},
+  {term:'any',      answer:'Cả danh từ đếm được và không đếm được'},
+  {term:'a lot of', answer:'Cả danh từ đếm được và không đếm được'},
+  {term:'many',     answer:'Danh từ đếm được'},
+  {term:'lots of',  answer:'Cả danh từ đếm được và không đếm được'},
+  {term:'much',     answer:'Danh từ không đếm được'},
+];
+const ex4Cats = ['Danh từ đếm được','Danh từ không đếm được','Cả danh từ đếm được và không đếm được'];
+
+const ex5Data = [
+  {before:'Come and look at', after:'insects.', answer:'these', hint:'these (đây, gần, số nhiều)'},
+  {before:'I was in fifth grade last year. I am in sixth grade', after:'year.', answer:'this', hint:'this (năm nay, gần)'},
+  {before:'Bring', after:'chairs here.', answer:'those', hint:'those (những cái đó, xa, số nhiều)'},
+  {before:'', after:'ice cream is delicious.', answer:'This', hint:'This / That'},
+  {before:'Can you see', after:'stars in the sky?', answer:'those', hint:'those (những ngôi sao xa, số nhiều)'},
+];
+
+const e6Ans = {e6q1:'A', e6q2:'A', e6q3:'B', e6q4:'B', e6q5:'B'};
+const e7Ans = {e7q1:'A', e7q2:'A', e7q3:'B', e7q4:'B', e7q5:'A'};
+
+const ex8Data = [
+  {orig:"I'd like any water, please.", answer:"I'd like some water, please."},
+  {orig:"There aren't some emails for you.", answer:"There aren't any emails for you."},
+  {orig:"We've got any nice apples today.", answer:"We've got some nice apples today."},
+  {orig:"There are always any horses in the field near our house.", answer:"There are always some horses in the field near our house."},
+];
+
+const e9Ans = {e9q1:'B', e9q2:'A', e9q3:'B', e9q4:'B'};
+const e10Ans = {e10q1:'D', e10q2:'D', e10q3:'B', e10q4:'A'};
+
+// ===== STATE =====
+const userAnswers = {};
+const chkState = {};
+let total = 0, correct = 0;
+
+// ===== BUILD =====
+function buildEx4() {
+  const card = document.getElementById('ex4-card');
+  ex4Data.forEach((item,i) => {
+    const row = document.createElement('div');
+    row.className = 'match-pair';
+    row.innerHTML = `<div class="match-term">${item.term}</div>
+    <div>
+      <select class="msel" id="ex4-${i}">
+        <option value="">-- Chọn --</option>
+        ${ex4Cats.map(c=>`<option value="${c}">${c}</option>`).join('')}
+      </select>
+      <div class="ans-hint" id="ex4-ans-${i}">✓ ${item.answer}</div>
+    </div>`;
+    card.appendChild(row);
+  });
+}
+
+function buildEx5() {
+  const cont = document.getElementById('ex5-rows');
+  ex5Data.forEach((item,i) => {
+    const row = document.createElement('div');
+    row.className = 'sent-row';
+    row.innerHTML = `${item.before} <input type="text" class="inline-fill" id="ex5-${i}" placeholder="..." autocomplete="off"/> ${item.after}
+    <div class="ans-hint" id="ex5-ans-${i}">✓ ${item.hint}</div>`;
+    cont.appendChild(row);
+  });
+}
+
+function buildEx8() {
+  const cont = document.getElementById('ex8-rows');
+  ex8Data.forEach((item,i) => {
+    const row = document.createElement('div');
+    row.className = 'fill-row';
+    row.innerHTML = `<div class="fill-orig">${item.orig}</div>
+    <input type="text" class="fill-input" id="ex8-${i}" placeholder="Viết lại câu đúng..." autocomplete="off"/>
+    <div class="ans-hint" id="ex8-ans-${i}">✓ ${item.answer}</div>`;
+    cont.appendChild(row);
+  });
+}
+
+// ===== INTERACTIONS =====
+function pickTF(btn, qid, val) {
+  btn.closest('.card').querySelectorAll('.opt').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+  userAnswers[qid] = val;
+}
+function pickMC(btn, qid, val) {
+  btn.closest('.card').querySelectorAll('.opt').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+  userAnswers[qid] = val;
+}
+function toggleChk(btn, group) {
+  if(!chkState[group]) chkState[group] = new Set();
+  const lbl = btn.querySelector('span:last-child') ? btn.textContent.trim() : btn.textContent.trim();
+  const label = [...btn.childNodes].filter(n=>n.nodeType===3||n.tagName==='SPAN').map(n=>n.textContent).join('').trim();
+  // use full text
+  const txt = btn.textContent.trim();
+  if(chkState[group].has(txt)){
+    chkState[group].delete(txt);
+    btn.classList.remove('checked');
+    btn.querySelector('.chk-box').textContent='';
+  } else {
+    chkState[group].add(txt);
+    btn.classList.add('checked');
+    btn.querySelector('.chk-box').textContent='✓';
+  }
+}
+
+// ===== HELPERS =====
+function norm(s){ return s.trim().toLowerCase().replace(/\s+/g,' ').replace(/['']/g,"'"); }
+function showFB(id,ok,msg){const el=document.getElementById(id);el.textContent=msg;el.className=`feedback show ${ok?'correct':'wrong'}`;}
+function markMC(card, correct, userVal){
+  const letters=['A','B','C','D'];
+  card.querySelectorAll('.opt').forEach((btn,idx)=>{
+    btn.disabled=true;
+    const v=letters[idx];
+    if(v===correct) btn.classList.add('correct');
+    else if(v===userVal&&userVal!==correct) btn.classList.add('wrong');
+  });
+}
+
+// ===== SUBMIT =====
+function submitAll(){
+  total=0; correct=0;
+
+  // Ex1
+  Object.entries(e1Ans).forEach(([qid,ans])=>{
+    total++;
+    const card=document.getElementById(`fb-${qid}`).closest('.card');
+    const user=userAnswers[qid];
+    const ok=user===ans;
+    if(ok) correct++;
+    card.querySelectorAll('.opt').forEach((btn,i)=>{
+      btn.disabled=true;
+      const v=i===0?'A':'B';
+      if(v===ans) btn.classList.add('correct');
+      else if(v===user&&!ok) btn.classList.add('wrong');
+    });
+    showFB(`fb-${qid}`,ok,ok?'✓ Chính xác!':`✗ Sai! Đáp án: ${ans==='A'?'True':'False'}`);
+  });
+
+  // Ex2
+  [1,2,3,4].forEach(n=>{
+    total++;
+    const inp=document.getElementById(`ex2-${n}`);
+    const ok=norm(inp.value)===ex2Ans[n];
+    if(ok) correct++;
+    inp.classList.add(ok?'correct':'wrong');
+    if(!ok) document.getElementById(`ex2-ans-${n}`).classList.add('show');
+    inp.disabled=true;
+  });
+
+  // Ex3
+  total++;
+  const sel3=chkState['ex3']?[...chkState['ex3']]:[];
+  const ok3=ex3Correct.every(x=>sel3.includes(x))&&sel3.length===ex3Correct.length;
+  if(ok3) correct++;
+  document.getElementById('ex3-opts').querySelectorAll('.chk-btn').forEach(btn=>{
+    btn.classList.add('locked'); btn.onclick=null;
+    const txt=btn.textContent.trim();
+    if(ex3Correct.includes(txt)) btn.classList.add('correct');
+    else if(sel3.includes(txt)) btn.classList.add('wrong');
+  });
+  showFB('fb-ex3',ok3,ok3?'✓ Chính xác!':'✗ Sai! Hãy xem lại đáp án được đánh dấu xanh.');
+
+  // Ex4
+  ex4Data.forEach((item,i)=>{
+    total++;
+    const sel=document.getElementById(`ex4-${i}`);
+    const ok=sel.value===item.answer;
+    if(ok) correct++;
+    sel.classList.add(ok?'correct':'wrong');
+    if(!ok) document.getElementById(`ex4-ans-${i}`).classList.add('show');
+    sel.disabled=true;
+  });
+
+  // Ex5
+  ex5Data.forEach((item,i)=>{
+    total++;
+    const inp=document.getElementById(`ex5-${i}`);
+    const ok=norm(inp.value)===norm(item.answer);
+    if(ok) correct++;
+    inp.classList.add(ok?'correct':'wrong');
+    if(!ok) document.getElementById(`ex5-ans-${i}`).classList.add('show');
+    inp.disabled=true;
+  });
+
+  // Ex6
+  Object.entries(e6Ans).forEach(([qid,ans])=>{
+    total++;
+    const card=document.getElementById(`fb-${qid}`).closest('.card');
+    const user=userAnswers[qid];
+    const ok=user===ans;
+    if(ok) correct++;
+    markMC(card,ans,user);
+    showFB(`fb-${qid}`,ok,ok?'✓ Chính xác!':`✗ Sai! Đáp án: ${ans}`);
+  });
+
+  // Ex7
+  Object.entries(e7Ans).forEach(([qid,ans])=>{
+    total++;
+    const card=document.getElementById(`fb-${qid}`).closest('.card');
+    const user=userAnswers[qid];
+    const ok=user===ans;
+    if(ok) correct++;
+    markMC(card,ans,user);
+    showFB(`fb-${qid}`,ok,ok?'✓ Chính xác!':`✗ Sai! Đáp án: ${ans}`);
+  });
+
+  // Ex8
+  ex8Data.forEach((item,i)=>{
+    total++;
+    const inp=document.getElementById(`ex8-${i}`);
+    const ok=norm(inp.value)===norm(item.answer);
+    if(ok) correct++;
+    inp.classList.add(ok?'correct':'wrong');
+    if(!ok) document.getElementById(`ex8-ans-${i}`).classList.add('show');
+    inp.disabled=true;
+  });
+
+  // Ex9
+  Object.entries(e9Ans).forEach(([qid,ans])=>{
+    total++;
+    const card=document.getElementById(`fb-${qid}`).closest('.card');
+    const user=userAnswers[qid];
+    const ok=user===ans;
+    if(ok) correct++;
+    markMC(card,ans,user);
+    showFB(`fb-${qid}`,ok,ok?'✓ Chính xác!':`✗ Sai! Đáp án: ${ans}`);
+  });
+
+  // Ex10
+  Object.entries(e10Ans).forEach(([qid,ans])=>{
+    total++;
+    const card=document.getElementById(`fb-${qid}`).closest('.card');
+    const user=userAnswers[qid];
+    const ok=user===ans;
+    if(ok) correct++;
+    markMC(card,ans,user);
+    showFB(`fb-${qid}`,ok,ok?'✓ Chính xác!':`✗ Sai! Đáp án: ${ans}`);
+  });
+
+  // Score
+  const pct=Math.round(correct/total*100);
+  document.getElementById('score-text').textContent=`${correct} / ${total} câu đúng (${pct}%)`;
+  const msg=pct>=90?'🎉 Xuất sắc! Bạn nắm vững hạn định từ!':pct>=70?'👍 Tốt lắm! Xem lại câu sai nhé!':pct>=50?'💪 Cố lên! Cần ôn luyện thêm!':'📚 Hãy xem lại bài và thử lại nhé!';
+  document.getElementById('score-msg').textContent=msg;
+  const sb=document.getElementById('score-board');
+  sb.classList.add('show');
+  sb.scrollIntoView({behavior:'smooth'});
+  document.getElementById('submit-btn').disabled=true;
+}
+
+// INIT
+buildEx4(); buildEx5(); buildEx8();
+</script>
+</body>
+</html>

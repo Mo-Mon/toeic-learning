@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Đề Cương Ôn Tập - Danh Từ Tiếng Anh | PREP.VN</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0F1923;
+  --ink2: #2D3A47;
+  --muted: #6B7A8A;
+  --s1: #1A56DB; --s1l: #EBF2FF; --s1b: #0C3799;
+  --s2: #057A55; --s2l: #E3FCEF; --s2b: #014737;
+  --s3: #C27803; --s3l: #FDF6B2; --s3b: #7E4C0A;
+  --s4: #9B1C1C; --s4l: #FDE8E8; --s4b: #771D1D;
+  --bg: #F7F8FA;
+  --white: #fff;
+  --border: #E2E8F0;
+  --radius: 16px;
+  --shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Lexend', sans-serif; background: var(--bg); color: var(--ink); min-height: 100vh; }
+
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, #0F1923 0%, #1A2E44 50%, #0C3799 100%);
+  padding: 60px 28px 80px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 120%, rgba(26,86,219,0.4) 0%, transparent 70%);
+}
+.hero-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.9);
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 5px 16px;
+  border-radius: 50px;
+  margin-bottom: 20px;
+  position: relative;
+}
+.hero h1 {
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.15;
+  margin-bottom: 14px;
+  position: relative;
+}
+.hero h1 span { color: #60A5FA; }
+.hero p {
+  color: rgba(255,255,255,0.7);
+  font-size: 1.05rem;
+  font-weight: 400;
+  max-width: 520px;
+  margin: 0 auto 32px;
+  position: relative;
+}
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: 28px;
+  flex-wrap: wrap;
+  position: relative;
+}
+.stat-pill {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 50px;
+  padding: 8px 20px;
+  color: #fff;
+  font-size: .88rem;
+  font-weight: 600;
+}
+.stat-pill strong { color: #93C5FD; margin-right: 5px; }
+
+/* NAV TABS */
+.nav-wrap {
+  background: var(--white);
+  border-bottom: 2px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+.nav-tabs {
+  display: flex;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 16px;
+  overflow-x: auto;
+  gap: 4px;
+  scrollbar-width: none;
+}
+.nav-tabs::-webkit-scrollbar { display: none; }
+.nav-tab {
+  flex-shrink: 0;
+  padding: 14px 20px;
+  font-family: 'Lexend', sans-serif;
+  font-size: .88rem;
+  font-weight: 600;
+  color: var(--muted);
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  transition: color .2s, border-color .2s;
+  white-space: nowrap;
+}
+.nav-tab:hover { color: var(--ink); }
+.nav-tab.active { color: var(--s1); border-bottom-color: var(--s1); }
+.nav-tab[data-s="2"].active { color: var(--s2); border-bottom-color: var(--s2); }
+.nav-tab[data-s="3"].active { color: var(--s3); border-bottom-color: var(--s3); }
+.nav-tab[data-s="4"].active { color: var(--s4); border-bottom-color: var(--s4); }
+
+/* CONTAINER */
+.container { max-width: 960px; margin: 0 auto; padding: 40px 20px 80px; }
+
+/* SECTION PANEL */
+.section-panel { display: none; }
+.section-panel.active { display: block; animation: fadeUp .3s ease; }
+@keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+
+/* SECTION HEADER */
+.sec-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 32px;
+  padding: 24px 28px;
+  border-radius: var(--radius);
+  border-left: 6px solid;
+}
+.sec-header.s1 { background: var(--s1l); border-color: var(--s1); }
+.sec-header.s2 { background: var(--s2l); border-color: var(--s2); }
+.sec-header.s3 { background: var(--s3l); border-color: var(--s3); }
+.sec-header.s4 { background: var(--s4l); border-color: var(--s4); }
+.sec-num {
+  width: 52px; height: 52px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; font-weight: 900; color: #fff;
+  flex-shrink: 0;
+}
+.s1 .sec-num { background: var(--s1); }
+.s2 .sec-num { background: var(--s2); }
+.s3 .sec-num { background: var(--s3); }
+.s4 .sec-num { background: var(--s4); }
+.sec-header-text h2 { font-size: 1.45rem; font-weight: 800; color: var(--ink); }
+.sec-header-text p { font-size: .9rem; color: var(--muted); margin-top: 3px; }
+
+/* THEORY CARD */
+.theory-block {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+.theory-head {
+  padding: 16px 24px;
+  font-size: 1rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+  transition: background .15s;
+}
+.theory-head:hover { filter: brightness(.97); }
+.theory-head .icon { font-size: 1.2rem; }
+.theory-head .chevron { margin-left: auto; transition: transform .25s; font-size: .9rem; }
+.theory-head.open .chevron { transform: rotate(180deg); }
+.s1 .theory-head { background: var(--s1l); color: var(--s1b); }
+.s2 .theory-head { background: var(--s2l); color: var(--s2b); }
+.s3 .theory-head { background: var(--s3l); color: var(--s3b); }
+.s4 .theory-head { background: var(--s4l); color: var(--s4b); }
+.theory-body {
+  padding: 0 24px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .35s ease, padding .3s;
+}
+.theory-body.open { max-height: 2000px; padding: 20px 24px 24px; }
+
+/* THEORY CONTENT */
+.theory-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin-top: 14px; }
+.theory-card {
+  border-radius: 12px;
+  padding: 14px 16px;
+  border: 2px solid var(--border);
+  background: #FAFBFC;
+}
+.theory-card h4 { font-size: .88rem; font-weight: 700; color: var(--ink); margin-bottom: 5px; }
+.theory-card p { font-size: .82rem; color: var(--muted); line-height: 1.5; }
+.theory-card .tag { display: inline-block; font-size: .72rem; font-weight: 700; padding: 2px 9px; border-radius: 50px; margin-bottom: 6px; }
+.tag-s1 { background: var(--s1l); color: var(--s1); }
+.tag-s2 { background: var(--s2l); color: var(--s2); }
+.tag-s3 { background: var(--s3l); color: var(--s3); }
+.tag-s4 { background: var(--s4l); color: var(--s4); }
+
+.rule-list { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+.rule-list li {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 10px 14px; border-radius: 10px;
+  background: #FAFBFC; border: 1.5px solid var(--border);
+  font-size: .9rem; line-height: 1.5;
+}
+.rule-list li .bullet {
+  width: 22px; height: 22px; border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .7rem; font-weight: 800; flex-shrink: 0; margin-top: 1px;
+  color: #fff;
+}
+.bl-s1 { background: var(--s1); }
+.bl-s2 { background: var(--s2); }
+.bl-s3 { background: var(--s3); }
+.bl-s4 { background: var(--s4); }
+
+.example-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 8px 12px; border-radius: 8px;
+  background: #F0F4FF; margin-top: 6px;
+  font-size: .85rem;
+}
+.ex-arrow { color: var(--muted); }
+.ex-correct { font-weight: 700; color: var(--s2); }
+.ex-wrong { color: var(--s4); text-decoration: line-through; }
+
+.info-box {
+  border-radius: 10px; padding: 12px 16px;
+  font-size: .88rem; line-height: 1.6;
+  margin-top: 12px;
+  display: flex; gap: 10px;
+}
+.info-box.tip { background: #EFF6FF; color: #1E40AF; border-left: 4px solid var(--s1); }
+.info-box.warn { background: #FFFBEB; color: #92400E; border-left: 4px solid #F59E0B; }
+.info-box.note { background: var(--s2l); color: var(--s2b); border-left: 4px solid var(--s2); }
+
+table.theory-tbl { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: .88rem; }
+table.theory-tbl th { background: #F0F4FF; color: var(--s1b); font-weight: 700; padding: 9px 12px; text-align: left; border-bottom: 2px solid var(--border); }
+table.theory-tbl td { padding: 8px 12px; border-bottom: 1px solid var(--border); color: var(--ink2); }
+table.theory-tbl tr:last-child td { border-bottom: none; }
+table.theory-tbl .hl { font-weight: 700; color: var(--s1); }
+table.theory-tbl.s2 th { background: var(--s2l); color: var(--s2b); }
+table.theory-tbl.s2 .hl { color: var(--s2); }
+table.theory-tbl.s3 th { background: var(--s3l); color: var(--s3b); }
+table.theory-tbl.s3 .hl { color: var(--s3); }
+table.theory-tbl.s4 th { background: var(--s4l); color: var(--s4b); }
+table.theory-tbl.s4 .hl { color: var(--s4); }
+
+/* PRACTICE */
+.practice-title {
+  font-size: 1.2rem; font-weight: 800; color: var(--ink);
+  margin: 36px 0 18px;
+  display: flex; align-items: center; gap: 10px;
+}
+.practice-title::before {
+  content: '✏️';
+  font-size: 1.1rem;
+}
+.practice-title .badge-ex {
+  font-size: .75rem; font-weight: 700; padding: 3px 10px;
+  border-radius: 50px; color: #fff; margin-left: 6px;
+}
+.b-s1 { background: var(--s1); }
+.b-s2 { background: var(--s2); }
+.b-s3 { background: var(--s3); }
+.b-s4 { background: var(--s4); }
+
+.pcard {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 22px 26px;
+  margin-bottom: 16px;
+  border: 1.5px solid var(--border);
+}
+.pcard .q-label { font-size: .8rem; font-weight: 700; color: var(--muted); margin-bottom: 7px; text-transform: uppercase; letter-spacing: .5px; }
+.pcard .q-text { font-size: 1rem; font-weight: 600; color: var(--ink); margin-bottom: 14px; line-height: 1.6; }
+
+.opts { display: flex; flex-direction: column; gap: 8px; }
+.opt-btn {
+  display: flex; align-items: center; gap: 11px;
+  padding: 10px 15px; border: 2px solid var(--border);
+  border-radius: 10px; background: var(--bg);
+  cursor: pointer; font-family: 'Lexend', sans-serif;
+  font-size: .93rem; font-weight: 500; color: var(--ink);
+  transition: all .15s; outline: none; text-align: left;
+}
+.opt-btn:hover:not(:disabled) { background: #EBF2FF; border-color: var(--s1); color: var(--s1); transform: translateX(3px); }
+.opt-btn.sel { background: #EBF2FF; border-color: var(--s1); color: var(--s1); }
+.opt-btn.correct { background: var(--s2l); border-color: var(--s2); color: var(--s2b); font-weight: 700; }
+.opt-btn.wrong { background: var(--s4l); border-color: var(--s4); color: var(--s4); }
+.opt-circ { width: 26px; height: 26px; border-radius: 50%; border: 2px solid currentColor; display: flex; align-items: center; justify-content: center; font-size: .72rem; font-weight: 800; flex-shrink: 0; }
+
+.fill-input {
+  border: 2px solid var(--border); border-radius: 10px;
+  padding: 9px 14px; font-family: 'Lexend', sans-serif;
+  font-size: .95rem; font-weight: 500; width: 100%;
+  background: var(--bg); color: var(--ink); outline: none;
+  transition: border-color .15s; margin-top: 8px;
+}
+.fill-input:focus { border-color: var(--s1); background: #EBF2FF; }
+.fill-input.correct { border-color: var(--s2); background: var(--s2l); color: var(--s2b); }
+.fill-input.wrong { border-color: var(--s4); background: var(--s4l); color: var(--s4); }
+
+.msel {
+  border: 2px solid var(--border); border-radius: 10px;
+  padding: 9px 12px; font-family: 'Lexend', sans-serif;
+  font-size: .92rem; font-weight: 500; width: 100%;
+  background: var(--bg); color: var(--ink); outline: none; cursor: pointer;
+  margin-top: 6px;
+}
+.msel.correct { border-color: var(--s2); background: var(--s2l); color: var(--s2b); }
+.msel.wrong { border-color: var(--s4); background: var(--s4l); color: var(--s4); }
+
+.feedback { margin-top: 10px; font-size: .88rem; font-weight: 600; padding: 7px 13px; border-radius: 8px; display: none; }
+.feedback.show { display: block; }
+.feedback.correct { background: var(--s2l); color: var(--s2b); }
+.feedback.wrong { background: var(--s4l); color: var(--s4); }
+.ans-hint { font-size: .85rem; font-weight: 600; color: var(--s2); margin-top: 4px; display: none; }
+.ans-hint.show { display: block; }
+
+/* SCORE */
+.score-row {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 20px 26px;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 14px;
+  border: 2px solid var(--border);
+  margin-top: 10px;
+}
+.score-display { font-size: 1.5rem; font-weight: 900; color: var(--ink); }
+.score-display span { font-size: .9rem; font-weight: 500; color: var(--muted); }
+.score-msg-text { font-size: .95rem; font-weight: 600; color: var(--muted); }
+.score-btns { display: flex; gap: 10px; }
+.btn-check {
+  padding: 10px 24px; background: var(--s1); color: #fff;
+  border: none; border-radius: 50px; font-family: 'Lexend', sans-serif;
+  font-size: .93rem; font-weight: 700; cursor: pointer;
+  transition: background .15s, transform .1s;
+}
+.btn-check:hover { background: var(--s1b); transform: translateY(-1px); }
+.btn-check:disabled { background: #CBD5E1; cursor: not-allowed; transform: none; }
+.btn-reset {
+  padding: 10px 20px; background: var(--bg); color: var(--ink);
+  border: 2px solid var(--border); border-radius: 50px;
+  font-family: 'Lexend', sans-serif; font-size: .93rem; font-weight: 700;
+  cursor: pointer; transition: background .15s;
+}
+.btn-reset:hover { background: var(--border); }
+.b-s1-check { background: var(--s1); }
+.b-s2-check { background: var(--s2); }
+.b-s3-check { background: var(--s3); }
+.b-s4-check { background: var(--s4); }
+.b-s1-check:hover { background: var(--s1b); }
+.b-s2-check:hover { background: var(--s2b); }
+.b-s3-check:hover { background: var(--s3b); }
+.b-s4-check:hover { background: var(--s4b); }
+
+/* Match pair */
+.match-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 9px; align-items: start; }
+.match-term { padding: 9px 13px; background: var(--bg); border: 2px solid var(--border); border-radius: 9px; font-weight: 600; font-size: .9rem; }
+
+/* Word bank */
+.wbank { display: flex; flex-wrap: wrap; gap: 8px; background: #FFFBEB; border: 2px solid #FDE68A; border-radius: 10px; padding: 10px 14px; margin-bottom: 16px; }
+.wchip { background: #FEF3C7; border: 2px solid #F59E0B; color: #92400E; border-radius: 50px; padding: 3px 14px; font-weight: 700; font-size: .88rem; }
+
+/* Inline fill */
+.ifill { border: 2px solid var(--border); border-radius: 7px; padding: 5px 10px; font-family: 'Lexend', sans-serif; font-size: .93rem; font-weight: 600; background: var(--bg); color: var(--ink); outline: none; width: 130px; transition: border-color .15s; }
+.ifill:focus { border-color: var(--s1); background: #EBF2FF; }
+.ifill.correct { border-color: var(--s2); background: var(--s2l); color: var(--s2b); }
+.ifill.wrong { border-color: var(--s4); background: var(--s4l); color: var(--s4); }
+
+/* Chk btn */
+.chk-btn { display: flex; align-items: flex-start; gap: 10px; padding: 10px 15px; border: 2px solid var(--border); border-radius: 10px; background: var(--bg); cursor: pointer; font-family: 'Lexend', sans-serif; font-size: .92rem; font-weight: 500; color: var(--ink); transition: all .15s; user-select: none; margin-bottom: 7px; }
+.chk-btn:hover:not(.locked) { background: #EBF2FF; border-color: var(--s1); }
+.chk-btn.checked { background: #EBF2FF; border-color: var(--s1); color: var(--s1); }
+.chk-btn.correct { background: var(--s2l); border-color: var(--s2); color: var(--s2b); font-weight: 700; }
+.chk-btn.wrong { background: var(--s4l); border-color: var(--s4); color: var(--s4); }
+.chk-box { width: 20px; height: 20px; border: 2px solid currentColor; border-radius: 4px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: .78rem; margin-top: 1px; }
+
+/* Progress bar */
+.progress-bar { height: 6px; background: var(--border); border-radius: 99px; margin-top: 8px; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 99px; transition: width .5s ease; }
+.pf-s1 { background: var(--s1); }
+.pf-s2 { background: var(--s2); }
+.pf-s3 { background: var(--s3); }
+.pf-s4 { background: var(--s4); }
+
+/* Divider */
+.divider { border: none; border-top: 2px dashed var(--border); margin: 28px 0; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">PREP.VN · Ngữ Pháp Tiếng Anh</div>
+  <h1>Đề Cương Ôn Tập<br><span>Danh Từ (Nouns)</span></h1>
+  <p>Tổng hợp lý thuyết & bài tập ôn lại cho 4 chủ đề danh từ quan trọng nhất</p>
+  <div class="hero-stats">
+    <div class="stat-pill"><strong>4</strong> Chủ đề</div>
+    <div class="stat-pill"><strong>20+</strong> Điểm lý thuyết</div>
+    <div class="stat-pill"><strong>40+</strong> Câu bài tập</div>
+  </div>
+</div>
+
+<!-- NAV -->
+<div class="nav-wrap">
+  <div class="nav-tabs">
+    <button class="nav-tab active" data-s="1" onclick="switchTab(1)">📘 Các loại danh từ</button>
+    <button class="nav-tab" data-s="2" onclick="switchTab(2)">📗 Đếm được / Không đếm được</button>
+    <button class="nav-tab" data-s="3" onclick="switchTab(3)">📙 Sở hữu cách</button>
+    <button class="nav-tab" data-s="4" onclick="switchTab(4)">📕 Hạn định từ</button>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ============================================================ SECTION 1 -->
+<div class="section-panel active" id="panel-1">
+  <div class="sec-header s1">
+    <div class="sec-num">1</div>
+    <div class="sec-header-text">
+      <h2>Các Loại Danh Từ</h2>
+      <p>Types of Nouns · Phân loại và nhận biết danh từ trong tiếng Anh</p>
+    </div>
+  </div>
+
+  <!-- THEORY -->
+  <div class="theory-block">
+    <div class="theory-head s1 open" onclick="toggleTheory(this)">
+      <span class="icon">📖</span> Lý thuyết 1: Phân loại danh từ chính
+      <span class="chevron open">▼</span>
+    </div>
+    <div class="theory-body open">
+      <div class="theory-grid">
+        <div class="theory-card"><span class="tag tag-s1">Common Noun</span><h4>Danh từ chung</h4><p>Chỉ người, vật, nơi chốn, khái niệm chung. <em>Ví dụ: dog, city, teacher</em></p></div>
+        <div class="theory-card"><span class="tag tag-s1">Proper Noun</span><h4>Danh từ riêng</h4><p>Tên riêng, luôn viết HOA chữ đầu. <em>Ví dụ: Vietnam, Mary, Monday</em></p></div>
+        <div class="theory-card"><span class="tag tag-s1">Abstract Noun</span><h4>Danh từ trừu tượng</h4><p>Chỉ cảm xúc, phẩm chất, khái niệm. <em>Ví dụ: love, courage, happiness</em></p></div>
+        <div class="theory-card"><span class="tag tag-s1">Collective Noun</span><h4>Danh từ tập hợp</h4><p>Chỉ nhóm người/vật/đồ vật. <em>Ví dụ: a herd of cattle, a pack of wolves</em></p></div>
+      </div>
+      <div class="info-box tip" style="margin-top:16px">💡 <div>Danh từ riêng (Proper Noun) bao gồm: tên người, địa danh, tháng trong năm, ngày trong tuần, ngôn ngữ, quốc tịch — tất cả đều phải <strong>viết hoa chữ cái đầu</strong>.</div></div>
+    </div>
+  </div>
+
+  <div class="theory-block">
+    <div class="theory-head s1" onclick="toggleTheory(this)">
+      <span class="icon">🐾</span> Lý thuyết 2: Danh từ tập hợp chỉ động vật
+      <span class="chevron">▼</span>
+    </div>
+    <div class="theory-body">
+      <table class="theory-tbl">
+        <tr><th>Cụm từ</th><th>Nghĩa</th><th>Cụm từ</th><th>Nghĩa</th></tr>
+        <tr><td class="hl">a brood of</td><td>đàn gà con</td><td class="hl">a school of</td><td>đàn cá</td></tr>
+        <tr><td class="hl">a flock of</td><td>bầy cừu / đàn chim</td><td class="hl">a herd of</td><td>đàn gia súc</td></tr>
+        <tr><td class="hl">a gaggle of</td><td>bầy ngỗng</td><td class="hl">a litter of</td><td>đàn chó con / mèo con</td></tr>
+        <tr><td class="hl">a pod of</td><td>đàn cá voi</td><td class="hl">a pack of</td><td>bầy sói</td></tr>
+        <tr><td class="hl">a pride of</td><td>bầy sư tử</td><td class="hl">a swarm of</td><td>đàn ong</td></tr>
+      </table>
+      <div class="info-box warn" style="margin-top:14px">⚠️ <div>Danh từ tập hợp chỉ nhóm người: <strong>a team of players</strong> (đội), <strong>a gang of robbers</strong> (băng cướp), <strong>a troupe of actors</strong> (đoàn diễn viên).</div></div>
+    </div>
+  </div>
+
+  <div class="theory-block">
+    <div class="theory-head s1" onclick="toggleTheory(this)">
+      <span class="icon">📝</span> Lý thuyết 3: Quy tắc viết hoa danh từ riêng
+      <span class="chevron">▼</span>
+    </div>
+    <div class="theory-body">
+      <ul class="rule-list">
+        <li><span class="bullet bl-s1">✓</span>Tên người & biệt danh: <strong>John, Uncle Mike, Snow White</strong></li>
+        <li><span class="bullet bl-s1">✓</span>Tên địa điểm & quốc gia: <strong>Vietnam, the Great Wall of China, Great Britain</strong></li>
+        <li><span class="bullet bl-s1">✓</span>Tháng & ngày trong tuần: <strong>January, Monday, Tuesday</strong></li>
+        <li><span class="bullet bl-s1">✓</span>Ngôn ngữ & quốc tịch: <strong>English, Vietnamese, French</strong></li>
+        <li><span class="bullet bl-s1">✓</span>Tên tổ chức & thương hiệu: <strong>United Bank, Google, NASA</strong></li>
+        <li><span class="bullet bl-s1">✗</span>Mùa trong năm KHÔNG viết hoa: <strong>summer, winter, spring</strong> (trừ khi đứng đầu câu)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- PRACTICE S1 -->
+  <div class="practice-title">Bài Tập Ôn Lại <span class="badge-ex b-s1">Section 1</span></div>
+
+  <div class="pcard">
+    <div class="q-label">Câu 1 · True / False</div>
+    <div class="q-text">Danh từ trừu tượng (Abstract Noun) bao gồm các từ chỉ cảm xúc, phẩm chất và khái niệm như <em>love, courage, freedom</em>.</div>
+    <div class="opts">
+      <button class="opt-btn" onclick="pick(this,'p1q1','A')"><span class="opt-circ">A</span>True</button>
+      <button class="opt-btn" onclick="pick(this,'p1q1','B')"><span class="opt-circ">B</span>False</button>
+    </div>
+    <div class="feedback" id="fb-p1q1"></div>
+  </div>
+
+  <div class="pcard">
+    <div class="q-label">Câu 2 · Chọn đáp án đúng</div>
+    <div class="q-text">Từ nào sau đây là danh từ RIÊNG (Proper Noun)?</div>
+    <div class="opts">
+      <button class="opt-btn" onclick="pick(this,'p1q2','A')"><span class="opt-circ">A</span>happiness</button>
+      <button class="opt-btn" onclick="pick(this,'p1q2','B')"><span class="opt-circ">B</span>doctor</button>
+      <button class="opt-btn" onclick="pick(this,'p1q2','C')"><span class="opt-circ">C</span>Queen Elizabeth</button>
+      <button class="opt-btn" onclick="pick(this,'p1q2','D')"><span class="opt-circ">D</span>a pack</button>
+    </div>
+    <div class="feedback" id="fb-p1q2"></div>
+  </div>
+
+  <div class="pcard">
+    <div class="q-label">Câu 3 · Điền từ tập hợp</div>
+    <div class="q-text">Điền từ thích hợp: a ___ of wolves (một bầy sói)</div>
+    <input type="text" class="fill-input" id="p1q3" placeholder="Nhập đáp án..." autocomplete="off"/>
+    <div class="ans-hint" id="p1q3-hint">✓ Đáp án: pack</div>
+  </div>
+
+  <div class="pcard">
+    <div class="q-label">Câu 4 · Tìm lỗi sai</div>
+    <div class="q-text">Câu nào sau đây viết đúng danh từ riêng?</div>
+    <div class="opts">
+      <button class="opt-btn" onclick="pick(this,'p1q4','A')"><span class="opt-circ">A</span>I think july is the hottest month.</button>
+      <button class="opt-btn" onclick="pick(this,'p1q4','B')"><span class="opt-circ">B</span>One day Ali Baba saw forty thieves.</button>
+      <button class="opt-btn" onclick="pick(this,'p1q4','C')"><span class="opt-circ">C</span>Mr. lee is reading a book.</button>
+      <button class="opt-btn" onclick="pick(this,'p1q4','D')"><span class="opt-circ">D</span>Next tuesday is a public holiday.</button>
+    </div>
+    <div class="feedback" id="fb-p1q4"></div>
+  </div>
+
+  <div class="pcard">
+    <div class="q-label">Câu 5 · Nối nhóm</div>
+    <div class="q-text">Từ <strong>"courage"</strong> thuộc loại danh từ nào?</div>
+    <select class="msel" id="p1q5">
+      <option value="">-- Chọn loại --</option>
+      <option>Common Nouns</option>
+      <option>Proper Nouns</option>
+      <option>Abstract Nouns</option>
+      <option>Collective Nouns</option>
+    </select>
+    <div class="ans-hint" id="p1q5-hint">✓ Đáp án: Abstract Nouns</div>
+  </div>
+
+  <div class="pcard">
+    <div class="q-label">Câu 6 · Điền từ tập hợp</div>
+    <div class="q-text">Điền từ thích hợp: a ___ of bees (một đàn ong)</div>
+    <input type="text" class="fill-input" id="p1q6" placeholder="Nhập đáp án..." autocomplete="off"/>
+    <div class="ans-hint" id="p1q6-hint">✓ Đáp án: swarm</div>
+  </div>
+
+  <div class="pcard">
+    <div class="q-label">Câu 7 · Danh từ chung</div>
+    <div class="q-text">Trong câu "Kate has a lovely doll." — danh từ chung là gì?</div>
+    <input type="text" class="fill-input" id="p1q7" placeholder="Nhập đáp án..." autocomplete="off"/>
+    <div class="ans-hint" id="p1q7-hint">✓ Đáp án: doll</div>
+  </div>
+
+  <div class="score-row" id="score-s1">
+    <div><div class="score-display" id="sd-s1">— <span>/ 7 câu</span></div><div class="progress-bar"><div class="progress-fill pf-s1" id="pb-s1" style="width:0%"></div></div></div>
+    <div class="score-msg-text" id="sm-s1">Hoàn thành bài rồi chấm điểm nhé!</div>
+    <div class="score-btns">
+      <button class="btn-check b-s1-check" id="chk-s1" onclick="checkSection(1)">Chấm bài</button>
+      <button class="btn-reset" onclick="resetSection(1)">Làm lại</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ SECTION 2 -->
+<div class="section-panel" id="panel-2">
+  <div class="sec-header s2">
+    <div class="sec-num">2</div>
+    <div class="sec-header-text">
+      <h2>Danh Từ Đếm Được & Không Đếm Được</h2>
+      <p>Countable & Uncountable Nouns · Số ít và Số nhiều</p>
+    </div>
+  </div>
+
+  <div class="theory-block">
+    <div class="theory-head s2 open" onclick="toggleTheory(this)">
+      <span class="icon">🔢</span> Lý thuyết 1: Đếm được vs Không đếm được
+      <span class="chevron open">▼</span>
+    </div>
+    <div class="theory-body open">
+      <div class="theory-grid">
+        <div class="theory-card">
+          <span class="tag tag-s2">Countable</span>
+          <h4>Danh từ đếm được</h4>
+          <p>Có dạng số ít & số nhiều. Dùng được với a/an, numbers.<br><em>book → books, child → children</em></p>
+        </div>
+        <div class="theory-card">
+          <span class="tag tag-s2">Uncountable</span>
+          <h4>Danh từ không đếm được</h4>
+          <p>Không dùng với a/an hay số đếm. Không có dạng số nhiều.<br><em>water, money, furniture, advice</em></p>
+        </div>
+      </div>
+      <div class="info-box warn" style="margin-top:14px">⚠️ <div>Các từ sau KHÔNG đếm được (không thêm -s): <strong>furniture, information, advice, luggage, money, rain, happiness, electricity</strong></div></div>
+    </div>
+  </div>
+
+  <div class="theory-block">
+    <div class="theory-head s2" onclick="toggleTheory(this)">
+      <span class="icon">📐</span> Lý thuyết 2: Quy tắc thêm -s/-es
+      <span class="chevron">▼</span>
+    </div>
+    <div class="theory-body">
+      <table class="theory-tbl s2">
+        <tr><th>Quy tắc</th><th>Ví dụ</th></tr>
+        <tr><td>Thêm <strong>-s</strong> vào hầu hết danh từ</td><td class="hl">book → books, pen → pens</td></tr>
+        <tr><td>Tận cùng -ch, -sh, -s, -x, -z → thêm <strong>-es</strong></td><td class="hl">box → boxes, brush → brushes</td></tr>
+        <tr><td>Phụ âm + y → đổi y thành <strong>-ies</strong></td><td class="hl">lady → ladies, city → cities</td></tr>
+        <tr><td>Nguyên âm + y → thêm <strong>-s</strong></td><td class="hl">key → keys, play → plays</td></tr>
+        <tr><td>f / fe → đổi thành <strong>-ves</strong> (một số từ)</td><td class="hl">wife → wives, life → lives</td></tr>
+        <tr><td>EF / IEF / IFF / OOF → thêm <strong>-s</strong></td><td class="hl">chef → chefs, roof → roofs</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="theory-block">
+    <div class="theory-head s2" onclick="toggleTheory(this)">
+      <span class="icon">🔄</span> Lý thuyết 3: Số nhiều bất quy tắc
+      <span class="chevron">▼</span>
+    </div>
+    <div class="theory-body">
+      <table class="theory-tbl s2">
+        <tr><th>Số ít</th><th>Số nhiều</th><th>Số ít</th><th>Số nhiều</th></tr>
+        <tr><td>man</td><td class="hl">men</td><td>woman</td><td class="hl">women</td></tr>
+        <tr><td>child</td><td class="hl">children</td><td>tooth</td><td class="hl">teeth</td></tr>
+        <tr><td>foot</td><td class="hl">feet</td><td>mouse</td><td class="hl">mice</td></tr>
+        <tr><td>goose</td><td class="hl">geese</td><td>ox</td><td class="hl">oxen</td></tr>
+        <tr><td>louse</td><td class="hl">lice</td><td>deer / sheep / fish</td><td class="hl">giống số ít</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- PRACTICE S2 -->
+  <div class="practice-title">Bài Tập Ôn Lại <span class="badge-ex b-s2">Section 2</span></div>
+
+  <div class="pcard">
+    <div class="q-label">Câu 1 · True / False</div>
+    <div class="q-text">Khi muốn chuyển 1 danh từ từ dạng số ít thành số nhiều, ta luôn thêm S hoặc ES vào sau danh từ.</div>
+    <div class="opts">
+      <button class="opt-btn" onclick="pick(this,'p2q1','A')"><span class="opt-circ">A</span>True</button>
+      <button class="opt-btn" onclick="pick(this,'p2q1','B')"><span class="opt-circ">B</span>False</button>
+    </div>
+    <div class="feedback" id="fb-p2q1"></div>
+  </div>
+
+  <div class="pcard">
+    <div class="q-label">Câu 2 · Số nhiều bất quy tắc</div>
+    <div class="q-text">Điền dạng số nhiều: <strong>goose</strong> →</div>
+    <input type="text" class="fill-input" id="p2q2" placeholder="Nhập đáp án..." autocomplete="off"/>
+    <div class="ans-hint" id="p2q2-hint">✓ Đáp án: geese</div>
+  </div>
+
+  <div class="pcard">
+    <div class="q-label">Câu 3 · Quy tắc số nhiều</div>
+    <div class="q-text">Dạng số nhiều của <strong>"lorry"</strong> là gì?</div>
+    <div class="opts">
+      <button class="opt-btn" onclick="pick(this,'p2q3','A')"><span class="opt-circ">A</span>lorrys</button>
+      <button class="opt-btn" onclick="pick(this,'p2q3','B')"><span class="opt-circ">B</span>lorries</button>
+      <button class="opt-btn" onclick="pick(this,'p2q3','C')"><span class="opt-circ">C</span>lorries's</button>
+    </div>
+    <div class="feedback" id="fb-p2q3"></div>
+  </div>
+
+  <div class="pcard">
+    <div class="q-label">Câu 4 · Đếm được / Không đếm được</div>
+    <div class="q-text">Từ nào sau đây là danh từ KHÔNG đếm được?</div>
+    <div class="opts">
+      <button class="opt-btn" onclick="pick(this,'p2q4','A')"><span class="opt-circ">A</span>book</button>
+      <button class="opt-btn" onclick="pick(this,'p2q4','B')"><span class="opt-circ">B</span>furniture</button>
+      <button class="opt-btn" onclick="pick(this,'p2q4','C')"><span class="opt-circ">C</span>pen</button>
+      <button class="opt-btn" onclick="pick(this,'p2q4','D')"><span class="opt-circ">D</span>house</button>
+    </div>
+    <div class="feedback" id="fb-p2q4"></div>
+  </div>
+
+  <div class="pcard">
+    <div class="q-label">Câu 5 · Chọn từ đúng</div>
+    <div class="q-text">We've just bought some new outdoor ___ .</div>
+    <div class="opts">
+      <button class="opt-btn" onclick="pick(this,'p2q5','A')"><span class="opt-circ">A</span>furnitures</button>
+      <button class="opt-btn" onclick="pick(this,'p2q5','B')"><span class="opt-circ">B</span>furniture</button>
+    </div>
+    <div class="feedback" id="fb-p2q5"></div>
+  </div>
+
+  <div class="pcard">
+    <div class="q-label">Câu 6 · Điền dạng đúng</div>
+    <div class="q-text">A group of ___ is standing outside the class. (student)</div>
+    <input type="text" class="fill-input" id="p2q6" placeholder="Nhập đúng dạng của từ..." autocomplete="off"/>
+    <div class="ans-hint" id="p2q6-hint">✓ Đáp án: students</div>
+  </div>
+
+  <div class="pcard">
+    <div class="q-label">Câu 7 · Dạng số nhiều</div>
+    <div class="q-text">Điền dạng số nhiều: <strong>sandwich</strong> →</div>
+    <input type="text" class="fill-input" id="p2q7" placeholder="Nhập đáp án..." autocomplete="off"/>
+    <div class="ans-hint" id="p2q7-hint">✓ Đáp án: sandwiches</div>
+  </div>
+
+  <div class="score-row" id="score-s2">
+    <div><div class="score-display" id="sd-s2">— <span>/ 7 câu</span></div><div class="progress-bar"><div class="progress-fill pf-s2" id="pb-s2" style="width:0%"></div></div></div>
+    <div class="score-msg-text" id="sm-s2">Hoàn thành bài rồi chấm điểm nhé!</div>
+    <div class="score-btns">
+      <button class="btn-check b-s2-check" id="chk-s2" onclick="checkSection(2)">Chấm bài</button>
+      <button class="btn-reset" onclick="resetSection(2)">Làm lại</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ SECTION 3 -->
+<div class="section-panel" id="panel-3">
+  <div class="sec-header s3">
+    <div class="sec-num">3</div>
+    <div class="sec-header-text">
+      <h2>Sở Hữu Cách</h2>
+      <p>Possessive Case · Cách dùng 's và s'</p>
+    </div>
+  </div>
+
+  <div class="theory-block">
+    <div class="theory-head s3 open" onclick="toggleTheory(this)">
+      <span class="icon">🔑</span> Lý thuyết 1: Các công thức sở hữu cách
+      <span class="chevron open">▼</span>
+    </div>
+    <div class="theory-body open">
+      <table class="theory-tbl s3">
+        <tr><th>Công thức</th><th>Khi nào dùng</th><th>Ví dụ</th></tr>
+        <tr><td class="hl">N1's N2</td><td>N1 số ít hoặc số nhiều không tận cùng -s</td><td>Mary's book, children's toys</td></tr>
+        <tr><td class="hl">N1s' N2</td><td>N1 số ít tận cùng -s hoặc số nhiều tận cùng -s</td><td>parents' house, boss's car</td></tr>
+        <tr><td class="hl">N1 and N2's N3</td><td>N1 và N2 CÙNG sở hữu một N3</td><td>Tom and Mary's house</td></tr>
+        <tr><td class="hl">N1's and N2's N3</td><td>N1 và N2 sở hữu N3 RIÊNG BIỆT</td><td>Tom's and Mary's cars</td></tr>
+      </table>
+      <div class="info-box note" style="margin-top:12px">📌 <div>N1 = chủ sở hữu · N2/N3 = vật được sở hữu. Nhớ: N1 là người/vật <strong>CÓ</strong> thứ gì đó.</div></div>
+    </div>
+  </div>
+
+  <div class="theory-block">
+    <div class="theory-head s3" onclick="toggleTheory(this)">
+      <span class="icon">✅</span> Lý thuyết 2: Khi nào dùng được sở hữu cách
+      <span class="chevron">▼</span>
+    </div>
+    <div class="theory-body">
+      <ul class="rule-list">
+        <li><span class="bullet bl-s3">✓</span><strong>Danh từ chỉ người:</strong> Mary's bag, the teacher's desk</li>
+        <li><span class="bullet bl-s3">✓</span><strong>Danh từ chỉ con vật:</strong> the cat's eyes, the dog's tail</li>
+        <li><span class="bullet bl-s3">✓</span><strong>Thời gian & không gian quen thuộc:</strong> a day's journey, a week's holiday</li>
+        <li><span class="bullet bl-s3">✓</span><strong>Danh từ chỉ tổ chức:</strong> the company's policy, the government's decision</li>
+        <li><span class="bullet bl-s3">✓</span><strong>Tránh lặp danh từ:</strong> I went to the dentist's (= dentist's office)</li>
+        <li><span class="bullet bl-s3">✗</span><strong>Danh từ chỉ vật/sự vật:</strong> KHÔNG dùng → the size of the computer ✓ (không viết the computer's size)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="theory-block">
+    <div class="theory-head s3" onclick="toggleTheory(this)">
+      <span class="icon">⏱️</span> Lý thuyết 3: Sở hữu cách chỉ thời gian
+      <span class="chevron">▼</span>
+    </div>
+    <div class="theory-body">
+      <div class="example-row"><span>a second's pause</span><span class="ex-arrow">→</span><span class="ex-correct">khoảnh khắc dừng lại một giây</span></div>
+      <div class="example-row"><span>a minute's wait</span><span class="ex-arrow">→</span><span class="ex-correct">chờ một phút</span></div>
+      <div class="example-row"><span>an hour's drive</span><span class="ex-arrow">→</span><span class="ex-correct">lái xe một tiếng</span></div>
+      <div class="example-row"><span>a day's journey</span><span class="ex-arrow">→</span><span class="ex-correct">hành trình một ngày</span></div>
+      <div class="example-row"><span>a week's holiday</span><span class="ex-arrow">→</span><span class="ex-correct">kỳ nghỉ một tuần</span></div>
+      <div class="example-row"><span>a year's course</span><span class="ex-arrow">→</span><span class="ex-correct">khóa học một năm</span></div>
+    </div>
+  </div>
+
+  <!-- PRACTICE S3 -->
+  <div class="practice-title">Bài Tập Ôn Lại <span class="badge-ex b-s3">Section 3</span></div>
+
+  <div class="pcard">
+    <div class="q-label">Câu 1 · True / False</div>
+    <div class="q-text">Trong công thức N1's N2 thì N1 là danh từ sở hữu (người/vật có thứ gì đó).</div>
+    <div class="opts">
+      <button class="opt-btn" onclick="pick(this,'p3q1','A')"><span class="opt-circ">A</span>True</button>
+      <button class="opt-btn" onclick="pick(this,'p3q1','B')"><span class="opt-circ">B</span>False</button>
+    </div>
+    <div class="feedback" id="fb-p3q1"></div>
+  </div>
+
+  <div class="pcard">
+    <div class="q-label">Câu 2 · Chọn đúng</div>
+    <div class="q-text">Câu nào đúng?</div>
+    <div class="opts">
+      <button class="opt-btn" onclick="pick(this,'p3q2','A')"><span class="opt-circ">A</span>My mothers' name is Alice.</button>
+      <button class="opt-btn" onclick="pick(this,'p3q2','B')"><span class="opt-circ">B</span>My mother's name is Alice.</button>
+      <button class="opt-btn" onclick="pick(this,'p3q2','C')"><span class="opt-circ">C</span>My mother name is Alice.</button>
+    </div>
+    <div class="feedback" id="fb-p3q2"></div>
+  </div>
+
+  <div class="pcard">
+    <div class="q-label">Câu 3 · Thêm 's hoặc '</div>
+    <div class="q-text">Viết lại: <strong>My grandparents garden</strong> (thêm dấu sở hữu cách)</div>
+    <input type="text" class="fill-input" id="p3q3" placeholder="Viết lại hoàn chỉnh..." autocomplete="off"/>
+    <div class="ans-hint" id="p3q3-hint">✓ Đáp án: My grandparents' garden</div>
+  </div>
+
+  <div class="pcard">
+    <div class="q-label">Câu 4 · Viết lại</div>
+    <div class="q-text">Dùng sở hữu cách viết lại: <em>The tools of the mechanic were heavy.</em></div>
+    <input type="text" class="fill-input" id="p3q4" placeholder="Viết lại câu dùng sở hữu cách..." autocomplete="off"/>
+    <div class="ans-hint" id="p3q4-hint">✓ Đáp án: The mechanic's tools were heavy.</div>
+  </div>
+
+  <div class="pcard">
+    <div class="q-label">Câu 5 · Thời gian sở hữu cách</div>
+    <div class="q-text">Viết cách diễn đạt sở hữu cách: "Lin had A HOLIDAY with her mother." (week)</div>
+    <input type="text" class="fill-input" id="p3q5" placeholder="Ví dụ: A second's pause" autocomplete="off"/>
+    <div class="ans-hint" id="p3q5-hint">✓ Đáp án: A week's holiday</div>
+  </div>
+
+  <div class="pcard">
+    <div class="q-label">Câu 6 · Chọn đúng</div>
+    <div class="q-text">Câu <em>"Do you know where the car of Dave is?"</em> nên viết lại thành:</div>
+    <div class="opts">
+      <button class="opt-btn" onclick="pick(this,'p3q6','A')"><span class="opt-circ">A</span>Do you know where Dave's car is?</button>
+      <button class="opt-btn" onclick="pick(this,'p3q6','B')"><span class="opt-circ">B</span>Do you know where Daves car is?</button>
+      <button class="opt-btn" onclick="pick(this,'p3q6','C')"><span class="opt-circ">C</span>Do you know where Dave car is?</button>
+    </div>
+    <div class="feedback" id="fb-p3q6"></div>
+  </div>
+
+  <div class="pcard">
+    <div class="q-label">Câu 7 · Đúng hay sai?</div>
+    <div class="q-text">Câu <em>"What is the computer's size?"</em> — có lỗi không? Nếu có, viết lại đúng:</div>
+    <input type="text" class="fill-input" id="p3q7" placeholder='Nhập "correct" hoặc viết lại câu đúng...' autocomplete="off"/>
+    <div class="ans-hint" id="p3q7-hint">✓ Đáp án: What size is the computer? (Vật vô tri không dùng sở hữu cách)</div>
+  </div>
+
+  <div class="score-row" id="score-s3">
+    <div><div class="score-display" id="sd-s3">— <span>/ 7 câu</span></div><div class="progress-bar"><div class="progress-fill pf-s3" id="pb-s3" style="width:0%"></div></div></div>
+    <div class="score-msg-text" id="sm-s3">Hoàn thành bài rồi chấm điểm nhé!</div>
+    <div class="score-btns">
+      <button class="btn-check b-s3-check" id="chk-s3" onclick="checkSection(3)">Chấm bài</button>
+      <button class="btn-reset" onclick="resetSection(3)">Làm lại</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ SECTION 4 -->
+<div class="section-panel" id="panel-4">
+  <div class="sec-header s4">
+    <div class="sec-num">4</div>
+    <div class="sec-header-text">
+      <h2>Hạn Định Từ</h2>
+      <p>Determiners · Từ chỉ định & Lượng từ</p>
+    </div>
+  </div>
+
+  <div class="theory-block">
+    <div class="theory-head s4 open" onclick="toggleTheory(this)">
+      <span class="icon">👆</span> Lý thuyết 1: Từ chỉ định (Demonstratives)
+      <span class="chevron open">▼</span>
+    </div>
+    <div class="theory-body open">
+      <table class="theory-tbl s4">
+        <tr><th></th><th>Số ít</th><th>Số nhiều</th></tr>
+        <tr><td><strong>Vị trí GẦN</strong></td><td class="hl">this</td><td class="hl">these</td></tr>
+        <tr><td><strong>Vị trí XA</strong></td><td class="hl">that</td><td class="hl">those</td></tr>
+      </table>
+      <div class="info-box tip" style="margin-top:12px">💡 <div>Từ chỉ định có thể đứng trước danh từ (<em>this book</em>) hoặc đứng một mình thay thế danh từ (<em>This is mine.</em>)</div></div>
+    </div>
+  </div>
+
+  <div class="theory-block">
+    <div class="theory-head s4" onclick="toggleTheory(this)">
+      <span class="icon">📊</span> Lý thuyết 2: Lượng từ (Quantifiers)
+      <span class="chevron">▼</span>
+    </div>
+    <div class="theory-body">
+      <table class="theory-tbl s4">
+        <tr><th>Lượng từ</th><th>Đếm được</th><th>Không đếm được</th><th>Ý nghĩa</th></tr>
+        <tr><td class="hl">a few</td><td>✅</td><td>❌</td><td>một vài (đủ dùng)</td></tr>
+        <tr><td class="hl">few</td><td>✅</td><td>❌</td><td>ít, không đủ</td></tr>
+        <tr><td class="hl">a little</td><td>❌</td><td>✅</td><td>một ít (đủ dùng)</td></tr>
+        <tr><td class="hl">little</td><td>❌</td><td>✅</td><td>ít, không đủ</td></tr>
+        <tr><td class="hl">many</td><td>✅</td><td>❌</td><td>nhiều</td></tr>
+        <tr><td class="hl">much</td><td>❌</td><td>✅</td><td>nhiều</td></tr>
+        <tr><td class="hl">some / any / a lot of / lots of</td><td>✅</td><td>✅</td><td>một số / bất kỳ / nhiều</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="theory-block">
+    <div class="theory-head s4" onclick="toggleTheory(this)">
+      <span class="icon">🔀</span> Lý thuyết 3: Some vs Any
+      <span class="chevron">▼</span>
+    </div>
+    <div class="theory-body">
+      <ul class="rule-list">
+        <li><span class="bullet bl-s4">S</span><strong>Some</strong> → câu khẳng định: <em>I have <strong>some</strong> friends.</em></li>
+        <li><span class="bullet bl-s4">S</span><strong>Some</strong> → câu hỏi mời/đề nghị: <em>Would you like <strong>some</strong> coffee?</em></li>
+        <li><span class="bullet bl-s4">A</span><strong>Any</strong> → câu phủ định: <em>I don't have <strong>any</strong> money.</em></li>
+        <li><span class="bullet bl-s4">A</span><strong>Any</strong> → câu hỏi thông thường: <em>Do you have <strong>any</strong> questions?</em></li>
+        <li><span class="bullet bl-s4">A</span><strong>Any</strong> → câu khẳng định nghĩa "bất cứ": <em>You can sit <strong>any</strong>where.</em></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- PRACTICE S4 -->
+  <div class="practice-title">Bài Tập Ôn Lại <span class="badge-ex b-s4">Section 4</span></div>
+
+  <div class="pcard">
+    <div class="q-label">Câu 1 · True / False</div>
+    <div class="q-text">Lượng từ chỉ đi cùng danh từ đếm được.</div>
+    <div class="opts">
+      <button class="opt-btn" onclick="pick(this,'p4q1','A')"><span class="opt-circ">A</span>True</button>
+      <button class="opt-btn" onclick="pick(this,'p4q1','B')"><span class="opt-circ">B</span>False</button>
+    </div>
+    <div class="feedback" id="fb-p4q1"></div>
+  </div>
+
+  <div class="pcard">
+    <div class="q-label">Câu 2 · Từ chỉ định</div>
+    <div class="q-text">Điền từ chỉ định phù hợp (vị trí xa, số nhiều): "Can you see ___ stars in the sky?"</div>
+    <input type="text" class="fill-input" id="p4q2" placeholder="Nhập đáp án..." autocomplete="off"/>
+    <div class="ans-hint" id="p4q2-hint">✓ Đáp án: those</div>
+  </div>
+
+  <div class="pcard">
+    <div class="q-label">Câu 3 · Some / Any</div>
+    <div class="q-text">Peter: No. The students don't need … pencils.</div>
+    <div class="opts">
+      <button class="opt-btn" onclick="pick(this,'p4q3','A')"><span class="opt-circ">A</span>some</button>
+      <button class="opt-btn" onclick="pick(this,'p4q3','B')"><span class="opt-circ">B</span>any</button>
+    </div>
+    <div class="feedback" id="fb-p4q3"></div>
+  </div>
+
+  <div class="pcard">
+    <div class="q-label">Câu 4 · a few / a little</div>
+    <div class="q-text">Câu nào đúng?</div>
+    <div class="opts">
+      <button class="opt-btn" onclick="pick(this,'p4q4','A')"><span class="opt-circ">A</span>I can speak a few Spanish.</button>
+      <button class="opt-btn" onclick="pick(this,'p4q4','B')"><span class="opt-circ">B</span>I can speak a little Spanish.</button>
+    </div>
+    <div class="feedback" id="fb-p4q4"></div>
+  </div>
+
+  <div class="pcard">
+    <div class="q-label">Câu 5 · Sửa lỗi</div>
+    <div class="q-text">Viết lại câu đúng: <em>"I'd like any water, please."</em></div>
+    <input type="text" class="fill-input" id="p4q5" placeholder="Viết lại câu đúng..." autocomplete="off"/>
+    <div class="ans-hint" id="p4q5-hint">✓ Đáp án: I'd like some water, please.</div>
+  </div>
+
+  <div class="pcard">
+    <div class="q-label">Câu 6 · many / much</div>
+    <div class="q-text">Sửa lỗi sai: <em>"We won't have much friends in the States."</em></div>
+    <div class="opts">
+      <button class="opt-btn" onclick="pick(this,'p4q6','A')"><span class="opt-circ">A</span>much → many</button>
+      <button class="opt-btn" onclick="pick(this,'p4q6','B')"><span class="opt-circ">B</span>much → little</button>
+      <button class="opt-btn" onclick="pick(this,'p4q6','C')"><span class="opt-circ">C</span>Câu đúng, không cần sửa</button>
+    </div>
+    <div class="feedback" id="fb-p4q6"></div>
+  </div>
+
+  <div class="pcard">
+    <div class="q-label">Câu 7 · Tình huống</div>
+    <div class="q-text">Tình huống: Mr. James có tính tình xấu, la hét mọi người. Câu nào đúng?</div>
+    <div class="opts">
+      <button class="opt-btn" onclick="pick(this,'p4q7','A')"><span class="opt-circ">A</span>A few people like working for him. (một vài người thích)</button>
+      <button class="opt-btn" onclick="pick(this,'p4q7','B')"><span class="opt-circ">B</span>Few people like working for him. (hầu như không ai thích)</button>
+    </div>
+    <div class="feedback" id="fb-p4q7"></div>
+  </div>
+
+  <div class="score-row" id="score-s4">
+    <div><div class="score-display" id="sd-s4">— <span>/ 7 câu</span></div><div class="progress-bar"><div class="progress-fill pf-s4" id="pb-s4" style="width:0%"></div></div></div>
+    <div class="score-msg-text" id="sm-s4">Hoàn thành bài rồi chấm điểm nhé!</div>
+    <div class="score-btns">
+      <button class="btn-check b-s4-check" id="chk-s4" onclick="checkSection(4)">Chấm bài</button>
+      <button class="btn-reset" onclick="resetSection(4)">Làm lại</button>
+    </div>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<script>
+// ===== ANSWERS =====
+const ANS = {
+  // S1
+  p1q1:'A', p1q2:'C', p1q3:'pack', p1q4:'B', p1q5:'Abstract Nouns', p1q6:'swarm', p1q7:'doll',
+  // S2
+  p2q1:'B', p2q2:'geese', p2q3:'B', p2q4:'B', p2q5:'B', p2q6:'students', p2q7:'sandwiches',
+  // S3
+  p3q1:'A', p3q2:'B', p3q3:"my grandparents' garden", p3q4:"the mechanic's tools were heavy.", p3q5:"a week's holiday", p3q6:'A', p3q7:"what size is the computer?",
+  // S4
+  p4q1:'B', p4q2:'those', p4q3:'B', p4q4:'B', p4q5:"i'd like some water, please.", p4q6:'A', p4q7:'B',
+};
+
+const MSGS = [
+  {min:7,msg:'🎉 Xuất sắc! Nắm vững rồi!'},
+  {min:5,msg:'👍 Tốt lắm! Xem lại câu sai nhé!'},
+  {min:3,msg:'💪 Cần ôn thêm một chút!'},
+  {min:0,msg:'📚 Hãy đọc kỹ lý thuyết và thử lại!'},
+];
+
+const userAns = {};
+const SECTIONS = {
+  1: ['p1q1','p1q2','p1q3','p1q4','p1q5','p1q6','p1q7'],
+  2: ['p2q1','p2q2','p2q3','p2q4','p2q5','p2q6','p2q7'],
+  3: ['p3q1','p3q2','p3q3','p3q4','p3q5','p3q6','p3q7'],
+  4: ['p4q1','p4q2','p4q3','p4q4','p4q5','p4q6','p4q7'],
+};
+
+function norm(s){ return (s||'').trim().toLowerCase().replace(/\s+/g,' ').replace(/['']/g,"'"); }
+
+// Tab switching
+function switchTab(n) {
+  document.querySelectorAll('.section-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('panel-'+n).classList.add('active');
+  document.querySelector(`.nav-tab[data-s="${n}"]`).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// Theory accordion
+function toggleTheory(head) {
+  const body = head.nextElementSibling;
+  const isOpen = body.classList.contains('open');
+  head.classList.toggle('open', !isOpen);
+  head.querySelector('.chevron').classList.toggle('open', !isOpen);
+  body.classList.toggle('open', !isOpen);
+}
+
+// Pick MC
+function pick(btn, qid, val) {
+  btn.closest('.pcard').querySelectorAll('.opt-btn').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  userAns[qid] = val;
+}
+
+// Check section
+function checkSection(s) {
+  let correct = 0;
+  const qs = SECTIONS[s];
+  qs.forEach(qid => {
+    const ans = ANS[qid];
+    const el = document.getElementById(qid);
+    // MC / select
+    const card = el ? el.closest('.pcard') : null;
+    if (el && el.tagName === 'INPUT') {
+      const v = norm(el.value);
+      const a = norm(ans);
+      const ok = v === a;
+      if (ok) correct++;
+      el.classList.remove('correct','wrong');
+      el.classList.add(ok?'correct':'wrong');
+      el.disabled = true;
+      const hint = document.getElementById(qid+'-hint');
+      if (hint && !ok) hint.classList.add('show');
+    } else if (el && el.tagName === 'SELECT') {
+      const ok = el.value === ans;
+      if (ok) correct++;
+      el.classList.remove('correct','wrong');
+      el.classList.add(ok?'correct':'wrong');
+      el.disabled = true;
+      const hint = document.getElementById(qid+'-hint');
+      if (hint && !ok) hint.classList.add('show');
+    } else {
+      // MC via buttons
+      const pcard = document.querySelector(`#fb-${qid}`)?.closest('.pcard');
+      if (!pcard) return;
+      const user = userAns[qid];
+      const ok = user === ans;
+      if (ok) correct++;
+      const btns = pcard.querySelectorAll('.opt-btn');
+      const letters = ['A','B','C','D'];
+      btns.forEach((b,i) => {
+        b.disabled = true;
+        if (letters[i] === ans) b.classList.add('correct');
+        else if (letters[i] === user && !ok) b.classList.add('wrong');
+      });
+      const fb = document.getElementById('fb-'+qid);
+      if (fb) { fb.textContent = ok?'✓ Chính xác!':'✗ Sai! Đáp án: '+ans; fb.className = `feedback show ${ok?'correct':'wrong'}`; }
+    }
+  });
+  const pct = Math.round(correct/qs.length*100);
+  document.getElementById('sd-s'+s).innerHTML = `${correct} <span>/ ${qs.length} câu</span>`;
+  document.getElementById('pb-s'+s).style.width = pct+'%';
+  const msg = MSGS.find(m=>correct>=m.min).msg;
+  document.getElementById('sm-s'+s).textContent = msg;
+  document.getElementById('chk-s'+s).disabled = true;
+}
+
+// Reset section
+function resetSection(s) {
+  const qs = SECTIONS[s];
+  qs.forEach(qid => {
+    const el = document.getElementById(qid);
+    if (el && (el.tagName==='INPUT'||el.tagName==='SELECT')) {
+      el.value=''; el.disabled=false;
+      el.classList.remove('correct','wrong');
+      const hint = document.getElementById(qid+'-hint');
+      if (hint) hint.classList.remove('show');
+    }
+    // MC
+    const pcard = document.querySelector(`#fb-${qid}`)?.closest('.pcard');
+    if (pcard) {
+      pcard.querySelectorAll('.opt-btn').forEach(b=>{ b.disabled=false; b.classList.remove('sel','correct','wrong'); });
+      const fb = document.getElementById('fb-'+qid);
+      if (fb) { fb.className='feedback'; fb.textContent=''; }
+    }
+    delete userAns[qid];
+  });
+  document.getElementById('sd-s'+s).innerHTML = `— <span>/ ${qs.length} câu</span>`;
+  document.getElementById('pb-s'+s).style.width = '0%';
+  document.getElementById('sm-s'+s).textContent = 'Hoàn thành bài rồi chấm điểm nhé!';
+  document.getElementById('chk-s'+s).disabled = false;
+}
+
+// Open first theory by default
+document.querySelectorAll('.theory-head').forEach(h => {
+  if (!h.classList.contains('open')) {
+    h.nextElementSibling.style.maxHeight = '0';
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📚 Danh Từ Tiếng Anh – Ôn Tập Ngữ Pháp</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f0e17;
+    --surface: #1a1929;
+    --card: #211f35;
+    --border: #2e2b4a;
+    --accent: #e94560;
+    --accent2: #f5a623;
+    --accent3: #4ecdc4;
+    --accent4: #a29bfe;
+    --text: #ede8f5;
+    --muted: #7c7a9a;
+    --success: #55efc4;
+    --error: #ff6b6b;
+    --warn: #ffeaa7;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Background noise */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* Header */
+  header {
+    position: relative;
+    padding: 2.5rem 2rem 2rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(180deg, rgba(233,69,96,0.08) 0%, transparent 100%);
+  }
+
+  header .badge {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 0.2rem 0.8rem;
+    border-radius: 20px;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+  }
+
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    background: linear-gradient(135deg, #ede8f5 0%, #a29bfe 50%, #e94560 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+  }
+
+  header p {
+    color: var(--muted);
+    font-size: 1rem;
+    font-weight: 300;
+  }
+
+  /* Nav tabs */
+  .nav-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(15,14,23,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 1.5rem;
+    display: flex;
+    gap: 0.25rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .nav-wrap::-webkit-scrollbar { display: none; }
+
+  .nav-tab {
+    flex-shrink: 0;
+    padding: 1rem 1.25rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+    letter-spacing: 0.02em;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+  }
+
+  .nav-tab:hover { color: var(--text); }
+  .nav-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* Main layout */
+  main { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem; position: relative; z-index: 1; }
+
+  section { display: none; animation: fadeUp 0.35s ease; }
+  section.active { display: block; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Section title */
+  .sec-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+  }
+  .sec-sub { color: var(--muted); font-size: 0.9rem; margin-bottom: 2rem; }
+
+  /* Theory cards */
+  .theory-grid { display: grid; gap: 1rem; }
+
+  .theory-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .theory-card:hover {
+    border-color: var(--accent4);
+    transform: translateY(-2px);
+  }
+
+  .theory-card .card-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent4);
+    background: rgba(162,155,254,0.1);
+    padding: 0.25rem 0.7rem;
+    border-radius: 6px;
+    margin-bottom: 0.75rem;
+  }
+
+  .theory-card h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+  }
+
+  .theory-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.65; margin-bottom: 0.6rem; }
+
+  .example-box {
+    background: rgba(78,205,196,0.06);
+    border-left: 3px solid var(--accent3);
+    padding: 0.6rem 0.9rem;
+    border-radius: 0 8px 8px 0;
+    font-size: 0.88rem;
+    color: var(--accent3);
+    font-style: italic;
+    margin-top: 0.5rem;
+  }
+
+  /* Tag cloud */
+  .tag-list { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.75rem; }
+
+  .tag {
+    background: rgba(233,69,96,0.1);
+    border: 1px solid rgba(233,69,96,0.25);
+    color: var(--accent);
+    font-size: 0.82rem;
+    padding: 0.3rem 0.75rem;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+
+  .tag.green { background: rgba(85,239,196,0.1); border-color: rgba(85,239,196,0.25); color: var(--success); }
+  .tag.yellow { background: rgba(245,166,35,0.1); border-color: rgba(245,166,35,0.25); color: var(--accent2); }
+  .tag.purple { background: rgba(162,155,254,0.1); border-color: rgba(162,155,254,0.25); color: var(--accent4); }
+  .tag.teal { background: rgba(78,205,196,0.1); border-color: rgba(78,205,196,0.25); color: var(--accent3); }
+
+  /* Table */
+  .grammar-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+    margin-top: 1rem;
+  }
+
+  .grammar-table th {
+    background: rgba(162,155,254,0.12);
+    color: var(--accent4);
+    padding: 0.7rem 1rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .grammar-table td {
+    padding: 0.65rem 1rem;
+    border-bottom: 1px solid rgba(46,43,74,0.5);
+    color: var(--muted);
+    vertical-align: top;
+  }
+
+  .grammar-table tr:last-child td { border-bottom: none; }
+  .grammar-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .grammar-table td strong { color: var(--text); }
+  .grammar-table td em { color: var(--accent3); font-style: normal; font-size: 0.83rem; }
+
+  /* Formula box */
+  .formula-box {
+    background: linear-gradient(135deg, rgba(233,69,96,0.08), rgba(162,155,254,0.08));
+    border: 1px solid rgba(162,155,254,0.3);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    color: var(--accent4);
+    margin: 0.75rem 0;
+    text-align: center;
+  }
+
+  /* Quiz section */
+  .quiz-controls {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+    align-items: center;
+  }
+
+  .btn {
+    padding: 0.65rem 1.4rem;
+    border-radius: 10px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    letter-spacing: 0.02em;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: white;
+  }
+  .btn-primary:hover { background: #c73652; transform: translateY(-1px); }
+
+  .btn-secondary {
+    background: var(--card);
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-secondary:hover { border-color: var(--accent4); color: var(--accent4); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid var(--border);
+  }
+  .btn-ghost:hover { color: var(--text); border-color: var(--muted); }
+
+  /* Score display */
+  .score-bar {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 0.9rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .score-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent);
+    min-width: 60px;
+  }
+
+  .score-info { flex: 1; }
+  .score-info p { font-size: 0.8rem; color: var(--muted); }
+  .score-info strong { font-size: 1rem; color: var(--text); }
+
+  .progress-track {
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-top: 0.4rem;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent4));
+    border-radius: 3px;
+    transition: width 0.5s ease;
+  }
+
+  /* Question card */
+  .q-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.75rem;
+    margin-bottom: 1rem;
+    transition: border-color 0.3s;
+  }
+
+  .q-card.correct { border-color: var(--success); background: rgba(85,239,196,0.04); }
+  .q-card.wrong { border-color: var(--error); background: rgba(255,107,107,0.04); }
+
+  .q-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 0.6rem;
+  }
+
+  .q-text {
+    font-size: 1.05rem;
+    font-weight: 500;
+    line-height: 1.55;
+    margin-bottom: 1.25rem;
+    color: var(--text);
+  }
+
+  .q-text .blank {
+    display: inline-block;
+    min-width: 80px;
+    height: 2px;
+    background: var(--accent4);
+    vertical-align: bottom;
+    margin: 0 4px;
+  }
+
+  .options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+  }
+
+  @media (max-width: 500px) { .options-grid { grid-template-columns: 1fr; } }
+
+  .option-btn {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    font-size: 0.88rem;
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.18s;
+    text-align: left;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .option-btn .opt-letter {
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    background: var(--border);
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.18s;
+  }
+
+  .option-btn:hover:not(:disabled) {
+    border-color: var(--accent4);
+    background: rgba(162,155,254,0.06);
+  }
+
+  .option-btn:hover:not(:disabled) .opt-letter {
+    background: var(--accent4);
+    color: var(--bg);
+  }
+
+  .option-btn.selected { border-color: var(--accent4); background: rgba(162,155,254,0.1); }
+  .option-btn.selected .opt-letter { background: var(--accent4); color: var(--bg); }
+
+  .option-btn.correct-ans {
+    border-color: var(--success) !important;
+    background: rgba(85,239,196,0.1) !important;
+    color: var(--success) !important;
+  }
+  .option-btn.correct-ans .opt-letter { background: var(--success) !important; color: var(--bg) !important; }
+
+  .option-btn.wrong-ans {
+    border-color: var(--error) !important;
+    background: rgba(255,107,107,0.1) !important;
+    color: var(--error) !important;
+  }
+  .option-btn.wrong-ans .opt-letter { background: var(--error) !important; color: white !important; }
+
+  .option-btn:disabled { cursor: default; }
+
+  .q-feedback {
+    margin-top: 0.85rem;
+    padding: 0.65rem 0.9rem;
+    border-radius: 8px;
+    font-size: 0.84rem;
+    line-height: 1.5;
+    display: none;
+  }
+
+  .q-feedback.show { display: block; }
+  .q-feedback.correct-fb { background: rgba(85,239,196,0.08); color: var(--success); border-left: 3px solid var(--success); }
+  .q-feedback.wrong-fb { background: rgba(255,107,107,0.08); color: var(--error); border-left: 3px solid var(--error); }
+
+  /* Flashcard */
+  .flashcard-wrap { perspective: 1000px; margin-bottom: 1.5rem; }
+
+  .flashcard {
+    width: 100%;
+    height: 200px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.5s ease;
+    cursor: pointer;
+  }
+
+  .flashcard.flipped { transform: rotateY(180deg); }
+
+  .flashcard-face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .flashcard-face.back { transform: rotateY(180deg); border-color: var(--accent3); }
+
+  .flashcard-face .fc-hint {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  .flashcard-face .fc-word {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.4rem;
+  }
+
+  .flashcard-face.back .fc-word { color: var(--accent3); }
+  .flashcard-face .fc-sub { color: var(--muted); font-size: 0.9rem; }
+
+  .fc-nav { display: flex; justify-content: center; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
+  .fc-count { font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: var(--muted); }
+
+  /* Result modal */
+  .result-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(8px);
+    z-index: 500;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+
+  .result-overlay.show { display: flex; }
+
+  .result-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 2.5rem;
+    max-width: 420px;
+    width: 100%;
+    text-align: center;
+    animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  @keyframes popIn {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .result-emoji { font-size: 4rem; margin-bottom: 1rem; }
+  .result-score { font-family: 'Playfair Display', serif; font-size: 3.5rem; font-weight: 900; color: var(--accent); }
+  .result-label { color: var(--muted); margin-bottom: 1.5rem; }
+  .result-msg { font-size: 1rem; color: var(--text); margin-bottom: 2rem; line-height: 1.6; }
+  .result-actions { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
+
+  /* Divider */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+
+  /* Info callout */
+  .callout {
+    background: rgba(245,166,35,0.06);
+    border: 1px solid rgba(245,166,35,0.2);
+    border-radius: 10px;
+    padding: 0.9rem 1.1rem;
+    font-size: 0.88rem;
+    color: var(--accent2);
+    margin: 1rem 0;
+    line-height: 1.55;
+  }
+
+  .callout strong { display: block; margin-bottom: 0.25rem; }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    main { padding: 1.5rem 1rem; }
+    .quiz-controls { flex-direction: column; align-items: stretch; }
+    .quiz-controls .btn { text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="badge">📖 Ngữ pháp tiếng Anh</div>
+  <h1>Danh Từ (Nouns)</h1>
+  <p>Lý thuyết tổng hợp · Ví dụ sinh động · Bài tập tương tác</p>
+</header>
+
+<div class="nav-wrap">
+  <button class="nav-tab active" onclick="showSection('theory')">📚 Lý thuyết</button>
+  <button class="nav-tab" onclick="showSection('collective')">🐺 Danh từ tập hợp</button>
+  <button class="nav-tab" onclick="showSection('countable')">🔢 Đếm được / Không đếm được</button>
+  <button class="nav-tab" onclick="showSection('plural')">📝 Số nhiều</button>
+  <button class="nav-tab" onclick="showSection('possessive')">🔑 Sở hữu cách</button>
+  <button class="nav-tab" onclick="showSection('determiners')">🎯 Hạn định từ</button>
+  <button class="nav-tab" onclick="showSection('flashcard')">🃏 Flashcard</button>
+  <button class="nav-tab" onclick="showSection('quiz')">✏️ Bài tập</button>
+</div>
+
+<main>
+
+<!-- ===================== LÝ THUYẾT ===================== -->
+<section id="theory" class="active">
+  <div class="sec-title">1. Phân loại Danh từ</div>
+  <div class="sec-sub">Tiếng Anh chia danh từ thành 4 loại chính</div>
+
+  <div class="theory-grid">
+
+    <div class="theory-card">
+      <span class="card-label">1.1</span>
+      <h3>Common Nouns – Danh từ chung</h3>
+      <p>Chỉ người, vật, nơi chốn, hay ý niệm <em>không</em> cụ thể. Không viết hoa.</p>
+      <div class="tag-list">
+        <span class="tag">Người: teacher, doctor, student</span>
+        <span class="tag">Đồ vật: book, phone, table</span>
+        <span class="tag">Con vật: cat, bird, fish</span>
+        <span class="tag">Nơi chốn: city, school, park</span>
+      </div>
+      <div class="example-box">🔸 The <strong>teacher</strong> gave the <strong>students</strong> a <strong>book</strong> to read at the <strong>library</strong>.</div>
+    </div>
+
+    <div class="theory-card">
+      <span class="card-label" style="color:var(--accent2);background:rgba(245,166,35,0.1)">1.2</span>
+      <h3>Proper Nouns – Danh từ riêng</h3>
+      <p>Chỉ người, địa danh, tổ chức... cụ thể. <strong>Luôn viết hoa chữ cái đầu.</strong></p>
+      <div class="tag-list">
+        <span class="tag yellow">Tên người: Alice, Mr. Smith</span>
+        <span class="tag yellow">Ngày tháng: Monday, January</span>
+        <span class="tag yellow">Địa danh: Vietnam, London</span>
+        <span class="tag yellow">Ngôn ngữ: English, French</span>
+        <span class="tag yellow">Lễ: Christmas, Tet Holiday</span>
+      </div>
+      <div class="example-box">🔸 <strong>Alice</strong> flew to <strong>Paris</strong> on <strong>Monday</strong>, the first day of <strong>January</strong>.</div>
+    </div>
+
+    <div class="theory-card">
+      <span class="card-label" style="color:var(--accent3);background:rgba(78,205,196,0.1)">1.3</span>
+      <h3>Abstract Nouns – Danh từ trừu tượng</h3>
+      <p>Chỉ cảm xúc, khái niệm, phẩm chất – những thứ <em>không nhìn thấy, không chạm được</em>.</p>
+      <div class="tag-list">
+        <span class="tag teal">Cảm xúc: love, fear, joy</span>
+        <span class="tag teal">Lý tưởng: freedom, justice</span>
+        <span class="tag teal">Khái niệm: time, education</span>
+        <span class="tag teal">Phẩm chất: honesty, courage</span>
+      </div>
+      <div class="example-box">🔸 Her <strong>courage</strong> and <strong>honesty</strong> earned everyone's <strong>respect</strong>.</div>
+    </div>
+
+    <div class="theory-card">
+      <span class="card-label" style="color:var(--success);background:rgba(85,239,196,0.1)">1.4</span>
+      <h3>Collective Nouns – Danh từ tập hợp</h3>
+      <p>Chỉ một <em>nhóm</em> người, động vật, hoặc đồ vật. Động từ dùng <strong>số ít</strong> (trừ khi nhấn mạnh từng cá thể).</p>
+      <div class="formula-box">A + Collective Noun + of + Noun (số nhiều) → Verb (số ít)</div>
+      <div class="example-box">🔸 A <strong>flock</strong> of birds <u>is</u> flying south. &nbsp;|&nbsp; The <strong>team</strong> <u>was</u> celebrating.</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===================== COLLECTIVE NOUNS ===================== -->
+<section id="collective">
+  <div class="sec-title">Danh từ tập hợp chi tiết</div>
+  <div class="sec-sub">Phân loại theo nhóm con vật, con người, và đồ vật</div>
+
+  <div class="theory-card" style="margin-bottom:1rem">
+    <span class="card-label" style="color:var(--accent);background:rgba(233,69,96,0.1)">Nhóm 1</span>
+    <h3>🐟 Con vật – Dưới nước & Trên không</h3>
+    <table class="grammar-table">
+      <thead><tr><th>Từ</th><th>Ý nghĩa</th><th>Ví dụ</th></tr></thead>
+      <tbody>
+        <tr><td><strong>pod</strong></td><td>Đàn động vật có vú dưới nước (cá voi, cá heo)</td><td><em>A pod of dolphins</em></td></tr>
+        <tr><td><strong>school / shoal</strong></td><td>Đàn cá nói chung</td><td><em>A school of tuna</em></td></tr>
+        <tr><td><strong>flock</strong></td><td>Đàn chim hoặc đàn cừu/dê</td><td><em>A flock of birds/sheep</em></td></tr>
+        <tr><td><strong>gaggle</strong></td><td>Đàn ngỗng đang ở dưới đất</td><td><em>A gaggle of geese</em></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="theory-card" style="margin-bottom:1rem">
+    <span class="card-label" style="color:var(--accent2);background:rgba(245,166,35,0.1)">Nhóm 2</span>
+    <h3>🦁 Con vật – Săn mồi & Gia đình</h3>
+    <table class="grammar-table">
+      <thead><tr><th>Từ</th><th>Ý nghĩa</th><th>Ví dụ</th></tr></thead>
+      <tbody>
+        <tr><td><strong>pride</strong></td><td>Đàn sư tử ("pride" = niềm tự hào)</td><td><em>A pride of lions</em></td></tr>
+        <tr><td><strong>pack</strong></td><td>Bầy chó săn, sói</td><td><em>A pack of wolves</em></td></tr>
+        <tr><td><strong>litter</strong></td><td>Một lứa thú con mới sinh</td><td><em>A litter of puppies</em></td></tr>
+        <tr><td><strong>brood</strong></td><td>Một lứa gà con / chim non</td><td><em>A brood of chicks</em></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="theory-card" style="margin-bottom:1rem">
+    <span class="card-label" style="color:var(--accent3);background:rgba(78,205,196,0.1)">Nhóm 3</span>
+    <h3>🐘 Con vật – Ăn cỏ & Côn trùng</h3>
+    <table class="grammar-table">
+      <thead><tr><th>Từ</th><th>Ý nghĩa</th><th>Ví dụ</th></tr></thead>
+      <tbody>
+        <tr><td><strong>herd</strong></td><td>Đàn động vật ăn cỏ lớn (bò, voi, hươu)</td><td><em>A herd of elephants</em></td></tr>
+        <tr><td><strong>swarm</strong></td><td>Đàn côn trùng đang bay (ong, mối, châu chấu)</td><td><em>A swarm of bees</em></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="theory-card" style="margin-bottom:1rem">
+    <span class="card-label" style="color:var(--accent4);background:rgba(162,155,254,0.1)">Nhóm 4</span>
+    <h3>👥 Con người – Công việc & Tổ chức</h3>
+    <table class="grammar-table">
+      <thead><tr><th>Từ</th><th>Ý nghĩa</th><th>Ví dụ</th></tr></thead>
+      <tbody>
+        <tr><td><strong>team</strong></td><td>Đội, nhóm làm việc / chơi thể thao</td><td><em>The team won the match</em></td></tr>
+        <tr><td><strong>committee</strong></td><td>Ủy ban (nhóm được chọn để quyết định)</td><td><em>The committee has decided</em></td></tr>
+        <tr><td><strong>staff</strong></td><td>Đội ngũ nhân viên</td><td><em>The staff is working hard</em></td></tr>
+        <tr><td><strong>board</strong></td><td>Hội đồng (Board of Directors – Hội đồng quản trị)</td><td><em>The board approved the plan</em></td></tr>
+        <tr><td><strong>panel</strong></td><td>Ban chuyên gia / hội đồng giám khảo</td><td><em>A panel of judges</em></td></tr>
+        <tr><td><strong>company</strong></td><td>Công ty, hoặc một toán quân, một đoàn kịch</td><td><em>A company of soldiers</em></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="theory-card" style="margin-bottom:1rem">
+    <span class="card-label" style="color:var(--accent2);background:rgba(245,166,35,0.1)">Nhóm 5</span>
+    <h3>🎭 Con người – Nghệ thuật & Biểu diễn</h3>
+    <table class="grammar-table">
+      <thead><tr><th>Từ</th><th>Ý nghĩa</th><th>Ví dụ</th></tr></thead>
+      <tbody>
+        <tr><td><strong>choir</strong></td><td>Dàn đồng ca</td><td><em>The choir sang beautifully</em></td></tr>
+        <tr><td><strong>orchestra</strong></td><td>Dàn nhạc giao hưởng</td><td><em>The orchestra performed Mozart</em></td></tr>
+        <tr><td><strong>troupe</strong></td><td>Đoàn nghệ sĩ (kịch, xiếc lưu diễn)</td><td><em>A troupe of actors</em></td></tr>
+        <tr><td><strong>audience</strong></td><td>Khán giả (xem phim, kịch, nghe nhạc)</td><td><em>The audience applauded loudly</em></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="theory-card" style="margin-bottom:1rem">
+    <span class="card-label" style="color:var(--accent3);background:rgba(78,205,196,0.1)">Nhóm 6</span>
+    <h3>🏘️ Con người – Xã hội & Đời sống</h3>
+    <table class="grammar-table">
+      <thead><tr><th>Từ</th><th>Ý nghĩa</th><th>Ví dụ</th></tr></thead>
+      <tbody>
+        <tr><td><strong>family</strong></td><td>Gia đình</td><td><em>My family lives in Hanoi</em></td></tr>
+        <tr><td><strong>class</strong></td><td>Lớp học</td><td><em>The class is studying grammar</em></td></tr>
+        <tr><td><strong>crowd</strong></td><td>Đám đông (thường không có tổ chức)</td><td><em>A crowd of people gathered</em></td></tr>
+        <tr><td><strong>gang</strong></td><td>Băng nhóm (tiêu cực) hoặc nhóm bạn thân</td><td><em>A gang of thieves</em></td></tr>
+        <tr><td><strong>group</strong></td><td>Nhóm (từ chung nhất cho tập hợp người/vật)</td><td><em>A group of students</em></td></tr>
+        <tr><td><strong>crew</strong></td><td>Phi hành đoàn, thủy thủ đoàn, nhóm kỹ thuật</td><td><em>The crew of the flight</em></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="theory-card">
+    <span class="card-label" style="color:var(--success);background:rgba(85,239,196,0.1)">Nhóm 7</span>
+    <h3>📦 Đồ vật – Nhóm và sắp xếp</h3>
+    <table class="grammar-table">
+      <thead><tr><th>Từ</th><th>Ý nghĩa</th><th>Dùng cho</th></tr></thead>
+      <tbody>
+        <tr><td><strong>bunch</strong></td><td>Chùm, bó</td><td><em>flowers, keys, grapes, bananas</em></td></tr>
+        <tr><td><strong>pile</strong></td><td>Chồng, đống (xếp gọn)</td><td><em>books, clothes, papers</em></td></tr>
+        <tr><td><strong>heap</strong></td><td>Đống (lộn xộn)</td><td><em>rubbish, sand, stones</em></td></tr>
+        <tr><td><strong>set</strong></td><td>Bộ (các vật đi cùng nhau)</td><td><em>tools, rules, a dinner set</em></td></tr>
+        <tr><td><strong>series</strong></td><td>Chuỗi, loạt (theo trình tự)</td><td><em>events, TV series, lectures</em></td></tr>
+        <tr><td><strong>collection</strong></td><td>Bộ sưu tập</td><td><em>stamps, paintings, data</em></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ===================== ĐẾM ĐƯỢC / KHÔNG ĐẾM ĐƯỢC ===================== -->
+<section id="countable">
+  <div class="sec-title">Danh từ đếm được & Không đếm được</div>
+  <div class="sec-sub">Countable Nouns vs Uncountable Nouns – Điểm khác biệt cốt lõi</div>
+
+  <div class="theory-grid">
+
+    <div class="theory-card">
+      <span class="card-label" style="color:var(--accent4);background:rgba(162,155,254,0.1)">Countable</span>
+      <h3>🔢 Danh từ đếm được</h3>
+      <p>Là những danh từ có thể <strong>đếm được bằng số</strong>. Có cả dạng <strong>số ít</strong> và <strong>số nhiều</strong>.</p>
+      <div class="tag-list">
+        <span class="tag purple">Số ít: a/an + N → a cat, an apple</span>
+        <span class="tag purple">Số nhiều: N + s/es → cats, apples</span>
+        <span class="tag purple">Dùng được: one, two, three…</span>
+        <span class="tag purple">Dùng được: a few, many, several</span>
+      </div>
+      <div class="example-box">
+        🔸 I have <strong>a dog</strong>. &nbsp;|&nbsp; She bought <strong>three apples</strong>.<br>
+        🔸 There are <strong>many students</strong> in class. &nbsp;|&nbsp; I need <strong>a few eggs</strong>.
+      </div>
+    </div>
+
+    <div class="theory-card">
+      <span class="card-label" style="color:var(--accent);background:rgba(233,69,96,0.1)">Uncountable</span>
+      <h3>🚫 Danh từ không đếm được</h3>
+      <p>Là những danh từ <strong>không thể đếm trực tiếp</strong>. Chỉ tồn tại ở dạng <strong>số ít</strong> – KHÔNG có số nhiều. Không dùng <em>a/an</em> trực tiếp trước danh từ này.</p>
+      <div class="tag-list">
+        <span class="tag">❌ Không có: waters, rices, musics</span>
+        <span class="tag">❌ Không dùng: a water, a music</span>
+        <span class="tag">✅ Dùng được: some, any, much, a little</span>
+        <span class="tag">✅ Dùng được: a glass of, a cup of…</span>
+      </div>
+      <div class="example-box">
+        🔸 I need <strong>some water</strong>. ✅ &nbsp;|&nbsp; I need <strong>a water</strong>. ❌<br>
+        🔸 She listens to <strong>music</strong> every day. ✅ &nbsp;|&nbsp; <strong>musics</strong> ❌<br>
+        🔸 Động từ luôn chia số ÍT: <u>Water <strong>is</strong> essential</u>. ✅
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="divider">
+
+  <div class="theory-card" style="margin-bottom:1rem">
+    <h3>📂 Các nhóm danh từ không đếm được thường gặp</h3>
+    <table class="grammar-table">
+      <thead><tr><th>Nhóm</th><th>Ví dụ</th><th>Cách dùng đúng</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Chất lỏng</strong></td><td>water, milk, juice, oil, blood</td><td><em>a glass of water, some milk</em></td></tr>
+        <tr><td><strong>Thực phẩm dạng khối/bột</strong></td><td>rice, bread, cheese, butter, sugar, salt, flour</td><td><em>some rice, a loaf of bread, a slice of cheese</em></td></tr>
+        <tr><td><strong>Khí, vật liệu</strong></td><td>air, oxygen, wood, metal, glass, paper, plastic</td><td><em>some wood, a sheet of paper</em></td></tr>
+        <tr><td><strong>Môn học / lĩnh vực</strong></td><td>music, art, history, mathematics, science, English</td><td><em>She loves music. He studies history.</em></td></tr>
+        <tr><td><strong>Khái niệm trừu tượng</strong></td><td>love, happiness, freedom, knowledge, advice, information, news</td><td><em>some advice, good news</em></td></tr>
+        <tr><td><strong>Thời tiết / hiện tượng</strong></td><td>rain, snow, wind, thunder, lightning, sunshine</td><td><em>The rain is heavy. There is sunshine.</em></td></tr>
+        <tr><td><strong>Hoạt động / trạng thái</strong></td><td>homework, work, fun, luck, traffic, money, time</td><td><em>much homework, a lot of traffic</em></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="theory-card" style="margin-bottom:1rem">
+    <h3>⚠️ Danh từ vừa đếm được vừa không đếm được</h3>
+    <p style="color:var(--muted);font-size:0.9rem;margin-bottom:0.75rem">Một số danh từ <strong>thay đổi nghĩa</strong> tùy vào đếm được hay không đếm được:</p>
+    <table class="grammar-table">
+      <thead><tr><th>Từ</th><th>Không đếm được (Uncountable)</th><th>Đếm được (Countable)</th></tr></thead>
+      <tbody>
+        <tr><td><strong>glass</strong></td><td><em>glass</em> = chất liệu kính (The window is made of glass.)</td><td><em>a glass</em> = cái ly (I need a glass of water.)</td></tr>
+        <tr><td><strong>paper</strong></td><td><em>paper</em> = chất liệu giấy (I need some paper.)</td><td><em>a paper</em> = tờ báo / bài luận (I read a paper.)</td></tr>
+        <tr><td><strong>time</strong></td><td><em>time</em> = thời gian (I don't have much time.)</td><td><em>a time</em> = lần (I've been there three times.)</td></tr>
+        <tr><td><strong>hair</strong></td><td><em>hair</em> = mái tóc (Her hair is long.)</td><td><em>a hair</em> = một sợi tóc (There's a hair in my soup!)</td></tr>
+        <tr><td><strong>experience</strong></td><td><em>experience</em> = kinh nghiệm (She has experience.)</td><td><em>an experience</em> = một trải nghiệm (It was a great experience.)</td></tr>
+        <tr><td><strong>work</strong></td><td><em>work</em> = công việc (I have a lot of work.)</td><td><em>a work</em> = tác phẩm (This is a work of art.)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="theory-card">
+    <h3>🎯 Bảng so sánh lượng từ theo loại danh từ</h3>
+    <table class="grammar-table">
+      <thead><tr><th>Lượng từ</th><th>Đếm được (số nhiều)</th><th>Không đếm được</th><th>Cả hai</th></tr></thead>
+      <tbody>
+        <tr><td><strong>some / any</strong></td><td>some apples ✅</td><td>some water ✅</td><td>✅ cả hai</td></tr>
+        <tr><td><strong>many</strong></td><td>many books ✅</td><td>many water ❌</td><td>❌ chỉ đếm được</td></tr>
+        <tr><td><strong>much</strong></td><td>much books ❌</td><td>much water ✅</td><td>❌ chỉ không đếm được</td></tr>
+        <tr><td><strong>a few</strong></td><td>a few cats ✅</td><td>a few music ❌</td><td>❌ chỉ đếm được</td></tr>
+        <tr><td><strong>a little</strong></td><td>a little cats ❌</td><td>a little milk ✅</td><td>❌ chỉ không đếm được</td></tr>
+        <tr><td><strong>a lot of</strong></td><td>a lot of cars ✅</td><td>a lot of rice ✅</td><td>✅ cả hai</td></tr>
+        <tr><td><strong>a/an</strong></td><td>a dog ✅</td><td>a music ❌</td><td>❌ chỉ đếm được số ít</td></tr>
+      </tbody>
+    </table>
+    <div class="callout" style="margin-top:1rem">
+      <strong>💡 Quy tắc vàng:</strong> Danh từ không đếm được → động từ luôn ở số ÍT, không có mạo từ a/an, không thêm -s/-es.<br>
+      <em>Water <strong>is</strong> life. &nbsp;|&nbsp; The news <strong>was</strong> surprising. &nbsp;|&nbsp; Information <strong>is</strong> power.</em>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SỐ NHIỀU ===================== -->
+<section id="plural">
+  <div class="sec-title">Quy tắc thêm -s / -es</div>
+  <div class="sec-sub">Hình thành số nhiều của danh từ</div>
+
+  <div class="theory-card" style="margin-bottom:1rem">
+    <h3>Quy tắc chung</h3>
+    <table class="grammar-table">
+      <thead><tr><th>Trường hợp</th><th>Quy tắc</th><th>Ví dụ</th></tr></thead>
+      <tbody>
+        <tr><td>Đa số danh từ</td><td>Thêm <strong>-s</strong></td><td><em>cat → cats, book → books</em></td></tr>
+        <tr><td>Tận cùng: ch, sh, x, z, s, o</td><td>Thêm <strong>-es</strong></td><td><em>bus → buses, box → boxes, watch → watches</em></td></tr>
+        <tr><td>Phụ âm + y</td><td>Đổi y → <strong>-ies</strong></td><td><em>baby → babies, city → cities</em></td></tr>
+        <tr><td>Nguyên âm + y</td><td>Thêm <strong>-s</strong> (giữ y)</td><td><em>key → keys, day → days</em></td></tr>
+        <tr><td>Ngoại lệ với -o</td><td>Chỉ thêm <strong>-s</strong></td><td><em>piano → pianos, photo → photos, radio → radios</em></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="theory-card">
+    <h3>9 Danh từ bất quy tắc quan trọng</h3>
+    <table class="grammar-table">
+      <thead><tr><th>Số ít</th><th>Số nhiều</th><th>Số ít</th><th>Số nhiều</th></tr></thead>
+      <tbody>
+        <tr><td><strong>man</strong></td><td><em>men</em></td><td><strong>foot</strong></td><td><em>feet</em></td></tr>
+        <tr><td><strong>woman</strong></td><td><em>women</em></td><td><strong>goose</strong></td><td><em>geese</em></td></tr>
+        <tr><td><strong>child</strong></td><td><em>children</em></td><td><strong>tooth</strong></td><td><em>teeth</em></td></tr>
+        <tr><td><strong>ox</strong></td><td><em>oxen</em></td><td><strong>mouse</strong></td><td><em>mice</em></td></tr>
+        <tr><td><strong>louse</strong></td><td><em>lice</em></td><td></td><td></td></tr>
+      </tbody>
+    </table>
+    <div class="callout" style="margin-top:1rem">
+      <strong>💡 Mẹo nhớ:</strong> man/woman/child = người → men/women/children &nbsp;|&nbsp; oo-words: foot/goose/tooth = foot/goose/tooth → feet/geese/teeth
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SỞ HỮU CÁCH ===================== -->
+<section id="possessive">
+  <div class="sec-title">Sở hữu cách (Possessive Case)</div>
+  <div class="sec-sub">Diễn đạt quan hệ sở hữu bằng 's và s'</div>
+
+  <div class="callout">
+    <strong>⚠️ Lưu ý quan trọng:</strong> Vật, sự vật trong tiếng Anh KHÔNG dùng sở hữu cách. Dùng cấu trúc <strong>N1 of N2</strong> thay thế.<br>
+    Ví dụ: the cover of the book ✅ &nbsp;&nbsp; (không dùng: the book's cover ❌)
+  </div>
+
+  <div class="theory-grid">
+    <div class="theory-card">
+      <span class="card-label">Quy tắc 1</span>
+      <h3>N1's N2</h3>
+      <p>Dùng khi N1 là <strong>danh từ số ít</strong> hoặc số nhiều <strong>không tận cùng bằng -s/-es</strong>.</p>
+      <div class="example-box">
+        🔸 Tom<strong>'s</strong> car &nbsp;|&nbsp; the children<strong>'s</strong> toys &nbsp;|&nbsp; the men<strong>'s</strong> room
+      </div>
+    </div>
+    <div class="theory-card">
+      <span class="card-label">Quy tắc 2</span>
+      <h3>N1s' N2</h3>
+      <p>Dùng khi N1 là <strong>danh từ số nhiều tận cùng bằng -s/-es</strong>. Chỉ thêm dấu nháy đơn, không thêm -s.</p>
+      <div class="example-box">
+        🔸 the students<strong>'</strong> books &nbsp;|&nbsp; the teachers<strong>'</strong> lounge
+      </div>
+    </div>
+    <div class="theory-card">
+      <span class="card-label">Quy tắc 3</span>
+      <h3>N1 and N2's N3</h3>
+      <p><strong>Cùng sở hữu</strong> một thứ → chỉ thêm 's vào N2.</p>
+      <div class="example-box">
+        🔸 Tom and Jerry<strong>'s</strong> house (họ chung nhà)
+      </div>
+    </div>
+    <div class="theory-card">
+      <span class="card-label">Quy tắc 4</span>
+      <h3>N1's and N2's N3</h3>
+      <p><strong>Sở hữu riêng biệt</strong> → thêm 's vào cả N1 lẫn N2.</p>
+      <div class="example-box">
+        🔸 Tom<strong>'s</strong> and Jerry<strong>'s</strong> houses (mỗi người một căn)
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== DETERMINERS ===================== -->
+<section id="determiners">
+  <div class="sec-title">Hạn định từ (Determiners)</div>
+  <div class="sec-sub">Từ chỉ định & Lượng từ đi kèm danh từ</div>
+
+  <div class="theory-card" style="margin-bottom:1rem">
+    <span class="card-label">Từ chỉ định</span>
+    <h3>Demonstratives</h3>
+    <table class="grammar-table">
+      <thead><tr><th></th><th>Số ít (gần)</th><th>Số ít (xa)</th><th>Số nhiều (gần)</th><th>Số nhiều (xa)</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Từ</td>
+          <td><strong>this</strong></td>
+          <td><strong>that</strong></td>
+          <td><strong>these</strong></td>
+          <td><strong>those</strong></td>
+        </tr>
+        <tr>
+          <td>Ví dụ</td>
+          <td><em>this pen</em></td>
+          <td><em>that book</em></td>
+          <td><em>these pens</em></td>
+          <td><em>those books</em></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="example-box">🔸 <strong>This</strong> coffee is hot. <strong>That</strong> coffee over there is cold. <strong>These</strong> cookies are fresh.</div>
+  </div>
+
+  <div class="theory-card">
+    <span class="card-label">Lượng từ</span>
+    <h3>Quantifiers</h3>
+    <table class="grammar-table">
+      <thead><tr><th>Từ</th><th>Dùng với</th><th>Ý nghĩa</th><th>Ví dụ</th></tr></thead>
+      <tbody>
+        <tr><td><strong>some</strong></td><td>Câu khẳng định, đề nghị</td><td>Một số, một ít</td><td><em>I have some milk / some apples</em></td></tr>
+        <tr><td><strong>any</strong></td><td>Câu phủ định, câu hỏi</td><td>Nào, bất kỳ</td><td><em>Do you have any sugar?</em></td></tr>
+        <tr><td><strong>a little</strong></td><td>Danh từ không đếm được</td><td>Một chút</td><td><em>a little water, a little time</em></td></tr>
+        <tr><td><strong>a few</strong></td><td>Danh từ đếm được (số nhiều)</td><td>Một vài</td><td><em>a few friends, a few ideas</em></td></tr>
+        <tr><td><strong>much</strong></td><td>Danh từ không đếm được</td><td>Nhiều (phủ định/câu hỏi)</td><td><em>not much time</em></td></tr>
+        <tr><td><strong>many</strong></td><td>Danh từ đếm được</td><td>Nhiều</td><td><em>many students</em></td></tr>
+        <tr><td><strong>a lot of / lots of</strong></td><td>Cả hai loại danh từ</td><td>Nhiều (câu khẳng định)</td><td><em>a lot of money / a lot of friends</em></td></tr>
+      </tbody>
+    </table>
+    <div class="callout" style="margin-top:1rem">
+      <strong>💡 Mẹo nhớ nhanh:</strong> a <u>few</u> = đếm được (a <u>f</u>ew <u>f</u>riends) &nbsp;|&nbsp; a <u>little</u> = không đếm được (a little liquid)
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FLASHCARD ===================== -->
+<section id="flashcard">
+  <div class="sec-title">🃏 Flashcard Luyện Từ Vựng</div>
+  <div class="sec-sub">Click vào thẻ để xem nghĩa · Chủ đề: Danh từ tập hợp</div>
+
+  <div style="display:flex;gap:0.75rem;margin-bottom:1.5rem;flex-wrap:wrap">
+    <button class="btn btn-secondary" onclick="changeFCDeck('animals')" id="fc-btn-animals">🐾 Động vật</button>
+    <button class="btn btn-secondary" onclick="changeFCDeck('people')" id="fc-btn-people">👥 Con người</button>
+    <button class="btn btn-secondary" onclick="changeFCDeck('objects')" id="fc-btn-objects">📦 Đồ vật</button>
+    <button class="btn btn-secondary" onclick="changeFCDeck('irregular')" id="fc-btn-irregular">📝 Bất quy tắc</button>
+  </div>
+
+  <div class="flashcard-wrap" onclick="flipCard()">
+    <div class="flashcard" id="flashcard">
+      <div class="flashcard-face front">
+        <div class="fc-hint">Nhấn để xem nghĩa</div>
+        <div class="fc-word" id="fc-front">pod</div>
+        <div class="fc-sub" id="fc-type">Collective noun (animals)</div>
+      </div>
+      <div class="flashcard-face back">
+        <div class="fc-hint">✅ Nghĩa</div>
+        <div class="fc-word" id="fc-back">A pod of dolphins</div>
+        <div class="fc-sub" id="fc-meaning">Đàn động vật có vú dưới nước</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fc-nav">
+    <button class="btn btn-ghost" onclick="prevCard()">← Trước</button>
+    <span class="fc-count" id="fc-count">1 / 8</span>
+    <button class="btn btn-ghost" onclick="nextCard()">Sau →</button>
+  </div>
+  <div style="text-align:center">
+    <button class="btn btn-secondary" onclick="shuffleCards()">🔀 Xáo trộn</button>
+  </div>
+</section>
+
+<!-- ===================== QUIZ ===================== -->
+<section id="quiz">
+  <div class="sec-title">✏️ Bài tập luyện tập</div>
+  <div class="sec-sub">Chọn chủ đề, làm bài, và chấm điểm tự động</div>
+
+  <div class="quiz-controls">
+    <select id="quiz-topic" style="background:var(--card);border:1px solid var(--border);color:var(--text);padding:0.65rem 1rem;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:0.88rem;cursor:pointer">
+      <option value="all">🌐 Tất cả chủ đề</option>
+      <option value="types">📚 Phân loại danh từ</option>
+      <option value="collective">🐺 Danh từ tập hợp</option>
+      <option value="countable">🔢 Đếm được / Không đếm được</option>
+      <option value="plural">📝 Số nhiều</option>
+      <option value="possessive">🔑 Sở hữu cách</option>
+      <option value="determiners">🎯 Hạn định từ</option>
+    </select>
+    <select id="quiz-count" style="background:var(--card);border:1px solid var(--border);color:var(--text);padding:0.65rem 1rem;border-radius:10px;font-family:'DM Sans',sans-serif;font-size:0.88rem;cursor:pointer">
+      <option value="5">5 câu</option>
+      <option value="10" selected>10 câu</option>
+      <option value="15">15 câu</option>
+      <option value="all">Tất cả</option>
+    </select>
+    <button class="btn btn-primary" onclick="startQuiz()">🚀 Bắt đầu / Random mới</button>
+    <button class="btn btn-ghost" onclick="submitQuiz()" id="submit-btn" style="display:none">✅ Chấm bài</button>
+  </div>
+
+  <div class="score-bar" id="score-bar" style="display:none">
+    <div class="score-num" id="score-num">0</div>
+    <div class="score-info">
+      <strong id="score-text">Chờ kết quả...</strong>
+      <p id="score-detail"></p>
+      <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+    </div>
+  </div>
+
+  <div id="quiz-container"></div>
+</section>
+
+</main>
+
+<!-- Result Modal -->
+<div class="result-overlay" id="result-modal">
+  <div class="result-card">
+    <div class="result-emoji" id="result-emoji">🎉</div>
+    <div class="result-score" id="result-score">10/10</div>
+    <div class="result-label" id="result-label">Điểm của bạn</div>
+    <div class="result-msg" id="result-msg">Xuất sắc! Bạn đã nắm vững danh từ tiếng Anh!</div>
+    <div class="result-actions">
+      <button class="btn btn-primary" onclick="closeModal();startQuiz()">🔀 Làm lại (Random mới)</button>
+      <button class="btn btn-ghost" onclick="closeModal()">Xem lại đáp án</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== NAVIGATION =====
+function showSection(id) {
+  document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ===== FLASHCARD DATA =====
+const fcDecks = {
+  animals: [
+    { front: 'pod', type: 'Collective noun (animals)', back: 'A pod of dolphins', meaning: 'Đàn động vật có vú dưới nước' },
+    { front: 'school / shoal', type: 'Collective noun (animals)', back: 'A school of fish', meaning: 'Đàn cá nói chung' },
+    { front: 'flock', type: 'Collective noun (animals)', back: 'A flock of birds', meaning: 'Đàn chim hoặc đàn cừu/dê' },
+    { front: 'gaggle', type: 'Collective noun (animals)', back: 'A gaggle of geese', meaning: 'Đàn ngỗng dưới đất' },
+    { front: 'pride', type: 'Collective noun (animals)', back: 'A pride of lions', meaning: 'Đàn sư tử' },
+    { front: 'pack', type: 'Collective noun (animals)', back: 'A pack of wolves', meaning: 'Bầy chó sói săn mồi' },
+    { front: 'litter', type: 'Collective noun (animals)', back: 'A litter of puppies', meaning: 'Một lứa thú con mới sinh' },
+    { front: 'herd', type: 'Collective noun (animals)', back: 'A herd of elephants', meaning: 'Đàn động vật ăn cỏ lớn' },
+    { front: 'swarm', type: 'Collective noun (animals)', back: 'A swarm of bees', meaning: 'Đàn côn trùng đang bay' },
+  ],
+  people: [
+    { front: 'team', type: 'Collective noun (people)', back: 'A team of players', meaning: 'Đội, nhóm làm việc/thể thao' },
+    { front: 'committee', type: 'Collective noun (people)', back: 'A committee of experts', meaning: 'Ủy ban' },
+    { front: 'company', type: 'Collective noun (people)', back: 'A company of soldiers', meaning: 'Công ty / toán quân / đoàn kịch' },
+    { front: 'board', type: 'Collective noun (people)', back: 'The board of directors', meaning: 'Hội đồng quản trị' },
+    { front: 'panel', type: 'Collective noun (people)', back: 'A panel of judges', meaning: 'Ban chuyên gia / giám khảo' },
+    { front: 'choir', type: 'Collective noun (people)', back: 'A choir of singers', meaning: 'Dàn đồng ca' },
+    { front: 'orchestra', type: 'Collective noun (people)', back: 'The orchestra played Mozart', meaning: 'Dàn nhạc giao hưởng' },
+    { front: 'audience', type: 'Collective noun (people)', back: 'The audience applauded', meaning: 'Khán giả (phim, kịch, nhạc)' },
+    { front: 'troupe', type: 'Collective noun (people)', back: 'A troupe of actors', meaning: 'Đoàn nghệ sĩ lưu diễn' },
+    { front: 'family', type: 'Collective noun (people)', back: 'My family lives here', meaning: 'Gia đình' },
+    { front: 'class', type: 'Collective noun (people)', back: 'The class is studying', meaning: 'Lớp học' },
+    { front: 'crowd', type: 'Collective noun (people)', back: 'A crowd of people', meaning: 'Đám đông không có tổ chức' },
+    { front: 'gang', type: 'Collective noun (people)', back: 'A gang of thieves', meaning: 'Băng nhóm (tiêu cực) / nhóm bạn thân' },
+    { front: 'group', type: 'Collective noun (people)', back: 'A group of students', meaning: 'Nhóm – từ chung nhất' },
+    { front: 'crew', type: 'Collective noun (people)', back: 'The crew of the flight', meaning: 'Phi hành đoàn / thủy thủ đoàn' },
+  ],
+  objects: [
+    { front: 'bunch', type: 'Collective noun (objects)', back: 'A bunch of flowers', meaning: 'Chùm, bó – hoa/chìa khóa/nho' },
+    { front: 'pile', type: 'Collective noun (objects)', back: 'A pile of books', meaning: 'Chồng, đống xếp gọn' },
+    { front: 'heap', type: 'Collective noun (objects)', back: 'A heap of rubbish', meaning: 'Đống lộn xộn' },
+    { front: 'set', type: 'Collective noun (objects)', back: 'A set of tools', meaning: 'Bộ (các vật đi kèm nhau)' },
+    { front: 'series', type: 'Collective noun (objects)', back: 'A series of events', meaning: 'Chuỗi, loạt theo trình tự' },
+    { front: 'collection', type: 'Collective noun (objects)', back: 'A stamp collection', meaning: 'Bộ sưu tập' },
+  ],
+  irregular: [
+    { front: 'man', type: 'Irregular plural noun', back: 'men', meaning: 'Số nhiều bất quy tắc' },
+    { front: 'woman', type: 'Irregular plural noun', back: 'women', meaning: 'Số nhiều bất quy tắc' },
+    { front: 'child', type: 'Irregular plural noun', back: 'children', meaning: 'Số nhiều bất quy tắc' },
+    { front: 'foot', type: 'Irregular plural noun', back: 'feet', meaning: 'Số nhiều bất quy tắc' },
+    { front: 'tooth', type: 'Irregular plural noun', back: 'teeth', meaning: 'Số nhiều bất quy tắc' },
+    { front: 'goose', type: 'Irregular plural noun', back: 'geese', meaning: 'Số nhiều bất quy tắc' },
+    { front: 'mouse', type: 'Irregular plural noun', back: 'mice', meaning: 'Số nhiều bất quy tắc' },
+    { front: 'ox', type: 'Irregular plural noun', back: 'oxen', meaning: 'Số nhiều bất quy tắc' },
+    { front: 'louse', type: 'Irregular plural noun', back: 'lice', meaning: 'Số nhiều bất quy tắc' },
+  ]
+};
+
+let currentDeck = [...fcDecks.animals];
+let fcIndex = 0;
+
+function changeFCDeck(name) {
+  currentDeck = [...fcDecks[name]];
+  fcIndex = 0;
+  document.querySelectorAll('[id^="fc-btn-"]').forEach(b => b.classList.remove('btn-primary'));
+  document.getElementById('fc-btn-' + name).classList.add('btn-primary');
+  renderCard();
+}
+
+function renderCard() {
+  const card = currentDeck[fcIndex];
+  document.getElementById('fc-front').textContent = card.front;
+  document.getElementById('fc-type').textContent = card.type;
+  document.getElementById('fc-back').textContent = card.back;
+  document.getElementById('fc-meaning').textContent = card.meaning;
+  document.getElementById('fc-count').textContent = (fcIndex + 1) + ' / ' + currentDeck.length;
+  document.getElementById('flashcard').classList.remove('flipped');
+}
+
+function flipCard() { document.getElementById('flashcard').classList.toggle('flipped'); }
+function nextCard() { fcIndex = (fcIndex + 1) % currentDeck.length; renderCard(); }
+function prevCard() { fcIndex = (fcIndex - 1 + currentDeck.length) % currentDeck.length; renderCard(); }
+function shuffleCards() {
+  for (let i = currentDeck.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [currentDeck[i], currentDeck[j]] = [currentDeck[j], currentDeck[i]];
+  }
+  fcIndex = 0;
+  renderCard();
+}
+
+// init flashcard
+document.getElementById('fc-btn-animals').classList.add('btn-primary');
+
+// ===== QUIZ DATA =====
+const allQuestions = [
+  // --- TYPES ---
+  { topic: 'types', q: '"London", "Monday", "Christmas" thuộc loại danh từ nào?', opts: ['Common noun', 'Proper noun', 'Abstract noun', 'Collective noun'], ans: 1, explain: 'Tên riêng của địa danh, thứ trong tuần, và ngày lễ đều là Proper nouns (danh từ riêng). Chúng luôn viết hoa.' },
+  { topic: 'types', q: '"Freedom", "courage", "love" thuộc loại danh từ nào?', opts: ['Proper noun', 'Common noun', 'Abstract noun', 'Collective noun'], ans: 2, explain: 'Abstract nouns (danh từ trừu tượng) chỉ những thứ không thể nhìn thấy hay chạm vào được như cảm xúc, phẩm chất, khái niệm.' },
+  { topic: 'types', q: 'Danh từ nào sau đây là Common noun?', opts: ['Vietnam', 'July', 'city', 'Christmas'], ans: 2, explain: '"city" là common noun (danh từ chung). Vietnam, July, Christmas đều là proper nouns (viết hoa).' },
+  { topic: 'types', q: 'Danh từ nào cần viết hoa chữ cái đầu?', opts: ['happiness', 'teacher', 'tuesday', 'book'], ans: 2, explain: '"Tuesday" là proper noun (thứ trong tuần) nên phải viết hoa → Tuesday.' },
+  { topic: 'types', q: '"The committee made a decision." – committee là loại danh từ gì?', opts: ['Abstract noun', 'Common noun', 'Proper noun', 'Collective noun'], ans: 3, explain: '"Committee" là collective noun (danh từ tập hợp) vì nó chỉ một nhóm người được tổ chức lại.' },
+
+  // --- COLLECTIVE ---
+  { topic: 'collective', q: 'Điền vào chỗ trống: "_____ of dolphins is swimming near the boat."', opts: ['A flock', 'A pod', 'A herd', 'A swarm'], ans: 1, explain: '"Pod" dùng cho động vật có vú dưới nước như cá heo (dolphins) và cá voi.' },
+  { topic: 'collective', q: 'Chọn từ đúng: "A _____ of bees attacked the hiker."', opts: ['pride', 'pod', 'swarm', 'flock'], ans: 2, explain: '"Swarm" dùng cho côn trùng đang bay như ong (bees), mối, châu chấu.' },
+  { topic: 'collective', q: '"A _____ of lions was resting under the tree." – Điền từ thích hợp:', opts: ['pack', 'pride', 'flock', 'herd'], ans: 1, explain: '"Pride" là từ dùng đặc biệt cho đàn sư tử (lions). Pack = bầy sói/chó săn.' },
+  { topic: 'collective', q: 'Dùng từ nào cho đàn cá nói chung?', opts: ['pod', 'flock', 'school', 'herd'], ans: 2, explain: '"School" (hoặc shoal) dùng cho đàn cá nói chung. Lưu ý: không nhầm với "ngôi trường"!' },
+  { topic: 'collective', q: '"A _____ of puppies were playing in the yard."', opts: ['brood', 'litter', 'pack', 'swarm'], ans: 1, explain: '"Litter" = một lứa thú con mới sinh (puppies, kittens). "Brood" dùng cho gà con / chim non.' },
+  { topic: 'collective', q: 'Từ nào dùng cho đàn ngỗng đang ở dưới đất và kêu ồn ào?', opts: ['flock', 'gaggle', 'swarm', 'school'], ans: 1, explain: '"Gaggle" dùng đặc biệt cho đàn ngỗng (geese) khi chúng đang đứng dưới đất.' },
+  { topic: 'collective', q: '"The _____ of workers demanded higher wages." – Chọn từ phù hợp:', opts: ['crew', 'team', 'flock', 'litter'], ans: 0, explain: '"Crew" = phi hành đoàn, thủy thủ đoàn, hoặc nhóm kỹ thuật viên/công nhân.' },
+  { topic: 'collective', q: '"A _____ of books was piled on the desk." – Điền từ đúng:', opts: ['bunch', 'pile', 'heap', 'series'], ans: 1, explain: '"Pile" = chồng/đống được xếp gọn gàng. "Heap" thường lộn xộn hơn.' },
+  { topic: 'collective', q: 'Chọn động từ đúng: "A pack of wolves _____ howling at the moon."', opts: ['were', 'was', 'are', 'have'], ans: 1, explain: 'Collective noun đi với động từ số ÍT: "A pack of wolves WAS howling." Dù "wolves" là số nhiều, nhưng "a pack" là số ít.' },
+  { topic: 'collective', q: '"A _____ of keys fell out of his pocket." – Chọn đúng:', opts: ['pile', 'heap', 'bunch', 'set'], ans: 2, explain: '"Bunch" dùng cho chùm/bó – flowers, keys, grapes, bananas.' },
+  { topic: 'collective', q: 'Từ nào mang nghĩa "đoàn kịch / đoàn xiếc lưu diễn"?', opts: ['choir', 'troupe', 'crew', 'audience'], ans: 1, explain: '"Troupe" = đoàn nghệ sĩ lưu diễn, thường là kịch hoặc xiếc.' },
+  { topic: 'collective', q: 'Từ nào chỉ khán giả đang xem kịch hoặc nghe nhạc?', opts: ['crowd', 'gang', 'audience', 'class'], ans: 2, explain: '"Audience" = khán giả xem phim, kịch, hoặc nghe nhạc. "Crowd" = đám đông nói chung (không có tổ chức).' },
+  { topic: 'collective', q: '"A _____ of soldiers marched through the town." – Điền đúng:', opts: ['company', 'gang', 'class', 'crowd'], ans: 0, explain: '"Company" có nghĩa là công ty, nhưng cũng chỉ một toán quân hoặc một đoàn kịch.' },
+  { topic: 'collective', q: 'Từ nào KHÔNG phải collective noun chỉ nhóm người?', opts: ['family', 'crowd', 'heap', 'class'], ans: 2, explain: '"Heap" là collective noun dùng cho ĐỒ VẬT (đống rác, cát...), không dùng cho người.' },
+  { topic: 'collective', q: '"The _____ is performing Beethoven tonight." – Chọn từ phù hợp nhất:', opts: ['choir', 'orchestra', 'troupe', 'crew'], ans: 1, explain: '"Orchestra" = dàn nhạc giao hưởng, thường biểu diễn nhạc cổ điển như Beethoven.' },
+  { topic: 'collective', q: 'Sự khác biệt giữa "crowd" và "gang" là gì?', opts: ['Không có gì khác nhau', '"Gang" thường có nghĩa tích cực hơn "crowd"', '"Crowd" là đám đông vô tổ chức; "gang" là nhóm (thường tiêu cực)', '"Gang" dùng cho đồ vật'], ans: 2, explain: '"Crowd" = đám đông không có tổ chức. "Gang" thường mang nghĩa tiêu cực (băng nhóm), hoặc đôi khi thân mật chỉ nhóm bạn.' },
+
+  // --- COUNTABLE / UNCOUNTABLE ---
+  { topic: 'countable', q: 'Từ nào là danh từ KHÔNG đếm được?', opts: ['apple', 'book', 'water', 'dog'], ans: 2, explain: '"Water" là danh từ không đếm được – không có dạng số nhiều "waters" (trừ khi nói về nhiều loại nước/vùng biển). apple, book, dog đều đếm được.' },
+  { topic: 'countable', q: 'Câu nào ĐÚNG về ngữ pháp?', opts: ['I need some informations.', 'The news are shocking.', 'She gave me a good advice.', 'The news was shocking.'], ans: 3, explain: '"News" là danh từ không đếm được → động từ số ÍT: "the news WAS". "Informations" và "advices" không tồn tại trong tiếng Anh.' },
+  { topic: 'countable', q: 'Chọn câu dùng đúng danh từ không đếm được:', opts: ['I have many homeworks.', 'She has a lot of homework.', 'He did three homeworks.', 'We need a homework.'], ans: 1, explain: '"Homework" là uncountable noun → không có số nhiều, không dùng a/an, không đếm. Dùng: "a lot of homework", "much homework".' },
+  { topic: 'countable', q: '"_____ is essential for life." – Chọn câu đúng:', opts: ['Waters are', 'A water is', 'Water is', 'The waters are'], ans: 2, explain: '"Water" là uncountable → dùng không có mạo từ a/an, động từ số ít: "Water IS essential."' },
+  { topic: 'countable', q: 'Từ nào sau đây là danh từ ĐẾM ĐƯỢC?', opts: ['music', 'information', 'luck', 'chair'], ans: 3, explain: '"Chair" đếm được (a chair, two chairs). Music, information, luck đều là uncountable nouns.' },
+  { topic: 'countable', q: '"I don\'t have _____ time to help you." – Điền đúng:', opts: ['many', 'a few', 'much', 'a lot'], ans: 2, explain: '"Time" (thời gian) là danh từ không đếm được → dùng "much" trong câu phủ định: "I don\'t have MUCH time."' },
+  { topic: 'countable', q: 'Câu nào SAI về ngữ pháp?', opts: ['She has a lot of experience.', 'He gave me some advice.', 'I need informations.', 'There is little hope.'], ans: 2, explain: '"Informations" SAI – "information" là uncountable noun, không có số nhiều. Đúng: "some information".' },
+  { topic: 'countable', q: '"a glass of ___" – Từ nào điền vào đây hợp lý nhất?', opts: ['apple', 'water', 'cat', 'book'], ans: 1, explain: 'Với uncountable nouns, ta dùng "a + container/unit + of": a glass of WATER, a cup of tea, a piece of advice.' },
+  { topic: 'countable', q: 'Câu nào dùng "a few" và "a little" ĐÚNG?', opts: ['I have a few money.', 'She has a little friends.', 'He has a few ideas.', 'We need a few sugar.'], ans: 2, explain: '"A few ideas" đúng vì "ideas" là đếm được số nhiều. "A little" dùng cho không đếm được: a little money, a little sugar.' },
+  { topic: 'countable', q: '"Her _____ is beautiful." (nói về mái tóc nói chung)', opts: ['a hair', 'hairs', 'hair', 'the hairs'], ans: 2, explain: '"Hair" (mái tóc) là uncountable: "Her hair IS beautiful." Nhưng "a hair" = một sợi tóc (đếm được): "There\'s a hair in my soup."' },
+  { topic: 'countable', q: 'Từ nào là uncountable noun?', opts: ['student', 'teacher', 'traffic', 'car'], ans: 2, explain: '"Traffic" (giao thông) là uncountable: "There is a lot of traffic." – không nói "traffics" hay "a traffic".' },
+  { topic: 'countable', q: 'Chọn câu đúng khi nói về "tin tức":', opts: ['The news are good today.', 'The news is good today.', 'Newses are good today.', 'A news is good today.'], ans: 1, explain: '"News" luôn là uncountable → động từ số ÍT: "The news IS good." Không có "newses" hay "a news".' },
+
+  // --- PLURAL ---
+  { topic: 'plural', q: 'Số nhiều đúng của "baby" là gì?', opts: ['babys', 'babies', 'babyes', 'babeis'], ans: 1, explain: 'Phụ âm + y → đổi y thành -ies: baby → babies. (city → cities, story → stories)' },
+  { topic: 'plural', q: 'Số nhiều đúng của "piano" là gì?', opts: ['pianoes', 'pianos', 'pianois', 'piano'], ans: 1, explain: 'Piano, photo, radio là ngoại lệ – chỉ thêm -s dù tận cùng là -o: pianos, photos, radios.' },
+  { topic: 'plural', q: 'Số nhiều đúng của "tooth" là gì?', opts: ['tooths', 'teeth', 'teeths', 'toothes'], ans: 1, explain: '"Tooth → teeth" là danh từ bất quy tắc. Cùng dạng: foot → feet, goose → geese.' },
+  { topic: 'plural', q: 'Số nhiều của "child" là?', opts: ['childs', 'childes', 'children', 'childrens'], ans: 2, explain: '"Child → children" là bất quy tắc hoàn toàn. Lưu ý: KHÔNG có "childrens".' },
+  { topic: 'plural', q: 'Chọn câu có số nhiều ĐÚNG:', opts: ['I have three foots.', 'She saw two mouses.', 'The men were tall.', 'Those womans are kind.'], ans: 2, explain: '"Men" là số nhiều đúng của "man". foot→feet, mouse→mice, woman→women.' },
+  { topic: 'plural', q: 'Số nhiều của "key" là?', opts: ['keies', 'keyies', 'keys', 'keyes'], ans: 2, explain: 'Nguyên âm + y → giữ nguyên y, chỉ thêm -s: key → keys (day → days, boy → boys).' },
+  { topic: 'plural', q: 'Từ nào sau đây đã ở dạng số nhiều ĐÚNG?', opts: ['boxs', 'watchs', 'buses', 'dishs'], ans: 2, explain: 'ch, sh, x, z, s → thêm -es: bus→buses, box→boxes, watch→watches, dish→dishes.' },
+  { topic: 'plural', q: 'Số nhiều của "ox" là?', opts: ['oxs', 'oxes', 'oxen', 'ox'], ans: 2, explain: '"Ox → oxen" là dạng bất quy tắc đặc biệt, tương tự "child → children".' },
+
+  // --- POSSESSIVE ---
+  { topic: 'possessive', q: 'Chọn cách viết ĐÚNG cho "căn phòng của những học sinh":', opts: ["the student's room", "the students' room", "the students's room", "the students room"], ans: 1, explain: '"students" là số nhiều tận cùng bằng -s → chỉ thêm dấu nháy đơn: students\'.' },
+  { topic: 'possessive', q: 'Tom và Mary sống chung nhà. Diễn đạt đúng là:', opts: ["Tom's and Mary's house", "Tom and Mary's house", "Tom's and Mary house", "Tom and Marys house"], ans: 1, explain: 'Khi cùng sở hữu → chỉ thêm \'s vào người cuối: "Tom and Mary\'s house".' },
+  { topic: 'possessive', q: '"Cuốn sách bìa" – Cách nói đúng cho sự vật là:', opts: ["the book's cover", "the books' cover", "the cover of the book", "book cover's"], ans: 2, explain: 'Vật, sự vật trong tiếng Anh không dùng sở hữu cách → dùng "N of N": the cover of the book.' },
+  { topic: 'possessive', q: 'Tom có chiếc xe riêng, Mary cũng có chiếc xe riêng. Đúng là:', opts: ["Tom and Mary's cars", "Tom's and Mary's cars", "Tom and Mary cars", "Tom's Mary's cars"], ans: 1, explain: 'Sở hữu riêng biệt → thêm \'s vào cả hai: "Tom\'s and Mary\'s cars".' },
+  { topic: 'possessive', q: 'Chọn cách viết đúng: "đồ chơi của những đứa trẻ"', opts: ["the children's toys", "the childrens' toys", "the childrens's toys", "the childs' toys"], ans: 0, explain: '"children" là số nhiều bất quy tắc (không tận cùng -s) → dùng \'s: the children\'s toys.' },
+
+  // --- DETERMINERS ---
+  { topic: 'determiners', q: 'Chọn câu đúng: "_____ water in that bottle is clean."', opts: ['These', 'Those', 'The', 'A little'], ans: 3, explain: '"A little" dùng với danh từ không đếm được (water). "The" cũng đúng ngữ pháp nhưng "a little" là câu hoàn chỉnh hơn với nghĩa "một chút nước".' },
+  { topic: 'determiners', q: '"I have _____ friends in this city." – Điền từ phù hợp (số lượng nhỏ, đếm được):', opts: ['a little', 'much', 'a few', 'any'], ans: 2, explain: '"A few" dùng với danh từ ĐẾM ĐƯỢC số nhiều: a few friends, a few ideas. "A little" dùng cho không đếm được.' },
+  { topic: 'determiners', q: '"_____ pen is yours, and _____ pencil is mine." – Chọn cặp đúng:', opts: ['These / that', 'This / that', 'Those / these', 'That / these'], ans: 1, explain: 'Số ít gần = "this", số ít xa = "that": "This pen is yours, and that pencil is mine."' },
+  { topic: 'determiners', q: 'Câu nào dùng "some" đúng nhất?', opts: ['Do you have some problems?', 'I don\'t have some money.', 'Would you like some coffee?', 'Is there some milk?'], ans: 2, explain: '"Some" dùng trong câu đề nghị/mời: "Would you like some coffee?" Câu hỏi thông thường và phủ định dùng "any".' },
+  { topic: 'determiners', q: '"There aren\'t _____ students in the classroom." – Điền đúng:', opts: ['some', 'a few', 'any', 'a little'], ans: 2, explain: '"Any" dùng trong câu PHỦ ĐỊNH và câu HỎI. "Some" dùng trong câu khẳng định.' },
+  { topic: 'determiners', q: 'Câu nào ĐÚNG về ngữ pháp?', opts: ['I have a little friends.', 'She drinks a few water.', 'We have a few days left.', 'He has a few time.'], ans: 2, explain: '"A few days" đúng vì "days" là danh từ đếm được số nhiều. "A little/a few" không dùng lẫn lộn.' },
+  { topic: 'determiners', q: '"She doesn\'t have _____ time to finish the project." – Chọn đúng:', opts: ['many', 'a few', 'much', 'some'], ans: 2, explain: '"Much" dùng với danh từ KHÔNG ĐẾM ĐƯỢC (time, money, water) trong câu phủ định và câu hỏi.' },
+  { topic: 'determiners', q: '"There are _____ students in the class today." – Chọn từ chỉ số lượng lớn:', opts: ['a little', 'much', 'many', 'a few'], ans: 2, explain: '"Many" dùng với danh từ ĐẾM ĐƯỢC số nhiều (students, books, cars). "Much" dùng cho không đếm được.' },
+  { topic: 'determiners', q: '"We have _____ homework today – it\'s a lot!" – Từ nào phù hợp nhất?', opts: ['many', 'a lot of', 'a few', 'any'], ans: 1, explain: '"A lot of" dùng được với cả danh từ đếm được lẫn không đếm được trong câu khẳng định: a lot of homework, a lot of friends.' },
+];
+
+// ===== QUIZ LOGIC =====
+let currentQuestions = [];
+let userAnswers = [];
+let quizSubmitted = false;
+
+function startQuiz() {
+  const topic = document.getElementById('quiz-topic').value;
+  const countVal = document.getElementById('quiz-count').value;
+  quizSubmitted = false;
+
+  let pool = topic === 'all' ? allQuestions : allQuestions.filter(q => q.topic === topic);
+
+  // Shuffle pool
+  pool = [...pool].sort(() => Math.random() - 0.5);
+
+  const count = countVal === 'all' ? pool.length : Math.min(parseInt(countVal), pool.length);
+  currentQuestions = pool.slice(0, count);
+  userAnswers = new Array(count).fill(null);
+
+  document.getElementById('score-bar').style.display = 'none';
+  document.getElementById('submit-btn').style.display = 'inline-block';
+  renderQuiz();
+}
+
+function renderQuiz() {
+  const container = document.getElementById('quiz-container');
+  container.innerHTML = '';
+
+  currentQuestions.forEach((q, qi) => {
+    const card = document.createElement('div');
+    card.className = 'q-card';
+    card.id = 'qcard-' + qi;
+
+    const letters = ['A', 'B', 'C', 'D'];
+    card.innerHTML = `
+      <div class="q-num">Câu ${qi + 1} · ${getTopicLabel(q.topic)}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="options-grid" id="opts-${qi}">
+        ${q.opts.map((opt, oi) => `
+          <button class="option-btn" id="opt-${qi}-${oi}" onclick="selectAnswer(${qi},${oi})">
+            <span class="opt-letter">${letters[oi]}</span>
+            ${opt}
+          </button>
+        `).join('')}
+      </div>
+      <div class="q-feedback" id="fb-${qi}"></div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function getTopicLabel(t) {
+  const map = { types: 'Phân loại', countable: 'Đếm được/Không đếm được', collective: 'Danh từ tập hợp', plural: 'Số nhiều', possessive: 'Sở hữu cách', determiners: 'Hạn định từ' };
+  return map[t] || t;
+}
+
+function selectAnswer(qi, oi) {
+  if (quizSubmitted) return;
+  userAnswers[qi] = oi;
+  const opts = document.querySelectorAll(`#opts-${qi} .option-btn`);
+  opts.forEach((btn, i) => {
+    btn.classList.toggle('selected', i === oi);
+  });
+}
+
+function submitQuiz() {
+  if (currentQuestions.length === 0) return;
+  quizSubmitted = true;
+  document.getElementById('submit-btn').style.display = 'none';
+
+  let correct = 0;
+  currentQuestions.forEach((q, qi) => {
+    const card = document.getElementById('qcard-' + qi);
+    const fb = document.getElementById('fb-' + qi);
+    const opts = document.querySelectorAll(`#opts-${qi} .option-btn`);
+
+    opts.forEach(btn => btn.disabled = true);
+    opts[q.ans].classList.add('correct-ans');
+
+    if (userAnswers[qi] === q.ans) {
+      correct++;
+      card.classList.add('correct');
+      if (userAnswers[qi] !== null) opts[userAnswers[qi]].classList.add('correct-ans');
+      fb.className = 'q-feedback show correct-fb';
+      fb.textContent = '✅ Chính xác! ' + q.explain;
+    } else {
+      card.classList.add('wrong');
+      if (userAnswers[qi] !== null) opts[userAnswers[qi]].classList.add('wrong-ans');
+      fb.className = 'q-feedback show wrong-fb';
+      fb.textContent = '❌ Sai. ' + q.explain;
+    }
+  });
+
+  const total = currentQuestions.length;
+  const pct = Math.round(correct / total * 100);
+
+  document.getElementById('score-bar').style.display = 'flex';
+  document.getElementById('score-num').textContent = correct + '/' + total;
+  document.getElementById('score-text').textContent = pct + '% chính xác';
+  document.getElementById('score-detail').textContent = `${correct} đúng · ${total - correct} sai`;
+  document.getElementById('progress-fill').style.width = pct + '%';
+
+  showResult(correct, total, pct);
+  document.getElementById('score-bar').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function showResult(correct, total, pct) {
+  let emoji, msg;
+  if (pct === 100) { emoji = '🏆'; msg = 'Hoàn hảo! Bạn đã thuộc làu làu phần danh từ này!'; }
+  else if (pct >= 80) { emoji = '🎉'; msg = 'Xuất sắc! Nắm vững phần lớn kiến thức. Ôn lại vài câu sai nhé!'; }
+  else if (pct >= 60) { emoji = '💪'; msg = 'Khá tốt! Còn một số điểm cần củng cố thêm.'; }
+  else if (pct >= 40) { emoji = '📖'; msg = 'Cần ôn tập thêm. Hãy xem lại phần lý thuyết rồi làm lại!'; }
+  else { emoji = '🌱'; msg = 'Hãy đọc kỹ phần lý thuyết trước khi làm bài nhé. Cố lên!'; }
+
+  document.getElementById('result-emoji').textContent = emoji;
+  document.getElementById('result-score').textContent = correct + '/' + total;
+  document.getElementById('result-msg').textContent = msg;
+  document.getElementById('result-modal').classList.add('show');
+}
+
+function closeModal() {
+  document.getElementById('result-modal').classList.remove('show');
+}
+
+// Init
+startQuiz();
+</script>
+</body>
+</html>

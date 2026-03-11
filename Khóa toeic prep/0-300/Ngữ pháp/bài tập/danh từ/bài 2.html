@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Section 2: Danh từ đếm được và không đếm được - PREP.VN</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #1565C0; --blue-light: #1976D2; --blue-pale: #E3F2FD;
+    --green: #2E7D32; --green-light: #E8F5E9;
+    --red: #C62828; --red-light: #FFEBEE;
+    --yellow: #FFF8E1; --grey: #F5F7FA;
+    --border: #BBDEFB; --text: #1A237E; --subtext: #455A64;
+    --white: #fff; --radius: 14px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Nunito', sans-serif; background: linear-gradient(135deg,#E3F2FD 0%,#F8FBFF 60%,#E8F5E9 100%); min-height: 100vh; color: var(--text); }
+  header { background: var(--blue); color: #fff; padding: 18px 28px; display: flex; align-items: center; gap: 16px; box-shadow: 0 3px 12px rgba(21,101,192,0.18); }
+  header .logo { font-family: 'Baloo 2',cursive; font-size: 1.7rem; font-weight: 800; background: rgba(255,255,255,0.15); border-radius: 8px; padding: 2px 14px; }
+  header h1 { font-family: 'Baloo 2',cursive; font-size: 1.15rem; font-weight: 700; color: rgba(255,255,255,0.92); }
+  .container { max-width: 840px; margin: 34px auto 60px; padding: 0 18px; }
+  .section-title { font-family: 'Baloo 2',cursive; font-size: 1.35rem; font-weight: 800; color: var(--blue); background: var(--blue-pale); border-left: 5px solid var(--blue); padding: 11px 20px; border-radius: 0 var(--radius) var(--radius) 0; margin-bottom: 22px; margin-top: 34px; line-height: 1.4; }
+  .card { background: var(--white); border-radius: var(--radius); box-shadow: 0 2px 12px rgba(21,101,192,0.07); padding: 22px 26px; margin-bottom: 18px; border: 1.5px solid var(--border); }
+  .q-label { font-weight: 700; color: var(--subtext); font-size: 0.95rem; margin-bottom: 7px; }
+  .q-text { font-size: 1.05rem; font-weight: 700; color: var(--text); margin-bottom: 14px; line-height: 1.55; }
+  /* Radio / Checkbox options */
+  .options { display: flex; flex-direction: column; gap: 9px; }
+  .opt-btn { display: flex; align-items: center; gap: 11px; padding: 11px 16px; border: 2px solid var(--border); border-radius: 10px; background: var(--grey); cursor: pointer; font-family: 'Nunito',sans-serif; font-size: 1rem; font-weight: 600; color: var(--text); transition: background .15s, border-color .15s, transform .1s; outline: none; text-align: left; }
+  .opt-btn:hover:not(:disabled) { background: var(--blue-pale); border-color: var(--blue-light); transform: translateX(3px); }
+  .opt-btn.selected { background: var(--blue-pale); border-color: var(--blue); color: var(--blue); }
+  .opt-btn.correct { background: var(--green-light); border-color: var(--green); color: var(--green); }
+  .opt-btn.wrong { background: var(--red-light); border-color: var(--red); color: var(--red); }
+  .opt-circle { width: 24px; height: 24px; border-radius: 50%; border: 2px solid currentColor; display: flex; align-items: center; justify-content: center; font-size: 0.76rem; font-weight: 800; flex-shrink: 0; }
+  /* Checkbox style */
+  .chk-btn { display: flex; align-items: center; gap: 11px; padding: 10px 15px; border: 2px solid var(--border); border-radius: 10px; background: var(--grey); cursor: pointer; font-family: 'Nunito',sans-serif; font-size: 1rem; font-weight: 600; color: var(--text); transition: background .15s, border-color .15s; user-select: none; }
+  .chk-btn:hover:not(.disabled) { background: var(--blue-pale); border-color: var(--blue-light); }
+  .chk-btn.checked { background: var(--blue-pale); border-color: var(--blue); color: var(--blue); }
+  .chk-btn.correct { background: var(--green-light); border-color: var(--green); color: var(--green); }
+  .chk-btn.wrong { background: var(--red-light); border-color: var(--red); color: var(--red); }
+  .chk-box { width: 22px; height: 22px; border: 2px solid currentColor; border-radius: 5px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.85rem; }
+  /* Fill */
+  .fill-input { border: 2px solid var(--border); border-radius: 9px; padding: 8px 13px; font-family: 'Nunito',sans-serif; font-size: 0.97rem; font-weight: 700; background: var(--grey); color: var(--text); outline: none; transition: border-color .15s; }
+  .fill-input:focus { border-color: var(--blue-light); background: var(--blue-pale); }
+  .fill-input.correct { border-color: var(--green); background: var(--green-light); color: var(--green); }
+  .fill-input.wrong { border-color: var(--red); background: var(--red-light); color: var(--red); }
+  .fill-row { display: flex; align-items: center; gap: 10px; margin-bottom: 11px; font-size: 0.97rem; font-weight: 700; flex-wrap: wrap; }
+  /* Match (select) */
+  .match-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 9px; align-items: center; }
+  .match-term { padding: 9px 13px; background: var(--grey); border: 2px solid var(--border); border-radius: 9px; font-weight: 700; font-size: 0.95rem; }
+  .match-select { border: 2px solid var(--border); border-radius: 9px; padding: 8px 11px; font-family: 'Nunito',sans-serif; font-size: 0.93rem; font-weight: 700; background: var(--grey); color: var(--text); outline: none; width: 100%; }
+  .match-select.correct { border-color: var(--green); background: var(--green-light); color: var(--green); }
+  .match-select.wrong { border-color: var(--red); background: var(--red-light); color: var(--red); }
+  /* Feedback */
+  .feedback { margin-top: 10px; font-size: 0.93rem; font-weight: 700; padding: 8px 13px; border-radius: 8px; display: none; }
+  .feedback.show { display: block; }
+  .feedback.correct { background: var(--green-light); color: var(--green); }
+  .feedback.wrong { background: var(--red-light); color: var(--red); }
+  .ans-hint { font-size: 0.88rem; color: var(--green); font-weight: 700; margin-top: 3px; display: none; }
+  .ans-hint.show { display: block; }
+  /* Word bank */
+  .word-bank { display: flex; flex-wrap: wrap; gap: 8px; background: var(--yellow); border: 2px solid #FFE082; border-radius: 10px; padding: 11px 15px; margin-bottom: 16px; }
+  .word-chip { background: #FFF9C4; border: 2px solid #F9A825; color: #E65100; border-radius: 50px; padding: 3px 14px; font-weight: 800; font-size: 0.95rem; }
+  /* Submit */
+  .submit-btn { display: block; margin: 34px auto 0; padding: 15px 48px; background: var(--blue); color: #fff; border: none; border-radius: 50px; font-family: 'Baloo 2',cursive; font-size: 1.2rem; font-weight: 800; cursor: pointer; box-shadow: 0 4px 18px rgba(21,101,192,.25); transition: background .18s,transform .12s; }
+  .submit-btn:hover { background: #0D47A1; transform: translateY(-2px); }
+  .submit-btn:disabled { background: #90A4AE; cursor: not-allowed; }
+  /* Score */
+  .score-board { background: linear-gradient(135deg,var(--blue) 0%,#1976D2 100%); color: #fff; border-radius: var(--radius); padding: 30px 28px; text-align: center; margin-top: 34px; box-shadow: 0 6px 24px rgba(21,101,192,.22); display: none; }
+  .score-board.show { display: block; }
+  .big-score { font-family: 'Baloo 2',cursive; font-size: 3.4rem; font-weight: 900; margin-bottom: 6px; }
+  .score-msg { font-size: 1.15rem; font-weight: 700; opacity: .92; }
+  .reset-btn { margin-top: 20px; padding: 11px 34px; background: #fff; color: var(--blue); border: none; border-radius: 50px; font-family: 'Baloo 2',cursive; font-size: 1.05rem; font-weight: 800; cursor: pointer; }
+  .reset-btn:hover { background: #E3F2FD; }
+  .ex-title { font-family: 'Baloo 2',cursive; font-size: 1.05rem; font-weight: 800; color: var(--blue); margin-bottom: 14px; }
+  .pic-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">PREP.VN</div>
+  <h1>Section 2: Danh từ đếm được và không đếm được. Số ít và số nhiều</h1>
+</header>
+<div class="container">
+
+<!-- EX1 -->
+<div class="section-title">Exercise 1: Chọn True nếu khẳng định là đúng, chọn False nếu khẳng định là sai</div>
+
+<div class="card">
+  <div class="q-label">Câu 1</div>
+  <div class="q-text">Danh từ đếm được là các danh từ chỉ người, sự vật mà ta có thể cầm nắm được.</div>
+  <div class="options">
+    <button class="opt-btn" onclick="pickTF(this,'e1q1','A')"><span class="opt-circle">A</span>True</button>
+    <button class="opt-btn" onclick="pickTF(this,'e1q1','B')"><span class="opt-circle">B</span>False</button>
+  </div>
+  <div class="feedback" id="fb-e1q1"></div>
+</div>
+
+<div class="card">
+  <div class="q-label">Câu 2</div>
+  <div class="q-text">Chỉ có danh từ đếm được mới có dạng số ít và số nhiều.</div>
+  <div class="options">
+    <button class="opt-btn" onclick="pickTF(this,'e1q2','A')"><span class="opt-circle">A</span>True</button>
+    <button class="opt-btn" onclick="pickTF(this,'e1q2','B')"><span class="opt-circle">B</span>False</button>
+  </div>
+  <div class="feedback" id="fb-e1q2"></div>
+</div>
+
+<div class="card">
+  <div class="q-label">Câu 3</div>
+  <div class="q-text">Khi muốn chuyển 1 danh từ từ dạng số ít thành số nhiều, ta luôn thêm S hoặc ES vào sau danh từ.</div>
+  <div class="options">
+    <button class="opt-btn" onclick="pickTF(this,'e1q3','A')"><span class="opt-circle">A</span>True</button>
+    <button class="opt-btn" onclick="pickTF(this,'e1q3','B')"><span class="opt-circle">B</span>False</button>
+  </div>
+  <div class="feedback" id="fb-e1q3"></div>
+</div>
+
+<!-- EX2 -->
+<div class="section-title">Exercise 2: Chọn các đáp án đúng</div>
+
+<div class="card">
+  <div class="q-text">Các nhóm nào sau đây thường <b>KHÔNG PHẢI</b> là những danh từ không đếm được:</div>
+  <div class="options" id="e2a-opts">
+    <button class="chk-btn" onclick="toggleChk(this,'e2a')"><span class="chk-box"></span>Danh từ chỉ người</button>
+    <button class="chk-btn" onclick="toggleChk(this,'e2a')"><span class="chk-box"></span>Danh từ tập hợp bao gồm nhiều thứ giống nhau</button>
+    <button class="chk-btn" onclick="toggleChk(this,'e2a')"><span class="chk-box"></span>Danh từ vật chất</button>
+    <button class="chk-btn" onclick="toggleChk(this,'e2a')"><span class="chk-box"></span>Danh từ chỉ con vật</button>
+    <button class="chk-btn" onclick="toggleChk(this,'e2a')"><span class="chk-box"></span>Danh từ trừu tượng</button>
+    <button class="chk-btn" onclick="toggleChk(this,'e2a')"><span class="chk-box"></span>Danh từ chỉ sự vật</button>
+    <button class="chk-btn" onclick="toggleChk(this,'e2a')"><span class="chk-box"></span>Hiện tượng thiên nhiên</button>
+  </div>
+  <div class="feedback" id="fb-e2a"></div>
+</div>
+
+<div class="card">
+  <div class="q-text">Các danh từ nào dưới đây có dạng số ít và số nhiều <b>KHÔNG</b> viết giống hệt nhau:</div>
+  <div class="options" id="e2b-opts">
+    <button class="chk-btn" onclick="toggleChk(this,'e2b')"><span class="chk-box"></span>means</button>
+    <button class="chk-btn" onclick="toggleChk(this,'e2b')"><span class="chk-box"></span>deer</button>
+    <button class="chk-btn" onclick="toggleChk(this,'e2b')"><span class="chk-box"></span>goose</button>
+    <button class="chk-btn" onclick="toggleChk(this,'e2b')"><span class="chk-box"></span>offspring</button>
+    <button class="chk-btn" onclick="toggleChk(this,'e2b')"><span class="chk-box"></span>fish</button>
+    <button class="chk-btn" onclick="toggleChk(this,'e2b')"><span class="chk-box"></span>series</button>
+    <button class="chk-btn" onclick="toggleChk(this,'e2b')"><span class="chk-box"></span>house</button>
+    <button class="chk-btn" onclick="toggleChk(this,'e2b')"><span class="chk-box"></span>sheep</button>
+    <button class="chk-btn" onclick="toggleChk(this,'e2b')"><span class="chk-box"></span>mouse</button>
+    <button class="chk-btn" onclick="toggleChk(this,'e2b')"><span class="chk-box"></span>shrimp</button>
+    <button class="chk-btn" onclick="toggleChk(this,'e2b')"><span class="chk-box"></span>baby</button>
+    <button class="chk-btn" onclick="toggleChk(this,'e2b')"><span class="chk-box"></span>species</button>
+    <button class="chk-btn" onclick="toggleChk(this,'e2b')"><span class="chk-box"></span>key</button>
+  </div>
+  <div class="feedback" id="fb-e2b"></div>
+</div>
+
+<!-- EX3 -->
+<div class="section-title">Exercise 3: Điền vào chỗ trống dạng số nhiều của các danh từ số ít sau</div>
+<div class="card" id="ex3-card"></div>
+
+<!-- EX4 -->
+<div class="section-title">Exercise 4: Quy tắc thêm số nhiều trong tiếng Anh. Chọn True nếu đúng, False nếu sai</div>
+
+<div class="card">
+  <div class="q-label">Câu 1</div>
+  <div class="q-text">Thường các danh từ tận dùng bằng -ch, -sh, -s, -x, -z và -y → Thêm ES vào cuối danh từ</div>
+  <div class="options">
+    <button class="opt-btn" onclick="pickTF(this,'e4q1','A')"><span class="opt-circle">A</span>True</button>
+    <button class="opt-btn" onclick="pickTF(this,'e4q1','B')"><span class="opt-circle">B</span>False</button>
+  </div>
+  <div class="feedback" id="fb-e4q1"></div>
+</div>
+
+<div class="card">
+  <div class="q-label">Câu 2</div>
+  <div class="q-text">Danh từ tận cùng bằng Phụ âm + Y → Thêm IES vào cuối danh từ</div>
+  <div class="options">
+    <button class="opt-btn" onclick="pickTF(this,'e4q2','A')"><span class="opt-circle">A</span>True</button>
+    <button class="opt-btn" onclick="pickTF(this,'e4q2','B')"><span class="opt-circle">B</span>False</button>
+  </div>
+  <div class="feedback" id="fb-e4q2"></div>
+</div>
+
+<div class="card">
+  <div class="q-label">Câu 3</div>
+  <div class="q-text">Danh từ tận cùng bằng Nguyên âm + Y → Thêm S vào cuối danh từ</div>
+  <div class="options">
+    <button class="opt-btn" onclick="pickTF(this,'e4q3','A')"><span class="opt-circle">A</span>True</button>
+    <button class="opt-btn" onclick="pickTF(this,'e4q3','B')"><span class="opt-circle">B</span>False</button>
+  </div>
+  <div class="feedback" id="fb-e4q3"></div>
+</div>
+
+<div class="card">
+  <div class="q-label">Câu 4</div>
+  <div class="q-text">Danh từ tận cùng bằng F / FE → Thêm VES vào cuối danh từ</div>
+  <div class="options">
+    <button class="opt-btn" onclick="pickTF(this,'e4q4','A')"><span class="opt-circle">A</span>True</button>
+    <button class="opt-btn" onclick="pickTF(this,'e4q4','B')"><span class="opt-circle">B</span>False</button>
+  </div>
+  <div class="feedback" id="fb-e4q4"></div>
+</div>
+
+<div class="card">
+  <div class="q-label">Câu 5</div>
+  <div class="q-text">Danh từ tận cùng bằng EF / IEF / IFF / OOF → Thêm S vào cuối danh từ</div>
+  <div class="options">
+    <button class="opt-btn" onclick="pickTF(this,'e4q5','A')"><span class="opt-circle">A</span>True</button>
+    <button class="opt-btn" onclick="pickTF(this,'e4q5','B')"><span class="opt-circle">B</span>False</button>
+  </div>
+  <div class="feedback" id="fb-e4q5"></div>
+</div>
+
+<!-- EX5 -->
+<div class="section-title">Exercise 5: Nối các từ sau đây với nhóm danh từ tương ứng</div>
+<div class="card" id="ex5-card"></div>
+
+<!-- EX6 -->
+<div class="section-title">Exercise 6: Nối các cách viết dạng số nhiều sau với danh từ tương ứng</div>
+<div class="card" id="ex6-card"></div>
+
+<!-- EX7 -->
+<div class="section-title">Exercise 7: Quan sát tranh và hoàn thiện các câu sau đây, sử dụng danh từ cho sẵn ở dạng số nhiều</div>
+<div class="card">
+  <div class="ex-title">Ví dụ: Picture 1. three bananas &nbsp;|&nbsp; Picture 2. two newspapers</div>
+  <div class="word-bank">
+    <span class="word-chip">girl</span><span class="word-chip">pencil</span><span class="word-chip">telephone</span>
+    <span class="word-chip">bird</span><span class="word-chip">cup</span><span class="word-chip">camera</span>
+    <span class="word-chip">banana</span><span class="word-chip">newspaper</span><span class="word-chip">chair</span>
+    <span class="word-chip">spoon</span>
+  </div>
+  <div id="ex7-rows"></div>
+  <div class="feedback" id="fb-ex7"></div>
+</div>
+
+<!-- EX8 -->
+<div class="section-title">Exercise 8: Chuyển các danh từ sau sang dạng số nhiều</div>
+<div class="card" id="ex8-card"></div>
+
+<!-- EX9 -->
+<div class="section-title">Exercise 9: Chọn đáp án chứa từ chính xác trong các câu sau</div>
+
+<div class="card">
+  <div class="q-label">Câu 1</div>
+  <div class="q-text">My mother gave me a lot of <u>money / moneys</u> for the week.</div>
+  <div class="options">
+    <button class="opt-btn" onclick="pickMC(this,'e9q1','A')"><span class="opt-circle">A</span>money</button>
+    <button class="opt-btn" onclick="pickMC(this,'e9q1','B')"><span class="opt-circle">B</span>moneys</button>
+  </div>
+  <div class="feedback" id="fb-e9q1"></div>
+</div>
+
+<div class="card">
+  <div class="q-label">Câu 2</div>
+  <div class="q-text">I like to keep a notebook and two <u>pencil / pencils</u> within reach.</div>
+  <div class="options">
+    <button class="opt-btn" onclick="pickMC(this,'e9q2','A')"><span class="opt-circle">A</span>pencil</button>
+    <button class="opt-btn" onclick="pickMC(this,'e9q2','B')"><span class="opt-circle">B</span>pencils</button>
+  </div>
+  <div class="feedback" id="fb-e9q2"></div>
+</div>
+
+<div class="card">
+  <div class="q-label">Câu 3</div>
+  <div class="q-text">Apple <u>juice / juices</u> is good for your health.</div>
+  <div class="options">
+    <button class="opt-btn" onclick="pickMC(this,'e9q3','A')"><span class="opt-circle">A</span>juice</button>
+    <button class="opt-btn" onclick="pickMC(this,'e9q3','B')"><span class="opt-circle">B</span>juices</button>
+  </div>
+  <div class="feedback" id="fb-e9q3"></div>
+</div>
+
+<div class="card">
+  <div class="q-label">Câu 4</div>
+  <div class="q-text">We've just bought some new outdoor <u>furniture / furnitures</u>.</div>
+  <div class="options">
+    <button class="opt-btn" onclick="pickMC(this,'e9q4','A')"><span class="opt-circle">A</span>furniture</button>
+    <button class="opt-btn" onclick="pickMC(this,'e9q4','B')"><span class="opt-circle">B</span>furnitures</button>
+  </div>
+  <div class="feedback" id="fb-e9q4"></div>
+</div>
+
+<!-- EX10 -->
+<div class="section-title">Exercise 10: Điền dạng đúng của các từ cho sẵn dưới đây vào ô trống thích hợp</div>
+<div class="card">
+  <div class="word-bank">
+    <span class="word-chip">advice</span><span class="word-chip">cake</span><span class="word-chip">student</span>
+    <span class="word-chip">electricity</span><span class="word-chip">information</span><span class="word-chip">pizza</span>
+    <span class="word-chip">sunshine</span>
+  </div>
+  <div id="ex10-rows"></div>
+  <div class="feedback" id="fb-ex10"></div>
+</div>
+
+<button class="submit-btn" onclick="submitAll()" id="submit-btn">✅ Chấm bài</button>
+
+<div class="score-board" id="score-board">
+  <div class="big-score" id="score-text"></div>
+  <div class="score-msg" id="score-msg"></div>
+  <button class="reset-btn" onclick="location.reload()">🔄 Làm lại</button>
+</div>
+
+</div><!-- /container -->
+
+<script>
+// ===== DATA =====
+const e1Answers = { e1q1:'B', e1q2:'B', e1q3:'B' };
+const e4Answers = { e4q1:'B', e4q2:'A', e4q3:'A', e4q4:'B', e4q5:'A' };
+// e4q1: False (vì -y thêm ies nếu phụ âm+y, không phải tất cả -y đều thêm es)
+// e4q4: False (không phải TẤT CẢ f/fe đều thêm ves, có ngoại lệ)
+
+const e2aCorrect = ['Danh từ chỉ người','Danh từ chỉ con vật','Danh từ chỉ sự vật'];
+const e2bCorrect = ['goose','house','mouse','baby','key'];
+
+const ex3Data = [
+  {word:'Man (người đàn ông)', answer:'men'},
+  {word:'Woman (người phụ nữ)', answer:'women'},
+  {word:'Child (đứa trẻ)', answer:'children'},
+  {word:'Ox (con bò đực)', answer:'oxen'},
+  {word:'Foot (bàn chân)', answer:'feet'},
+  {word:'Goose (con ngỗng)', answer:'geese'},
+  {word:'Tooth (răng)', answer:'teeth'},
+  {word:'Mouse (con chuột)', answer:'mice'},
+  {word:'Louse (con chấy)', answer:'lice'},
+];
+
+const ex5Data = [
+  {term:'Luggage', answer:'Danh từ không đếm được'},
+  {term:'Bar', answer:'Danh từ đếm được'},
+  {term:'Sugar', answer:'Danh từ không đếm được'},
+  {term:'Book', answer:'Danh từ đếm được'},
+  {term:'Coffee', answer:'Danh từ không đếm được'},
+  {term:'Happiness', answer:'Danh từ không đếm được'},
+  {term:'Pen', answer:'Danh từ đếm được'},
+  {term:'House', answer:'Danh từ đếm được'},
+  {term:'Rain', answer:'Danh từ không đếm được'},
+];
+const ex5Cats = ['Danh từ đếm được','Danh từ không đếm được'];
+
+const ex6Data = [
+  {term:'Book', answer:"Thêm 's' vào cuối từ"},
+  {term:'Wife', answer:"Đổi 'f' và 'fe' thành 'v' rồi thêm 'es'"},
+  {term:'Tomato', answer:"Thêm 'es' vào cuối từ"},
+  {term:'Table', answer:"Thêm 's' vào cuối từ"},
+  {term:'Lady', answer:"Đổi 'y' thành 'i' rồi thêm 'es'"},
+  {term:'Scarf', answer:"Thêm 's' vào cuối từ"},
+  {term:'Hero', answer:"Thêm 'es' vào cuối từ"},
+  {term:'Life', answer:"Đổi 'f' và 'fe' thành 'v' rồi thêm 'es'"},
+  {term:'Play', answer:"Thêm 's' vào cuối từ"},
+  {term:'Family', answer:"Đổi 'y' thành 'i' rồi thêm 'es'"},
+  {term:'Box', answer:"Thêm 'es' vào cuối từ"},
+  {term:'Country', answer:"Đổi 'y' thành 'i' rồi thêm 'es'"},
+  {term:'Chef', answer:"Thêm 's' vào cuối từ"},
+  {term:'Brush', answer:"Thêm 'es' vào cuối từ"},
+];
+const ex6Cats = ["Thêm 's' vào cuối từ","Thêm 'es' vào cuối từ","Đổi 'f' và 'fe' thành 'v' rồi thêm 'es'","Đổi 'y' thành 'i' rồi thêm 'es'"];
+
+const ex7Data = [
+  {pic:'3', answer:'three girls', hint:'three girls (3 cô gái)'},
+  {pic:'4', answer:'two telephones', hint:'two telephones (2 điện thoại)'},
+  {pic:'5', answer:'three cameras', hint:'three cameras (3 máy ảnh)'},
+  {pic:'6', answer:'four spoons', hint:'four spoons (4 chiếc thìa)'},
+  {pic:'7', answer:'three pencils', hint:'three pencils (3 cây bút chì)'},
+  {pic:'8', answer:'two birds', hint:'two birds (2 con chim)'},
+  {pic:'9', answer:'three chairs', hint:'three chairs (3 cái ghế)'},
+  {pic:'10', answer:'three cups', hint:'three cups (3 cái cốc)'},
+];
+
+const ex8Data = [
+  {word:'Address', answer:'addresses'},
+  {word:'Mountain', answer:'mountains'},
+  {word:'Lorry', answer:'lorries'},
+  {word:'Waitress', answer:'waitresses'},
+  {word:'Secretary', answer:'secretaries'},
+  {word:'Sandwich', answer:'sandwiches'},
+  {word:'Vegetable', answer:'vegetables'},
+  {word:'Dictionary', answer:'dictionaries'},
+  {word:'Eye', answer:'eyes'},
+  {word:'Bag', answer:'bags'},
+  {word:'Box', answer:'boxes'},
+  {word:'School', answer:'schools'},
+  {word:'Lunch', answer:'lunches'},
+  {word:'City', answer:'cities'},
+  {word:'Hotel', answer:'hotels'},
+];
+
+const ex9Answers = {e9q1:'A', e9q2:'B', e9q3:'A', e9q4:'A'};
+
+const ex10Data = [
+  {sentence:'A group of ___ is standing outside the class.', answer:'students'},
+  {sentence:'My sister usually gives me good ___ on how to prepare for the exam.', answer:'advice'},
+  {sentence:'A dictionary is a wonderful source of ___.', answer:'information'},
+  {sentence:"I have some little ___ for Claire's birthday party.", answer:'cakes'},
+  {sentence:'I am very glad because I love the warm ___ and the fragrant flowers.', answer:'sunshine'},
+  {sentence:'Every day they eat two ___ for breakfast.', answer:'pizzas'},
+  {sentence:'There is no ___ in the area, so they have to cook over the fire.', answer:'electricity'},
+];
+
+// ===== STATE =====
+const userAnswers = {};
+let totalQ = 0, correctQ = 0;
+
+// ===== BUILD UI =====
+function buildEx3() {
+  const card = document.getElementById('ex3-card');
+  ex3Data.forEach((item,i) => {
+    const row = document.createElement('div');
+    row.className = 'fill-row';
+    row.innerHTML = `<b>${item.word}</b> → <input type="text" class="fill-input" id="ex3-${i}" placeholder="..." autocomplete="off" style="width:160px"/>
+    <span class="ans-hint" id="ex3-ans-${i}">✓ ${item.answer}</span>`;
+    card.appendChild(row);
+  });
+}
+
+function buildEx5() {
+  const card = document.getElementById('ex5-card');
+  ex5Data.forEach((item,i) => {
+    const row = document.createElement('div');
+    row.className = 'match-pair';
+    row.innerHTML = `<div class="match-term">${item.term}</div>
+    <div>
+      <select class="match-select" id="ex5-${i}">
+        <option value="">-- Chọn --</option>
+        ${ex5Cats.map(c=>`<option value="${c}">${c}</option>`).join('')}
+      </select>
+      <div class="ans-hint" id="ex5-ans-${i}">✓ ${item.answer}</div>
+    </div>`;
+    card.appendChild(row);
+  });
+}
+
+function buildEx6() {
+  const card = document.getElementById('ex6-card');
+  ex6Data.forEach((item,i) => {
+    const row = document.createElement('div');
+    row.className = 'match-pair';
+    row.style.marginBottom = '8px';
+    row.innerHTML = `<div class="match-term">${item.term}</div>
+    <div>
+      <select class="match-select" id="ex6-${i}">
+        <option value="">-- Chọn quy tắc --</option>
+        ${ex6Cats.map(c=>`<option value="${c}">${c}</option>`).join('')}
+      </select>
+      <div class="ans-hint" id="ex6-ans-${i}">✓ ${item.answer}</div>
+    </div>`;
+    card.appendChild(row);
+  });
+}
+
+function buildEx7() {
+  const cont = document.getElementById('ex7-rows');
+  ex7Data.forEach((item,i) => {
+    const row = document.createElement('div');
+    row.className = 'fill-row';
+    row.innerHTML = `<b>Picture ${item.pic}.</b>
+    <input type="text" class="fill-input" id="ex7-${i}" placeholder="..." autocomplete="off" style="flex:1;min-width:160px"/>
+    <span class="ans-hint" id="ex7-ans-${i}">✓ ${item.hint}</span>`;
+    cont.appendChild(row);
+  });
+}
+
+function buildEx8() {
+  const card = document.getElementById('ex8-card');
+  const grid = document.createElement('div');
+  grid.style.display = 'grid';
+  grid.style.gridTemplateColumns = '1fr 1fr';
+  grid.style.gap = '10px';
+  ex8Data.forEach((item,i) => {
+    const row = document.createElement('div');
+    row.className = 'fill-row';
+    row.style.flexDirection = 'column';
+    row.style.alignItems = 'flex-start';
+    row.innerHTML = `<b>${item.word}</b>
+    <input type="text" class="fill-input" id="ex8-${i}" placeholder="..." autocomplete="off" style="width:100%"/>
+    <span class="ans-hint" id="ex8-ans-${i}">✓ ${item.answer}</span>`;
+    grid.appendChild(row);
+  });
+  card.appendChild(grid);
+}
+
+function buildEx10() {
+  const cont = document.getElementById('ex10-rows');
+  ex10Data.forEach((item,i) => {
+    const row = document.createElement('div');
+    row.style.marginBottom = '13px';
+    const parts = item.sentence.split('___');
+    row.innerHTML = `<div style="font-weight:700;font-size:1rem;margin-bottom:4px">${parts[0]}<input type="text" class="fill-input" id="ex10-${i}" placeholder="..." autocomplete="off" style="width:140px;margin:0 4px"/>${parts[1]||''}</div>
+    <span class="ans-hint" id="ex10-ans-${i}">✓ ${item.answer}</span>`;
+    cont.appendChild(row);
+  });
+}
+
+// ===== INTERACTIONS =====
+function pickTF(btn, qid, val) {
+  btn.closest('.card').querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  userAnswers[qid] = val;
+}
+function pickMC(btn, qid, val) {
+  btn.closest('.card').querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  userAnswers[qid] = val;
+}
+const chkState = {};
+function toggleChk(btn, group) {
+  if (!chkState[group]) chkState[group] = new Set();
+  const label = btn.textContent.trim();
+  if (chkState[group].has(label)) {
+    chkState[group].delete(label);
+    btn.classList.remove('checked');
+    btn.querySelector('.chk-box').textContent = '';
+  } else {
+    chkState[group].add(label);
+    btn.classList.add('checked');
+    btn.querySelector('.chk-box').textContent = '✓';
+  }
+}
+
+// ===== SUBMIT =====
+function submitAll() {
+  totalQ = 0; correctQ = 0;
+
+  // Ex1
+  Object.entries(e1Answers).forEach(([qid, correct]) => {
+    totalQ++;
+    const card = document.getElementById(`fb-${qid}`).closest('.card');
+    const user = userAnswers[qid];
+    if (user === correct) { correctQ++; markBtns(card, correct, true); showFB(`fb-${qid}`, true, '✓ Chính xác!'); }
+    else { markBtns(card, correct, false, user); showFB(`fb-${qid}`, false, `✗ Sai! Đáp án: ${correct==='A'?'True':'False'}`); }
+  });
+
+  // Ex2a
+  totalQ++;
+  const sel2a = chkState['e2a'] ? [...chkState['e2a']] : [];
+  const ok2a = e2aCorrect.every(x => sel2a.includes(x)) && sel2a.every(x => e2aCorrect.includes(x));
+  if (ok2a) correctQ++;
+  document.getElementById('e2a-opts').querySelectorAll('.chk-btn').forEach(btn => {
+    btn.classList.add('disabled'); btn.onclick = null;
+    const lbl = btn.textContent.trim();
+    if (e2aCorrect.includes(lbl)) btn.classList.add('correct');
+    else if (sel2a.includes(lbl)) btn.classList.add('wrong');
+  });
+  showFB('fb-e2a', ok2a, ok2a ? '✓ Chính xác!' : `✗ Đáp án đúng: ${e2aCorrect.join(', ')}`);
+
+  // Ex2b
+  totalQ++;
+  const sel2b = chkState['e2b'] ? [...chkState['e2b']] : [];
+  const ok2b = e2bCorrect.every(x => sel2b.includes(x)) && sel2b.every(x => e2bCorrect.includes(x));
+  if (ok2b) correctQ++;
+  document.getElementById('e2b-opts').querySelectorAll('.chk-btn').forEach(btn => {
+    btn.classList.add('disabled'); btn.onclick = null;
+    const lbl = btn.textContent.trim();
+    if (e2bCorrect.includes(lbl)) btn.classList.add('correct');
+    else if (sel2b.includes(lbl)) btn.classList.add('wrong');
+  });
+  showFB('fb-e2b', ok2b, ok2b ? '✓ Chính xác!' : `✗ Đáp án đúng: ${e2bCorrect.join(', ')}`);
+
+  // Ex3
+  ex3Data.forEach((item,i) => {
+    totalQ++;
+    const inp = document.getElementById(`ex3-${i}`);
+    if (inp.value.trim().toLowerCase() === item.answer.toLowerCase()) {
+      correctQ++; inp.classList.add('correct');
+    } else {
+      inp.classList.add('wrong');
+      document.getElementById(`ex3-ans-${i}`).classList.add('show');
+    }
+    inp.disabled = true;
+  });
+
+  // Ex4
+  Object.entries(e4Answers).forEach(([qid, correct]) => {
+    totalQ++;
+    const card = document.getElementById(`fb-${qid}`).closest('.card');
+    const user = userAnswers[qid];
+    if (user === correct) { correctQ++; markBtns(card, correct, true); showFB(`fb-${qid}`, true, '✓ Chính xác!'); }
+    else { markBtns(card, correct, false, user); showFB(`fb-${qid}`, false, `✗ Sai! Đáp án: ${correct==='A'?'True':'False'}`); }
+  });
+
+  // Ex5
+  ex5Data.forEach((item,i) => {
+    totalQ++;
+    const sel = document.getElementById(`ex5-${i}`);
+    if (sel.value === item.answer) { correctQ++; sel.classList.add('correct'); }
+    else { sel.classList.add('wrong'); document.getElementById(`ex5-ans-${i}`).classList.add('show'); }
+    sel.disabled = true;
+  });
+
+  // Ex6
+  ex6Data.forEach((item,i) => {
+    totalQ++;
+    const sel = document.getElementById(`ex6-${i}`);
+    if (sel.value === item.answer) { correctQ++; sel.classList.add('correct'); }
+    else { sel.classList.add('wrong'); document.getElementById(`ex6-ans-${i}`).classList.add('show'); }
+    sel.disabled = true;
+  });
+
+  // Ex7
+  ex7Data.forEach((item,i) => {
+    totalQ++;
+    const inp = document.getElementById(`ex7-${i}`);
+    const v = inp.value.trim().toLowerCase();
+    // Accept if contains the key noun plural
+    const noun = item.answer.split(' ').slice(-1)[0];
+    if (v.includes(noun)) { correctQ++; inp.classList.add('correct'); }
+    else { inp.classList.add('wrong'); document.getElementById(`ex7-ans-${i}`).classList.add('show'); }
+    inp.disabled = true;
+  });
+
+  // Ex8
+  ex8Data.forEach((item,i) => {
+    totalQ++;
+    const inp = document.getElementById(`ex8-${i}`);
+    if (inp.value.trim().toLowerCase() === item.answer.toLowerCase()) {
+      correctQ++; inp.classList.add('correct');
+    } else {
+      inp.classList.add('wrong');
+      document.getElementById(`ex8-ans-${i}`).classList.add('show');
+    }
+    inp.disabled = true;
+  });
+
+  // Ex9
+  Object.entries(ex9Answers).forEach(([qid, correct]) => {
+    totalQ++;
+    const card = document.getElementById(`fb-${qid}`).closest('.card');
+    const user = userAnswers[qid];
+    if (user === correct) { correctQ++; markBtns(card, correct, true); showFB(`fb-${qid}`, true, '✓ Chính xác!'); }
+    else { markBtns(card, correct, false, user); showFB(`fb-${qid}`, false, `✗ Sai! Đáp án: ${correct}`); }
+  });
+
+  // Ex10
+  ex10Data.forEach((item,i) => {
+    totalQ++;
+    const inp = document.getElementById(`ex10-${i}`);
+    if (inp.value.trim().toLowerCase() === item.answer.toLowerCase()) {
+      correctQ++; inp.classList.add('correct');
+    } else {
+      inp.classList.add('wrong');
+      document.getElementById(`ex10-ans-${i}`).classList.add('show');
+    }
+    inp.disabled = true;
+  });
+
+  // Score
+  const pct = Math.round(correctQ/totalQ*100);
+  document.getElementById('score-text').textContent = `${correctQ} / ${totalQ} câu đúng (${pct}%)`;
+  let msg = pct>=90?'🎉 Xuất sắc! Bạn nắm chắc kiến thức danh từ!':pct>=70?'👍 Tốt lắm! Xem lại câu sai nhé!':pct>=50?'💪 Cố lên! Cần ôn luyện thêm!':'📚 Hãy xem lại bài và thử lại nhé!';
+  document.getElementById('score-msg').textContent = msg;
+  const sb = document.getElementById('score-board');
+  sb.classList.add('show');
+  sb.scrollIntoView({behavior:'smooth'});
+  document.getElementById('submit-btn').disabled = true;
+}
+
+function markBtns(card, correct, isRight, wrong) {
+  card.querySelectorAll('.opt-btn').forEach(btn => {
+    btn.disabled = true;
+    const txt = btn.textContent.replace(/^[A-Z]/,'').trim();
+    if (txt === (correct==='A'?'True':'False') || btn.textContent.trim().startsWith(correct)) btn.classList.add('correct');
+    if (wrong && btn.textContent.trim().startsWith(wrong) && !isRight) btn.classList.add('wrong');
+  });
+}
+function showFB(id, ok, msg) {
+  const el = document.getElementById(id);
+  el.textContent = msg;
+  el.className = `feedback show ${ok?'correct':'wrong'}`;
+}
+
+// INIT
+buildEx3(); buildEx5(); buildEx6(); buildEx7(); buildEx8(); buildEx10();
+</script>
+</body>
+</html>
