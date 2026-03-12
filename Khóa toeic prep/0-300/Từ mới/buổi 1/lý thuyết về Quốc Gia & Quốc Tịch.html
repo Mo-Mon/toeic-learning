@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quốc Gia & Quốc Tịch | PREP.VN</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F0F5FF;--white:#fff;--ink:#1A1F36;--muted:#6B7A99;--border:#D6E0FF;
+  --blue:#2563EB;--blue-l:#EEF3FF;--blue-d:#1D4ED8;
+  --green:#059669;--green-l:#ECFDF5;
+  --red:#DC2626;--red-l:#FEF2F2;
+  --yellow:#D97706;--yellow-l:#FFFBEB;
+  --purple:#7C3AED;--purple-l:#F5F3FF;
+  --radius:16px;--shadow:0 4px 20px rgba(37,99,235,0.10);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;}
+
+header{background:linear-gradient(135deg,#1D4ED8 0%,#6D28D9 100%);padding:30px 20px 40px;text-align:center;position:relative;overflow:hidden;}
+header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 110%,rgba(255,255,255,0.12),transparent);}
+.prep-badge{display:inline-block;background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.3);color:#fff;font-size:.75rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:4px 16px;border-radius:50px;margin-bottom:12px;position:relative;}
+header h1{font-family:'Baloo 2',cursive;font-size:clamp(1.7rem,4vw,2.5rem);font-weight:900;color:#fff;position:relative;line-height:1.2;}
+header h1 span{color:#93C5FD;}
+header p{color:rgba(255,255,255,0.78);font-size:.95rem;margin-top:8px;position:relative;}
+.hstats{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:18px;position:relative;}
+.hstat{background:rgba(255,255,255,0.13);border:1px solid rgba(255,255,255,0.2);border-radius:50px;padding:5px 16px;color:#fff;font-size:.82rem;font-weight:700;}
+
+.tab-bar{background:var(--white);border-bottom:2px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,0.06);}
+.tabs{display:flex;max-width:960px;margin:0 auto;padding:0 12px;overflow-x:auto;scrollbar-width:none;gap:2px;}
+.tabs::-webkit-scrollbar{display:none;}
+.tab-btn{flex-shrink:0;padding:13px 18px;font-family:'Nunito',sans-serif;font-size:.86rem;font-weight:700;color:var(--muted);background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;transition:all .2s;white-space:nowrap;}
+.tab-btn:hover{color:var(--ink);}
+.tab-btn.active{color:var(--blue);border-bottom-color:var(--blue);}
+
+.container{max-width:960px;margin:0 auto;padding:28px 16px 80px;}
+.panel{display:none;}
+.panel.active{display:block;animation:up .3s ease;}
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+.theory-section{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px 26px;margin-bottom:18px;border:2px solid var(--border);}
+.theory-head2{font-family:'Baloo 2',cursive;font-size:1.1rem;font-weight:800;color:var(--ink);margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.suffix-badge{font-size:.8rem;font-weight:800;padding:3px 13px;border-radius:50px;color:#fff;}
+.sb-ese{background:#7C3AED;}.sb-an{background:#2563EB;}.sb-ian{background:#059669;}.sb-ish{background:#D97706;}.sb-other{background:#DC2626;}
+table.suf-tbl{width:100%;border-collapse:collapse;font-size:.92rem;}
+table.suf-tbl th{background:var(--blue-l);color:var(--blue-d);font-weight:800;padding:9px 14px;text-align:left;border-bottom:2px solid var(--border);}
+table.suf-tbl td{padding:9px 14px;border-bottom:1px solid var(--border);font-weight:600;vertical-align:middle;}
+table.suf-tbl tr:last-child td{border-bottom:none;}
+.nat{color:var(--blue);font-weight:800;}
+.tip-box{background:var(--yellow-l);border:2px solid #FDE68A;border-radius:10px;padding:11px 16px;font-size:.88rem;font-weight:600;color:#92400E;margin-top:14px;display:flex;gap:8px;}
+
+.speak-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-top:14px;}
+.speak-card{background:var(--bg);border:2px solid var(--border);border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:10px;}
+.sc-flag{font-size:1.4rem;}
+.sc-info{flex:1;}
+.sc-country{font-size:.82rem;color:var(--muted);font-weight:600;}
+.sc-nat{font-size:1rem;font-weight:800;color:var(--blue-d);}
+.speak-btn{width:34px;height:34px;border-radius:50%;border:2px solid var(--blue);background:var(--blue);color:#fff;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;font-size:.85rem;transition:all .15s;flex-shrink:0;}
+.speak-btn:hover{background:var(--blue-d);}
+.speak-btn.playing{animation:pulse .6s infinite alternate;}
+@keyframes pulse{from{transform:scale(1)}to{transform:scale(1.12)}}
+
+.ex-block{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);border:2px solid var(--border);padding:22px 26px;margin-bottom:18px;}
+.ex-title{font-family:'Baloo 2',cursive;font-size:1.05rem;font-weight:800;color:var(--ink);margin-bottom:4px;display:flex;align-items:center;gap:10px;}
+.ex-sub{font-size:.85rem;color:var(--muted);font-weight:600;margin-bottom:18px;}
+.ex-num{font-size:.78rem;font-weight:800;padding:3px 11px;border-radius:50px;color:#fff;background:var(--blue);}
+.divider{border:none;border-top:2px dashed var(--border);margin:18px 0;}
+
+.q-text{font-size:.97rem;font-weight:700;color:var(--ink);margin-bottom:10px;line-height:1.6;}
+.q-text em{background:var(--blue-l);color:var(--blue-d);padding:1px 7px;border-radius:5px;font-style:normal;font-weight:800;}
+.opts{display:flex;flex-direction:column;gap:7px;}
+.opt{display:flex;align-items:center;gap:10px;padding:10px 15px;border:2px solid var(--border);border-radius:10px;background:var(--bg);cursor:pointer;font-family:'Nunito',sans-serif;font-size:.93rem;font-weight:600;color:var(--ink);transition:all .15s;text-align:left;width:100%;}
+.opt:hover:not([disabled]){background:var(--blue-l);border-color:var(--blue);color:var(--blue);transform:translateX(3px);}
+.opt.sel{background:var(--blue-l);border-color:var(--blue);color:var(--blue);}
+.opt.correct{background:var(--green-l);border-color:var(--green);color:var(--green);font-weight:800;}
+.opt.wrong{background:var(--red-l);border-color:var(--red);color:var(--red);}
+.opt-c{width:25px;height:25px;border-radius:50%;border:2px solid currentColor;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;flex-shrink:0;}
+.fb{margin-top:8px;font-size:.86rem;font-weight:700;padding:7px 13px;border-radius:8px;display:none;}
+.fb.show{display:block;}
+.fb.correct{background:var(--green-l);color:var(--green);}
+.fb.wrong{background:var(--red-l);color:var(--red);}
+
+.listen-q{background:var(--purple-l);border:2px solid #C4B5FD;border-radius:12px;padding:16px 20px;margin-bottom:12px;}
+.lq-num{font-size:.8rem;font-weight:700;color:#6D28D9;margin-bottom:8px;}
+.play-big{padding:10px 18px;background:var(--purple);color:#fff;border:none;border-radius:50px;font-family:'Nunito',sans-serif;font-size:.9rem;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:all .15s;margin-bottom:12px;}
+.play-big:hover{background:#6D28D9;}
+.play-big.playing{animation:pulse .6s infinite alternate;}
+.lopts{display:flex;gap:8px;flex-wrap:wrap;}
+.lopt{padding:8px 18px;border:2px solid #C4B5FD;border-radius:50px;background:#fff;cursor:pointer;font-family:'Nunito',sans-serif;font-size:.9rem;font-weight:700;color:#6D28D9;transition:all .15s;}
+.lopt:hover:not([disabled]){background:var(--purple);color:#fff;border-color:var(--purple);}
+.lopt.sel{background:var(--purple);color:#fff;border-color:var(--purple);}
+.lopt.correct{background:var(--green-l);border-color:var(--green);color:var(--green);}
+.lopt.wrong{background:var(--red-l);border-color:var(--red);color:var(--red);}
+
+.pron-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;}
+.pron-card{background:var(--blue-l);border:2px solid var(--blue);border-radius:12px;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.pron-word{font-size:1rem;font-weight:900;color:var(--blue-d);}
+
+.err-block{background:var(--bg);border:2px solid var(--border);border-radius:10px;padding:14px 18px;margin-bottom:4px;}
+.err-sent{font-size:.93rem;font-weight:700;color:var(--ink);margin-bottom:10px;line-height:1.6;}
+.err-fields{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;}
+.field-group{display:flex;flex-direction:column;gap:4px;}
+.field-label{font-size:.72rem;font-weight:700;color:var(--muted);}
+.fill-input{border:2px solid var(--border);border-radius:9px;padding:8px 12px;font-family:'Nunito',sans-serif;font-size:.9rem;font-weight:700;background:#fff;color:var(--ink);outline:none;transition:border-color .15s;width:140px;}
+.fill-input:focus{border-color:var(--blue);background:var(--blue-l);}
+.fill-input.correct{border-color:var(--green);background:var(--green-l);color:var(--green);}
+.fill-input.wrong{border-color:var(--red);background:var(--red-l);color:var(--red);}
+.hint{font-size:.82rem;font-weight:700;color:var(--green);display:none;margin-top:4px;}
+.hint.show{display:block;}
+
+.para-box{background:#FFFBEB;border:2px solid #FDE68A;border-radius:12px;padding:18px 22px;font-size:.93rem;line-height:2.4;font-weight:600;color:var(--ink);margin-bottom:16px;}
+.blank-sel{border:2px solid #F59E0B;border-radius:7px;padding:4px 8px;font-family:'Nunito',sans-serif;font-size:.88rem;font-weight:700;background:#fff;color:var(--ink);outline:none;cursor:pointer;margin:0 2px;}
+.blank-sel.correct{border-color:var(--green);background:var(--green-l);color:var(--green);}
+.blank-sel.wrong{border-color:var(--red);background:var(--red-l);color:var(--red);}
+
+.score-row{background:var(--white);border-radius:var(--radius);padding:20px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;border:2px solid var(--border);margin-top:6px;box-shadow:var(--shadow);}
+.sc-num{font-size:1.4rem;font-weight:900;color:var(--ink);}
+.sc-num span{font-size:.85rem;font-weight:500;color:var(--muted);}
+.sc-msg{font-size:.9rem;font-weight:600;color:var(--muted);}
+.progress-bar{height:6px;background:var(--border);border-radius:99px;margin-top:6px;overflow:hidden;min-width:120px;}
+.progress-fill{height:100%;border-radius:99px;background:var(--blue);transition:width .5s ease;}
+.btn-check{padding:10px 22px;color:#fff;border:none;border-radius:50px;font-family:'Nunito',sans-serif;font-size:.9rem;font-weight:800;cursor:pointer;transition:all .15s;}
+.btn-check:hover{filter:brightness(.88);}
+.btn-check:disabled{background:#CBD5E1!important;cursor:not-allowed;}
+.btn-reset{padding:10px 16px;background:var(--bg);color:var(--ink);border:2px solid var(--border);border-radius:50px;font-family:'Nunito',sans-serif;font-size:.9rem;font-weight:800;cursor:pointer;}
+.btn-reset:hover{background:var(--border);}
+.score-btns{display:flex;gap:10px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="prep-badge">PREP.VN · Buổi 1</div>
+  <h1>🌍 Quốc Gia &amp; <span>Quốc Tịch</span></h1>
+  <p>Countries &amp; Nationalities · Hậu tố -ese / -an / -ian / -ish</p>
+  <div class="hstats">
+    <div class="hstat">📚 Lý thuyết hậu tố</div>
+    <div class="hstat">🔊 Luyện phát âm</div>
+    <div class="hstat">✏️ 5 bài tập</div>
+  </div>
+</header>
+
+<div class="tab-bar"><div class="tabs" id="tabs"></div></div>
+<div class="container" id="container"></div>
+
+<script>
+// ===== DATA =====
+const TAB_LABELS = ['📖 Lý thuyết','✏️ Ex 1','🎧 Ex 2','🔊 Ex 3','🔍 Ex 4','📝 Ex 5','📄 Ex 6'];
+
+const VOCAB = [
+  {f:'🇻🇳',c:'Vietnam',n:'Vietnamese'},{f:'🇨🇳',c:'China',n:'Chinese'},{f:'🇯🇵',c:'Japan',n:'Japanese'},
+  {f:'🇺🇸',c:'America',n:'American'},{f:'🇦🇺',c:'Australia',n:'Australian'},{f:'🇲🇽',c:'Mexico',n:'Mexican'},
+  {f:'🇪🇬',c:'Egypt',n:'Egyptian'},{f:'🇧🇷',c:'Brazil',n:'Brazilian'},{f:'🇮🇹',c:'Italy',n:'Italian'},
+  {f:'🏴',c:'England',n:'English'},{f:'🇬🇧',c:'Britain',n:'British'},{f:'🇹🇷',c:'Turkey',n:'Turkish'},
+  {f:'🇫🇷',c:'France',n:'French'},{f:'🇳🇱',c:'The Netherlands',n:'Dutch'},
+];
+
+const E1_DATA = [
+  {q:'Đâu <strong>KHÔNG</strong> phải hậu tố chỉ quốc tịch?', opts:['A. -an','B. -ish','C. -ese','D. -ion','E. -ian'], ans:'D', exp:'-ion không phải hậu tố quốc tịch!'},
+  {q:'Quốc tịch của <em>Mexico</em>?', opts:['A. Mexician','B. Mexican','C. Mexicoian'], ans:'B', exp:'Mexico → Mexican (hậu tố -an)'},
+  {q:'Quốc tịch của <em>England</em>?', opts:['A. English','B. Englese','C. Englian'], ans:'A', exp:'England → English (hậu tố -ish)'},
+  {q:'Quốc tịch của <em>The Netherlands</em>?', opts:['A. Netherlandian','B. Dutch','C. Dutchese'], ans:'B', exp:'The Netherlands → Dutch (đặc biệt)'},
+  {q:'Quốc tịch của <em>China</em>?', opts:['A. Chinese','B. China','C. Chinish'], ans:'A', exp:'China → Chinese (hậu tố -ese)'},
+  {q:'Quốc tịch của <em>Egypt</em>?', opts:['A. Egyptan','B. Egyptian','C. Egyptese'], ans:'B', exp:'Egypt → Egyptian (hậu tố -ian)'},
+  {q:'Quốc tịch của <em>France</em>?', opts:['A. Francese','B. Francish','C. French'], ans:'C', exp:'France → French (đặc biệt)'},
+];
+
+const E2_DATA = [
+  {word:'Vietnam',ans:'country'},{word:'Japanese',ans:'nationality'},
+  {word:'Mexico',ans:'country'},{word:'Egyptian',ans:'nationality'},
+  {word:'Brazil',ans:'country'},{word:'Turkish',ans:'nationality'},
+];
+
+const E3_WORDS = ['Japanese','Australia','Mexican','Egypt','Brazilian','Turkish','British','French'];
+
+const E4_DATA = [
+  {s:'1. We do a lot of business with <u>Italy</u> people.',w:'Italy',c:'Italian'},
+  {s:'2. The <u>Vietnam</u> are usually hard-working.',w:'Vietnam',c:'Vietnamese'},
+  {s:'3. I think <u>America</u> are very friendly.',w:'America',c:'Americans'},
+  {s:'4. I met a lot of new friends on my trip to <u>Australian</u>.',w:'Australian',c:'Australia'},
+  {s:'5. James is from Japan. He speaks <u>Japanish</u>.',w:'Japanish',c:'Japanese'},
+];
+
+const E5_DATA = [
+  {q:'Oliver is ___. He is ___ Brazil.',opts:['A. Brazilian - from','B. Brazilan - to'],ans:'A',exp:'Brazilian (quốc tịch) + from (đến từ)'},
+  {q:'William and Elijah ___ from Britain. They are ___ and they speak ___.',opts:['A. come - British - English','B. are - Britese - British'],ans:'A',exp:'come from + British + English (ngôn ngữ)'},
+  {q:'James and her mother ___ Turkish. They come from ___.',opts:['A. come - Turkish','B. are - Turkey'],ans:'B',exp:'are Turkish (quốc tịch) + Turkey (quốc gia)'},
+  {q:'Some of my friends ___ from Australia. They speak ___.',opts:['A. are - English','B. come - Australian'],ans:'A',exp:'are from Australia + English (ngôn ngữ Úc)'},
+  {q:'Kate and Mary are ___. They come from ___.',opts:['A. Dutch - The Netherlands','B. The Netherlands - Dutch'],ans:'A',exp:'Dutch (quốc tịch) + The Netherlands (quốc gia)'},
+  {q:'Nam is from ___, but he can speak ___ very well.',opts:['A. Vietnamese - China','B. Vietnam - Chinese'],ans:'B',exp:'Vietnam (quốc gia) + Chinese (tiếng Trung)'},
+];
+
+const E6_ANS = {b1:'Italy',b2:'Turkish',b3:'from',b4:'Australia',b5:'is',b6:'China'};
+
+// ===== STATE =====
+const mcSel = {};
+const e2Sel = {};
+
+// ===== SPEAK =====
+function speak(word, btn) {
+  if (window.speechSynthesis.speaking) window.speechSynthesis.cancel();
+  var u = new SpeechSynthesisUtterance(word);
+  u.lang = 'en-US'; u.rate = 0.85;
+  if (btn) {
+    u.onstart = function(){ btn.classList.add('playing'); };
+    u.onend = u.onerror = function(){ btn.classList.remove('playing'); };
+  }
+  window.speechSynthesis.speak(u);
+}
+
+// ===== TABS =====
+function sw(idx) {
+  document.querySelectorAll('.panel').forEach(function(p,i){ p.classList.toggle('active', i===idx); });
+  document.querySelectorAll('.tab-btn').forEach(function(t,i){ t.classList.toggle('active', i===idx); });
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// ===== MC PICK =====
+function mcPick(gid, val) {
+  mcSel[gid] = val;
+  document.querySelectorAll('#'+gid+' .opt').forEach(function(b){
+    b.classList.toggle('sel', b.getAttribute('data-val')===val);
+  });
+}
+
+// ===== E2 PICK =====
+function e2Pick(i, val, btn) {
+  e2Sel[i] = val;
+  var lopts = btn.closest('.listen-q').querySelectorAll('.lopt');
+  lopts.forEach(function(b){ b.classList.toggle('sel', b.getAttribute('data-val')===val); });
+}
+
+// ===== SCORE HELPER =====
+function showScore(numId, pbId, msgId, btnId, ok, total, color) {
+  document.getElementById(numId).innerHTML = ok+' <span>/ '+total+' câu</span>';
+  document.getElementById(pbId).style.cssText = 'width:'+Math.round(ok/total*100)+'%;background:'+color;
+  var r = ok/total;
+  var msg = r>=1?'🎉 Hoàn hảo!':r>=0.7?'👍 Rất tốt!':r>=0.4?'💪 Cố lên!':'📚 Ôn thêm nhé!';
+  document.getElementById(msgId).textContent = msg;
+  document.getElementById(btnId).disabled = true;
+}
+
+// ===== CHECK FUNCTIONS =====
+function checkE1() {
+  var ok = 0;
+  E1_DATA.forEach(function(q,i){
+    var user = mcSel['e1g'+i], ans = q.ans, correct = user===ans;
+    if(correct) ok++;
+    document.querySelectorAll('#e1g'+i+' .opt').forEach(function(b){
+      b.disabled = true;
+      var v = b.getAttribute('data-val');
+      if(v===ans) b.classList.add('correct');
+      else if(v===user && !correct) b.classList.add('wrong');
+    });
+    var fb = document.getElementById('e1fb'+i);
+    fb.textContent = correct ? '✓ Đúng! '+q.exp : '✗ Sai! Đáp án: '+ans+'. '+q.exp;
+    fb.className = 'fb show '+(correct?'correct':'wrong');
+  });
+  showScore('sc1n','sc1p','sc1m','sc1btn', ok, E1_DATA.length, 'var(--blue)');
+}
+function resetE1() {
+  E1_DATA.forEach(function(_,i){
+    delete mcSel['e1g'+i];
+    document.querySelectorAll('#e1g'+i+' .opt').forEach(function(b){ b.disabled=false; b.className='opt'; });
+    var fb = document.getElementById('e1fb'+i); fb.className='fb'; fb.textContent='';
+  });
+  document.getElementById('sc1n').innerHTML='— <span>/ 7 câu</span>';
+  document.getElementById('sc1p').style.width='0%';
+  document.getElementById('sc1m').textContent='Làm hết rồi chấm điểm nhé!';
+  document.getElementById('sc1btn').disabled=false;
+}
+
+function checkE2() {
+  var ok = 0;
+  E2_DATA.forEach(function(d,i){
+    var user = e2Sel[i], correct = user===d.ans;
+    if(correct) ok++;
+    var lq = document.getElementById('lq'+i);
+    lq.querySelectorAll('.lopt').forEach(function(b){
+      b.disabled=true;
+      var v = b.getAttribute('data-val');
+      if(v===d.ans) b.classList.add('correct');
+      else if(v===user && !correct) b.classList.add('wrong');
+    });
+    var fb = document.getElementById('l2fb'+i);
+    fb.textContent = correct?'✓ Đúng! "'+d.word+'" là '+d.ans+'.':'✗ Sai! "'+d.word+'" là "'+d.ans+'".';
+    fb.className = 'fb show '+(correct?'correct':'wrong');
+  });
+  showScore('sc2n','sc2p','sc2m','sc2btn', ok, E2_DATA.length, 'var(--purple)');
+}
+function resetE2() {
+  E2_DATA.forEach(function(_,i){
+    delete e2Sel[i];
+    var lq = document.getElementById('lq'+i);
+    lq.querySelectorAll('.lopt').forEach(function(b){ b.disabled=false; b.className='lopt'; });
+    var fb = document.getElementById('l2fb'+i); fb.className='fb'; fb.textContent='';
+  });
+  document.getElementById('sc2n').innerHTML='— <span>/ 6 câu</span>';
+  document.getElementById('sc2p').style.width='0%';
+  document.getElementById('sc2m').textContent='Nghe rồi chọn đáp án!';
+  document.getElementById('sc2btn').disabled=false;
+}
+
+function checkE4() {
+  var ok = 0;
+  E4_DATA.forEach(function(d,i){
+    var wEl = document.getElementById('e4w'+i), cEl = document.getElementById('e4c'+i);
+    var wOk = wEl.value.trim().toLowerCase()===d.w.toLowerCase();
+    var cOk = cEl.value.trim().toLowerCase()===d.c.toLowerCase();
+    if(wOk && cOk) ok++;
+    wEl.disabled=true; cEl.disabled=true;
+    wEl.className='fill-input '+(wOk?'correct':'wrong');
+    cEl.className='fill-input '+(cOk?'correct':'wrong');
+    if(!wOk) document.getElementById('e4hw'+i).classList.add('show');
+    if(!cOk) document.getElementById('e4hc'+i).classList.add('show');
+  });
+  showScore('sc4n','sc4p','sc4m','sc4btn', ok, E4_DATA.length, 'var(--yellow)');
+}
+function resetE4() {
+  E4_DATA.forEach(function(_,i){
+    ['e4w','e4c'].forEach(function(p){
+      var el = document.getElementById(p+i); el.value=''; el.disabled=false; el.className='fill-input';
+    });
+    ['e4hw','e4hc'].forEach(function(p){ document.getElementById(p+i).classList.remove('show'); });
+  });
+  document.getElementById('sc4n').innerHTML='— <span>/ 5 câu</span>';
+  document.getElementById('sc4p').style.width='0%';
+  document.getElementById('sc4m').textContent='Nhập đáp án rồi chấm điểm!';
+  document.getElementById('sc4btn').disabled=false;
+}
+
+function checkE5() {
+  var ok = 0;
+  E5_DATA.forEach(function(q,i){
+    var user = mcSel['e5g'+i], ans = q.ans, correct = user===ans;
+    if(correct) ok++;
+    document.querySelectorAll('#e5g'+i+' .opt').forEach(function(b){
+      b.disabled=true;
+      var v = b.getAttribute('data-val');
+      if(v===ans) b.classList.add('correct');
+      else if(v===user && !correct) b.classList.add('wrong');
+    });
+    var fb = document.getElementById('e5fb'+i);
+    fb.textContent = correct?'✓ Đúng! '+q.exp:'✗ Sai! Đáp án: '+ans+'. '+q.exp;
+    fb.className = 'fb show '+(correct?'correct':'wrong');
+  });
+  showScore('sc5n','sc5p','sc5m','sc5btn', ok, E5_DATA.length, 'var(--green)');
+}
+function resetE5() {
+  E5_DATA.forEach(function(_,i){
+    delete mcSel['e5g'+i];
+    document.querySelectorAll('#e5g'+i+' .opt').forEach(function(b){ b.disabled=false; b.className='opt'; });
+    var fb = document.getElementById('e5fb'+i); fb.className='fb'; fb.textContent='';
+  });
+  document.getElementById('sc5n').innerHTML='— <span>/ 6 câu</span>';
+  document.getElementById('sc5p').style.width='0%';
+  document.getElementById('sc5m').textContent='Làm hết rồi chấm điểm nhé!';
+  document.getElementById('sc5btn').disabled=false;
+}
+
+function checkE6() {
+  var ok = 0;
+  Object.keys(E6_ANS).forEach(function(id){
+    var el = document.getElementById(id), correct = el.value===E6_ANS[id];
+    if(correct) ok++;
+    el.className='blank-sel '+(correct?'correct':'wrong');
+    el.disabled=true;
+  });
+  showScore('sc6n','sc6p','sc6m','sc6btn', ok, 6, 'var(--red)');
+}
+function resetE6() {
+  Object.keys(E6_ANS).forEach(function(id){
+    var el = document.getElementById(id); el.value=''; el.disabled=false; el.className='blank-sel';
+  });
+  document.getElementById('sc6n').innerHTML='— <span>/ 6 chỗ trống</span>';
+  document.getElementById('sc6p').style.width='0%';
+  document.getElementById('sc6m').textContent='Điền hết rồi chấm điểm nhé!';
+  document.getElementById('sc6btn').disabled=false;
+}
+
+// ===== BUILD HTML =====
+function mkOpts(data, gid, letters) {
+  return data.map(function(o,j){
+    var l = letters[j];
+    var txt = o.replace(/^[A-E]\.\s*/,'');
+    return '<button class="opt" data-val="'+l+'" onclick="mcPick(\''+gid+'\',\''+l+'\')"><span class="opt-c">'+l+'</span>'+txt+'</button>';
+  }).join('');
+}
+
+function buildSpeakBtn(word) {
+  return '<button class="speak-btn" onclick="speak(\''+word+'\',this)">▶</button>';
+}
+
+function scoreBlock(numId, pbId, msgId, btnId, total, color, checkFn, resetFn, totalLabel) {
+  totalLabel = totalLabel || total+' câu';
+  return '<div class="score-row">'+
+    '<div><div class="sc-num" id="'+numId+'">— <span>/ '+totalLabel+'</span></div>'+
+    '<div class="progress-bar"><div class="progress-fill" id="'+pbId+'" style="width:0%"></div></div></div>'+
+    '<div class="sc-msg" id="'+msgId+'">Làm hết rồi chấm điểm nhé!</div>'+
+    '<div class="score-btns">'+
+    '<button class="btn-check" id="'+btnId+'" style="background:'+color+'" onclick="'+checkFn+'()">✅ Chấm bài</button>'+
+    '<button class="btn-reset" onclick="'+resetFn+'()">🔄 Làm lại</button>'+
+    '</div></div>';
+}
+
+// PANEL 0
+function buildP0() {
+  var suffixes = [
+    {cls:'sb-ese',label:'-ese',rows:VOCAB.slice(0,3)},
+    {cls:'sb-an', label:'-an', rows:VOCAB.slice(3,6)},
+    {cls:'sb-ian',label:'-ian',rows:VOCAB.slice(6,9)},
+    {cls:'sb-ish',label:'-ish',rows:VOCAB.slice(9,12)},
+  ];
+  var html = suffixes.map(function(s){
+    return '<div class="theory-section">'+
+      '<div class="theory-head2"><span class="suffix-badge '+s.cls+'">Hậu tố '+s.label+'</span></div>'+
+      '<table class="suf-tbl"><tr><th>Country (Quốc gia)</th><th>Nationality (Quốc tịch)</th></tr>'+
+      s.rows.map(function(v){ return '<tr><td>'+v.f+' '+v.c+'</td><td class="nat">'+buildSpeakBtn(v.n)+' '+v.n+'</td></tr>'; }).join('')+
+      '</table></div>';
+  }).join('');
+
+  html += '<div class="theory-section">'+
+    '<div class="theory-head2"><span class="suffix-badge sb-other">Đặc biệt</span> Không theo hậu tố</div>'+
+    '<table class="suf-tbl"><tr><th>Country</th><th>Nationality</th></tr>'+
+    '<tr><td>🇫🇷 France</td><td class="nat">'+buildSpeakBtn('French')+' French</td></tr>'+
+    '<tr><td>🇳🇱 The Netherlands</td><td class="nat">'+buildSpeakBtn('Dutch')+' Dutch</td></tr>'+
+    '</table>'+
+    '<div class="tip-box">⚠️ <div>Hậu tố <strong>-ion KHÔNG</strong> phải hậu tố quốc tịch! Hậu tố đúng: <strong>-ese, -an, -ian, -ish</strong>. Một số từ đặc biệt: French, Dutch.</div></div>'+
+    '</div>';
+
+  html += '<div class="theory-section">'+
+    '<div class="theory-head2">🔊 Luyện phát âm tất cả từ</div>'+
+    '<div class="speak-grid">'+
+    VOCAB.map(function(v){
+      return '<div class="speak-card"><span class="sc-flag">'+v.f+'</span>'+
+        '<div class="sc-info"><div class="sc-country">'+v.c+'</div><div class="sc-nat">'+v.n+'</div></div>'+
+        '<button class="speak-btn" onclick="speak(\''+v.n+'\',this)">🔊</button></div>';
+    }).join('')+
+    '</div></div>';
+  return html;
+}
+
+// PANEL 1
+function buildP1() {
+  var html = '<div class="ex-block"><div class="ex-title"><span class="ex-num">Ex 1</span> Chọn đáp án đúng</div>'+
+    '<div class="ex-sub">Chọn quốc tịch hoặc hậu tố đúng cho mỗi câu hỏi.</div>';
+  E1_DATA.forEach(function(q,i){
+    var letters = 'ABCDE';
+    html += '<div class="qcard"><div class="q-text">'+q.q+'</div>'+
+      '<div class="opts" id="e1g'+i+'">'+mkOpts(q.opts,'e1g'+i,letters)+'</div>'+
+      '<div class="fb" id="e1fb'+i+'"></div></div>';
+    if(i<E1_DATA.length-1) html+='<div class="divider"></div>';
+  });
+  html += '</div>'+scoreBlock('sc1n','sc1p','sc1m','sc1btn',E1_DATA.length,'var(--blue)','checkE1','resetE1');
+  return html;
+}
+
+// PANEL 2
+function buildP2() {
+  var html = '<div class="ex-block"><div class="ex-title"><span class="ex-num" style="background:var(--purple)">Ex 2</span> Luyện nghe</div>'+
+    '<div class="ex-sub">Nhấn 🔊 nghe từ, rồi chọn quốc gia hay quốc tịch.</div>';
+  E2_DATA.forEach(function(d,i){
+    html += '<div class="listen-q" id="lq'+i+'">'+
+      '<div class="lq-num">Từ số '+(i+1)+' / '+E2_DATA.length+'</div>'+
+      '<button class="play-big" onclick="speak(\''+d.word+'\',this)">🔊 Nghe từ số '+(i+1)+'</button>'+
+      '<div class="lopts">'+
+      '<button class="lopt" data-val="country" onclick="e2Pick('+i+',\'country\',this)">A. country (quốc gia)</button>'+
+      '<button class="lopt" data-val="nationality" onclick="e2Pick('+i+',\'nationality\',this)">B. nationality (quốc tịch)</button>'+
+      '</div><div class="fb" id="l2fb'+i+'"></div></div>';
+  });
+  html += '</div>'+scoreBlock('sc2n','sc2p','sc2m','sc2btn',E2_DATA.length,'var(--purple)','checkE2','resetE2');
+  return html;
+}
+
+// PANEL 3
+function buildP3() {
+  return '<div class="ex-block"><div class="ex-title"><span class="ex-num" style="background:var(--green)">Ex 3</span> Luyện phát âm</div>'+
+    '<div class="ex-sub">Nhấn 🔊 nghe cách phát âm chuẩn, sau đó tự đọc theo.</div>'+
+    '<div class="pron-grid">'+
+    E3_WORDS.map(function(w){ return '<div class="pron-card"><div class="pron-word">'+w+'</div><button class="speak-btn" onclick="speak(\''+w+'\',this)">🔊</button></div>'; }).join('')+
+    '</div>'+
+    '<div class="tip-box" style="margin-top:16px">💡 <div>Lưu ý trọng âm: <strong>Jap-a-NESE</strong>, <strong>Aus-TRA-li-a</strong>, <strong>Bra-ZIL-ian</strong>, <strong>E-GYP-tian</strong>. Nghe nhiều lần rồi tự đọc to!</div></div>'+
+    '</div>';
+}
+
+// PANEL 4
+function buildP4() {
+  var html = '<div class="ex-block"><div class="ex-title"><span class="ex-num" style="background:var(--yellow)">Ex 4</span> Tìm lỗi sai và sửa lại</div>'+
+    '<div class="ex-sub">Tìm từ sai trong câu rồi nhập từ đúng.</div>'+
+    '<div class="tip-box" style="margin-bottom:16px">📌 <div><strong>Ví dụ:</strong> "James and her mother are <u>France</u>." → Lỗi: "France" → Sửa: <strong>"French"</strong></div></div>';
+  E4_DATA.forEach(function(d,i){
+    html += '<div class="err-block">'+
+      '<div class="err-sent">'+d.s+'</div>'+
+      '<div class="err-fields">'+
+      '<div class="field-group"><div class="field-label">Lỗi sai ở:</div>'+
+      '<input class="fill-input" id="e4w'+i+'" placeholder="Nhập từ sai..." autocomplete="off"/></div>'+
+      '<div style="font-size:1.3rem;color:var(--muted);align-self:flex-end;padding-bottom:6px">→</div>'+
+      '<div class="field-group"><div class="field-label">Sửa lại thành:</div>'+
+      '<input class="fill-input" id="e4c'+i+'" placeholder="Nhập từ đúng..." autocomplete="off"/></div>'+
+      '</div>'+
+      '<div class="hint" id="e4hw'+i+'">✓ Lỗi: <strong>'+d.w+'</strong></div>'+
+      '<div class="hint" id="e4hc'+i+'">✓ Đáp án đúng: <strong>'+d.c+'</strong></div>'+
+      '</div>';
+    if(i<E4_DATA.length-1) html+='<div class="divider"></div>';
+  });
+  html += '</div>'+scoreBlock('sc4n','sc4p','sc4m','sc4btn',E4_DATA.length,'var(--yellow)','checkE4','resetE4');
+  return html;
+}
+
+// PANEL 5
+function buildP5() {
+  var html = '<div class="ex-block"><div class="ex-title"><span class="ex-num" style="background:var(--green)">Ex 5</span> Chọn đáp án điền vào câu</div>'+
+    '<div class="ex-sub">Chọn cặp từ đúng để hoàn thành câu.</div>';
+  E5_DATA.forEach(function(q,i){
+    html += '<div class="qcard"><div class="q-text">'+q.q+'</div>'+
+      '<div class="opts" id="e5g'+i+'">'+mkOpts(q.opts,'e5g'+i,'AB')+'</div>'+
+      '<div class="fb" id="e5fb'+i+'"></div></div>';
+    if(i<E5_DATA.length-1) html+='<div class="divider"></div>';
+  });
+  html += '</div>'+scoreBlock('sc5n','sc5p','sc5m','sc5btn',E5_DATA.length,'var(--green)','checkE5','resetE5');
+  return html;
+}
+
+// PANEL 6
+function buildP6() {
+  return '<div class="ex-block"><div class="ex-title"><span class="ex-num" style="background:var(--red)">Ex 6</span> Hoàn thành đoạn văn</div>'+
+    '<div class="ex-sub">Chọn từ đúng điền vào chỗ trống trong đoạn thư.</div>'+
+    '<div class="para-box">'+
+    'Dear Dustin,<br><br>'+
+    'Welcome to the Friends Club. It\'s for English learners and friends around the world.<br><br>'+
+    'Martina, Pepe, Kate, Dunya, Mary, Paul and Bernd are members of the Club:<br><br>'+
+    'Martina is from <select class="blank-sel" id="b1"><option value="">--</option><option>Italy</option><option>Italian</option></select>. She\'s twelve.<br>'+
+    'Pepe is <select class="blank-sel" id="b2"><option value="">--</option><option>Turkey</option><option>Turkish</option></select>. He\'s nine.<br>'+
+    'Kate and Mary are twins <select class="blank-sel" id="b3"><option value="">--</option><option>come</option><option>from</option></select> Great Britain. They are thirteen years old.<br>'+
+    'Dunya is from <select class="blank-sel" id="b4"><option value="">--</option><option>Australia</option><option>Australian</option></select>. She\'s ten.<br>'+
+    'Paul <select class="blank-sel" id="b5"><option value="">--</option><option>come</option><option>is</option></select> French and he\'s eleven.<br>'+
+    'Bernd is from <select class="blank-sel" id="b6"><option value="">--</option><option>China</option><option>Chinese</option></select> and he is eight years old.<br><br>'+
+    'How old are you? Enjoy the club!'+
+    '</div>'+
+    '<div class="tip-box">🇻🇳 <div><strong>Gợi ý:</strong> Sau "from" → dùng <em>quốc gia</em>. Sau "is/are" → dùng <em>quốc tịch</em>.</div></div>'+
+    '</div>'+
+    scoreBlock('sc6n','sc6p','sc6m','sc6btn',6,'var(--red)','checkE6','resetE6','6 chỗ trống');
+}
+
+// ===== INIT =====
+(function(){
+  // Build tabs
+  var tabs = document.getElementById('tabs');
+  TAB_LABELS.forEach(function(label,i){
+    var btn = document.createElement('button');
+    btn.className = 'tab-btn'+(i===0?' active':'');
+    btn.textContent = label;
+    btn.onclick = function(){ sw(i); };
+    tabs.appendChild(btn);
+  });
+
+  // Build panels
+  var builders = [buildP0,buildP1,buildP2,buildP3,buildP4,buildP5,buildP6];
+  var container = document.getElementById('container');
+  builders.forEach(function(fn,i){
+    var div = document.createElement('div');
+    div.className = 'panel'+(i===0?' active':'');
+    div.innerHTML = fn();
+    container.appendChild(div);
+  });
+})();
+</script>
+</body>
+</html>
