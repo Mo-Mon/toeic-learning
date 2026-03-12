@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Địa Điểm – Places & Directions</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#2563EB;--pri-dark:#1D4ED8;--secondary:#7C3AED;
+  --acc:#F59E0B;--green:#22c55e;--red:#ef4444;--teal:#0D9488;
+  --bg:#EFF6FF;--card:#fff;--text:#0f172a;--muted:#6487a8;
+  --shadow:0 4px 24px rgba(37,99,235,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+header{
+  background:linear-gradient(135deg,#1D4ED8 0%,#2563EB 45%,#60A5FA 100%);
+  padding:28px 16px 20px;text-align:center;
+  box-shadow:0 4px 20px rgba(37,99,235,.35);position:relative;overflow:hidden;
+}
+header::before{content:'🏙️ 🌄 🗺️ 🧭 🌲 🏞️ 🛤️ 🏘️ 🌊 ⛰️';position:absolute;top:8px;left:0;right:0;font-size:1.3rem;letter-spacing:5px;opacity:.2;}
+header h1{font-family:'Baloo 2',cursive;font-size:2.2rem;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.15);position:relative;}
+header p{color:rgba(255,255,255,.88);font-size:.97rem;margin-top:5px;position:relative;}
+
+.tabs{display:flex;justify-content:center;gap:8px;padding:20px 12px 0;flex-wrap:wrap;}
+.tab-btn{padding:8px 16px;border-radius:50px;border:2.5px solid var(--primary);background:#fff;color:var(--primary);font-family:'Nunito',sans-serif;font-size:.86rem;font-weight:700;cursor:pointer;transition:all .2s;}
+.tab-btn.active,.tab-btn:hover{background:var(--primary);color:#fff;box-shadow:0 3px 12px rgba(37,99,235,.3);}
+
+.tab-content{display:none;padding:22px 13px 50px;max-width:920px;margin:0 auto;}
+.tab-content.active{display:block;}
+
+.sc{background:var(--card);border-radius:18px;padding:22px;margin-bottom:18px;box-shadow:var(--shadow);}
+.sc h2{font-family:'Baloo 2',cursive;color:var(--primary);font-size:1.28rem;margin-bottom:14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.sc h2 small{font-size:.73rem;color:var(--muted);font-family:'Nunito',sans-serif;font-weight:600;}
+.sc h3{font-family:'Baloo 2',cursive;color:var(--secondary);font-size:1.08rem;margin-bottom:13px;padding-bottom:8px;border-bottom:2px dashed #ede9fe;}
+
+/* VOCAB GRIDS */
+.vocab-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:9px;}
+.vc{background:linear-gradient(135deg,#eff6ff,#dbeafe);border-radius:13px;padding:12px 8px 10px;text-align:center;border:1.5px solid #bfdbfe;transition:transform .15s,box-shadow .15s;}
+.vc:hover{transform:translateY(-3px);box-shadow:0 6px 16px rgba(37,99,235,.18);}
+.vc .em{font-size:1.75rem;line-height:1;}
+.vc .w{font-size:.88rem;font-weight:900;color:var(--primary);margin-top:4px;}
+.vc .ipa{font-size:.63rem;color:var(--muted);font-style:italic;margin-top:1px;}
+.vc .v{font-size:.75rem;color:#1e40af;margin-top:2px;font-weight:600;}
+.vc .ex{font-size:.68rem;color:#3b5fa0;margin-top:3px;font-style:italic;line-height:1.3;}
+.speak-btn{display:inline-flex;align-items:center;justify-content:center;margin-top:6px;background:var(--primary);border:none;border-radius:50%;width:26px;height:26px;cursor:pointer;color:#fff;font-size:.72rem;transition:background .15s,transform .1s;box-shadow:0 2px 6px rgba(37,99,235,.3);}
+.speak-btn:hover{background:var(--pri-dark);transform:scale(1.12);}
+.speak-btn.playing{background:var(--acc);animation:pb .5s infinite alternate;}
+@keyframes pb{from{box-shadow:0 0 0 0 rgba(245,158,11,.5)}to{box-shadow:0 0 0 8px rgba(245,158,11,0)}}
+
+/* COMPASS WIDGET */
+.compass-wrap{display:flex;justify-content:center;margin:16px 0;}
+.compass{position:relative;width:180px;height:180px;}
+.compass svg{width:100%;height:100%;}
+.dir-label{position:absolute;font-weight:900;font-size:.9rem;color:var(--primary);}
+.dir-label.N{top:-2px;left:50%;transform:translateX(-50%);}
+.dir-label.S{bottom:-2px;left:50%;transform:translateX(-50%);}
+.dir-label.E{right:-2px;top:50%;transform:translateY(-50%);}
+.dir-label.W{left:-2px;top:50%;transform:translateY(-50%);}
+
+/* RULE BOX */
+.rule-box{background:linear-gradient(135deg,#eff6ff,#dbeafe);border-left:4px solid #3b82f6;border-radius:10px;padding:12px 16px;margin-top:12px;font-size:.9rem;line-height:1.85;}
+.rule-box strong{color:#1e40af;}
+.rule-box.green{background:linear-gradient(135deg,#ecfdf5,#d1fae5);border-left-color:#10b981;}
+.rule-box.green strong{color:#065f46;}
+.rule-box.amber{background:linear-gradient(135deg,#fffbeb,#fef3c7);border-left-color:#f59e0b;}
+.rule-box.amber strong{color:#92400e;}
+
+/* LISTEN */
+.listen-sec{background:var(--card);border-radius:18px;padding:22px;margin-bottom:18px;box-shadow:var(--shadow);}
+.listen-sec h2{font-family:'Baloo 2',cursive;color:var(--teal);font-size:1.28rem;margin-bottom:12px;}
+.speed-row{display:flex;align-items:center;gap:7px;margin-bottom:12px;flex-wrap:wrap;}
+.speed-row span{font-weight:700;color:var(--muted);font-size:.86rem;}
+.speed-btn{padding:5px 12px;border-radius:20px;border:2px solid #99f6e4;background:#fff;color:var(--teal);font-weight:700;font-size:.8rem;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .15s;}
+.speed-btn.active{background:var(--teal);color:#fff;border-color:var(--teal);}
+.listen-box{background:linear-gradient(135deg,#f0fdfa,#ccfbf1);border-radius:13px;padding:18px 16px;margin-bottom:12px;border:1.5px solid #99f6e4;}
+.listen-qnum{font-size:.75rem;font-weight:800;color:var(--teal);text-transform:uppercase;letter-spacing:1px;margin-bottom:9px;}
+.listen-play{display:inline-flex;align-items:center;gap:8px;background:var(--teal);color:#fff;border:none;border-radius:50px;padding:11px 26px;font-family:'Nunito',sans-serif;font-size:.97rem;font-weight:800;cursor:pointer;transition:all .2s;box-shadow:0 4px 14px rgba(13,148,136,.3);margin-bottom:13px;}
+.listen-play:hover{background:#0f766e;}
+.listen-play.playing{background:#F59E0B;}
+.listen-opts{display:flex;flex-wrap:wrap;gap:8px;}
+.listen-opt{padding:8px 18px;border-radius:50px;border:2.5px solid #99f6e4;background:#fff;font-family:'Nunito',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;transition:all .15s;color:#134e4a;}
+.listen-opt:hover:not(.locked){border-color:var(--teal);background:#f0fdfa;}
+.listen-opt.correct-opt{border-color:var(--green);background:#f0fdf4;color:#166534;}
+.listen-opt.wrong-opt{border-color:var(--red);background:#fef2f2;color:#991b1b;}
+.listen-opt.locked{cursor:default;}
+.listen-fb{margin-top:10px;font-weight:700;font-size:.88rem;min-height:20px;}
+.ls-bar{display:flex;align-items:center;gap:11px;font-weight:700;flex-wrap:wrap;padding-top:11px;}
+.ls-big{font-size:1.65rem;font-weight:900;color:var(--teal);}
+.prog-wrap{flex:1;min-width:90px;height:9px;background:#ccfbf1;border-radius:99px;overflow:hidden;}
+.prog-fill{height:100%;background:var(--teal);border-radius:99px;transition:width .4s;}
+
+/* MCQ */
+.mcq-item{margin-bottom:15px;}
+.mcq-item .qt{font-weight:700;margin-bottom:9px;line-height:1.55;font-size:.92rem;background:#eff6ff;padding:9px 13px;border-radius:9px;border-left:3px solid var(--primary);}
+.mcq-item .qt .hint{font-size:.78rem;font-weight:600;color:var(--muted);font-style:italic;margin-top:4px;}
+.mcq-options{display:flex;flex-direction:column;gap:6px;}
+.mcq-option{display:flex;align-items:center;gap:9px;padding:8px 13px;border-radius:9px;border:2px solid #e2e8f0;cursor:pointer;transition:all .15s;font-weight:600;user-select:none;font-size:.91rem;}
+.mcq-option:hover{border-color:var(--primary);background:#eff6ff;}
+.mcq-option.correct-ans{border-color:var(--green);background:#f0fdf4;color:#166534;}
+.mcq-option.wrong-ans{border-color:var(--red);background:#fef2f2;color:#991b1b;}
+.mcq-option input[type=radio]{accent-color:var(--primary);width:14px;height:14px;}
+
+/* FILL */
+.para-blank{border:none;border-bottom:2px solid var(--primary);background:transparent;font-family:'Nunito',sans-serif;font-size:.93rem;width:110px;outline:none;padding:2px 4px;font-weight:700;color:var(--primary);}
+.para-blank.correct{border-bottom-color:var(--green);color:var(--green);}
+.para-blank.wrong{border-bottom-color:var(--red);color:var(--red);}
+.fb{font-size:.77rem;font-weight:700;}
+.fb.correct{color:var(--green);}
+.fb.wrong{color:var(--red);}
+.fill-input{border:2px solid #bfdbfe;border-radius:8px;padding:6px 11px;font-family:'Nunito',sans-serif;font-size:.91rem;width:150px;outline:none;transition:border .2s;}
+.fill-input:focus{border-color:var(--primary);}
+.fill-input.correct{border-color:var(--green);background:#f0fdf4;}
+.fill-input.wrong{border-color:var(--red);background:#fef2f2;}
+
+/* WORD BANK */
+.word-bank{background:#fefce8;border-radius:10px;padding:9px 14px;margin-bottom:13px;font-weight:700;color:#92400e;font-size:.85rem;border:1.5px solid #fde68a;}
+
+/* SCORE */
+.score-bar{background:#eff6ff;border-radius:13px;padding:13px 17px;margin-top:12px;display:flex;align-items:center;gap:13px;font-weight:700;flex-wrap:wrap;border:1.5px solid #bfdbfe;}
+.score-num{font-size:1.7rem;font-weight:900;color:var(--primary);}
+.btn{padding:9px 24px;border-radius:50px;border:none;font-family:'Nunito',sans-serif;font-size:.93rem;font-weight:800;cursor:pointer;transition:all .2s;margin-top:12px;}
+.btn-p{background:var(--primary);color:#fff;box-shadow:0 3px 12px rgba(37,99,235,.3);}
+.btn-p:hover{background:var(--pri-dark);transform:translateY(-2px);}
+.btn-s{background:#fff;color:var(--primary);border:2.5px solid var(--primary);}
+.btn-s:hover{background:#eff6ff;}
+.btn-row{display:flex;gap:9px;flex-wrap:wrap;}
+
+/* READING PASSAGE */
+.reading-box{background:#f8fafc;border-radius:12px;padding:15px;line-height:2.1;font-size:.91rem;margin-bottom:14px;border:1.5px solid #bfdbfe;}
+
+/* POPUP */
+.result-popup{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.45);z-index:999;align-items:center;justify-content:center;}
+.result-popup.show{display:flex;}
+.result-box{background:#fff;border-radius:22px;padding:36px 42px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.2);animation:popIn .3s ease;max-width:350px;width:90%;}
+@keyframes popIn{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
+.result-box h2{font-family:'Baloo 2',cursive;font-size:1.65rem;color:var(--primary);margin:9px 0 4px;}
+.result-box p{color:var(--muted);font-size:.97rem;margin-bottom:16px;}
+.rs{font-size:2.4rem;font-weight:900;color:var(--secondary);}
+
+@media(max-width:600px){
+  header h1{font-size:1.35rem;}
+  .vocab-grid{grid-template-columns:repeat(2,1fr);}
+  .fill-input{width:120px;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🗺️ Places & Directions – Địa Điểm</h1>
+  <p>Học từ vựng · Luyện phát âm · Hướng đi · Bài tập</p>
+</header>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('theory',this)">📖 Lý Thuyết</button>
+  <button class="tab-btn" onclick="showTab('ex1',this)">🖼️ Bài 1: Nhận dạng</button>
+  <button class="tab-btn" onclick="showTab('ex3',this)">🔊 Bài 2: Phát âm</button>
+  <button class="tab-btn" onclick="showTab('ex7',this)">📝 Bài 3: Định nghĩa</button>
+  <button class="tab-btn" onclick="showTab('exread',this)">📖 Bài 4: Đọc hiểu</button>
+</div>
+
+<!-- ══════ THEORY ══════ -->
+<div id="theory" class="tab-content active">
+
+  <div class="sc">
+    <h2>🏙️ 1. Từ vựng – Địa điểm & Phong cảnh <small>— bấm 🔊 nghe phát âm</small></h2>
+    <div class="vocab-grid" id="vocabGrid"></div>
+  </div>
+
+  <div class="sc">
+    <h2>🧭 2. Phương hướng – Cardinal Directions</h2>
+    <div class="vocab-grid" id="dirGrid"></div>
+    <div class="compass-wrap">
+      <div class="compass">
+        <span class="dir-label N">N ⬆</span>
+        <span class="dir-label S">S ⬇</span>
+        <span class="dir-label E">E ➡</span>
+        <span class="dir-label W">⬅ W</span>
+        <svg viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="90" cy="90" r="85" stroke="#bfdbfe" stroke-width="3"/>
+          <circle cx="90" cy="90" r="8" fill="#2563EB"/>
+          <polygon points="90,10 80,90 90,80 100,90" fill="#2563EB"/>
+          <polygon points="90,170 80,90 90,100 100,90" fill="#94a3b8"/>
+          <polygon points="10,90 90,80 80,90 90,100" fill="#94a3b8"/>
+          <polygon points="170,90 90,80 100,90 90,100" fill="#94a3b8"/>
+          <line x1="90" y1="5" x2="90" y2="175" stroke="#e2e8f0" stroke-width="1"/>
+          <line x1="5" y1="90" x2="175" y2="90" stroke="#e2e8f0" stroke-width="1"/>
+        </svg>
+      </div>
+    </div>
+    <div class="rule-box amber">
+      <strong>📌 Cấu trúc phương hướng:</strong><br>
+      <code style="background:#fff8e1;padding:3px 8px;border-radius:6px;font-size:.93rem;">The + [địa điểm A] + is in the + [phương hướng] + of + [địa điểm B]</code><br><br>
+      Ví dụ:<br>
+      • <strong>Hanoi</strong> is in the <strong>north</strong> of Vietnam.<br>
+      • <strong>Ho Chi Minh City</strong> is in the <strong>south</strong> of Vietnam.<br>
+      • <strong>The hill</strong> is in the <strong>east</strong> of the village.
+    </div>
+    <div class="rule-box" style="margin-top:10px;">
+      <strong>💡 Phân biệt: path / street / road</strong><br>
+      • <strong>path</strong> = con đường nhỏ, đường đi bộ (in the countryside)<br>
+      • <strong>street</strong> = con đường ở phố, có nhà hai bên (in the city)<br>
+      • <strong>road</strong> = con đường nói chung (connecting places)
+    </div>
+  </div>
+
+  <!-- LISTEN QUIZ -->
+  <div class="listen-sec">
+    <h2>🎧 3. Luyện nghe – Nghe và chọn từ đúng</h2>
+    <div class="speed-row">
+      <span>Tốc độ:</span>
+      <button class="speed-btn active" onclick="setSpeed(0.7,this)">🐢 Chậm</button>
+      <button class="speed-btn" onclick="setSpeed(1.0,this)">🚶 Bình thường</button>
+      <button class="speed-btn" onclick="setSpeed(1.3,this)">🏃 Nhanh</button>
+    </div>
+    <div class="listen-box">
+      <div class="listen-qnum" id="lqnum">Câu 1 / 10</div>
+      <button class="listen-play" id="lplayBtn" onclick="playQ()">🔊 &nbsp;Nghe từ</button>
+      <div class="listen-opts" id="lOpts"></div>
+      <div class="listen-fb" id="lFb"></div>
+    </div>
+    <div class="ls-bar">
+      <span>Điểm:</span>
+      <span class="ls-big" id="lsNum">0</span>
+      <span style="color:var(--muted);font-weight:600;" id="lsTot">/0</span>
+      <div class="prog-wrap"><div class="prog-fill" id="lBar" style="width:0%"></div></div>
+      <button class="btn btn-s" style="margin-top:0;padding:5px 14px;font-size:.82rem;" onclick="resetListen()">🔄 Làm lại</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ EX1: PICTURE MCQ ══════ -->
+<div id="ex1" class="tab-content">
+  <div class="sc">
+    <h3>🖼️ Bài 1: Chọn từ mô tả hình ảnh đúng nhất</h3>
+    <div id="ex1form"></div>
+    <div class="btn-row">
+      <button class="btn btn-p" onclick="checkEx1()">✅ Chấm điểm</button>
+      <button class="btn btn-s" onclick="resetEx1()">🔄 Làm lại</button>
+    </div>
+    <div id="ex1-score" class="score-bar" style="display:none;"></div>
+  </div>
+</div>
+
+<!-- ══════ EX3: PRONUNCIATION ══════ -->
+<div id="ex3" class="tab-content">
+  <div class="sc">
+    <h3>🔊 Bài 2: Chọn nhóm từ có âm gạch chân phát âm KHÁC nhau</h3>
+    <p style="font-size:.84rem;color:var(--muted);margin-bottom:14px;">Chọn đáp án là nhóm từ có âm gạch chân phát âm khác nhau (odd one out).</p>
+
+    <div class="mcq-item" id="p1">
+      <div class="qt">
+        1. Nhóm nào có âm gạch chân phát âm KHÁC nhau?
+        <div class="hint">Chú ý âm "i" trong: c<u>i</u>ty, h<u>i</u>ll, f<u>o</u>rest</div>
+      </div>
+      <div class="mcq-options">
+        <label class="mcq-option"><input type="radio" name="p1" value="A"> A. c<u>i</u>ty, h<u>i</u>ll, fo<u>re</u>st</label>
+        <label class="mcq-option"><input type="radio" name="p1" value="B"> B. countr<u>y</u>side, c<u>i</u>ty, r<u>i</u>ver</label>
+        <label class="mcq-option"><input type="radio" name="p1" value="C"> C. h<u>i</u>ll, v<u>i</u>llage, r<u>i</u>ver</label>
+      </div>
+    </div>
+
+    <div class="mcq-item" id="p2">
+      <div class="qt">
+        2. Nhóm nào có âm gạch chân phát âm KHÁC nhau?
+        <div class="hint">Chú ý âm cuối: nor<u>th</u>, sou<u>th</u>, pa<u>th</u> / ea<u>st</u>, fie<u>ld</u>, stree<u>t</u></div>
+      </div>
+      <div class="mcq-options">
+        <label class="mcq-option"><input type="radio" name="p2" value="A"> A. nor<u>th</u>, sou<u>th</u>, pa<u>th</u></label>
+        <label class="mcq-option"><input type="radio" name="p2" value="B"> B. <u>ea</u>st, fi<u>e</u>ld, str<u>ee</u>t</label>
+        <label class="mcq-option"><input type="radio" name="p2" value="C"> C. vill<u>age</u>, <u>a</u>rea, l<u>a</u>ke</label>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-p" onclick="checkEx3()">✅ Chấm điểm</button>
+      <button class="btn btn-s" onclick="resetEx3()">🔄 Làm lại</button>
+    </div>
+    <div id="ex3-score" class="score-bar" style="display:none;"></div>
+  </div>
+</div>
+
+<!-- ══════ EX7: DEFINITIONS ══════ -->
+<div id="ex7" class="tab-content">
+  <div class="sc">
+    <h3>📝 Bài 3: Chọn từ phù hợp nhất với định nghĩa</h3>
+    <div id="ex7form"></div>
+    <div class="btn-row">
+      <button class="btn btn-p" onclick="checkEx7()">✅ Chấm điểm</button>
+      <button class="btn btn-s" onclick="resetEx7()">🔄 Làm lại</button>
+    </div>
+    <div id="ex7-score" class="score-bar" style="display:none;"></div>
+  </div>
+</div>
+
+<!-- ══════ EX READING ══════ -->
+<div id="exread" class="tab-content">
+  <div class="sc">
+    <h3>📖 Bài 4: Điền từ vào đoạn văn</h3>
+    <div class="word-bank">📦 Từ cho sẵn: A = forest &nbsp;|&nbsp; B = road &nbsp;|&nbsp; C = field &nbsp;|&nbsp; D = river &nbsp;|&nbsp; E = hill &nbsp;|&nbsp; F = path &nbsp;|&nbsp; G = village</div>
+    <div class="reading-box">
+      Last week I went to the place I was born in. When I got there, I saw many changes. The first thing I saw is that my uncle who lives on the right side of the big road now has a
+      <input class="para-blank" id="blank1" style="width:80px" autocomplete="off"> <span class="fb" id="bfb1"></span>
+      between his house and the hill not far from there. He told me his son doesn't live with them anymore and now lives far away. I could only visit my cousin's house by using a small wooden bridge then walking on a small
+      <input class="para-blank" id="blank2" style="width:80px" autocomplete="off"> <span class="fb" id="bfb2"></span>
+      that leads to his house. I couldn't go directly to the village since it is across the
+      <input class="para-blank" id="blank3" style="width:80px" autocomplete="off"> <span class="fb" id="bfb3"></span>
+      from his house. So after meeting my cousin, I went back to the big road then went past the big bridge leading to the
+      <input class="para-blank" id="blank4" style="width:80px" autocomplete="off"> <span class="fb" id="bfb4"></span>
+      which is also on the right side of the road. There I met my extended family, and had a good time with them.
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-p" onclick="checkRead()">✅ Chấm điểm</button>
+      <button class="btn btn-s" onclick="resetRead()">🔄 Làm lại</button>
+    </div>
+    <div id="read-score" class="score-bar" style="display:none;"></div>
+  </div>
+
+  <div class="sc">
+    <h3>🧭 Luyện cấu trúc phương hướng</h3>
+    <p style="font-size:.85rem;color:var(--muted);margin-bottom:12px;">Điền phương hướng phù hợp vào chỗ trống.</p>
+    <ol style="line-height:3;font-size:.93rem;padding-left:18px;">
+      <li>The sun rises in the <input class="para-blank" id="dir1" style="width:70px" autocomplete="off">. <span class="fb" id="dfb1"></span></li>
+      <li>Hanoi is in the <input class="para-blank" id="dir2" style="width:70px" autocomplete="off"> of Vietnam. <span class="fb" id="dfb2"></span></li>
+      <li>Ho Chi Minh City is in the <input class="para-blank" id="dir3" style="width:70px" autocomplete="off"> of Vietnam. <span class="fb" id="dfb3"></span></li>
+      <li>The sun sets in the <input class="para-blank" id="dir4" style="width:70px" autocomplete="off">. <span class="fb" id="dfb4"></span></li>
+    </ol>
+    <div class="btn-row">
+      <button class="btn btn-p" onclick="checkDir()">✅ Chấm điểm</button>
+      <button class="btn btn-s" onclick="resetDir()">🔄 Làm lại</button>
+    </div>
+    <div id="dir-score" class="score-bar" style="display:none;"></div>
+  </div>
+</div>
+
+<!-- Popup -->
+<div class="result-popup" id="resultPopup">
+  <div class="result-box">
+    <div style="font-size:3.5rem;" id="rEmoji">🎉</div>
+    <h2>Hoàn thành!</h2>
+    <div class="rs" id="rScore">0/0</div>
+    <p id="rMsg">Làm tốt lắm!</p>
+    <button class="btn btn-p" onclick="closePopup()">✨ Tiếp tục</button>
+  </div>
+</div>
+
+<script>
+// ══════ DATA ══════
+const places=[
+  {w:'countryside', ipa:'/ˈkʌn.tri.saɪd/', em:'🌾', v:'miền quê', ex:'She grew up in the countryside.'},
+  {w:'city',        ipa:'/ˈsɪt.i/',         em:'🏙️', v:'thành phố', ex:'London is a big city.'},
+  {w:'village',     ipa:'/ˈvɪl.ɪdʒ/',       em:'🏘️', v:'ngôi làng', ex:'He lives in a small village.'},
+  {w:'area',        ipa:'/ˈeə.ri.ə/',        em:'📍', v:'khu vực', ex:'This is a quiet area.'},
+  {w:'path',        ipa:'/pɑːθ/',            em:'🛤️', v:'đường mòn nhỏ', ex:'Walk along the path.'},
+  {w:'street',      ipa:'/striːt/',           em:'🏪', v:'đường phố', ex:'Cross the street carefully.'},
+  {w:'road',        ipa:'/rəʊd/',            em:'🛣️', v:'con đường', ex:'The road leads to the city.'},
+  {w:'field',       ipa:'/fiːld/',            em:'🌿', v:'cánh đồng', ex:'Cows graze in the field.'},
+  {w:'river',       ipa:'/ˈrɪv.ər/',         em:'🌊', v:'dòng sông', ex:'The river flows to the sea.'},
+  {w:'forest',      ipa:'/ˈfɒr.ɪst/',        em:'🌲', v:'rừng', ex:'Many animals live in the forest.'},
+  {w:'hill',        ipa:'/hɪl/',             em:'⛰️', v:'đồi', ex:'We climbed to the top of the hill.'},
+  {w:'lake',        ipa:'/leɪk/',            em:'🏞️', v:'hồ nước', ex:'They swam in the lake.'},
+];
+
+const directions=[
+  {w:'north', ipa:'/nɔːθ/', em:'⬆️', v:'hướng bắc', ex:'Hanoi is in the north.'},
+  {w:'south', ipa:'/saʊθ/', em:'⬇️', v:'hướng nam', ex:'HCMC is in the south.'},
+  {w:'east',  ipa:'/iːst/', em:'➡️', v:'hướng đông', ex:'The sun rises in the east.'},
+  {w:'west',  ipa:'/west/', em:'⬅️', v:'hướng tây', ex:'The sun sets in the west.'},
+];
+
+// ══════ RENDER ══════
+const vg=document.getElementById('vocabGrid');
+places.forEach(a=>{
+  vg.innerHTML+=`<div class="vc">
+    <div class="em">${a.em}</div>
+    <div class="w">${a.w}</div>
+    <div class="ipa">${a.ipa}</div>
+    <div class="v">${a.v}</div>
+    <div class="ex">${a.ex}</div>
+    <button class="speak-btn" onclick="speakWord('${a.w}',this)">🔊</button>
+  </div>`;
+});
+const dg=document.getElementById('dirGrid');
+directions.forEach(a=>{
+  dg.innerHTML+=`<div class="vc">
+    <div class="em">${a.em}</div>
+    <div class="w">${a.w}</div>
+    <div class="ipa">${a.ipa}</div>
+    <div class="v">${a.v}</div>
+    <div class="ex">${a.ex}</div>
+    <button class="speak-btn" onclick="speakWord('${a.w}',this)">🔊</button>
+  </div>`;
+});
+
+// ══════ TTS ══════
+let ttsRate=0.7;
+function setSpeed(r,btn){ttsRate=r;document.querySelectorAll('.speed-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
+function speakWord(w,btn){
+  if(!window.speechSynthesis){alert('Dùng Chrome/Edge.');return;}
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(w);
+  u.lang='en-US';u.rate=ttsRate;u.pitch=1;
+  if(btn){btn.classList.add('playing');u.onend=()=>btn.classList.remove('playing');}
+  window.speechSynthesis.speak(u);
+}
+
+// ══════ LISTEN QUIZ ══════
+const allWords=[...places,...directions];
+const LTOTAL=10;
+let lQ=[],lIdx=0,lOk=0,lAns=false;
+function shuffled(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+function initListen(){
+  lQ=shuffled([...allWords,...allWords]).slice(0,LTOTAL);
+  lIdx=0;lOk=0;lAns=false;
+  document.getElementById('lsNum').textContent='0';
+  document.getElementById('lsTot').textContent='/0';
+  document.getElementById('lBar').style.width='0%';
+  renderLQ();
+}
+function renderLQ(){
+  if(lIdx>=LTOTAL){doneListen();return;}
+  const q=lQ[lIdx];
+  document.getElementById('lqnum').textContent=`Câu ${lIdx+1} / ${LTOTAL}`;
+  document.getElementById('lFb').textContent='';
+  document.getElementById('lplayBtn').className='listen-play';
+  document.getElementById('lplayBtn').innerHTML='🔊 &nbsp;Nghe từ';
+  lAns=false;
+  const pool=allWords.filter(x=>x.w!==q.w);
+  const wrongs=shuffled(pool).slice(0,3);
+  const opts=shuffled([q,...wrongs]);
+  const el=document.getElementById('lOpts');el.innerHTML='';
+  opts.forEach(o=>{
+    const b=document.createElement('button');b.className='listen-opt';
+    b.innerHTML=`${o.em} ${o.w}`;
+    b.onclick=()=>handleLA(o.w,q.w,b);el.appendChild(b);
+  });
+  updateLS();
+}
+function playQ(){
+  if(lIdx>=LTOTAL)return;
+  const btn=document.getElementById('lplayBtn');btn.classList.add('playing');
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(lQ[lIdx].w);
+  u.lang='en-US';u.rate=ttsRate;u.pitch=1;u.onend=()=>btn.classList.remove('playing');
+  window.speechSynthesis.speak(u);
+}
+function handleLA(chosen,correct,btn){
+  if(lAns)return;lAns=true;
+  const ok=chosen===correct;
+  if(ok){lOk++;btn.classList.add('correct-opt');}
+  else{btn.classList.add('wrong-opt');document.querySelectorAll('.listen-opt').forEach(b=>{if(b.textContent.includes(correct))b.classList.add('correct-opt');});}
+  document.querySelectorAll('.listen-opt').forEach(b=>b.classList.add('locked'));
+  const viet=allWords.find(x=>x.w===correct)?.v||'';
+  const fb=document.getElementById('lFb');
+  fb.innerHTML=ok?`✅ Đúng! <strong>${correct}</strong> = ${viet}`:`❌ Sai! Đáp án: <strong>${correct}</strong> = ${viet}`;
+  fb.style.color=ok?'#166534':'#991b1b';
+  updateLS();setTimeout(()=>{lIdx++;renderLQ();},1800);
+}
+function updateLS(){
+  document.getElementById('lsNum').textContent=lOk;
+  document.getElementById('lsTot').textContent='/'+lIdx;
+  const p=lIdx>0?(lOk/lIdx)*100:0;
+  document.getElementById('lBar').style.width=p+'%';
+}
+function doneListen(){
+  document.getElementById('lqnum').textContent='🎉 Hoàn thành!';
+  document.getElementById('lOpts').innerHTML='';
+  document.getElementById('lplayBtn').innerHTML='✅ Đã xong';
+  const fb=document.getElementById('lFb');
+  fb.innerHTML=`<strong>Kết quả: ${lOk}/${LTOTAL}</strong> — ${lOk>=8?'Xuất sắc! 🏆':lOk>=5?'Tốt lắm! 🎉':'Cố gắng hơn nhé 💪'}`;
+  fb.style.color='#0D9488';
+  document.getElementById('lsTot').textContent='/'+LTOTAL;
+  document.getElementById('lBar').style.width=(lOk/LTOTAL*100)+'%';
+}
+function resetListen(){initListen();}
+initListen();
+
+// ══════ EX1: PICTURE MCQ ══════
+const ex1data=[
+  {emoji:'🏙️',q:'Hình ảnh thành phố với nhiều tòa nhà cao tầng',opts:['countryside','city','village'],ans:'city',exp:'city = thành phố, có nhiều tòa nhà cao tầng.'},
+  {emoji:'🧭',q:'Biểu tượng la bàn, mũi tên chỉ lên trên',opts:['north','south','east'],ans:'north',exp:'north = hướng bắc (↑)'},
+  {emoji:'🌊',q:'Hình ảnh dòng nước chảy dài uốn khúc qua núi',opts:['field','river','forest'],ans:'river',exp:'river = dòng sông, chảy dài'},
+  {emoji:'🛤️',q:'Đường nhỏ giữa cỏ, có người đi bộ',opts:['path','street','road'],ans:'path',exp:'path = con đường nhỏ, đường mòn'},
+  {emoji:'🏞️',q:'Hồ nước hình trái tim, được bao quanh bởi rừng',opts:['hill','river','lake'],ans:'lake',exp:'lake = hồ nước, nước đứng yên'},
+  {emoji:'⛰️',q:'Đồi xanh, bầu trời xanh, không khí trong lành',opts:['hill','forest','village'],ans:'hill',exp:'hill = đồi, cao hơn mặt đất xung quanh'},
+];
+const ex1f=document.getElementById('ex1form');
+ex1data.forEach((item,i)=>{
+  ex1f.innerHTML+=`<div class="mcq-item" id="e1q${i}">
+    <div class="qt"><span style="font-size:2.2rem;">${item.emoji}</span><br>${i+1}. ${item.q}</div>
+    <div class="mcq-options">
+      ${item.opts.map(o=>`<label class="mcq-option"><input type="radio" name="e1_${i}" value="${o}"> ${o}</label>`).join('')}
+    </div>
+  </div>`;
+});
+function checkEx1(){
+  let c=0;
+  ex1data.forEach((item,i)=>{
+    const sel=document.querySelector(`input[name="e1_${i}"]:checked`);
+    const opts=document.querySelectorAll(`#e1q${i} .mcq-option`);
+    opts.forEach(o=>o.classList.remove('correct-ans','wrong-ans'));
+    if(sel){
+      const ok=sel.value===item.ans;
+      sel.closest('.mcq-option').classList.add(ok?'correct-ans':'wrong-ans');
+      if(!ok)opts.forEach(o=>{if(o.querySelector('input').value===item.ans)o.classList.add('correct-ans');});
+      if(ok)c++;
+      let ex=document.getElementById('e1exp'+i);
+      if(!ex){ex=document.createElement('div');ex.id='e1exp'+i;ex.style.cssText='margin-top:5px;padding:5px 10px;background:#f0fdf4;border-radius:7px;font-size:.81rem;color:#166534;font-weight:700;';document.getElementById('e1q'+i).appendChild(ex);}
+      ex.textContent=(ok?'✅ ':'❌ ')+item.exp;
+    }
+  });
+  showSB('ex1-score',c,ex1data.length);showResult(c,ex1data.length);
+}
+function resetEx1(){
+  document.querySelectorAll('[name^="e1_"]').forEach(r=>r.checked=false);
+  document.querySelectorAll('#ex1form .mcq-option').forEach(o=>o.classList.remove('correct-ans','wrong-ans'));
+  ex1data.forEach((_,i)=>{const e=document.getElementById('e1exp'+i);if(e)e.remove();});
+  document.getElementById('ex1-score').style.display='none';
+}
+
+// ══════ EX3: PRONUNCIATION ══════
+const p3ans={p1:'B',p2:'C'};
+const p3exp={
+  p1:'B – KHÁC: countryside /ˈkʌn.tri.saɪd/ có âm "y" /i/, city /ˈsɪt.i/ có "i" /ɪ/, river /ˈrɪv.ər/ có "i" /ɪ/ → countryside âm "y" khác hai từ kia.',
+  p2:'C – KHÁC: village /ˈvɪl.ɪdʒ/ (âm /ɪdʒ/), area /ˈeə.ri.ə/ (âm /eə/), lake /leɪk/ (âm /eɪ/) → ba âm khác nhau. Trong khi A và B đều có âm giống nhau trong nhóm.'
+};
+function checkEx3(){
+  let c=0;
+  ['p1','p2'].forEach((q,i)=>{
+    const sel=document.querySelector(`input[name="${q}"]:checked`);
+    const opts=document.querySelectorAll(`#${q} .mcq-option`);
+    opts.forEach(o=>o.classList.remove('correct-ans','wrong-ans'));
+    if(sel){
+      const ok=sel.value===p3ans[q];
+      sel.closest('.mcq-option').classList.add(ok?'correct-ans':'wrong-ans');
+      if(!ok)opts.forEach(o=>{if(o.querySelector('input').value===p3ans[q])o.classList.add('correct-ans');});
+      if(ok)c++;
+      let ex=document.getElementById('p3exp'+i);
+      if(!ex){ex=document.createElement('div');ex.id='p3exp'+i;ex.style.cssText='margin-top:5px;padding:6px 11px;background:#f0fdf4;border-radius:7px;font-size:.8rem;color:#166534;font-weight:600;';document.getElementById(q).appendChild(ex);}
+      ex.textContent='💡 '+p3exp[q];
+    }
+  });
+  showSB('ex3-score',c,2);showResult(c,2);
+}
+function resetEx3(){
+  ['p1','p2'].forEach((q,i)=>{
+    const r=document.querySelector(`input[name="${q}"]:checked`);if(r)r.checked=false;
+    document.querySelectorAll(`#${q} .mcq-option`).forEach(o=>o.classList.remove('correct-ans','wrong-ans'));
+    const e=document.getElementById('p3exp'+i);if(e)e.remove();
+  });
+  document.getElementById('ex3-score').style.display='none';
+}
+
+// ══════ EX7: DEFINITIONS ══════
+const ex7data=[
+  {q:'A ____ is a large area of water, often in a park.',hint:'Chú ý: "large area of water" + "in a park"',opts:['forest','hill','lake'],ans:'lake',exp:'lake = hồ, vùng nước lớn thường trong công viên'},
+  {q:'A ____ is a very large area which has lots of trees in it.',hint:'Chú ý: "lots of trees"',opts:['forest','river','lake'],ans:'forest',exp:'forest = rừng, có rất nhiều cây'},
+  {q:'A ____ is a long area of water that often ends in the sea.',hint:'Chú ý: "ends in the sea"',opts:['forest','river','hill'],ans:'river',exp:'river = sông, chảy ra biển'},
+  {q:'The sun rises in the ____.',hint:'Mặt trời mọc ở phương nào?',opts:['south','east','west'],ans:'east',exp:'east = hướng đông. Mặt trời mọc ở phương đông.'},
+  {q:'A ____ is an area of land that is higher than the land around it.',hint:'Chú ý: "higher than the land around it"',opts:['field','village','hill'],ans:'hill',exp:'hill = đồi, cao hơn vùng đất xung quanh'},
+  {q:'A ____ is an area of land, used for growing plants or keeping animals.',hint:'Chú ý: "growing plants or keeping animals"',opts:['field','river','lake'],ans:'field',exp:'field = cánh đồng, dùng để trồng trọt hoặc chăn nuôi'},
+  {q:'A ____ is a group of houses that is smaller than a town, usually in the countryside.',hint:'Chú ý: "smaller than a town"',opts:['village','city','countryside'],ans:'village',exp:'village = làng, nhỏ hơn thị trấn, thường ở nông thôn'},
+];
+const ex7f=document.getElementById('ex7form');
+ex7data.forEach((item,i)=>{
+  ex7f.innerHTML+=`<div class="mcq-item" id="e7q${i}">
+    <div class="qt">${i+1}. ${item.q}<div class="hint">💡 ${item.hint}</div></div>
+    <div class="mcq-options">
+      ${item.opts.map(o=>`<label class="mcq-option"><input type="radio" name="e7_${i}" value="${o}"> ${o}</label>`).join('')}
+    </div>
+  </div>`;
+});
+function checkEx7(){
+  let c=0;
+  ex7data.forEach((item,i)=>{
+    const sel=document.querySelector(`input[name="e7_${i}"]:checked`);
+    const opts=document.querySelectorAll(`#e7q${i} .mcq-option`);
+    opts.forEach(o=>o.classList.remove('correct-ans','wrong-ans'));
+    if(sel){
+      const ok=sel.value===item.ans;
+      sel.closest('.mcq-option').classList.add(ok?'correct-ans':'wrong-ans');
+      if(!ok)opts.forEach(o=>{if(o.querySelector('input').value===item.ans)o.classList.add('correct-ans');});
+      if(ok)c++;
+      let ex=document.getElementById('e7exp'+i);
+      if(!ex){ex=document.createElement('div');ex.id='e7exp'+i;ex.style.cssText='margin-top:5px;padding:6px 11px;background:#f0fdf4;border-radius:7px;font-size:.81rem;color:#166534;font-weight:700;';document.getElementById('e7q'+i).appendChild(ex);}
+      ex.textContent=(ok?'✅ ':'❌ ')+item.exp;
+    }
+  });
+  showSB('ex7-score',c,ex7data.length);showResult(c,ex7data.length);
+}
+function resetEx7(){
+  document.querySelectorAll('[name^="e7_"]').forEach(r=>r.checked=false);
+  document.querySelectorAll('#ex7form .mcq-option').forEach(o=>o.classList.remove('correct-ans','wrong-ans'));
+  ex7data.forEach((_,i)=>{const e=document.getElementById('e7exp'+i);if(e)e.remove();});
+  document.getElementById('ex7-score').style.display='none';
+}
+
+// ══════ READING FILL ══════
+// Answers from image 1: blank1=C(field), blank2=F(path), blank3=D(river), blank4=G(village)
+const readBlanks=[['blank1','field','bfb1'],['blank2','path','bfb2'],['blank3','river','bfb3'],['blank4','village','bfb4']];
+function checkRead(){
+  let c=0;
+  readBlanks.forEach(([id,ans,fid])=>{
+    const inp=document.getElementById(id);const fb=document.getElementById(fid);
+    const ok=inp.value.trim().toLowerCase()===ans;
+    inp.classList.toggle('correct',ok);inp.classList.toggle('wrong',!ok&&inp.value.trim()!=='');
+    if(ok){fb.textContent='✓('+ans+')';fb.className='fb correct';c++;}
+    else if(inp.value.trim()!==''){fb.textContent='✗→'+ans;fb.className='fb wrong';}
+    else fb.textContent='';
+  });
+  showSB('read-score',c,4);showResult(c,4);
+}
+function resetRead(){
+  readBlanks.forEach(([id,,fid])=>{document.getElementById(id).value='';document.getElementById(id).className='para-blank';document.getElementById(fid).textContent='';});
+  document.getElementById('read-score').style.display='none';
+}
+
+// ══════ DIRECTION FILL ══════
+const dirBlanks=[['dir1','east','dfb1'],['dir2','north','dfb2'],['dir3','south','dfb3'],['dir4','west','dfb4']];
+function checkDir(){
+  let c=0;
+  dirBlanks.forEach(([id,ans,fid])=>{
+    const inp=document.getElementById(id);const fb=document.getElementById(fid);
+    const ok=inp.value.trim().toLowerCase()===ans;
+    inp.classList.toggle('correct',ok);inp.classList.toggle('wrong',!ok&&inp.value.trim()!=='');
+    if(ok){fb.textContent='✓';fb.className='fb correct';c++;}
+    else if(inp.value.trim()!==''){fb.textContent='✗→'+ans;fb.className='fb wrong';}
+    else fb.textContent='';
+  });
+  showSB('dir-score',c,4);showResult(c,4);
+}
+function resetDir(){
+  dirBlanks.forEach(([id,,fid])=>{document.getElementById(id).value='';document.getElementById(id).className='para-blank';document.getElementById(fid).textContent='';});
+  document.getElementById('dir-score').style.display='none';
+}
+
+// ══════ HELPERS ══════
+function showTab(id,btn){
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(btn)btn.classList.add('active');
+}
+function showSB(id,c,t){
+  const el=document.getElementById(id);el.style.display='flex';
+  el.innerHTML=`<span class="score-num">${c}/${t}</span><span>${c===t?'🏆 Hoàn hảo!':c>=t*.7?'🎉 Tốt lắm!':'💪 Thử lại!'}</span>`;
+}
+function showResult(c,t){
+  const p=c/t;
+  document.getElementById('rEmoji').textContent=p===1?'🏆':p>=.7?'🎉':p>=.5?'👍':'💪';
+  document.getElementById('rScore').textContent=c+'/'+t;
+  document.getElementById('rMsg').textContent=p===1?'Hoàn hảo! Xuất sắc!':p>=.7?'Làm tốt lắm!':p>=.5?'Cố gắng hơn nhé!':'Ôn lại lý thuyết và thử lại!';
+  document.getElementById('resultPopup').classList.add('show');
+}
+function closePopup(){document.getElementById('resultPopup').classList.remove('show');}
+</script>
+</body>
+</html>

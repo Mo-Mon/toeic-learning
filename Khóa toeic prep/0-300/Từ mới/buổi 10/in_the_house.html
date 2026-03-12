@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>In the House – Trong Nhà</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --teal:#0D9488;--teal-d:#0F766E;--teal-l:#CCFBF1;
+  --blue:#3B82F6;--blue-l:#EFF6FF;
+  --amber:#F59E0B;--amber-l:#FFFBEB;
+  --pink:#EC4899;--purple:#8B5CF6;
+  --green:#10B981;--red:#EF4444;
+  --bg:#F0FDFA;--card:#fff;--text:#134E4A;--muted:#5EADA7;
+  --shadow:0 6px 28px rgba(13,148,136,.14);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+header{
+  background:linear-gradient(135deg,#0D9488 0%,#0891B2 60%,#6366F1 100%);
+  padding:28px 16px 20px;text-align:center;position:relative;overflow:hidden;
+  box-shadow:0 4px 24px rgba(13,148,136,.4);
+}
+header::before{
+  content:'🏠 🛋️ 🛏️ 🍳 🪟 💡 🪑 📚 ❄️ 🛁 🚪 🪴';
+  position:absolute;bottom:5px;left:0;right:0;font-size:1rem;letter-spacing:2px;opacity:.2;
+}
+header h1{font-family:'Fredoka One',cursive;font-size:2.2rem;color:#fff;text-shadow:0 3px 12px rgba(0,0,0,.15);}
+header p{color:rgba(255,255,255,.88);font-size:.93rem;margin-top:4px;}
+
+.tabs{display:flex;justify-content:center;gap:6px;padding:16px 10px 0;flex-wrap:wrap;}
+.tab-btn{padding:7px 13px;border-radius:50px;border:2.5px solid var(--teal);background:#fff;color:var(--teal);font-family:'Nunito',sans-serif;font-size:.81rem;font-weight:800;cursor:pointer;transition:all .2s;}
+.tab-btn.active,.tab-btn:hover{background:var(--teal);color:#fff;box-shadow:0 3px 12px rgba(13,148,136,.35);}
+
+.tab-content{display:none;max-width:950px;margin:0 auto;padding:18px 12px 60px;}
+.tab-content.active{display:block;}
+
+.sc{background:var(--card);border-radius:20px;padding:22px;margin-bottom:16px;box-shadow:var(--shadow);}
+.sc h2{font-family:'Fredoka One',cursive;color:var(--teal);font-size:1.3rem;margin-bottom:14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.sc h3{font-family:'Fredoka One',cursive;color:var(--blue);font-size:1.05rem;margin-bottom:12px;padding-bottom:7px;border-bottom:2px dashed #dbeafe;}
+
+/* VOCAB */
+.vocab-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:9px;}
+.vc{background:linear-gradient(145deg,#f0fdfa,#ccfbf1);border-radius:15px;padding:12px 8px 10px;text-align:center;border:2px solid #99f6e4;transition:transform .15s,box-shadow .15s;}
+.vc:hover{transform:translateY(-4px);box-shadow:0 6px 16px rgba(13,148,136,.22);}
+.vc .em{font-size:2rem;line-height:1;}
+.vc .w{font-size:.83rem;font-weight:900;color:var(--teal-d);margin-top:5px;line-height:1.2;}
+.vc .ipa{font-size:.61rem;color:var(--muted);font-style:italic;margin-top:2px;}
+.vc .v{font-size:.73rem;color:#065f46;margin-top:3px;font-weight:700;}
+.speak-btn{display:inline-flex;align-items:center;justify-content:center;margin-top:5px;background:var(--teal);border:none;border-radius:50%;width:26px;height:26px;cursor:pointer;color:#fff;font-size:.72rem;transition:all .15s;}
+.speak-btn:hover{background:var(--teal-d);}
+.speak-btn.playing{background:var(--amber);color:#333;}
+
+/* ROOMS */
+.room-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:10px;}
+.room-card{border-radius:14px;padding:13px;border:2px solid #99f6e4;}
+.room-card.bedroom{background:linear-gradient(135deg,#eff6ff,#dbeafe);border-color:#93c5fd;}
+.room-card.kitchen{background:linear-gradient(135deg,#fff7ed,#fed7aa);border-color:#fdba74;}
+.room-card.living{background:linear-gradient(135deg,#fdf4ff,#e9d5ff);border-color:#c4b5fd;}
+.room-card.other{background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-color:#86efac;}
+.room-card h4{font-family:'Fredoka One',cursive;font-size:.95rem;margin-bottom:6px;}
+.room-card.bedroom h4{color:#1e40af;}
+.room-card.kitchen h4{color:#c2410c;}
+.room-card.living h4{color:#7c3aed;}
+.room-card.other h4{color:#166534;}
+.room-tag{display:inline-block;background:#fff;border-radius:6px;padding:2px 8px;font-size:.77rem;font-weight:700;margin:2px;color:var(--text);}
+
+/* RULE BOX */
+.rule-box{border-left:4px solid var(--teal);border-radius:11px;padding:11px 15px;margin:10px 0;font-size:.88rem;line-height:1.9;background:var(--teal-l);}
+.rule-box strong{color:var(--teal-d);}
+.rule-box.blue{background:var(--blue-l);border-left-color:var(--blue);}
+.rule-box.blue strong{color:#1e40af;}
+.rule-box.amber{background:var(--amber-l);border-left-color:var(--amber);}
+.rule-box.amber strong{color:#92400e;}
+
+/* LISTEN */
+.listen-sec{background:var(--card);border-radius:20px;padding:20px;margin-bottom:16px;box-shadow:var(--shadow);}
+.listen-sec h2{font-family:'Fredoka One',cursive;color:var(--green);font-size:1.2rem;margin-bottom:11px;}
+.speed-row{display:flex;align-items:center;gap:7px;margin-bottom:11px;flex-wrap:wrap;}
+.speed-row span{font-weight:700;color:var(--muted);font-size:.83rem;}
+.speed-btn{padding:4px 11px;border-radius:20px;border:2px solid #99f6e4;background:#fff;color:var(--teal-d);font-weight:700;font-size:.78rem;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .15s;}
+.speed-btn.active{background:var(--teal-d);color:#fff;border-color:var(--teal-d);}
+.listen-box{background:var(--teal-l);border-radius:14px;padding:16px;margin-bottom:10px;border:1.5px solid #99f6e4;}
+.listen-play{display:inline-flex;align-items:center;gap:7px;background:var(--teal);color:#fff;border:none;border-radius:50px;padding:10px 26px;font-family:'Nunito',sans-serif;font-size:.93rem;font-weight:800;cursor:pointer;box-shadow:0 3px 12px rgba(13,148,136,.3);margin-bottom:12px;transition:background .2s;}
+.listen-play.playing{background:var(--amber);color:#333;}
+.listen-opts{display:flex;flex-wrap:wrap;gap:7px;}
+.listen-opt{padding:7px 16px;border-radius:50px;border:2.5px solid #99f6e4;background:#fff;font-family:'Nunito',sans-serif;font-size:.87rem;font-weight:700;cursor:pointer;transition:all .15s;color:#065f46;}
+.listen-opt:hover:not(.locked){border-color:var(--teal);}
+.listen-opt.correct-opt{border-color:var(--green);background:#f0fdf4;color:#166534;}
+.listen-opt.wrong-opt{border-color:#ef4444;background:#fef2f2;color:#991b1b;}
+.listen-opt.locked{cursor:default;}
+.listen-fb{margin-top:9px;font-weight:700;font-size:.85rem;min-height:18px;}
+.ls-bar{display:flex;align-items:center;gap:10px;font-weight:700;flex-wrap:wrap;padding-top:10px;}
+.ls-big{font-size:1.65rem;font-weight:900;color:var(--teal);}
+.prog-wrap{flex:1;min-width:80px;height:8px;background:#99f6e4;border-radius:99px;overflow:hidden;}
+.prog-fill{height:100%;background:var(--teal);border-radius:99px;transition:width .4s;}
+
+/* MCQ / ODD */
+.mcq-item{margin-bottom:14px;}
+.mcq-item .qt{font-weight:700;margin-bottom:8px;line-height:1.5;font-size:.9rem;background:var(--teal-l);padding:9px 13px;border-radius:10px;border-left:3px solid var(--teal);}
+.mcq-item .qt .hint{font-size:.76rem;color:var(--muted);font-weight:600;margin-top:3px;font-style:italic;}
+.mcq-options{display:flex;flex-direction:column;gap:5px;}
+.mcq-option{display:flex;align-items:center;gap:8px;padding:8px 13px;border-radius:10px;border:2px solid #e2e8f0;cursor:pointer;transition:all .15s;font-weight:600;user-select:none;font-size:.88rem;}
+.mcq-option:hover{border-color:var(--teal);background:var(--teal-l);}
+.mcq-option.correct-ans{border-color:var(--green);background:#f0fdf4;color:#166534;}
+.mcq-option.wrong-ans{border-color:#ef4444;background:#fef2f2;color:#991b1b;}
+.mcq-option input[type=radio]{accent-color:var(--teal);}
+
+.odd-item{margin-bottom:13px;padding:12px 15px;background:var(--teal-l);border-radius:13px;border:1.5px solid #99f6e4;}
+.odd-item .oq{font-size:.88rem;font-weight:700;color:var(--teal-d);margin-bottom:9px;}
+.odd-opts{display:flex;flex-wrap:wrap;gap:7px;}
+.odd-opt{padding:7px 18px;border-radius:50px;border:2.5px solid #99f6e4;background:#fff;font-family:'Nunito',sans-serif;font-size:.87rem;font-weight:700;cursor:pointer;transition:all .15s;color:var(--teal-d);user-select:none;}
+.odd-opt:hover{border-color:var(--teal);}
+.odd-opt.correct-ans{border-color:var(--green);background:#f0fdf4;color:#166534;}
+.odd-opt.wrong-ans{border-color:#ef4444;background:#fef2f2;color:#991b1b;}
+.odd-opt.locked{cursor:default;}
+
+/* FILL */
+.para-blank{border:none;border-bottom:2.5px solid var(--teal);background:transparent;font-family:'Nunito',sans-serif;font-size:.9rem;width:100px;outline:none;padding:2px 5px;font-weight:700;color:var(--teal-d);}
+.para-blank.correct{border-bottom-color:var(--green);color:var(--green);}
+.para-blank.wrong{border-bottom-color:#ef4444;color:#ef4444;}
+.fb{font-size:.75rem;font-weight:700;margin-left:2px;}
+.fb.correct{color:var(--green);}
+.fb.wrong{color:#ef4444;}
+
+/* WORD COMPLETE */
+.wc-row{display:flex;align-items:center;gap:8px;margin-bottom:11px;padding:10px 13px;background:var(--teal-l);border-radius:11px;border:1.5px solid #99f6e4;flex-wrap:wrap;}
+.wc-pre{font-family:'Fredoka One',cursive;font-size:1.05rem;color:var(--teal-d);}
+.wc-inp{border:2px solid #99f6e4;border-radius:8px;padding:5px 10px;font-family:'Nunito',sans-serif;font-size:.9rem;font-weight:700;outline:none;transition:border .2s;background:#fff;width:110px;}
+.wc-inp:focus{border-color:var(--teal);}
+.wc-inp.correct{border-color:var(--green);background:#f0fdf4;}
+.wc-inp.wrong{border-color:#ef4444;background:#fef2f2;}
+.wc-viet{font-size:.82rem;color:var(--muted);font-style:italic;margin-left:4px;}
+
+/* MATCH */
+.match-item{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap;}
+.match-left{font-size:.9rem;font-weight:700;min-width:130px;}
+.match-sel{border:2px solid #99f6e4;border-radius:9px;padding:5px 10px;font-family:'Nunito',sans-serif;font-size:.88rem;font-weight:700;background:#fff;outline:none;color:var(--text);cursor:pointer;transition:border .2s;}
+.match-sel:focus{border-color:var(--teal);}
+.match-sel.correct{border-color:var(--green);background:#f0fdf4;}
+.match-sel.wrong{border-color:#ef4444;background:#fef2f2;}
+
+/* ROOM SORT */
+.sort-item{margin-bottom:11px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:9px 13px;background:var(--teal-l);border-radius:11px;border:1.5px solid #99f6e4;}
+.sort-label{font-weight:800;font-size:.9rem;min-width:120px;color:var(--teal-d);}
+
+/* SCORE */
+.score-bar{background:var(--teal-l);border-radius:14px;padding:12px 16px;margin-top:12px;display:flex;align-items:center;gap:12px;font-weight:700;flex-wrap:wrap;border:1.5px solid #99f6e4;}
+.score-num{font-size:1.7rem;font-weight:900;color:var(--teal);}
+.btn{padding:9px 24px;border-radius:50px;border:none;font-family:'Nunito',sans-serif;font-size:.9rem;font-weight:800;cursor:pointer;transition:all .2s;margin-top:11px;}
+.btn-p{background:var(--teal);color:#fff;box-shadow:0 3px 14px rgba(13,148,136,.3);}
+.btn-p:hover{background:var(--teal-d);transform:translateY(-2px);}
+.btn-s{background:#fff;color:var(--teal);border:2.5px solid var(--teal);}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;}
+.word-bank{background:var(--amber-l);border-radius:11px;padding:9px 14px;margin-bottom:13px;font-weight:700;color:#92400e;font-size:.82rem;border:1.5px solid #fde68a;line-height:1.8;}
+
+/* POPUP */
+.result-popup{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.45);z-index:999;align-items:center;justify-content:center;}
+.result-popup.show{display:flex;}
+.result-box{background:#fff;border-radius:24px;padding:36px 42px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.2);animation:popIn .3s ease;max-width:340px;width:90%;}
+@keyframes popIn{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
+.result-box h2{font-family:'Fredoka One',cursive;font-size:1.7rem;color:var(--teal);margin:8px 0 4px;}
+.rs{font-size:2.5rem;font-weight:900;color:var(--blue);}
+
+@media(max-width:600px){
+  header h1{font-size:1.5rem;}
+  .vocab-grid{grid-template-columns:repeat(2,1fr);}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🏠 In the House – Trong Nhà</h1>
+  <p>Lý thuyết · 7 Bài tập · Luyện nghe · Phát âm</p>
+</header>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('theory',this)">📖 Lý Thuyết</button>
+  <button class="tab-btn" onclick="showTab('ex1',this)">🔤 Bài 1: Điền chữ</button>
+  <button class="tab-btn" onclick="showTab('ex2',this)">🗺️ Bài 2: Nhận phòng</button>
+  <button class="tab-btn" onclick="showTab('ex3',this)">🔗 Bài 3: Nối từ</button>
+  <button class="tab-btn" onclick="showTab('ex4',this)">🏷️ Bài 4: Phân loại</button>
+  <button class="tab-btn" onclick="showTab('ex5',this)">✏️ Bài 5: Điền đoạn</button>
+  <button class="tab-btn" onclick="showTab('ex6',this)">🔊 Bài 6: Phát âm</button>
+  <button class="tab-btn" onclick="showTab('ex7',this)">🏷️ Bài 7: Nhãn phòng</button>
+</div>
+
+<!-- ══════ THEORY ══════ -->
+<div id="theory" class="tab-content active">
+  <div class="sc">
+    <h2>🏠 Từ vựng – Các phòng & đồ vật trong nhà <small style="font-size:.7rem;color:var(--muted)">(bấm 🔊 nghe)</small></h2>
+    <div class="vocab-grid" id="vocabGrid"></div>
+  </div>
+  <div class="sc">
+    <h2>🗂️ Từ theo phòng</h2>
+    <div class="room-grid">
+      <div class="room-card bedroom">
+        <h4>🛏️ Bedroom – Phòng ngủ</h4>
+        <span class="room-tag">bed</span><span class="room-tag">curtain</span>
+        <span class="room-tag">lamp/light</span><span class="room-tag">desk</span>
+        <span class="room-tag">chair</span><span class="room-tag">computer</span>
+        <span class="room-tag">bookshelf</span><span class="room-tag">ceiling</span>
+        <span class="room-tag">carpet</span><span class="room-tag">wooden floor</span>
+      </div>
+      <div class="room-card kitchen">
+        <h4>🍳 Kitchen – Nhà bếp</h4>
+        <span class="room-tag">fridge/refrigerator</span><span class="room-tag">oven</span>
+        <span class="room-tag">rice cooker</span><span class="room-tag">dishwasher</span>
+        <span class="room-tag">floor</span>
+      </div>
+      <div class="room-card living">
+        <h4>🛋️ Living room – Phòng khách</h4>
+        <span class="room-tag">sofa</span><span class="room-tag">bookshelf</span>
+        <span class="room-tag">carpet</span><span class="room-tag">TV</span>
+        <span class="room-tag">ceiling</span>
+      </div>
+      <div class="room-card other">
+        <h4>🏡 Khác – Other</h4>
+        <span class="room-tag">garage</span><span class="room-tag">hall</span>
+        <span class="room-tag">bathroom</span><span class="room-tag">garden</span>
+        <span class="room-tag">floor</span>
+      </div>
+    </div>
+  </div>
+  <div class="sc">
+    <h2>💡 Ghi nhớ quan trọng</h2>
+    <div class="rule-box"><strong>fridge</strong> = <strong>refrigerator</strong> = tủ lạnh (fridge là cách nói ngắn thông thường)</div>
+    <div class="rule-box blue"><strong>lamp</strong> = <strong>light</strong> = đèn &nbsp;|&nbsp; <strong>desk</strong> = bàn học (phòng ngủ) &nbsp;|&nbsp; <strong>sofa</strong> = ghế dài phòng khách</div>
+    <div class="rule-box amber"><strong>ceiling</strong> /ˈsiːlɪŋ/ = trần nhà &nbsp;|&nbsp; <strong>floor</strong> = sàn nhà &nbsp;|&nbsp; <strong>carpet</strong> = thảm trải sàn &nbsp;|&nbsp; <strong>wooden</strong> = làm bằng gỗ</div>
+  </div>
+  <div class="listen-sec">
+    <h2>🎧 Luyện nghe – Nghe từ → chọn nghĩa</h2>
+    <div class="speed-row">
+      <span>Tốc độ:</span>
+      <button class="speed-btn active" onclick="setSpeed(0.7,this)">🐢 Chậm</button>
+      <button class="speed-btn" onclick="setSpeed(1.0,this)">🚶 Bình thường</button>
+      <button class="speed-btn" onclick="setSpeed(1.3,this)">🏃 Nhanh</button>
+    </div>
+    <div class="listen-box">
+      <div id="lqnum">Câu 1 / 12</div>
+      <button class="listen-play" id="lplayBtn" onclick="playQ()">🔊 &nbsp;Nghe từ</button>
+      <div class="listen-opts" id="lOpts"></div>
+      <div class="listen-fb" id="lFb"></div>
+    </div>
+    <div class="ls-bar">
+      <span>Điểm:</span><span class="ls-big" id="lsNum">0</span>
+      <span style="color:var(--muted);font-weight:600;" id="lsTot">/0</span>
+      <div class="prog-wrap"><div class="prog-fill" id="lBar" style="width:0%"></div></div>
+      <button class="btn btn-s" style="margin-top:0;padding:4px 12px;font-size:.8rem;" onclick="resetListen()">🔄</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ EX1: WORD COMPLETION ══════ -->
+<div id="ex1" class="tab-content">
+  <div class="sc">
+    <h3>🔤 Bài 1: Điền các chữ cái còn thiếu để tạo thành từ hoàn chỉnh</h3>
+    <div id="ex1form"></div>
+    <div class="btn-row">
+      <button class="btn btn-p" onclick="checkEx1()">✅ Chấm điểm</button>
+      <button class="btn btn-s" onclick="resetEx1()">🔄 Làm lại</button>
+    </div>
+    <div id="ex1-score" class="score-bar" style="display:none;"></div>
+  </div>
+</div>
+
+<!-- ══════ EX2: ROOM LABEL (bedroom sketch) ══════ -->
+<div id="ex2" class="tab-content">
+  <div class="sc">
+    <h3>🗺️ Bài 2: Nhìn sơ đồ phòng ngủ – ghép chữ cái với đồ vật đúng</h3>
+    <div style="background:linear-gradient(135deg,#f0fdfa,#ccfbf1);border-radius:14px;padding:16px;margin-bottom:14px;border:1.5px solid #99f6e4;">
+      <div style="font-family:'Fredoka One',cursive;font-size:1.05rem;color:var(--teal-d);margin-bottom:10px;">🛏️ Sơ đồ phòng ngủ (A–F)</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:7px;max-width:360px;">
+        <div style="background:#fff;border-radius:9px;padding:7px;text-align:center;border:1.5px solid #99f6e4;font-family:'Fredoka One',cursive;color:var(--teal-d);">A<div style="font-size:.7rem;color:var(--muted);">trần nhà</div></div>
+        <div style="background:#fff;border-radius:9px;padding:7px;text-align:center;border:1.5px solid #99f6e4;font-family:'Fredoka One',cursive;color:var(--teal-d);">B<div style="font-size:.7rem;color:var(--muted);">bàn học</div></div>
+        <div style="background:#fff;border-radius:9px;padding:7px;text-align:center;border:1.5px solid #99f6e4;font-family:'Fredoka One',cursive;color:var(--teal-d);">C<div style="font-size:.7rem;color:var(--muted);">ghế</div></div>
+        <div style="background:#fff;border-radius:9px;padding:7px;text-align:center;border:1.5px solid #99f6e4;font-family:'Fredoka One',cursive;color:var(--teal-d);">D<div style="font-size:.7rem;color:var(--muted);">rèm cửa</div></div>
+        <div style="background:#fff;border-radius:9px;padding:7px;text-align:center;border:1.5px solid #99f6e4;font-family:'Fredoka One',cursive;color:var(--teal-d);">E<div style="font-size:.7rem;color:var(--muted);">đèn</div></div>
+        <div style="background:#fff;border-radius:9px;padding:7px;text-align:center;border:1.5px solid #99f6e4;font-family:'Fredoka One',cursive;color:var(--teal-d);">F<div style="font-size:.7rem;color:var(--muted);">giường</div></div>
+      </div>
+    </div>
+    <div id="ex2form"></div>
+    <div class="btn-row">
+      <button class="btn btn-p" onclick="checkEx2()">✅ Chấm điểm</button>
+      <button class="btn btn-s" onclick="resetEx2()">🔄 Làm lại</button>
+    </div>
+    <div id="ex2-score" class="score-bar" style="display:none;"></div>
+  </div>
+</div>
+
+<!-- ══════ EX3: MATCHING ══════ -->
+<div id="ex3" class="tab-content">
+  <div class="sc">
+    <h3>🔗 Bài 3: Nối nghĩa tiếng Anh ↔ tiếng Việt</h3>
+    <div id="ex3form"></div>
+    <div class="btn-row">
+      <button class="btn btn-p" onclick="checkEx3()">✅ Chấm điểm</button>
+      <button class="btn btn-s" onclick="resetEx3()">🔄 Làm lại</button>
+    </div>
+    <div id="ex3-score" class="score-bar" style="display:none;"></div>
+  </div>
+</div>
+
+<!-- ══════ EX4: ROOM CATEGORISE ══════ -->
+<div id="ex4" class="tab-content">
+  <div class="sc">
+    <h3>🏷️ Bài 4: Đồ vật này thuộc phòng nào?</h3>
+    <div id="ex4form"></div>
+    <div class="btn-row">
+      <button class="btn btn-p" onclick="checkEx4()">✅ Chấm điểm</button>
+      <button class="btn btn-s" onclick="resetEx4()">🔄 Làm lại</button>
+    </div>
+    <div id="ex4-score" class="score-bar" style="display:none;"></div>
+  </div>
+</div>
+
+<!-- ══════ EX5: FILL TWO PARAGRAPHS ══════ -->
+<div id="ex5" class="tab-content">
+  <div class="sc">
+    <h3>✏️ Bài 5: Điền từ thích hợp vào chỗ trống</h3>
+    <div class="word-bank">📦 Từ cho sẵn: bedrooms · living room · kitchen · refrigerator · sofa · ceiling · floor</div>
+    <div style="background:linear-gradient(135deg,#f0fdfa,#e6fffa);border-radius:13px;padding:15px;margin-bottom:12px;border:1.5px solid #99f6e4;">
+      <div style="font-family:'Fredoka One',cursive;color:var(--teal);margin-bottom:8px;">🏡 Description 1:</div>
+      <div style="line-height:2.8;font-size:.91rem;">
+        We have a house. It's really nice. We have four
+        <input class="para-blank" id="d1_1" style="width:95px" autocomplete="off"> <span class="fb" id="d1f1"></span>
+        and two bathrooms. We have a beautiful
+        <input class="para-blank" id="d1_2" style="width:100px" autocomplete="off"> <span class="fb" id="d1f2"></span>
+        so we can watch TV and a big
+        <input class="para-blank" id="d1_3" style="width:80px" autocomplete="off"> <span class="fb" id="d1f3"></span>
+        because I love cooking. We also have a small garden.
+      </div>
+    </div>
+    <div style="background:linear-gradient(135deg,#eff6ff,#dbeafe);border-radius:13px;padding:15px;margin-bottom:12px;border:1.5px solid #93c5fd;">
+      <div style="font-family:'Fredoka One',cursive;color:var(--blue);margin-bottom:8px;">🏢 Description 2:</div>
+      <div style="line-height:2.8;font-size:.91rem;">
+        I live in an apartment. It only has one bedroom. I have a small kitchen but I don't have a
+        <input class="para-blank" id="d2_1" style="width:110px" autocomplete="off"> <span class="fb" id="d2f1"></span>
+        to keep my food inside because it is too big. I usually watch TV while sitting on my bed, because I don't have a living room or a
+        <input class="para-blank" id="d2_2" style="width:65px" autocomplete="off"> <span class="fb" id="d2f2"></span>
+        to sit on!
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-p" onclick="checkEx5()">✅ Chấm điểm</button>
+      <button class="btn btn-s" onclick="resetEx5()">🔄 Làm lại</button>
+    </div>
+    <div id="ex5-score" class="score-bar" style="display:none;"></div>
+  </div>
+</div>
+
+<!-- ══════ EX6: PRONUNCIATION ══════ -->
+<div id="ex6" class="tab-content">
+  <div class="sc">
+    <h3>🔊 Bài 6: Chọn từ có phần gạch chân phát âm KHÁC với các từ còn lại</h3>
+    <div id="ex6form"></div>
+    <div class="btn-row">
+      <button class="btn btn-p" onclick="checkEx6()">✅ Chấm điểm</button>
+      <button class="btn btn-s" onclick="resetEx6()">🔄 Làm lại</button>
+    </div>
+    <div id="ex6-score" class="score-bar" style="display:none;"></div>
+  </div>
+</div>
+
+<!-- ══════ EX7: BEDROOM LABEL LETTERS ══════ -->
+<div id="ex7" class="tab-content">
+  <div class="sc">
+    <h3>🏷️ Bài 7: Viết tên đồ vật theo chữ cái trong sơ đồ phòng ngủ</h3>
+    <div class="word-bank">📦 Đồ vật: curtain · bed · desk · lamp · ceiling · chair</div>
+    <div id="ex7form"></div>
+    <div class="btn-row">
+      <button class="btn btn-p" onclick="checkEx7()">✅ Chấm điểm</button>
+      <button class="btn btn-s" onclick="resetEx7()">🔄 Làm lại</button>
+    </div>
+    <div id="ex7-score" class="score-bar" style="display:none;"></div>
+  </div>
+</div>
+
+<!-- POPUP -->
+<div class="result-popup" id="resultPopup">
+  <div class="result-box">
+    <div style="font-size:3.5rem;" id="rEmoji">🎉</div>
+    <h2>Hoàn thành!</h2>
+    <div class="rs" id="rScore">0/0</div>
+    <p id="rMsg">Làm tốt lắm!</p>
+    <button class="btn btn-p" onclick="closePopup()">🏠 Tiếp tục</button>
+  </div>
+</div>
+
+<script>
+// ══════ VOCAB DATA ══════
+const vocab=[
+  {em:'🏠',w:'garage',ipa:'/ˈɡær.ɑːdʒ/',v:'ga-ra, nhà để xe'},
+  {em:'🚪',w:'hall',ipa:'/hɔːl/',v:'hành lang, tiền sảnh'},
+  {em:'🛋️',w:'living room',ipa:'/ˈlɪv.ɪŋ ruːm/',v:'phòng khách'},
+  {em:'🪵',w:'floor',ipa:'/flɔːr/',v:'sàn nhà'},
+  {em:'🪵',w:'wooden',ipa:'/ˈwʊd.ən/',v:'làm bằng gỗ'},
+  {em:'🟫',w:'carpet',ipa:'/ˈkɑːr.pɪt/',v:'thảm trải sàn'},
+  {em:'🛋️',w:'sofa',ipa:'/ˈsoʊ.fə/',v:'ghế sô-fa'},
+  {em:'📚',w:'bookshelf',ipa:'/ˈbʊk.ʃelf/',v:'giá sách, tủ sách'},
+  {em:'🍳',w:'kitchen',ipa:'/ˈkɪtʃ.ɪn/',v:'nhà bếp'},
+  {em:'🔥',w:'oven',ipa:'/ˈʌv.ən/',v:'lò nướng'},
+  {em:'🍚',w:'rice cooker',ipa:'/raɪs ˈkʊk.ər/',v:'nồi cơm điện'},
+  {em:'🍽️',w:'dishwasher',ipa:'/ˈdɪʃ.wɒʃ.ər/',v:'máy rửa bát'},
+  {em:'❄️',w:'fridge',ipa:'/frɪdʒ/',v:'tủ lạnh (ngắn gọn)'},
+  {em:'❄️',w:'refrigerator',ipa:'/rɪˈfrɪdʒ.ər.eɪ.tər/',v:'tủ lạnh (đầy đủ)'},
+  {em:'🛏️',w:'bedroom',ipa:'/ˈbed.ruːm/',v:'phòng ngủ'},
+  {em:'🪟',w:'curtain',ipa:'/ˈkɜːr.tən/',v:'rèm cửa'},
+  {em:'🪢',w:'silk',ipa:'/sɪlk/',v:'lụa, làm bằng lụa'},
+  {em:'💡',w:'lamp',ipa:'/læmp/',v:'đèn (có chân)'},
+  {em:'🔆',w:'ceiling',ipa:'/ˈsiː.lɪŋ/',v:'trần nhà'},
+  {em:'🪑',w:'chair',ipa:'/tʃeər/',v:'ghế'},
+  {em:'💻',w:'computer',ipa:'/kəmˈpjuː.tər/',v:'máy tính'},
+  {em:'📖',w:'desk',ipa:'/desk/',v:'bàn học'},
+];
+
+const vg=document.getElementById('vocabGrid');
+vocab.forEach(a=>{
+  vg.innerHTML+=`<div class="vc">
+    <div class="em">${a.em}</div>
+    <div class="w">${a.w}</div>
+    <div class="ipa">${a.ipa}</div>
+    <div class="v">${a.v}</div>
+    <button class="speak-btn" onclick="speakWord('${a.w}',this)">🔊</button>
+  </div>`;
+});
+
+let ttsRate=0.7;
+function setSpeed(r,btn){ttsRate=r;document.querySelectorAll('.speed-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
+function speakWord(w,btn){
+  if(!window.speechSynthesis)return;
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(w);u.lang='en-US';u.rate=ttsRate;
+  if(btn){btn.classList.add('playing');u.onend=()=>btn.classList.remove('playing');}
+  window.speechSynthesis.speak(u);
+}
+
+// LISTEN
+const LTOTAL=12;let lQ=[],lIdx=0,lOk=0,lAns=false;
+function sh(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+function initListen(){
+  lQ=sh([...vocab,...vocab]).slice(0,LTOTAL);lIdx=0;lOk=0;lAns=false;
+  document.getElementById('lsNum').textContent='0';
+  document.getElementById('lsTot').textContent='/0';
+  document.getElementById('lBar').style.width='0%';
+  renderLQ();
+}
+function renderLQ(){
+  if(lIdx>=LTOTAL){doneListen();return;}
+  const q=lQ[lIdx];
+  document.getElementById('lqnum').textContent=`Câu ${lIdx+1} / ${LTOTAL}`;
+  document.getElementById('lFb').textContent='';
+  document.getElementById('lplayBtn').className='listen-play';
+  document.getElementById('lplayBtn').innerHTML='🔊 &nbsp;Nghe từ';
+  lAns=false;
+  const pool=vocab.filter(x=>x.w!==q.w);
+  const opts=sh([q,...sh(pool).slice(0,3)]);
+  const el=document.getElementById('lOpts');el.innerHTML='';
+  opts.forEach(o=>{
+    const b=document.createElement('button');b.className='listen-opt';
+    b.innerHTML=`${o.em} ${o.v}`;b.onclick=()=>handleLA(o.w,q.w,b);el.appendChild(b);
+  });
+  updateLS();
+}
+function playQ(){
+  if(lIdx>=LTOTAL)return;
+  const btn=document.getElementById('lplayBtn');btn.classList.add('playing');
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(lQ[lIdx].w);u.lang='en-US';u.rate=ttsRate;
+  u.onend=()=>btn.classList.remove('playing');window.speechSynthesis.speak(u);
+}
+function handleLA(chosen,correct,btn){
+  if(lAns)return;lAns=true;
+  const ok=chosen===correct;
+  if(ok){lOk++;btn.classList.add('correct-opt');}
+  else{
+    btn.classList.add('wrong-opt');
+    const f=vocab.find(x=>x.w===correct);
+    document.querySelectorAll('.listen-opt').forEach(b=>{if(b.innerHTML.includes(f?.v||'__'))b.classList.add('correct-opt');});
+  }
+  document.querySelectorAll('.listen-opt').forEach(b=>b.classList.add('locked'));
+  const viet=vocab.find(x=>x.w===correct)?.v||'';
+  const fb=document.getElementById('lFb');
+  fb.innerHTML=ok?`✅ Đúng! <strong>${correct}</strong> = ${viet}`:`❌ Sai! <strong>${correct}</strong> = ${viet}`;
+  fb.style.color=ok?'#059669':'#991b1b';
+  updateLS();setTimeout(()=>{lIdx++;renderLQ();},1800);
+}
+function updateLS(){
+  document.getElementById('lsNum').textContent=lOk;
+  document.getElementById('lsTot').textContent='/'+lIdx;
+  document.getElementById('lBar').style.width=(lIdx>0?(lOk/lIdx)*100:0)+'%';
+}
+function doneListen(){
+  document.getElementById('lqnum').textContent='🎉 Hoàn thành!';
+  document.getElementById('lOpts').innerHTML='';
+  document.getElementById('lplayBtn').innerHTML='✅ Đã xong';
+  document.getElementById('lFb').innerHTML=`<strong>Kết quả: ${lOk}/${LTOTAL}</strong> — ${lOk>=10?'Xuất sắc! 🏆':lOk>=7?'Tốt lắm! 🎉':'Cố lên! 💪'}`;
+  document.getElementById('lsTot').textContent='/'+LTOTAL;
+  document.getElementById('lBar').style.width=(lOk/LTOTAL*100)+'%';
+}
+function resetListen(){initListen();}
+initListen();
+
+// ══════ EX1: WORD COMPLETION ══════
+const ex1Data=[
+  {pre:'dish',suf:'',ans:'washer',viet:'máy rửa bát'},
+  {pre:'refri',suf:'',ans:'gerator',viet:'tủ lạnh'},
+  {pre:'com',suf:'',ans:'puter',viet:'máy tính'},
+  {pre:'book',suf:'',ans:'shelf',viet:'giá sách'},
+  {pre:'gar',suf:'',ans:'age',viet:'ga-ra'},
+  {pre:'kit',suf:'',ans:'chen',viet:'nhà bếp'},
+];
+const ex1f=document.getElementById('ex1form');
+ex1Data.forEach((item,i)=>{
+  ex1f.innerHTML+=`<div class="wc-row">
+    <span class="wc-pre">${item.pre}</span>
+    <input class="wc-inp" id="wc${i}" placeholder="..." autocomplete="off">
+    <span class="wc-viet">= ${item.viet}</span>
+    <span class="fb" id="wf${i}" style="margin-left:4px;"></span>
+  </div>`;
+});
+function checkEx1(){
+  let c=0;
+  ex1Data.forEach((item,i)=>{
+    const inp=document.getElementById('wc'+i);const fb=document.getElementById('wf'+i);
+    const ok=inp.value.trim().toLowerCase()===item.ans;
+    inp.classList.toggle('correct',ok);inp.classList.toggle('wrong',!ok&&inp.value.trim()!='');
+    if(ok){fb.textContent='✓ '+item.pre+item.ans;fb.className='fb correct';c++;}
+    else if(inp.value.trim()){fb.textContent='✗ →'+item.ans;fb.className='fb wrong';}
+    else fb.textContent='';
+  });
+  showSB('ex1-score',c,ex1Data.length);showResult(c,ex1Data.length);
+}
+function resetEx1(){ex1Data.forEach((_,i)=>{document.getElementById('wc'+i).value='';document.getElementById('wc'+i).className='wc-inp';document.getElementById('wf'+i).textContent='';});document.getElementById('ex1-score').style.display='none';}
+
+// ══════ EX2: BEDROOM LABEL ══════
+// Sketch labels: A=ceiling, B=desk, C=chair, D=curtain, E=lamp, F=bed
+const ex2Data=[
+  {label:'curtain',ans:'D',hint:'rèm cửa'},
+  {label:'bed',ans:'F',hint:'giường ngủ'},
+  {label:'desk',ans:'B',hint:'bàn học'},
+  {label:'lamp',ans:'E',hint:'đèn'},
+  {label:'ceiling',ans:'A',hint:'trần nhà'},
+  {label:'chair',ans:'C',hint:'ghế'},
+];
+const ex2f=document.getElementById('ex2form');
+ex2Data.forEach((item,i)=>{
+  ex2f.innerHTML+=`<div class="match-item">
+    <span class="match-left">🔹 <strong>${item.label}</strong> <em style="font-size:.76rem;color:var(--muted);">(${item.hint})</em></span>
+    <select class="match-sel" id="ms${i}">
+      <option value="">-- Chữ cái --</option>
+      ${['A','B','C','D','E','F'].map(l=>`<option value="${l}">${l}</option>`).join('')}
+    </select>
+    <span class="fb" id="mf${i}"></span>
+  </div>`;
+});
+function checkEx2(){
+  let c=0;
+  ex2Data.forEach((item,i)=>{
+    const sel=document.getElementById('ms'+i);const fb=document.getElementById('mf'+i);
+    const ok=sel.value===item.ans;
+    sel.classList.toggle('correct',ok);sel.classList.toggle('wrong',!ok&&sel.value!='');
+    if(ok){fb.textContent='✓';fb.className='fb correct';c++;}
+    else if(sel.value){fb.textContent='✗→'+item.ans;fb.className='fb wrong';}
+    else fb.textContent='';
+  });
+  showSB('ex2-score',c,ex2Data.length);showResult(c,ex2Data.length);
+}
+function resetEx2(){ex2Data.forEach((_,i)=>{const s=document.getElementById('ms'+i);s.value='';s.className='match-sel';document.getElementById('mf'+i).textContent='';});document.getElementById('ex2-score').style.display='none';}
+
+// ══════ EX3: MATCHING ══════
+const ex3Data=[
+  {viet:'nồi cơm',ans:'rice cooker'},
+  {viet:'phòng khách',ans:'living room'},
+  {viet:'sàn',ans:'floor'},
+  {viet:'tiền sảnh',ans:'hall'},
+  {viet:'thảm',ans:'carpet'},
+  {viet:'lò nướng',ans:'oven'},
+];
+const ex3opts=sh([...ex3Data.map(x=>x.ans),'bookshelf','refrigerator']);
+const ex3f=document.getElementById('ex3form');
+ex3Data.forEach((item,i)=>{
+  ex3f.innerHTML+=`<div class="match-item">
+    <span class="match-left">🔹 ${item.viet}</span>
+    <select class="match-sel" id="e3s${i}">
+      <option value="">-- chọn --</option>
+      ${ex3opts.map(o=>`<option value="${o}">${o}</option>`).join('')}
+    </select>
+    <span class="fb" id="e3f${i}"></span>
+  </div>`;
+});
+function checkEx3(){
+  let c=0;
+  ex3Data.forEach((item,i)=>{
+    const sel=document.getElementById('e3s'+i);const fb=document.getElementById('e3f'+i);
+    const ok=sel.value===item.ans;
+    sel.classList.toggle('correct',ok);sel.classList.toggle('wrong',!ok&&sel.value!='');
+    if(ok){fb.textContent='✓';fb.className='fb correct';c++;}
+    else if(sel.value){fb.textContent='✗→'+item.ans;fb.className='fb wrong';}
+    else fb.textContent='';
+  });
+  showSB('ex3-score',c,ex3Data.length);showResult(c,ex3Data.length);
+}
+function resetEx3(){ex3Data.forEach((_,i)=>{const s=document.getElementById('e3s'+i);s.value='';s.className='match-sel';document.getElementById('e3f'+i).textContent='';});document.getElementById('ex3-score').style.display='none';}
+
+// ══════ EX4: ROOM SORT ══════
+const ex4Data=[
+  {item:'curtain',ans:'bedroom'},
+  {item:'fridge',ans:'kitchen'},
+  {item:'computer',ans:'bedroom'},
+  {item:'sofa',ans:'living room'},
+  {item:'desk',ans:'bedroom'},
+  {item:'oven',ans:'kitchen'},
+  {item:'bookshelf',ans:'living room'},
+  {item:'rice cooker',ans:'kitchen'},
+];
+const ex4f=document.getElementById('ex4form');
+ex4Data.forEach((item,i)=>{
+  ex4f.innerHTML+=`<div class="sort-item">
+    <span class="sort-label">🔹 <strong>${item.item}</strong></span>
+    <select class="match-sel" id="e4s${i}">
+      <option value="">-- phòng --</option>
+      <option value="bedroom">🛏️ bedroom</option>
+      <option value="kitchen">🍳 kitchen</option>
+      <option value="living room">🛋️ living room</option>
+      <option value="other">🚪 other</option>
+    </select>
+    <span class="fb" id="e4f${i}"></span>
+  </div>`;
+});
+function checkEx4(){
+  let c=0;
+  ex4Data.forEach((item,i)=>{
+    const sel=document.getElementById('e4s'+i);const fb=document.getElementById('e4f'+i);
+    const ok=sel.value===item.ans;
+    sel.classList.toggle('correct',ok);sel.classList.toggle('wrong',!ok&&sel.value!='');
+    if(ok){fb.textContent='✓';fb.className='fb correct';c++;}
+    else if(sel.value){fb.textContent='✗→'+item.ans;fb.className='fb wrong';}
+    else fb.textContent='';
+  });
+  showSB('ex4-score',c,ex4Data.length);showResult(c,ex4Data.length);
+}
+function resetEx4(){ex4Data.forEach((_,i)=>{const s=document.getElementById('e4s'+i);s.value='';s.className='match-sel';document.getElementById('e4f'+i).textContent='';});document.getElementById('ex4-score').style.display='none';}
+
+// ══════ EX5: FILL PARAGRAPHS ══════
+const ex5Ans=[
+  ['d1_1','d1f1','bedrooms'],['d1_2','d1f2','living room'],['d1_3','d1f3','kitchen'],
+  ['d2_1','d2f1','refrigerator'],['d2_2','d2f2','sofa'],
+];
+function checkEx5(){
+  let c=0;
+  ex5Ans.forEach(([id,fid,ans])=>{
+    const inp=document.getElementById(id);const fb=document.getElementById(fid);
+    const ok=inp.value.trim().toLowerCase()===ans;
+    inp.classList.toggle('correct',ok);inp.classList.toggle('wrong',!ok&&inp.value.trim()!='');
+    if(ok){fb.textContent='✓';fb.className='fb correct';c++;}
+    else if(inp.value.trim()){fb.textContent='✗→'+ans;fb.className='fb wrong';}
+    else fb.textContent='';
+  });
+  showSB('ex5-score',c,5);showResult(c,5);
+}
+function resetEx5(){ex5Ans.forEach(([id,fid])=>{document.getElementById(id).value='';document.getElementById(id).className='para-blank';document.getElementById(fid).textContent='';});document.getElementById('ex5-score').style.display='none';}
+
+// ══════ EX6: PRONUNCIATION ══════
+const ex6Data=[
+  {q:'Q1: Âm <u>o</u> trong — h<u>a</u>ll / fl<u>oo</u>r / s<u>o</u>fa',opts:['hall','floor','sofa'],ans:'sofa',exp:'hall=/ɔː/, floor=/ɔː/; sofa=/əʊ/ — âm khác!'},
+  {q:'Q2: Âm <u>e</u> — b<u>e</u>droom / r<u>e</u>frigerator / d<u>e</u>sk',opts:['bedroom','refrigerator','desk'],ans:'refrigerator',exp:'bedroom/desk âm /e/; refrigerator = /rɪ/ âm /ɪ/ khác'},
+  {q:'Q3: Âm <u>oo</u> — bedr<u>oo</u>m / w<u>oo</u>den / bookshelF',opts:['bedroom','wooden','bookshelf'],ans:'bedroom',exp:'wooden=/ʊ/; bedroom=/uː/ — âm dài khác!'},
+  {q:'Q4: Âm <u>i</u> — fr<u>i</u>dge / s<u>i</u>lk / l<u>igh</u>t',opts:['fridge','silk','light'],ans:'light',exp:'fridge/silk = /ɪ/; light = /aɪ/ — âm đôi khác!'},
+  {q:'Q5: Âm <u>et/en/ain</u> — carp<u>et</u> / kitch<u>en</u> / curt<u>ain</u>',opts:['carpet','kitchen','curtain'],ans:'carpet',exp:'kitchen/curtain cuối = /ən/; carpet cuối = /ɪt/ — khác!'},
+];
+const ex6f=document.getElementById('ex6form');
+const p6Sel={};
+ex6Data.forEach((item,i)=>{
+  ex6f.innerHTML+=`<div class="odd-item" id="e6q${i}">
+    <div class="oq">${item.q}<div style="font-size:.77rem;color:var(--muted);font-style:italic;margin-top:3px;">💡 ${item.exp}</div></div>
+    <div class="odd-opts">
+      ${item.opts.map(o=>`<span class="odd-opt" onclick="selP6(${i},'${o}',this)">${o}</span>`).join('')}
+    </div>
+  </div>`;
+});
+function selP6(i,v,btn){
+  if(btn.classList.contains('locked'))return;
+  document.querySelectorAll(`#e6q${i} .odd-opt`).forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');p6Sel[i]=v;
+}
+function checkEx6(){
+  let c=0;
+  ex6Data.forEach((item,i)=>{
+    document.querySelectorAll(`#e6q${i} .odd-opt`).forEach(b=>{b.classList.remove('selected');b.classList.add('locked');});
+    if(p6Sel[i]){
+      const ok=p6Sel[i]===item.ans;
+      const selBtn=document.querySelector(`#e6q${i} .odd-opt[onclick*="'${p6Sel[i]}'"]`);
+      if(selBtn)selBtn.classList.add(ok?'correct-ans':'wrong-ans');
+      if(!ok){const a=document.querySelector(`#e6q${i} .odd-opt[onclick*="'${item.ans}'"]`);if(a)a.classList.add('correct-ans');}
+      if(ok)c++;
+    }
+  });
+  showSB('ex6-score',c,ex6Data.length);showResult(c,ex6Data.length);
+}
+function resetEx6(){Object.keys(p6Sel).forEach(k=>delete p6Sel[k]);document.querySelectorAll('#ex6form .odd-opt').forEach(b=>{b.className='odd-opt';});document.getElementById('ex6-score').style.display='none';}
+
+// ══════ EX7: WRITE BEDROOM LABELS ══════
+const ex7Data=[
+  {letter:'A',ans:'ceiling',hint:'trần nhà'},
+  {letter:'B',ans:'desk',hint:'bàn học'},
+  {letter:'C',ans:'chair',hint:'ghế'},
+  {letter:'D',ans:'curtain',hint:'rèm cửa'},
+  {letter:'E',ans:'lamp',hint:'đèn'},
+  {letter:'F',ans:'bed',hint:'giường'},
+];
+const ex7f=document.getElementById('ex7form');
+ex7Data.forEach((item,i)=>{
+  ex7f.innerHTML+=`<div class="wc-row">
+    <span style="font-family:'Fredoka One',cursive;font-size:1.2rem;color:var(--blue);min-width:28px;">${item.letter}</span>
+    <input class="wc-inp" id="e7i${i}" placeholder="${item.hint}..." autocomplete="off">
+    <span class="fb" id="e7f${i}" style="margin-left:4px;"></span>
+  </div>`;
+});
+function checkEx7(){
+  let c=0;
+  ex7Data.forEach((item,i)=>{
+    const inp=document.getElementById('e7i'+i);const fb=document.getElementById('e7f'+i);
+    const ok=inp.value.trim().toLowerCase()===item.ans;
+    inp.classList.toggle('correct',ok);inp.classList.toggle('wrong',!ok&&inp.value.trim()!='');
+    if(ok){fb.textContent='✓ '+item.ans;fb.className='fb correct';c++;}
+    else if(inp.value.trim()){fb.textContent='✗→'+item.ans;fb.className='fb wrong';}
+    else fb.textContent='';
+  });
+  showSB('ex7-score',c,ex7Data.length);showResult(c,ex7Data.length);
+}
+function resetEx7(){ex7Data.forEach((_,i)=>{document.getElementById('e7i'+i).value='';document.getElementById('e7i'+i).className='wc-inp';document.getElementById('e7f'+i).textContent='';});document.getElementById('ex7-score').style.display='none';}
+
+// ══════ HELPERS ══════
+function showTab(id,btn){
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');btn.classList.add('active');
+}
+function showSB(id,c,t){
+  const el=document.getElementById(id);el.style.display='flex';
+  el.innerHTML=`<span class="score-num">${c}/${t}</span><span>${c===t?'🏆 Hoàn hảo!':c>=t*.7?'🎉 Tốt lắm!':'💪 Thử lại!'}</span>`;
+}
+function showResult(c,t){
+  const p=c/t;
+  document.getElementById('rEmoji').textContent=p===1?'🏆':p>=.7?'🎉':p>=.5?'👍':'💪';
+  document.getElementById('rScore').textContent=c+'/'+t;
+  document.getElementById('rMsg').textContent=p===1?'Hoàn hảo! 🏠':p>=.7?'Làm tốt lắm!':'Ôn lại và thử lại nhé!';
+  document.getElementById('resultPopup').classList.add('show');
+}
+function closePopup(){document.getElementById('resultPopup').classList.remove('show');}
+</script>
+</body>
+</html>

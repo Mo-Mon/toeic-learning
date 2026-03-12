@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sức Khỏe – Health</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #0ea5e9;
+  --primary-light: #38bdf8;
+  --primary-dark: #0369a1;
+  --secondary: #10b981;
+  --accent: #f59e0b;
+  --danger: #ef4444;
+  --bg: #f0f9ff;
+  --card-bg: #ffffff;
+  --text: #0f172a;
+  --text-light: #64748b;
+  --correct: #22c55e;
+  --wrong: #ef4444;
+  --radius: 16px;
+  --shadow: 0 4px 20px rgba(14,165,233,0.13);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+/* HEADER */
+.header {
+  background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 50%, #10b981 100%);
+  padding: 22px 16px 18px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.header::before {
+  content: '';
+  position: absolute; top: -50px; right: -30px;
+  width: 160px; height: 160px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 50%;
+}
+.header::after {
+  content: '🏥';
+  position: absolute; bottom: -10px; left: 16px;
+  font-size: 4rem; opacity: 0.15;
+}
+.header h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 2rem; color: #fff;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+  position: relative; z-index: 1;
+}
+.header p { color: rgba(255,255,255,0.9); font-size: 0.95rem; margin-top: 4px; font-weight: 600; position: relative; z-index: 1; }
+
+/* SPEED */
+.speed-bar {
+  display: flex; justify-content: center; gap: 8px;
+  padding: 12px 16px; background: #fff;
+  border-bottom: 2px solid #e0f2fe;
+  flex-wrap: wrap;
+}
+.speed-btn {
+  padding: 6px 14px; border: 2px solid var(--primary);
+  border-radius: 20px; background: #fff; color: var(--primary);
+  font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.82rem;
+  cursor: pointer; transition: all 0.2s;
+}
+.speed-btn.active, .speed-btn:hover { background: var(--primary); color: #fff; }
+
+/* TABS */
+.tabs {
+  display: flex; overflow-x: auto;
+  background: #fff; border-bottom: 3px solid #e0f2fe;
+  scrollbar-width: none;
+}
+.tabs::-webkit-scrollbar { display: none; }
+.tab-btn {
+  flex: 0 0 auto; padding: 12px 14px;
+  border: none; background: transparent;
+  font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.82rem;
+  color: var(--text-light); cursor: pointer; white-space: nowrap;
+  border-bottom: 3px solid transparent; margin-bottom: -3px;
+  transition: all 0.2s;
+}
+.tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); }
+
+/* CONTENT */
+.tab-content { display: none; padding: 16px; }
+.tab-content.active { display: block; }
+
+/* VOCAB GRID */
+.vocab-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
+  gap: 12px; margin-bottom: 20px;
+}
+.vocab-card {
+  background: var(--card-bg); border-radius: var(--radius);
+  padding: 14px 10px; text-align: center;
+  box-shadow: var(--shadow); border: 2px solid transparent;
+  transition: transform 0.2s, border-color 0.2s;
+}
+.vocab-card:hover { transform: translateY(-3px); border-color: var(--primary-light); }
+.vocab-emoji { font-size: 2rem; margin-bottom: 6px; display: block; }
+.vocab-word { font-family: 'Fredoka One', cursive; font-size: 1.05rem; color: var(--primary); display: block; }
+.vocab-ipa { font-size: 0.72rem; color: var(--text-light); display: block; margin: 2px 0; }
+.vocab-viet { font-size: 0.8rem; font-weight: 700; color: var(--text); display: block; }
+.vocab-example { font-size: 0.72rem; color: var(--text-light); font-style: italic; margin-top: 4px; display: block; line-height: 1.3; }
+.speak-btn {
+  margin-top: 8px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  border: none; border-radius: 20px; padding: 4px 10px;
+  color: #fff; font-size: 0.75rem; font-weight: 700; cursor: pointer; transition: opacity 0.2s;
+}
+.speak-btn:hover { opacity: 0.85; }
+
+/* RULE BOX */
+.rule-box {
+  background: linear-gradient(135deg, #f0f9ff, #ecfdf5);
+  border-left: 5px solid var(--primary);
+  border-radius: var(--radius); padding: 16px;
+  margin-bottom: 16px; box-shadow: var(--shadow);
+}
+.rule-box h3 { font-family: 'Fredoka One', cursive; color: var(--primary); font-size: 1.1rem; margin-bottom: 10px; }
+.rule-box p, .rule-box li { font-size: 0.88rem; line-height: 1.7; color: var(--text); }
+.rule-box ul { padding-left: 18px; }
+.rule-box li { margin-bottom: 4px; }
+.rule-box strong { color: var(--primary-dark); }
+
+/* TABLE */
+.health-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); }
+.health-table th { background: var(--primary); color: #fff; padding: 10px 12px; font-family: 'Fredoka One', cursive; font-size: 0.95rem; text-align: left; }
+.health-table td { padding: 9px 12px; font-size: 0.85rem; border-bottom: 1px solid #e0f2fe; background: #fff; }
+.health-table tr:last-child td { border-bottom: none; }
+.health-table tr:nth-child(even) td { background: #f0f9ff; }
+
+/* QUIZ NGHE */
+.quiz-section { margin-top: 20px; }
+.quiz-section h3 { font-family: 'Fredoka One', cursive; font-size: 1.2rem; color: var(--secondary); margin-bottom: 12px; }
+.quiz-progress { background: #d1fae5; border-radius: 20px; height: 10px; margin-bottom: 16px; overflow: hidden; }
+.quiz-progress-bar { height: 100%; background: linear-gradient(90deg, var(--secondary), var(--primary)); border-radius: 20px; transition: width 0.4s; }
+.quiz-listen-card { background: #fff; border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow); text-align: center; }
+.quiz-counter { font-size: 0.82rem; color: var(--text-light); margin-bottom: 16px; }
+#listen-btn {
+  background: linear-gradient(135deg, var(--secondary), #34d399);
+  border: none; border-radius: 24px; padding: 10px 28px;
+  color: #fff; font-family: 'Fredoka One', cursive; font-size: 1rem;
+  cursor: pointer; margin-bottom: 20px; transition: opacity 0.2s;
+}
+#listen-btn:hover { opacity: 0.85; }
+.quiz-choices { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.quiz-choice {
+  padding: 10px; border: 2px solid #d1fae5; border-radius: 12px;
+  background: #f0fdf4; font-weight: 700; font-size: 0.85rem;
+  cursor: pointer; transition: all 0.2s;
+}
+.quiz-choice:hover { border-color: var(--secondary); background: #d1fae5; }
+.quiz-choice.correct { background: #dcfce7; border-color: var(--correct); color: var(--correct); }
+.quiz-choice.wrong { background: #fee2e2; border-color: var(--wrong); color: var(--wrong); }
+
+/* EXERCISE CARD */
+.exercise-card { background: #fff; border-radius: var(--radius); padding: 18px; margin-bottom: 20px; box-shadow: var(--shadow); }
+.exercise-title { font-family: 'Fredoka One', cursive; font-size: 1.1rem; color: var(--primary); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+.exercise-item { margin-bottom: 14px; font-size: 0.9rem; line-height: 1.6; }
+
+/* MATCHING ROWS */
+.match-grid { display: grid; gap: 8px; margin-bottom: 14px; }
+.match-row { display: flex; align-items: center; gap: 10px; padding: 8px 12px; background: #f0f9ff; border-radius: 10px; font-size: 0.88rem; flex-wrap: wrap; }
+.match-left { font-weight: 700; color: var(--primary-dark); flex: 1; min-width: 160px; }
+.match-right { flex: 1; min-width: 140px; }
+.match-select {
+  border: 2px solid #bae6fd; border-radius: 10px; padding: 6px 10px;
+  font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.82rem;
+  outline: none; cursor: pointer; background: #fff;
+  transition: border-color 0.2s; width: 100%;
+}
+.match-select:focus { border-color: var(--primary); }
+.match-select.correct { border-color: var(--correct); background: #dcfce7; }
+.match-select.wrong { border-color: var(--wrong); background: #fee2e2; }
+
+/* WORD COMPLETION */
+.word-comp-item { margin-bottom: 14px; }
+.word-comp-item .word-display { font-family: 'Fredoka One', cursive; font-size: 1.1rem; color: var(--primary-dark); letter-spacing: 1px; }
+.word-comp-item .meaning { font-size: 0.82rem; color: var(--text-light); display: block; margin-bottom: 6px; }
+.radio-options { display: flex; gap: 10px; flex-wrap: wrap; }
+.radio-opt {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 14px; border: 2px solid #bae6fd;
+  border-radius: 20px; cursor: pointer; font-weight: 700;
+  font-size: 0.88rem; transition: all 0.2s; background: #f0f9ff;
+}
+.radio-opt:hover { border-color: var(--primary); background: #e0f2fe; }
+.radio-opt input { accent-color: var(--primary); }
+.radio-opt.correct { border-color: var(--correct); background: #dcfce7; color: var(--correct); }
+.radio-opt.wrong { border-color: var(--wrong); background: #fee2e2; color: var(--wrong); }
+
+/* MCQ */
+.mcq-option {
+  display: flex; align-items: center; gap: 8px; padding: 8px 12px;
+  border: 2px solid #bae6fd; border-radius: 10px; margin-bottom: 6px;
+  cursor: pointer; transition: all 0.2s; font-size: 0.88rem; font-weight: 600;
+  background: #f0f9ff;
+}
+.mcq-option:hover { border-color: var(--primary); background: #e0f2fe; }
+.mcq-option input[type="radio"] { accent-color: var(--primary); }
+.mcq-option.correct { border-color: var(--correct); background: #dcfce7; }
+.mcq-option.wrong { border-color: var(--wrong); background: #fee2e2; }
+
+/* FILL BLANK */
+.fill-input {
+  border: none; border-bottom: 2.5px solid var(--primary);
+  background: transparent; font-family: 'Nunito', sans-serif;
+  font-weight: 700; font-size: 0.9rem; color: var(--primary-dark);
+  width: 130px; outline: none; padding: 2px 6px; text-align: center;
+  transition: border-color 0.2s;
+}
+.fill-input:focus { border-color: var(--secondary); }
+.fill-input.correct { border-color: var(--correct); color: var(--correct); }
+.fill-input.wrong { border-color: var(--wrong); color: var(--wrong); }
+
+/* SELECT FILL */
+.sel-fill {
+  border: 2px solid #bae6fd; border-radius: 10px;
+  padding: 6px 10px; font-family: 'Nunito', sans-serif;
+  font-weight: 700; font-size: 0.88rem; background: #f0f9ff;
+  outline: none; cursor: pointer; transition: border-color 0.2s;
+}
+.sel-fill:focus { border-color: var(--primary); }
+.sel-fill.correct { border-color: var(--correct); background: #dcfce7; }
+.sel-fill.wrong { border-color: var(--wrong); background: #fee2e2; }
+
+/* RESULT BADGE */
+.result-badge { display: inline-block; margin-left: 6px; font-size: 0.82rem; font-weight: 800; }
+.result-badge.correct { color: var(--correct); }
+.result-badge.wrong { color: var(--wrong); }
+
+/* SCORE BAR */
+.score-bar-wrap { margin: 14px 0 4px; display: none; }
+.score-bar-label { font-weight: 800; font-size: 0.9rem; margin-bottom: 6px; color: var(--text); }
+.score-bar { background: #e0f2fe; border-radius: 20px; height: 14px; overflow: hidden; }
+.score-bar-fill { height: 100%; border-radius: 20px; background: linear-gradient(90deg, var(--primary), var(--secondary)); transition: width 0.6s; }
+
+/* BUTTONS */
+.btn-check {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: #fff; border: none; border-radius: 24px; padding: 10px 24px;
+  font-family: 'Fredoka One', cursive; font-size: 1rem;
+  cursor: pointer; margin-right: 10px; margin-top: 14px; transition: opacity 0.2s;
+}
+.btn-check:hover { opacity: 0.85; }
+.btn-reset {
+  background: #fff; color: var(--primary); border: 2px solid var(--primary);
+  border-radius: 24px; padding: 8px 20px; font-family: 'Fredoka One', cursive;
+  font-size: 1rem; cursor: pointer; margin-top: 14px; transition: all 0.2s;
+}
+.btn-reset:hover { background: var(--primary); color: #fff; }
+
+/* CONTEXT BOX */
+.context-box {
+  background: linear-gradient(135deg, #f0f9ff, #f0fdf4);
+  border-left: 4px solid var(--secondary);
+  border-radius: 10px; padding: 12px 14px; margin-bottom: 12px;
+  font-size: 0.88rem; font-weight: 600;
+}
+.context-label { font-family: 'Fredoka One', cursive; color: var(--secondary); font-size: 0.9rem; margin-bottom: 6px; display: block; }
+
+/* CROSSWORD */
+.crossword-grid { font-family: monospace; margin: 16px 0; overflow-x: auto; }
+.cw-table { border-collapse: collapse; margin: 0 auto; }
+.cw-cell {
+  width: 36px; height: 36px;
+  border: 2px solid #93c5fd; text-align: center;
+  font-family: 'Fredoka One', cursive; font-size: 1rem;
+  text-transform: uppercase; background: #f0f9ff;
+  color: var(--primary-dark);
+}
+.cw-cell.empty { background: #1e293b; border-color: #1e293b; }
+.cw-cell.numbered { position: relative; }
+.cw-num { position: absolute; top: 1px; left: 2px; font-size: 0.55rem; font-family: 'Nunito', sans-serif; color: var(--primary); font-weight: 800; }
+.cw-input {
+  width: 100%; height: 100%; border: none; background: transparent;
+  text-align: center; font-family: 'Fredoka One', cursive; font-size: 0.95rem;
+  text-transform: uppercase; color: var(--primary-dark); outline: none;
+  padding: 0;
+}
+.cw-cell.correct { background: #dcfce7; }
+.cw-cell.wrong { background: #fee2e2; }
+
+/* AUDIO PLAYER */
+.audio-section {
+  background: linear-gradient(135deg, #fff, #f0f9ff);
+  border: 2px solid #bae6fd; border-radius: var(--radius);
+  padding: 16px; margin-bottom: 20px; text-align: center;
+}
+.audio-section h4 { font-family: 'Fredoka One', cursive; color: var(--primary); font-size: 1rem; margin-bottom: 10px; }
+audio { width: 100%; max-width: 400px; border-radius: 30px; }
+
+/* LISTENING MCQ */
+.listen-item { margin-bottom: 16px; padding: 14px; background: #f0f9ff; border-radius: 12px; border: 2px solid #e0f2fe; }
+.listen-q { font-weight: 800; color: var(--primary-dark); margin-bottom: 8px; font-size: 0.9rem; }
+
+/* POPUP */
+.popup-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 100; align-items: center; justify-content: center; }
+.popup-overlay.show { display: flex; }
+.popup-box {
+  background: #fff; border-radius: 24px; padding: 32px 24px;
+  text-align: center; max-width: 320px; width: 90%;
+  box-shadow: 0 20px 60px rgba(14,165,233,0.3);
+  animation: popIn 0.3s ease;
+}
+@keyframes popIn { from { transform: scale(0.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.popup-emoji { font-size: 3.5rem; display: block; margin-bottom: 10px; }
+.popup-title { font-family: 'Fredoka One', cursive; font-size: 1.6rem; color: var(--primary); margin-bottom: 8px; }
+.popup-score { font-size: 1.1rem; font-weight: 800; color: var(--text); margin-bottom: 8px; }
+.popup-msg { font-size: 0.9rem; color: var(--text-light); margin-bottom: 20px; }
+.popup-close { background: var(--primary); color: #fff; border: none; border-radius: 20px; padding: 10px 28px; font-family: 'Fredoka One', cursive; font-size: 1rem; cursor: pointer; }
+
+@media (max-width: 480px) {
+  .header h1 { font-size: 1.6rem; }
+  .vocab-grid { grid-template-columns: repeat(2, 1fr); }
+  .quiz-choices { grid-template-columns: 1fr 1fr; }
+  .cw-cell { width: 28px; height: 28px; }
+  .cw-input { font-size: 0.8rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🏥 Health & Sickness</h1>
+  <p>Sức Khỏe Con Người</p>
+</div>
+
+<div class="speed-bar">
+  <span style="font-weight:700;font-size:0.85rem;color:var(--text-light);align-self:center">🔊 Tốc độ:</span>
+  <button class="speed-btn" onclick="setSpeed(0.7,this)">🐢 Chậm</button>
+  <button class="speed-btn active" onclick="setSpeed(1.0,this)">🚶 Bình thường</button>
+  <button class="speed-btn" onclick="setSpeed(1.3,this)">🏃 Nhanh</button>
+</div>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('theory',this)">📖 Lý Thuyết</button>
+  <button class="tab-btn" onclick="showTab('ex1',this)">🔗 BT1 Nối từ</button>
+  <button class="tab-btn" onclick="showTab('ex2',this)">🔤 BT2 Điền chữ</button>
+  <button class="tab-btn" onclick="showTab('ex3',this)">🎧 BT3 Nghe</button>
+  <button class="tab-btn" onclick="showTab('ex5',this)">📝 BT5 Chọn từ</button>
+  <button class="tab-btn" onclick="showTab('ex6',this)">🧩 BT6 Crossword</button>
+  <button class="tab-btn" onclick="showTab('ex7',this)">✍️ BT7 Điền đoạn</button>
+</div>
+
+<!-- ===== TAB 1: LÝ THUYẾT ===== -->
+<div id="theory" class="tab-content active">
+
+  <div class="rule-box">
+    <h3>💡 Chủ đề: Sức Khỏe & Bệnh Tật</h3>
+    <p>Học từ vựng về các loại bệnh, cơ sở y tế và cách chăm sóc sức khỏe. Đây là chủ đề quan trọng giúp em giao tiếp khi bị ốm hoặc cần đến bệnh viện! 🏥</p>
+  </div>
+
+  <!-- CÁC LOẠI BỆNH -->
+  <h3 style="font-family:'Fredoka One',cursive;color:var(--danger);margin-bottom:12px;font-size:1.1rem;">🤒 Các loại bệnh</h3>
+  <div class="vocab-grid">
+    <div class="vocab-card">
+      <span class="vocab-emoji">🤧</span>
+      <span class="vocab-word">a cold</span>
+      <span class="vocab-ipa">/ə koʊld/</span>
+      <span class="vocab-viet">Cơn cảm lạnh</span>
+      <button class="speak-btn" onclick="speak('a cold')">🔊 Nghe</button>
+    </div>
+    <div class="vocab-card">
+      <span class="vocab-emoji">🤧</span>
+      <span class="vocab-word">get / catch a cold</span>
+      <span class="vocab-ipa">/kætʃ ə koʊld/</span>
+      <span class="vocab-viet">Bị cảm lạnh</span>
+      <span class="vocab-example">At the beginning of winter, I always get a cold.</span>
+      <button class="speak-btn" onclick="speak('catch a cold')">🔊 Nghe</button>
+    </div>
+    <div class="vocab-card">
+      <span class="vocab-emoji">🔥</span>
+      <span class="vocab-word">have a fever</span>
+      <span class="vocab-ipa">/ˈfiːvər/</span>
+      <span class="vocab-viet">Bị sốt / ốm</span>
+      <button class="speak-btn" onclick="speak('have a fever')">🔊 Nghe</button>
+    </div>
+    <div class="vocab-card">
+      <span class="vocab-emoji">😣</span>
+      <span class="vocab-word">sore throat</span>
+      <span class="vocab-ipa">/sɔːr θroʊt/</span>
+      <span class="vocab-viet">Đau họng</span>
+      <span class="vocab-example">have a sore throat</span>
+      <button class="speak-btn" onclick="speak('sore throat')">🔊 Nghe</button>
+    </div>
+    <div class="vocab-card">
+      <span class="vocab-emoji">🤕</span>
+      <span class="vocab-word">headache</span>
+      <span class="vocab-ipa">/ˈhɛdeɪk/</span>
+      <span class="vocab-viet">Đau đầu</span>
+      <span class="vocab-example">have a headache</span>
+      <button class="speak-btn" onclick="speak('headache')">🔊 Nghe</button>
+    </div>
+    <div class="vocab-card">
+      <span class="vocab-emoji">🦷</span>
+      <span class="vocab-word">toothache</span>
+      <span class="vocab-ipa">/ˈtuːθeɪk/</span>
+      <span class="vocab-viet">Đau răng</span>
+      <span class="vocab-example">have a toothache</span>
+      <button class="speak-btn" onclick="speak('toothache')">🔊 Nghe</button>
+    </div>
+    <div class="vocab-card">
+      <span class="vocab-emoji">🤢</span>
+      <span class="vocab-word">stomachache</span>
+      <span class="vocab-ipa">/ˈstʌməkeɪk/</span>
+      <span class="vocab-viet">Đau dạ dày</span>
+      <span class="vocab-example">have a stomachache</span>
+      <button class="speak-btn" onclick="speak('stomachache')">🔊 Nghe</button>
+    </div>
+    <div class="vocab-card">
+      <span class="vocab-emoji">🦴</span>
+      <span class="vocab-word">broken arm</span>
+      <span class="vocab-ipa">/ˈbroʊkən ɑːrm/</span>
+      <span class="vocab-viet">Gãy tay</span>
+      <span class="vocab-example">have a broken arm</span>
+      <button class="speak-btn" onclick="speak('broken arm')">🔊 Nghe</button>
+    </div>
+    <div class="vocab-card">
+      <span class="vocab-emoji">😷</span>
+      <span class="vocab-word">sick</span>
+      <span class="vocab-ipa">/sɪk/</span>
+      <span class="vocab-viet">Ốm / Bệnh</span>
+      <button class="speak-btn" onclick="speak('sick')">🔊 Nghe</button>
+    </div>
+  </div>
+
+  <!-- NHÀ NHÂN LỰC Y TẾ -->
+  <h3 style="font-family:'Fredoka One',cursive;color:var(--primary);margin-bottom:12px;font-size:1.1rem;">👨‍⚕️ Nhân lực & Cơ sở y tế</h3>
+  <div class="vocab-grid">
+    <div class="vocab-card">
+      <span class="vocab-emoji">👨‍⚕️</span>
+      <span class="vocab-word">doctor</span>
+      <span class="vocab-ipa">/ˈdɒktər/</span>
+      <span class="vocab-viet">Bác sĩ</span>
+      <button class="speak-btn" onclick="speak('doctor')">🔊 Nghe</button>
+    </div>
+    <div class="vocab-card">
+      <span class="vocab-emoji">👩‍⚕️</span>
+      <span class="vocab-word">nurse</span>
+      <span class="vocab-ipa">/nɜːrs/</span>
+      <span class="vocab-viet">Y tá</span>
+      <button class="speak-btn" onclick="speak('nurse')">🔊 Nghe</button>
+    </div>
+    <div class="vocab-card">
+      <span class="vocab-emoji">🦷</span>
+      <span class="vocab-word">dentist</span>
+      <span class="vocab-ipa">/ˈdɛntɪst/</span>
+      <span class="vocab-viet">Nha sĩ</span>
+      <button class="speak-btn" onclick="speak('dentist')">🔊 Nghe</button>
+    </div>
+    <div class="vocab-card">
+      <span class="vocab-emoji">💊</span>
+      <span class="vocab-word">chemist / chemist's</span>
+      <span class="vocab-ipa">/ˈkɛmɪst/</span>
+      <span class="vocab-viet">Dược sĩ / Hiệu thuốc</span>
+      <button class="speak-btn" onclick="speak("chemist's")">🔊 Nghe</button>
+    </div>
+    <div class="vocab-card">
+      <span class="vocab-emoji">🏥</span>
+      <span class="vocab-word">hospital</span>
+      <span class="vocab-ipa">/ˈhɒspɪtl/</span>
+      <span class="vocab-viet">Bệnh viện</span>
+      <button class="speak-btn" onclick="speak('hospital')">🔊 Nghe</button>
+    </div>
+    <div class="vocab-card">
+      <span class="vocab-emoji">🚑</span>
+      <span class="vocab-word">ambulance</span>
+      <span class="vocab-ipa">/ˈæmbjʊləns/</span>
+      <span class="vocab-viet">Xe cứu thương</span>
+      <button class="speak-btn" onclick="speak('ambulance')">🔊 Nghe</button>
+    </div>
+    <div class="vocab-card">
+      <span class="vocab-emoji">💊</span>
+      <span class="vocab-word">medicine</span>
+      <span class="vocab-ipa">/ˈmɛdsɪn/</span>
+      <span class="vocab-viet">Thuốc</span>
+      <button class="speak-btn" onclick="speak('medicine')">🔊 Nghe</button>
+    </div>
+  </div>
+
+  <!-- SỨC KHỎE -->
+  <h3 style="font-family:'Fredoka One',cursive;color:var(--secondary);margin-bottom:12px;font-size:1.1rem;">🥗 Giữ gìn sức khỏe</h3>
+  <div class="vocab-grid">
+    <div class="vocab-card">
+      <span class="vocab-emoji">🥗</span>
+      <span class="vocab-word">go on a diet</span>
+      <span class="vocab-ipa">/daɪ.ɪt/</span>
+      <span class="vocab-viet">Ăn kiêng</span>
+      <button class="speak-btn" onclick="speak('go on a diet')">🔊 Nghe</button>
+    </div>
+    <div class="vocab-card">
+      <span class="vocab-emoji">🌙</span>
+      <span class="vocab-word">sleep early</span>
+      <span class="vocab-ipa">/sliːp ˈɜːrli/</span>
+      <span class="vocab-viet">Ngủ sớm</span>
+      <button class="speak-btn" onclick="speak('sleep early')">🔊 Nghe</button>
+    </div>
+    <div class="vocab-card">
+      <span class="vocab-emoji">🤢</span>
+      <span class="vocab-word">ache / pain</span>
+      <span class="vocab-ipa">/eɪk/ /peɪn/</span>
+      <span class="vocab-viet">Cơn đau</span>
+      <button class="speak-btn" onclick="speak('ache')">🔊 Nghe</button>
+    </div>
+  </div>
+
+  <div class="rule-box">
+    <h3>📐 Cấu trúc: Have + a/an + [bệnh]</h3>
+    <ul>
+      <li><strong>have a headache</strong> → bị đau đầu</li>
+      <li><strong>have a toothache</strong> → bị đau răng</li>
+      <li><strong>have a stomachache</strong> → bị đau dạ dày</li>
+      <li><strong>have a sore throat</strong> → bị đau họng</li>
+      <li><strong>have a fever</strong> → bị sốt</li>
+      <li><strong>have a broken arm</strong> → bị gãy tay</li>
+      <li><strong>get/catch a cold</strong> → bị cảm lạnh</li>
+    </ul>
+  </div>
+
+  <div class="rule-box" style="border-left-color: var(--accent);">
+    <h3>💡 Lưu ý: chemist's vs pharmacy</h3>
+    <p><strong>chemist's</strong> → hiệu thuốc (tiếng Anh Anh 🇬🇧)<br>
+    <strong>pharmacy</strong> → hiệu thuốc (tiếng Anh Mỹ 🇺🇸)<br>
+    Cả hai đều đúng nhưng dùng khác nhau theo vùng!</p>
+  </div>
+
+  <!-- QUIZ NGHE -->
+  <div class="quiz-section">
+    <h3>🎧 Quiz Nghe – Nghe từ & chọn nghĩa đúng</h3>
+    <div class="quiz-progress">
+      <div class="quiz-progress-bar" id="quiz-bar" style="width:0%"></div>
+    </div>
+    <div class="quiz-listen-card">
+      <div class="quiz-counter" id="quiz-counter">Câu 1 / 12</div>
+      <button id="listen-btn" onclick="listenQuizWord()">🔊 Bấm để nghe</button>
+      <div class="quiz-choices" id="quiz-choices"></div>
+      <div id="quiz-result" style="margin-top:12px;font-weight:800;font-size:1rem;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TAB 2: BT1 NỐI TỪ ===== -->
+<div id="ex1" class="tab-content">
+  <div class="exercise-card">
+    <div class="exercise-title">🔗 Bài 1 – Nối từ tiếng Anh với nghĩa tiếng Việt</div>
+    <p style="font-size:0.85rem;color:var(--text-light);margin-bottom:16px;">Chọn nghĩa tiếng Việt đúng cho mỗi cụm từ tiếng Anh:</p>
+
+    <div class="match-grid">
+      <div class="match-row">
+        <div class="match-left">🤧 Get / catch a cold</div>
+        <div class="match-right">
+          <select class="match-select" id="m1">
+            <option value="">-- Chọn nghĩa --</option>
+            <option>Bị đau dạ dày</option>
+            <option>Bị đau răng</option>
+            <option>Bị đau đầu</option>
+            <option>Bị đau họng</option>
+            <option>Ốm, sốt</option>
+            <option>Bị cảm lạnh</option>
+            <option>Bị gãy tay</option>
+          </select>
+        </div>
+        <span class="result-badge" id="r-m1"></span>
+      </div>
+      <div class="match-row">
+        <div class="match-left">🔥 Be sick = Have a fever</div>
+        <div class="match-right">
+          <select class="match-select" id="m2">
+            <option value="">-- Chọn nghĩa --</option>
+            <option>Bị đau dạ dày</option>
+            <option>Bị đau răng</option>
+            <option>Bị đau đầu</option>
+            <option>Bị đau họng</option>
+            <option>Ốm, sốt</option>
+            <option>Bị cảm lạnh</option>
+            <option>Bị gãy tay</option>
+          </select>
+        </div>
+        <span class="result-badge" id="r-m2"></span>
+      </div>
+      <div class="match-row">
+        <div class="match-left">😣 Have a sore throat</div>
+        <div class="match-right">
+          <select class="match-select" id="m3">
+            <option value="">-- Chọn nghĩa --</option>
+            <option>Bị đau dạ dày</option>
+            <option>Bị đau răng</option>
+            <option>Bị đau đầu</option>
+            <option>Bị đau họng</option>
+            <option>Ốm, sốt</option>
+            <option>Bị cảm lạnh</option>
+            <option>Bị gãy tay</option>
+          </select>
+        </div>
+        <span class="result-badge" id="r-m3"></span>
+      </div>
+      <div class="match-row">
+        <div class="match-left">🦴 Have a broken arm</div>
+        <div class="match-right">
+          <select class="match-select" id="m4">
+            <option value="">-- Chọn nghĩa --</option>
+            <option>Bị đau dạ dày</option>
+            <option>Bị đau răng</option>
+            <option>Bị đau đầu</option>
+            <option>Bị đau họng</option>
+            <option>Ốm, sốt</option>
+            <option>Bị cảm lạnh</option>
+            <option>Bị gãy tay</option>
+          </select>
+        </div>
+        <span class="result-badge" id="r-m4"></span>
+      </div>
+      <div class="match-row">
+        <div class="match-left">🤕 Have a headache</div>
+        <div class="match-right">
+          <select class="match-select" id="m5">
+            <option value="">-- Chọn nghĩa --</option>
+            <option>Bị đau dạ dày</option>
+            <option>Bị đau răng</option>
+            <option>Bị đau đầu</option>
+            <option>Bị đau họng</option>
+            <option>Ốm, sốt</option>
+            <option>Bị cảm lạnh</option>
+            <option>Bị gãy tay</option>
+          </select>
+        </div>
+        <span class="result-badge" id="r-m5"></span>
+      </div>
+      <div class="match-row">
+        <div class="match-left">🦷 Have a toothache</div>
+        <div class="match-right">
+          <select class="match-select" id="m6">
+            <option value="">-- Chọn nghĩa --</option>
+            <option>Bị đau dạ dày</option>
+            <option>Bị đau răng</option>
+            <option>Bị đau đầu</option>
+            <option>Bị đau họng</option>
+            <option>Ốm, sốt</option>
+            <option>Bị cảm lạnh</option>
+            <option>Bị gãy tay</option>
+          </select>
+        </div>
+        <span class="result-badge" id="r-m6"></span>
+      </div>
+      <div class="match-row">
+        <div class="match-left">🤢 Have a stomachache</div>
+        <div class="match-right">
+          <select class="match-select" id="m7">
+            <option value="">-- Chọn nghĩa --</option>
+            <option>Bị đau dạ dày</option>
+            <option>Bị đau răng</option>
+            <option>Bị đau đầu</option>
+            <option>Bị đau họng</option>
+            <option>Ốm, sốt</option>
+            <option>Bị cảm lạnh</option>
+            <option>Bị gãy tay</option>
+          </select>
+        </div>
+        <span class="result-badge" id="r-m7"></span>
+      </div>
+    </div>
+
+    <div class="score-bar-wrap" id="sb-ex1">
+      <div class="score-bar-label" id="sbl-ex1"></div>
+      <div class="score-bar"><div class="score-bar-fill" id="sbf-ex1"></div></div>
+    </div>
+    <button class="btn-check" onclick="checkMatch()">✅ Chấm điểm</button>
+    <button class="btn-reset" onclick="resetMatch()">🔄 Làm lại</button>
+  </div>
+</div>
+
+<!-- ===== TAB 3: BT2 ĐIỀN CHỮ CÁI ===== -->
+<div id="ex2" class="tab-content">
+  <div class="exercise-card">
+    <div class="exercise-title">🔤 Bài 2 – Điền chữ cái còn thiếu vào chỗ trống</div>
+    <p style="font-size:0.85rem;color:var(--text-light);margin-bottom:16px;">Chọn chữ cái đúng để hoàn thành từ:</p>
+
+    <!-- 1. Chemist's -->
+    <div class="exercise-item word-comp-item" id="wc1">
+      <span class="word-display">Ch_mist's</span>
+      <span class="meaning">Hiệu thuốc</span>
+      <div class="radio-options">
+        <label class="radio-opt"><input type="radio" name="wc1" value="a"> a</label>
+        <label class="radio-opt"><input type="radio" name="wc1" value="o"> o</label>
+        <label class="radio-opt"><input type="radio" name="wc1" value="e"> e</label>
+      </div>
+      <span class="result-badge" id="r-wc1"></span>
+    </div>
+    <!-- 2. Medicine -->
+    <div class="exercise-item word-comp-item" id="wc2">
+      <span class="word-display">M_dicine</span>
+      <span class="meaning">Thuốc</span>
+      <div class="radio-options">
+        <label class="radio-opt"><input type="radio" name="wc2" value="e"> e</label>
+        <label class="radio-opt"><input type="radio" name="wc2" value="i"> i</label>
+        <label class="radio-opt"><input type="radio" name="wc2" value="u"> u</label>
+      </div>
+      <span class="result-badge" id="r-wc2"></span>
+    </div>
+    <!-- 3. Ambulance -->
+    <div class="exercise-item word-comp-item" id="wc3">
+      <span class="word-display">Ambul_nce</span>
+      <span class="meaning">Xe cứu thương</span>
+      <div class="radio-options">
+        <label class="radio-opt"><input type="radio" name="wc3" value="a"> a</label>
+        <label class="radio-opt"><input type="radio" name="wc3" value="i"> i</label>
+        <label class="radio-opt"><input type="radio" name="wc3" value="e"> e</label>
+      </div>
+      <span class="result-badge" id="r-wc3"></span>
+    </div>
+    <!-- 4. Doctor -->
+    <div class="exercise-item word-comp-item" id="wc4">
+      <span class="word-display">Doct_r</span>
+      <span class="meaning">Bác sĩ</span>
+      <div class="radio-options">
+        <label class="radio-opt"><input type="radio" name="wc4" value="o"> o</label>
+        <label class="radio-opt"><input type="radio" name="wc4" value="i"> i</label>
+        <label class="radio-opt"><input type="radio" name="wc4" value="e"> e</label>
+      </div>
+      <span class="result-badge" id="r-wc4"></span>
+    </div>
+    <!-- 5. Dentist -->
+    <div class="exercise-item word-comp-item" id="wc5">
+      <span class="word-display">D_ntist</span>
+      <span class="meaning">Nha sĩ</span>
+      <div class="radio-options">
+        <label class="radio-opt"><input type="radio" name="wc5" value="o"> o</label>
+        <label class="radio-opt"><input type="radio" name="wc5" value="a"> a</label>
+        <label class="radio-opt"><input type="radio" name="wc5" value="e"> e</label>
+      </div>
+      <span class="result-badge" id="r-wc5"></span>
+    </div>
+    <!-- 6. Nurse -->
+    <div class="exercise-item word-comp-item" id="wc6">
+      <span class="word-display">N_rse</span>
+      <span class="meaning">Y tá</span>
+      <div class="radio-options">
+        <label class="radio-opt"><input type="radio" name="wc6" value="u"> u</label>
+        <label class="radio-opt"><input type="radio" name="wc6" value="i"> i</label>
+        <label class="radio-opt"><input type="radio" name="wc6" value="o"> o</label>
+      </div>
+      <span class="result-badge" id="r-wc6"></span>
+    </div>
+    <!-- 7. Sleep early -->
+    <div class="exercise-item word-comp-item" id="wc7">
+      <span class="word-display">Sleep earl_</span>
+      <span class="meaning">Ngủ sớm</span>
+      <div class="radio-options">
+        <label class="radio-opt"><input type="radio" name="wc7" value="i"> i</label>
+        <label class="radio-opt"><input type="radio" name="wc7" value="e"> e</label>
+        <label class="radio-opt"><input type="radio" name="wc7" value="y"> y</label>
+      </div>
+      <span class="result-badge" id="r-wc7"></span>
+    </div>
+    <!-- 8. Hospital -->
+    <div class="exercise-item word-comp-item" id="wc8">
+      <span class="word-display">H_spital</span>
+      <span class="meaning">Bệnh viện</span>
+      <div class="radio-options">
+        <label class="radio-opt"><input type="radio" name="wc8" value="o"> o</label>
+        <label class="radio-opt"><input type="radio" name="wc8" value="i"> i</label>
+        <label class="radio-opt"><input type="radio" name="wc8" value="a"> a</label>
+      </div>
+      <span class="result-badge" id="r-wc8"></span>
+    </div>
+
+    <div class="score-bar-wrap" id="sb-ex2">
+      <div class="score-bar-label" id="sbl-ex2"></div>
+      <div class="score-bar"><div class="score-bar-fill" id="sbf-ex2"></div></div>
+    </div>
+    <button class="btn-check" onclick="checkWordComp()">✅ Chấm điểm</button>
+    <button class="btn-reset" onclick="resetWordComp()">🔄 Làm lại</button>
+  </div>
+</div>
+
+<!-- ===== TAB 4: BT3 NGHE ===== -->
+<div id="ex3" class="tab-content">
+  <div class="exercise-card">
+    <div class="exercise-title">🎧 Bài 3 – Nghe và chọn đáp án đúng nhất</div>
+
+    <div class="audio-section">
+      <h4>🎵 File nghe bài 3 – Nhấn play để nghe</h4>
+      <audio id="audio-ex3" controls>
+        <source src="bai3.mp3" type="audio/mpeg">
+        <p style="color:var(--wrong);font-size:0.85rem;">⚠️ Trình duyệt không hỗ trợ audio. Hãy đặt file <strong>bai3.mp3</strong> cùng thư mục với file HTML này.</p>
+      </audio>
+      <p style="font-size:0.78rem;color:var(--text-light);margin-top:8px;">💡 File <strong>bai3.mp3</strong> phải đặt cùng thư mục với file HTML này.</p>
+    </div>
+
+    <!-- Q1 -->
+    <div class="listen-item" id="lq1">
+      <div class="listen-q">❓ Question 1:</div>
+      <label class="mcq-option"><input type="radio" name="lq1" value="a"> A. Have a sore throat</label>
+      <label class="mcq-option"><input type="radio" name="lq1" value="b"> B. Have a broken arm</label>
+      <span class="result-badge" id="r-lq1"></span>
+    </div>
+    <!-- Q2 -->
+    <div class="listen-item" id="lq2">
+      <div class="listen-q">❓ Question 2:</div>
+      <label class="mcq-option"><input type="radio" name="lq2" value="a"> A. Have a fever</label>
+      <label class="mcq-option"><input type="radio" name="lq2" value="b"> B. Have a headache</label>
+      <span class="result-badge" id="r-lq2"></span>
+    </div>
+    <!-- Q3 -->
+    <div class="listen-item" id="lq3">
+      <div class="listen-q">❓ Question 3:</div>
+      <label class="mcq-option"><input type="radio" name="lq3" value="a"> A. Have a toothache</label>
+      <label class="mcq-option"><input type="radio" name="lq3" value="b"> B. Have a stomachache</label>
+      <span class="result-badge" id="r-lq3"></span>
+    </div>
+    <!-- Q4 -->
+    <div class="listen-item" id="lq4">
+      <div class="listen-q">❓ Question 4:</div>
+      <label class="mcq-option"><input type="radio" name="lq4" value="a"> A. chemist's</label>
+      <label class="mcq-option"><input type="radio" name="lq4" value="b"> B. medicine</label>
+      <span class="result-badge" id="r-lq4"></span>
+    </div>
+    <!-- Q5 -->
+    <div class="listen-item" id="lq5">
+      <div class="listen-q">❓ Question 5:</div>
+      <label class="mcq-option"><input type="radio" name="lq5" value="a"> A. ambulance</label>
+      <label class="mcq-option"><input type="radio" name="lq5" value="b"> B. nurse</label>
+      <span class="result-badge" id="r-lq5"></span>
+    </div>
+    <!-- Q6 -->
+    <div class="listen-item" id="lq6">
+      <div class="listen-q">❓ Question 6:</div>
+      <label class="mcq-option"><input type="radio" name="lq6" value="a"> A. hospital</label>
+      <label class="mcq-option"><input type="radio" name="lq6" value="b"> B. ambulance</label>
+      <span class="result-badge" id="r-lq6"></span>
+    </div>
+    <!-- Q7 -->
+    <div class="listen-item" id="lq7">
+      <div class="listen-q">❓ Question 7:</div>
+      <label class="mcq-option"><input type="radio" name="lq7" value="a"> A. doctor</label>
+      <label class="mcq-option"><input type="radio" name="lq7" value="b"> B. dentist</label>
+      <span class="result-badge" id="r-lq7"></span>
+    </div>
+    <!-- Q8 (bài nghe PDF chỉ có 8 câu nhưng đáp án cung cấp 7 – ẩn Q8 -->
+
+    <div class="score-bar-wrap" id="sb-ex3">
+      <div class="score-bar-label" id="sbl-ex3"></div>
+      <div class="score-bar"><div class="score-bar-fill" id="sbf-ex3"></div></div>
+    </div>
+    <button class="btn-check" onclick="checkListening()">✅ Chấm điểm</button>
+    <button class="btn-reset" onclick="resetListening()">🔄 Làm lại</button>
+  </div>
+</div>
+
+<!-- ===== TAB 5: BT5 CHỌN TỪ ===== -->
+<div id="ex5" class="tab-content">
+  <div class="exercise-card">
+    <div class="exercise-title">📝 Bài 5 – Chọn từ đúng nhất để điền vào chỗ trống</div>
+
+    <div class="exercise-item">
+      <div class="context-box">
+        <span class="context-label">📌 Context 1</span>
+        Ah, my tooth hurts really bad. Maybe I should go see a
+        <select class="sel-fill" id="c1">
+          <option value="">--chọn--</option>
+          <option>doctor</option>
+          <option>dentist</option>
+        </select>.
+      </div>
+      <span class="result-badge" id="r-c1"></span>
+    </div>
+
+    <div class="exercise-item">
+      <div class="context-box">
+        <span class="context-label">📌 Context 2</span>
+        — Is your sister a doctor?<br>
+        — Yes, she's working at a
+        <select class="sel-fill" id="c2">
+          <option value="">--chọn--</option>
+          <option>chemist's</option>
+          <option>hospital</option>
+        </select>.
+      </div>
+      <span class="result-badge" id="r-c2"></span>
+    </div>
+
+    <div class="exercise-item">
+      <div class="context-box">
+        <span class="context-label">📌 Context 3</span>
+        — My broken arm doesn't feel good.<br>
+        — I think you should visit a
+        <select class="sel-fill" id="c3">
+          <option value="">--chọn--</option>
+          <option>doctor</option>
+          <option>nurse</option>
+        </select>.
+      </div>
+      <span class="result-badge" id="r-c3"></span>
+    </div>
+
+    <div class="exercise-item">
+      <div class="context-box">
+        <span class="context-label">📌 Context 4</span>
+        Be careful. You might catch
+        <select class="sel-fill" id="c4">
+          <option value="">--chọn--</option>
+          <option>a cold</option>
+          <option>a sore throat</option>
+        </select>!
+      </div>
+      <span class="result-badge" id="r-c4"></span>
+    </div>
+
+    <div class="exercise-item">
+      <div class="context-box">
+        <span class="context-label">📌 Context 5</span>
+        — You look different when I met you last year! You look skinnier.<br>
+        — Yeah I have been going
+        <select class="sel-fill" id="c5">
+          <option value="">--chọn--</option>
+          <option>on a diet</option>
+          <option>to sleep early</option>
+        </select>.
+      </div>
+      <span class="result-badge" id="r-c5"></span>
+    </div>
+
+    <div class="score-bar-wrap" id="sb-ex5">
+      <div class="score-bar-label" id="sbl-ex5"></div>
+      <div class="score-bar"><div class="score-bar-fill" id="sbf-ex5"></div></div>
+    </div>
+    <button class="btn-check" onclick="checkContext()">✅ Chấm điểm</button>
+    <button class="btn-reset" onclick="resetContext()">🔄 Làm lại</button>
+  </div>
+</div>
+
+<!-- ===== TAB 6: BT6 CROSSWORD ===== -->
+<div id="ex6" class="tab-content">
+  <div class="exercise-card">
+    <div class="exercise-title">🧩 Bài 6 – Ô chữ (Crossword)</div>
+    <p style="font-size:0.85rem;color:var(--text-light);margin-bottom:16px;">Điền từ đúng vào ô chữ dựa theo gợi ý (các từ là các loại bệnh):</p>
+
+    <div class="rule-box" style="margin-bottom:16px;">
+      <h3>📌 Gợi ý:</h3>
+      <p><strong>HÀNG DỌC:</strong></p>
+      <ul>
+        <li><strong>Số 1 (↓):</strong> Hiếu has to see a dentist. Why? <li>
+        <li><strong>Số 2 (↓):</strong> My head hurts a lot. → </li>
+        <li><strong>Số 4 (↓):</strong> Why does he have a cast on his hand? He fell and broke it. → </li>
+        <li><strong>Số 5 (↓):</strong> My throat hurts so bad. →</li>
+      </ul>
+      <p style="margin-top:8px;"><strong>HÀNG NGANG:</strong></p>
+      <ul>
+        <li><strong>Số 3 (→):</strong> She coughs and sneezes a lot. →</li>
+        <li><strong>Số 5 (→):</strong> My stomach hurts. → </li>
+        <li><strong>Số 6 (→):</strong> My body temperature is over 39 degrees. → </li>
+      </ul>
+    </div>
+
+    <!-- Simple crossword as fill-in inputs -->
+    <div style="overflow-x:auto;">
+    <table class="cw-table" id="cw">
+      <tr>
+        <td class="cw-cell empty"></td>
+        <td class="cw-cell empty"></td>
+        <td class="cw-cell empty"></td>
+        <td class="cw-cell numbered" style="position:relative"><span class="cw-num">1</span><input class="cw-input" id="cw-1-0" maxlength="1" oninput="cwNav(this,'1-0')"></td>
+        <td class="cw-cell empty"></td>
+        <td class="cw-cell empty"></td>
+        <td class="cw-cell empty"></td>
+        <td class="cw-cell numbered" style="position:relative"><span class="cw-num">2</span><input class="cw-input" id="cw-2-0" maxlength="1" oninput="cwNav(this,'2-0')"></td>
+        <td class="cw-cell empty"></td>
+      </tr>
+      <tr>
+        <td class="cw-cell empty"></td>
+        <td class="cw-cell empty"></td>
+        <td class="cw-cell numbered" style="position:relative"><span class="cw-num">3</span><input class="cw-input" id="cw-3h-0" maxlength="1" oninput="cwNav(this,'3h-0')"></td>
+        <td class="cw-cell"><input class="cw-input" id="cw-1-1" maxlength="1" oninput="cwNav(this,'1-1')"></td>
+        <td class="cw-cell"><input class="cw-input" id="cw-3h-2" maxlength="1" oninput="cwNav(this,'3h-2')"></td>
+        <td class="cw-cell"><input class="cw-input" id="cw-3h-3" maxlength="1" oninput="cwNav(this,'3h-3')"></td>
+        <td class="cw-cell empty"></td>
+        <td class="cw-cell"><input class="cw-input" id="cw-2-1" maxlength="1" oninput="cwNav(this,'2-1')"></td>
+        <td class="cw-cell empty"></td>
+      </tr>
+      <tr>
+        <td class="cw-cell empty"></td>
+        <td class="cw-cell empty"></td>
+        <td class="cw-cell empty"></td>
+        <td class="cw-cell"><input class="cw-input" id="cw-1-2" maxlength="1" oninput="cwNav(this,'1-2')"></td>
+        <td class="cw-cell empty"></td>
+        <td class="cw-cell empty"></td>
+        <td class="cw-cell empty"></td>
+        <td class="cw-cell"><input class="cw-input" id="cw-2-2" maxlength="1" oninput="cwNav(this,'2-2')"></td>
+        <td class="cw-cell empty"></td>
+      </tr>
+      <tr>
+        <td class="cw-cell empty"></td>
+        <td class="cw-cell numbered" style="position:relative"><span class="cw-num">4</span><input class="cw-input" id="cw-4-0" maxlength="1" oninput="cwNav(this,'4-0')"></td>
+        <td class="cw-cell empty"></td>
+        <td class="cw-cell"><input class="cw-input" id="cw-1-3" maxlength="1" oninput="cwNav(this,'1-3')"></td>
+        <td class="cw-cell empty"></td>
+        <td class="cw-cell empty"></td>
+        <td class="cw-cell empty"></td>
+        <td class="cw-cell"><input class="cw-input" id="cw-2-3" maxlength="1" oninput="cwNav(this,'2-3')"></td>
+        <td class="cw-cell empty"></td>
+      </tr>
+      <tr>
+        <td class="cw-cell numbered" style="position:relative"><span class="cw-num">5</span><input class="cw-input" id="cw-5h-0" maxlength="1" oninput="cwNav(this,'5h-0')"></td>
+        <td class="cw-cell"><input class="cw-input" id="cw-4-1" maxlength="1" oninput="cwNav(this,'4-1')"></td>
+        <td class="cw-cell"><input class="cw-input" id="cw-5h-2" maxlength="1" oninput="cwNav(this,'5h-2')"></td>
+        <td class="cw-cell"><input class="cw-input" id="cw-1-4" maxlength="1" oninput="cwNav(this,'1-4')"></td>
+        <td class="cw-cell"><input class="cw-input" id="cw-5h-4" maxlength="1" oninput="cwNav(this,'5h-4')"></td>
+        <td class="cw-cell"><input class="cw-input" id="cw-5h-5" maxlength="1" oninput="cwNav(this,'5h-5')"></td>
+        <td class="cw-cell"><input class="cw-input" id="cw-5h-6" maxlength="1" oninput="cwNav(this,'5h-6')"></td>
+        <td class="cw-cell"><input class="cw-input" id="cw-2-4" maxlength="1" oninput="cwNav(this,'2-4')"></td>
+        <td class="cw-cell"><input class="cw-input" id="cw-5h-8" maxlength="1" oninput="cwNav(this,'5h-8')"></td>
+      </tr>
+      <tr>
+        <td class="cw-cell empty"></td>
+        <td class="cw-cell"><input class="cw-input" id="cw-4-2" maxlength="1" oninput="cwNav(this,'4-2')"></td>
+        <td class="cw-cell empty"></td>
+        <td class="cw-cell"><input class="cw-input" id="cw-1-5" maxlength="1" oninput="cwNav(this,'1-5')"></td>
+        <td class="cw-cell empty"></td>
+        <td class="cw-cell empty"></td>
+        <td class="cw-cell empty"></td>
+        <td class="cw-cell"><input class="cw-input" id="cw-2-5" maxlength="1" oninput="cwNav(this,'2-5')"></td>
+        <td class="cw-cell empty"></td>
+      </tr>
+      <tr>
+        <td class="cw-cell empty"></td>
+        <td class="cw-cell empty"></td>
+        <td class="cw-cell empty"></td>
+        <td class="cw-cell"><input class="cw-input" id="cw-1-6" maxlength="1" oninput="cwNav(this,'1-6')"></td>
+        <td class="cw-cell empty"></td>
+        <td class="cw-cell empty"></td>
+        <td class="cw-cell empty"></td>
+        <td class="cw-cell"><input class="cw-input" id="cw-2-6" maxlength="1" oninput="cwNav(this,'2-6')"></td>
+        <td class="cw-cell empty"></td>
+      </tr>
+      <tr>
+        <td class="cw-cell numbered" style="position:relative"><span class="cw-num">6</span><input class="cw-input" id="cw-6h-0" maxlength="1" oninput="cwNav(this,'6h-0')"></td>
+        <td class="cw-cell empty"></td>
+        <td class="cw-cell empty"></td>
+        <td class="cw-cell"><input class="cw-input" id="cw-1-7" maxlength="1" oninput="cwNav(this,'1-7')"></td>
+        <td class="cw-cell"><input class="cw-input" id="cw-6h-3" maxlength="1" oninput="cwNav(this,'6h-3')"></td>
+        <td class="cw-cell"><input class="cw-input" id="cw-6h-4" maxlength="1" oninput="cwNav(this,'6h-4')"></td>
+        <td class="cw-cell empty"></td>
+        <td class="cw-cell empty"></td>
+        <td class="cw-cell empty"></td>
+      </tr>
+      <tr>
+        <td class="cw-cell empty"></td>
+        <td class="cw-cell empty"></td>
+        <td class="cw-cell empty"></td>
+        <td class="cw-cell"><input class="cw-input" id="cw-1-8" maxlength="1" oninput="cwNav(this,'1-8')"></td>
+        <td class="cw-cell empty"></td>
+        <td class="cw-cell empty"></td>
+        <td class="cw-cell empty"></td>
+        <td class="cw-cell empty"></td>
+        <td class="cw-cell empty"></td>
+      </tr>
+    </table>
+    </div>
+
+    <div style="margin-top:12px;">
+      <button class="btn-check" onclick="checkCrossword()">✅ Kiểm tra</button>
+      <button class="btn-reset" onclick="resetCrossword()">🔄 Làm lại</button>
+      <button class="btn-reset" style="background:var(--accent);color:#fff;border-color:var(--accent);" onclick="showCrosswordAnswers()">💡 Xem đáp án</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TAB 7: BT7 ĐIỀN ĐOẠN ===== -->
+<div id="ex7" class="tab-content">
+  <div class="exercise-card">
+    <div class="exercise-title">✍️ Bài 7 – Điền từ thích hợp vào đoạn hội thoại</div>
+
+    <div class="rule-box" style="margin-bottom:16px;">
+      <h3>📦 Hộp từ:</h3>
+      <p style="font-size:0.9rem;">
+        <strong>hospital &nbsp;|&nbsp; stomachache &nbsp;|&nbsp; fever &nbsp;|&nbsp; ambulance</strong><br>
+        <strong>cold &nbsp;|&nbsp; doctor &nbsp;|&nbsp; headache</strong>
+      </p>
+    </div>
+
+    <div class="context-box" style="line-height:2.2;font-size:0.9rem;">
+      <strong>A:</strong> Where are you guys going? Do you need any help?<br>
+      <strong>B:</strong> We are going to the
+      <input class="fill-input" id="f1" placeholder="..."> .
+      Daisy has been having a
+      <input class="fill-input" id="f2" placeholder="...">
+      since yesterday and her temperature is really high now.<br>
+      <strong>A:</strong> Really? She must have a
+      <input class="fill-input" id="f3" placeholder="..."> !<br>
+      <strong>B:</strong> She really is!<br>
+      <strong>A:</strong> Let's call an
+      <input class="fill-input" id="f4" placeholder="..."> !
+      They can take us to the hospital faster.<br>
+      <strong>B:</strong> Can you call David for me? He is a
+      <input class="fill-input" id="f5" placeholder="..."> .
+      Last week I ate something bad and got a
+      <input class="fill-input" id="f6" placeholder="..."> .
+      He gave me some pills.
+    </div>
+    <p style="font-size:0.78rem;color:var(--text-light);margin-top:6px;">💡 Lưu ý: từ <strong>headache</strong> không dùng trong đoạn này.</p>
+
+    <div class="score-bar-wrap" id="sb-ex7">
+      <div class="score-bar-label" id="sbl-ex7"></div>
+      <div class="score-bar"><div class="score-bar-fill" id="sbf-ex7"></div></div>
+    </div>
+    <button class="btn-check" onclick="checkFillIn()">✅ Chấm điểm</button>
+    <button class="btn-reset" onclick="resetFillIn()">🔄 Làm lại</button>
+  </div>
+</div>
+
+<!-- POPUP -->
+<div class="popup-overlay" id="popup">
+  <div class="popup-box">
+    <span class="popup-emoji" id="popup-emoji"></span>
+    <div class="popup-title" id="popup-title"></div>
+    <div class="popup-score" id="popup-score"></div>
+    <div class="popup-msg" id="popup-msg"></div>
+    <button class="popup-close" onclick="closePopup()">Đóng lại ✕</button>
+  </div>
+</div>
+
+<script>
+// ===== SPEECH =====
+let speechRate = 1.0;
+function setSpeed(r, btn) {
+  speechRate = r;
+  document.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+function speak(word) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(word);
+  u.lang = 'en-US'; u.rate = speechRate;
+  window.speechSynthesis.speak(u);
+}
+
+// ===== TABS =====
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ===== QUIZ NGHE (LÝ THUYẾT) =====
+const quizData = [
+  { word: 'headache', meaning: 'Đau đầu', wrong: ['Đau răng', 'Đau dạ dày', 'Đau họng'] },
+  { word: 'toothache', meaning: 'Đau răng', wrong: ['Đau đầu', 'Đau dạ dày', 'Đau họng'] },
+  { word: 'stomachache', meaning: 'Đau dạ dày', wrong: ['Đau đầu', 'Đau răng', 'Đau họng'] },
+  { word: 'sore throat', meaning: 'Đau họng', wrong: ['Đau đầu', 'Đau răng', 'Đau dạ dày'] },
+  { word: 'fever', meaning: 'Sốt', wrong: ['Cảm lạnh', 'Đau đầu', 'Đau họng'] },
+  { word: 'ambulance', meaning: 'Xe cứu thương', wrong: ['Bệnh viện', 'Hiệu thuốc', 'Y tá'] },
+  { word: 'hospital', meaning: 'Bệnh viện', wrong: ['Hiệu thuốc', 'Bác sĩ', 'Xe cứu thương'] },
+  { word: 'doctor', meaning: 'Bác sĩ', wrong: ['Y tá', 'Nha sĩ', 'Dược sĩ'] },
+  { word: 'nurse', meaning: 'Y tá', wrong: ['Bác sĩ', 'Nha sĩ', 'Dược sĩ'] },
+  { word: 'dentist', meaning: 'Nha sĩ', wrong: ['Bác sĩ', 'Y tá', 'Dược sĩ'] },
+  { word: "chemist's", meaning: 'Hiệu thuốc', wrong: ['Bệnh viện', 'Xe cứu thương', 'Bác sĩ'] },
+  { word: 'medicine', meaning: 'Thuốc', wrong: ['Bác sĩ', 'Y tá', 'Nha sĩ'] },
+];
+let quizIdx = 0, quizAnswered = false;
+function renderQuiz() {
+  if (quizIdx >= quizData.length) {
+    document.getElementById('quiz-result').innerHTML = '🎉 Hoàn thành tất cả 12 câu!';
+    document.getElementById('listen-btn').style.display = 'none';
+    document.getElementById('quiz-choices').innerHTML = '';
+    return;
+  }
+  quizAnswered = false;
+  const q = quizData[quizIdx];
+  document.getElementById('quiz-counter').textContent = `Câu ${quizIdx + 1} / 12`;
+  document.getElementById('quiz-bar').style.width = `${(quizIdx / 12) * 100}%`;
+  document.getElementById('quiz-result').textContent = '';
+  const choices = shuffle([q.meaning, ...q.wrong]);
+  const div = document.getElementById('quiz-choices');
+  div.innerHTML = '';
+  choices.forEach(c => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-choice';
+    btn.textContent = c;
+    btn.onclick = () => answerQuiz(c, q.meaning, div);
+    div.appendChild(btn);
+  });
+}
+function listenQuizWord() {
+  if (quizIdx < quizData.length) speak(quizData[quizIdx].word);
+}
+function answerQuiz(chosen, correct, div) {
+  if (quizAnswered) return;
+  quizAnswered = true;
+  Array.from(div.children).forEach(btn => {
+    btn.style.pointerEvents = 'none';
+    if (btn.textContent === correct) btn.classList.add('correct');
+    else if (btn.textContent === chosen && chosen !== correct) btn.classList.add('wrong');
+  });
+  const res = document.getElementById('quiz-result');
+  if (chosen === correct) { res.innerHTML = '✅ Đúng rồi! 🎉'; res.style.color = 'var(--correct)'; }
+  else { res.innerHTML = `❌ Sai! Đáp án: <strong>${correct}</strong>`; res.style.color = 'var(--wrong)'; }
+  setTimeout(() => { quizIdx++; renderQuiz(); }, 1800);
+}
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+renderQuiz();
+
+// ===== POPUP =====
+function showPopup(score, total) {
+  const pct = score / total;
+  let emoji, title, msg;
+  if (pct === 1) { emoji = '🏆'; title = 'Hoàn Hảo!'; msg = 'Xuất sắc! Em đã trả lời đúng tất cả!'; }
+  else if (pct >= 0.7) { emoji = '🎉'; title = 'Tốt Lắm!'; msg = 'Em làm rất tốt! Tiếp tục cố gắng nhé!'; }
+  else { emoji = '💪'; title = 'Thử Lại!'; msg = 'Ôn thêm từ vựng rồi làm lại nhé!'; }
+  document.getElementById('popup-emoji').textContent = emoji;
+  document.getElementById('popup-title').textContent = title;
+  document.getElementById('popup-score').textContent = `${score} / ${total} câu đúng`;
+  document.getElementById('popup-msg').textContent = msg;
+  document.getElementById('popup').classList.add('show');
+}
+function closePopup() { document.getElementById('popup').classList.remove('show'); }
+function showScoreBar(barId, labelId, fillId, score, total) {
+  document.getElementById(barId).style.display = 'block';
+  document.getElementById(labelId).textContent = `Kết quả: ${score} / ${total} câu đúng`;
+  setTimeout(() => { document.getElementById(fillId).style.width = `${(score / total) * 100}%`; }, 100);
+}
+
+// ===== BT1: MATCH =====
+const matchAns = { m1: 'Bị cảm lạnh', m2: 'Ốm, sốt', m3: 'Bị đau họng', m4: 'Bị gãy tay', m5: 'Bị đau đầu', m6: 'Bị đau răng', m7: 'Bị đau dạ dày' };
+function checkMatch() {
+  let score = 0;
+  Object.entries(matchAns).forEach(([id, ans]) => {
+    const sel = document.getElementById(id);
+    const badge = document.getElementById('r-' + id);
+    sel.classList.remove('correct', 'wrong');
+    if (sel.value === ans) { sel.classList.add('correct'); badge.textContent = '✓'; badge.className = 'result-badge correct'; score++; }
+    else { sel.classList.add('wrong'); badge.textContent = `✗ → ${ans}`; badge.className = 'result-badge wrong'; }
+  });
+  showScoreBar('sb-ex1', 'sbl-ex1', 'sbf-ex1', score, 7);
+  showPopup(score, 7);
+}
+function resetMatch() {
+  Object.keys(matchAns).forEach(id => {
+    document.getElementById(id).value = '';
+    document.getElementById(id).classList.remove('correct', 'wrong');
+    const b = document.getElementById('r-' + id); b.textContent = ''; b.className = 'result-badge';
+  });
+  document.getElementById('sb-ex1').style.display = 'none';
+}
+
+// ===== BT2: WORD COMPLETION =====
+const wcAns = { wc1: 'e', wc2: 'e', wc3: 'a', wc4: 'o', wc5: 'e', wc6: 'u', wc7: 'y', wc8: 'o' };
+function checkWordComp() {
+  let score = 0;
+  Object.entries(wcAns).forEach(([name, ans]) => {
+    const radios = document.querySelectorAll(`input[name="${name}"]`);
+    const badge = document.getElementById('r-' + name);
+    let chosen = '';
+    radios.forEach(r => { if (r.checked) chosen = r.value; });
+    radios.forEach(r => {
+      const lbl = r.closest('.radio-opt');
+      lbl.classList.remove('correct', 'wrong');
+      if (r.value === ans) lbl.classList.add('correct');
+      else if (r.checked && r.value !== ans) lbl.classList.add('wrong');
+    });
+    if (chosen === ans) { badge.textContent = '✓'; badge.className = 'result-badge correct'; score++; }
+    else { badge.textContent = `✗ → ${ans}`; badge.className = 'result-badge wrong'; }
+  });
+  showScoreBar('sb-ex2', 'sbl-ex2', 'sbf-ex2', score, 8);
+  showPopup(score, 8);
+}
+function resetWordComp() {
+  document.querySelectorAll('#ex2 input[type="radio"]').forEach(r => r.checked = false);
+  document.querySelectorAll('#ex2 .radio-opt').forEach(l => l.classList.remove('correct', 'wrong'));
+  Object.keys(wcAns).forEach(n => { const b = document.getElementById('r-' + n); if (b) { b.textContent = ''; b.className = 'result-badge'; } });
+  document.getElementById('sb-ex2').style.display = 'none';
+}
+
+// ===== BT3: LISTENING (đáp án: 1B 2B 3B 4B 5B 6B 7B) =====
+const listenAns = { lq1: 'b', lq2: 'b', lq3: 'b', lq4: 'b', lq5: 'b', lq6: 'b', lq7: 'b' };
+function checkListening() {
+  let score = 0;
+  Object.entries(listenAns).forEach(([name, ans]) => {
+    const radios = document.querySelectorAll(`input[name="${name}"]`);
+    const badge = document.getElementById('r-' + name);
+    let chosen = '';
+    radios.forEach(r => { if (r.checked) chosen = r.value; });
+    radios.forEach(r => {
+      const lbl = r.closest('.mcq-option');
+      lbl.classList.remove('correct', 'wrong');
+      if (r.value === ans) lbl.classList.add('correct');
+      else if (r.checked && r.value !== ans) lbl.classList.add('wrong');
+    });
+    if (chosen === ans) { badge.textContent = '✓'; badge.className = 'result-badge correct'; score++; }
+    else { badge.textContent = `✗ → ${ans.toUpperCase()}`; badge.className = 'result-badge wrong'; }
+  });
+  showScoreBar('sb-ex3', 'sbl-ex3', 'sbf-ex3', score, 7);
+  showPopup(score, 7);
+}
+function resetListening() {
+  document.querySelectorAll('#ex3 input[type="radio"]').forEach(r => r.checked = false);
+  document.querySelectorAll('#ex3 .mcq-option').forEach(l => l.classList.remove('correct', 'wrong'));
+  Object.keys(listenAns).forEach(n => { const b = document.getElementById('r-' + n); if (b) { b.textContent = ''; b.className = 'result-badge'; } });
+  document.getElementById('sb-ex3').style.display = 'none';
+}
+
+// ===== BT5: CONTEXT =====
+const contextAns = { c1: 'dentist', c2: 'hospital', c3: 'doctor', c4: 'a cold', c5: 'on a diet' };
+function checkContext() {
+  let score = 0;
+  Object.entries(contextAns).forEach(([id, ans]) => {
+    const sel = document.getElementById(id);
+    const badge = document.getElementById('r-' + id);
+    sel.classList.remove('correct', 'wrong');
+    if (sel.value === ans) { sel.classList.add('correct'); badge.textContent = '✓'; badge.className = 'result-badge correct'; score++; }
+    else { sel.classList.add('wrong'); badge.textContent = `✗ → ${ans}`; badge.className = 'result-badge wrong'; }
+  });
+  showScoreBar('sb-ex5', 'sbl-ex5', 'sbf-ex5', score, 5);
+  showPopup(score, 5);
+}
+function resetContext() {
+  Object.keys(contextAns).forEach(id => {
+    document.getElementById(id).value = '';
+    document.getElementById(id).classList.remove('correct', 'wrong');
+    const b = document.getElementById('r-' + id); b.textContent = ''; b.className = 'result-badge';
+  });
+  document.getElementById('sb-ex5').style.display = 'none';
+}
+
+// ===== BT6: CROSSWORD =====
+// Answers mapping: cell-id → letter
+// 1↓ toothache: cells 1-0..1-8 = t,o,o,t,h,a,c,h,e
+// 2↓ headache:  cells 2-0..2-6 = h,e,a,d,a,c,h,e (8 letters but 7 rows)
+// 3→ cold:      cells 3h-0,1-1,3h-2,3h-3 = c,o,l,d
+// 4↓ brokenarm: cells 4-0..4-2 = b,r,o (just "broken" 3 rows)
+// 5h→ stomachache: 9 cells = s,t,o,m,a,c,h,a,c,h,e — simplified
+// 5↓ sorethroat: intersects
+// 6h→ fever: cells 6h-0,1-7,6h-3,6h-4 = f,e,v,e,r
+
+const cwAnswers = {
+  'cw-1-0': 't', 'cw-1-1': 'o', 'cw-1-2': 'o', 'cw-1-3': 't', 'cw-1-4': 'h',
+  'cw-1-5': 'a', 'cw-1-6': 'c', 'cw-1-7': 'h', 'cw-1-8': 'e',
+  'cw-2-0': 'h', 'cw-2-1': 'e', 'cw-2-2': 'a', 'cw-2-3': 'd', 'cw-2-4': 'a',
+  'cw-2-5': 'c', 'cw-2-6': 'h',
+  'cw-3h-0': 'c', 'cw-3h-2': 'l', 'cw-3h-3': 'd',
+  'cw-4-0': 'b', 'cw-4-1': 'r', 'cw-4-2': 'o',
+  'cw-5h-0': 's', 'cw-5h-2': 'o', 'cw-5h-4': 'a', 'cw-5h-5': 'c',
+  'cw-5h-6': 'h', 'cw-5h-8': 'e',
+  'cw-6h-0': 'f', 'cw-6h-3': 'v', 'cw-6h-4': 'r',
+};
+function checkCrossword() {
+  let score = 0, total = Object.keys(cwAnswers).length;
+  Object.entries(cwAnswers).forEach(([id, letter]) => {
+    const cell = document.getElementById(id);
+    if (!cell) return;
+    const parent = cell.closest('td');
+    parent.classList.remove('correct', 'wrong');
+    if (cell.value.toLowerCase() === letter) { parent.classList.add('correct'); score++; }
+    else { parent.classList.add('wrong'); }
+  });
+  alert(`Kết quả: ${score} / ${total} ô đúng!`);
+}
+function resetCrossword() {
+  Object.keys(cwAnswers).forEach(id => {
+    const el = document.getElementById(id);
+    if (el) { el.value = ''; const p = el.closest('td'); p.classList.remove('correct','wrong'); }
+  });
+}
+function showCrosswordAnswers() {
+  Object.entries(cwAnswers).forEach(([id, letter]) => {
+    const el = document.getElementById(id);
+    if (el) el.value = letter.toUpperCase();
+  });
+}
+function cwNav(inp, id) {
+  if (inp.value.length >= 1) {
+    const allInputs = Array.from(document.querySelectorAll('.cw-input'));
+    const idx = allInputs.indexOf(inp);
+    if (idx < allInputs.length - 1) allInputs[idx + 1].focus();
+  }
+}
+
+// ===== BT7: FILL IN =====
+const fillAns = {
+  f1: 'hospital', f2: 'headache', f3: 'fever',
+  f4: 'ambulance', f5: 'doctor', f6: 'stomachache'
+};
+function checkFillIn() {
+  let score = 0;
+  Object.entries(fillAns).forEach(([id, ans]) => {
+    const inp = document.getElementById(id);
+    inp.classList.remove('correct', 'wrong');
+    if (inp.value.trim().toLowerCase() === ans) { inp.classList.add('correct'); score++; }
+    else { inp.classList.add('wrong'); inp.placeholder = ans; }
+  });
+  showScoreBar('sb-ex7', 'sbl-ex7', 'sbf-ex7', score, 6);
+  showPopup(score, 6);
+}
+function resetFillIn() {
+  Object.keys(fillAns).forEach(id => {
+    const inp = document.getElementById(id);
+    inp.value = ''; inp.classList.remove('correct', 'wrong'); inp.placeholder = '...';
+  });
+  document.getElementById('sb-ex7').style.display = 'none';
+}
+</script>
+</body>
+</html>

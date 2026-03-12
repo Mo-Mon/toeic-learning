@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Số Đếm Tiếng Anh – Cardinal Numbers</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #6C63FF; --secondary: #FF6584; --accent: #43D9AD;
+    --bg: #F0F4FF; --card: #fff; --text: #2d2d4e; --muted: #8a8aab;
+    --correct: #22c55e; --wrong: #ef4444; --shadow: 0 4px 24px rgba(108,99,255,0.10);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+  header { background: linear-gradient(135deg, #6C63FF 0%, #a78bfa 100%); padding: 28px 0 18px; text-align: center; box-shadow: 0 4px 20px rgba(108,99,255,0.25); }
+  header h1 { font-family: 'Baloo 2', cursive; font-size: 2.3rem; color: #fff; letter-spacing: 1px; text-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+  header p { color: #e0d9ff; font-size: 1rem; margin-top: 4px; }
+  .tabs { display: flex; justify-content: center; gap: 10px; padding: 22px 16px 0; flex-wrap: wrap; }
+  .tab-btn { padding: 9px 22px; border-radius: 50px; border: 2.5px solid var(--primary); background: #fff; color: var(--primary); font-family: 'Nunito', sans-serif; font-size: 0.92rem; font-weight: 700; cursor: pointer; transition: all .2s; }
+  .tab-btn.active, .tab-btn:hover { background: var(--primary); color: #fff; box-shadow: 0 3px 12px rgba(108,99,255,0.25); }
+  .tab-content { display: none; padding: 28px 16px 50px; max-width: 880px; margin: 0 auto; }
+  .tab-content.active { display: block; }
+
+  /* THEORY CARDS */
+  .theory-section { background: var(--card); border-radius: 18px; padding: 24px; margin-bottom: 20px; box-shadow: var(--shadow); }
+  .theory-section h2 { font-family: 'Baloo 2', cursive; color: var(--primary); font-size: 1.3rem; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .theory-section h2 small { font-size: 0.76rem; color: var(--muted); font-family: 'Nunito', sans-serif; font-weight: 600; }
+  .number-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 9px; }
+  .num-card { background: linear-gradient(135deg,#f5f3ff,#ede9fe); border-radius: 13px; padding: 11px 7px 9px; text-align: center; border: 1.5px solid #ddd6fe; transition: transform .15s, box-shadow .15s; }
+  .num-card:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(108,99,255,0.18); }
+  .num-card .n { font-size: 1.45rem; font-weight: 900; color: var(--primary); line-height: 1; }
+  .num-card .word { font-size: 0.85rem; font-weight: 800; color: var(--text); margin-top: 3px; }
+  .num-card .ipa { font-size: 0.68rem; color: #7c6fe0; font-style: italic; margin-top: 2px; }
+  .num-card .viet { font-size: 0.73rem; color: var(--muted); margin-top: 1px; }
+  .speak-btn { display: inline-flex; align-items: center; justify-content: center; margin-top: 6px; background: var(--primary); border: none; border-radius: 50%; width: 27px; height: 27px; cursor: pointer; color: #fff; font-size: 0.75rem; transition: background .15s, transform .1s; box-shadow: 0 2px 6px rgba(108,99,255,0.3); }
+  .speak-btn:hover { background: #5b52e0; transform: scale(1.12); }
+  .speak-btn.playing { background: var(--accent); animation: pulse-btn .5s infinite alternate; }
+  @keyframes pulse-btn { from { box-shadow: 0 0 0 0 rgba(67,217,173,0.5); } to { box-shadow: 0 0 0 8px rgba(67,217,173,0); } }
+
+  /* COMPARE GRID */
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .compare-card { border-radius: 12px; padding: 13px 14px; }
+  .compare-card.teen { background: linear-gradient(135deg,#fce7f3,#fdf2f8); border: 1.5px solid #f9a8d4; }
+  .compare-card.ten  { background: linear-gradient(135deg,#dbeafe,#eff6ff); border: 1.5px solid #93c5fd; }
+  .cc-label { font-size: 0.68rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+  .compare-card.teen .cc-label { color: #be185d; }
+  .compare-card.ten  .cc-label { color: #1d4ed8; }
+  .cc-row { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+  .cc-num  { font-size: 1.1rem; font-weight: 900; }
+  .cc-word { font-size: 0.88rem; font-weight: 700; }
+  .cc-ipa  { font-size: 0.7rem; font-style: italic; color: var(--muted); }
+
+  /* RULE BOX */
+  .rule-box { background: linear-gradient(135deg,#ecfdf5,#d1fae5); border-left: 4px solid var(--accent); border-radius: 10px; padding: 13px 17px; margin-top: 14px; font-size: 0.93rem; line-height: 1.8; }
+  .rule-box strong { color: #059669; }
+  .rule-box.warn { background: linear-gradient(135deg,#fff7ed,#ffedd5); border-left-color: #f97316; }
+  .rule-box.warn strong { color: #c2410c; }
+
+  /* LISTEN QUIZ */
+  .listen-section { background: var(--card); border-radius: 18px; padding: 24px; margin-bottom: 20px; box-shadow: var(--shadow); }
+  .listen-section h2 { font-family: 'Baloo 2', cursive; color: #059669; font-size: 1.3rem; margin-bottom: 14px; }
+  .speed-row { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+  .speed-row span { font-weight: 700; color: var(--muted); font-size: 0.88rem; }
+  .speed-btn { padding: 5px 13px; border-radius: 20px; border: 2px solid #a7f3d0; background: #fff; color: #059669; font-weight: 700; font-size: 0.82rem; cursor: pointer; font-family: 'Nunito', sans-serif; transition: all .15s; }
+  .speed-btn.active { background: #059669; color: #fff; border-color: #059669; }
+  .listen-box { background: linear-gradient(135deg,#ecfdf5,#d1fae5); border-radius: 14px; padding: 20px 18px; margin-bottom: 14px; border: 1.5px solid #a7f3d0; }
+  .listen-q-num { font-size: 0.78rem; font-weight: 800; color: #059669; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+  .listen-play-btn { display: inline-flex; align-items: center; gap: 9px; background: #059669; color: #fff; border: none; border-radius: 50px; padding: 12px 28px; font-family: 'Nunito', sans-serif; font-size: 1rem; font-weight: 800; cursor: pointer; transition: all .2s; box-shadow: 0 4px 14px rgba(5,150,105,0.3); margin-bottom: 14px; }
+  .listen-play-btn:hover { background: #047857; transform: translateY(-2px); }
+  .listen-play-btn.playing { background: var(--secondary); }
+  .listen-opts { display: flex; flex-wrap: wrap; gap: 9px; }
+  .listen-opt { padding: 9px 22px; border-radius: 50px; border: 2.5px solid #a7f3d0; background: #fff; font-family: 'Nunito', sans-serif; font-size: 0.93rem; font-weight: 700; cursor: pointer; transition: all .15s; color: #065f46; }
+  .listen-opt:hover:not(.locked) { border-color: #059669; background: #f0fdf4; }
+  .listen-opt.correct-opt { border-color: var(--correct); background: #f0fdf4; color: #166534; }
+  .listen-opt.wrong-opt   { border-color: var(--wrong);   background: #fef2f2; color: #991b1b; }
+  .listen-opt.locked { cursor: default; }
+  .listen-fb { margin-top: 11px; font-weight: 700; font-size: 0.9rem; min-height: 20px; }
+  .listen-score-bar { display: flex; align-items: center; gap: 12px; font-weight: 700; flex-wrap: wrap; padding-top: 12px; }
+  .listen-score-big { font-size: 1.7rem; font-weight: 900; color: #059669; }
+  .prog-wrap { flex: 1; min-width: 100px; height: 10px; background: #d1fae5; border-radius: 99px; overflow: hidden; }
+  .prog-fill  { height: 100%; background: #059669; border-radius: 99px; transition: width .4s; }
+
+  /* EXERCISE */
+  .exercise-card { background: var(--card); border-radius: 18px; padding: 24px; margin-bottom: 22px; box-shadow: var(--shadow); }
+  .exercise-card h3 { font-family: 'Baloo 2', cursive; color: var(--secondary); font-size: 1.1rem; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 2px dashed #fce7f3; }
+  .fill-row { display: flex; align-items: center; gap: 10px; margin-bottom: 11px; flex-wrap: wrap; }
+  .fill-row label { font-weight: 700; min-width: 115px; color: var(--primary); font-size: 0.93rem; }
+  .fill-input { border: 2px solid #c4b5fd; border-radius: 8px; padding: 7px 12px; font-family: 'Nunito', sans-serif; font-size: 0.93rem; width: 160px; outline: none; transition: border .2s; }
+  .fill-input:focus { border-color: var(--primary); }
+  .fill-input.correct { border-color: var(--correct); background: #f0fdf4; }
+  .fill-input.wrong   { border-color: var(--wrong);   background: #fef2f2; }
+  .feedback-inline { font-size: 0.8rem; font-weight: 700; }
+  .feedback-inline.correct { color: var(--correct); }
+  .feedback-inline.wrong   { color: var(--wrong); }
+  .mcq-item { margin-bottom: 18px; }
+  .mcq-item .question-text { font-weight: 700; margin-bottom: 10px; line-height: 1.5; font-size: 0.95rem; }
+  .mcq-options { display: flex; flex-direction: column; gap: 7px; }
+  .mcq-option { display: flex; align-items: center; gap: 10px; padding: 9px 14px; border-radius: 10px; border: 2px solid #e2e8f0; cursor: pointer; transition: all .15s; font-weight: 600; user-select: none; font-size: 0.93rem; }
+  .mcq-option:hover { border-color: var(--primary); background: #f5f3ff; }
+  .mcq-option.correct-ans { border-color: var(--correct); background: #f0fdf4; color: #166534; }
+  .mcq-option.wrong-ans   { border-color: var(--wrong);   background: #fef2f2; color: #991b1b; }
+  .mcq-option input[type=radio] { accent-color: var(--primary); width: 15px; height: 15px; }
+  .write-row { display: flex; align-items: center; gap: 12px; margin-bottom: 9px; }
+  .write-row .num-label { font-size: 1.35rem; font-weight: 900; color: var(--primary); min-width: 52px; }
+  .write-input { border: 2px solid #c4b5fd; border-radius: 8px; padding: 7px 13px; font-family: 'Nunito', sans-serif; font-size: 0.93rem; width: 195px; outline: none; transition: border .2s; }
+  .write-input:focus { border-color: var(--primary); }
+  .write-input.correct { border-color: var(--correct); background: #f0fdf4; }
+  .write-input.wrong   { border-color: var(--wrong);   background: #fef2f2; }
+  .para-blank { border: none; border-bottom: 2px solid var(--primary); background: transparent; font-family: 'Nunito', sans-serif; font-size: 1rem; width: 130px; outline: none; padding: 2px 4px; font-weight: 700; color: var(--primary); }
+  .para-blank.correct { border-bottom-color: var(--correct); color: var(--correct); }
+  .para-blank.wrong   { border-bottom-color: var(--wrong);   color: var(--wrong); }
+  .reading-text { background: #f8f7ff; border-radius: 12px; padding: 17px; line-height: 2; font-size: 0.95rem; margin-bottom: 17px; border: 1.5px solid #e0d9ff; }
+  .score-bar { background: #f5f3ff; border-radius: 14px; padding: 16px 20px; margin-bottom: 16px; display: flex; align-items: center; gap: 14px; font-weight: 700; font-size: 1rem; flex-wrap: wrap; }
+  .score-num { font-size: 1.75rem; font-weight: 900; color: var(--primary); }
+  .btn { padding: 10px 26px; border-radius: 50px; border: none; font-family: 'Nunito', sans-serif; font-size: 0.95rem; font-weight: 800; cursor: pointer; transition: all .2s; margin-top: 13px; }
+  .btn-primary { background: var(--primary); color: #fff; box-shadow: 0 3px 12px rgba(108,99,255,0.3); }
+  .btn-primary:hover { background: #5b52e0; transform: translateY(-2px); }
+  .btn-secondary { background: #fff; color: var(--primary); border: 2.5px solid var(--primary); }
+  .btn-secondary:hover { background: #f5f3ff; }
+  .btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .result-popup { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,.45); z-index:999; align-items:center; justify-content:center; }
+  .result-popup.show { display: flex; }
+  .result-box { background:#fff; border-radius:24px; padding:38px 46px; text-align:center; box-shadow:0 20px 60px rgba(0,0,0,.2); animation:popIn .3s ease; max-width:370px; width:90%; }
+  @keyframes popIn { from{transform:scale(.7);opacity:0} to{transform:scale(1);opacity:1} }
+  .result-emoji { font-size:3.5rem; }
+  .result-box h2 { font-family:'Baloo 2',cursive; font-size:1.75rem; color:var(--primary); margin:10px 0 5px; }
+  .result-box p  { color:var(--muted); font-size:1rem; margin-bottom:18px; }
+  .result-score  { font-size:2.5rem; font-weight:900; color:var(--secondary); }
+  @media(max-width:600px){
+    header h1{font-size:1.4rem;}
+    .number-grid{grid-template-columns:repeat(3,1fr);}
+    .compare-grid{grid-template-columns:1fr;}
+    .fill-input,.write-input{width:130px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🔢 Cardinal Numbers – Số Đếm Tiếng Anh</h1>
+  <p>Học lý thuyết · Luyện phát âm · Nghe & làm bài tập</p>
+</header>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('theory',this)">📖 Lý Thuyết</button>
+  <button class="tab-btn" onclick="showTab('ex1',this)">✏️ Bài 1: Điền từ</button>
+  <button class="tab-btn" onclick="showTab('ex3',this)">🔡 Bài 2: Viết số</button>
+  <button class="tab-btn" onclick="showTab('ex7',this)">🎯 Bài 3: Trắc nghiệm</button>
+  <button class="tab-btn" onclick="showTab('ex8',this)">📝 Bài 4: Điền đoạn</button>
+  <button class="tab-btn" onclick="showTab('ex9',this)">📖 Bài 5: Đọc hiểu</button>
+</div>
+
+<!-- ══════════ THEORY ══════════ -->
+<div id="theory" class="tab-content active">
+
+  <div class="theory-section">
+    <h2>🔢 1. Số đơn vị & số 11–19 <small>— bấm 🔊 để nghe phát âm</small></h2>
+    <div class="number-grid" id="grid1"></div>
+  </div>
+
+  <div class="theory-section">
+    <h2>🔟 2. Số chục (Tens) <small>— bấm 🔊 để nghe</small></h2>
+    <div class="number-grid" id="grid2"></div>
+    <div class="rule-box">
+      <strong>📌 Quy tắc ghép số:</strong> Số chục + gạch nối + số lẻ<br>
+      Ví dụ: 21 = <strong>twenty-one</strong> &nbsp;|&nbsp; 45 = <strong>forty-five</strong> &nbsp;|&nbsp; 99 = <strong>ninety-nine</strong>
+    </div>
+  </div>
+
+  <div class="theory-section">
+    <h2>🏦 3. Số lớn <small>— hundred / thousand / million</small></h2>
+    <div class="number-grid" id="grid3"></div>
+    <div class="rule-box">
+      <strong>📌 Cách đọc:</strong><br>
+      250 = <strong>two hundred and fifty</strong><br>
+      1,793 = <strong>one thousand, seven hundred and ninety-three</strong><br>
+      → Dùng <strong>"and"</strong> giữa hàng trăm và hàng chục/đơn vị.
+    </div>
+  </div>
+
+  <div class="theory-section">
+    <h2>⚠️ 4. Phân biệt Teens vs Tens <small>— dễ nhầm nhất!</small></h2>
+    <div class="compare-grid" id="compareGrid"></div>
+    <div class="rule-box warn" style="margin-top:14px;">
+      <strong>Mẹo nhớ:</strong><br>
+      • <strong>-TEEN</strong> → nhấn âm <em>cuối</em>: thir<u>TEEN</u>, fif<u>TEEN</u>, eigh<u>TEEN</u><br>
+      • <strong>-TY</strong>   → nhấn âm <em>đầu</em>: <u>THIR</u>ty, <u>FIF</u>ty, <u>EIGH</u>ty<br>
+      • <strong>five</strong> → fif<strong>teen</strong> / fif<strong>ty</strong> &nbsp;|&nbsp; <strong>eight</strong> → eigh<strong>teen</strong> / eigh<strong>ty</strong>
+    </div>
+  </div>
+
+  <!-- LISTEN QUIZ -->
+  <div class="listen-section">
+    <h2>🎧 5. Luyện nghe – Nghe và chọn số đúng</h2>
+    <div class="speed-row">
+      <span>Tốc độ đọc:</span>
+      <button class="speed-btn active" onclick="setSpeed(0.7,this)">🐢 Chậm</button>
+      <button class="speed-btn" onclick="setSpeed(1.0,this)">🚶 Bình thường</button>
+      <button class="speed-btn" onclick="setSpeed(1.3,this)">🏃 Nhanh</button>
+    </div>
+    <div class="listen-box">
+      <div class="listen-q-num" id="listenQNum">Câu 1 / 10</div>
+      <button class="listen-play-btn" id="listenPlayBtn" onclick="playCurrentQ()">🔊 &nbsp;Nghe số</button>
+      <div class="listen-opts" id="listenOpts"></div>
+      <div class="listen-fb" id="listenFb"></div>
+    </div>
+    <div class="listen-score-bar">
+      <span>Điểm:</span>
+      <span class="listen-score-big" id="listenScoreNum">0</span>
+      <span style="color:var(--muted);font-weight:600;" id="listenScoreTotal">/0</span>
+      <div class="prog-wrap"><div class="prog-fill" id="listenBar" style="width:0%"></div></div>
+      <button class="btn btn-secondary" style="margin-top:0;padding:6px 16px;font-size:0.86rem;" onclick="resetListenQuiz()">🔄 Làm lại</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════ EX1 ══════════ -->
+<div id="ex1" class="tab-content">
+  <div class="exercise-card">
+    <h3>✏️ Bài 1: Điền từ còn thiếu vào bảng số đếm</h3>
+    <div class="fill-row"><label>0 – Không</label><input class="fill-input" id="b1" placeholder="Tiếng Anh..." autocomplete="off"><span class="feedback-inline" id="f1"></span></div>
+    <div class="fill-row"><label>6 – Sáu</label><input class="fill-input" id="b2" placeholder="Tiếng Anh..." autocomplete="off"><span class="feedback-inline" id="f2"></span></div>
+    <div class="fill-row"><label>10 – ten</label><input class="fill-input" id="b3" placeholder="Tiếng Việt..." autocomplete="off"><span class="feedback-inline" id="f3"></span></div>
+    <div class="fill-row"><label>15 – fifteen</label><input class="fill-input" id="b4" placeholder="Số (digits)..." autocomplete="off"><span class="feedback-inline" id="f4"></span></div>
+    <div class="fill-row"><label>18 – Mười tám</label><input class="fill-input" id="b5" placeholder="Tiếng Anh..." autocomplete="off"><span class="feedback-inline" id="f5"></span></div>
+    <div class="fill-row"><label>20 – twenty</label><input class="fill-input" id="b6" placeholder="Tiếng Việt..." autocomplete="off"><span class="feedback-inline" id="f6"></span></div>
+    <div class="fill-row"><label>50 – Năm mươi</label><input class="fill-input" id="b7" placeholder="Tiếng Anh..." autocomplete="off"><span class="feedback-inline" id="f7"></span></div>
+    <div class="fill-row"><label>Sixty – Sáu mươi</label><input class="fill-input" id="b8" placeholder="Số (digits)..." autocomplete="off"><span class="feedback-inline" id="f8"></span></div>
+    <div class="fill-row"><label>88 – Eighty-eight</label><input class="fill-input" id="b9" placeholder="Tiếng Việt..." autocomplete="off"><span class="feedback-inline" id="f9"></span></div>
+    <div class="fill-row"><label>99 – Chín mươi chín</label><input class="fill-input" id="b10" placeholder="Tiếng Anh..." autocomplete="off"><span class="feedback-inline" id="f10"></span></div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="checkEx1()">✅ Chấm điểm</button>
+      <button class="btn btn-secondary" onclick="resetEx1()">🔄 Làm lại</button>
+    </div>
+    <div id="ex1-score" class="score-bar" style="display:none;margin-top:14px;"></div>
+  </div>
+</div>
+
+<!-- ══════════ EX3 ══════════ -->
+<div id="ex3" class="tab-content">
+  <div class="exercise-card">
+    <h3>🔡 Bài 2: Viết số bằng chữ tiếng Anh</h3>
+    <div class="write-row"><span class="num-label">44</span><input class="write-input" id="w1" placeholder="forty-..." autocomplete="off"><span class="feedback-inline" id="wf1"></span></div>
+    <div class="write-row"><span class="num-label">100</span><input class="write-input" id="w2" placeholder="one ..." autocomplete="off"><span class="feedback-inline" id="wf2"></span></div>
+    <div class="write-row"><span class="num-label">32</span><input class="write-input" id="w3" placeholder="thirty-..." autocomplete="off"><span class="feedback-inline" id="wf3"></span></div>
+    <div class="write-row"><span class="num-label">14</span><input class="write-input" id="w4" placeholder="four..." autocomplete="off"><span class="feedback-inline" id="wf4"></span></div>
+    <div class="write-row"><span class="num-label">55</span><input class="write-input" id="w5" placeholder="fifty-..." autocomplete="off"><span class="feedback-inline" id="wf5"></span></div>
+    <div class="write-row"><span class="num-label">70</span><input class="write-input" id="w6" placeholder="sev..." autocomplete="off"><span class="feedback-inline" id="wf6"></span></div>
+    <div class="write-row"><span class="num-label">46</span><input class="write-input" id="w7" placeholder="forty-..." autocomplete="off"><span class="feedback-inline" id="wf7"></span></div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="checkEx3()">✅ Chấm điểm</button>
+      <button class="btn btn-secondary" onclick="resetEx3()">🔄 Làm lại</button>
+    </div>
+    <div id="ex3-score" class="score-bar" style="display:none;margin-top:14px;"></div>
+  </div>
+</div>
+
+<!-- ══════════ EX7 ══════════ -->
+<div id="ex7" class="tab-content">
+  <div class="exercise-card">
+    <h3>🎯 Bài 3: Chọn đáp án đúng</h3>
+    <div class="mcq-item" id="mcq1"><div class="question-text">1. I usually have breakfast at _____ o'clock.</div><div class="mcq-options"><label class="mcq-option"><input type="radio" name="q1" value="A"> A. six</label><label class="mcq-option"><input type="radio" name="q1" value="B"> B. sixty</label></div></div>
+    <div class="mcq-item" id="mcq2"><div class="question-text">2. Jamie is an elementary student. He is _____ years old.</div><div class="mcq-options"><label class="mcq-option"><input type="radio" name="q2" value="A"> A. nine</label><label class="mcq-option"><input type="radio" name="q2" value="B"> B. nineteen</label></div></div>
+    <div class="mcq-item" id="mcq3"><div class="question-text">3. It costs only _____ pound. Two of them will be four pounds.</div><div class="mcq-options"><label class="mcq-option"><input type="radio" name="q3" value="A"> A. two</label><label class="mcq-option"><input type="radio" name="q3" value="B"> B. four</label></div></div>
+    <div class="mcq-item" id="mcq4"><div class="question-text">4. It takes Jane _____ hours to get from London to Cairo by airplane. So she will be there tomorrow.</div><div class="mcq-options"><label class="mcq-option"><input type="radio" name="q4" value="A"> A. fifteen</label><label class="mcq-option"><input type="radio" name="q4" value="B"> B. fifty</label></div></div>
+    <div class="mcq-item" id="mcq5"><div class="question-text">5. David scored three goals in the game. Jack scored more than David two goals, _____ goals total.</div><div class="mcq-options"><label class="mcq-option"><input type="radio" name="q5" value="A"> A. five</label><label class="mcq-option"><input type="radio" name="q5" value="B"> B. fifteen</label></div></div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="checkEx7()">✅ Chấm điểm</button>
+      <button class="btn btn-secondary" onclick="resetEx7()">🔄 Làm lại</button>
+    </div>
+    <div id="ex7-score" class="score-bar" style="display:none;margin-top:14px;"></div>
+  </div>
+</div>
+
+<!-- ══════════ EX8 ══════════ -->
+<div id="ex8" class="tab-content">
+  <div class="exercise-card">
+    <h3>📝 Bài 4: Điền từ vào chỗ trống</h3>
+    <div style="background:#ede9fe;border-radius:10px;padding:11px 17px;margin-bottom:16px;font-weight:700;color:var(--primary);font-size:0.9rem;">
+      📦 Từ cho sẵn: <em>eight | fifteen | seven | sixty | twelve | twenty-six | two hundred | thousand</em>
+    </div>
+    <ol style="line-height:2.9;font-size:0.95rem;padding-left:20px;">
+      <li>There are <input class="para-blank" id="p1" autocomplete="off"> days in a week. <span class="feedback-inline" id="pf1"></span></li>
+      <li>When it's 11:45, it is also a quarter to <input class="para-blank" id="p2" autocomplete="off">. <span class="feedback-inline" id="pf2"></span></li>
+      <li>There are a <input class="para-blank" id="p3" autocomplete="off"> metres in a kilometre. <span class="feedback-inline" id="pf3"></span></li>
+      <li>I'm 24 and my sister is 16. She's <input class="para-blank" id="p4" autocomplete="off"> years younger than me. <span class="feedback-inline" id="pf4"></span></li>
+      <li>There are <input class="para-blank" id="p5" autocomplete="off"> seconds in a minute. <span class="feedback-inline" id="pf5"></span></li>
+      <li>Paula lives at 16 Brick Lane and her friend lives next door at number <input class="para-blank" id="p6" autocomplete="off">. <span class="feedback-inline" id="pf6"></span></li>
+      <li>There are <input class="para-blank" id="p7" autocomplete="off"> letters in the English alphabet. <span class="feedback-inline" id="pf7"></span></li>
+      <li>Our house was built in 1793. It's over <input class="para-blank" id="p8" autocomplete="off"> years old. <span class="feedback-inline" id="pf8"></span></li>
+    </ol>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="checkEx8()">✅ Chấm điểm</button>
+      <button class="btn btn-secondary" onclick="resetEx8()">🔄 Làm lại</button>
+    </div>
+    <div id="ex8-score" class="score-bar" style="display:none;margin-top:14px;"></div>
+  </div>
+</div>
+
+<!-- ══════════ EX9 ══════════ -->
+<div id="ex9" class="tab-content">
+  <div class="exercise-card">
+    <h3>📖 Bài 5: Đọc và trả lời câu hỏi – Kênh đào Panama</h3>
+    <div class="reading-text">
+      The Panama Canal is an artificial waterway in the Central American country of Panama that connects the Atlantic and Pacific Ocean. It is only <strong>82</strong> kilometres long. If you go around South America by ship then you need to travel another <strong>15,000</strong> kilometres. So the canal saves a lot of travel time. It takes around <strong>8 to 10</strong> hours to cross the canal. The French started building the canal in <strong>1881</strong>, but they couldn't finish it. The project was started again in <strong>1904</strong> by the United States and the canal was finally finished in <strong>1914</strong>. Many people died while they were building the canal, some say up to <strong>25,000</strong>. The United States controlled the canal but gave control back to Panama in <strong>2000</strong>. Every year, around <strong>40,000</strong> ships come through the canal. In <strong>2016</strong> the government of Panama made the canal bigger, so that now <strong>99</strong> percent of ships can pass through it.
+    </div>
+    <ol style="line-height:3;font-size:0.95rem;padding-left:20px;">
+      <li>The Panama Canal connects <input class="para-blank" id="r1" autocomplete="off" style="width:88px"> oceans. <span class="feedback-inline" id="rf1"></span></li>
+      <li>It was finished in <input class="para-blank" id="r2" autocomplete="off" style="width:72px">. <span class="feedback-inline" id="rf2"></span></li>
+      <li>Almost <input class="para-blank" id="r3" autocomplete="off" style="width:88px"> people died while building the canal. <span class="feedback-inline" id="rf3"></span></li>
+      <li>The control returned to Panama in <input class="para-blank" id="r4" autocomplete="off" style="width:72px">. <span class="feedback-inline" id="rf4"></span></li>
+      <li>Now <input class="para-blank" id="r5" autocomplete="off" style="width:55px"> percent of ships can pass through it. <span class="feedback-inline" id="rf5"></span></li>
+    </ol>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="checkEx9()">✅ Chấm điểm</button>
+      <button class="btn btn-secondary" onclick="resetEx9()">🔄 Làm lại</button>
+    </div>
+    <div id="ex9-score" class="score-bar" style="display:none;margin-top:14px;"></div>
+  </div>
+</div>
+
+<!-- Result Popup -->
+<div class="result-popup" id="resultPopup">
+  <div class="result-box">
+    <div class="result-emoji" id="resultEmoji">🎉</div>
+    <h2>Hoàn thành!</h2>
+    <div class="result-score" id="resultScore">0/0</div>
+    <p id="resultMsg">Làm tốt lắm!</p>
+    <button class="btn btn-primary" onclick="closePopup()">✨ Tiếp tục</button>
+  </div>
+</div>
+
+<script>
+// ══════ DATA ══════
+const nums0to19=[
+  {n:0,w:'zero',ipa:'/ˈzɪərəʊ/',v:'không'},
+  {n:1,w:'one',ipa:'/wʌn/',v:'một'},
+  {n:2,w:'two',ipa:'/tuː/',v:'hai'},
+  {n:3,w:'three',ipa:'/θriː/',v:'ba'},
+  {n:4,w:'four',ipa:'/fɔːr/',v:'bốn'},
+  {n:5,w:'five',ipa:'/faɪv/',v:'năm'},
+  {n:6,w:'six',ipa:'/sɪks/',v:'sáu'},
+  {n:7,w:'seven',ipa:'/ˈsev.ən/',v:'bảy'},
+  {n:8,w:'eight',ipa:'/eɪt/',v:'tám'},
+  {n:9,w:'nine',ipa:'/naɪn/',v:'chín'},
+  {n:10,w:'ten',ipa:'/ten/',v:'mười'},
+  {n:11,w:'eleven',ipa:'/ɪˈlev.ən/',v:'mười một'},
+  {n:12,w:'twelve',ipa:'/twɛlv/',v:'mười hai'},
+  {n:13,w:'thirteen',ipa:'/ˌθɜːˈtiːn/',v:'mười ba'},
+  {n:14,w:'fourteen',ipa:'/ˌfɔːˈtiːn/',v:'mười bốn'},
+  {n:15,w:'fifteen',ipa:'/ˌfɪfˈtiːn/',v:'mười lăm'},
+  {n:16,w:'sixteen',ipa:'/ˌsɪkˈtiːn/',v:'mười sáu'},
+  {n:17,w:'seventeen',ipa:'/ˌsev.ənˈtiːn/',v:'mười bảy'},
+  {n:18,w:'eighteen',ipa:'/ˌeɪˈtiːn/',v:'mười tám'},
+  {n:19,w:'nineteen',ipa:'/ˌnaɪnˈtiːn/',v:'mười chín'},
+];
+const numsTens=[
+  {n:20,w:'twenty',ipa:'/ˈtwɛn.ti/',v:'hai mươi'},
+  {n:30,w:'thirty',ipa:'/ˈθɜː.ti/',v:'ba mươi'},
+  {n:40,w:'forty',ipa:'/ˈfɔː.ti/',v:'bốn mươi'},
+  {n:50,w:'fifty',ipa:'/ˈfɪf.ti/',v:'năm mươi'},
+  {n:60,w:'sixty',ipa:'/ˈsɪk.sti/',v:'sáu mươi'},
+  {n:70,w:'seventy',ipa:'/ˈsev.ən.ti/',v:'bảy mươi'},
+  {n:80,w:'eighty',ipa:'/ˈeɪ.ti/',v:'tám mươi'},
+  {n:90,w:'ninety',ipa:'/ˈnaɪn.ti/',v:'chín mươi'},
+  {n:100,w:'one hundred',ipa:'/wʌn ˈhʌn.drəd/',v:'một trăm'},
+];
+const numsBig=[
+  {n:'100',w:'a/one hundred',ipa:'/ˈhʌn.drəd/',v:'một trăm'},
+  {n:'1,000',w:'a/one thousand',ipa:'/ˈθaʊ.zənd/',v:'một nghìn'},
+  {n:'1,000,000',w:'a/one million',ipa:'/ˈmɪl.jən/',v:'một triệu'},
+];
+const comparePairs=[
+  {teen:{n:13,w:'thirteen',ipa:'/ˌθɜːˈtiːn/'},ten:{n:30,w:'thirty',ipa:'/ˈθɜː.ti/'}},
+  {teen:{n:14,w:'fourteen',ipa:'/ˌfɔːˈtiːn/'},ten:{n:40,w:'forty',ipa:'/ˈfɔː.ti/'}},
+  {teen:{n:15,w:'fifteen',ipa:'/ˌfɪfˈtiːn/'},ten:{n:50,w:'fifty',ipa:'/ˈfɪf.ti/'}},
+  {teen:{n:16,w:'sixteen',ipa:'/ˌsɪkˈtiːn/'},ten:{n:60,w:'sixty',ipa:'/ˈsɪk.sti/'}},
+  {teen:{n:17,w:'seventeen',ipa:'/ˌsev.ənˈtiːn/'},ten:{n:70,w:'seventy',ipa:'/ˈsev.ən.ti/'}},
+  {teen:{n:18,w:'eighteen',ipa:'/ˌeɪˈtiːn/'},ten:{n:80,w:'eighty',ipa:'/ˈeɪ.ti/'}},
+  {teen:{n:19,w:'nineteen',ipa:'/ˌnaɪnˈtiːn/'},ten:{n:90,w:'ninety',ipa:'/ˈnaɪn.ti/'}},
+];
+
+// ══════ RENDER ══════
+function makeCard(item){
+  return `<div class="num-card">
+    <div class="n">${item.n}</div>
+    <div class="word">${item.w}</div>
+    <div class="ipa">${item.ipa}</div>
+    <div class="viet">${item.v}</div>
+    <button class="speak-btn" onclick="speakWord('${item.w}',this)" title="Nghe '${item.w}'">🔊</button>
+  </div>`;
+}
+document.getElementById('grid1').innerHTML=nums0to19.map(makeCard).join('');
+document.getElementById('grid2').innerHTML=numsTens.map(makeCard).join('');
+document.getElementById('grid3').innerHTML=numsBig.map(makeCard).join('');
+
+const cg=document.getElementById('compareGrid');
+comparePairs.forEach(p=>{
+  cg.innerHTML+=`
+    <div class="compare-card teen">
+      <div class="cc-label">👶 Teen (-teen)</div>
+      <div class="cc-row">
+        <div><div class="cc-num" style="color:#be185d">${p.teen.n}</div><div class="cc-word">${p.teen.w}</div><div class="cc-ipa">${p.teen.ipa}</div></div>
+        <button class="speak-btn" style="background:#be185d" onclick="speakWord('${p.teen.w}',this)">🔊</button>
+      </div>
+    </div>
+    <div class="compare-card ten">
+      <div class="cc-label">🔟 Tens (-ty)</div>
+      <div class="cc-row">
+        <div><div class="cc-num" style="color:#1d4ed8">${p.ten.n}</div><div class="cc-word">${p.ten.w}</div><div class="cc-ipa">${p.ten.ipa}</div></div>
+        <button class="speak-btn" style="background:#1d4ed8" onclick="speakWord('${p.ten.w}',this)">🔊</button>
+      </div>
+    </div>`;
+});
+
+// ══════ TTS ══════
+let ttsRate=0.7;
+function setSpeed(r,btn){ttsRate=r;document.querySelectorAll('.speed-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
+function speakWord(word,btn){
+  if(!window.speechSynthesis){alert('Trình duyệt không hỗ trợ Text-to-Speech. Hãy dùng Chrome hoặc Edge.');return;}
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(word);
+  u.lang='en-US';u.rate=ttsRate;u.pitch=1;
+  if(btn){btn.classList.add('playing');u.onend=()=>btn.classList.remove('playing');}
+  window.speechSynthesis.speak(u);
+}
+
+// ══════ LISTEN QUIZ ══════
+const listenPool=[...nums0to19,...numsTens.filter(x=>x.n<=90),
+  {n:13,w:'thirteen'},{n:30,w:'thirty'},{n:14,w:'fourteen'},{n:40,w:'forty'},
+  {n:15,w:'fifteen'},{n:50,w:'fifty'},{n:16,w:'sixteen'},{n:60,w:'sixty'},
+  {n:17,w:'seventeen'},{n:70,w:'seventy'},{n:18,w:'eighteen'},{n:80,w:'eighty'},
+  {n:19,w:'nineteen'},{n:90,w:'ninety'},
+];
+const LTOTAL=10;
+let lQueue=[],lIdx=0,lCorrect=0,lAnswered=false;
+
+function shuffled(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+function initListenQueue(){
+  lQueue=shuffled(listenPool).slice(0,LTOTAL);
+  lIdx=0;lCorrect=0;lAnswered=false;
+  document.getElementById('listenScoreNum').textContent='0';
+  document.getElementById('listenScoreTotal').textContent='/0';
+  document.getElementById('listenBar').style.width='0%';
+  renderListenQ();
+}
+
+function renderListenQ(){
+  if(lIdx>=LTOTAL){showListenDone();return;}
+  const q=lQueue[lIdx];
+  document.getElementById('listenQNum').textContent=`Câu ${lIdx+1} / ${LTOTAL}`;
+  document.getElementById('listenFb').textContent='';
+  document.getElementById('listenPlayBtn').className='listen-play-btn';
+  document.getElementById('listenPlayBtn').innerHTML='🔊 &nbsp;Nghe số';
+  lAnswered=false;
+  const wrongs=shuffled(listenPool.filter(x=>String(x.n)!==String(q.n))).slice(0,3);
+  const opts=shuffled([q,...wrongs]);
+  const el=document.getElementById('listenOpts');
+  el.innerHTML='';
+  opts.forEach(o=>{
+    const btn=document.createElement('button');
+    btn.className='listen-opt';
+    btn.textContent=o.n;
+    btn.onclick=()=>handleListenAns(String(o.n),String(q.n),btn);
+    el.appendChild(btn);
+  });
+  updateListenScore();
+}
+
+function playCurrentQ(){
+  if(lIdx>=LTOTAL)return;
+  const q=lQueue[lIdx];
+  const btn=document.getElementById('listenPlayBtn');
+  btn.classList.add('playing');
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(q.w);
+  u.lang='en-US';u.rate=ttsRate;u.pitch=1;
+  u.onend=()=>btn.classList.remove('playing');
+  window.speechSynthesis.speak(u);
+}
+
+function handleListenAns(chosen,correct,btn){
+  if(lAnswered)return;
+  lAnswered=true;
+  const ok=chosen===correct;
+  if(ok){lCorrect++;btn.classList.add('correct-opt');}
+  else{
+    btn.classList.add('wrong-opt');
+    document.querySelectorAll('.listen-opt').forEach(b=>{
+      if(String(b.textContent).trim()===correct)b.classList.add('correct-opt');
+    });
+  }
+  document.querySelectorAll('.listen-opt').forEach(b=>b.classList.add('locked'));
+  const fb=document.getElementById('listenFb');
+  const qWord=lQueue[lIdx].w;
+  fb.innerHTML=ok
+    ?`✅ Đúng! <strong>${correct}</strong> = <em>${qWord}</em>`
+    :`❌ Sai! Đáp án đúng: <strong>${correct}</strong> = <em>${qWord}</em>`;
+  fb.style.color=ok?'#166534':'#991b1b';
+  updateListenScore();
+  setTimeout(()=>{lIdx++;renderListenQ();},1800);
+}
+
+function updateListenScore(){
+  document.getElementById('listenScoreNum').textContent=lCorrect;
+  document.getElementById('listenScoreTotal').textContent='/'+lIdx;
+  const pct=lIdx>0?(lCorrect/lIdx)*100:0;
+  document.getElementById('listenBar').style.width=pct+'%';
+}
+
+function showListenDone(){
+  document.getElementById('listenQNum').textContent='🎉 Đã hoàn thành!';
+  document.getElementById('listenOpts').innerHTML='';
+  document.getElementById('listenPlayBtn').innerHTML='✅ Đã xong';
+  const fb=document.getElementById('listenFb');
+  fb.innerHTML=`<strong>Kết quả: ${lCorrect}/${LTOTAL}</strong> &nbsp;—&nbsp; ${lCorrect>=8?'Xuất sắc! 🏆':lCorrect>=5?'Tốt lắm! 🎉':'Cố gắng hơn nhé 💪'}`;
+  fb.style.color='#059669';
+  document.getElementById('listenScoreTotal').textContent='/'+LTOTAL;
+  document.getElementById('listenBar').style.width=(lCorrect/LTOTAL*100)+'%';
+}
+
+function resetListenQuiz(){initListenQueue();}
+initListenQueue();
+
+// ══════ TABS ══════
+function showTab(id,btn){
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(btn)btn.classList.add('active');
+}
+
+// ══════ EXERCISES ══════
+function norm(s){return s.trim().toLowerCase().replace(/[-\s]+/g,'-').replace(/[^a-z0-9\-]/g,'');}
+
+function checkFill(pairs,scoreId){
+  let correct=0;
+  pairs.forEach(([id,answers,feedId])=>{
+    const input=document.getElementById(id);
+    const fb=document.getElementById(feedId);
+    const val=norm(input.value);
+    const ok=(Array.isArray(answers)?answers:[answers]).map(norm).includes(val);
+    input.classList.toggle('correct',ok);
+    input.classList.toggle('wrong',!ok&&input.value.trim()!=='');
+    if(ok){fb.textContent='✓';fb.className='feedback-inline correct';correct++;}
+    else if(input.value.trim()!==''){const show=Array.isArray(answers)?answers[0]:answers;fb.textContent='✗ → '+show;fb.className='feedback-inline wrong';}
+    else fb.textContent='';
+  });
+  const total=pairs.length;
+  const el=document.getElementById(scoreId);
+  el.style.display='flex';
+  el.innerHTML=`<span class="score-num">${correct}/${total}</span><span>${correct===total?'🏆 Hoàn hảo!':correct>=total*.7?'🎉 Tốt lắm!':'💪 Thử lại!'}</span>`;
+  showResult(correct,total);
+}
+
+function showResult(c,t){
+  const p=c/t;
+  document.getElementById('resultEmoji').textContent=p===1?'🏆':p>=.7?'🎉':p>=.5?'👍':'💪';
+  document.getElementById('resultScore').textContent=c+'/'+t;
+  document.getElementById('resultMsg').textContent=p===1?'Hoàn hảo! Xuất sắc!':p>=.7?'Làm tốt lắm!':p>=.5?'Cố gắng hơn nhé!':'Ôn lại lý thuyết và thử lại!';
+  document.getElementById('resultPopup').classList.add('show');
+}
+function closePopup(){document.getElementById('resultPopup').classList.remove('show');}
+
+const ex1Pairs=[['b1','zero','f1'],['b2','six','f2'],['b3',['mười','muoi'],'f3'],['b4','15','f4'],['b5','eighteen','f5'],['b6',['hai mươi','hai muoi'],'f6'],['b7','fifty','f7'],['b8','60','f8'],['b9',['tám mươi tám','tam muoi tam'],'f9'],['b10',['ninety-nine','ninety nine'],'f10']];
+function checkEx1(){checkFill(ex1Pairs,'ex1-score');}
+function resetEx1(){ex1Pairs.forEach(([id,,fid])=>{document.getElementById(id).value='';document.getElementById(id).className='fill-input';document.getElementById(fid).textContent='';});document.getElementById('ex1-score').style.display='none';}
+
+const ex3Pairs=[['w1',['forty-four','forty four'],'wf1'],['w2',['one hundred','a hundred'],'wf2'],['w3',['thirty-two','thirty two'],'wf3'],['w4','fourteen','wf4'],['w5',['fifty-five','fifty five'],'wf5'],['w6','seventy','wf6'],['w7',['forty-six','forty six'],'wf7']];
+function checkEx3(){checkFill(ex3Pairs,'ex3-score');}
+function resetEx3(){ex3Pairs.forEach(([id,,fid])=>{document.getElementById(id).value='';document.getElementById(id).className='write-input';document.getElementById(fid).textContent='';});document.getElementById('ex3-score').style.display='none';}
+
+const ex7Ans={q1:'A',q2:'A',q3:'A',q4:'A',q5:'A'};
+const ex7Exp={q1:'six – Ăn sáng lúc 6 giờ hợp lý; sixty (60) quá lớn.',q2:'nine – Học sinh tiểu học thường 6–11 tuổi.',q3:'two – 1 cái = 2 bảng → 2 cái = 4 bảng (2×2=4).',q4:'fifteen – London → Cairo ~15 tiếng bay. Fifty (50) quá dài.',q5:'five – David: 3 bàn, Jack hơn 2 → Jack: 5 bàn.'};
+function checkEx7(){
+  let correct=0;
+  ['q1','q2','q3','q4','q5'].forEach((q,i)=>{
+    const sel=document.querySelector(`input[name="${q}"]:checked`);
+    const opts=document.querySelectorAll(`#mcq${i+1} .mcq-option`);
+    opts.forEach(o=>o.classList.remove('correct-ans','wrong-ans'));
+    if(sel){
+      const pl=sel.closest('.mcq-option');const ok=sel.value===ex7Ans[q];
+      if(ok){pl.classList.add('correct-ans');correct++;}
+      else{pl.classList.add('wrong-ans');opts.forEach(o=>{if(o.querySelector('input').value===ex7Ans[q])o.classList.add('correct-ans');});}
+      let ex=document.getElementById('exp_'+q);
+      if(!ex){ex=document.createElement('div');ex.id='exp_'+q;ex.style.cssText='margin-top:8px;padding:7px 13px;background:#f0fdf4;border-radius:8px;font-size:0.84rem;color:#166534;font-weight:600;';document.getElementById(`mcq${i+1}`).appendChild(ex);}
+      ex.textContent='💡 '+ex7Exp[q];
+    }
+  });
+  const el=document.getElementById('ex7-score');el.style.display='flex';
+  el.innerHTML=`<span class="score-num">${correct}/5</span><span>${correct===5?'🏆 Hoàn hảo!':correct>=3?'🎉 Tốt lắm!':'💪 Thử lại!'}</span>`;
+  showResult(correct,5);
+}
+function resetEx7(){document.querySelectorAll('input[type=radio]').forEach(r=>r.checked=false);document.querySelectorAll('.mcq-option').forEach(o=>o.classList.remove('correct-ans','wrong-ans'));['q1','q2','q3','q4','q5'].forEach(q=>{const e=document.getElementById('exp_'+q);if(e)e.remove();});document.getElementById('ex7-score').style.display='none';}
+
+const ex8Pairs=[['p1','seven','pf1'],['p2','twelve','pf2'],['p3','thousand','pf3'],['p4','eight','pf4'],['p5','sixty','pf5'],['p6',['twenty-six','twenty six'],'pf6'],['p7',['twenty-six','twenty six'],'pf7'],['p8',['two hundred','two-hundred'],'pf8']];
+function checkEx8(){checkFill(ex8Pairs,'ex8-score');}
+function resetEx8(){ex8Pairs.forEach(([id,,fid])=>{document.getElementById(id).value='';document.getElementById(id).className='para-blank';document.getElementById(fid).textContent='';});document.getElementById('ex8-score').style.display='none';}
+
+const ex9Pairs=[['r1',['two','2'],'rf1'],['r2','1914','rf2'],['r3',['25,000','25000'],'rf3'],['r4','2000','rf4'],['r5','99','rf5']];
+function checkEx9(){checkFill(ex9Pairs,'ex9-score');}
+function resetEx9(){ex9Pairs.forEach(([id,,fid])=>{document.getElementById(id).value='';document.getElementById(id).className='para-blank';document.getElementById(fid).textContent='';});document.getElementById('ex9-score').style.display='none';}
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='Enter'){
+    const a=document.querySelector('.tab-content.active').id;
+    if(a==='ex1')checkEx1();else if(a==='ex3')checkEx3();else if(a==='ex8')checkEx8();else if(a==='ex9')checkEx9();
+  }
+});
+</script>
+</body>
+</html>

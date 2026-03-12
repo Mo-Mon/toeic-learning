@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cơ Thể Người – Body Parts</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #e84393;
+  --primary-light: #ff6db8;
+  --primary-dark: #c2006f;
+  --secondary: #ff9a3c;
+  --accent: #7c3aed;
+  --bg: #fff5f9;
+  --card-bg: #ffffff;
+  --text: #2d1b3d;
+  --text-light: #7a5c8a;
+  --correct: #22c55e;
+  --wrong: #ef4444;
+  --radius: 16px;
+  --shadow: 0 4px 20px rgba(232,67,147,0.12);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+/* HEADER */
+.header {
+  background: linear-gradient(135deg, var(--primary) 0%, #ff6db8 50%, var(--secondary) 100%);
+  padding: 20px 16px 16px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.header::before {
+  content: '';
+  position: absolute;
+  top: -40px; right: -40px;
+  width: 140px; height: 140px;
+  background: rgba(255,255,255,0.12);
+  border-radius: 50%;
+}
+.header::after {
+  content: '';
+  position: absolute;
+  bottom: -30px; left: -20px;
+  width: 100px; height: 100px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 50%;
+}
+.header h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 2rem;
+  color: #fff;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+  position: relative;
+  z-index: 1;
+}
+.header p {
+  color: rgba(255,255,255,0.9);
+  font-size: 0.95rem;
+  margin-top: 4px;
+  font-weight: 600;
+  position: relative;
+  z-index: 1;
+}
+/* SPEED CONTROL */
+.speed-bar {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: #fff;
+  border-bottom: 2px solid #fce4ef;
+}
+.speed-btn {
+  padding: 6px 14px;
+  border: 2px solid var(--primary);
+  border-radius: 20px;
+  background: #fff;
+  color: var(--primary);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.speed-btn.active, .speed-btn:hover {
+  background: var(--primary);
+  color: #fff;
+}
+/* TABS */
+.tabs {
+  display: flex;
+  overflow-x: auto;
+  background: #fff;
+  border-bottom: 3px solid #fce4ef;
+  scrollbar-width: none;
+}
+.tabs::-webkit-scrollbar { display: none; }
+.tab-btn {
+  flex: 0 0 auto;
+  padding: 12px 16px;
+  border: none;
+  background: transparent;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--text-light);
+  cursor: pointer;
+  white-space: nowrap;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -3px;
+  transition: all 0.2s;
+}
+.tab-btn.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+/* CONTENT */
+.tab-content { display: none; padding: 16px; }
+.tab-content.active { display: block; }
+
+/* VOCAB GRID */
+.vocab-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.vocab-card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 14px 10px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  border: 2px solid transparent;
+  transition: transform 0.2s, border-color 0.2s;
+  cursor: pointer;
+}
+.vocab-card:hover { transform: translateY(-3px); border-color: var(--primary-light); }
+.vocab-emoji { font-size: 2.2rem; margin-bottom: 6px; display: block; }
+.vocab-word {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.15rem;
+  color: var(--primary);
+  display: block;
+}
+.vocab-ipa {
+  font-size: 0.75rem;
+  color: var(--text-light);
+  display: block;
+  margin: 2px 0;
+}
+.vocab-viet {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--text);
+  display: block;
+}
+.speak-btn {
+  margin-top: 8px;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  border: none;
+  border-radius: 20px;
+  padding: 4px 12px;
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.speak-btn:hover { opacity: 0.85; }
+
+/* RULE BOX */
+.rule-box {
+  background: linear-gradient(135deg, #fff0fa, #f3e8ff);
+  border-left: 5px solid var(--primary);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow);
+}
+.rule-box h3 {
+  font-family: 'Fredoka One', cursive;
+  color: var(--primary);
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+.rule-box p, .rule-box li {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text);
+}
+.rule-box ul { padding-left: 18px; }
+.rule-box li { margin-bottom: 4px; }
+
+/* BODY TABLE */
+.body-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); }
+.body-table th {
+  background: var(--primary);
+  color: #fff;
+  padding: 10px 12px;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  text-align: left;
+}
+.body-table td {
+  padding: 9px 12px;
+  font-size: 0.88rem;
+  border-bottom: 1px solid #fce4ef;
+  background: #fff;
+}
+.body-table tr:last-child td { border-bottom: none; }
+.body-table tr:nth-child(even) td { background: #fff5f9; }
+
+/* QUIZ NGHE */
+.quiz-section { margin-top: 24px; }
+.quiz-section h3 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.2rem;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+.quiz-progress {
+  background: #f3e8ff;
+  border-radius: 20px;
+  height: 10px;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+.quiz-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--primary));
+  border-radius: 20px;
+  transition: width 0.4s;
+}
+.quiz-listen-card {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+.quiz-listen-word {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.4rem;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+.quiz-counter {
+  font-size: 0.82rem;
+  color: var(--text-light);
+  margin-bottom: 16px;
+}
+#listen-btn {
+  background: linear-gradient(135deg, var(--accent), #9f67ff);
+  border: none;
+  border-radius: 24px;
+  padding: 10px 28px;
+  color: #fff;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: opacity 0.2s;
+}
+#listen-btn:hover { opacity: 0.85; }
+.quiz-choices {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.quiz-choice {
+  padding: 10px;
+  border: 2px solid #e0d4f0;
+  border-radius: 12px;
+  background: #f8f3ff;
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.quiz-choice:hover { border-color: var(--accent); background: #ede8ff; }
+.quiz-choice.correct { background: #dcfce7; border-color: var(--correct); color: var(--correct); }
+.quiz-choice.wrong { background: #fee2e2; border-color: var(--wrong); color: var(--wrong); }
+
+/* EXERCISES */
+.exercise-card {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 18px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+.exercise-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.1rem;
+  color: var(--primary);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.exercise-item {
+  margin-bottom: 14px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+.exercise-item strong { color: var(--accent); }
+
+/* ANAGRAM */
+.anagram-input {
+  border: 2px solid #e0d4f0;
+  border-radius: 10px;
+  padding: 6px 10px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  width: 120px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.anagram-input:focus { border-color: var(--accent); }
+.anagram-input.correct { border-color: var(--correct); background: #dcfce7; }
+.anagram-input.wrong { border-color: var(--wrong); background: #fee2e2; }
+.anagram-label {
+  font-weight: 800;
+  color: var(--primary);
+  letter-spacing: 1px;
+}
+
+/* MCQ */
+.mcq-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 2px solid #e0d4f0;
+  border-radius: 10px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+.mcq-option:hover { border-color: var(--primary); background: #fff0fa; }
+.mcq-option input[type="radio"] { accent-color: var(--primary); }
+.mcq-option.correct { border-color: var(--correct); background: #dcfce7; }
+.mcq-option.wrong { border-color: var(--wrong); background: #fee2e2; }
+
+/* MATCHING / SELECT */
+.match-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  font-size: 0.88rem;
+  flex-wrap: wrap;
+}
+.match-select {
+  border: 2px solid #e0d4f0;
+  border-radius: 10px;
+  padding: 6px 10px;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  background: #f8f3ff;
+}
+.match-select:focus { border-color: var(--primary); }
+.match-select.correct { border-color: var(--correct); background: #dcfce7; }
+.match-select.wrong { border-color: var(--wrong); background: #fee2e2; }
+
+/* FILL BLANK */
+.fill-input {
+  border: none;
+  border-bottom: 2.5px solid var(--primary);
+  background: transparent;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--primary-dark);
+  width: 100px;
+  outline: none;
+  padding: 2px 4px;
+  text-align: center;
+  transition: border-color 0.2s;
+}
+.fill-input:focus { border-color: var(--accent); }
+.fill-input.correct { border-color: var(--correct); color: var(--correct); }
+.fill-input.wrong { border-color: var(--wrong); color: var(--wrong); }
+
+/* RESULT FEEDBACK */
+.result-badge {
+  display: inline-block;
+  margin-left: 6px;
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+.result-badge.correct { color: var(--correct); }
+.result-badge.wrong { color: var(--wrong); }
+
+/* SCORE BAR */
+.score-bar-wrap {
+  margin: 14px 0 4px;
+  display: none;
+}
+.score-bar-label {
+  font-weight: 800;
+  font-size: 0.9rem;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+.score-bar {
+  background: #f3e8ff;
+  border-radius: 20px;
+  height: 14px;
+  overflow: hidden;
+}
+.score-bar-fill {
+  height: 100%;
+  border-radius: 20px;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  transition: width 0.6s;
+}
+
+/* BUTTONS */
+.btn-check {
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: #fff;
+  border: none;
+  border-radius: 24px;
+  padding: 10px 24px;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-right: 10px;
+  margin-top: 14px;
+  transition: opacity 0.2s;
+}
+.btn-check:hover { opacity: 0.85; }
+.btn-reset {
+  background: #fff;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+  border-radius: 24px;
+  padding: 8px 20px;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 14px;
+  transition: all 0.2s;
+}
+.btn-reset:hover { background: var(--primary); color: #fff; }
+
+/* POPUP */
+.popup-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+}
+.popup-overlay.show { display: flex; }
+.popup-box {
+  background: #fff;
+  border-radius: 24px;
+  padding: 32px 24px;
+  text-align: center;
+  max-width: 320px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(232,67,147,0.3);
+  animation: popIn 0.3s ease;
+}
+@keyframes popIn {
+  from { transform: scale(0.7); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.popup-emoji { font-size: 3.5rem; display: block; margin-bottom: 10px; }
+.popup-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.6rem;
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+.popup-score { font-size: 1.1rem; font-weight: 800; color: var(--text); margin-bottom: 8px; }
+.popup-msg { font-size: 0.9rem; color: var(--text-light); margin-bottom: 20px; }
+.popup-close {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 28px;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* PERSON MATCHING */
+.person-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.person-card {
+  background: linear-gradient(135deg, #fff0fa, #f3e8ff);
+  border: 2px solid #e0d4f0;
+  border-radius: 12px;
+  padding: 10px;
+  font-size: 0.82rem;
+  text-align: center;
+}
+.person-card strong { display: block; font-family: 'Fredoka One', cursive; color: var(--primary); font-size: 0.95rem; margin-bottom: 4px; }
+.person-card span { color: var(--text-light); font-size: 0.78rem; line-height: 1.4; }
+
+/* BODY DIAGRAM */
+.body-diagram {
+  text-align: center;
+  margin-bottom: 16px;
+  font-size: 5rem;
+  line-height: 1;
+}
+
+/* Sentence highlight */
+.sentence-box {
+  background: #fff5f9;
+  border-left: 4px solid var(--secondary);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 10px;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+@media (max-width: 480px) {
+  .header h1 { font-size: 1.6rem; }
+  .vocab-grid { grid-template-columns: repeat(2, 1fr); }
+  .quiz-choices { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🫀 Body Parts</h1>
+  <p>Cơ Thể Con Người</p>
+</div>
+
+<div class="speed-bar">
+  <span style="font-weight:700;font-size:0.85rem;color:var(--text-light);align-self:center">🔊 Tốc độ:</span>
+  <button class="speed-btn" onclick="setSpeed(0.7,this)">🐢 Chậm</button>
+  <button class="speed-btn active" onclick="setSpeed(1.0,this)">🚶 Bình thường</button>
+  <button class="speed-btn" onclick="setSpeed(1.3,this)">🏃 Nhanh</button>
+</div>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('theory',this)">📖 Lý Thuyết</button>
+  <button class="tab-btn" onclick="showTab('ex1',this)">✏️ BT1 Sắp xếp</button>
+  <button class="tab-btn" onclick="showTab('ex2',this)">🖼️ BT2 Nhìn tranh</button>
+  <button class="tab-btn" onclick="showTab('ex3',this)">👤 BT3 Mô tả người</button>
+  <button class="tab-btn" onclick="showTab('ex4',this)">🔗 BT4 Nối bộ phận</button>
+  <button class="tab-btn" onclick="showTab('ex5',this)">📖 BT5 Đọc hiểu</button>
+</div>
+
+<!-- ===== TAB 1: LÝ THUYẾT ===== -->
+<div id="theory" class="tab-content active">
+
+  <div class="rule-box">
+    <h3>📌 Giới thiệu chủ đề</h3>
+    <p>Học các bộ phận cơ thể con người bằng tiếng Anh. Biết tên từng bộ phận giúp em mô tả người, nói về sức khỏe và hiểu bài học tiếng Anh tốt hơn! 💪</p>
+  </div>
+
+  <div class="vocab-grid">
+    <!-- HEAD AREA -->
+    <div class="vocab-card">
+      <span class="vocab-emoji">😮</span>
+      <span class="vocab-word">Face</span>
+      <span class="vocab-ipa">/feɪs/</span>
+      <span class="vocab-viet">Mặt</span>
+      <button class="speak-btn" onclick="speak('face')">🔊 Nghe</button>
+    </div>
+    <div class="vocab-card">
+      <span class="vocab-emoji">👁️</span>
+      <span class="vocab-word">Eyes</span>
+      <span class="vocab-ipa">/aɪz/</span>
+      <span class="vocab-viet">Mắt</span>
+      <button class="speak-btn" onclick="speak('eyes')">🔊 Nghe</button>
+    </div>
+    <div class="vocab-card">
+      <span class="vocab-emoji">👃</span>
+      <span class="vocab-word">Nose</span>
+      <span class="vocab-ipa">/noʊz/</span>
+      <span class="vocab-viet">Mũi</span>
+      <button class="speak-btn" onclick="speak('nose')">🔊 Nghe</button>
+    </div>
+    <div class="vocab-card">
+      <span class="vocab-emoji">👄</span>
+      <span class="vocab-word">Mouth</span>
+      <span class="vocab-ipa">/maʊθ/</span>
+      <span class="vocab-viet">Miệng</span>
+      <button class="speak-btn" onclick="speak('mouth')">🔊 Nghe</button>
+    </div>
+    <div class="vocab-card">
+      <span class="vocab-emoji">👂</span>
+      <span class="vocab-word">Ear</span>
+      <span class="vocab-ipa">/ɪər/</span>
+      <span class="vocab-viet">Tai</span>
+      <button class="speak-btn" onclick="speak('ear')">🔊 Nghe</button>
+    </div>
+    <div class="vocab-card">
+      <span class="vocab-emoji">💆</span>
+      <span class="vocab-word">Head</span>
+      <span class="vocab-ipa">/hɛd/</span>
+      <span class="vocab-viet">Đầu</span>
+      <button class="speak-btn" onclick="speak('head')">🔊 Nghe</button>
+    </div>
+    <div class="vocab-card">
+      <span class="vocab-emoji">💇</span>
+      <span class="vocab-word">Hair</span>
+      <span class="vocab-ipa">/hɛər/</span>
+      <span class="vocab-viet">Tóc</span>
+      <button class="speak-btn" onclick="speak('hair')">🔊 Nghe</button>
+    </div>
+    <!-- BODY -->
+    <div class="vocab-card">
+      <span class="vocab-emoji">🦒</span>
+      <span class="vocab-word">Neck</span>
+      <span class="vocab-ipa">/nɛk/</span>
+      <span class="vocab-viet">Cổ</span>
+      <button class="speak-btn" onclick="speak('neck')">🔊 Nghe</button>
+    </div>
+    <div class="vocab-card">
+      <span class="vocab-emoji">🫁</span>
+      <span class="vocab-word">Back</span>
+      <span class="vocab-ipa">/bæk/</span>
+      <span class="vocab-viet">Lưng</span>
+      <button class="speak-btn" onclick="speak('back')">🔊 Nghe</button>
+    </div>
+    <!-- ARMS -->
+    <div class="vocab-card">
+      <span class="vocab-emoji">💪</span>
+      <span class="vocab-word">Arm</span>
+      <span class="vocab-ipa">/ɑːrm/</span>
+      <span class="vocab-viet">Cánh tay</span>
+      <button class="speak-btn" onclick="speak('arm')">🔊 Nghe</button>
+    </div>
+    <div class="vocab-card">
+      <span class="vocab-emoji">🤚</span>
+      <span class="vocab-word">Hand</span>
+      <span class="vocab-ipa">/hænd/</span>
+      <span class="vocab-viet">Bàn tay</span>
+      <button class="speak-btn" onclick="speak('hand')">🔊 Nghe</button>
+    </div>
+    <div class="vocab-card">
+      <span class="vocab-emoji">☝️</span>
+      <span class="vocab-word">Finger</span>
+      <span class="vocab-ipa">/ˈfɪŋɡər/</span>
+      <span class="vocab-viet">Ngón tay</span>
+      <button class="speak-btn" onclick="speak('finger')">🔊 Nghe</button>
+    </div>
+    <!-- LEGS -->
+    <div class="vocab-card">
+      <span class="vocab-emoji">🦵</span>
+      <span class="vocab-word">Leg</span>
+      <span class="vocab-ipa">/lɛɡ/</span>
+      <span class="vocab-viet">Chân</span>
+      <button class="speak-btn" onclick="speak('leg')">🔊 Nghe</button>
+    </div>
+    <div class="vocab-card">
+      <span class="vocab-emoji">🦶</span>
+      <span class="vocab-word">Foot / Feet</span>
+      <span class="vocab-ipa">/fʊt/ /fiːt/</span>
+      <span class="vocab-viet">Bàn chân / Đôi bàn chân</span>
+      <button class="speak-btn" onclick="speak('foot')">🔊 Nghe</button>
+    </div>
+  </div>
+
+  <div class="rule-box">
+    <h3>📐 Số ít – Số nhiều đặc biệt</h3>
+    <ul>
+      <li>1 <strong>foot</strong> → 2 <strong>feet</strong> (bàn chân)</li>
+      <li>1 <strong>tooth</strong> → 2 <strong>teeth</strong> (chiếc răng)</li>
+      <li>1 <strong>eye</strong> → 2 <strong>eyes</strong> (mắt)</li>
+      <li>1 <strong>ear</strong> → 2 <strong>ears</strong> (tai)</li>
+      <li>1 <strong>arm</strong> → 2 <strong>arms</strong> (cánh tay)</li>
+      <li>1 <strong>leg</strong> → 2 <strong>legs</strong> (chân)</li>
+    </ul>
+  </div>
+
+  <div class="rule-box">
+    <h3>🗂️ Phân loại bộ phận cơ thể</h3>
+    <table class="body-table">
+      <tr><th>Vùng đầu mặt</th><th>Thân người</th><th>Tay & chân</th></tr>
+      <tr><td>head 💆, face 😮</td><td>neck 🦒, back 🫁</td><td>arm 💪, hand 🤚</td></tr>
+      <tr><td>hair 💇, eyes 👁️</td><td>body 🫀</td><td>finger ☝️, leg 🦵</td></tr>
+      <tr><td>nose 👃, mouth 👄</td><td></td><td>foot/feet 🦶</td></tr>
+      <tr><td>ear 👂</td><td></td><td></td></tr>
+    </table>
+  </div>
+
+  <!-- QUIZ NGHE -->
+  <div class="quiz-section">
+    <h3>🎧 Quiz Nghe – Nghe từ & chọn nghĩa đúng</h3>
+    <div class="quiz-progress">
+      <div class="quiz-progress-bar" id="quiz-bar" style="width:0%"></div>
+    </div>
+    <div class="quiz-listen-card">
+      <div class="quiz-counter" id="quiz-counter">Câu 1 / 12</div>
+      <button id="listen-btn" onclick="listenQuizWord()">🔊 Bấm để nghe</button>
+      <div class="quiz-choices" id="quiz-choices"></div>
+      <div id="quiz-result" style="margin-top:12px;font-weight:800;font-size:1rem;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TAB 2: BT1 SẮP XẾP CHỮ CÁI ===== -->
+<div id="ex1" class="tab-content">
+  <div class="exercise-card">
+    <div class="exercise-title">✏️ Bài 1 – Sắp xếp chữ cái thành tên bộ phận cơ thể</div>
+    <p style="font-size:0.85rem;color:var(--text-light);margin-bottom:16px;">Sắp xếp những chữ cái sau thành tên 1 bộ phận trên cơ thể mà bạn đã học:</p>
+
+    <div class="exercise-item">
+      <strong>1.</strong> <span class="anagram-label">E / C / A / F</span> → 
+      <input class="anagram-input" id="a1" placeholder="...">
+      <span class="result-badge" id="r-a1"></span>
+    </div>
+    <div class="exercise-item">
+      <strong>2.</strong> <span class="anagram-label">U / T / M / O / H</span> → 
+      <input class="anagram-input" id="a2" placeholder="...">
+      <span class="result-badge" id="r-a2"></span>
+    </div>
+    <div class="exercise-item">
+      <strong>3.</strong> <span class="anagram-label">O / N / S / E</span> → 
+      <input class="anagram-input" id="a3" placeholder="...">
+      <span class="result-badge" id="r-a3"></span>
+    </div>
+    <div class="exercise-item">
+      <strong>4.</strong> <span class="anagram-label">A / N / D / H</span> → 
+      <input class="anagram-input" id="a4" placeholder="...">
+      <span class="result-badge" id="r-a4"></span>
+    </div>
+    <div class="exercise-item">
+      <strong>5.</strong> <span class="anagram-label">K / B / C / A</span> → 
+      <input class="anagram-input" id="a5" placeholder="...">
+      <span class="result-badge" id="r-a5"></span>
+    </div>
+
+    <div class="score-bar-wrap" id="sb-ex1">
+      <div class="score-bar-label" id="sbl-ex1"></div>
+      <div class="score-bar"><div class="score-bar-fill" id="sbf-ex1"></div></div>
+    </div>
+    <button class="btn-check" onclick="checkAnagram()">✅ Chấm điểm</button>
+    <button class="btn-reset" onclick="resetAnagram()">🔄 Làm lại</button>
+  </div>
+</div>
+
+<!-- ===== TAB 3: BT2 NHÌN TRANH ===== -->
+<div id="ex2" class="tab-content">
+  <div class="exercise-card">
+    <div class="exercise-title">🖼️ Bài 2 – Nhìn tranh và chọn đáp án đúng</div>
+    <p style="font-size:0.85rem;color:var(--text-light);margin-bottom:16px;">Nhìn tranh và chọn đáp án đúng:</p>
+
+    <!-- Q1: eye -->
+    <div class="exercise-item" id="pic1">
+      <div style="font-size:4rem;text-align:center;background:#f8f3ff;border-radius:12px;padding:16px;margin-bottom:8px;">👁️</div>
+      <strong>1.</strong> Đây là bộ phận gì?
+      <div style="margin-top:8px;">
+        <label class="mcq-option"><input type="radio" name="pic1" value="eye"> A. eye</label>
+        <label class="mcq-option"><input type="radio" name="pic1" value="tooth"> B. tooth</label>
+        <label class="mcq-option"><input type="radio" name="pic1" value="ear"> C. ear</label>
+        <label class="mcq-option"><input type="radio" name="pic1" value="back"> D. back</label>
+      </div>
+      <span class="result-badge" id="r-pic1"></span>
+    </div>
+
+    <!-- Q2: arm -->
+    <div class="exercise-item" id="pic2">
+      <div style="font-size:4rem;text-align:center;background:#f8f3ff;border-radius:12px;padding:16px;margin-bottom:8px;">💪</div>
+      <strong>2.</strong> Đây là bộ phận gì?
+      <div style="margin-top:8px;">
+        <label class="mcq-option"><input type="radio" name="pic2" value="hair"> A. hair</label>
+        <label class="mcq-option"><input type="radio" name="pic2" value="arm"> B. arm</label>
+        <label class="mcq-option"><input type="radio" name="pic2" value="teeth"> C. teeth</label>
+        <label class="mcq-option"><input type="radio" name="pic2" value="head"> D. head</label>
+      </div>
+      <span class="result-badge" id="r-pic2"></span>
+    </div>
+
+    <!-- Q3: neck -->
+    <div class="exercise-item" id="pic3">
+      <div style="font-size:4rem;text-align:center;background:#f8f3ff;border-radius:12px;padding:16px;margin-bottom:8px;">🦒</div>
+      <strong>3.</strong> Mũi tên chỉ vào bộ phận nào? (Cổ con hươu)
+      <div style="margin-top:8px;">
+        <label class="mcq-option"><input type="radio" name="pic3" value="neck"> A. neck</label>
+        <label class="mcq-option"><input type="radio" name="pic3" value="leg"> B. leg</label>
+        <label class="mcq-option"><input type="radio" name="pic3" value="foot"> C. foot</label>
+        <label class="mcq-option"><input type="radio" name="pic3" value="back"> D. back</label>
+      </div>
+      <span class="result-badge" id="r-pic3"></span>
+    </div>
+
+    <!-- Q4: hair -->
+    <div class="exercise-item" id="pic4">
+      <div style="font-size:4rem;text-align:center;background:#f8f3ff;border-radius:12px;padding:16px;margin-bottom:8px;">💇</div>
+      <strong>4.</strong> Đây là bộ phận gì?
+      <div style="margin-top:8px;">
+        <label class="mcq-option"><input type="radio" name="pic4" value="head"> A. head</label>
+        <label class="mcq-option"><input type="radio" name="pic4" value="ear"> B. ear</label>
+        <label class="mcq-option"><input type="radio" name="pic4" value="hand"> C. hand</label>
+        <label class="mcq-option"><input type="radio" name="pic4" value="hair"> D. hair</label>
+      </div>
+      <span class="result-badge" id="r-pic4"></span>
+    </div>
+
+    <!-- Q5: fingers -->
+    <div class="exercise-item" id="pic5">
+      <div style="font-size:4rem;text-align:center;background:#f8f3ff;border-radius:12px;padding:16px;margin-bottom:8px;">🖐️</div>
+      <strong>5.</strong> Mũi tên chỉ vào ngón tay. Đây là gì?
+      <div style="margin-top:8px;">
+        <label class="mcq-option"><input type="radio" name="pic5" value="hand"> A. hand</label>
+        <label class="mcq-option"><input type="radio" name="pic5" value="fingers"> B. fingers</label>
+        <label class="mcq-option"><input type="radio" name="pic5" value="arm"> C. arm</label>
+        <label class="mcq-option"><input type="radio" name="pic5" value="toes"> D. toes</label>
+      </div>
+      <span class="result-badge" id="r-pic5"></span>
+    </div>
+
+    <!-- Q6: head -->
+    <div class="exercise-item" id="pic6">
+      <div style="font-size:4rem;text-align:center;background:#f8f3ff;border-radius:12px;padding:16px;margin-bottom:8px;">🧠</div>
+      <strong>6.</strong> Bộ phận chứa não là gì?
+      <div style="margin-top:8px;">
+        <label class="mcq-option"><input type="radio" name="pic6" value="leg"> A. leg</label>
+        <label class="mcq-option"><input type="radio" name="pic6" value="back"> B. back</label>
+        <label class="mcq-option"><input type="radio" name="pic6" value="head"> C. head</label>
+        <label class="mcq-option"><input type="radio" name="pic6" value="arm"> D. arm</label>
+      </div>
+      <span class="result-badge" id="r-pic6"></span>
+    </div>
+
+    <!-- Q7: leg -->
+    <div class="exercise-item" id="pic7">
+      <div style="font-size:4rem;text-align:center;background:#f8f3ff;border-radius:12px;padding:16px;margin-bottom:8px;">🦵</div>
+      <strong>7.</strong> Đây là bộ phận gì?
+      <div style="margin-top:8px;">
+        <label class="mcq-option"><input type="radio" name="pic7" value="leg"> A. leg</label>
+        <label class="mcq-option"><input type="radio" name="pic7" value="finger"> B. finger</label>
+        <label class="mcq-option"><input type="radio" name="pic7" value="hand"> C. hand</label>
+        <label class="mcq-option"><input type="radio" name="pic7" value="hair"> D. hair</label>
+      </div>
+      <span class="result-badge" id="r-pic7"></span>
+    </div>
+
+    <!-- Q8: feet -->
+    <div class="exercise-item" id="pic8">
+      <div style="font-size:4rem;text-align:center;background:#f8f3ff;border-radius:12px;padding:16px;margin-bottom:8px;">🦶🦶</div>
+      <strong>8.</strong> Đây là bộ phận gì? (có 2 cái)
+      <div style="margin-top:8px;">
+        <label class="mcq-option"><input type="radio" name="pic8" value="hands"> A. hands</label>
+        <label class="mcq-option"><input type="radio" name="pic8" value="teeth"> B. teeth</label>
+        <label class="mcq-option"><input type="radio" name="pic8" value="arms"> C. arms</label>
+        <label class="mcq-option"><input type="radio" name="pic8" value="feet"> D. feet</label>
+      </div>
+      <span class="result-badge" id="r-pic8"></span>
+    </div>
+
+    <!-- Q9: ear -->
+    <div class="exercise-item" id="pic9">
+      <div style="font-size:4rem;text-align:center;background:#f8f3ff;border-radius:12px;padding:16px;margin-bottom:8px;">👂</div>
+      <strong>9.</strong> Đây là bộ phận gì?
+      <div style="margin-top:8px;">
+        <label class="mcq-option"><input type="radio" name="pic9" value="eye"> A. eye</label>
+        <label class="mcq-option"><input type="radio" name="pic9" value="nose"> B. nose</label>
+        <label class="mcq-option"><input type="radio" name="pic9" value="ear"> C. ear</label>
+        <label class="mcq-option"><input type="radio" name="pic9" value="mouth"> D. mouth</label>
+      </div>
+      <span class="result-badge" id="r-pic9"></span>
+    </div>
+
+    <div class="score-bar-wrap" id="sb-ex2">
+      <div class="score-bar-label" id="sbl-ex2"></div>
+      <div class="score-bar"><div class="score-bar-fill" id="sbf-ex2"></div></div>
+    </div>
+    <button class="btn-check" onclick="checkPictures()">✅ Chấm điểm</button>
+    <button class="btn-reset" onclick="resetPictures()">🔄 Làm lại</button>
+  </div>
+</div>
+
+<!-- ===== TAB 4: BT3 MÔ TẢ NGƯỜI ===== -->
+<div id="ex3" class="tab-content">
+  <div class="exercise-card">
+    <div class="exercise-title">👤 Bài 3 – Đọc mô tả và chọn tên đúng</div>
+    <p style="font-size:0.85rem;color:var(--text-light);margin-bottom:12px;">Đọc mô tả về từng người và chọn tên đúng:</p>
+
+    <div class="person-cards">
+      <div class="person-card"><strong>Marianne</strong><span>Old, a little fat, brown skin, square face, long gray hair, blue eyes, wears glasses</span></div>
+      <div class="person-card"><strong>Will</strong><span>Young, slim, fair skin, short red hair, round eyes, straight nose, wears a shirt</span></div>
+      <div class="person-card"><strong>Katy</strong><span>Over 30, short straight blonde hair, black eyes, likes playing sports</span></div>
+      <div class="person-card"><strong>James</strong><span>Fat, fair skin, round face, long blonde hair with a bun, blue eyes, straight nose</span></div>
+      <div class="person-card"><strong>Mike</strong><span>Thin, tan skin, long face, no hair, brown round eyes, large ears</span></div>
+      <div class="person-card"><strong>Maia</strong><span>Fat, black skin, round face, long black hair, green round eyes</span></div>
+    </div>
+
+    <div class="exercise-item">
+      <div class="sentence-box">1. She is old and a little fat. She has brown skin and a square face. Her hair is long and gray. She has blue eyes. She wears glasses.</div>
+      → 
+      <select class="match-select" id="p1">
+        <option value="">-- Chọn tên --</option>
+        <option>Marianne</option><option>Will</option><option>Katy</option>
+        <option>James</option><option>Mike</option><option>Maia</option>
+      </select>
+      <span class="result-badge" id="r-p1"></span>
+    </div>
+    <div class="exercise-item">
+      <div class="sentence-box">2. He is young and slim. He has fair skin. His hair is short and red. He has round eyes. He has a straight nose. He wears a shirt.</div>
+      → 
+      <select class="match-select" id="p2">
+        <option value="">-- Chọn tên --</option>
+        <option>Marianne</option><option>Will</option><option>Katy</option>
+        <option>James</option><option>Mike</option><option>Maia</option>
+      </select>
+      <span class="result-badge" id="r-p2"></span>
+    </div>
+    <div class="exercise-item">
+      <div class="sentence-box">3. She is over 30 years old. Her hair is short, straight and blonde. She has black eyes. She likes playing sports.</div>
+      → 
+      <select class="match-select" id="p3">
+        <option value="">-- Chọn tên --</option>
+        <option>Marianne</option><option>Will</option><option>Katy</option>
+        <option>James</option><option>Mike</option><option>Maia</option>
+      </select>
+      <span class="result-badge" id="r-p3"></span>
+    </div>
+    <div class="exercise-item">
+      <div class="sentence-box">4. He is fat. He has fair skin and a round face. His hair is long and blonde with a bun. He has blue eyes. He has a straight nose.</div>
+      → 
+      <select class="match-select" id="p4">
+        <option value="">-- Chọn tên --</option>
+        <option>Marianne</option><option>Will</option><option>Katy</option>
+        <option>James</option><option>Mike</option><option>Maia</option>
+      </select>
+      <span class="result-badge" id="r-p4"></span>
+    </div>
+    <div class="exercise-item">
+      <div class="sentence-box">5. He is thin. He has tan skin. He has a long face. He has no hair. He has brown and round eyes. He has large ears.</div>
+      → 
+      <select class="match-select" id="p5">
+        <option value="">-- Chọn tên --</option>
+        <option>Marianne</option><option>Will</option><option>Katy</option>
+        <option>James</option><option>Mike</option><option>Maia</option>
+      </select>
+      <span class="result-badge" id="r-p5"></span>
+    </div>
+    <div class="exercise-item">
+      <div class="sentence-box">6. She is fat. She has black skin and a round face. Her hair is long and black. She has green and round eyes.</div>
+      → 
+      <select class="match-select" id="p6">
+        <option value="">-- Chọn tên --</option>
+        <option>Marianne</option><option>Will</option><option>Katy</option>
+        <option>James</option><option>Mike</option><option>Maia</option>
+      </select>
+      <span class="result-badge" id="r-p6"></span>
+    </div>
+
+    <div class="score-bar-wrap" id="sb-ex3">
+      <div class="score-bar-label" id="sbl-ex3"></div>
+      <div class="score-bar"><div class="score-bar-fill" id="sbf-ex3"></div></div>
+    </div>
+    <button class="btn-check" onclick="checkPersons()">✅ Chấm điểm</button>
+    <button class="btn-reset" onclick="resetPersons()">🔄 Làm lại</button>
+  </div>
+</div>
+
+<!-- ===== TAB 5: BT4 NỐI BỘ PHẬN VỚI HOẠT ĐỘNG ===== -->
+<div id="ex4" class="tab-content">
+  <div class="exercise-card">
+    <div class="exercise-title">🔗 Bài 4 – Nối bộ phận cơ thể với hoạt động</div>
+    <p style="font-size:0.85rem;color:var(--text-light);margin-bottom:16px;">Bộ phận nào trên cơ thể được dùng để thực hiện các hoạt động dưới đây? Nối tên bộ phận trên cơ thể với hoạt động phù hợp nhất:</p>
+
+    <div class="exercise-item">
+      <div class="sentence-box">1. I wash my face and brush my teeth every morning.</div>
+      → <select class="match-select" id="b1">
+        <option value="">-- Chọn --</option>
+        <option>hands</option><option>mouth</option><option>feet</option>
+        <option>arms</option><option>eyes</option><option>fingers</option>
+        <option>legs</option><option>ears</option><option>nose</option><option>teeth</option>
+      </select>
+      <span class="result-badge" id="r-b1"></span>
+    </div>
+    <div class="exercise-item">
+      <div class="sentence-box">2. I eat eggs for breakfast.</div>
+      → <select class="match-select" id="b2">
+        <option value="">-- Chọn --</option>
+        <option>hands</option><option>mouth</option><option>feet</option>
+        <option>arms</option><option>eyes</option><option>fingers</option>
+        <option>legs</option><option>ears</option><option>nose</option><option>teeth</option>
+      </select>
+      <span class="result-badge" id="r-b2"></span>
+    </div>
+    <div class="exercise-item">
+      <div class="sentence-box">3. I wear my shoes.</div>
+      → <select class="match-select" id="b3">
+        <option value="">-- Chọn --</option>
+        <option>hands</option><option>mouth</option><option>feet</option>
+        <option>arms</option><option>eyes</option><option>fingers</option>
+        <option>legs</option><option>ears</option><option>nose</option><option>teeth</option>
+      </select>
+      <span class="result-badge" id="r-b3"></span>
+    </div>
+    <div class="exercise-item">
+      <div class="sentence-box">4. My mother hugs me before I leave.</div>
+      → <select class="match-select" id="b4">
+        <option value="">-- Chọn --</option>
+        <option>hands</option><option>mouth</option><option>feet</option>
+        <option>arms</option><option>eyes</option><option>fingers</option>
+        <option>legs</option><option>ears</option><option>nose</option><option>teeth</option>
+      </select>
+      <span class="result-badge" id="r-b4"></span>
+    </div>
+    <div class="exercise-item">
+      <div class="sentence-box">5. I see my best friends at school every day.</div>
+      → <select class="match-select" id="b5">
+        <option value="">-- Chọn --</option>
+        <option>hands</option><option>mouth</option><option>feet</option>
+        <option>arms</option><option>eyes</option><option>fingers</option>
+        <option>legs</option><option>ears</option><option>nose</option><option>teeth</option>
+      </select>
+      <span class="result-badge" id="r-b5"></span>
+    </div>
+    <div class="exercise-item">
+      <div class="sentence-box">6. I play the piano in the music club.</div>
+      → <select class="match-select" id="b6">
+        <option value="">-- Chọn --</option>
+        <option>hands</option><option>mouth</option><option>feet</option>
+        <option>arms</option><option>eyes</option><option>fingers</option>
+        <option>legs</option><option>ears</option><option>nose</option><option>teeth</option>
+      </select>
+      <span class="result-badge" id="r-b6"></span>
+    </div>
+    <div class="exercise-item">
+      <div class="sentence-box">7. I run around the gym in the PE lessons.</div>
+      → <select class="match-select" id="b7">
+        <option value="">-- Chọn --</option>
+        <option>hands</option><option>mouth</option><option>feet</option>
+        <option>arms</option><option>eyes</option><option>fingers</option>
+        <option>legs</option><option>ears</option><option>nose</option><option>teeth</option>
+      </select>
+      <span class="result-badge" id="r-b7"></span>
+    </div>
+    <div class="exercise-item">
+      <div class="sentence-box">8. I listen to music when I come home.</div>
+      → <select class="match-select" id="b8">
+        <option value="">-- Chọn --</option>
+        <option>hands</option><option>mouth</option><option>feet</option>
+        <option>arms</option><option>eyes</option><option>fingers</option>
+        <option>legs</option><option>ears</option><option>nose</option><option>teeth</option>
+      </select>
+      <span class="result-badge" id="r-b8"></span>
+    </div>
+    <div class="exercise-item">
+      <div class="sentence-box">9. I smell flowers in the garden.</div>
+      → <select class="match-select" id="b9">
+        <option value="">-- Chọn --</option>
+        <option>hands</option><option>mouth</option><option>feet</option>
+        <option>arms</option><option>eyes</option><option>fingers</option>
+        <option>legs</option><option>ears</option><option>nose</option><option>teeth</option>
+      </select>
+      <span class="result-badge" id="r-b9"></span>
+    </div>
+    <div class="exercise-item">
+      <div class="sentence-box">10. I play with my little sister and she sometimes bites me.</div>
+      → <select class="match-select" id="b10">
+        <option value="">-- Chọn --</option>
+        <option>hands</option><option>mouth</option><option>feet</option>
+        <option>arms</option><option>eyes</option><option>fingers</option>
+        <option>legs</option><option>ears</option><option>nose</option><option>teeth</option>
+      </select>
+      <span class="result-badge" id="r-b10"></span>
+    </div>
+
+    <div class="score-bar-wrap" id="sb-ex4">
+      <div class="score-bar-label" id="sbl-ex4"></div>
+      <div class="score-bar"><div class="score-bar-fill" id="sbf-ex4"></div></div>
+    </div>
+    <button class="btn-check" onclick="checkBodyParts()">✅ Chấm điểm</button>
+    <button class="btn-reset" onclick="resetBodyParts()">🔄 Làm lại</button>
+  </div>
+</div>
+
+<!-- ===== TAB 6: BT5 ĐỌC HIỂU ===== -->
+<div id="ex5" class="tab-content">
+  <div class="exercise-card">
+    <div class="exercise-title">📖 Bài 5 – Đọc hiểu đoạn văn</div>
+
+    <div class="rule-box" style="margin-bottom:16px;">
+      <h3>📄 Đọc đoạn văn sau:</h3>
+      <p style="line-height:1.8;font-size:0.88rem;">
+        Ms. Katy is James' teacher. She is beautiful and kind. She always wears beautiful clothes and has long, black hair. She has big eyes and a small nose.
+        <br><br>
+        Helen has long brown hair and blue eyes. She has a straight nose. She is 15 years old and she wants to become a doctor.
+        <br><br>
+        Eric is a farmer. He gets up early and works on the farm. He is very strong.
+      </p>
+    </div>
+
+    <p style="font-size:0.85rem;color:var(--text-light);margin-bottom:14px;font-weight:700;">Trả lời các câu hỏi sau:</p>
+
+    <div class="exercise-item" id="rq1">
+      <strong>1.</strong> Ms. Katy is _____.
+      <div style="margin-top:8px;">
+        <label class="mcq-option"><input type="radio" name="rq1" value="a"> A. Alice's sister.</label>
+        <label class="mcq-option"><input type="radio" name="rq1" value="b"> B. James' teacher.</label>
+        <label class="mcq-option"><input type="radio" name="rq1" value="c"> C. Chris' mom.</label>
+      </div>
+      <span class="result-badge" id="r-rq1"></span>
+    </div>
+
+    <div class="exercise-item" id="rq2">
+      <strong>2.</strong> Helen has short brown hair and black eyes. (Đúng hay sai?)
+      <div style="margin-top:8px;">
+        <label class="mcq-option"><input type="radio" name="rq2" value="a"> A. Đúng</label>
+        <label class="mcq-option"><input type="radio" name="rq2" value="b"> B. Sai</label>
+      </div>
+      <span class="result-badge" id="r-rq2"></span>
+    </div>
+
+    <div class="exercise-item" id="rq3">
+      <strong>3.</strong> Who is a farmer?
+      <div style="margin-top:8px;">
+        <label class="mcq-option"><input type="radio" name="rq3" value="a"> A. Katy</label>
+        <label class="mcq-option"><input type="radio" name="rq3" value="b"> B. Helen</label>
+        <label class="mcq-option"><input type="radio" name="rq3" value="c"> C. Eric</label>
+      </div>
+      <span class="result-badge" id="r-rq3"></span>
+    </div>
+
+    <div class="exercise-item" id="rq4">
+      <strong>4.</strong> Who often wears beautiful clothes?
+      <div style="margin-top:8px;">
+        <label class="mcq-option"><input type="radio" name="rq4" value="a"> A. Katy</label>
+        <label class="mcq-option"><input type="radio" name="rq4" value="b"> B. Helen</label>
+        <label class="mcq-option"><input type="radio" name="rq4" value="c"> C. Eric</label>
+      </div>
+      <span class="result-badge" id="r-rq4"></span>
+    </div>
+
+    <div class="exercise-item" id="rq5">
+      <strong>5.</strong> Who wants to become a doctor?
+      <div style="margin-top:8px;">
+        <label class="mcq-option"><input type="radio" name="rq5" value="a"> A. Katy</label>
+        <label class="mcq-option"><input type="radio" name="rq5" value="b"> B. Helen</label>
+        <label class="mcq-option"><input type="radio" name="rq5" value="c"> C. Eric</label>
+      </div>
+      <span class="result-badge" id="r-rq5"></span>
+    </div>
+
+    <div class="score-bar-wrap" id="sb-ex5">
+      <div class="score-bar-label" id="sbl-ex5"></div>
+      <div class="score-bar"><div class="score-bar-fill" id="sbf-ex5"></div></div>
+    </div>
+    <button class="btn-check" onclick="checkReading()">✅ Chấm điểm</button>
+    <button class="btn-reset" onclick="resetReading()">🔄 Làm lại</button>
+  </div>
+</div>
+
+<!-- POPUP -->
+<div class="popup-overlay" id="popup">
+  <div class="popup-box">
+    <span class="popup-emoji" id="popup-emoji"></span>
+    <div class="popup-title" id="popup-title"></div>
+    <div class="popup-score" id="popup-score"></div>
+    <div class="popup-msg" id="popup-msg"></div>
+    <button class="popup-close" onclick="closePopup()">Đóng lại ✕</button>
+  </div>
+</div>
+
+<script>
+// ===== SPEECH =====
+let speechRate = 1.0;
+function setSpeed(rate, btn) {
+  speechRate = rate;
+  document.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+function speak(word) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(word);
+  u.lang = 'en-US';
+  u.rate = speechRate;
+  window.speechSynthesis.speak(u);
+}
+
+// ===== TABS =====
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ===== QUIZ NGHE =====
+const quizData = [
+  { word: 'face', meaning: 'Mặt', wrong: ['Tóc', 'Tai', 'Mũi'] },
+  { word: 'eyes', meaning: 'Mắt', wrong: ['Tai', 'Mũi', 'Miệng'] },
+  { word: 'nose', meaning: 'Mũi', wrong: ['Mắt', 'Tai', 'Miệng'] },
+  { word: 'mouth', meaning: 'Miệng', wrong: ['Mũi', 'Tai', 'Mắt'] },
+  { word: 'ear', meaning: 'Tai', wrong: ['Mắt', 'Miệng', 'Mũi'] },
+  { word: 'head', meaning: 'Đầu', wrong: ['Cổ', 'Lưng', 'Tóc'] },
+  { word: 'hair', meaning: 'Tóc', wrong: ['Đầu', 'Tai', 'Mặt'] },
+  { word: 'neck', meaning: 'Cổ', wrong: ['Đầu', 'Lưng', 'Tay'] },
+  { word: 'arm', meaning: 'Cánh tay', wrong: ['Bàn tay', 'Ngón tay', 'Chân'] },
+  { word: 'hand', meaning: 'Bàn tay', wrong: ['Cánh tay', 'Ngón tay', 'Bàn chân'] },
+  { word: 'leg', meaning: 'Chân', wrong: ['Bàn chân', 'Cánh tay', 'Lưng'] },
+  { word: 'foot', meaning: 'Bàn chân', wrong: ['Chân', 'Ngón tay', 'Bàn tay'] },
+];
+let quizIdx = 0;
+let quizAnswered = false;
+let autoTimer = null;
+
+function renderQuiz() {
+  if (quizIdx >= quizData.length) {
+    document.getElementById('quiz-result').innerHTML = '🎉 Hoàn thành tất cả 12 câu!';
+    document.getElementById('listen-btn').style.display = 'none';
+    document.getElementById('quiz-choices').innerHTML = '';
+    return;
+  }
+  quizAnswered = false;
+  const q = quizData[quizIdx];
+  document.getElementById('quiz-counter').textContent = `Câu ${quizIdx + 1} / 12`;
+  document.getElementById('quiz-bar').style.width = `${(quizIdx / 12) * 100}%`;
+  document.getElementById('quiz-result').textContent = '';
+
+  const choices = shuffle([q.meaning, ...q.wrong]);
+  const div = document.getElementById('quiz-choices');
+  div.innerHTML = '';
+  choices.forEach(c => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-choice';
+    btn.textContent = c;
+    btn.onclick = () => answerQuiz(c, q.meaning, div);
+    div.appendChild(btn);
+  });
+}
+
+function listenQuizWord() {
+  if (quizIdx >= quizData.length) return;
+  speak(quizData[quizIdx].word);
+}
+
+function answerQuiz(chosen, correct, div) {
+  if (quizAnswered) return;
+  quizAnswered = true;
+  Array.from(div.children).forEach(btn => {
+    btn.style.pointerEvents = 'none';
+    if (btn.textContent === correct) btn.classList.add('correct');
+    else if (btn.textContent === chosen && chosen !== correct) btn.classList.add('wrong');
+  });
+  const res = document.getElementById('quiz-result');
+  if (chosen === correct) { res.innerHTML = '✅ Đúng rồi! 🎉'; res.style.color = 'var(--correct)'; }
+  else { res.innerHTML = `❌ Sai! Đáp án đúng: <strong>${correct}</strong>`; res.style.color = 'var(--wrong)'; }
+  autoTimer = setTimeout(() => { quizIdx++; renderQuiz(); }, 1800);
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+renderQuiz();
+
+// ===== POPUP =====
+function showPopup(score, total) {
+  const pct = score / total;
+  let emoji, title, msg;
+  if (pct === 1) { emoji = '🏆'; title = 'Hoàn Hảo!'; msg = 'Xuất sắc! Em đã trả lời đúng tất cả!'; }
+  else if (pct >= 0.7) { emoji = '🎉'; title = 'Tốt Lắm!'; msg = 'Em làm rất tốt! Tiếp tục cố gắng nhé!'; }
+  else { emoji = '💪'; title = 'Thử Lại!'; msg = 'Ôn thêm từ vựng rồi làm lại nhé!'; }
+  document.getElementById('popup-emoji').textContent = emoji;
+  document.getElementById('popup-title').textContent = title;
+  document.getElementById('popup-score').textContent = `${score} / ${total} câu đúng`;
+  document.getElementById('popup-msg').textContent = msg;
+  document.getElementById('popup').classList.add('show');
+}
+function closePopup() { document.getElementById('popup').classList.remove('show'); }
+
+function showScoreBar(barId, labelId, fillId, score, total) {
+  const wrap = document.getElementById(barId);
+  const label = document.getElementById(labelId);
+  const fill = document.getElementById(fillId);
+  wrap.style.display = 'block';
+  label.textContent = `Kết quả: ${score} / ${total} câu đúng`;
+  setTimeout(() => { fill.style.width = `${(score / total) * 100}%`; }, 100);
+}
+
+// ===== BT1: ANAGRAM =====
+const anagramAnswers = { a1: 'face', a2: 'mouth', a3: 'nose', a4: 'hand', a5: 'back' };
+function checkAnagram() {
+  let score = 0;
+  Object.entries(anagramAnswers).forEach(([id, ans]) => {
+    const inp = document.getElementById(id);
+    const badge = document.getElementById('r-' + id);
+    const val = inp.value.trim().toLowerCase();
+    inp.classList.remove('correct', 'wrong');
+    if (val === ans) {
+      inp.classList.add('correct');
+      badge.textContent = '✓';
+      badge.className = 'result-badge correct';
+      score++;
+    } else {
+      inp.classList.add('wrong');
+      badge.textContent = `✗ → ${ans}`;
+      badge.className = 'result-badge wrong';
+    }
+  });
+  showScoreBar('sb-ex1', 'sbl-ex1', 'sbf-ex1', score, 5);
+  showPopup(score, 5);
+}
+function resetAnagram() {
+  Object.keys(anagramAnswers).forEach(id => {
+    document.getElementById(id).value = '';
+    document.getElementById(id).classList.remove('correct', 'wrong');
+    document.getElementById('r-' + id).textContent = '';
+    document.getElementById('r-' + id).className = 'result-badge';
+  });
+  document.getElementById('sb-ex1').style.display = 'none';
+}
+
+// ===== BT2: PICTURES =====
+const picAnswers = { pic1: 'eye', pic2: 'arm', pic3: 'neck', pic4: 'hair', pic5: 'fingers', pic6: 'head', pic7: 'leg', pic8: 'feet', pic9: 'ear' };
+function checkPictures() {
+  let score = 0;
+  Object.entries(picAnswers).forEach(([name, ans]) => {
+    const radios = document.querySelectorAll(`input[name="${name}"]`);
+    const badge = document.getElementById('r-' + name);
+    let chosen = '';
+    radios.forEach(r => { if (r.checked) chosen = r.value; });
+    const labels = document.querySelectorAll(`#${name} .mcq-option`);
+    labels.forEach(l => { l.classList.remove('correct', 'wrong'); });
+    radios.forEach(r => {
+      const lbl = r.closest('.mcq-option');
+      if (r.value === ans) lbl.classList.add('correct');
+      else if (r.checked && r.value !== ans) lbl.classList.add('wrong');
+    });
+    if (chosen === ans) {
+      badge.textContent = '✓'; badge.className = 'result-badge correct'; score++;
+    } else {
+      badge.textContent = `✗ → ${ans}`; badge.className = 'result-badge wrong';
+    }
+  });
+  showScoreBar('sb-ex2', 'sbl-ex2', 'sbf-ex2', score, 9);
+  showPopup(score, 9);
+}
+function resetPictures() {
+  document.querySelectorAll('#ex2 input[type="radio"]').forEach(r => r.checked = false);
+  document.querySelectorAll('#ex2 .mcq-option').forEach(l => l.classList.remove('correct', 'wrong'));
+  Object.keys(picAnswers).forEach(n => { const b = document.getElementById('r-' + n); if (b) { b.textContent = ''; b.className = 'result-badge'; } });
+  document.getElementById('sb-ex2').style.display = 'none';
+}
+
+// ===== BT3: PERSONS =====
+const personAnswers = { p1: 'Marianne', p2: 'Will', p3: 'Katy', p4: 'James', p5: 'Mike', p6: 'Maia' };
+function checkPersons() {
+  let score = 0;
+  Object.entries(personAnswers).forEach(([id, ans]) => {
+    const sel = document.getElementById(id);
+    const badge = document.getElementById('r-' + id);
+    sel.classList.remove('correct', 'wrong');
+    if (sel.value === ans) {
+      sel.classList.add('correct'); badge.textContent = '✓'; badge.className = 'result-badge correct'; score++;
+    } else {
+      sel.classList.add('wrong'); badge.textContent = `✗ → ${ans}`; badge.className = 'result-badge wrong';
+    }
+  });
+  showScoreBar('sb-ex3', 'sbl-ex3', 'sbf-ex3', score, 6);
+  showPopup(score, 6);
+}
+function resetPersons() {
+  Object.keys(personAnswers).forEach(id => {
+    document.getElementById(id).value = '';
+    document.getElementById(id).classList.remove('correct', 'wrong');
+    document.getElementById('r-' + id).textContent = '';
+    document.getElementById('r-' + id).className = 'result-badge';
+  });
+  document.getElementById('sb-ex3').style.display = 'none';
+}
+
+// ===== BT4: BODY PARTS =====
+const bodyAnswers = { b1: 'hands', b2: 'mouth', b3: 'feet', b4: 'arms', b5: 'eyes', b6: 'fingers', b7: 'legs', b8: 'ears', b9: 'nose', b10: 'teeth' };
+function checkBodyParts() {
+  let score = 0;
+  Object.entries(bodyAnswers).forEach(([id, ans]) => {
+    const sel = document.getElementById(id);
+    const badge = document.getElementById('r-' + id);
+    sel.classList.remove('correct', 'wrong');
+    if (sel.value === ans) {
+      sel.classList.add('correct'); badge.textContent = '✓'; badge.className = 'result-badge correct'; score++;
+    } else {
+      sel.classList.add('wrong'); badge.textContent = `✗ → ${ans}`; badge.className = 'result-badge wrong';
+    }
+  });
+  showScoreBar('sb-ex4', 'sbl-ex4', 'sbf-ex4', score, 10);
+  showPopup(score, 10);
+}
+function resetBodyParts() {
+  Object.keys(bodyAnswers).forEach(id => {
+    document.getElementById(id).value = '';
+    document.getElementById(id).classList.remove('correct', 'wrong');
+    document.getElementById('r-' + id).textContent = '';
+    document.getElementById('r-' + id).className = 'result-badge';
+  });
+  document.getElementById('sb-ex4').style.display = 'none';
+}
+
+// ===== BT5: READING =====
+const readingAnswers = { rq1: 'b', rq2: 'b', rq3: 'c', rq4: 'a', rq5: 'b' };
+function checkReading() {
+  let score = 0;
+  Object.entries(readingAnswers).forEach(([name, ans]) => {
+    const radios = document.querySelectorAll(`input[name="${name}"]`);
+    const badge = document.getElementById('r-' + name);
+    let chosen = '';
+    radios.forEach(r => { if (r.checked) chosen = r.value; });
+    radios.forEach(r => {
+      const lbl = r.closest('.mcq-option');
+      lbl.classList.remove('correct', 'wrong');
+      if (r.value === ans) lbl.classList.add('correct');
+      else if (r.checked && r.value !== ans) lbl.classList.add('wrong');
+    });
+    if (chosen === ans) {
+      badge.textContent = '✓'; badge.className = 'result-badge correct'; score++;
+    } else {
+      badge.textContent = '✗'; badge.className = 'result-badge wrong';
+    }
+  });
+  showScoreBar('sb-ex5', 'sbl-ex5', 'sbf-ex5', score, 5);
+  showPopup(score, 5);
+}
+function resetReading() {
+  document.querySelectorAll('#ex5 input[type="radio"]').forEach(r => r.checked = false);
+  document.querySelectorAll('#ex5 .mcq-option').forEach(l => l.classList.remove('correct', 'wrong'));
+  Object.keys(readingAnswers).forEach(n => { const b = document.getElementById('r-' + n); if (b) { b.textContent = ''; b.className = 'result-badge'; } });
+  document.getElementById('sb-ex5').style.display = 'none';
+}
+</script>
+</body>
+</html>

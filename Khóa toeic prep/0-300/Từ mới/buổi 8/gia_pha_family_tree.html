@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gia Phả – Family Tree</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#E11D48;--pri-dark:#BE123C;--secondary:#7C3AED;
+  --acc:#F59E0B;--green:#22c55e;--red:#ef4444;--blue:#2563EB;
+  --pink:#fce7f3;--bg:#FFF1F2;--card:#fff;--text:#1c0a12;--muted:#9d6679;
+  --shadow:0 4px 24px rgba(225,29,72,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+header{
+  background:linear-gradient(135deg,#9F1239 0%,#E11D48 50%,#FB7185 100%);
+  padding:28px 16px 20px;text-align:center;
+  box-shadow:0 4px 20px rgba(225,29,72,.4);position:relative;overflow:hidden;
+}
+header::before{content:'👴 👵 👨 👩 👦 👧 👶 💑 👨‍👩‍👦 🌳';position:absolute;top:8px;left:0;right:0;font-size:1.3rem;letter-spacing:4px;opacity:.22;}
+header h1{font-family:'Baloo 2',cursive;font-size:2.1rem;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.15);position:relative;}
+header p{color:rgba(255,255,255,.88);font-size:.96rem;margin-top:5px;position:relative;}
+
+.tabs{display:flex;justify-content:center;gap:8px;padding:18px 12px 0;flex-wrap:wrap;}
+.tab-btn{padding:8px 16px;border-radius:50px;border:2.5px solid var(--primary);background:#fff;color:var(--primary);font-family:'Nunito',sans-serif;font-size:.85rem;font-weight:800;cursor:pointer;transition:all .2s;}
+.tab-btn.active,.tab-btn:hover{background:var(--primary);color:#fff;box-shadow:0 3px 12px rgba(225,29,72,.35);}
+
+.tab-content{display:none;max-width:920px;margin:0 auto;padding:20px 12px 50px;}
+.tab-content.active{display:block;}
+
+.sc{background:var(--card);border-radius:18px;padding:22px;margin-bottom:18px;box-shadow:var(--shadow);}
+.sc h2{font-family:'Baloo 2',cursive;color:var(--primary);font-size:1.25rem;margin-bottom:13px;display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
+.sc h3{font-family:'Baloo 2',cursive;color:var(--secondary);font-size:1.06rem;margin-bottom:12px;padding-bottom:8px;border-bottom:2px dashed #ede9fe;}
+
+/* VOCAB GRID */
+.vocab-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;}
+.vc{background:linear-gradient(135deg,#fff1f2,#ffe4e6);border-radius:13px;padding:11px 8px 9px;text-align:center;border:1.5px solid #fecdd3;transition:transform .15s,box-shadow .15s;}
+.vc:hover{transform:translateY(-3px);box-shadow:0 5px 14px rgba(225,29,72,.18);}
+.vc .em{font-size:1.75rem;line-height:1;}
+.vc .w{font-size:.85rem;font-weight:900;color:var(--primary);margin-top:4px;}
+.vc .ipa{font-size:.63rem;color:var(--muted);font-style:italic;margin-top:1px;}
+.vc .v{font-size:.73rem;color:#9f1239;margin-top:2px;font-weight:700;}
+.speak-btn{display:inline-flex;align-items:center;justify-content:center;margin-top:5px;background:var(--primary);border:none;border-radius:50%;width:25px;height:25px;cursor:pointer;color:#fff;font-size:.7rem;transition:background .15s,transform .1s;}
+.speak-btn:hover{background:var(--pri-dark);transform:scale(1.12);}
+.speak-btn.playing{background:var(--acc);}
+
+/* FAMILY TREE SVG */
+.tree-wrap{overflow-x:auto;padding:10px 0;}
+
+/* RULE BOX */
+.rule-box{border-left:4px solid var(--primary);border-radius:10px;padding:11px 15px;margin:10px 0;font-size:.88rem;line-height:1.85;background:linear-gradient(135deg,#fff1f2,#ffe4e6);}
+.rule-box strong{color:#9f1239;}
+.rule-box.purple{background:linear-gradient(135deg,#f5f3ff,#ede9fe);border-left-color:#7C3AED;}
+.rule-box.purple strong{color:#4c1d95;}
+
+/* LISTEN */
+.listen-sec{background:var(--card);border-radius:18px;padding:20px;margin-bottom:16px;box-shadow:var(--shadow);}
+.listen-sec h2{font-family:'Baloo 2',cursive;color:#7C3AED;font-size:1.2rem;margin-bottom:11px;}
+.speed-row{display:flex;align-items:center;gap:7px;margin-bottom:11px;flex-wrap:wrap;}
+.speed-row span{font-weight:700;color:var(--muted);font-size:.83rem;}
+.speed-btn{padding:4px 11px;border-radius:20px;border:2px solid #c4b5fd;background:#fff;color:#7C3AED;font-weight:700;font-size:.78rem;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .15s;}
+.speed-btn.active{background:#7C3AED;color:#fff;border-color:#7C3AED;}
+.listen-box{background:linear-gradient(135deg,#f5f3ff,#ede9fe);border-radius:13px;padding:16px;margin-bottom:10px;border:1.5px solid #c4b5fd;}
+.listen-play{display:inline-flex;align-items:center;gap:7px;background:#7C3AED;color:#fff;border:none;border-radius:50px;padding:10px 24px;font-family:'Nunito',sans-serif;font-size:.93rem;font-weight:800;cursor:pointer;box-shadow:0 3px 12px rgba(124,58,237,.28);margin-bottom:12px;transition:background .2s;}
+.listen-play.playing{background:var(--acc);}
+.listen-opts{display:flex;flex-wrap:wrap;gap:7px;}
+.listen-opt{padding:7px 16px;border-radius:50px;border:2.5px solid #c4b5fd;background:#fff;font-family:'Nunito',sans-serif;font-size:.87rem;font-weight:700;cursor:pointer;transition:all .15s;color:#4c1d95;}
+.listen-opt:hover:not(.locked){border-color:#7C3AED;}
+.listen-opt.correct-opt{border-color:var(--green);background:#f0fdf4;color:#166534;}
+.listen-opt.wrong-opt{border-color:var(--red);background:#fef2f2;color:#991b1b;}
+.listen-opt.locked{cursor:default;}
+.listen-fb{margin-top:9px;font-weight:700;font-size:.85rem;min-height:18px;}
+.ls-bar{display:flex;align-items:center;gap:10px;font-weight:700;flex-wrap:wrap;padding-top:10px;}
+.ls-big{font-size:1.6rem;font-weight:900;color:#7C3AED;}
+.prog-wrap{flex:1;min-width:80px;height:8px;background:#ede9fe;border-radius:99px;overflow:hidden;}
+.prog-fill{height:100%;background:#7C3AED;border-radius:99px;transition:width .4s;}
+
+/* MCQ */
+.mcq-item{margin-bottom:14px;}
+.mcq-item .qt{font-weight:700;margin-bottom:8px;line-height:1.5;font-size:.9rem;background:#fff1f2;padding:8px 12px;border-radius:9px;border-left:3px solid var(--primary);}
+.mcq-item .qt .hint{font-size:.75rem;color:var(--muted);font-weight:600;margin-top:3px;font-style:italic;}
+.mcq-options{display:flex;flex-direction:column;gap:5px;}
+.mcq-option{display:flex;align-items:center;gap:8px;padding:7px 12px;border-radius:9px;border:2px solid #e2e8f0;cursor:pointer;transition:all .15s;font-weight:600;user-select:none;font-size:.88rem;}
+.mcq-option:hover{border-color:var(--primary);background:#fff1f2;}
+.mcq-option.correct-ans{border-color:var(--green);background:#f0fdf4;color:#166534;}
+.mcq-option.wrong-ans{border-color:var(--red);background:#fef2f2;color:#991b1b;}
+.mcq-option input[type=radio]{accent-color:var(--primary);width:13px;height:13px;}
+
+/* MATCHING */
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px;}
+.match-col{display:flex;flex-direction:column;gap:6px;}
+.match-item{background:#fff1f2;border:2px solid #fecdd3;border-radius:9px;padding:8px 12px;font-size:.87rem;font-weight:700;color:#9f1239;cursor:pointer;transition:all .15s;user-select:none;}
+.match-item:hover:not(.locked):not(.matched){border-color:var(--primary);background:#ffe4e6;}
+.match-item.selected-left{border-color:var(--acc);background:#fef3c7;color:#92400e;}
+.match-item.selected-right{border-color:var(--acc);background:#fef3c7;color:#92400e;}
+.match-item.matched{border-color:var(--green);background:#f0fdf4;color:#166534;cursor:default;}
+.match-item.wrong-flash{border-color:var(--red);background:#fef2f2;animation:wf .4s;}
+@keyframes wf{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.match-item.locked{cursor:default;}
+
+/* FILL */
+.para-blank{border:none;border-bottom:2px solid var(--primary);background:transparent;font-family:'Nunito',sans-serif;font-size:.9rem;width:110px;outline:none;padding:2px 4px;font-weight:700;color:var(--primary);}
+.para-blank.correct{border-bottom-color:var(--green);color:var(--green);}
+.para-blank.wrong{border-bottom-color:var(--red);color:var(--red);}
+.fb{font-size:.75rem;font-weight:700;margin-left:2px;}
+.fb.correct{color:var(--green);}
+.fb.wrong{color:var(--red);}
+
+/* ANAGRAM */
+.anagram-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;flex-wrap:wrap;}
+.anagram-num{font-weight:900;color:var(--secondary);min-width:22px;padding-top:4px;}
+.anagram-block{flex:1;min-width:200px;}
+.anagram-letters{font-family:monospace;font-size:1rem;font-weight:800;color:var(--secondary);background:#f5f3ff;padding:4px 10px;border-radius:7px;display:inline-block;margin-bottom:5px;letter-spacing:2px;}
+.anagram-hint{font-size:.79rem;color:var(--muted);font-style:italic;margin-bottom:5px;}
+.fill-input{border:2px solid #fecdd3;border-radius:8px;padding:5px 10px;font-family:'Nunito',sans-serif;font-size:.9rem;width:145px;outline:none;transition:border .2s;}
+.fill-input:focus{border-color:var(--primary);}
+.fill-input.correct{border-color:var(--green);background:#f0fdf4;}
+.fill-input.wrong{border-color:var(--red);background:#fef2f2;}
+
+/* MULTI-SELECT */
+.ms-opts{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px;}
+.ms-opt{padding:7px 15px;border-radius:50px;border:2.5px solid #fecdd3;background:#fff;font-family:'Nunito',sans-serif;font-size:.87rem;font-weight:700;cursor:pointer;transition:all .15s;color:#9f1239;}
+.ms-opt.selected{background:#ffe4e6;border-color:var(--primary);}
+.ms-opt.correct-ms{border-color:var(--green);background:#f0fdf4;color:#166534;}
+.ms-opt.wrong-ms{border-color:var(--red);background:#fef2f2;color:#991b1b;}
+.ms-opt.missed-ms{border-color:var(--acc);background:#fefce8;color:#92400e;}
+.ms-opt.locked{cursor:default;}
+
+/* SCORE & BTN */
+.score-bar{background:#fff1f2;border-radius:13px;padding:12px 16px;margin-top:11px;display:flex;align-items:center;gap:12px;font-weight:700;flex-wrap:wrap;border:1.5px solid #fecdd3;}
+.score-num{font-size:1.65rem;font-weight:900;color:var(--primary);}
+.btn{padding:8px 22px;border-radius:50px;border:none;font-family:'Nunito',sans-serif;font-size:.9rem;font-weight:800;cursor:pointer;transition:all .2s;margin-top:11px;}
+.btn-p{background:var(--primary);color:#fff;box-shadow:0 3px 12px rgba(225,29,72,.3);}
+.btn-p:hover{background:var(--pri-dark);transform:translateY(-2px);}
+.btn-s{background:#fff;color:var(--primary);border:2.5px solid var(--primary);}
+.btn-s:hover{background:#fff1f2;}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;}
+
+/* POPUP */
+.result-popup{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.45);z-index:999;align-items:center;justify-content:center;}
+.result-popup.show{display:flex;}
+.result-box{background:#fff;border-radius:22px;padding:34px 40px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.2);animation:popIn .3s ease;max-width:340px;width:90%;}
+@keyframes popIn{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
+.result-box h2{font-family:'Baloo 2',cursive;font-size:1.6rem;color:var(--primary);margin:8px 0 4px;}
+.result-box p{color:var(--muted);font-size:.94rem;margin-bottom:14px;}
+.rs{font-size:2.3rem;font-weight:900;color:var(--secondary);}
+
+/* FAMILY TREE DISPLAY */
+.tree-svg-wrap{background:linear-gradient(135deg,#fdf2f8,#fce7f3);border-radius:14px;padding:16px;border:1.5px solid #fbcfe8;overflow-x:auto;}
+
+@media(max-width:600px){
+  header h1{font-size:1.3rem;}
+  .vocab-grid{grid-template-columns:repeat(2,1fr);}
+  .match-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🌳 Family Tree – Gia Phả</h1>
+  <p>Học từ vựng gia đình · Luyện phát âm · Bài tập</p>
+</header>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('theory',this)">📖 Lý Thuyết</button>
+  <button class="tab-btn" onclick="showTab('ex1',this)">🔤 Bài 1: Sắp xếp chữ</button>
+  <button class="tab-btn" onclick="showTab('ex2',this)">🔗 Bài 2: Nối từ</button>
+  <button class="tab-btn" onclick="showTab('ex3',this)">🌳 Bài 3: Loại gia đình</button>
+  <button class="tab-btn" onclick="showTab('ex4',this)">🔊 Bài 4: Phát âm</button>
+  <button class="tab-btn" onclick="showTab('ex5',this)">✏️ Bài 5: Điền câu</button>
+  <button class="tab-btn" onclick="showTab('ex6',this)">📖 Bài 6: Đọc hiểu</button>
+</div>
+
+<!-- ══════ THEORY ══════ -->
+<div id="theory" class="tab-content active">
+  <div class="sc">
+    <h2>👨‍👩‍👧‍👦 Từ vựng – Thành viên gia đình <small style="font-size:.7rem;color:var(--muted)">(bấm 🔊 nghe)</small></h2>
+    <div class="vocab-grid" id="vocabGrid"></div>
+  </div>
+
+  <div class="sc">
+    <h2>🌳 Sơ đồ cây gia phả</h2>
+    <div class="tree-svg-wrap">
+      <svg viewBox="0 0 700 320" width="100%" style="min-width:520px;font-family:'Nunito',sans-serif;">
+        <!-- Lines -->
+        <line x1="350" y1="60" x2="350" y2="90" stroke="#fecdd3" stroke-width="2"/>
+        <line x1="175" y1="90" x2="525" y2="90" stroke="#fecdd3" stroke-width="2"/>
+        <line x1="175" y1="90" x2="175" y2="120" stroke="#fecdd3" stroke-width="2"/>
+        <line x1="350" y1="90" x2="350" y2="120" stroke="#fecdd3" stroke-width="2"/>
+        <line x1="525" y1="90" x2="525" y2="120" stroke="#fecdd3" stroke-width="2"/>
+        <line x1="350" y1="185" x2="350" y2="215" stroke="#fecdd3" stroke-width="2"/>
+        <line x1="230" y1="215" x2="470" y2="215" stroke="#fecdd3" stroke-width="2"/>
+        <line x1="230" y1="215" x2="230" y2="240" stroke="#fecdd3" stroke-width="2"/>
+        <line x1="350" y1="215" x2="350" y2="240" stroke="#fecdd3" stroke-width="2"/>
+        <line x1="470" y1="215" x2="470" y2="240" stroke="#fecdd3" stroke-width="2"/>
+        <!-- Gen 0: Grandparents -->
+        <rect x="60" y="20" width="110" height="40" rx="10" fill="#fce7f3" stroke="#f9a8d4" stroke-width="1.5"/>
+        <text x="115" y="36" text-anchor="middle" font-size="9" font-weight="800" fill="#9f1239">👴 Grandfather</text>
+        <text x="115" y="50" text-anchor="middle" font-size="8" fill="#be185d">ông nội/ngoại</text>
+        <rect x="180" y="20" width="110" height="40" rx="10" fill="#fce7f3" stroke="#f9a8d4" stroke-width="1.5"/>
+        <text x="235" y="36" text-anchor="middle" font-size="9" font-weight="800" fill="#9f1239">👵 Grandmother</text>
+        <text x="235" y="50" text-anchor="middle" font-size="8" fill="#be185d">bà nội/ngoại</text>
+        <text x="160" y="45" text-anchor="middle" font-size="11" fill="#f43f5e">💑</text>
+        <!-- Parents row -->
+        <rect x="100" y="120" width="100" height="38" rx="9" fill="#fce7f3" stroke="#f9a8d4" stroke-width="1.5"/>
+        <text x="150" y="135" text-anchor="middle" font-size="9" font-weight="800" fill="#9f1239">👨 Father</text>
+        <text x="150" y="149" text-anchor="middle" font-size="8" fill="#be185d">Bố</text>
+        <rect x="260" y="120" width="100" height="38" rx="9" fill="#fce7f3" stroke="#f9a8d4" stroke-width="1.5"/>
+        <text x="310" y="135" text-anchor="middle" font-size="9" font-weight="800" fill="#9f1239">👩 Mother</text>
+        <text x="310" y="149" text-anchor="middle" font-size="8" fill="#be185d">Mẹ</text>
+        <rect x="450" y="120" width="100" height="38" rx="9" fill="#dbeafe" stroke="#93c5fd" stroke-width="1.5"/>
+        <text x="500" y="135" text-anchor="middle" font-size="9" font-weight="800" fill="#1d4ed8">👨 Uncle/Aunt</text>
+        <text x="500" y="149" text-anchor="middle" font-size="8" fill="#1e40af">Chú/Cô/Dì</text>
+        <!-- Connector Father+Mother -->
+        <line x1="200" y1="139" x2="260" y2="139" stroke="#fecdd3" stroke-width="1.5"/>
+        <line x1="230" y1="139" x2="230" y2="158" stroke="#fecdd3" stroke-width="1.5"/>
+        <!-- Children row -->
+        <rect x="155" y="240" width="90" height="38" rx="9" fill="#dcfce7" stroke="#86efac" stroke-width="1.5"/>
+        <text x="200" y="255" text-anchor="middle" font-size="9" font-weight="800" fill="#166534">👦 Son</text>
+        <text x="200" y="268" text-anchor="middle" font-size="8" fill="#15803d">Con trai</text>
+        <rect x="305" y="240" width="90" height="38" rx="9" fill="#dcfce7" stroke="#86efac" stroke-width="1.5"/>
+        <text x="350" y="255" text-anchor="middle" font-size="9" font-weight="800" fill="#166534">👧 Daughter</text>
+        <text x="350" y="268" text-anchor="middle" font-size="8" fill="#15803d">Con gái</text>
+        <rect x="430" y="240" width="90" height="38" rx="9" fill="#fef9c3" stroke="#fde68a" stroke-width="1.5"/>
+        <text x="475" y="255" text-anchor="middle" font-size="9" font-weight="800" fill="#854d0e">👦 Cousin</text>
+        <text x="475" y="268" text-anchor="middle" font-size="8" fill="#92400e">Anh chị em họ</text>
+        <!-- Labels -->
+        <text x="350" y="300" text-anchor="middle" font-size="9" fill="#9f1239" font-style="italic">← Son & Daughter là Siblings (anh chị em ruột) →</text>
+        <!-- Nephew/Niece label -->
+        <text x="475" y="290" text-anchor="middle" font-size="8" fill="#92400e" font-style="italic">Nephew/Niece của cha mẹ</text>
+      </svg>
+    </div>
+    <div class="rule-box purple" style="margin-top:12px;">
+      <strong>📌 Nuclear Family</strong> = Gia đình hạt nhân (2 thế hệ): bố + mẹ + con<br>
+      <strong>📌 Extended Family</strong> = Gia đình mở rộng (3+ thế hệ): có thêm ông, bà, cô, chú, dì...
+    </div>
+    <div class="rule-box">
+      <strong>💡 Mẹo nhớ:</strong><br>
+      • <strong>Niece</strong> (cháu gái) ≠ <strong>Nephew</strong> (cháu trai)<br>
+      • <strong>Aunt</strong> (cô/dì/bác gái) ≠ <strong>Uncle</strong> (chú/bác trai)<br>
+      • <strong>Sibling</strong> = anh chị em ruột (gồm brother + sister)<br>
+      • <strong>Grandparent</strong> = ông hoặc bà (tổng quát)
+    </div>
+  </div>
+
+  <div class="listen-sec">
+    <h2>🎧 Luyện nghe – Nghe từ → chọn nghĩa đúng</h2>
+    <div class="speed-row">
+      <span>Tốc độ:</span>
+      <button class="speed-btn active" onclick="setSpeed(0.7,this)">🐢 Chậm</button>
+      <button class="speed-btn" onclick="setSpeed(1.0,this)">🚶 Bình thường</button>
+      <button class="speed-btn" onclick="setSpeed(1.3,this)">🏃 Nhanh</button>
+    </div>
+    <div class="listen-box">
+      <div class="listen-qnum" id="lqnum">Câu 1 / 10</div>
+      <button class="listen-play" id="lplayBtn" onclick="playQ()">🔊 &nbsp;Nghe từ</button>
+      <div class="listen-opts" id="lOpts"></div>
+      <div class="listen-fb" id="lFb"></div>
+    </div>
+    <div class="ls-bar">
+      <span>Điểm:</span><span class="ls-big" id="lsNum">0</span>
+      <span style="color:var(--muted);font-weight:600;" id="lsTot">/0</span>
+      <div class="prog-wrap"><div class="prog-fill" id="lBar" style="width:0%"></div></div>
+      <button class="btn btn-s" style="margin-top:0;padding:4px 12px;font-size:.8rem;" onclick="resetListen()">🔄</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ EX1: ANAGRAM ══════ -->
+<div id="ex1" class="tab-content">
+  <div class="sc">
+    <h3>🔤 Bài 1: Sắp xếp chữ cái thành từ đúng</h3>
+    <div id="ex1form"></div>
+    <div class="btn-row">
+      <button class="btn btn-p" onclick="checkEx1()">✅ Chấm điểm</button>
+      <button class="btn btn-s" onclick="resetEx1()">🔄 Làm lại</button>
+    </div>
+    <div id="ex1-score" class="score-bar" style="display:none;"></div>
+  </div>
+</div>
+
+<!-- ══════ EX2: MATCHING ══════ -->
+<div id="ex2" class="tab-content">
+  <div class="sc">
+    <h3>🔗 Bài 2: Nối từ tiếng Anh với nghĩa tiếng Việt</h3>
+    <p style="font-size:.83rem;color:var(--muted);margin-bottom:12px;">Bấm cột trái rồi cột phải để ghép cặp đúng.</p>
+    <div class="match-grid">
+      <div class="match-col" id="ml1"></div>
+      <div class="match-col" id="mr1"></div>
+    </div>
+    <div id="m1fb" style="font-size:.85rem;font-weight:700;min-height:20px;margin-bottom:8px;"></div>
+    <div class="btn-row"><button class="btn btn-s" onclick="resetMatch()">🔄 Làm lại</button></div>
+    <div id="m1-score" class="score-bar" style="display:none;"></div>
+  </div>
+</div>
+
+<!-- ══════ EX3: NUCLEAR/EXTENDED ══════ -->
+<div id="ex3" class="tab-content">
+  <div class="sc">
+    <h3>🌳 Bài 3: Xác định loại gia đình – Nuclear hay Extended?</h3>
+    <div id="ex3form"></div>
+    <div class="btn-row">
+      <button class="btn btn-p" onclick="checkEx3()">✅ Chấm điểm</button>
+      <button class="btn btn-s" onclick="resetEx3()">🔄 Làm lại</button>
+    </div>
+    <div id="ex3-score" class="score-bar" style="display:none;"></div>
+  </div>
+</div>
+
+<!-- ══════ EX4: PRONUNCIATION ══════ -->
+<div id="ex4" class="tab-content">
+  <div class="sc">
+    <h3>🔊 Bài 4: Chọn nhóm có âm gạch chân phát âm giống nhau</h3>
+    <div id="ex4form"></div>
+    <div class="btn-row">
+      <button class="btn btn-p" onclick="checkEx4()">✅ Chấm điểm</button>
+      <button class="btn btn-s" onclick="resetEx4()">🔄 Làm lại</button>
+    </div>
+    <div id="ex4-score" class="score-bar" style="display:none;"></div>
+  </div>
+</div>
+
+<!-- ══════ EX5: FILL SENTENCES ══════ -->
+<div id="ex5" class="tab-content">
+  <div class="sc">
+    <h3>✏️ Bài 5: Điền quan hệ gia đình vào câu (dựa theo cây gia phả)</h3>
+    <div class="tree-svg-wrap" style="margin-bottom:14px;">
+      <svg viewBox="0 0 680 260" width="100%" style="min-width:500px;">
+        <!-- Tony's family tree from screenshot 7 -->
+        <!-- Gen 1: Becky & John (top) -->
+        <rect x="10" y="10" width="90" height="35" rx="8" fill="#fce7f3" stroke="#f9a8d4" stroke-width="1.5"/>
+        <text x="55" y="28" text-anchor="middle" font-size="10" font-weight="800" fill="#9f1239">Becky</text>
+        <text x="55" y="40" text-anchor="middle" font-size="8" fill="#be185d">👵</text>
+        <rect x="115" y="10" width="90" height="35" rx="8" fill="#dbeafe" stroke="#93c5fd" stroke-width="1.5"/>
+        <text x="160" y="28" text-anchor="middle" font-size="10" font-weight="800" fill="#1d4ed8">John</text>
+        <text x="160" y="40" text-anchor="middle" font-size="8" fill="#1e40af">👴</text>
+        <line x1="100" y1="28" x2="115" y2="28" stroke="#fecdd3" stroke-width="1.5"/>
+        <!-- Gen 1 right: Rose & Philip -->
+        <rect x="430" y="10" width="90" height="35" rx="8" fill="#fce7f3" stroke="#f9a8d4" stroke-width="1.5"/>
+        <text x="475" y="28" text-anchor="middle" font-size="10" font-weight="800" fill="#9f1239">Rose</text>
+        <text x="475" y="40" text-anchor="middle" font-size="8" fill="#be185d">👵</text>
+        <rect x="535" y="10" width="90" height="35" rx="8" fill="#dbeafe" stroke="#93c5fd" stroke-width="1.5"/>
+        <text x="580" y="28" text-anchor="middle" font-size="10" font-weight="800" fill="#1d4ed8">Philip</text>
+        <text x="580" y="40" text-anchor="middle" font-size="8" fill="#1e40af">👴</text>
+        <line x1="520" y1="28" x2="535" y2="28" stroke="#dbeafe" stroke-width="1.5"/>
+        <!-- Lines down -->
+        <line x1="137" y1="45" x2="137" y2="75" stroke="#fecdd3" stroke-width="1.5"/>
+        <line x1="340" y1="45" x2="340" y2="75" stroke="#fecdd3" stroke-width="1.5"/>
+        <line x1="137" y1="75" x2="340" y2="75" stroke="#fecdd3" stroke-width="1.5"/>
+        <line x1="238" y1="75" x2="238" y2="100" stroke="#fecdd3" stroke-width="1.5"/>
+        <!-- Jane left side -->
+        <line x1="475" y1="45" x2="475" y2="100" stroke="#dbeafe" stroke-width="1.5"/>
+        <!-- Gen 2: Mark & Jane -->
+        <rect x="155" y="100" width="85" height="35" rx="8" fill="#dbeafe" stroke="#93c5fd" stroke-width="1.5"/>
+        <text x="197" y="118" text-anchor="middle" font-size="10" font-weight="800" fill="#1d4ed8">Mark</text>
+        <text x="197" y="130" text-anchor="middle" font-size="8" fill="#1e40af">👨</text>
+        <rect x="255" y="100" width="85" height="35" rx="8" fill="#fce7f3" stroke="#f9a8d4" stroke-width="1.5"/>
+        <text x="297" y="118" text-anchor="middle" font-size="10" font-weight="800" fill="#9f1239">Jane</text>
+        <text x="297" y="130" text-anchor="middle" font-size="8" fill="#be185d">👩</text>
+        <line x1="240" y1="117" x2="255" y2="117" stroke="#fecdd3" stroke-width="1.5"/>
+        <!-- Alice right side -->
+        <rect x="430" y="100" width="90" height="35" rx="8" fill="#fce7f3" stroke="#f9a8d4" stroke-width="1.5"/>
+        <text x="475" y="118" text-anchor="middle" font-size="10" font-weight="800" fill="#9f1239">Alice</text>
+        <text x="475" y="130" text-anchor="middle" font-size="8" fill="#be185d">👩</text>
+        <!-- Gen 3 -->
+        <line x1="270" y1="135" x2="270" y2="160" stroke="#fecdd3" stroke-width="1.5"/>
+        <line x1="185" y1="160" x2="380" y2="160" stroke="#fecdd3" stroke-width="1.5"/>
+        <line x1="185" y1="160" x2="185" y2="185" stroke="#fecdd3" stroke-width="1.5"/>
+        <line x1="270" y1="160" x2="270" y2="185" stroke="#fecdd3" stroke-width="1.5"/>
+        <line x1="380" y1="160" x2="380" y2="185" stroke="#fecdd3" stroke-width="1.5"/>
+        <!-- Julia, Paul, Tony -->
+        <rect x="140" y="185" width="80" height="35" rx="8" fill="#dcfce7" stroke="#86efac" stroke-width="1.5"/>
+        <text x="180" y="203" text-anchor="middle" font-size="10" font-weight="800" fill="#166534">Julia</text>
+        <text x="180" y="215" text-anchor="middle" font-size="8" fill="#15803d">👧</text>
+        <rect x="230" y="185" width="80" height="35" rx="8" fill="#dcfce7" stroke="#86efac" stroke-width="1.5"/>
+        <text x="270" y="203" text-anchor="middle" font-size="10" font-weight="800" fill="#166534">Paul</text>
+        <text x="270" y="215" text-anchor="middle" font-size="8" fill="#15803d">👦</text>
+        <rect x="340" y="185" width="80" height="35" rx="8" fill="#dcfce7" stroke="#86efac" stroke-width="1.5"/>
+        <text x="380" y="203" text-anchor="middle" font-size="10" font-weight="800" fill="#166534">Tony</text>
+        <text x="380" y="215" text-anchor="middle" font-size="8" fill="#15803d">👶</text>
+        <!-- Bob (Philip's son) -->
+        <line x1="475" y1="135" x2="475" y2="185" stroke="#dbeafe" stroke-width="1.5"/>
+        <rect x="430" y="185" width="80" height="35" rx="8" fill="#fef9c3" stroke="#fde68a" stroke-width="1.5"/>
+        <text x="470" y="203" text-anchor="middle" font-size="10" font-weight="800" fill="#854d0e">Bob</text>
+        <text x="470" y="215" text-anchor="middle" font-size="8" fill="#92400e">👦</text>
+      </svg>
+    </div>
+    <div id="ex5form"></div>
+    <div class="btn-row">
+      <button class="btn btn-p" onclick="checkEx5()">✅ Chấm điểm</button>
+      <button class="btn btn-s" onclick="resetEx5()">🔄 Làm lại</button>
+    </div>
+    <div id="ex5-score" class="score-bar" style="display:none;"></div>
+  </div>
+</div>
+
+<!-- ══════ EX6: READING SCARLETT ══════ -->
+<div id="ex6" class="tab-content">
+  <div class="sc">
+    <h3>📖 Bài 6: Đọc hiểu – Gia đình Scarlett Johansson</h3>
+    <div style="background:#fff1f2;border-radius:12px;padding:14px;margin-bottom:14px;font-size:.9rem;line-height:2.2;border:1.5px solid #fecdd3;">
+      Scarlett Johansson was born on November 22nd, 1984. She and her twin
+      <input class="para-blank" id="sc1" style="width:75px" autocomplete="off"> <span class="fb" id="scf1"></span>
+      Hunter are the youngest of four
+      <input class="para-blank" id="sc2" style="width:80px" autocomplete="off"> <span class="fb" id="scf2"></span>
+      . Their older
+      <input class="para-blank" id="sc3" style="width:75px" autocomplete="off"> <span class="fb" id="scf3"></span>
+      is called Adrian and their
+      <input class="para-blank" id="sc4" style="width:65px" autocomplete="off"> <span class="fb" id="scf4"></span>
+      's name is Vanessa. Their
+      <input class="para-blank" id="sc5" style="width:75px" autocomplete="off"> <span class="fb" id="scf5"></span>
+      are divorced and live in different places. Their
+      <input class="para-blank" id="sc6" style="width:75px" autocomplete="off"> <span class="fb" id="scf6"></span>
+      , Melanie, lives in Los Angeles and their
+      <input class="para-blank" id="sc7" style="width:65px" autocomplete="off"> <span class="fb" id="scf7"></span>
+      , Karsten, is in New York. Karsten is half-Danish. Scarlett's
+      <input class="para-blank" id="sc8" style="width:100px" autocomplete="off"> <span class="fb" id="scf8"></span>
+      is the famous Danish writer Ejner Johansson.
+    </div>
+    <div style="background:#fffbeb;border-radius:10px;padding:8px 13px;font-size:.82rem;color:#92400e;font-weight:700;margin-bottom:12px;border:1.5px solid #fde68a;">
+      📦 Gợi ý: brother · siblings · brother · sister · parents · mother · father · grandfather
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-p" onclick="checkEx6()">✅ Chấm điểm</button>
+      <button class="btn btn-s" onclick="resetEx6()">🔄 Làm lại</button>
+    </div>
+    <div id="ex6-score" class="score-bar" style="display:none;"></div>
+  </div>
+</div>
+
+<!-- Popup -->
+<div class="result-popup" id="resultPopup">
+  <div class="result-box">
+    <div style="font-size:3.2rem;" id="rEmoji">🎉</div>
+    <h2>Hoàn thành!</h2>
+    <div class="rs" id="rScore">0/0</div>
+    <p id="rMsg">Làm tốt lắm!</p>
+    <button class="btn btn-p" onclick="closePopup()">✨ Tiếp tục</button>
+  </div>
+</div>
+
+<script>
+// ══════ DATA ══════
+const familyWords=[
+  {w:'grandfather', ipa:'/ˈɡrænd.fɑː.ðər/', em:'👴', v:'ông'},
+  {w:'grandmother', ipa:'/ˈɡrænd.mʌð.ər/', em:'👵', v:'bà'},
+  {w:'grandparent', ipa:'/ˈɡrænd.peər.ənt/', em:'👴👵', v:'ông bà'},
+  {w:'father',      ipa:'/ˈfɑː.ðər/',       em:'👨', v:'bố'},
+  {w:'mother',      ipa:'/ˈmʌð.ər/',        em:'👩', v:'mẹ'},
+  {w:'parent',      ipa:'/ˈpeər.ənt/',      em:'👫', v:'bố mẹ'},
+  {w:'brother',     ipa:'/ˈbrʌð.ər/',       em:'👦', v:'anh/em trai'},
+  {w:'sister',      ipa:'/ˈsɪs.tər/',       em:'👧', v:'chị/em gái'},
+  {w:'sibling',     ipa:'/ˈsɪb.lɪŋ/',       em:'👬', v:'anh chị em ruột'},
+  {w:'son',         ipa:'/sʌn/',            em:'👦', v:'con trai'},
+  {w:'daughter',    ipa:'/ˈdɔː.tər/',       em:'👧', v:'con gái'},
+  {w:'uncle',       ipa:'/ˈʌŋ.kl̩/',        em:'🧔', v:'chú/bác trai'},
+  {w:'aunt',        ipa:'/ɑːnt/',           em:'👩', v:'cô/dì/bác gái'},
+  {w:'nephew',      ipa:'/ˈnef.juː/',       em:'👦', v:'cháu trai'},
+  {w:'niece',       ipa:'/niːs/',           em:'👧', v:'cháu gái'},
+  {w:'cousin',      ipa:'/ˈkʌz.n̩/',        em:'🧑', v:'anh chị em họ'},
+  {w:'nuclear family', ipa:'/ˈnjuː.klɪər ˈfæm.ɪ.li/', em:'👨‍👩‍👦', v:'gia đình 2 thế hệ'},
+  {w:'extended family', ipa:'/ɪkˈsten.dɪd ˈfæm.ɪ.li/', em:'👨‍👩‍👧‍👦', v:'gia đình từ 3 thế hệ'},
+];
+
+// RENDER VOCAB
+const vg=document.getElementById('vocabGrid');
+familyWords.forEach(a=>{
+  vg.innerHTML+=`<div class="vc">
+    <div class="em">${a.em}</div>
+    <div class="w">${a.w}</div>
+    <div class="ipa">${a.ipa}</div>
+    <div class="v">${a.v}</div>
+    <button class="speak-btn" onclick="speakWord('${a.w}',this)">🔊</button>
+  </div>`;
+});
+
+// TTS
+let ttsRate=0.7;
+function setSpeed(r,btn){ttsRate=r;document.querySelectorAll('.speed-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
+function speakWord(w,btn){
+  if(!window.speechSynthesis)return;
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(w);u.lang='en-US';u.rate=ttsRate;
+  if(btn){btn.classList.add('playing');u.onend=()=>btn.classList.remove('playing');}
+  window.speechSynthesis.speak(u);
+}
+
+// LISTEN QUIZ
+const LTOTAL=10;let lQ=[],lIdx=0,lOk=0,lAns=false;
+function shuffled(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+function initListen(){
+  lQ=shuffled([...familyWords,...familyWords]).slice(0,LTOTAL);
+  lIdx=0;lOk=0;lAns=false;
+  document.getElementById('lsNum').textContent='0';document.getElementById('lsTot').textContent='/0';
+  document.getElementById('lBar').style.width='0%';renderLQ();
+}
+function renderLQ(){
+  if(lIdx>=LTOTAL){doneListen();return;}
+  const q=lQ[lIdx];
+  document.getElementById('lqnum').textContent=`Câu ${lIdx+1} / ${LTOTAL}`;
+  document.getElementById('lFb').textContent='';
+  document.getElementById('lplayBtn').className='listen-play';
+  document.getElementById('lplayBtn').innerHTML='🔊 &nbsp;Nghe từ';
+  lAns=false;
+  const pool=familyWords.filter(x=>x.w!==q.w);
+  const opts=shuffled([q,...shuffled(pool).slice(0,3)]);
+  const el=document.getElementById('lOpts');el.innerHTML='';
+  opts.forEach(o=>{
+    const b=document.createElement('button');b.className='listen-opt';
+    b.innerHTML=`${o.em} ${o.v}`;
+    b.onclick=()=>handleLA(o.w,q.w,b);el.appendChild(b);
+  });
+  updateLS();
+}
+function playQ(){
+  if(lIdx>=LTOTAL)return;
+  const btn=document.getElementById('lplayBtn');btn.classList.add('playing');
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(lQ[lIdx].w);u.lang='en-US';u.rate=ttsRate;
+  u.onend=()=>btn.classList.remove('playing');window.speechSynthesis.speak(u);
+}
+function handleLA(chosen,correct,btn){
+  if(lAns)return;lAns=true;
+  const ok=chosen===correct;
+  if(ok){lOk++;btn.classList.add('correct-opt');}
+  else{btn.classList.add('wrong-opt');document.querySelectorAll('.listen-opt').forEach(b=>{const f=familyWords.find(x=>x.w===correct);if(b.innerHTML.includes(f?.v||'__'))b.classList.add('correct-opt');});}
+  document.querySelectorAll('.listen-opt').forEach(b=>b.classList.add('locked'));
+  const viet=familyWords.find(x=>x.w===correct)?.v||'';
+  const fb=document.getElementById('lFb');
+  fb.innerHTML=ok?`✅ Đúng! <strong>${correct}</strong> = ${viet}`:`❌ Sai! <strong>${correct}</strong> = ${viet}`;
+  fb.style.color=ok?'#166534':'#991b1b';
+  updateLS();setTimeout(()=>{lIdx++;renderLQ();},1800);
+}
+function updateLS(){
+  document.getElementById('lsNum').textContent=lOk;document.getElementById('lsTot').textContent='/'+lIdx;
+  document.getElementById('lBar').style.width=(lIdx>0?(lOk/lIdx)*100:0)+'%';
+}
+function doneListen(){
+  document.getElementById('lqnum').textContent='🎉 Hoàn thành!';document.getElementById('lOpts').innerHTML='';
+  document.getElementById('lplayBtn').innerHTML='✅ Đã xong';
+  document.getElementById('lFb').innerHTML=`<strong>Kết quả: ${lOk}/${LTOTAL}</strong> — ${lOk>=8?'Xuất sắc! 🏆':lOk>=5?'Tốt lắm! 🎉':'Cố lên! 💪'}`;
+  document.getElementById('lsTot').textContent='/'+LTOTAL;
+  document.getElementById('lBar').style.width=(lOk/LTOTAL*100)+'%';
+}
+function resetListen(){initListen();}
+initListen();
+
+// ══════ EX1: ANAGRAM ══════
+const anagramData=[
+  {letters:'N/A/T/D/G/N/A/R/E/R/P',hint:'Ông bà (nói chung)',ans:'grandparent'},
+  {letters:'R/E/R/H/O/T/B',hint:'Anh/em trai',ans:'brother'},
+  {letters:'G/A/D/H/E/R/T/U',hint:'Con gái',ans:'daughter'},
+  {letters:'E/H/N/E/W/P',hint:'Cháu trai',ans:'nephew'},
+  {letters:'C/O/I/N/S/U',hint:'Anh chị em họ',ans:'cousin'},
+  {letters:'E/C/N/U/L',hint:'Chú/bác trai',ans:'uncle'},
+  {letters:'S/N/L/I/B/G/I',hint:'Anh chị em ruột',ans:'sibling'},
+];
+const ex1f=document.getElementById('ex1form');
+anagramData.forEach((a,i)=>{
+  ex1f.innerHTML+=`<div class="anagram-row">
+    <div class="anagram-num">${i+1}.</div>
+    <div class="anagram-block">
+      <div class="anagram-letters">${a.letters}</div>
+      <div class="anagram-hint">💡 ${a.hint}</div>
+      <input class="fill-input" id="ag${i}" placeholder="Nhập từ..." autocomplete="off">
+      <span class="fb" id="agf${i}" style="margin-left:6px;"></span>
+    </div>
+  </div>`;
+});
+function checkEx1(){
+  let c=0;
+  anagramData.forEach((a,i)=>{
+    const inp=document.getElementById('ag'+i);const fb=document.getElementById('agf'+i);
+    const ok=inp.value.trim().toLowerCase()===a.ans;
+    inp.classList.toggle('correct',ok);inp.classList.toggle('wrong',!ok&&inp.value.trim()!='');
+    if(ok){fb.textContent='✓';fb.className='fb correct';c++;}
+    else if(inp.value.trim()){fb.textContent='✗ → '+a.ans;fb.className='fb wrong';}
+    else fb.textContent='';
+  });
+  showSB('ex1-score',c,anagramData.length);showResult(c,anagramData.length);
+}
+function resetEx1(){anagramData.forEach((_,i)=>{document.getElementById('ag'+i).value='';document.getElementById('ag'+i).className='fill-input';document.getElementById('agf'+i).textContent='';});document.getElementById('ex1-score').style.display='none';}
+
+// ══════ EX2: MATCHING ══════
+const matchPairs={
+  'Niece':'Cháu gái',
+  'Extended family':'Gia đình từ 3 thế hệ',
+  'Grandfather':'Ông',
+  'Aunt':'Cô/Dì/Bác gái',
+  'Mother':'Mẹ',
+  'Nuclear family':'Gia đình 2 thế hệ',
+};
+let mLeft=null,mRight=null,mMatched=new Set(),mScore=0;
+function initMatch(){
+  mLeft=null;mRight=null;mMatched=new Set();mScore=0;
+  const ml=document.getElementById('ml1');const mr=document.getElementById('mr1');
+  ml.innerHTML='';mr.innerHTML='';
+  shuffled(Object.keys(matchPairs)).forEach(w=>{
+    const el=document.createElement('div');el.className='match-item';el.id='ml_'+w.replace(/\s/g,'_');
+    el.textContent=w;el.onclick=()=>selLeft(w,el);ml.appendChild(el);
+  });
+  shuffled(Object.values(matchPairs)).forEach(w=>{
+    const el=document.createElement('div');el.className='match-item';el.id='mr_'+w.replace(/\s/g,'_');
+    el.textContent=w;el.onclick=()=>selRight(w,el);mr.appendChild(el);
+  });
+  document.getElementById('m1fb').textContent='';
+  document.getElementById('m1-score').style.display='none';
+}
+function selLeft(w,el){
+  if(el.classList.contains('locked')||el.classList.contains('matched'))return;
+  document.querySelectorAll('#ml1 .match-item').forEach(x=>{if(!x.classList.contains('matched'))x.classList.remove('selected-left');});
+  el.classList.add('selected-left');mLeft=w;tryM();
+}
+function selRight(w,el){
+  if(el.classList.contains('locked')||el.classList.contains('matched'))return;
+  document.querySelectorAll('#mr1 .match-item').forEach(x=>{if(!x.classList.contains('matched'))x.classList.remove('selected-right');});
+  el.classList.add('selected-right');mRight=w;tryM();
+}
+function tryM(){
+  if(!mLeft||!mRight)return;
+  const lEl=document.getElementById('ml_'+mLeft.replace(/\s/g,'_'));
+  const rEl=document.getElementById('mr_'+mRight.replace(/\s/g,'_'));
+  const ok=matchPairs[mLeft]===mRight;
+  if(ok){
+    lEl.classList.remove('selected-left');rEl.classList.remove('selected-right');
+    lEl.classList.add('matched','locked');rEl.classList.add('matched','locked');
+    mMatched.add(mLeft);mScore++;
+    document.getElementById('m1fb').innerHTML=`✅ <strong>${mLeft}</strong> = <strong>${mRight}</strong>`;
+    document.getElementById('m1fb').style.color='#166534';
+    if(mMatched.size===Object.keys(matchPairs).length){setTimeout(()=>{showSB('m1-score',mScore,Object.keys(matchPairs).length);showResult(mScore,Object.keys(matchPairs).length);},300);}
+  }else{
+    lEl.classList.add('wrong-flash');rEl.classList.add('wrong-flash');
+    setTimeout(()=>{lEl.classList.remove('selected-left','wrong-flash');rEl.classList.remove('selected-right','wrong-flash');},500);
+    document.getElementById('m1fb').innerHTML='❌ Sai, thử lại!';document.getElementById('m1fb').style.color='#991b1b';
+  }
+  mLeft=null;mRight=null;
+}
+function resetMatch(){initMatch();}
+initMatch();
+
+// ══════ EX3: NUCLEAR/EXTENDED ══════
+const ex3Data=[
+  {desc:'Cây gia phả gồm: Grandfather, Grandmother (hai bên), Father, Mother, Brother, Me, Sister — nhiều thế hệ, gồm cả chú và bà.',ans:'B',optA:'Nuclear family',optB:'Extended family',exp:'Extended family = có hơn 2 thế hệ (ông bà, bố mẹ, con)'},
+  {desc:'Cây gia phả nhỏ: Uncle + Aunt ở trên, Cousin + Cousin ở dưới — chỉ 2 thế hệ.',ans:'A',optA:'Nuclear family',optB:'Extended family',exp:'Nuclear family = 2 thế hệ (bố/mẹ + con)'},
+  {desc:'Cây gia phả Hoàng gia Anh: Prince Philip + Queen Elizabeth II → Charles, Diana, Anne, Andrew, Edward → William, Harry... — rất nhiều thế hệ và thành viên.',ans:'B',optA:'Nuclear family',optB:'Extended family',exp:'Extended family = gia đình lớn nhiều thế hệ'},
+  {desc:'Cây gia phả: Alexandra + Nikolaus II → Olga, Tatjana, Maria, Anastasia, Alexei — 2 thế hệ: bố mẹ và các con.',ans:'A',optA:'Nuclear family',optB:'Extended family',exp:'Nuclear family = chỉ bố mẹ và các con (2 thế hệ)'},
+];
+const ex3f=document.getElementById('ex3form');
+ex3Data.forEach((item,i)=>{
+  ex3f.innerHTML+=`<div class="mcq-item" id="e3q${i}">
+    <div class="qt">${i+1}. ${item.desc}<div class="hint">💡 ${item.exp}</div></div>
+    <div class="mcq-options">
+      <label class="mcq-option"><input type="radio" name="ex3_${i}" value="A"> A. ${item.optA}</label>
+      <label class="mcq-option"><input type="radio" name="ex3_${i}" value="B"> B. ${item.optB}</label>
+    </div>
+  </div>`;
+});
+function checkEx3(){
+  let c=0;
+  ex3Data.forEach((item,i)=>{
+    const sel=document.querySelector(`input[name="ex3_${i}"]:checked`);
+    document.querySelectorAll(`#e3q${i} .mcq-option`).forEach(o=>o.classList.remove('correct-ans','wrong-ans'));
+    if(sel){const ok=sel.value===item.ans;sel.closest('.mcq-option').classList.add(ok?'correct-ans':'wrong-ans');if(!ok)document.querySelectorAll(`#e3q${i} .mcq-option`).forEach(o=>{if(o.querySelector('input').value===item.ans)o.classList.add('correct-ans');});if(ok)c++;}
+  });
+  showSB('ex3-score',c,ex3Data.length);showResult(c,ex3Data.length);
+}
+function resetEx3(){document.querySelectorAll('[name^="ex3_"]').forEach(r=>r.checked=false);document.querySelectorAll('#ex3form .mcq-option').forEach(o=>o.classList.remove('correct-ans','wrong-ans'));document.getElementById('ex3-score').style.display='none';}
+
+// ══════ EX4: PRONUNCIATION ══════
+// From screenshot 6: answers are B, D, E, F
+const ex4Data=[
+  {
+    q:'Nhóm nào có âm gạch chân phát âm GIỐNG nhau?',
+    opts:['A. Nephew, Niece, Sibling','B. Uncle, Brother, Son','C. Sister, Cousin, Niece','D. Sibling, Son, Niece','E. Grandparent, Daughter, Cousin','F. Aunt, Father, Grandfather','G. Mother, Sister, Daughter'],
+    ans:['B','D','E','F'],
+    exp:'B (âm /ʌ/): Uncle /ʌ/, Brother /ʌ/, Son /ʌ/ — giống nhau\nD (âm /ɪ/): Sibling /ɪ/, Son /ʌ/, Niece /iː/ — KHÁC → đáp án D là sai trong đề\nE (âm /ə/): Grandparent, Daughter, Cousin\nF (âm /ɑː/ hay /æ/): Aunt, Father, Grandfather'
+  }
+];
+const ex4f=document.getElementById('ex4form');
+const msSelected={};
+const ex4Item=ex4Data[0];
+ex4f.innerHTML=`<div style="font-weight:700;margin-bottom:10px;font-size:.9rem;background:#fff1f2;padding:9px 13px;border-radius:9px;border-left:3px solid var(--primary);">
+  ${ex4Item.q}<br><small style="font-weight:600;color:var(--muted);font-style:italic;">💡 Chọn TẤT CẢ đáp án đúng (có thể có nhiều đáp án)</small>
+</div>
+<div class="ms-opts">
+${ex4Item.opts.map(o=>`<span class="ms-opt" id="ms_${o[0]}" onclick="toggleMS4('${o[0]}',this)">${o}</span>`).join('')}
+</div>`;
+function toggleMS4(k,btn){
+  if(btn.classList.contains('locked'))return;
+  if(msSelected[k]){delete msSelected[k];btn.classList.remove('selected');}
+  else{msSelected[k]=true;btn.classList.add('selected');}
+}
+function checkEx4(){
+  const sel=Object.keys(msSelected);
+  const ans=ex4Item.ans;
+  let c=0;
+  ex4Item.opts.forEach(o=>{
+    const k=o[0];const btn=document.getElementById('ms_'+k);
+    btn.classList.remove('selected','correct-ms','wrong-ms','missed-ms');btn.classList.add('locked');
+    const isAns=ans.includes(k);const isSel=!!msSelected[k];
+    if(isAns&&isSel){btn.classList.add('correct-ms');c++;}
+    else if(!isAns&&isSel)btn.classList.add('wrong-ms');
+    else if(isAns&&!isSel)btn.classList.add('missed-ms');
+  });
+  const exp=document.createElement('div');exp.style.cssText='margin-top:12px;padding:9px 13px;background:#f0fdf4;border-radius:9px;font-size:.82rem;color:#166534;font-weight:600;white-space:pre-line;';
+  exp.textContent='💡 '+ex4Item.exp;ex4f.appendChild(exp);
+  const perfect=ans.every(k=>!!msSelected[k])&&sel.every(k=>ans.includes(k));
+  showSB('ex4-score',perfect?4:c,4);showResult(c,4);
+}
+function resetEx4(){
+  Object.keys(msSelected).forEach(k=>delete msSelected[k]);
+  ex4Item.opts.forEach(o=>{const b=document.getElementById('ms_'+o[0]);if(b)b.className='ms-opt';});
+  const e=ex4f.querySelector('div:last-child');if(e&&e!==ex4f.firstChild)e.remove();
+  document.getElementById('ex4-score').style.display='none';
+}
+
+// ══════ EX5: FILL SENTENCES ══════
+const ex5Data=[
+  {id:'e5_1',fid:'e5f_1',q:'1. Becky is Alice\'s',ans:'grandmother',hint:'Becky là mẹ của Mark. Alice là con của Mark. → Becky là ? của Alice'},
+  {id:'e5_2',fid:'e5f_2',q:'2. Jane is Mark\'s',ans:'aunt',hint:'Jane là vợ của Mark, nhưng Jane là con của Rose & Philip. Mark là con của Becky & John. → Jane là dì/cô của Alice, hay là ? của Mark'},
+  {id:'e5_3',fid:'e5f_3',q:'3. Laura is Rose\'s',hint:'(Không có Laura trong sơ đồ này — gợi ý: Laura là con của Rose\'s children)',ans:'niece'},
+  {id:'e5_4',fid:'e5f_4',q:'4. John is Paul\'s',ans:'grandfather',hint:'John là bố của Mark. Mark là bố của Paul. → John là ? của Paul'},
+  {id:'e5_5',fid:'e5f_5',q:'5. Julia is Mark\'s',ans:'cousin',hint:'Julia là con của Mark & Jane. Bob là con của Philip. Alice là con của Mark... đề bài: Julia là họ hàng với ai?'},
+  {id:'e5_6',fid:'e5f_6',q:'6. Bob is Philip\'s',ans:'son',hint:'Philip là bố của Bob → Bob là ? của Philip'},
+  {id:'e5_7',fid:'e5f_7',q:'7. Paul is Julia\'s',ans:'brother',hint:'Paul và Julia là con của Mark & Jane → họ là anh chị em ruột'},
+];
+const ex5f=document.getElementById('ex5form');
+ex5Data.forEach(item=>{
+  ex5f.innerHTML+=`<div style="margin-bottom:12px;font-size:.9rem;line-height:1.8;">
+    <strong>${item.q}</strong>
+    <input class="para-blank" id="${item.id}" style="width:110px" autocomplete="off">
+    <span class="fb" id="${item.fid}"></span>
+    <div style="font-size:.76rem;color:var(--muted);font-style:italic;">💡 ${item.hint||''}</div>
+  </div>`;
+});
+function checkEx5(){
+  let c=0;
+  ex5Data.forEach(item=>{
+    const inp=document.getElementById(item.id);const fb=document.getElementById(item.fid);
+    const ok=inp.value.trim().toLowerCase()===item.ans;
+    inp.classList.toggle('correct',ok);inp.classList.toggle('wrong',!ok&&inp.value.trim()!='');
+    if(ok){fb.textContent='✓';fb.className='fb correct';c++;}
+    else if(inp.value.trim()){fb.textContent='✗→'+item.ans;fb.className='fb wrong';}
+    else fb.textContent='';
+  });
+  showSB('ex5-score',c,ex5Data.length);showResult(c,ex5Data.length);
+}
+function resetEx5(){ex5Data.forEach(item=>{document.getElementById(item.id).value='';document.getElementById(item.id).className='para-blank';document.getElementById(item.fid).textContent='';});document.getElementById('ex5-score').style.display='none';}
+
+// ══════ EX6: SCARLETT FILL ══════
+const sc=[['sc1','scf1','brother'],['sc2','scf2','siblings'],['sc3','scf3','brother'],['sc4','scf4','sister'],['sc5','scf5','parents'],['sc6','scf6','mother'],['sc7','scf7','father'],['sc8','scf8','grandfather']];
+function checkEx6(){
+  let c=0;
+  sc.forEach(([id,fid,ans])=>{
+    const inp=document.getElementById(id);const fb=document.getElementById(fid);
+    const ok=inp.value.trim().toLowerCase()===ans;
+    inp.classList.toggle('correct',ok);inp.classList.toggle('wrong',!ok&&inp.value.trim()!='');
+    if(ok){fb.textContent='✓';fb.className='fb correct';c++;}
+    else if(inp.value.trim()){fb.textContent='✗→'+ans;fb.className='fb wrong';}
+    else fb.textContent='';
+  });
+  showSB('ex6-score',c,8);showResult(c,8);
+}
+function resetEx6(){sc.forEach(([id,fid])=>{document.getElementById(id).value='';document.getElementById(id).className='para-blank';document.getElementById(fid).textContent='';});document.getElementById('ex6-score').style.display='none';}
+
+// ══════ HELPERS ══════
+function showTab(id,btn){
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');btn.classList.add('active');
+}
+function showSB(id,c,t){
+  const el=document.getElementById(id);el.style.display='flex';
+  el.innerHTML=`<span class="score-num">${c}/${t}</span><span>${c===t?'🏆 Hoàn hảo!':c>=t*.7?'🎉 Tốt lắm!':'💪 Thử lại!'}</span>`;
+}
+function showResult(c,t){
+  const p=c/t;
+  document.getElementById('rEmoji').textContent=p===1?'🏆':p>=.7?'🎉':p>=.5?'👍':'💪';
+  document.getElementById('rScore').textContent=c+'/'+t;
+  document.getElementById('rMsg').textContent=p===1?'Hoàn hảo! Xuất sắc!':p>=.7?'Làm tốt lắm!':'Ôn lại và thử lại nhé!';
+  document.getElementById('resultPopup').classList.add('show');
+}
+function closePopup(){document.getElementById('resultPopup').classList.remove('show');}
+</script>
+</body>
+</html>

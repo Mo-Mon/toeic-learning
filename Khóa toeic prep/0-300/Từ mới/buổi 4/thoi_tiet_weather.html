@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thời Tiết – Weather Vocabulary</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary:#0EA5E9; --pri-dark:#0284C7;
+    --secondary:#6366F1; --acc:#F59E0B;
+    --green:#22c55e; --red:#ef4444;
+    --bg:#F0F9FF; --card:#fff; --text:#0c2d4a; --muted:#64899e;
+    --shadow:0 4px 24px rgba(14,165,233,0.10);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+  header{
+    background:linear-gradient(135deg,#0EA5E9 0%,#38BDF8 50%,#7DD3FC 100%);
+    padding:28px 16px 20px;text-align:center;
+    box-shadow:0 4px 20px rgba(14,165,233,0.35);
+    position:relative;overflow:hidden;
+  }
+  header::before{content:'☁️ ⛅ 🌤️ 🌧️ ❄️ 🌪️ ⛈️ 🌈';position:absolute;top:6px;left:0;right:0;font-size:1.4rem;letter-spacing:8px;opacity:.25;}
+  header h1{font-family:'Baloo 2',cursive;font-size:2.2rem;color:#fff;letter-spacing:1px;text-shadow:0 2px 8px rgba(0,0,0,.15);position:relative;}
+  header p{color:rgba(255,255,255,.85);font-size:.97rem;margin-top:5px;position:relative;}
+
+  .tabs{display:flex;justify-content:center;gap:8px;padding:20px 12px 0;flex-wrap:wrap;}
+  .tab-btn{padding:8px 18px;border-radius:50px;border:2.5px solid var(--primary);background:#fff;color:var(--primary);font-family:'Nunito',sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;transition:all .2s;}
+  .tab-btn.active,.tab-btn:hover{background:var(--primary);color:#fff;box-shadow:0 3px 12px rgba(14,165,233,.3);}
+
+  .tab-content{display:none;padding:24px 14px 50px;max-width:900px;margin:0 auto;}
+  .tab-content.active{display:block;}
+
+  /* SECTION CARDS */
+  .sc{background:var(--card);border-radius:18px;padding:22px;margin-bottom:18px;box-shadow:var(--shadow);}
+  .sc h2{font-family:'Baloo 2',cursive;color:var(--primary);font-size:1.28rem;margin-bottom:14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+  .sc h2 small{font-size:.74rem;color:var(--muted);font-family:'Nunito',sans-serif;font-weight:600;}
+  .sc h3{font-family:'Baloo 2',cursive;color:var(--secondary);font-size:1.08rem;margin-bottom:14px;padding-bottom:9px;border-bottom:2px dashed #e0e7ff;}
+
+  /* VOCAB GRID */
+  .vocab-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:9px;}
+  .vc{background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border-radius:13px;padding:12px 8px 10px;text-align:center;border:1.5px solid #bae6fd;transition:transform .15s,box-shadow .15s;}
+  .vc:hover{transform:translateY(-3px);box-shadow:0 6px 16px rgba(14,165,233,.18);}
+  .vc .em{font-size:1.7rem;line-height:1;}
+  .vc .w{font-size:.87rem;font-weight:900;color:var(--primary);margin-top:4px;}
+  .vc .ipa{font-size:.65rem;color:var(--muted);font-style:italic;margin-top:1px;}
+  .vc .v{font-size:.75rem;color:#0369a1;margin-top:2px;font-weight:600;}
+  .speak-btn{display:inline-flex;align-items:center;justify-content:center;margin-top:6px;background:var(--primary);border:none;border-radius:50%;width:26px;height:26px;cursor:pointer;color:#fff;font-size:.72rem;transition:background .15s,transform .1s;box-shadow:0 2px 6px rgba(14,165,233,.3);}
+  .speak-btn:hover{background:var(--pri-dark);transform:scale(1.12);}
+  .speak-btn.playing{background:var(--acc);animation:pulse-b .5s infinite alternate;}
+  @keyframes pulse-b{from{box-shadow:0 0 0 0 rgba(245,158,11,.5)}to{box-shadow:0 0 0 8px rgba(245,158,11,0)}}
+
+  /* NOUN/ADJ TABLE */
+  .na-table{width:100%;border-collapse:collapse;margin-top:8px;}
+  .na-table th{background:linear-gradient(135deg,#0EA5E9,#38BDF8);color:#fff;padding:10px 14px;font-size:.88rem;font-weight:800;}
+  .na-table td{padding:9px 14px;font-size:.88rem;border-bottom:1px solid #e0f2fe;}
+  .na-table tr:nth-child(even) td{background:#f0f9ff;}
+  .na-table .speak-sm{background:var(--primary);border:none;border-radius:50%;width:22px;height:22px;cursor:pointer;color:#fff;font-size:.65rem;margin-left:4px;vertical-align:middle;}
+
+  /* RULE BOX */
+  .rule-box{background:linear-gradient(135deg,#ecfdf5,#d1fae5);border-left:4px solid #10b981;border-radius:10px;padding:12px 16px;margin-top:12px;font-size:.91rem;line-height:1.8;}
+  .rule-box strong{color:#065f46;}
+  .rule-box.blue{background:linear-gradient(135deg,#eff6ff,#dbeafe);border-left-color:#3b82f6;}
+  .rule-box.blue strong{color:#1d4ed8;}
+
+  /* TEMPERATURE SCALE */
+  .temp-scale{display:flex;align-items:stretch;border-radius:12px;overflow:hidden;margin:14px 0;height:48px;}
+  .temp-seg{flex:1;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.82rem;color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.3);}
+
+  /* LISTEN QUIZ */
+  .listen-sec{background:var(--card);border-radius:18px;padding:22px;margin-bottom:18px;box-shadow:var(--shadow);}
+  .listen-sec h2{font-family:'Baloo 2',cursive;color:#059669;font-size:1.28rem;margin-bottom:12px;}
+  .speed-row{display:flex;align-items:center;gap:7px;margin-bottom:12px;flex-wrap:wrap;}
+  .speed-row span{font-weight:700;color:var(--muted);font-size:.86rem;}
+  .speed-btn{padding:5px 12px;border-radius:20px;border:2px solid #a7f3d0;background:#fff;color:#059669;font-weight:700;font-size:.8rem;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .15s;}
+  .speed-btn.active{background:#059669;color:#fff;border-color:#059669;}
+  .listen-box{background:linear-gradient(135deg,#ecfdf5,#d1fae5);border-radius:13px;padding:18px 16px;margin-bottom:12px;border:1.5px solid #a7f3d0;}
+  .listen-q-num{font-size:.76rem;font-weight:800;color:#059669;text-transform:uppercase;letter-spacing:1px;margin-bottom:9px;}
+  .listen-play-btn{display:inline-flex;align-items:center;gap:8px;background:#059669;color:#fff;border:none;border-radius:50px;padding:11px 26px;font-family:'Nunito',sans-serif;font-size:.97rem;font-weight:800;cursor:pointer;transition:all .2s;box-shadow:0 4px 14px rgba(5,150,105,.3);margin-bottom:13px;}
+  .listen-play-btn:hover{background:#047857;transform:translateY(-2px);}
+  .listen-play-btn.playing{background:#F59E0B;}
+  .listen-opts{display:flex;flex-wrap:wrap;gap:8px;}
+  .listen-opt{padding:8px 18px;border-radius:50px;border:2.5px solid #a7f3d0;background:#fff;font-family:'Nunito',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;transition:all .15s;color:#065f46;}
+  .listen-opt:hover:not(.locked){border-color:#059669;background:#f0fdf4;}
+  .listen-opt.correct-opt{border-color:var(--green);background:#f0fdf4;color:#166534;}
+  .listen-opt.wrong-opt{border-color:var(--red);background:#fef2f2;color:#991b1b;}
+  .listen-opt.locked{cursor:default;}
+  .listen-fb{margin-top:10px;font-weight:700;font-size:.88rem;min-height:20px;}
+  .ls-bar{display:flex;align-items:center;gap:11px;font-weight:700;flex-wrap:wrap;padding-top:11px;}
+  .ls-big{font-size:1.65rem;font-weight:900;color:#059669;}
+  .prog-wrap{flex:1;min-width:90px;height:9px;background:#d1fae5;border-radius:99px;overflow:hidden;}
+  .prog-fill{height:100%;background:#059669;border-radius:99px;transition:width .4s;}
+
+  /* EXERCISE */
+  .para-blank{border:none;border-bottom:2px solid var(--primary);background:transparent;font-family:'Nunito',sans-serif;font-size:.94rem;width:110px;outline:none;padding:2px 4px;font-weight:700;color:var(--primary);}
+  .para-blank.correct{border-bottom-color:var(--green);color:var(--green);}
+  .para-blank.wrong{border-bottom-color:var(--red);color:var(--red);}
+  .fb{font-size:.78rem;font-weight:700;}
+  .fb.correct{color:var(--green);}
+  .fb.wrong{color:var(--red);}
+
+  .mcq-item{margin-bottom:16px;}
+  .mcq-item .qt{font-weight:700;margin-bottom:9px;line-height:1.55;font-size:.92rem;background:#f0f9ff;padding:9px 13px;border-radius:9px;border-left:3px solid var(--primary);}
+  .mcq-options{display:flex;flex-direction:column;gap:6px;}
+  .mcq-option{display:flex;align-items:center;gap:9px;padding:8px 13px;border-radius:9px;border:2px solid #e2e8f0;cursor:pointer;transition:all .15s;font-weight:600;user-select:none;font-size:.91rem;}
+  .mcq-option:hover{border-color:var(--primary);background:#f0f9ff;}
+  .mcq-option.correct-ans{border-color:var(--green);background:#f0fdf4;color:#166534;}
+  .mcq-option.wrong-ans{border-color:var(--red);background:#fef2f2;color:#991b1b;}
+  .mcq-option input[type=radio]{accent-color:var(--primary);width:14px;height:14px;}
+
+  /* ANAGRAM */
+  .anagram-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;flex-wrap:wrap;}
+  .anagram-row .num{font-weight:900;color:var(--primary);min-width:20px;padding-top:2px;}
+  .anagram-block{flex:1;min-width:200px;}
+  .anagram-block .letters{font-family:monospace;font-size:1.05rem;font-weight:800;color:var(--secondary);background:#f5f3ff;padding:4px 10px;border-radius:7px;display:inline-block;margin-bottom:5px;letter-spacing:2px;}
+  .anagram-block .hint{font-size:.8rem;color:var(--muted);font-style:italic;margin-bottom:6px;}
+  .fill-input{border:2px solid #bae6fd;border-radius:8px;padding:6px 11px;font-family:'Nunito',sans-serif;font-size:.91rem;width:160px;outline:none;transition:border .2s;}
+  .fill-input:focus{border-color:var(--primary);}
+  .fill-input.correct{border-color:var(--green);background:#f0fdf4;}
+  .fill-input.wrong{border-color:var(--red);background:#fef2f2;}
+
+  /* SCORE */
+  .score-bar{background:#f0f9ff;border-radius:13px;padding:14px 18px;margin-top:13px;display:flex;align-items:center;gap:13px;font-weight:700;flex-wrap:wrap;border:1.5px solid #bae6fd;}
+  .score-num{font-size:1.7rem;font-weight:900;color:var(--primary);}
+  .btn{padding:9px 24px;border-radius:50px;border:none;font-family:'Nunito',sans-serif;font-size:.93rem;font-weight:800;cursor:pointer;transition:all .2s;margin-top:12px;}
+  .btn-p{background:var(--primary);color:#fff;box-shadow:0 3px 12px rgba(14,165,233,.3);}
+  .btn-p:hover{background:var(--pri-dark);transform:translateY(-2px);}
+  .btn-s{background:#fff;color:var(--primary);border:2.5px solid var(--primary);}
+  .btn-s:hover{background:#f0f9ff;}
+  .btn-row{display:flex;gap:9px;flex-wrap:wrap;}
+
+  /* READING */
+  .reading-box{background:#f0f9ff;border-radius:12px;padding:16px;line-height:2;font-size:.92rem;margin-bottom:16px;border:1.5px solid #bae6fd;}
+
+  /* POPUP */
+  .result-popup{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.45);z-index:999;align-items:center;justify-content:center;}
+  .result-popup.show{display:flex;}
+  .result-box{background:#fff;border-radius:22px;padding:36px 42px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.2);animation:popIn .3s ease;max-width:350px;width:90%;}
+  @keyframes popIn{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
+  .re{font-size:3.5rem;}
+  .result-box h2{font-family:'Baloo 2',cursive;font-size:1.65rem;color:var(--primary);margin:9px 0 4px;}
+  .result-box p{color:var(--muted);font-size:.97rem;margin-bottom:16px;}
+  .rs{font-size:2.4rem;font-weight:900;color:var(--secondary);}
+
+  @media(max-width:600px){
+    header h1{font-size:1.35rem;}
+    .vocab-grid{grid-template-columns:repeat(2,1fr);}
+    .fill-input{width:130px;}
+    .para-blank{width:90px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🌤️ Weather – Thời Tiết</h1>
+  <p>Học từ vựng · Luyện phát âm · Nghe & làm bài tập</p>
+</header>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('theory',this)">📖 Lý Thuyết</button>
+  <button class="tab-btn" onclick="showTab('ex2',this)">🔤 Bài 1: Sắp xếp chữ</button>
+  <button class="tab-btn" onclick="showTab('ex4',this)">🌡️ Bài 2: Nhiệt độ</button>
+  <button class="tab-btn" onclick="showTab('ex5',this)">✏️ Bài 3: Điền từ</button>
+  <button class="tab-btn" onclick="showTab('ex6',this)">🎯 Bài 4: Danh/Tính từ</button>
+  <button class="tab-btn" onclick="showTab('ex7',this)">📝 Bài 5: Đoạn văn</button>
+  <button class="tab-btn" onclick="showTab('ex8',this)">📖 Bài 6: Đọc hiểu</button>
+</div>
+
+<!-- ══════ THEORY ══════ -->
+<div id="theory" class="tab-content active">
+
+  <div class="sc">
+    <h2>☀️ 1. Từ vựng thời tiết <small>— bấm 🔊 để nghe phát âm</small></h2>
+    <div class="vocab-grid" id="vocabGrid"></div>
+  </div>
+
+  <div class="sc">
+    <h2>📊 2. Danh từ vs Tính từ <small>— Noun vs Adjective</small></h2>
+    <table class="na-table">
+      <thead><tr><th>Danh từ (Noun)</th><th>Tính từ (Adjective)</th><th>Nghĩa</th></tr></thead>
+      <tbody id="naTableBody"></tbody>
+    </table>
+    <div class="rule-box" style="margin-top:14px;">
+      <strong>📌 Quy tắc:</strong> Danh từ đứng sau động từ hoặc đứng một mình.<br>
+      Tính từ đứng sau động từ "be" hoặc trước danh từ.<br>
+      Ví dụ: "There is <strong>wind</strong>." (danh từ) ↔ "It is <strong>windy</strong>." (tính từ)
+    </div>
+    <div class="rule-box blue" style="margin-top:10px;">
+      <strong>💡 Hậu tố tính từ thường gặp:</strong><br>
+      wind → wind<strong>y</strong> &nbsp;|&nbsp; cloud → cloud<strong>y</strong> &nbsp;|&nbsp; fog → fogg<strong>y</strong><br>
+      snow → snow<strong>y</strong> &nbsp;|&nbsp; sun → sunn<strong>y</strong> &nbsp;|&nbsp; storm → storm<strong>y</strong> &nbsp;|&nbsp; ice → ic<strong>y</strong>
+    </div>
+  </div>
+
+  <div class="sc">
+    <h2>🌡️ 3. Thang nhiệt độ <small>— nóng nhất → lạnh nhất</small></h2>
+    <div class="temp-scale">
+      <div class="temp-seg" style="background:#ef4444;">🔥 hot<br><small>&gt;35°C</small></div>
+      <div class="temp-seg" style="background:#f97316;">☀️ warm<br><small>20–35°C</small></div>
+      <div class="temp-seg" style="background:#eab308;">🌤️ mild<br><small>10–20°C</small></div>
+      <div class="temp-seg" style="background:#3b82f6;">🧥 chilly<br><small>5–10°C</small></div>
+      <div class="temp-seg" style="background:#6366f1;">❄️ cold<br><small>0–5°C</small></div>
+      <div class="temp-seg" style="background:#8b5cf6;">🧊 freezing<br><small>&lt;0°C</small></div>
+    </div>
+  </div>
+
+  <!-- LISTEN QUIZ -->
+  <div class="listen-sec">
+    <h2>🎧 4. Luyện nghe – Nghe và chọn từ đúng</h2>
+    <div class="speed-row">
+      <span>Tốc độ:</span>
+      <button class="speed-btn active" onclick="setSpeed(0.7,this)">🐢 Chậm</button>
+      <button class="speed-btn" onclick="setSpeed(1.0,this)">🚶 Bình thường</button>
+      <button class="speed-btn" onclick="setSpeed(1.3,this)">🏃 Nhanh</button>
+    </div>
+    <div class="listen-box">
+      <div class="listen-q-num" id="listenQNum">Câu 1 / 10</div>
+      <button class="listen-play-btn" id="listenPlayBtn" onclick="playCurrentQ()">🔊 &nbsp;Nghe từ</button>
+      <div class="listen-opts" id="listenOpts"></div>
+      <div class="listen-fb" id="listenFb"></div>
+    </div>
+    <div class="ls-bar">
+      <span>Điểm:</span>
+      <span class="ls-big" id="lsNum">0</span>
+      <span style="color:var(--muted);font-weight:600;" id="lsTotal">/0</span>
+      <div class="prog-wrap"><div class="prog-fill" id="lsBar" style="width:0%"></div></div>
+      <button class="btn btn-s" style="margin-top:0;padding:5px 14px;font-size:.83rem;" onclick="resetListen()">🔄 Làm lại</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════ EX2: ANAGRAM ══════ -->
+<div id="ex2" class="tab-content">
+  <div class="sc">
+    <h3>🔤 Bài 1: Sắp xếp các chữ cái thành từ mô tả thời tiết</h3>
+    <div id="anagramForm"></div>
+    <div class="btn-row">
+      <button class="btn btn-p" onclick="checkAnagram()">✅ Chấm điểm</button>
+      <button class="btn btn-s" onclick="resetAnagram()">🔄 Làm lại</button>
+    </div>
+    <div id="anagram-score" class="score-bar" style="display:none;"></div>
+  </div>
+</div>
+
+<!-- ══════ EX4: TEMPERATURE ORDER ══════ -->
+<div id="ex4" class="tab-content">
+  <div class="sc">
+    <h3>🌡️ Bài 2: Điền các từ theo thứ tự từ nóng nhất → lạnh nhất</h3>
+    <div style="background:#f0f9ff;border-radius:10px;padding:10px 15px;margin-bottom:14px;font-size:.86rem;color:var(--muted);">
+      📦 Từ cho sẵn: <strong>hot &nbsp;|&nbsp; warm &nbsp;|&nbsp; chilly &nbsp;|&nbsp; cold</strong>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px;">
+      <div style="text-align:center;">
+        <div style="font-size:1.8rem;">🔥</div>
+        <div style="font-size:.78rem;color:var(--muted);margin-bottom:6px;">Nóng nhất</div>
+        <input class="para-blank" id="t1" autocomplete="off" style="width:90px;text-align:center;">
+        <span class="fb" id="tf1"></span>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-size:1.8rem;">☀️</div>
+        <div style="font-size:.78rem;color:var(--muted);margin-bottom:6px;">Ấm</div>
+        <input class="para-blank" id="t2" autocomplete="off" style="width:90px;text-align:center;">
+        <span class="fb" id="tf2"></span>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-size:1.8rem;">🧥</div>
+        <div style="font-size:.78rem;color:var(--muted);margin-bottom:6px;">Lạnh nhẹ</div>
+        <input class="para-blank" id="t3" autocomplete="off" style="width:90px;text-align:center;">
+        <span class="fb" id="tf3"></span>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-size:1.8rem;">❄️</div>
+        <div style="font-size:.78rem;color:var(--muted);margin-bottom:6px;">Lạnh nhất</div>
+        <input class="para-blank" id="t4" autocomplete="off" style="width:90px;text-align:center;">
+        <span class="fb" id="tf4"></span>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-p" onclick="checkTemp()">✅ Chấm điểm</button>
+      <button class="btn btn-s" onclick="resetTemp()">🔄 Làm lại</button>
+    </div>
+    <div id="temp-score" class="score-bar" style="display:none;"></div>
+  </div>
+</div>
+
+<!-- ══════ EX5: FILL IN BLANKS ══════ -->
+<div id="ex5" class="tab-content">
+  <div class="sc">
+    <h3>✏️ Bài 3: Chọn từ đúng điền vào chỗ trống</h3>
+    <div style="background:#e0f2fe;border-radius:10px;padding:10px 15px;margin-bottom:14px;font-weight:700;color:var(--primary);font-size:.86rem;">
+      📦 Từ cho sẵn: <em>cold &nbsp;|&nbsp; cloudy &nbsp;|&nbsp; chilly &nbsp;|&nbsp; hot &nbsp;|&nbsp; warm &nbsp;|&nbsp; thunderstorm &nbsp;|&nbsp; ice &nbsp;|&nbsp; floods</em>
+    </div>
+    <ol style="line-height:3;font-size:.94rem;padding-left:20px;">
+      <li>The temperature was -20°C. It was <input class="para-blank" id="e1" autocomplete="off">! <span class="fb" id="ef1"></span></li>
+      <li>San Diego has a <input class="para-blank" id="e2" autocomplete="off"> climate. The average temperature is 23°C. <span class="fb" id="ef2"></span></li>
+      <li>It was so <input class="para-blank" id="e3" autocomplete="off"> that we couldn't go out. <span class="fb" id="ef3"></span></li>
+      <li>It's too <input class="para-blank" id="e4" autocomplete="off"> in this house. It's only 10°C! <span class="fb" id="ef4"></span></li>
+      <li>It is so <input class="para-blank" id="e5" autocomplete="off">. I can't see the sun. <span class="fb" id="ef5"></span></li>
+      <li>It is very dangerous to drive with <input class="para-blank" id="e6" autocomplete="off"> on the road. <span class="fb" id="ef6"></span></li>
+      <li>In the summer, Vietnam usually has many thunderstorms that cause heavy <input class="para-blank" id="e7" autocomplete="off">. <span class="fb" id="ef7"></span></li>
+    </ol>
+    <div class="btn-row">
+      <button class="btn btn-p" onclick="checkEx5()">✅ Chấm điểm</button>
+      <button class="btn btn-s" onclick="resetEx5()">🔄 Làm lại</button>
+    </div>
+    <div id="ex5-score" class="score-bar" style="display:none;"></div>
+  </div>
+</div>
+
+<!-- ══════ EX6: NOUN or ADJ ══════ -->
+<div id="ex6" class="tab-content">
+  <div class="sc">
+    <h3>🎯 Bài 4: Chọn danh từ hay tính từ?</h3>
+    <div id="ex6form"></div>
+    <div class="btn-row">
+      <button class="btn btn-p" onclick="checkEx6()">✅ Chấm điểm</button>
+      <button class="btn btn-s" onclick="resetEx6()">🔄 Làm lại</button>
+    </div>
+    <div id="ex6-score" class="score-bar" style="display:none;"></div>
+  </div>
+</div>
+
+<!-- ══════ EX7: PASSAGE FILL ══════ -->
+<div id="ex7" class="tab-content">
+  <div class="sc">
+    <h3>📝 Bài 5: Điền từ vào đoạn văn</h3>
+    <div class="reading-box" style="margin-bottom:10px;">
+      <strong>🇻🇳 Bản dịch:</strong> Đã có một <em>[cơn bão]</em> khủng khiếp vào tối hôm qua. Chúng tôi nhìn thấy <em>[đám mây]</em> lớn, xám đen trên bầu trời. Sau đó, một <em>[cơn gió]</em> mạnh bắt đầu thổi và trời bắt đầu <em>[mưa]</em> nặng hạt. Chúng tôi đã rất ướt! Có tia chớp và sấm lớn. Nhưng rồi cơn bão đi qua và có <em>[ánh nắng]</em> sáng!
+    </div>
+    <div class="reading-box">
+      There was a terrible <input class="para-blank" id="p1" autocomplete="off"> yesterday evening. We saw big, dark grey <input class="para-blank" id="p2" autocomplete="off"> in the sky. Then a strong <input class="para-blank" id="p3" autocomplete="off"> started to blow and it began to <input class="para-blank" id="p4" autocomplete="off"> heavily – huge raindrops fell from the sky. We got very wet! There were flashes of lightning and loud claps of thunder. It was quite scary. But then the storm passed and there was bright <input class="para-blank" id="p5" autocomplete="off">!
+      <div style="margin-top:10px;font-size:.8rem;color:var(--muted);">
+        <span class="fb" id="pf1"></span> <span class="fb" id="pf2"></span> <span class="fb" id="pf3"></span> <span class="fb" id="pf4"></span> <span class="fb" id="pf5"></span>
+      </div>
+    </div>
+    <div style="background:#e0f2fe;border-radius:10px;padding:9px 14px;font-weight:700;color:var(--primary);font-size:.84rem;margin-bottom:12px;">
+      📦 Từ gợi ý: <em>storm &nbsp;|&nbsp; clouds &nbsp;|&nbsp; wind &nbsp;|&nbsp; rain &nbsp;|&nbsp; sunshine</em>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-p" onclick="checkEx7()">✅ Chấm điểm</button>
+      <button class="btn btn-s" onclick="resetEx7()">🔄 Làm lại</button>
+    </div>
+    <div id="ex7-score" class="score-bar" style="display:none;"></div>
+  </div>
+</div>
+
+<!-- ══════ EX8: READING ══════ -->
+<div id="ex8" class="tab-content">
+  <div class="sc">
+    <h3>📖 Bài 6: Đọc hiểu – Warren Faidley</h3>
+    <div class="reading-box">
+      Warren Faidley has an unusual job - he likes bad weather so much that he follows storms, really bad storms like tornadoes. He was born in the middle of the USA. This part of the world has more tornadoes than the rest of the country. Warren travels all over North America to find tornadoes and other storms. When he finds one, he makes a <strong>film</strong> of it and uses his computer to give him more information. He says he enjoys taking photos of <strong>bad weather</strong>. He believes it is very important for people to know about bad weather. He works for the government and also for Hollywood. He helped on the film <em>Twister</em>. He says his job can be very frightening but he does everything he needs to do to keep himself safe.
+      <br><br>
+      <span style="font-size:.82rem;color:var(--muted);">📖 <strong>government</strong> = chính phủ &nbsp;|&nbsp; <strong>frightening</strong> = đáng sợ &nbsp;|&nbsp; <strong>tornado</strong> = lốc xoáy</span>
+    </div>
+
+    <div class="mcq-item" id="r1">
+      <div class="qt">1. Warren enjoys following ___</div>
+      <div class="mcq-options">
+        <label class="mcq-option"><input type="radio" name="r1" value="A"> A. nice weather</label>
+        <label class="mcq-option"><input type="radio" name="r1" value="B"> B. bad storm</label>
+        <label class="mcq-option"><input type="radio" name="r1" value="C"> C. heavy rain</label>
+      </div>
+    </div>
+    <div class="mcq-item" id="r2">
+      <div class="qt">2. The place where Warren was born has _____</div>
+      <div class="mcq-options">
+        <label class="mcq-option"><input type="radio" name="r2" value="A"> A. tornadoes</label>
+        <label class="mcq-option"><input type="radio" name="r2" value="B"> B. floods</label>
+        <label class="mcq-option"><input type="radio" name="r2" value="C"> C. thunderstorms</label>
+      </div>
+    </div>
+    <div class="mcq-item" id="r3">
+      <div class="qt">3. Warren finds tornadoes to make _____</div>
+      <div class="mcq-options">
+        <label class="mcq-option"><input type="radio" name="r3" value="A"> A. films</label>
+        <label class="mcq-option"><input type="radio" name="r3" value="B"> B. songs</label>
+        <label class="mcq-option"><input type="radio" name="r3" value="C"> C. stories</label>
+      </div>
+    </div>
+    <div class="mcq-item" id="r4">
+      <div class="qt">4. Warren _____ taking photos of sunny days</div>
+      <div class="mcq-options">
+        <label class="mcq-option"><input type="radio" name="r4" value="A"> A. likes</label>
+        <label class="mcq-option"><input type="radio" name="r4" value="B"> B. loves</label>
+        <label class="mcq-option"><input type="radio" name="r4" value="C"> C. hates</label>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-p" onclick="checkEx8()">✅ Chấm điểm</button>
+      <button class="btn btn-s" onclick="resetEx8()">🔄 Làm lại</button>
+    </div>
+    <div id="ex8-score" class="score-bar" style="display:none;"></div>
+  </div>
+</div>
+
+<!-- Result Popup -->
+<div class="result-popup" id="resultPopup">
+  <div class="result-box">
+    <div class="re" id="rEmoji">🎉</div>
+    <h2>Hoàn thành!</h2>
+    <div class="rs" id="rScore">0/0</div>
+    <p id="rMsg">Làm tốt lắm!</p>
+    <button class="btn btn-p" onclick="closePopup()">✨ Tiếp tục</button>
+  </div>
+</div>
+
+<script>
+// ══════ DATA ══════
+const vocab=[
+  {w:'sun',      ipa:'/sʌn/',        em:'☀️', v:'mặt trời'},
+  {w:'sunny',    ipa:'/ˈsʌn.i/',     em:'🌞', v:'nắng, có nắng'},
+  {w:'rain',     ipa:'/reɪn/',       em:'🌧️', v:'mưa'},
+  {w:'rainy',    ipa:'/ˈreɪ.ni/',    em:'☔', v:'mưa nhiều'},
+  {w:'wind',     ipa:'/wɪnd/',       em:'💨', v:'gió'},
+  {w:'windy',    ipa:'/ˈwɪn.di/',    em:'🌬️', v:'có nhiều gió'},
+  {w:'cloud',    ipa:'/klaʊd/',      em:'☁️', v:'đám mây'},
+  {w:'cloudy',   ipa:'/ˈklaʊ.di/',  em:'⛅', v:'nhiều mây'},
+  {w:'fog',      ipa:'/fɒɡ/',        em:'🌫️', v:'sương mù'},
+  {w:'foggy',    ipa:'/ˈfɒɡ.i/',    em:'🌁', v:'nhiều sương mù'},
+  {w:'snow',     ipa:'/snəʊ/',       em:'❄️', v:'tuyết'},
+  {w:'snowy',    ipa:'/ˈsnəʊ.i/',   em:'🌨️', v:'có tuyết'},
+  {w:'ice',      ipa:'/aɪs/',        em:'🧊', v:'băng'},
+  {w:'icy',      ipa:'/ˈaɪ.si/',    em:'🥶', v:'có băng, trơn'},
+  {w:'hot',      ipa:'/hɒt/',        em:'🔥', v:'nóng'},
+  {w:'warm',     ipa:'/wɔːm/',       em:'🌤️', v:'ấm'},
+  {w:'chilly',   ipa:'/ˈtʃɪl.i/',   em:'🧥', v:'lạnh đến thấu xương'},
+  {w:'cold',     ipa:'/kəʊld/',      em:'🌡️', v:'lạnh'},
+  {w:'storm',    ipa:'/stɔːm/',      em:'⛈️', v:'bão'},
+  {w:'stormy',   ipa:'/ˈstɔː.mi/',  em:'🌩️', v:'có bão'},
+  {w:'thunderstorm',ipa:'/ˈθʌn.də.stɔːm/',em:'⛈️',v:'bão có sấm sét'},
+  {w:'flood',    ipa:'/flʌd/',       em:'🌊', v:'lũ lụt'},
+  {w:'tornado',  ipa:'/tɔːˈneɪ.dəʊ/',em:'🌪️',v:'lốc xoáy'},
+  {w:'temperature',ipa:'/ˈtem.prɪ.tʃər/',em:'🌡️',v:'nhiệt độ'},
+  {w:'dry',      ipa:'/draɪ/',       em:'🏜️', v:'khô'},
+  {w:'wet',      ipa:'/wet/',        em:'💧', v:'ẩm ướt'},
+];
+
+const naData=[
+  {noun:'sun',   adj:'sunny',  meaning:'nắng'},
+  {noun:'wind',  adj:'windy',  meaning:'gió'},
+  {noun:'cloud', adj:'cloudy', meaning:'mây'},
+  {noun:'fog',   adj:'foggy',  meaning:'sương mù'},
+  {noun:'snow',  adj:'snowy',  meaning:'tuyết'},
+  {noun:'ice',   adj:'icy',    meaning:'băng'},
+  {noun:'storm', adj:'stormy', meaning:'bão'},
+  {noun:'rain',  adj:'rainy',  meaning:'mưa'},
+];
+
+// ══════ RENDER VOCAB ══════
+const vg=document.getElementById('vocabGrid');
+vocab.forEach(a=>{
+  vg.innerHTML+=`<div class="vc">
+    <div class="em">${a.em}</div>
+    <div class="w">${a.w}</div>
+    <div class="ipa">${a.ipa}</div>
+    <div class="v">${a.v}</div>
+    <button class="speak-btn" onclick="speakWord('${a.w}',this)">🔊</button>
+  </div>`;
+});
+
+// NA TABLE
+const tbody=document.getElementById('naTableBody');
+naData.forEach(r=>{
+  tbody.innerHTML+=`<tr>
+    <td><strong>${r.noun}</strong><button class="speak-sm" onclick="speakWord('${r.noun}',this)">🔊</button></td>
+    <td><strong>${r.adj}</strong><button class="speak-sm" onclick="speakWord('${r.adj}',this)">🔊</button></td>
+    <td>${r.meaning}</td>
+  </tr>`;
+});
+
+// ══════ TTS ══════
+let ttsRate=0.7;
+function setSpeed(r,btn){ttsRate=r;document.querySelectorAll('.speed-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
+function speakWord(w,btn){
+  if(!window.speechSynthesis){alert('Dùng Chrome/Edge để nghe phát âm.');return;}
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(w);
+  u.lang='en-US';u.rate=ttsRate;u.pitch=1;
+  if(btn){btn.classList.add('playing');u.onend=()=>btn.classList.remove('playing');}
+  window.speechSynthesis.speak(u);
+}
+
+// ══════ LISTEN QUIZ ══════
+const listenPool=vocab.filter(x=>x.w.length<12);
+const LTOTAL=10;
+let lQ=[],lIdx=0,lOk=0,lAns=false;
+function shuffled(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+function initListen(){
+  lQ=shuffled([...listenPool,...listenPool]).slice(0,LTOTAL);
+  lIdx=0;lOk=0;lAns=false;
+  document.getElementById('lsNum').textContent='0';
+  document.getElementById('lsTotal').textContent='/0';
+  document.getElementById('lsBar').style.width='0%';
+  renderLQ();
+}
+function renderLQ(){
+  if(lIdx>=LTOTAL){doneListen();return;}
+  const q=lQ[lIdx];
+  document.getElementById('listenQNum').textContent=`Câu ${lIdx+1} / ${LTOTAL}`;
+  document.getElementById('listenFb').textContent='';
+  document.getElementById('listenPlayBtn').className='listen-play-btn';
+  document.getElementById('listenPlayBtn').innerHTML='🔊 &nbsp;Nghe từ';
+  lAns=false;
+  const wrongs=shuffled(listenPool.filter(x=>x.w!==q.w)).slice(0,3);
+  const opts=shuffled([q,...wrongs]);
+  const el=document.getElementById('listenOpts');el.innerHTML='';
+  opts.forEach(o=>{
+    const b=document.createElement('button');b.className='listen-opt';b.textContent=o.w;
+    b.onclick=()=>handleLA(o.w,q.w,b);el.appendChild(b);
+  });
+  updateLS();
+}
+function playCurrentQ(){
+  if(lIdx>=LTOTAL)return;
+  const btn=document.getElementById('listenPlayBtn');btn.classList.add('playing');
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(lQ[lIdx].w);
+  u.lang='en-US';u.rate=ttsRate;u.pitch=1;u.onend=()=>btn.classList.remove('playing');
+  window.speechSynthesis.speak(u);
+}
+function handleLA(chosen,correct,btn){
+  if(lAns)return;lAns=true;
+  const ok=chosen===correct;
+  if(ok){lOk++;btn.classList.add('correct-opt');}
+  else{btn.classList.add('wrong-opt');document.querySelectorAll('.listen-opt').forEach(b=>{if(b.textContent===correct)b.classList.add('correct-opt');});}
+  document.querySelectorAll('.listen-opt').forEach(b=>b.classList.add('locked'));
+  const viet=vocab.find(x=>x.w===correct)?.v||'';
+  const fb=document.getElementById('listenFb');
+  fb.innerHTML=ok?`✅ Đúng! <strong>${correct}</strong> = ${viet}`:`❌ Sai! Đáp án: <strong>${correct}</strong> = ${viet}`;
+  fb.style.color=ok?'#166534':'#991b1b';
+  updateLS();setTimeout(()=>{lIdx++;renderLQ();},1800);
+}
+function updateLS(){
+  document.getElementById('lsNum').textContent=lOk;
+  document.getElementById('lsTotal').textContent='/'+lIdx;
+  const p=lIdx>0?(lOk/lIdx)*100:0;
+  document.getElementById('lsBar').style.width=p+'%';
+}
+function doneListen(){
+  document.getElementById('listenQNum').textContent='🎉 Hoàn thành!';
+  document.getElementById('listenOpts').innerHTML='';
+  document.getElementById('listenPlayBtn').innerHTML='✅ Đã xong';
+  const fb=document.getElementById('listenFb');
+  fb.innerHTML=`<strong>Kết quả: ${lOk}/${LTOTAL}</strong> — ${lOk>=8?'Xuất sắc! 🏆':lOk>=5?'Tốt lắm! 🎉':'Cố gắng hơn nhé 💪'}`;
+  fb.style.color='#059669';
+  document.getElementById('lsTotal').textContent='/'+LTOTAL;
+  document.getElementById('lsBar').style.width=(lOk/LTOTAL*100)+'%';
+}
+function resetListen(){initListen();}
+initListen();
+
+// ══════ ANAGRAM ══════
+const anagrams=[
+  {letters:'y/g/o/g/f',hint:'Khó để quan sát với kiểu thời tiết này',ans:'foggy'},
+  {letters:'n/u/s',hint:'Mang lại nguồn nhiệt và ánh sáng cho chúng ta',ans:'sun'},
+  {letters:'m/u/m/s/e/r',hint:'Nó nóng hơn các thời điểm khác trong năm',ans:'summer'},
+  {letters:'o/l/u/c/d',hint:'Đây là một thứ màu trắng hoặc xám trên bầu trời',ans:'cloud'},
+  {letters:'a/r/w/m',hint:'Cái này có một chút nhiệt, nhưng không nóng',ans:'warm'},
+  {letters:'n/w/o/s',hint:'Thứ này có màu trắng, lạnh và rơi từ trên trời xuống',ans:'snow'},
+  {letters:'c/e/i',hint:'Khi lái xe mà thứ này ở trên đường thì rất trơn và nguy hiểm',ans:'ice'},
+  {letters:'n/i/d/w/y',hint:'Khó sử dụng được ô khi có thời tiết này',ans:'windy'},
+];
+const af=document.getElementById('anagramForm');
+anagrams.forEach((a,i)=>{
+  af.innerHTML+=`<div class="anagram-row">
+    <div class="num">${i+1}.</div>
+    <div class="anagram-block">
+      <div class="letters">${a.letters.toUpperCase()}</div>
+      <div class="hint">💡 ${a.hint}</div>
+      <input class="fill-input" id="ag${i}" placeholder="Nhập từ..." autocomplete="off">
+      <span class="fb" id="agf${i}"></span>
+    </div>
+  </div>`;
+});
+function checkAnagram(){
+  let c=0;
+  anagrams.forEach((a,i)=>{
+    const inp=document.getElementById('ag'+i);
+    const fb=document.getElementById('agf'+i);
+    const ok=inp.value.trim().toLowerCase()===a.ans;
+    inp.classList.toggle('correct',ok);inp.classList.toggle('wrong',!ok&&inp.value.trim()!=='');
+    if(ok){fb.textContent='✓';fb.className='fb correct';c++;}
+    else if(inp.value.trim()!==''){fb.textContent='✗ → '+a.ans;fb.className='fb wrong';}
+    else fb.textContent='';
+  });
+  showScoreBar('anagram-score',c,anagrams.length);showResult(c,anagrams.length);
+}
+function resetAnagram(){
+  anagrams.forEach((_,i)=>{document.getElementById('ag'+i).value='';document.getElementById('ag'+i).className='fill-input';document.getElementById('agf'+i).textContent='';});
+  document.getElementById('anagram-score').style.display='none';
+}
+
+// ══════ EX4 TEMP ══════
+const tempPairs=[['t1','hot','tf1'],['t2','warm','tf2'],['t3','chilly','tf3'],['t4','cold','tf4']];
+function checkTemp(){
+  let c=0;
+  tempPairs.forEach(([id,ans,fid])=>{
+    const inp=document.getElementById(id);const fb=document.getElementById(fid);
+    const ok=inp.value.trim().toLowerCase()===ans;
+    inp.classList.toggle('correct',ok);inp.classList.toggle('wrong',!ok&&inp.value.trim()!=='');
+    if(ok){fb.textContent='✓';fb.className='fb correct';c++;}
+    else if(inp.value.trim()!==''){fb.textContent='✗→'+ans;fb.className='fb wrong';}
+    else fb.textContent='';
+  });
+  showScoreBar('temp-score',c,4);showResult(c,4);
+}
+function resetTemp(){tempPairs.forEach(([id,,fid])=>{document.getElementById(id).value='';document.getElementById(id).className='para-blank';document.getElementById(fid).textContent='';});document.getElementById('temp-score').style.display='none';}
+
+// ══════ EX5 FILL ══════
+const ex5p=[['e1','cold','ef1'],['e2','warm','ef2'],['e3',['thunderstorm','hot'],'ef3'],['e4','chilly','ef4'],['e5','cloudy','ef5'],['e6','ice','ef6'],['e7','floods','ef7']];
+function checkEx5(){
+  let c=0;
+  ex5p.forEach(([id,ans,fid])=>{
+    const inp=document.getElementById(id);const fb=document.getElementById(fid);
+    const val=inp.value.trim().toLowerCase();
+    const ok=(Array.isArray(ans)?ans:[ans]).includes(val);
+    inp.classList.toggle('correct',ok);inp.classList.toggle('wrong',!ok&&val!=='');
+    if(ok){fb.textContent='✓';fb.className='fb correct';c++;}
+    else if(val!==''){const s=Array.isArray(ans)?ans[0]:ans;fb.textContent='✗→'+s;fb.className='fb wrong';}
+    else fb.textContent='';
+  });
+  showScoreBar('ex5-score',c,ex5p.length);showResult(c,ex5p.length);
+}
+function resetEx5(){ex5p.forEach(([id,,fid])=>{document.getElementById(id).value='';document.getElementById(id).className='para-blank';document.getElementById(fid).textContent='';});document.getElementById('ex5-score').style.display='none';}
+
+// ══════ EX6 NOUN/ADJ MCQ ══════
+const ex6data=[
+  {q:'The weather is very ____. It\'s hard to use an umbrella in this weather.',opts:['Wind','Windy'],ans:'Windy',exp:'Sau "be" (is) → dùng tính từ: Windy'},
+  {q:'"How strong is the ____?" "Really strong, there is even a flood."',opts:['Rain','Rainy'],ans:'Rain',exp:'Sau "the" → danh từ: Rain (the rain = cơn mưa)'},
+  {q:'There are so many ____ in the sky, I can\'t see the sun.',opts:['Clouds','Cloudy'],ans:'Clouds',exp:'Sau "many" → danh từ số nhiều: Clouds'},
+  {q:'Here in the winter, the weather is always so ____ in the morning.',opts:['Fog','Foggy'],ans:'Foggy',exp:'Sau "so" (rất) → tính từ: Foggy'},
+  {q:'In London, it is ____ in December and January.',opts:['Ice','Icy'],ans:'Icy',exp:'Sau "is" → tính từ: Icy'},
+  {q:'I like ____ a lot. I love making snowmen with my family.',opts:['Snow','Snowy'],ans:'Snow',exp:'"like + danh từ" → Snow (thích tuyết)'},
+  {q:'Oh I hate it! It is ____ in the summer, there are even thunderstorms.',opts:['Storm','Stormy'],ans:'Stormy',exp:'Sau "is" → tính từ: Stormy'},
+];
+const ex6f=document.getElementById('ex6form');
+ex6data.forEach((item,i)=>{
+  ex6f.innerHTML+=`<div class="mcq-item" id="ex6q${i}">
+    <div class="qt">${i+1}. ${item.q}</div>
+    <div class="mcq-options">
+      ${item.opts.map(o=>`<label class="mcq-option"><input type="radio" name="ex6_${i}" value="${o}"> ${o}</label>`).join('')}
+    </div>
+  </div>`;
+});
+function checkEx6(){
+  let c=0;
+  ex6data.forEach((item,i)=>{
+    const sel=document.querySelector(`input[name="ex6_${i}"]:checked`);
+    const opts=document.querySelectorAll(`#ex6q${i} .mcq-option`);
+    opts.forEach(o=>o.classList.remove('correct-ans','wrong-ans'));
+    if(sel){
+      const pl=sel.closest('.mcq-option');const ok=sel.value===item.ans;
+      if(ok){pl.classList.add('correct-ans');c++;}
+      else{pl.classList.add('wrong-ans');opts.forEach(o=>{if(o.querySelector('input').value===item.ans)o.classList.add('correct-ans');});}
+      let ex=document.getElementById('ex6exp'+i);
+      if(!ex){ex=document.createElement('div');ex.id='ex6exp'+i;ex.style.cssText='margin-top:6px;padding:6px 11px;background:#f0fdf4;border-radius:7px;font-size:.82rem;color:#166534;font-weight:600;';document.getElementById('ex6q'+i).appendChild(ex);}
+      ex.textContent='💡 '+item.exp;
+    }
+  });
+  showScoreBar('ex6-score',c,ex6data.length);showResult(c,ex6data.length);
+}
+function resetEx6(){
+  document.querySelectorAll('[name^="ex6_"]').forEach(r=>r.checked=false);
+  document.querySelectorAll('#ex6form .mcq-option').forEach(o=>o.classList.remove('correct-ans','wrong-ans'));
+  ex6data.forEach((_,i)=>{const e=document.getElementById('ex6exp'+i);if(e)e.remove();});
+  document.getElementById('ex6-score').style.display='none';
+}
+
+// ══════ EX7 PASSAGE ══════
+const ex7p=[['p1','storm','pf1'],['p2','clouds','pf2'],['p3','wind','pf3'],['p4','rain','pf4'],['p5','sunshine','pf5']];
+function checkEx7(){
+  let c=0;
+  ex7p.forEach(([id,ans,fid])=>{
+    const inp=document.getElementById(id);const fb=document.getElementById(fid);
+    const ok=inp.value.trim().toLowerCase()===ans;
+    inp.classList.toggle('correct',ok);inp.classList.toggle('wrong',!ok&&inp.value.trim()!=='');
+    if(ok){fb.textContent='✓ '+ans;fb.className='fb correct';c++;}
+    else if(inp.value.trim()!==''){fb.textContent='✗→'+ans;fb.className='fb wrong';}
+    else fb.textContent='';
+  });
+  showScoreBar('ex7-score',c,5);showResult(c,5);
+}
+function resetEx7(){ex7p.forEach(([id,,fid])=>{document.getElementById(id).value='';document.getElementById(id).className='para-blank';document.getElementById(fid).textContent='';});document.getElementById('ex7-score').style.display='none';}
+
+// ══════ EX8 READING MCQ ══════
+const ex8ans={r1:'B',r2:'A',r3:'A',r4:'C'};
+const ex8exp={r1:'B – Warren thích đuổi theo bad storms (bão tố).',r2:'A – Anh sinh ở giữa nước Mỹ, nơi có nhiều tornadoes (lốc xoáy).',r3:'A – Anh quay phim (makes a film) khi tìm thấy lốc xoáy.',r4:'C – Anh thích chụp ảnh bad weather, không phải sunny days → hates.'};
+function checkEx8(){
+  let c=0;
+  ['r1','r2','r3','r4'].forEach((q,i)=>{
+    const sel=document.querySelector(`input[name="${q}"]:checked`);
+    const opts=document.querySelectorAll(`#${q} .mcq-option`);
+    opts.forEach(o=>o.classList.remove('correct-ans','wrong-ans'));
+    if(sel){
+      const pl=sel.closest('.mcq-option');const ok=sel.value===ex8ans[q];
+      if(ok){pl.classList.add('correct-ans');c++;}
+      else{pl.classList.add('wrong-ans');opts.forEach(o=>{if(o.querySelector('input').value===ex8ans[q])o.classList.add('correct-ans');});}
+      let ex=document.getElementById('ex8exp_'+q);
+      if(!ex){ex=document.createElement('div');ex.id='ex8exp_'+q;ex.style.cssText='margin-top:6px;padding:6px 11px;background:#f0fdf4;border-radius:7px;font-size:.82rem;color:#166534;font-weight:600;';document.getElementById(q).appendChild(ex);}
+      ex.textContent='💡 '+ex8exp[q];
+    }
+  });
+  showScoreBar('ex8-score',c,4);showResult(c,4);
+}
+function resetEx8(){
+  document.querySelectorAll('[name^="r"]').forEach(r=>r.checked=false);
+  document.querySelectorAll('#ex8 .mcq-option').forEach(o=>o.classList.remove('correct-ans','wrong-ans'));
+  ['r1','r2','r3','r4'].forEach(q=>{const e=document.getElementById('ex8exp_'+q);if(e)e.remove();});
+  document.getElementById('ex8-score').style.display='none';
+}
+
+// ══════ HELPERS ══════
+function showTab(id,btn){
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(btn)btn.classList.add('active');
+}
+function showScoreBar(id,c,t){
+  const el=document.getElementById(id);el.style.display='flex';
+  el.innerHTML=`<span class="score-num">${c}/${t}</span><span>${c===t?'🏆 Hoàn hảo!':c>=t*.7?'🎉 Tốt lắm!':'💪 Thử lại!'}</span>`;
+}
+function showResult(c,t){
+  const p=c/t;
+  document.getElementById('rEmoji').textContent=p===1?'🏆':p>=.7?'🎉':p>=.5?'👍':'💪';
+  document.getElementById('rScore').textContent=c+'/'+t;
+  document.getElementById('rMsg').textContent=p===1?'Hoàn hảo! Xuất sắc!':p>=.7?'Làm tốt lắm!':p>=.5?'Cố gắng hơn nhé!':'Ôn lại lý thuyết và thử lại!';
+  document.getElementById('resultPopup').classList.add('show');
+}
+function closePopup(){document.getElementById('resultPopup').classList.remove('show');}
+</script>
+</body>
+</html>

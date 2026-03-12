@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Căn Phòng – Room Adjectives</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #7C3AED;
+  --primary-light: #A78BFA;
+  --primary-dark: #5B21B6;
+  --accent: #F59E0B;
+  --accent2: #10B981;
+  --bg: #F5F3FF;
+  --card: #FFFFFF;
+  --text: #1E1B4B;
+  --text-muted: #6B7280;
+  --correct: #10B981;
+  --wrong: #EF4444;
+  --radius: 16px;
+  --shadow: 0 4px 20px rgba(124,58,237,0.12);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+/* HEADER */
+.header {
+  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 60%, var(--primary-light) 100%);
+  padding: 28px 20px 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.header::before {
+  content: '';
+  position: absolute;
+  width: 200px; height: 200px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 50%;
+  top: -80px; right: -60px;
+}
+.header h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 2rem;
+  color: #fff;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+.header p { color: rgba(255,255,255,0.85); font-size: 0.95rem; margin-top: 4px; }
+
+/* TABS */
+.tabs-wrap { background: #fff; box-shadow: 0 2px 8px rgba(124,58,237,0.08); position: sticky; top: 0; z-index: 100; }
+.tabs { display: flex; overflow-x: auto; gap: 0; scrollbar-width: none; }
+.tabs::-webkit-scrollbar { display: none; }
+.tab-btn {
+  flex: none;
+  padding: 14px 18px;
+  border: none;
+  background: none;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+.tab-btn.active { color: var(--primary); border-bottom-color: var(--primary); }
+.tab-btn:hover { color: var(--primary); }
+
+/* CONTENT */
+.tab-content { display: none; padding: 20px 16px; max-width: 720px; margin: 0 auto; }
+.tab-content.active { display: block; }
+
+/* SECTION TITLE */
+.section-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.3rem;
+  color: var(--primary);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* VOCAB GRID */
+.speed-bar {
+  display: flex; gap: 8px; margin-bottom: 16px; justify-content: center;
+}
+.speed-btn {
+  padding: 8px 16px; border-radius: 20px; border: 2px solid var(--primary-light);
+  background: #fff; font-family: 'Nunito', sans-serif; font-weight: 700;
+  font-size: 0.85rem; cursor: pointer; color: var(--primary); transition: all 0.2s;
+}
+.speed-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+.vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+.vocab-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 14px 12px;
+  box-shadow: var(--shadow);
+  text-align: center;
+  position: relative;
+  border-top: 4px solid var(--primary-light);
+  transition: transform 0.2s;
+}
+.vocab-card:hover { transform: translateY(-3px); }
+.vocab-emoji { font-size: 2rem; margin-bottom: 6px; }
+.vocab-word { font-family: 'Fredoka One', cursive; font-size: 1.1rem; color: var(--primary); }
+.vocab-ipa { font-size: 0.78rem; color: var(--text-muted); margin: 2px 0; }
+.vocab-meaning { font-size: 0.88rem; font-weight: 700; color: var(--text); }
+.speak-btn {
+  position: absolute; top: 8px; right: 8px;
+  background: var(--primary-light); border: none; border-radius: 50%;
+  width: 28px; height: 28px; cursor: pointer; font-size: 0.85rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+}
+.speak-btn:hover { background: var(--primary); }
+
+/* RULE BOX */
+.rule-box {
+  background: linear-gradient(135deg, #EDE9FE, #F5F3FF);
+  border-left: 5px solid var(--primary);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  margin-bottom: 16px;
+}
+.rule-box h3 { font-family: 'Fredoka One', cursive; color: var(--primary); margin-bottom: 10px; font-size: 1.05rem; }
+.rule-box table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+.rule-box th { background: var(--primary); color: #fff; padding: 8px 12px; text-align: left; }
+.rule-box td { padding: 7px 12px; border-bottom: 1px solid #DDD6FE; }
+.rule-box tr:last-child td { border-bottom: none; }
+.tag {
+  display: inline-block; padding: 2px 10px; border-radius: 12px;
+  font-size: 0.8rem; font-weight: 700;
+}
+.tag-color { background: #FEF3C7; color: #D97706; }
+.tag-quality { background: #D1FAE5; color: #059669; }
+.tag-material { background: #EDE9FE; color: #7C3AED; }
+
+/* LISTEN QUIZ */
+.listen-quiz { background: #fff; border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow); }
+.lq-progress { background: #EDE9FE; border-radius: 10px; height: 8px; margin-bottom: 20px; }
+.lq-progress-bar { background: var(--primary); height: 8px; border-radius: 10px; transition: width 0.5s; }
+.lq-word-btn {
+  display: block; width: 100%;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: #fff; border: none; border-radius: var(--radius);
+  padding: 20px; font-family: 'Fredoka One', cursive; font-size: 2rem;
+  cursor: pointer; margin-bottom: 20px; transition: transform 0.1s;
+  box-shadow: 0 4px 12px rgba(124,58,237,0.3);
+}
+.lq-word-btn:hover { transform: scale(1.02); }
+.lq-choices { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.lq-choice {
+  padding: 12px; border-radius: 12px; border: 2px solid #DDD6FE;
+  background: #fff; font-family: 'Nunito', sans-serif; font-weight: 700;
+  font-size: 0.95rem; cursor: pointer; text-align: center; transition: all 0.2s;
+}
+.lq-choice:hover { border-color: var(--primary); background: #F5F3FF; }
+.lq-choice.correct { background: #D1FAE5; border-color: var(--correct); color: var(--correct); }
+.lq-choice.wrong { background: #FEE2E2; border-color: var(--wrong); color: var(--wrong); }
+.lq-counter { text-align: center; color: var(--text-muted); font-weight: 700; margin-bottom: 10px; font-size: 0.9rem; }
+.lq-score { text-align: center; font-family: 'Fredoka One', cursive; font-size: 1.5rem; color: var(--primary); }
+
+/* EXERCISE CARD */
+.ex-card {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+  margin-bottom: 20px;
+}
+.ex-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.1rem;
+  color: var(--primary-dark);
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 2px dashed #DDD6FE;
+}
+.ex-instruction {
+  font-size: 0.88rem; color: var(--text-muted);
+  margin-bottom: 14px; font-style: italic;
+}
+
+/* CROSSWORD */
+.crossword-wrap { overflow-x: auto; margin-bottom: 16px; }
+.crossword-grid { border-collapse: collapse; margin: 0 auto; }
+.crossword-grid td {
+  width: 36px; height: 36px; border: 2px solid #9CA3AF;
+  text-align: center; padding: 0; position: relative;
+}
+.crossword-grid td.black { background: #1E1B4B; border-color: #1E1B4B; }
+.crossword-grid td.empty { border: none; background: transparent; }
+.cw-num {
+  position: absolute; top: 1px; left: 2px;
+  font-size: 9px; color: var(--primary); font-weight: 800;
+}
+.cw-input {
+  width: 100%; height: 100%; border: none; text-align: center;
+  font-family: 'Fredoka One', cursive; font-size: 1rem;
+  background: transparent; text-transform: uppercase; outline: none;
+  color: var(--text);
+}
+.cw-input:focus { background: #EDE9FE; }
+.cw-clues { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+.cw-clue-group h4 { font-family: 'Fredoka One', cursive; color: var(--primary); margin-bottom: 8px; }
+.cw-clue-item { font-size: 0.88rem; margin-bottom: 4px; color: var(--text); }
+
+/* FILL INPUT */
+.fill-item { margin-bottom: 12px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.fill-num {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--primary); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 0.85rem; flex-shrink: 0;
+}
+.fill-input {
+  border: 2px solid #DDD6FE; border-radius: 10px; padding: 8px 14px;
+  font-family: 'Nunito', sans-serif; font-size: 0.95rem; font-weight: 700;
+  width: 160px; outline: none; transition: border-color 0.2s;
+}
+.fill-input:focus { border-color: var(--primary); }
+.fill-input.correct { border-color: var(--correct); background: #D1FAE5; color: var(--correct); }
+.fill-input.wrong { border-color: var(--wrong); background: #FEE2E2; color: var(--wrong); }
+.fill-label { font-size: 0.95rem; font-weight: 600; }
+.answer-show { color: var(--wrong); font-weight: 700; font-size: 0.85rem; margin-left: 4px; }
+
+/* CLASSIFY */
+.classify-item { margin-bottom: 12px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.classify-word { font-weight: 700; font-size: 1rem; min-width: 80px; }
+.classify-select {
+  border: 2px solid #DDD6FE; border-radius: 10px; padding: 8px 12px;
+  font-family: 'Nunito', sans-serif; font-size: 0.9rem; font-weight: 600;
+  outline: none; cursor: pointer; background: #fff;
+}
+.classify-select.correct { border-color: var(--correct); background: #D1FAE5; }
+.classify-select.wrong { border-color: var(--wrong); background: #FEE2E2; }
+
+/* MCQ */
+.mcq-item { margin-bottom: 18px; }
+.mcq-q { font-weight: 700; margin-bottom: 8px; font-size: 0.95rem; line-height: 1.5; }
+.mcq-hint { font-size: 0.82rem; color: var(--text-muted); font-style: italic; margin-bottom: 8px; line-height: 1.4; }
+.mcq-options { display: flex; flex-direction: column; gap: 8px; }
+.mcq-opt {
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px; border-radius: 10px; border: 2px solid #EDE9FE;
+  cursor: pointer; transition: all 0.2s; font-weight: 600;
+}
+.mcq-opt:hover { border-color: var(--primary-light); background: #F5F3FF; }
+.mcq-opt input { accent-color: var(--primary); }
+.mcq-opt.correct { background: #D1FAE5; border-color: var(--correct); color: var(--correct); }
+.mcq-opt.wrong { background: #FEE2E2; border-color: var(--wrong); color: var(--wrong); }
+
+/* PRONUNCIATION */
+.pron-underline { text-decoration: underline; font-weight: 800; }
+
+/* FILL IN BLANK PASSAGE */
+.fib-passage { font-size: 0.95rem; line-height: 2; }
+.fib-blank {
+  display: inline-block;
+  border-bottom: 2px solid var(--primary);
+  min-width: 100px; padding: 0 4px;
+  font-weight: 700; margin: 0 4px;
+}
+.fib-inline-input {
+  border: none; border-bottom: 2px solid var(--primary);
+  background: transparent; font-family: 'Nunito', sans-serif;
+  font-weight: 700; font-size: 0.95rem; min-width: 90px;
+  text-align: center; outline: none; padding: 2px 6px;
+}
+.fib-inline-input.correct { border-color: var(--correct); color: var(--correct); }
+.fib-inline-input.wrong { border-color: var(--wrong); color: var(--wrong); }
+
+/* BTN ROW */
+.btn-row { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+.btn-check {
+  padding: 10px 22px; border-radius: 12px; border: none;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: #fff; font-family: 'Nunito', sans-serif; font-weight: 800;
+  font-size: 0.9rem; cursor: pointer; transition: transform 0.1s;
+}
+.btn-check:hover { transform: scale(1.03); }
+.btn-reset {
+  padding: 10px 22px; border-radius: 12px; border: 2px solid var(--primary);
+  background: #fff; color: var(--primary); font-family: 'Nunito', sans-serif;
+  font-weight: 800; font-size: 0.9rem; cursor: pointer;
+}
+.score-bar-wrap { margin-top: 14px; display: none; }
+.score-bar-bg { background: #EDE9FE; border-radius: 10px; height: 12px; }
+.score-bar-fill { background: linear-gradient(90deg, var(--primary), var(--accent2)); height: 12px; border-radius: 10px; transition: width 0.6s; }
+.score-text { font-weight: 800; color: var(--primary); margin-top: 6px; font-size: 0.95rem; }
+
+/* POPUP */
+.popup-overlay {
+  position: fixed; inset: 0; background: rgba(30,27,75,0.6);
+  display: none; align-items: center; justify-content: center; z-index: 999;
+}
+.popup-overlay.show { display: flex; }
+.popup-box {
+  background: #fff; border-radius: 24px; padding: 36px 30px;
+  text-align: center; max-width: 320px; width: 90%;
+  animation: popIn 0.3s ease;
+  box-shadow: 0 20px 60px rgba(124,58,237,0.3);
+}
+@keyframes popIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+.popup-emoji { font-size: 3.5rem; margin-bottom: 10px; }
+.popup-title { font-family: 'Fredoka One', cursive; font-size: 1.6rem; color: var(--primary); margin-bottom: 6px; }
+.popup-sub { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px; }
+.popup-close {
+  background: var(--primary); color: #fff; border: none;
+  border-radius: 12px; padding: 10px 28px;
+  font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1rem; cursor: pointer;
+}
+
+@media (max-width: 480px) {
+  .vocab-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+  .cw-clues { grid-template-columns: 1fr; }
+  .lq-choices { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🏠 Căn Phòng – Room</h1>
+  <p>Tính từ mô tả căn phòng & màu sắc</p>
+</div>
+
+<div class="tabs-wrap">
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('theory',this)">📖 Lý Thuyết</button>
+    <button class="tab-btn" onclick="switchTab('ex1',this)">✏️ Bài 1</button>
+    <button class="tab-btn" onclick="switchTab('ex2',this)">✏️ Bài 2</button>
+    <button class="tab-btn" onclick="switchTab('ex3',this)">✏️ Bài 3</button>
+    <button class="tab-btn" onclick="switchTab('ex6',this)">🔊 Bài 6</button>
+    <button class="tab-btn" onclick="switchTab('ex8',this)">🧩 Bài 8</button>
+    <button class="tab-btn" onclick="switchTab('ex9',this)">📝 Bài 9</button>
+  </div>
+</div>
+
+<!-- ===================== TAB LÝ THUYẾT ===================== -->
+<div id="tab-theory" class="tab-content active">
+  <div class="section-title">📚 Từ Vựng Chủ Đề Căn Phòng</div>
+  
+  <div class="speed-bar">
+    <button class="speed-btn" onclick="setSpeed(0.7,this)">🐢 Chậm</button>
+    <button class="speed-btn active" onclick="setSpeed(1.0,this)">🚶 Bình thường</button>
+    <button class="speed-btn" onclick="setSpeed(1.3,this)">🏃 Nhanh</button>
+  </div>
+
+  <div class="vocab-grid" id="vocabGrid"></div>
+
+  <br>
+  <div class="rule-box">
+    <h3>📊 Phân loại từ vựng</h3>
+    <table>
+      <tr><th>Nhóm</th><th>Từ</th><th>Nghĩa</th></tr>
+      <tr><td><span class="tag tag-color">🎨 Màu sắc</span></td><td>red, green, blue, yellow, orange, brown, pink, purple, violet</td><td>đỏ, xanh lá, xanh dương, vàng, cam, nâu, hồng, tím, tím nhạt</td></tr>
+      <tr><td><span class="tag tag-quality">⚡ Tính chất</span></td><td>wide, narrow, noisy, quiet, big, small, heavy, light, beautiful, ugly</td><td>rộng, chật, ồn ào, yên tĩnh, to, nhỏ, nặng, nhẹ, đẹp, xấu</td></tr>
+      <tr><td><span class="tag tag-material">🏭 Chất liệu</span></td><td>wood/wooden, glass, leather, plastic</td><td>gỗ, kính, da, nhựa</td></tr>
+    </table>
+  </div>
+
+  <div class="rule-box">
+    <h3>🔄 Từ trái nghĩa</h3>
+    <table>
+      <tr><th>Từ</th><th>Trái nghĩa</th><th>Nghĩa</th></tr>
+      <tr><td><b>wide</b> (rộng)</td><td><b>narrow</b></td><td>chật hẹp</td></tr>
+      <tr><td><b>noisy</b> (ồn ào)</td><td><b>quiet</b></td><td>yên tĩnh</td></tr>
+      <tr><td><b>big</b> (to)</td><td><b>small</b></td><td>nhỏ</td></tr>
+      <tr><td><b>heavy</b> (nặng)</td><td><b>light</b></td><td>nhẹ</td></tr>
+      <tr><td><b>beautiful</b> (đẹp)</td><td><b>ugly</b></td><td>xấu</td></tr>
+    </table>
+  </div>
+
+  <!-- LISTEN QUIZ -->
+  <div class="section-title">🎧 Quiz Nghe – Nhận Biết Từ</div>
+  <div class="listen-quiz">
+    <div class="lq-counter" id="lqCounter">Câu 1 / 12</div>
+    <div class="lq-progress"><div class="lq-progress-bar" id="lqBar" style="width:8%"></div></div>
+    <button class="lq-word-btn" id="lqSpeakBtn" onclick="lqSpeak()">🔊 Nghe từ</button>
+    <div class="lq-choices" id="lqChoices"></div>
+    <div class="lq-score" id="lqScore" style="display:none"></div>
+  </div>
+</div>
+
+<!-- ===================== TAB BÀI 1: CROSSWORD ===================== -->
+<div id="tab-ex1" class="tab-content">
+  <div class="ex-card">
+    <div class="ex-title">✏️ Exercise 1 – Hoàn thành ô chữ</div>
+    <p class="ex-instruction">Điền các từ tiếng Anh vào ô chữ dựa theo gợi ý bên dưới.</p>
+    
+    <div class="crossword-wrap">
+      <table class="crossword-grid" id="cwTable"></table>
+    </div>
+
+    <div class="cw-clues">
+      <div class="cw-clue-group">
+        <h4>↔ Hàng ngang</h4>
+        <div class="cw-clue-item">2. xanh lá cây</div>
+        <div class="cw-clue-item">3. xấu</div>
+        <div class="cw-clue-item">5. kính</div>
+        <div class="cw-clue-item">7. chật hẹp</div>
+      </div>
+      <div class="cw-clue-group">
+        <h4>↕ Hàng dọc</h4>
+        <div class="cw-clue-item">1. vàng</div>
+        <div class="cw-clue-item">4. da</div>
+        <div class="cw-clue-item">6. nâu</div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-check" onclick="checkCW()">✅ Chấm điểm</button>
+      <button class="btn-reset" onclick="resetCW()">🔄 Làm lại</button>
+    </div>
+    <div class="score-bar-wrap" id="cwScoreWrap">
+      <div class="score-bar-bg"><div class="score-bar-fill" id="cwScoreBar"></div></div>
+      <div class="score-text" id="cwScoreText"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== TAB BÀI 2: FILL ENGLISH ===================== -->
+<div id="tab-ex2" class="tab-content">
+  <div class="ex-card">
+    <div class="ex-title">✏️ Exercise 2 – Điền từ tiếng Anh phù hợp</div>
+    <p class="ex-instruction">Điền vào chỗ trống từ tiếng Anh phù hợp với định nghĩa đã cho sẵn.</p>
+    
+    <div id="ex2Items"></div>
+
+    <div class="btn-row">
+      <button class="btn-check" onclick="checkEx2()">✅ Chấm điểm</button>
+      <button class="btn-reset" onclick="resetEx2()">🔄 Làm lại</button>
+    </div>
+    <div class="score-bar-wrap" id="ex2ScoreWrap">
+      <div class="score-bar-bg"><div class="score-bar-fill" id="ex2ScoreBar"></div></div>
+      <div class="score-text" id="ex2ScoreText"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== TAB BÀI 3: CLASSIFY ===================== -->
+<div id="tab-ex3" class="tab-content">
+  <div class="ex-card">
+    <div class="ex-title">✏️ Exercise 3 – Nối từ vào đúng nhóm</div>
+    <p class="ex-instruction">Chọn nhóm phù hợp cho mỗi từ: Màu sắc / Tính chất / Chất liệu</p>
+    
+    <div id="ex3Items"></div>
+
+    <div class="btn-row">
+      <button class="btn-check" onclick="checkEx3()">✅ Chấm điểm</button>
+      <button class="btn-reset" onclick="resetEx3()">🔄 Làm lại</button>
+    </div>
+    <div class="score-bar-wrap" id="ex3ScoreWrap">
+      <div class="score-bar-bg"><div class="score-bar-fill" id="ex3ScoreBar"></div></div>
+      <div class="score-text" id="ex3ScoreText"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== TAB BÀI 6: PRONUNCIATION ===================== -->
+<div id="tab-ex6" class="tab-content">
+  <div class="ex-card">
+    <div class="ex-title">🔊 Exercise 6 – Chọn nhóm có âm gạch chân phát âm giống nhau</div>
+    <p class="ex-instruction">Chọn đáp án là các từ có âm được gạch chân phát âm giống nhau.</p>
+
+    <div class="mcq-item">
+      <div class="mcq-q">Question 1. Chọn nhóm từ có âm gạch chân phát âm giống nhau:</div>
+      <div class="mcq-options" id="ex6q1"></div>
+    </div>
+
+    <div class="mcq-item">
+      <div class="mcq-q">Question 2. Chọn nhóm từ có âm gạch chân phát âm giống nhau:</div>
+      <div class="mcq-options" id="ex6q2"></div>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-check" onclick="checkEx6()">✅ Chấm điểm</button>
+      <button class="btn-reset" onclick="resetEx6()">🔄 Làm lại</button>
+    </div>
+    <div class="score-bar-wrap" id="ex6ScoreWrap">
+      <div class="score-bar-bg"><div class="score-bar-fill" id="ex6ScoreBar"></div></div>
+      <div class="score-text" id="ex6ScoreText"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== TAB BÀI 8: MCQ ===================== -->
+<div id="tab-ex8" class="tab-content">
+  <div class="ex-card">
+    <div class="ex-title">🧩 Exercise 8 – Chọn đáp án đúng nhất</div>
+    <p class="ex-instruction">Đọc câu và chọn tính từ phù hợp nhất để điền vào chỗ trống.</p>
+    <div id="ex8Items"></div>
+
+    <div class="btn-row">
+      <button class="btn-check" onclick="checkEx8()">✅ Chấm điểm</button>
+      <button class="btn-reset" onclick="resetEx8()">🔄 Làm lại</button>
+    </div>
+    <div class="score-bar-wrap" id="ex8ScoreWrap">
+      <div class="score-bar-bg"><div class="score-bar-fill" id="ex8ScoreBar"></div></div>
+      <div class="score-text" id="ex8ScoreText"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== TAB BÀI 9: FILL IN BLANK PASSAGE ===================== -->
+<div id="tab-ex9" class="tab-content">
+  <div class="ex-card">
+    <div class="ex-title">📝 Exercise 9 – Điền từ vào đoạn văn</div>
+    <p class="ex-instruction">Sử dụng các từ trái nghĩa trong bảng để điền vào chỗ trống phù hợp.</p>
+    
+    <div class="rule-box" style="margin-bottom:16px">
+      <h3>📋 Từ cần dùng</h3>
+      <table>
+        <tr><th>Cặp từ</th></tr>
+        <tr><td>Wide – Narrow (rộng – chật)</td></tr>
+        <tr><td>Big – Small (to – nhỏ)</td></tr>
+        <tr><td>Light – Heavy (nhẹ – nặng)</td></tr>
+        <tr><td>Noisy – Quiet (ồn ào – yên tĩnh)</td></tr>
+      </table>
+    </div>
+
+    <div class="fib-passage" id="ex9Passage"></div>
+
+    <div class="btn-row">
+      <button class="btn-check" onclick="checkEx9()">✅ Chấm điểm</button>
+      <button class="btn-reset" onclick="resetEx9()">🔄 Làm lại</button>
+    </div>
+    <div class="score-bar-wrap" id="ex9ScoreWrap">
+      <div class="score-bar-bg"><div class="score-bar-fill" id="ex9ScoreBar"></div></div>
+      <div class="score-text" id="ex9ScoreText"></div>
+    </div>
+  </div>
+</div>
+
+<!-- POPUP -->
+<div class="popup-overlay" id="popup">
+  <div class="popup-box">
+    <div class="popup-emoji" id="popEmoji"></div>
+    <div class="popup-title" id="popTitle"></div>
+    <div class="popup-sub" id="popSub"></div>
+    <button class="popup-close" onclick="closePopup()">Đóng ✕</button>
+  </div>
+</div>
+
+<script>
+// ===== SPEED =====
+let speechRate = 1.0;
+function setSpeed(r, btn) {
+  speechRate = r;
+  document.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+function speak(text) {
+  if (!window.speechSynthesis) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US'; u.rate = speechRate;
+  speechSynthesis.speak(u);
+}
+
+// ===== VOCAB DATA =====
+const vocabData = [
+  { emoji: '↔️', word: 'wide', ipa: '/waɪd/', meaning: 'rộng' },
+  { emoji: '↕️', word: 'narrow', ipa: '/ˈnær.oʊ/', meaning: 'chật hẹp' },
+  { emoji: '🔊', word: 'noisy', ipa: '/ˈnɔɪ.zi/', meaning: 'ồn ào' },
+  { emoji: '🤫', word: 'quiet', ipa: '/ˈkwaɪ.ɪt/', meaning: 'yên tĩnh' },
+  { emoji: '🌳', word: 'wooden', ipa: '/ˈwʊd.ən/', meaning: 'làm bằng gỗ' },
+  { emoji: '🪟', word: 'glass', ipa: '/ɡlæs/', meaning: 'kính' },
+  { emoji: '👜', word: 'leather', ipa: '/ˈleð.ər/', meaning: 'da' },
+  { emoji: '🧴', word: 'plastic', ipa: '/ˈplæs.tɪk/', meaning: 'nhựa' },
+  { emoji: '🔴', word: 'red', ipa: '/red/', meaning: 'đỏ' },
+  { emoji: '🟢', word: 'green', ipa: '/ɡriːn/', meaning: 'xanh lá' },
+  { emoji: '🔵', word: 'blue', ipa: '/bluː/', meaning: 'xanh dương' },
+  { emoji: '🟡', word: 'yellow', ipa: '/ˈjel.oʊ/', meaning: 'vàng' },
+  { emoji: '🟠', word: 'orange', ipa: '/ˈɔːr.ɪndʒ/', meaning: 'cam' },
+  { emoji: '🤎', word: 'brown', ipa: '/braʊn/', meaning: 'nâu' },
+  { emoji: '🩷', word: 'pink', ipa: '/pɪŋk/', meaning: 'hồng' },
+  { emoji: '🟣', word: 'purple', ipa: '/ˈpɜːr.pəl/', meaning: 'tím' },
+  { emoji: '💜', word: 'violet', ipa: '/ˈvaɪ.ə.lɪt/', meaning: 'tím nhạt' },
+  { emoji: '📦', word: 'big', ipa: '/bɪɡ/', meaning: 'to lớn' },
+  { emoji: '🔲', word: 'small', ipa: '/smɔːl/', meaning: 'nhỏ' },
+  { emoji: '🏋️', word: 'heavy', ipa: '/ˈhev.i/', meaning: 'nặng' },
+  { emoji: '🪶', word: 'light', ipa: '/laɪt/', meaning: 'nhẹ' },
+  { emoji: '😍', word: 'beautiful', ipa: '/ˈbjuː.tɪ.fəl/', meaning: 'đẹp' },
+  { emoji: '😬', word: 'ugly', ipa: '/ˈʌɡ.li/', meaning: 'xấu' },
+];
+
+// Build vocab grid
+const grid = document.getElementById('vocabGrid');
+vocabData.forEach((v, i) => {
+  grid.innerHTML += `
+    <div class="vocab-card">
+      <button class="speak-btn" onclick="speak('${v.word}')">🔊</button>
+      <div class="vocab-emoji">${v.emoji}</div>
+      <div class="vocab-word">${v.word}</div>
+      <div class="vocab-ipa">${v.ipa}</div>
+      <div class="vocab-meaning">${v.meaning}</div>
+    </div>`;
+});
+
+// ===== LISTEN QUIZ =====
+const lqData = [
+  { word: 'wide', choices: ['rộng', 'chật hẹp', 'ồn ào', 'yên tĩnh'], answer: 'rộng' },
+  { word: 'narrow', choices: ['rộng', 'chật hẹp', 'nặng', 'nhẹ'], answer: 'chật hẹp' },
+  { word: 'noisy', choices: ['đẹp', 'xấu', 'ồn ào', 'yên tĩnh'], answer: 'ồn ào' },
+  { word: 'quiet', choices: ['to lớn', 'nhỏ', 'ồn ào', 'yên tĩnh'], answer: 'yên tĩnh' },
+  { word: 'beautiful', choices: ['đẹp', 'xấu', 'nâu', 'hồng'], answer: 'đẹp' },
+  { word: 'ugly', choices: ['đẹp', 'xấu', 'nhẹ', 'nặng'], answer: 'xấu' },
+  { word: 'heavy', choices: ['nặng', 'nhẹ', 'rộng', 'chật'], answer: 'nặng' },
+  { word: 'glass', choices: ['da', 'nhựa', 'kính', 'gỗ'], answer: 'kính' },
+  { word: 'leather', choices: ['kính', 'da', 'nhựa', 'gỗ'], answer: 'da' },
+  { word: 'yellow', choices: ['vàng', 'nâu', 'hồng', 'tím'], answer: 'vàng' },
+  { word: 'purple', choices: ['xanh lá', 'xanh dương', 'tím', 'cam'], answer: 'tím' },
+  { word: 'brown', choices: ['đỏ', 'nâu', 'hồng', 'cam'], answer: 'nâu' },
+];
+let lqIdx = 0, lqCorrect = 0, lqAnswered = false;
+function lqRender() {
+  if (lqIdx >= lqData.length) {
+    document.getElementById('lqSpeakBtn').style.display = 'none';
+    document.getElementById('lqChoices').innerHTML = '';
+    document.getElementById('lqScore').style.display = 'block';
+    document.getElementById('lqScore').textContent = `🎯 Kết quả: ${lqCorrect}/${lqData.length}`;
+    document.getElementById('lqCounter').textContent = 'Hoàn thành!';
+    showPopup(lqCorrect, lqData.length);
+    return;
+  }
+  const q = lqData[lqIdx];
+  document.getElementById('lqCounter').textContent = `Câu ${lqIdx+1} / ${lqData.length}`;
+  document.getElementById('lqBar').style.width = ((lqIdx+1)/lqData.length*100) + '%';
+  document.getElementById('lqSpeakBtn').textContent = '🔊 Nghe từ';
+  lqAnswered = false;
+  const ch = document.getElementById('lqChoices');
+  ch.innerHTML = '';
+  q.choices.forEach(c => {
+    const btn = document.createElement('button');
+    btn.className = 'lq-choice';
+    btn.textContent = c;
+    btn.onclick = () => lqAnswer(c, btn);
+    ch.appendChild(btn);
+  });
+}
+function lqSpeak() { speak(lqData[lqIdx]?.word || ''); }
+function lqAnswer(choice, btn) {
+  if (lqAnswered) return;
+  lqAnswered = true;
+  const correct = lqData[lqIdx].answer;
+  if (choice === correct) { btn.classList.add('correct'); lqCorrect++; }
+  else {
+    btn.classList.add('wrong');
+    document.querySelectorAll('.lq-choice').forEach(b => { if (b.textContent === correct) b.classList.add('correct'); });
+  }
+  setTimeout(() => { lqIdx++; lqRender(); }, 1800);
+}
+lqRender();
+
+// ===== CROSSWORD =====
+// Layout: 9 cols × 10 rows
+// Answers: 1-yellow(col), 2-green(row), 3-ugly(row), 4-leather(col), 5-glass(row), 6-brown(col), 7-narrow(row)
+const cwLayout = [
+  // row, col, letter, number, direction
+  // YELLOW: col1, rows 0-5
+  // GREEN: row 1, cols 2-6
+  // UGLY: row 3, cols 2-4
+  // LEATHER: col4, rows 3-9
+  // GLASS: row 5, cols 4-8
+  // BROWN: col6, rows 1-5
+  // NARROW: row 7, cols 2-7
+];
+
+// Grid definition: [row][col] = {letter, num, black}
+const CW_ROWS = 10, CW_COLS = 9;
+const cwGrid = Array.from({length:CW_ROWS}, () => Array(CW_COLS).fill(null));
+
+// Place words
+const words = {
+  yellow: { letters:'YELLOW', dir:'col', startRow:0, startCol:1, num:1 },
+  green:  { letters:'GREEN',  dir:'row', startRow:1, startCol:2, num:2 },
+  ugly:   { letters:'UGLY',   dir:'row', startRow:3, startCol:2, num:3 },
+  leather:{ letters:'LEATHER',dir:'col', startRow:3, startCol:4, num:4 },
+  glass:  { letters:'GLASS',  dir:'row', startRow:5, startCol:4, num:5 },
+  brown:  { letters:'BROWN',  dir:'col', startRow:1, startCol:6, num:6 },
+  narrow: { letters:'NARROW', dir:'row', startRow:7, startCol:2, num:7 },
+};
+
+Object.values(words).forEach(w => {
+  w.letters.split('').forEach((l, i) => {
+    const r = w.dir==='row' ? w.startRow : w.startRow+i;
+    const c = w.dir==='col' ? w.startCol : w.startCol+i;
+    if (!cwGrid[r][c]) cwGrid[r][c] = { letter:l, nums:[], inputs:[] };
+    else cwGrid[r][c].letter = l;
+  });
+  const r0 = w.startRow, c0 = w.startCol;
+  if (!cwGrid[r0][c0].nums) cwGrid[r0][c0].nums = [];
+  cwGrid[r0][c0].nums.push(w.num);
+});
+
+const cwTable = document.getElementById('cwTable');
+for (let r=0; r<CW_ROWS; r++) {
+  const tr = document.createElement('tr');
+  for (let c=0; c<CW_COLS; c++) {
+    const td = document.createElement('td');
+    if (cwGrid[r][c]) {
+      const cell = cwGrid[r][c];
+      if (cell.nums && cell.nums.length) {
+        const span = document.createElement('span');
+        span.className = 'cw-num';
+        span.textContent = cell.nums.join(',');
+        td.appendChild(span);
+      }
+      const inp = document.createElement('input');
+      inp.className = 'cw-input';
+      inp.maxLength = 1;
+      inp.dataset.answer = cell.letter;
+      inp.dataset.r = r; inp.dataset.c = c;
+      td.appendChild(inp);
+    } else {
+      td.classList.add('black');
+    }
+    tr.appendChild(td);
+  }
+  cwTable.appendChild(tr);
+}
+
+function checkCW() {
+  const inputs = document.querySelectorAll('.cw-input');
+  let correct=0, total=inputs.length;
+  inputs.forEach(inp => {
+    inp.classList.remove('correct','wrong');
+    if (inp.value.toUpperCase() === inp.dataset.answer) { inp.classList.add('correct'); correct++; }
+    else inp.classList.add('wrong');
+  });
+  showScore('cwScoreWrap','cwScoreBar','cwScoreText', correct, total);
+  showPopup(correct, total);
+}
+function resetCW() {
+  document.querySelectorAll('.cw-input').forEach(i => { i.value=''; i.classList.remove('correct','wrong'); });
+  document.getElementById('cwScoreWrap').style.display='none';
+}
+
+// ===== EX 2 =====
+const ex2Data = [
+  { meaning: 'kính', answer: 'glass' },
+  { meaning: 'đẹp', answer: 'beautiful' },
+  { meaning: 'ồn ào', answer: 'noisy' },
+  { meaning: 'xanh nước biển', answer: 'blue' },
+  { meaning: 'tím', answer: 'purple' },
+  { meaning: 'rộng', answer: 'wide' },
+  { meaning: 'xấu', answer: 'ugly' },
+  { meaning: 'xanh lá cây', answer: 'green' },
+];
+const ex2Container = document.getElementById('ex2Items');
+ex2Data.forEach((item, i) => {
+  ex2Container.innerHTML += `
+    <div class="fill-item">
+      <div class="fill-num">${i+1}</div>
+      <input class="fill-input" id="ex2_${i}" placeholder="..." data-answer="${item.answer}">
+      <div class="fill-label">: ${item.meaning}</div>
+      <span class="answer-show" id="ex2ans_${i}" style="display:none"></span>
+    </div>`;
+});
+function checkEx2() {
+  let correct=0;
+  ex2Data.forEach((item, i) => {
+    const inp = document.getElementById(`ex2_${i}`);
+    const ans = document.getElementById(`ex2ans_${i}`);
+    inp.classList.remove('correct','wrong');
+    ans.style.display='none';
+    if (inp.value.trim().toLowerCase() === item.answer.toLowerCase()) { inp.classList.add('correct'); correct++; }
+    else { inp.classList.add('wrong'); ans.textContent = '→ '+item.answer; ans.style.display='inline'; }
+  });
+  showScore('ex2ScoreWrap','ex2ScoreBar','ex2ScoreText', correct, ex2Data.length);
+  showPopup(correct, ex2Data.length);
+}
+function resetEx2() {
+  ex2Data.forEach((_,i) => {
+    const inp = document.getElementById(`ex2_${i}`);
+    inp.value=''; inp.classList.remove('correct','wrong');
+    document.getElementById(`ex2ans_${i}`).style.display='none';
+  });
+  document.getElementById('ex2ScoreWrap').style.display='none';
+}
+
+// ===== EX 3 =====
+const ex3Data = [
+  { word: 'red', answer: 'Màu sắc' },
+  { word: 'small', answer: 'Tính chất' },
+  { word: 'glass', answer: 'Chất liệu' },
+  { word: 'heavy', answer: 'Tính chất' },
+  { word: 'green', answer: 'Màu sắc' },
+  { word: 'narrow', answer: 'Tính chất' },
+  { word: 'violet', answer: 'Màu sắc' },
+  { word: 'leather', answer: 'Chất liệu' },
+  { word: 'noisy', answer: 'Tính chất' },
+  { word: 'purple', answer: 'Màu sắc' },
+];
+const ex3Container = document.getElementById('ex3Items');
+ex3Data.forEach((item, i) => {
+  ex3Container.innerHTML += `
+    <div class="classify-item">
+      <div class="fill-num">${i+1}</div>
+      <div class="classify-word">${item.word}</div>
+      <select class="classify-select" id="ex3_${i}" data-answer="${item.answer}">
+        <option value="">-- Chọn nhóm --</option>
+        <option value="Màu sắc">🎨 Màu sắc</option>
+        <option value="Tính chất">⚡ Tính chất</option>
+        <option value="Chất liệu">🏭 Chất liệu</option>
+      </select>
+      <span class="answer-show" id="ex3ans_${i}" style="display:none"></span>
+    </div>`;
+});
+function checkEx3() {
+  let correct=0;
+  ex3Data.forEach((item, i) => {
+    const sel = document.getElementById(`ex3_${i}`);
+    const ans = document.getElementById(`ex3ans_${i}`);
+    sel.classList.remove('correct','wrong'); ans.style.display='none';
+    if (sel.value === item.answer) { sel.classList.add('correct'); correct++; }
+    else { sel.classList.add('wrong'); ans.textContent='→ '+item.answer; ans.style.display='inline'; }
+  });
+  showScore('ex3ScoreWrap','ex3ScoreBar','ex3ScoreText', correct, ex3Data.length);
+  showPopup(correct, ex3Data.length);
+}
+function resetEx3() {
+  ex3Data.forEach((_,i) => {
+    const sel = document.getElementById(`ex3_${i}`);
+    sel.value=''; sel.classList.remove('correct','wrong');
+    document.getElementById(`ex3ans_${i}`).style.display='none';
+  });
+  document.getElementById('ex3ScoreWrap').style.display='none';
+}
+
+// ===== EX 6: PRONUNCIATION =====
+const ex6q1Options = [
+  { text: 'narr<u>ow</u>, br<u>ow</u>n, yell<u>ow</u>', value: 'A' },
+  { text: 'l<u>igh</u>t, w<u>i</u>de, qu<u>ie</u>t', value: 'B' },
+  { text: '<u>u</u>gly, p<u>u</u>rple, beaut<u>i</u>ful', value: 'C' },
+];
+const ex6q2Options = [
+  { text: 'plasti<u>c</u>, pin<u>k</u>, quie<u>t</u>', value: 'A' },
+  { text: 'vio<u>l</u>et, bi<u>g</u>, gree<u>n</u>', value: 'B' },
+  { text: 'g<u>l</u>ass, oran<u>g</u>e, bla<u>ck</u>', value: 'C' },
+];
+function buildMCQ(containerId, options, name) {
+  const c = document.getElementById(containerId);
+  options.forEach(o => {
+    c.innerHTML += `
+      <label class="mcq-opt" id="${name}_${o.value}">
+        <input type="radio" name="${name}" value="${o.value}">
+        ${o.text}
+      </label>`;
+  });
+}
+buildMCQ('ex6q1', ex6q1Options, 'q1');
+buildMCQ('ex6q2', ex6q2Options, 'q2');
+
+function checkEx6() {
+  let correct=0;
+  // Q1 answer: B (light, wide, quiet — all have silent gh/final sound /aɪ/)
+  const q1 = document.querySelector('input[name="q1"]:checked');
+  ['A','B','C'].forEach(v => document.getElementById(`q1_${v}`)?.classList.remove('correct','wrong'));
+  if (q1) {
+    if (q1.value==='B') { document.getElementById('q1_B').classList.add('correct'); correct++; }
+    else { document.getElementById(`q1_${q1.value}`).classList.add('wrong'); document.getElementById('q1_B').classList.add('correct'); }
+  } else document.getElementById('q1_B').classList.add('correct');
+
+  // Q2 answer: A (plastic /k/, pink /k/, quiet /t/ — all end with voiceless stops... actually plastic=k, pink=k, quiet=t → different. Let's use the Prep answer: A)
+  const q2 = document.querySelector('input[name="q2"]:checked');
+  ['A','B','C'].forEach(v => document.getElementById(`q2_${v}`)?.classList.remove('correct','wrong'));
+  if (q2) {
+    if (q2.value==='A') { document.getElementById('q2_A').classList.add('correct'); correct++; }
+    else { document.getElementById(`q2_${q2.value}`).classList.add('wrong'); document.getElementById('q2_A').classList.add('correct'); }
+  } else document.getElementById('q2_A').classList.add('correct');
+
+  showScore('ex6ScoreWrap','ex6ScoreBar','ex6ScoreText', correct, 2);
+  showPopup(correct, 2);
+}
+function resetEx6() {
+  document.querySelectorAll('input[name="q1"], input[name="q2"]').forEach(r => r.checked=false);
+  ['q1_A','q1_B','q1_C','q2_A','q2_B','q2_C'].forEach(id => document.getElementById(id)?.classList.remove('correct','wrong'));
+  document.getElementById('ex6ScoreWrap').style.display='none';
+}
+
+// ===== EX 8: MCQ =====
+const ex8Data = [
+  {
+    q: 'The bedroom is very ............... because I can\'t put all of my things in there.',
+    hint: 'Gợi ý: "can\'t put all of my things in there" (không thể đặt tất cả đồ đạc vào đó)',
+    options: ['big', 'small', 'heavy'], answer: 'small'
+  },
+  {
+    q: 'The flat is ............... at night and I can sleep easily.',
+    hint: 'Gợi ý: "can sleep easily" (có thể ngủ một cách dễ dàng)',
+    options: ['noisy', 'heavy', 'quiet'], answer: 'quiet'
+  },
+  {
+    q: 'I love your ............... eyes. They look like the color of the sky!',
+    hint: 'Gợi ý: "look like the color of the sky" (trông giống như màu của bầu trời)',
+    options: ['blue', 'green', 'brown'], answer: 'blue'
+  },
+  {
+    q: 'Your garage is so ............... ! There are so many cars in there!',
+    hint: 'Gợi ý: "There are so many cars in there" (Có rất nhiều xe trong đó)',
+    options: ['narrow', 'wide', 'small'], answer: 'wide'
+  },
+  {
+    q: 'Tung: This sofa is so ............... !\nDuc: Thanks.',
+    hint: 'Gợi ý: Duc nói "Thanks" → đây là lời khen',
+    options: ['beautiful', 'lazy', 'ugly'], answer: 'beautiful'
+  },
+];
+const ex8Container = document.getElementById('ex8Items');
+ex8Data.forEach((item, i) => {
+  let opts = '';
+  item.options.forEach(o => {
+    opts += `<label class="mcq-opt" id="ex8_${i}_${o}"><input type="radio" name="ex8_${i}" value="${o}"> ${o}</label>`;
+  });
+  ex8Container.innerHTML += `
+    <div class="mcq-item">
+      <div class="mcq-q">Question ${i+1}. ${item.q.replace(/\n/g,'<br>')}</div>
+      <div class="mcq-hint">💡 ${item.hint}</div>
+      <div class="mcq-options">${opts}</div>
+    </div>`;
+});
+function checkEx8() {
+  let correct=0;
+  ex8Data.forEach((item, i) => {
+    item.options.forEach(o => document.getElementById(`ex8_${i}_${o}`)?.classList.remove('correct','wrong'));
+    const sel = document.querySelector(`input[name="ex8_${i}"]:checked`);
+    if (sel) {
+      if (sel.value === item.answer) { document.getElementById(`ex8_${i}_${item.answer}`).classList.add('correct'); correct++; }
+      else { document.getElementById(`ex8_${i}_${sel.value}`).classList.add('wrong'); document.getElementById(`ex8_${i}_${item.answer}`).classList.add('correct'); }
+    } else document.getElementById(`ex8_${i}_${item.answer}`).classList.add('correct');
+  });
+  showScore('ex8ScoreWrap','ex8ScoreBar','ex8ScoreText', correct, ex8Data.length);
+  showPopup(correct, ex8Data.length);
+}
+function resetEx8() {
+  ex8Data.forEach((item,i) => {
+    document.querySelectorAll(`input[name="ex8_${i}"]`).forEach(r => r.checked=false);
+    item.options.forEach(o => document.getElementById(`ex8_${i}_${o}`)?.classList.remove('correct','wrong'));
+  });
+  document.getElementById('ex8ScoreWrap').style.display='none';
+}
+
+// ===== EX 9: FILL IN BLANK PASSAGE =====
+// Answers: 1-narrow/small, 2-wide/big, 3-narrow/small, 4-wide/big, 5-light, 6-heavy, 7-quiet, 8-noisy
+const ex9Answers = [
+  ['narrow','small'],
+  ['wide','big'],
+  ['narrow','small'],
+  ['wide','big'],
+  ['light'],
+  ['heavy'],
+  ['quiet'],
+  ['noisy'],
+];
+const ex9HTML = `
+<p><b>1.</b> My sister and I have different rooms. The space of my room is only 10m², the space of my sister's room is 30m².<br>
+→ My room is <input class="fib-inline-input" id="ex9_0" data-idx="0"> , my sister's room is <input class="fib-inline-input" id="ex9_1" data-idx="1"> .</p><br>
+
+<p><b>2.</b> My sister and I have different beds. Only 1 person can sleep on my bed, but 3 people can sleep on my sister's bed.<br>
+→ My bed is <input class="fib-inline-input" id="ex9_2" data-idx="2"> , my sister's bed is <input class="fib-inline-input" id="ex9_3" data-idx="3"> .</p><br>
+
+<p><b>3.</b> My mother asked me to lift some things for her. I was able to lift the plastic chair myself, but I had to ask my father for help with the sofa.<br>
+→ The plastic chair is <input class="fib-inline-input" id="ex9_4" data-idx="4"> , the sofa is <input class="fib-inline-input" id="ex9_5" data-idx="5"> .</p><br>
+
+<p><b>4.</b> I used to live in the countryside, but now I live in the city. When I was in the countryside, I could sleep easily because there were no cars outside at night. I have a hard time falling asleep in the city because I live near a big road and there are many cars outside even past midnight.<br>
+→ The countryside is <input class="fib-inline-input" id="ex9_6" data-idx="6"> , the city is <input class="fib-inline-input" id="ex9_7" data-idx="7"> .</p>
+`;
+document.getElementById('ex9Passage').innerHTML = ex9HTML;
+
+function checkEx9() {
+  let correct=0;
+  for(let i=0;i<8;i++){
+    const inp = document.getElementById(`ex9_${i}`);
+    inp.classList.remove('correct','wrong');
+    const val = inp.value.trim().toLowerCase();
+    const correctAnswers = ex9Answers[i];
+    if (correctAnswers.includes(val)) { inp.classList.add('correct'); correct++; }
+    else { inp.classList.add('wrong'); inp.title = 'Đáp án: '+correctAnswers.join(' hoặc '); }
+  }
+  showScore('ex9ScoreWrap','ex9ScoreBar','ex9ScoreText', correct, 8);
+  showPopup(correct, 8);
+}
+function resetEx9() {
+  for(let i=0;i<8;i++){
+    const inp = document.getElementById(`ex9_${i}`);
+    inp.value=''; inp.classList.remove('correct','wrong'); inp.title='';
+  }
+  document.getElementById('ex9ScoreWrap').style.display='none';
+}
+
+// ===== UTILS =====
+function showScore(wrapId, barId, textId, correct, total) {
+  const pct = Math.round(correct/total*100);
+  document.getElementById(wrapId).style.display = 'block';
+  document.getElementById(barId).style.width = pct+'%';
+  document.getElementById(textId).textContent = `✅ ${correct}/${total} câu đúng (${pct}%)`;
+}
+
+function showPopup(correct, total) {
+  const pct = correct/total;
+  let emoji, title, sub;
+  if (pct === 1) { emoji='🏆'; title='Hoàn hảo!'; sub='Xuất sắc! Bạn trả lời đúng tất cả câu!'; }
+  else if (pct >= 0.7) { emoji='🎉'; title='Tốt lắm!'; sub=`Bạn đúng ${correct}/${total} câu. Cố lên nhé!`; }
+  else { emoji='💪'; title='Thử lại nhé!'; sub=`Bạn đúng ${correct}/${total} câu. Ôn thêm và làm lại!`; }
+  document.getElementById('popEmoji').textContent = emoji;
+  document.getElementById('popTitle').textContent = title;
+  document.getElementById('popSub').textContent = sub;
+  document.getElementById('popup').classList.add('show');
+}
+function closePopup() { document.getElementById('popup').classList.remove('show'); }
+
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>

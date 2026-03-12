@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Đồ Ăn & Thức Uống – Food & Drinks</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --orange:#FF6B2B;--orange-d:#E05520;--yellow:#FFD93D;--green:#06D6A0;--green-d:#05B085;
+  --blue:#4361EE;--pink:#FF4B9E;--purple:#845EF7;
+  --bg:#FFF8F0;--card:#fff;--text:#2D1B00;--muted:#A07850;
+  --shadow:0 6px 28px rgba(255,107,43,.13);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+/* HEADER */
+header{
+  background:linear-gradient(135deg,#FF6B2B 0%,#FF9F43 40%,#FFD93D 100%);
+  padding:30px 16px 22px;text-align:center;position:relative;overflow:hidden;
+  box-shadow:0 4px 24px rgba(255,107,43,.35);
+}
+header::before{
+  content:'🍎 🍌 🥕 🍔 🍕 🥗 🧃 🍰 🍣 🥩 🍜 ☕';
+  position:absolute;bottom:6px;left:0;right:0;text-align:center;font-size:1.1rem;letter-spacing:3px;opacity:.3;
+}
+header h1{font-family:'Fredoka One',cursive;font-size:2.3rem;color:#fff;text-shadow:0 3px 12px rgba(0,0,0,.15);}
+header p{color:rgba(255,255,255,.9);font-size:.95rem;margin-top:5px;}
+
+/* TABS */
+.tabs{display:flex;justify-content:center;gap:6px;padding:18px 10px 0;flex-wrap:wrap;}
+.tab-btn{
+  padding:7px 14px;border-radius:50px;border:2.5px solid var(--orange);
+  background:#fff;color:var(--orange);font-family:'Nunito',sans-serif;
+  font-size:.82rem;font-weight:800;cursor:pointer;transition:all .2s;
+}
+.tab-btn.active,.tab-btn:hover{background:var(--orange);color:#fff;box-shadow:0 3px 12px rgba(255,107,43,.35);}
+
+.tab-content{display:none;max-width:950px;margin:0 auto;padding:20px 12px 60px;}
+.tab-content.active{display:block;}
+
+.sc{background:var(--card);border-radius:20px;padding:22px;margin-bottom:18px;box-shadow:var(--shadow);}
+.sc h2{font-family:'Fredoka One',cursive;color:var(--orange);font-size:1.3rem;margin-bottom:14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.sc h3{font-family:'Fredoka One',cursive;color:var(--blue);font-size:1.05rem;margin-bottom:12px;padding-bottom:7px;border-bottom:2px dashed #e8f0fe;}
+
+/* VOCAB GRID */
+.vocab-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:9px;}
+.vc{
+  background:linear-gradient(145deg,#fff8f0,#fff0e0);
+  border-radius:15px;padding:12px 8px 10px;text-align:center;
+  border:2px solid #ffe0c0;transition:transform .15s,box-shadow .15s;
+}
+.vc:hover{transform:translateY(-4px);box-shadow:0 6px 16px rgba(255,107,43,.2);}
+.vc .em{font-size:2rem;line-height:1;}
+.vc .w{font-size:.83rem;font-weight:900;color:var(--orange-d);margin-top:5px;line-height:1.2;}
+.vc .ipa{font-size:.62rem;color:var(--muted);font-style:italic;margin-top:2px;}
+.vc .v{font-size:.73rem;color:#9D4E00;margin-top:3px;font-weight:700;}
+.speak-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  margin-top:6px;background:var(--orange);border:none;border-radius:50%;
+  width:26px;height:26px;cursor:pointer;color:#fff;font-size:.72rem;transition:all .15s;
+}
+.speak-btn:hover{background:var(--orange-d);transform:scale(1.12);}
+.speak-btn.playing{background:var(--yellow);color:#333;}
+
+/* RULE BOXES */
+.rule-box{border-left:4px solid var(--orange);border-radius:11px;padding:11px 15px;margin:10px 0;font-size:.88rem;line-height:1.9;background:linear-gradient(135deg,#fff8f0,#fff0e0);}
+.rule-box strong{color:#9D4E00;}
+.rule-box.green{background:linear-gradient(135deg,#ecfdf5,#d1fae5);border-left-color:var(--green);}
+.rule-box.green strong{color:#065f46;}
+.rule-box.blue{background:#eff6ff;border-left-color:var(--blue);}
+.rule-box.blue strong{color:#1e40af;}
+
+/* LISTEN */
+.listen-sec{background:var(--card);border-radius:20px;padding:20px;margin-bottom:16px;box-shadow:var(--shadow);}
+.listen-sec h2{font-family:'Fredoka One',cursive;color:var(--green-d);font-size:1.2rem;margin-bottom:11px;}
+.speed-row{display:flex;align-items:center;gap:7px;margin-bottom:11px;flex-wrap:wrap;}
+.speed-row span{font-weight:700;color:var(--muted);font-size:.83rem;}
+.speed-btn{padding:4px 11px;border-radius:20px;border:2px solid #b2f5ea;background:#fff;color:var(--green-d);font-weight:700;font-size:.78rem;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .15s;}
+.speed-btn.active{background:var(--green-d);color:#fff;border-color:var(--green-d);}
+.listen-box{background:linear-gradient(135deg,#f0fdf9,#ccfbf1);border-radius:14px;padding:16px;margin-bottom:10px;border:1.5px solid #99f6e4;}
+.listen-play{display:inline-flex;align-items:center;gap:7px;background:var(--green-d);color:#fff;border:none;border-radius:50px;padding:10px 26px;font-family:'Nunito',sans-serif;font-size:.93rem;font-weight:800;cursor:pointer;box-shadow:0 3px 12px rgba(6,214,160,.28);margin-bottom:12px;transition:background .2s;}
+.listen-play.playing{background:var(--yellow);color:#333;}
+.listen-opts{display:flex;flex-wrap:wrap;gap:7px;}
+.listen-opt{padding:7px 16px;border-radius:50px;border:2.5px solid #99f6e4;background:#fff;font-family:'Nunito',sans-serif;font-size:.87rem;font-weight:700;cursor:pointer;transition:all .15s;color:#065f46;}
+.listen-opt:hover:not(.locked){border-color:var(--green-d);}
+.listen-opt.correct-opt{border-color:var(--green);background:#f0fdf4;color:#166534;}
+.listen-opt.wrong-opt{border-color:#ef4444;background:#fef2f2;color:#991b1b;}
+.listen-opt.locked{cursor:default;}
+.listen-fb{margin-top:9px;font-weight:700;font-size:.85rem;min-height:18px;}
+.ls-bar{display:flex;align-items:center;gap:10px;font-weight:700;flex-wrap:wrap;padding-top:10px;}
+.ls-big{font-size:1.65rem;font-weight:900;color:var(--green-d);}
+.prog-wrap{flex:1;min-width:80px;height:8px;background:#ccfbf1;border-radius:99px;overflow:hidden;}
+.prog-fill{height:100%;background:var(--green-d);border-radius:99px;transition:width .4s;}
+
+/* MCQ */
+.mcq-item{margin-bottom:14px;}
+.mcq-item .qt{font-weight:700;margin-bottom:8px;line-height:1.5;font-size:.9rem;background:#fff8f0;padding:9px 13px;border-radius:10px;border-left:3px solid var(--orange);}
+.mcq-item .qt .hint{font-size:.76rem;color:var(--muted);font-weight:600;margin-top:3px;font-style:italic;}
+.mcq-options{display:flex;flex-direction:column;gap:5px;}
+.mcq-option{display:flex;align-items:center;gap:8px;padding:8px 13px;border-radius:10px;border:2px solid #e2e8f0;cursor:pointer;transition:all .15s;font-weight:600;user-select:none;font-size:.88rem;}
+.mcq-option:hover{border-color:var(--orange);background:#fff8f0;}
+.mcq-option.correct-ans{border-color:var(--green);background:#f0fdf4;color:#166534;}
+.mcq-option.wrong-ans{border-color:#ef4444;background:#fef2f2;color:#991b1b;}
+.mcq-option input[type=radio]{accent-color:var(--orange);width:13px;height:13px;}
+
+/* FILL BLANKS */
+.para-blank{border:none;border-bottom:2.5px solid var(--orange);background:transparent;font-family:'Nunito',sans-serif;font-size:.9rem;width:100px;outline:none;padding:2px 5px;font-weight:700;color:var(--orange-d);}
+.para-blank.correct{border-bottom-color:var(--green);color:var(--green-d);}
+.para-blank.wrong{border-bottom-color:#ef4444;color:#ef4444;}
+.fb{font-size:.75rem;font-weight:700;margin-left:2px;}
+.fb.correct{color:var(--green-d);}
+.fb.wrong{color:#ef4444;}
+.fill-input{border:2px solid #ffe0c0;border-radius:9px;padding:5px 11px;font-family:'Nunito',sans-serif;font-size:.9rem;width:140px;outline:none;transition:border .2s;}
+.fill-input:focus{border-color:var(--orange);}
+.fill-input.correct{border-color:var(--green);background:#f0fdf4;}
+.fill-input.wrong{border-color:#ef4444;background:#fef2f2;}
+
+/* WORD BANK */
+.word-bank{background:#fffbeb;border-radius:11px;padding:9px 14px;margin-bottom:13px;font-weight:700;color:#92400e;font-size:.82rem;border:1.5px solid #fde68a;line-height:1.8;}
+
+/* ODD ONE OUT */
+.odd-item{margin-bottom:13px;padding:12px 15px;background:#fff8f0;border-radius:13px;border:1.5px solid #ffe0c0;}
+.odd-item .oq{font-size:.88rem;font-weight:700;color:#9D4E00;margin-bottom:9px;}
+.odd-opts{display:flex;flex-wrap:wrap;gap:7px;}
+.odd-opt{padding:7px 18px;border-radius:50px;border:2.5px solid #ffe0c0;background:#fff;font-family:'Nunito',sans-serif;font-size:.87rem;font-weight:700;cursor:pointer;transition:all .15s;color:#9D4E00;user-select:none;}
+.odd-opt:hover{border-color:var(--orange);background:#fff8f0;}
+.odd-opt.correct-ans{border-color:var(--green);background:#f0fdf4;color:#166534;}
+.odd-opt.wrong-ans{border-color:#ef4444;background:#fef2f2;color:#991b1b;}
+.odd-opt.locked{cursor:default;}
+
+/* MATCHING / SENTENCE CONNECT */
+.sent-item{display:flex;align-items:center;gap:10px;margin-bottom:11px;flex-wrap:wrap;}
+.sent-left{font-size:.88rem;font-weight:700;flex:1;min-width:160px;line-height:1.6;}
+.sent-sel{border:2px solid #ffe0c0;border-radius:9px;padding:5px 10px;font-family:'Nunito',sans-serif;font-size:.88rem;font-weight:700;background:#fff;outline:none;color:var(--text);cursor:pointer;transition:border .2s;}
+.sent-sel:focus{border-color:var(--orange);}
+.sent-sel.correct{border-color:var(--green);background:#f0fdf4;}
+.sent-sel.wrong{border-color:#ef4444;background:#fef2f2;}
+
+/* SCORE & BTN */
+.score-bar{background:#fff8f0;border-radius:14px;padding:12px 16px;margin-top:12px;display:flex;align-items:center;gap:12px;font-weight:700;flex-wrap:wrap;border:1.5px solid #ffe0c0;}
+.score-num{font-size:1.7rem;font-weight:900;color:var(--orange);}
+.btn{padding:9px 24px;border-radius:50px;border:none;font-family:'Nunito',sans-serif;font-size:.9rem;font-weight:800;cursor:pointer;transition:all .2s;margin-top:11px;}
+.btn-p{background:var(--orange);color:#fff;box-shadow:0 3px 14px rgba(255,107,43,.3);}
+.btn-p:hover{background:var(--orange-d);transform:translateY(-2px);}
+.btn-s{background:#fff;color:var(--orange);border:2.5px solid var(--orange);}
+.btn-s:hover{background:#fff8f0;}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;}
+
+/* POPUP */
+.result-popup{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.45);z-index:999;align-items:center;justify-content:center;}
+.result-popup.show{display:flex;}
+.result-box{background:#fff;border-radius:24px;padding:36px 42px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.2);animation:popIn .3s ease;max-width:340px;width:90%;}
+@keyframes popIn{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
+.result-box h2{font-family:'Fredoka One',cursive;font-size:1.7rem;color:var(--orange);margin:8px 0 4px;}
+.result-box p{color:var(--muted);font-size:.95rem;margin-bottom:14px;}
+.rs{font-size:2.5rem;font-weight:900;color:var(--blue);}
+
+/* ANAGRAM */
+.ag-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:13px;flex-wrap:wrap;}
+.ag-num{font-weight:900;color:var(--purple);min-width:24px;padding-top:6px;font-size:1rem;}
+.ag-block{flex:1;min-width:220px;}
+.ag-letters{font-family:'Fredoka One',cursive;font-size:1rem;color:var(--purple);background:#f5f3ff;padding:4px 12px;border-radius:8px;display:inline-block;margin-bottom:5px;letter-spacing:3px;}
+.ag-hint{font-size:.79rem;color:var(--muted);font-style:italic;margin-bottom:5px;}
+
+/* Picture grid in Ex1 */
+.pic-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px;}
+.pic-card{background:#fff8f0;border:2px solid #ffe0c0;border-radius:13px;padding:10px 8px;text-align:center;}
+.pic-card .emoji{font-size:2.5rem;}
+.pic-card .label{font-size:.76rem;color:var(--muted);margin-top:3px;font-family:'Fredoka One',cursive;font-size:.78rem;color:#9D4E00;letter-spacing:.5px;}
+.pic-card .hint-letters{font-size:.72rem;color:var(--muted);font-style:italic;margin-top:2px;letter-spacing:1px;}
+.pic-card input{border:none;border-bottom:2px solid var(--orange);background:transparent;font-family:'Nunito',sans-serif;font-size:.88rem;width:90%;outline:none;padding:2px 3px;font-weight:700;color:var(--orange-d);margin-top:4px;text-align:center;}
+.pic-card input.correct{border-bottom-color:var(--green);color:var(--green-d);}
+.pic-card input.wrong{border-bottom-color:#ef4444;color:#ef4444;}
+
+@media(max-width:600px){
+  header h1{font-size:1.5rem;}
+  .vocab-grid{grid-template-columns:repeat(2,1fr);}
+  .pic-grid{grid-template-columns:repeat(2,1fr);}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🍽️ Food & Drinks – Đồ Ăn & Thức Uống</h1>
+  <p>Lý thuyết · 8 Bài tập · Luyện nghe · Phát âm</p>
+</header>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('theory',this)">📖 Lý Thuyết</button>
+  <button class="tab-btn" onclick="showTab('ex1',this)">🖼️ Bài 1: Nhận dạng</button>
+  <button class="tab-btn" onclick="showTab('ex2',this)">✏️ Bài 2: Chọn từ</button>
+  <button class="tab-btn" onclick="showTab('ex3',this)">🔍 Bài 3: Từ lạc nhóm</button>
+  <button class="tab-btn" onclick="showTab('ex5',this)">🔊 Bài 4: Phát âm</button>
+  <button class="tab-btn" onclick="showTab('ex6',this)">📝 Bài 5: Rachel</button>
+  <button class="tab-btn" onclick="showTab('ex7',this)">🔗 Bài 6: Nối câu</button>
+  <button class="tab-btn" onclick="showTab('ex8',this)">📖 Bài 7: Đọc hiểu</button>
+</div>
+
+<!-- ══════ THEORY ══════ -->
+<div id="theory" class="tab-content active">
+  <div class="sc">
+    <h2>🍎 Từ vựng – Đồ ăn & thức uống <small style="font-size:.7rem;color:var(--muted)">(bấm 🔊 nghe)</small></h2>
+    <div class="vocab-grid" id="vocabGrid"></div>
+  </div>
+  <div class="sc">
+    <h2>☕ Các bữa ăn & cụm từ quan trọng</h2>
+    <div class="rule-box">
+      <strong>🌅 Breakfast</strong> = Bữa sáng &nbsp;|&nbsp; <strong>🥣 Brunch</strong> = Ăn gộp sáng+trưa &nbsp;|&nbsp; <strong>🍱 Lunch</strong> = Bữa trưa<br>
+      <strong>🌆 Dinner/Supper</strong> = Bữa tối &nbsp;|&nbsp; <strong>🎂 Dessert</strong> = Món tráng miệng
+    </div>
+    <div class="rule-box green">
+      <strong>📦 Đơn vị đếm:</strong><br>
+      • a <strong>cup</strong> of coffee/tea &nbsp;→ một tách cà phê/trà<br>
+      • a <strong>glass</strong> of water/coca cola &nbsp;→ một ly nước/coca<br>
+      • a <strong>bowl</strong> of rice/soup &nbsp;→ một bát cơm/súp<br>
+      • a <strong>pack</strong> of sticky rice &nbsp;→ một gói xôi<br>
+      • a <strong>light</strong> breakfast &nbsp;→ bữa sáng nhẹ &nbsp;|&nbsp; <strong>fast</strong> foods &nbsp;→ đồ ăn nhanh
+    </div>
+    <div class="rule-box blue">
+      <strong>💡 Hay nhầm:</strong><br>
+      • <strong>dessert</strong> /dɪˈzɜːrt/ = tráng miệng &nbsp;≠&nbsp; <strong>desert</strong> /ˈdezərt/ = sa mạc<br>
+      • <strong>brunch</strong> = breakfast + lunch (ghép lại!)<br>
+      • <strong>supper</strong> = bữa ăn tối nhẹ (informal dinner)
+    </div>
+  </div>
+  <div class="listen-sec">
+    <h2>🎧 Luyện nghe – Nghe từ → chọn nghĩa</h2>
+    <div class="speed-row">
+      <span>Tốc độ:</span>
+      <button class="speed-btn active" onclick="setSpeed(0.7,this)">🐢 Chậm</button>
+      <button class="speed-btn" onclick="setSpeed(1.0,this)">🚶 Bình thường</button>
+      <button class="speed-btn" onclick="setSpeed(1.3,this)">🏃 Nhanh</button>
+    </div>
+    <div class="listen-box">
+      <div class="listen-qnum" id="lqnum">Câu 1 / 12</div>
+      <button class="listen-play" id="lplayBtn" onclick="playQ()">🔊 &nbsp;Nghe từ</button>
+      <div class="listen-opts" id="lOpts"></div>
+      <div class="listen-fb" id="lFb"></div>
+    </div>
+    <div class="ls-bar">
+      <span>Điểm:</span><span class="ls-big" id="lsNum">0</span>
+      <span style="color:var(--muted);font-weight:600;" id="lsTot">/0</span>
+      <div class="prog-wrap"><div class="prog-fill" id="lBar" style="width:0%"></div></div>
+      <button class="btn btn-s" style="margin-top:0;padding:4px 12px;font-size:.8rem;" onclick="resetListen()">🔄</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ EX1: PICTURE ID ══════ -->
+<div id="ex1" class="tab-content">
+  <div class="sc">
+    <h3>🖼️ Bài 1: Nhìn gợi ý chữ cái, đoán và viết từ đúng</h3>
+    <div class="pic-grid" id="ex1grid"></div>
+    <div class="btn-row">
+      <button class="btn btn-p" onclick="checkEx1()">✅ Chấm điểm</button>
+      <button class="btn btn-s" onclick="resetEx1()">🔄 Làm lại</button>
+    </div>
+    <div id="ex1-score" class="score-bar" style="display:none;"></div>
+  </div>
+</div>
+
+<!-- ══════ EX2: CHOOSE WORD ══════ -->
+<div id="ex2" class="tab-content">
+  <div class="sc">
+    <h3>✏️ Bài 2: Chọn từ đúng trong ngoặc để hoàn thành cụm từ</h3>
+    <div id="ex2form"></div>
+    <div class="btn-row">
+      <button class="btn btn-p" onclick="checkEx2()">✅ Chấm điểm</button>
+      <button class="btn btn-s" onclick="resetEx2()">🔄 Làm lại</button>
+    </div>
+    <div id="ex2-score" class="score-bar" style="display:none;"></div>
+  </div>
+</div>
+
+<!-- ══════ EX3: ODD ONE OUT ══════ -->
+<div id="ex3" class="tab-content">
+  <div class="sc">
+    <h3>🔍 Bài 3: Chọn từ KHÔNG cùng nhóm với các từ còn lại</h3>
+    <div id="ex3form"></div>
+    <div class="btn-row">
+      <button class="btn btn-p" onclick="checkEx3()">✅ Chấm điểm</button>
+      <button class="btn btn-s" onclick="resetEx3()">🔄 Làm lại</button>
+    </div>
+    <div id="ex3-score" class="score-bar" style="display:none;"></div>
+  </div>
+</div>
+
+<!-- ══════ EX5: PRONUNCIATION ══════ -->
+<div id="ex5" class="tab-content">
+  <div class="sc">
+    <h3>🔊 Bài 4: Chọn từ có phần gạch chân phát âm KHÁC các từ còn lại</h3>
+    <div id="ex5form"></div>
+    <div class="btn-row">
+      <button class="btn btn-p" onclick="checkEx5()">✅ Chấm điểm</button>
+      <button class="btn btn-s" onclick="resetEx5()">🔄 Làm lại</button>
+    </div>
+    <div id="ex5-score" class="score-bar" style="display:none;"></div>
+  </div>
+</div>
+
+<!-- ══════ EX6: RACHEL FILL ══════ -->
+<div id="ex6" class="tab-content">
+  <div class="sc">
+    <h3>📝 Bài 5: Điền từ vào đoạn văn – Rachel's day</h3>
+    <div class="word-bank">📦 Từ gợi ý: eat · cereal · lunch · salad · chocolate · coffee · fish · dessert</div>
+    <div style="line-height:2.6;font-size:.91rem;" id="rachelform">
+      What do I usually <input class="para-blank" id="r1" style="width:60px" autocomplete="off"> <span class="fb" id="rf1"></span>
+      and drink? Well, I get up about seven thirty, have a shower and then have breakfast about eight o'clock. I make a cup of tea, and I have
+      <input class="para-blank" id="r2" style="width:75px" autocomplete="off"> <span class="fb" id="rf2"></span>
+      and then toast. Then, I go to my office — I work in advertising. I don't eat snacks, so I'm quite hungry by lunchtime. I have
+      <input class="para-blank" id="r3" style="width:65px" autocomplete="off"> <span class="fb" id="rf3"></span>
+      at one fifteen. I have about an hour for lunch, and often go to a café near my office. I have
+      <input class="para-blank" id="r4" style="width:65px" autocomplete="off"> <span class="fb" id="rf4"></span>
+      and I sometimes have a cake — the café does yummy
+      <input class="para-blank" id="r5" style="width:90px" autocomplete="off"> <span class="fb" id="rf5"></span>
+      cakes. And to drink? Well, water. I don't like to have too much tea or
+      <input class="para-blank" id="r6" style="width:70px" autocomplete="off"> <span class="fb" id="rf6"></span>
+      in the day. I get home from work at about five thirty. I have my evening meal at about six thirty — usually chicken or
+      <input class="para-blank" id="r7" style="width:55px" autocomplete="off"> <span class="fb" id="rf7"></span>
+      with rice or pasta. I never have a
+      <input class="para-blank" id="r8" style="width:80px" autocomplete="off"> <span class="fb" id="rf8"></span>
+      , but I do have a cup of coffee after dinner.
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-p" onclick="checkEx6()">✅ Chấm điểm</button>
+      <button class="btn btn-s" onclick="resetEx6()">🔄 Làm lại</button>
+    </div>
+    <div id="ex6-score" class="score-bar" style="display:none;"></div>
+  </div>
+</div>
+
+<!-- ══════ EX7: SENTENCE MATCHING ══════ -->
+<div id="ex7" class="tab-content">
+  <div class="sc">
+    <h3>🔗 Bài 6: Chọn từ đúng để hoàn thành câu</h3>
+    <div class="word-bank">📦 Từ ngân hàng: supper · meal · chicken · pasta · dessert · juice · improve · cheese &nbsp;(1 từ dư)</div>
+    <div id="ex7form"></div>
+    <div class="btn-row">
+      <button class="btn btn-p" onclick="checkEx7()">✅ Chấm điểm</button>
+      <button class="btn btn-s" onclick="resetEx7()">🔄 Làm lại</button>
+    </div>
+    <div id="ex7-score" class="score-bar" style="display:none;"></div>
+  </div>
+</div>
+
+<!-- ══════ EX8: MINH READING ══════ -->
+<div id="ex8" class="tab-content">
+  <div class="sc">
+    <h3>📖 Bài 7: Điền từ vào đoạn văn – Minh's eating habits</h3>
+    <div class="word-bank">📦 Từ cho sẵn: breakfast · fast · glass · fruits · meals · drink · carrots · potatoes</div>
+    <div style="line-height:2.6;font-size:.91rem;">
+      My friend, Minh, has quite unhealthy eating habits. He usually skips
+      <input class="para-blank" id="m1" style="width:90px" autocomplete="off"> <span class="fb" id="mf1"></span>
+      in the morning if he has to go to school. He eats a lot of hamburgers and noodles although they are not good for health. During the day at school, he often has
+      <input class="para-blank" id="m2" style="width:60px" autocomplete="off"> <span class="fb" id="mf2"></span>
+      foods and a
+      <input class="para-blank" id="m3" style="width:65px" autocomplete="off"> <span class="fb" id="mf3"></span>
+      of coca cola for lunch. He always buys them in the supermarket. He also doesn't like eating
+      <input class="para-blank" id="m4" style="width:65px" autocomplete="off"> <span class="fb" id="mf4"></span>
+      , especially apples and oranges.<br><br>
+      I told him that he should have a more healthy diet. I suggest he has three
+      <input class="para-blank" id="m5" style="width:65px" autocomplete="off"> <span class="fb" id="mf5"></span>
+      a day. Besides, he should
+      <input class="para-blank" id="m6" style="width:65px" autocomplete="off"> <span class="fb" id="mf6"></span>
+      water instead of coca cola. He should also eat more fish and vegetables like
+      <input class="para-blank" id="m7" style="width:80px" autocomplete="off"> <span class="fb" id="mf7"></span>
+      and
+      <input class="para-blank" id="m8" style="width:80px" autocomplete="off"> <span class="fb" id="mf8"></span>
+      . It's good to do some exercises as well.
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-p" onclick="checkEx8()">✅ Chấm điểm</button>
+      <button class="btn btn-s" onclick="resetEx8()">🔄 Làm lại</button>
+    </div>
+    <div id="ex8-score" class="score-bar" style="display:none;"></div>
+  </div>
+</div>
+
+<!-- POPUP -->
+<div class="result-popup" id="resultPopup">
+  <div class="result-box">
+    <div style="font-size:3.5rem;" id="rEmoji">🎉</div>
+    <h2>Hoàn thành!</h2>
+    <div class="rs" id="rScore">0/0</div>
+    <p id="rMsg">Làm tốt lắm!</p>
+    <button class="btn btn-p" onclick="closePopup()">🍽️ Tiếp tục</button>
+  </div>
+</div>
+
+<script>
+// ══════ VOCAB DATA ══════
+const foods=[
+  {em:'🍳',w:'breakfast',ipa:'/ˈbrek.fəst/',v:'bữa sáng'},
+  {em:'🥞',w:'brunch',ipa:'/brʌntʃ/',v:'ăn gộp sáng+trưa'},
+  {em:'🥗',w:'salad',ipa:'/ˈsæl.əd/',v:'sa lát'},
+  {em:'🥩',w:'steak',ipa:'/steɪk/',v:'bít tết'},
+  {em:'🍔',w:'burger',ipa:'/ˈbɜː.ɡər/',v:'bánh burger'},
+  {em:'🍝',w:'pasta',ipa:'/ˈpæs.tə/',v:'mỳ Ý'},
+  {em:'🐟',w:'fish',ipa:'/fɪʃ/',v:'cá'},
+  {em:'🍗',w:'chicken',ipa:'/ˈtʃɪk.ɪn/',v:'thịt gà'},
+  {em:'🥕',w:'carrot',ipa:'/ˈkær.ət/',v:'cà rốt'},
+  {em:'🥔',w:'potato',ipa:'/pəˈteɪ.təʊ/',v:'khoai tây'},
+  {em:'🍎',w:'apple',ipa:'/ˈæp.l̩/',v:'trái táo'},
+  {em:'🍌',w:'banana',ipa:'/bəˈnɑː.nə/',v:'chuối'},
+  {em:'🍊',w:'orange juice',ipa:'/ˈɒr.ɪndʒ dʒuːs/',v:'nước cam'},
+  {em:'🧀',w:'cheese',ipa:'/tʃiːz/',v:'phô mai'},
+  {em:'🍰',w:'chocolate cake',ipa:'/ˈtʃɒk.l̩.ət keɪk/',v:'bánh sô cô la'},
+  {em:'🍦',w:'ice cream',ipa:'/ˈaɪs kriːm/',v:'kem'},
+  {em:'☕',w:'coffee',ipa:'/ˈkɒf.i/',v:'cà phê'},
+  {em:'🍵',w:'tea',ipa:'/tiː/',v:'trà'},
+  {em:'🥛',w:'milk',ipa:'/mɪlk/',v:'sữa'},
+  {em:'🍞',w:'bread',ipa:'/bred/',v:'bánh mỳ'},
+  {em:'🍚',w:'rice',ipa:'/raɪs/',v:'cơm/gạo'},
+  {em:'🌙',w:'supper',ipa:'/ˈsʌp.ər/',v:'bữa tối (nhẹ)'},
+  {em:'🍽️',w:'dinner',ipa:'/ˈdɪn.ər/',v:'bữa tối'},
+  {em:'🎂',w:'dessert',ipa:'/dɪˈzɜːrt/',v:'món tráng miệng'},
+];
+
+// RENDER VOCAB
+const vg=document.getElementById('vocabGrid');
+foods.forEach(a=>{
+  vg.innerHTML+=`<div class="vc">
+    <div class="em">${a.em}</div>
+    <div class="w">${a.w}</div>
+    <div class="ipa">${a.ipa}</div>
+    <div class="v">${a.v}</div>
+    <button class="speak-btn" onclick="speakWord('${a.w}',this)">🔊</button>
+  </div>`;
+});
+
+// TTS
+let ttsRate=0.7;
+function setSpeed(r,btn){ttsRate=r;document.querySelectorAll('.speed-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
+function speakWord(w,btn){
+  if(!window.speechSynthesis)return;
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(w);u.lang='en-US';u.rate=ttsRate;
+  if(btn){btn.classList.add('playing');u.onend=()=>btn.classList.remove('playing');}
+  window.speechSynthesis.speak(u);
+}
+
+// LISTEN QUIZ
+const LTOTAL=12;let lQ=[],lIdx=0,lOk=0,lAns=false;
+function shuffled(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+function initListen(){
+  lQ=shuffled([...foods,...foods]).slice(0,LTOTAL);
+  lIdx=0;lOk=0;lAns=false;
+  document.getElementById('lsNum').textContent='0';
+  document.getElementById('lsTot').textContent='/0';
+  document.getElementById('lBar').style.width='0%';
+  renderLQ();
+}
+function renderLQ(){
+  if(lIdx>=LTOTAL){doneListen();return;}
+  const q=lQ[lIdx];
+  document.getElementById('lqnum').textContent=`Câu ${lIdx+1} / ${LTOTAL}`;
+  document.getElementById('lFb').textContent='';
+  document.getElementById('lplayBtn').className='listen-play';
+  document.getElementById('lplayBtn').innerHTML='🔊 &nbsp;Nghe từ';
+  lAns=false;
+  const pool=foods.filter(x=>x.w!==q.w);
+  const opts=shuffled([q,...shuffled(pool).slice(0,3)]);
+  const el=document.getElementById('lOpts');el.innerHTML='';
+  opts.forEach(o=>{
+    const b=document.createElement('button');b.className='listen-opt';
+    b.innerHTML=`${o.em} ${o.v}`;
+    b.onclick=()=>handleLA(o.w,q.w,b);el.appendChild(b);
+  });
+  updateLS();
+}
+function playQ(){
+  if(lIdx>=LTOTAL)return;
+  const btn=document.getElementById('lplayBtn');btn.classList.add('playing');
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(lQ[lIdx].w);u.lang='en-US';u.rate=ttsRate;
+  u.onend=()=>btn.classList.remove('playing');window.speechSynthesis.speak(u);
+}
+function handleLA(chosen,correct,btn){
+  if(lAns)return;lAns=true;
+  const ok=chosen===correct;
+  if(ok){lOk++;btn.classList.add('correct-opt');}
+  else{
+    btn.classList.add('wrong-opt');
+    const f=foods.find(x=>x.w===correct);
+    document.querySelectorAll('.listen-opt').forEach(b=>{if(b.innerHTML.includes(f?.v||'__'))b.classList.add('correct-opt');});
+  }
+  document.querySelectorAll('.listen-opt').forEach(b=>b.classList.add('locked'));
+  const viet=foods.find(x=>x.w===correct)?.v||'';
+  const fb=document.getElementById('lFb');
+  fb.innerHTML=ok?`✅ Đúng! <strong>${correct}</strong> = ${viet}`:`❌ Sai! <strong>${correct}</strong> = ${viet}`;
+  fb.style.color=ok?'#059669':'#991b1b';
+  updateLS();setTimeout(()=>{lIdx++;renderLQ();},1800);
+}
+function updateLS(){
+  document.getElementById('lsNum').textContent=lOk;
+  document.getElementById('lsTot').textContent='/'+lIdx;
+  document.getElementById('lBar').style.width=(lIdx>0?(lOk/lIdx)*100:0)+'%';
+}
+function doneListen(){
+  document.getElementById('lqnum').textContent='🎉 Hoàn thành!';
+  document.getElementById('lOpts').innerHTML='';
+  document.getElementById('lplayBtn').innerHTML='✅ Đã xong';
+  document.getElementById('lFb').innerHTML=`<strong>Kết quả: ${lOk}/${LTOTAL}</strong> — ${lOk>=10?'Xuất sắc! 🏆':lOk>=7?'Tốt lắm! 🎉':'Cố lên! 💪'}`;
+  document.getElementById('lsTot').textContent='/'+LTOTAL;
+  document.getElementById('lBar').style.width=(lOk/LTOTAL*100)+'%';
+}
+function resetListen(){initListen();}
+initListen();
+
+// ══════ EX1: PICTURE IDENTIFY ══════
+const picData=[
+  {em:'🥩',hint:'m _ _ _',ans:'meat',viet:'thịt'},
+  {em:'🥦',hint:'v_g_t_ _l_ _',ans:'vegetables',viet:'rau củ'},
+  {em:'🍊',hint:'_r_ _t_',ans:'fruits',viet:'trái cây'},
+  {em:'🍚',hint:'s_ _c_ _ _i_e',ans:'sticky rice',viet:'xôi'},
+  {em:'🍦',hint:'i_ _ cr_ _ _',ans:'ice cream',viet:'kem'},
+  {em:'🍔',hint:'b_ _g_ _',ans:'burger',viet:'bánh burger'},
+  {em:'🍎',hint:'_p_l_',ans:'apple',viet:'táo'},
+  {em:'🥔',hint:'_o_ _t_',ans:'potato',viet:'khoai tây'},
+  {em:'🧃',hint:'l_ _o_ _ _da',ans:'lemonade',viet:'nước chanh'},
+];
+const ex1g=document.getElementById('ex1grid');
+picData.forEach((p,i)=>{
+  ex1g.innerHTML+=`<div class="pic-card">
+    <div class="emoji">${p.em}</div>
+    <div class="label">${p.viet}</div>
+    <div class="hint-letters">${p.hint}</div>
+    <input id="p${i}" placeholder="viết từ..." autocomplete="off">
+    <span class="fb" id="pf${i}" style="display:block;margin-top:3px;"></span>
+  </div>`;
+});
+function checkEx1(){
+  let c=0;
+  picData.forEach((p,i)=>{
+    const inp=document.getElementById('p'+i);const fb=document.getElementById('pf'+i);
+    const ok=inp.value.trim().toLowerCase()===p.ans;
+    inp.classList.toggle('correct',ok);inp.classList.toggle('wrong',!ok&&inp.value.trim()!='');
+    if(ok){fb.textContent='✓';fb.className='fb correct';c++;}
+    else if(inp.value.trim()){fb.textContent='✗→'+p.ans;fb.className='fb wrong';}
+    else fb.textContent='';
+  });
+  showSB('ex1-score',c,picData.length);showResult(c,picData.length);
+}
+function resetEx1(){
+  picData.forEach((_,i)=>{
+    const inp=document.getElementById('p'+i);
+    inp.value='';inp.className='';
+    document.getElementById('pf'+i).textContent='';
+  });
+  document.getElementById('ex1-score').style.display='none';
+}
+
+// ══════ EX2: CHOOSE CORRECT WORD ══════
+const ex2Data=[
+  {q:'1. một cốc cà phê → a ___ (hup/<u>cup</u>) of coffee',opts:['hup','cup'],ans:'cup',exp:'cup = tách (cup of coffee/tea)'},
+  {q:'2. ăn gộp bữa sáng và trưa → have ___ (<u>brunch</u>/lunch)',opts:['brunch','lunch'],ans:'brunch',exp:'brunch = breakfast + lunch'},
+  {q:'3. bữa sáng nhẹ → a ___ (tight/<u>light</u>) breakfast',opts:['tight','light'],ans:'light',exp:'light breakfast = bữa sáng nhẹ'},
+  {q:'4. một gói xôi → a ___ (<u>pack</u>/stack) of sticky rice',opts:['pack','stack'],ans:'pack',exp:'pack of = một gói'},
+  {q:'5. một ly coca cola → a ___ (grass/<u>glass</u>) of coca cola',opts:['grass','glass'],ans:'glass',exp:'glass of = một ly (nước uống)'},
+  {q:'6. đồ ăn nhanh → ___ (fat/<u>fast</u>) foods',opts:['fat','fast'],ans:'fast',exp:'fast food = đồ ăn nhanh (McDonald\'s, KFC...)'},
+  {q:'7. một bát cơm → a ___ (<u>bowl</u>/bow) of rice',opts:['bowl','bow'],ans:'bowl',exp:'bowl of rice = một bát cơm'},
+  {q:'8. canh cá → fish ___ (group/<u>soup</u>)',opts:['group','soup'],ans:'soup',exp:'fish soup = canh cá'},
+  {q:'9. nước cam → orange ___ (<u>juice</u>/water)',opts:['juice','water'],ans:'juice',exp:'orange juice = nước cam ép'},
+  {q:'10. bánh kem sô cô la → chocolate ___ (bread/<u>cake</u>)',opts:['bread','cake'],ans:'cake',exp:'chocolate cake = bánh kem sô cô la'},
+];
+const ex2f=document.getElementById('ex2form');
+ex2Data.forEach((item,i)=>{
+  ex2f.innerHTML+=`<div class="mcq-item" id="e2q${i}">
+    <div class="qt">${item.q}<div class="hint">💡 ${item.exp}</div></div>
+    <div class="mcq-options">
+      ${item.opts.map(o=>`<label class="mcq-option"><input type="radio" name="ex2_${i}" value="${o}"> ${o}</label>`).join('')}
+    </div>
+  </div>`;
+});
+function checkEx2(){
+  let c=0;
+  ex2Data.forEach((item,i)=>{
+    const sel=document.querySelector(`input[name="ex2_${i}"]:checked`);
+    document.querySelectorAll(`#e2q${i} .mcq-option`).forEach(o=>o.classList.remove('correct-ans','wrong-ans'));
+    if(sel){
+      const ok=sel.value===item.ans;
+      sel.closest('.mcq-option').classList.add(ok?'correct-ans':'wrong-ans');
+      if(!ok)document.querySelectorAll(`#e2q${i} .mcq-option`).forEach(o=>{if(o.querySelector('input').value===item.ans)o.classList.add('correct-ans');});
+      if(ok)c++;
+    }
+  });
+  showSB('ex2-score',c,ex2Data.length);showResult(c,ex2Data.length);
+}
+function resetEx2(){document.querySelectorAll('[name^="ex2_"]').forEach(r=>r.checked=false);document.querySelectorAll('#ex2form .mcq-option').forEach(o=>o.classList.remove('correct-ans','wrong-ans'));document.getElementById('ex2-score').style.display='none';}
+
+// ══════ EX3: ODD ONE OUT ══════
+const ex3Data=[
+  {q:'Q1: Chọn từ KHÔNG cùng nhóm',opts:['apple','banana','coffee','grape'],ans:'coffee',exp:'coffee = đồ uống; apple/banana/grape = trái cây'},
+  {q:'Q2: Chọn từ KHÔNG cùng nhóm',opts:['fruits','pasta','burger','supper'],ans:'supper',exp:'supper = bữa ăn (meal time); fruits/pasta/burger = loại thức ăn'},
+  {q:'Q3: Chọn từ KHÔNG cùng nhóm',opts:['bowl','salad','glass','cup'],ans:'salad',exp:'salad = món ăn; bowl/glass/cup = đơn vị đo/đựng đồ'},
+  {q:'Q4: Chọn từ KHÔNG cùng nhóm',opts:['breakfast','lunch','dinner','dessert'],ans:'dessert',exp:'dessert = món tráng miệng; breakfast/lunch/dinner = bữa ăn'},
+  {q:'Q5: Chọn từ KHÔNG cùng nhóm',opts:['pack','fish','rice','steak'],ans:'pack',exp:'pack = đơn vị đong/gói; fish/rice/steak = loại thức ăn'},
+];
+const ex3f=document.getElementById('ex3form');
+ex3Data.forEach((item,i)=>{
+  ex3f.innerHTML+=`<div class="odd-item" id="e3q${i}">
+    <div class="oq">${item.q}<div style="font-size:.77rem;color:var(--muted);font-weight:600;font-style:italic;margin-top:3px;">💡 ${item.exp}</div></div>
+    <div class="odd-opts">
+      ${item.opts.map(o=>`<span class="odd-opt" onclick="selOdd(${i},'${o}',this)">${o}</span>`).join('')}
+    </div>
+  </div>`;
+});
+const oddSel={};
+function selOdd(i,v,btn){
+  if(btn.classList.contains('locked'))return;
+  document.querySelectorAll(`#e3q${i} .odd-opt`).forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');oddSel[i]=v;
+}
+function checkEx3(){
+  let c=0;
+  ex3Data.forEach((item,i)=>{
+    document.querySelectorAll(`#e3q${i} .odd-opt`).forEach(b=>{b.classList.remove('selected');b.classList.add('locked');});
+    if(oddSel[i]){
+      const ok=oddSel[i]===item.ans;
+      const selBtn=document.querySelector(`#e3q${i} .odd-opt[onclick*="'${oddSel[i]}'"]`);
+      if(selBtn)selBtn.classList.add(ok?'correct-ans':'wrong-ans');
+      if(!ok){const ansBtn=document.querySelector(`#e3q${i} .odd-opt[onclick*="'${item.ans}'"]`);if(ansBtn)ansBtn.classList.add('correct-ans');}
+      if(ok)c++;
+    }
+  });
+  showSB('ex3-score',c,ex3Data.length);showResult(c,ex3Data.length);
+}
+function resetEx3(){
+  Object.keys(oddSel).forEach(k=>delete oddSel[k]);
+  document.querySelectorAll('#ex3form .odd-opt').forEach(b=>{b.className='odd-opt';});
+  document.getElementById('ex3-score').style.display='none';
+}
+
+// ══════ EX5: PRONUNCIATION ══════
+const ex5Data=[
+  {q:'Q1: Âm <u>u</u> — br<u>u</u>nch / s<u>u</u>pper / l<u>u</u>nch / j<u>ui</u>ce',opts:['brunch','supper','lunch','juice'],ans:'juice',exp:'brunch/supper/lunch = /ʌ/; juice = /uː/ (âm dài khác)'},
+  {q:'Q2: Âm <u>ee/ea/i</u> — coff<u>ee</u> / ice-cr<u>ea</u>m / f<u>i</u>sh / d<u>i</u>nner',opts:['coffee','ice-cream','fish','dinner'],ans:'coffee',exp:'ice-cream/fish/dinner có âm /iː/ hoặc /ɪ/; coffee = /i/ cuối câu, nhưng "ee" ở đây /i/ ngắn — đáp án thường là coffee (âm /iː/ cuối không giống /iː/ của cream)'},
+  {q:'Q3: Âm <u>a</u> — breakf<u>a</u>st / b<u>a</u>nana / coc<u>a</u>-cola / p<u>a</u>sta',opts:['breakfast','banana','coca-cola','pasta'],ans:'breakfast',exp:'banana/coca-cola/pasta = âm /ə/ (unstressed); breakfast = /æ/ (fast = /æ/)'},
+  {q:'Q4: Âm <u>a</u> — c<u>a</u>ke / pot<u>a</u>to / <u>a</u>pple / st<u>ea</u>k',opts:['cake','potato','apple','steak'],ans:'apple',exp:'cake/steak = /eɪ/; potato = /eɪ/; apple = /æ/ (khác!)'},
+  {q:'Q5: Âm <u>s</u> — chee<u>se</u> / <u>s</u>alad / pa<u>s</u>ta / <u>s</u>upper',opts:['cheese','salad','pasta','supper'],ans:'cheese',exp:'salad/pasta/supper có âm /s/; cheese có âm /z/ (cheese = /tʃiːz/)'},
+];
+const ex5f=document.getElementById('ex5form');
+ex5Data.forEach((item,i)=>{
+  ex5f.innerHTML+=`<div class="odd-item" id="e5q${i}">
+    <div class="oq">${item.q}<div style="font-size:.77rem;color:var(--muted);font-weight:600;font-style:italic;margin-top:3px;">💡 ${item.exp}</div></div>
+    <div class="odd-opts">
+      ${item.opts.map(o=>`<span class="odd-opt" onclick="selP5(${i},'${o}',this)">${o}</span>`).join('')}
+    </div>
+  </div>`;
+});
+const p5Sel={};
+function selP5(i,v,btn){
+  if(btn.classList.contains('locked'))return;
+  document.querySelectorAll(`#e5q${i} .odd-opt`).forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');p5Sel[i]=v;
+}
+function checkEx5(){
+  let c=0;
+  ex5Data.forEach((item,i)=>{
+    document.querySelectorAll(`#e5q${i} .odd-opt`).forEach(b=>{b.classList.remove('selected');b.classList.add('locked');});
+    if(p5Sel[i]){
+      const ok=p5Sel[i]===item.ans;
+      const selBtn=document.querySelector(`#e5q${i} .odd-opt[onclick*="'${p5Sel[i]}'"]`);
+      if(selBtn)selBtn.classList.add(ok?'correct-ans':'wrong-ans');
+      if(!ok){const a=document.querySelector(`#e5q${i} .odd-opt[onclick*="'${item.ans}'"]`);if(a)a.classList.add('correct-ans');}
+      if(ok)c++;
+    }
+  });
+  showSB('ex5-score',c,ex5Data.length);showResult(c,ex5Data.length);
+}
+function resetEx5(){Object.keys(p5Sel).forEach(k=>delete p5Sel[k]);document.querySelectorAll('#ex5form .odd-opt').forEach(b=>{b.className='odd-opt';});document.getElementById('ex5-score').style.display='none';}
+
+// ══════ EX6: RACHEL FILL ══════
+const rachelAns=[['r1','rf1','eat'],['r2','rf2','cereal'],['r3','rf3','lunch'],['r4','rf4','salad'],['r5','rf5','chocolate'],['r6','rf6','coffee'],['r7','rf7','fish'],['r8','rf8','dessert']];
+function checkEx6(){
+  let c=0;
+  rachelAns.forEach(([id,fid,ans])=>{
+    const inp=document.getElementById(id);const fb=document.getElementById(fid);
+    const ok=inp.value.trim().toLowerCase()===ans;
+    inp.classList.toggle('correct',ok);inp.classList.toggle('wrong',!ok&&inp.value.trim()!='');
+    if(ok){fb.textContent='✓';fb.className='fb correct';c++;}
+    else if(inp.value.trim()){fb.textContent='✗→'+ans;fb.className='fb wrong';}
+    else fb.textContent='';
+  });
+  showSB('ex6-score',c,8);showResult(c,8);
+}
+function resetEx6(){rachelAns.forEach(([id,fid])=>{document.getElementById(id).value='';document.getElementById(id).className='para-blank';document.getElementById(fid).textContent='';});document.getElementById('ex6-score').style.display='none';}
+
+// ══════ EX7: SENTENCE MATCHING ══════
+const ex7Data=[
+  {q:'He had apple pie with ice cream for _____.',ans:'dessert',exp:'dessert = món tráng miệng'},
+  {q:'Fish and carrots can help you _____ your eyesight.',ans:'improve',exp:'improve = cải thiện'},
+  {q:"We're having spaghetti for _____ tonight.",ans:'supper',exp:'supper = bữa tối nhẹ'},
+  {q:'She gave the children some pineapple _____.',ans:'juice',exp:'juice = nước ép'},
+  {q:'We both had _____ soup for lunch.',ans:'chicken',exp:'chicken soup = canh gà'},
+  {q:'The _____ was made of flour, eggs, and water.',ans:'pasta',exp:'pasta = mỳ ý (làm từ bột mỳ, trứng, nước)'},
+  {q:'Dinner is the main _____ of the day for most people.',ans:'meal',exp:'meal = bữa ăn'},
+];
+const ex7f=document.getElementById('ex7form');
+const bankWords=['supper','meal','chicken','pasta','dessert','juice','improve','cheese'];
+ex7Data.forEach((item,i)=>{
+  ex7f.innerHTML+=`<div style="margin-bottom:12px;font-size:.9rem;line-height:1.7;">
+    <span style="font-weight:700;">${i+1}. ${item.q.replace('_____',`<input class="para-blank" id="e7i${i}" style="width:90px" autocomplete="off">`)}</span>
+    <span class="fb" id="e7f${i}" style="margin-left:6px;"></span>
+    <div style="font-size:.76rem;color:var(--muted);font-style:italic;">💡 ${item.exp}</div>
+  </div>`;
+});
+function checkEx7(){
+  let c=0;
+  ex7Data.forEach((item,i)=>{
+    const inp=document.getElementById('e7i'+i);const fb=document.getElementById('e7f'+i);
+    const ok=inp.value.trim().toLowerCase()===item.ans;
+    inp.classList.toggle('correct',ok);inp.classList.toggle('wrong',!ok&&inp.value.trim()!='');
+    if(ok){fb.textContent='✓';fb.className='fb correct';c++;}
+    else if(inp.value.trim()){fb.textContent='✗→'+item.ans;fb.className='fb wrong';}
+    else fb.textContent='';
+  });
+  showSB('ex7-score',c,ex7Data.length);showResult(c,ex7Data.length);
+}
+function resetEx7(){ex7Data.forEach((_,i)=>{document.getElementById('e7i'+i).value='';document.getElementById('e7i'+i).className='para-blank';document.getElementById('e7f'+i).textContent='';});document.getElementById('ex7-score').style.display='none';}
+
+// ══════ EX8: MINH FILL ══════
+// answers: breakfast, fast, glass, fruits, meals, drink, carrots, potatoes (order may vary for last 2)
+const minhAns=[
+  ['m1','mf1','breakfast'],['m2','mf2','fast'],['m3','mf3','glass'],
+  ['m4','mf4','fruits'],['m5','mf5','meals'],['m6','mf6','drink'],
+  ['m7','mf7','carrots'],['m8','mf8','potatoes'],
+];
+function checkEx8(){
+  let c=0;
+  minhAns.forEach(([id,fid,ans])=>{
+    const inp=document.getElementById(id);const fb=document.getElementById(fid);
+    // allow both orders for last 2
+    const val=inp.value.trim().toLowerCase();
+    let ok=val===ans;
+    if((id==='m7'||id==='m8')&&(val==='carrots'||val==='potatoes'))ok=true;
+    inp.classList.toggle('correct',ok);inp.classList.toggle('wrong',!ok&&val!='');
+    if(ok){fb.textContent='✓';fb.className='fb correct';c++;}
+    else if(val){fb.textContent='✗→'+ans;fb.className='fb wrong';}
+    else fb.textContent='';
+  });
+  showSB('ex8-score',c,8);showResult(c,8);
+}
+function resetEx8(){minhAns.forEach(([id,fid])=>{document.getElementById(id).value='';document.getElementById(id).className='para-blank';document.getElementById(fid).textContent='';});document.getElementById('ex8-score').style.display='none';}
+
+// ══════ HELPERS ══════
+function showTab(id,btn){
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');btn.classList.add('active');
+}
+function showSB(id,c,t){
+  const el=document.getElementById(id);el.style.display='flex';
+  el.innerHTML=`<span class="score-num">${c}/${t}</span><span>${c===t?'🏆 Hoàn hảo!':c>=t*.7?'🎉 Tốt lắm!':'💪 Thử lại!'}</span>`;
+}
+function showResult(c,t){
+  const p=c/t;
+  document.getElementById('rEmoji').textContent=p===1?'🏆':p>=.7?'🎉':p>=.5?'👍':'💪';
+  document.getElementById('rScore').textContent=c+'/'+t;
+  document.getElementById('rMsg').textContent=p===1?'Hoàn hảo! 🍽️':p>=.7?'Làm tốt lắm!':'Ôn lại và thử lại nhé!';
+  document.getElementById('resultPopup').classList.add('show');
+}
+function closePopup(){document.getElementById('resultPopup').classList.remove('show');}
+</script>
+</body>
+</html>

@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hoạt Động Hàng Ngày – Daily Activities</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#7C3AED;--pri-dark:#6D28D9;--secondary:#2563EB;
+  --acc:#F59E0B;--green:#22c55e;--red:#ef4444;--teal:#0D9488;
+  --bg:#F5F3FF;--card:#fff;--text:#1e1b4b;--muted:#7c6fa8;
+  --shadow:0 4px 24px rgba(124,58,237,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+header{
+  background:linear-gradient(135deg,#5B21B6 0%,#7C3AED 50%,#A78BFA 100%);
+  padding:28px 16px 20px;text-align:center;
+  box-shadow:0 4px 20px rgba(124,58,237,.4);position:relative;overflow:hidden;
+}
+header::before{content:'🌅 ☕ 🏃 💼 🍽️ 🛁 📚 🌙 🧹 📞';position:absolute;top:8px;left:0;right:0;font-size:1.3rem;letter-spacing:4px;opacity:.2;}
+header h1{font-family:'Baloo 2',cursive;font-size:2.1rem;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.15);position:relative;}
+header p{color:rgba(255,255,255,.88);font-size:.96rem;margin-top:5px;position:relative;}
+
+/* SECTION TABS */
+.sec-tabs{display:flex;justify-content:center;gap:8px;padding:18px 12px 0;flex-wrap:wrap;}
+.sec-btn{padding:9px 18px;border-radius:50px;border:2.5px solid var(--primary);background:#fff;color:var(--primary);font-family:'Nunito',sans-serif;font-size:.87rem;font-weight:800;cursor:pointer;transition:all .2s;}
+.sec-btn.active,.sec-btn:hover{background:var(--primary);color:#fff;box-shadow:0 3px 12px rgba(124,58,237,.35);}
+
+.sec-panel{display:none;max-width:920px;margin:0 auto;padding:18px 12px 50px;}
+.sec-panel.active{display:block;}
+
+/* SUB TABS */
+.sub-tabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px;}
+.sub-btn{padding:6px 14px;border-radius:50px;border:2px solid #c4b5fd;background:#fff;color:var(--primary);font-family:'Nunito',sans-serif;font-size:.82rem;font-weight:700;cursor:pointer;transition:all .15s;}
+.sub-btn.active,.sub-btn:hover{background:var(--primary);color:#fff;}
+
+.sub-panel{display:none;}
+.sub-panel.active{display:block;}
+
+.sc{background:var(--card);border-radius:18px;padding:22px;margin-bottom:18px;box-shadow:var(--shadow);}
+.sc h2{font-family:'Baloo 2',cursive;color:var(--primary);font-size:1.25rem;margin-bottom:13px;display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
+.sc h3{font-family:'Baloo 2',cursive;color:var(--secondary);font-size:1.06rem;margin-bottom:12px;padding-bottom:8px;border-bottom:2px dashed #ddd6fe;}
+
+/* VOCAB GRID */
+.vocab-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(138px,1fr));gap:8px;}
+.vc{background:linear-gradient(135deg,#f5f3ff,#ede9fe);border-radius:13px;padding:11px 8px 9px;text-align:center;border:1.5px solid #c4b5fd;transition:transform .15s,box-shadow .15s;}
+.vc:hover{transform:translateY(-3px);box-shadow:0 5px 14px rgba(124,58,237,.18);}
+.vc .em{font-size:1.7rem;line-height:1;}
+.vc .w{font-size:.82rem;font-weight:900;color:var(--primary);margin-top:4px;line-height:1.2;}
+.vc .v{font-size:.72rem;color:#4c1d95;margin-top:3px;font-weight:600;}
+.vc .ex{font-size:.67rem;color:#6d28d9;margin-top:2px;font-style:italic;line-height:1.3;}
+.speak-btn{display:inline-flex;align-items:center;justify-content:center;margin-top:5px;background:var(--primary);border:none;border-radius:50%;width:25px;height:25px;cursor:pointer;color:#fff;font-size:.7rem;transition:background .15s,transform .1s;}
+.speak-btn:hover{background:var(--pri-dark);transform:scale(1.12);}
+.speak-btn.playing{background:var(--acc);}
+
+/* RULE BOX */
+.rule-box{border-left:4px solid var(--primary);border-radius:10px;padding:11px 15px;margin:10px 0;font-size:.88rem;line-height:1.85;background:linear-gradient(135deg,#f5f3ff,#ede9fe);}
+.rule-box strong{color:#4c1d95;}
+.rule-box.green{background:linear-gradient(135deg,#ecfdf5,#d1fae5);border-left-color:#10b981;}
+.rule-box.green strong{color:#065f46;}
+.rule-box.amber{background:#fffbeb;border-left-color:var(--acc);}
+.rule-box.amber strong{color:#92400e;}
+.rule-box.blue{background:#eff6ff;border-left-color:#3b82f6;}
+.rule-box.blue strong{color:#1e40af;}
+
+/* LISTEN */
+.listen-sec{background:var(--card);border-radius:18px;padding:20px;margin-bottom:16px;box-shadow:var(--shadow);}
+.listen-sec h2{font-family:'Baloo 2',cursive;color:var(--teal);font-size:1.2rem;margin-bottom:11px;}
+.speed-row{display:flex;align-items:center;gap:7px;margin-bottom:11px;flex-wrap:wrap;}
+.speed-row span{font-weight:700;color:var(--muted);font-size:.83rem;}
+.speed-btn{padding:4px 11px;border-radius:20px;border:2px solid #99f6e4;background:#fff;color:var(--teal);font-weight:700;font-size:.78rem;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .15s;}
+.speed-btn.active{background:var(--teal);color:#fff;border-color:var(--teal);}
+.listen-box{background:linear-gradient(135deg,#f0fdfa,#ccfbf1);border-radius:13px;padding:16px;margin-bottom:10px;border:1.5px solid #99f6e4;}
+.listen-qnum{font-size:.72rem;font-weight:800;color:var(--teal);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+.listen-play{display:inline-flex;align-items:center;gap:7px;background:var(--teal);color:#fff;border:none;border-radius:50px;padding:10px 24px;font-family:'Nunito',sans-serif;font-size:.93rem;font-weight:800;cursor:pointer;transition:all .2s;box-shadow:0 3px 12px rgba(13,148,136,.28);margin-bottom:12px;}
+.listen-play.playing{background:var(--acc);}
+.listen-opts{display:flex;flex-wrap:wrap;gap:7px;}
+.listen-opt{padding:7px 16px;border-radius:50px;border:2.5px solid #99f6e4;background:#fff;font-family:'Nunito',sans-serif;font-size:.87rem;font-weight:700;cursor:pointer;transition:all .15s;color:#134e4a;}
+.listen-opt:hover:not(.locked){border-color:var(--teal);}
+.listen-opt.correct-opt{border-color:var(--green);background:#f0fdf4;color:#166534;}
+.listen-opt.wrong-opt{border-color:var(--red);background:#fef2f2;color:#991b1b;}
+.listen-opt.locked{cursor:default;}
+.listen-fb{margin-top:9px;font-weight:700;font-size:.85rem;min-height:18px;}
+.ls-bar{display:flex;align-items:center;gap:10px;font-weight:700;flex-wrap:wrap;padding-top:10px;}
+.ls-big{font-size:1.6rem;font-weight:900;color:var(--teal);}
+.prog-wrap{flex:1;min-width:80px;height:8px;background:#ccfbf1;border-radius:99px;overflow:hidden;}
+.prog-fill{height:100%;background:var(--teal);border-radius:99px;transition:width .4s;}
+
+/* MCQ */
+.mcq-item{margin-bottom:14px;}
+.mcq-item .qt{font-weight:700;margin-bottom:8px;line-height:1.5;font-size:.9rem;background:#f5f3ff;padding:8px 12px;border-radius:9px;border-left:3px solid var(--primary);}
+.mcq-item .qt .hint{font-size:.76rem;color:var(--muted);font-weight:600;margin-top:3px;font-style:italic;}
+.mcq-options{display:flex;flex-direction:column;gap:5px;}
+.mcq-option{display:flex;align-items:center;gap:8px;padding:7px 12px;border-radius:9px;border:2px solid #e2e8f0;cursor:pointer;transition:all .15s;font-weight:600;user-select:none;font-size:.88rem;}
+.mcq-option:hover{border-color:var(--primary);background:#f5f3ff;}
+.mcq-option.correct-ans{border-color:var(--green);background:#f0fdf4;color:#166534;}
+.mcq-option.wrong-ans{border-color:var(--red);background:#fef2f2;color:#991b1b;}
+.mcq-option input[type=radio]{accent-color:var(--primary);width:13px;height:13px;}
+
+/* MATCHING */
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:14px;}
+.match-col{display:flex;flex-direction:column;gap:6px;}
+.match-item{background:#f5f3ff;border:2px solid #c4b5fd;border-radius:9px;padding:8px 12px;font-size:.87rem;font-weight:700;color:#4c1d95;cursor:pointer;transition:all .15s;user-select:none;}
+.match-item:hover:not(.locked){border-color:var(--primary);background:#ede9fe;}
+.match-item.selected-left{border-color:var(--acc);background:#fef3c7;color:#92400e;}
+.match-item.selected-right{border-color:var(--acc);background:#fef3c7;color:#92400e;}
+.match-item.matched{border-color:var(--green);background:#f0fdf4;color:#166534;cursor:default;}
+.match-item.wrong-flash{border-color:var(--red);background:#fef2f2;animation:wf .4s;}
+@keyframes wf{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.match-item.locked{cursor:default;}
+
+/* FILL BLANKS */
+.para-blank{border:none;border-bottom:2px solid var(--primary);background:transparent;font-family:'Nunito',sans-serif;font-size:.9rem;width:110px;outline:none;padding:2px 4px;font-weight:700;color:var(--primary);}
+.para-blank.correct{border-bottom-color:var(--green);color:var(--green);}
+.para-blank.wrong{border-bottom-color:var(--red);color:var(--red);}
+.fb{font-size:.75rem;font-weight:700;margin-left:2px;}
+.fb.correct{color:var(--green);}
+.fb.wrong{color:var(--red);}
+.fill-input{border:2px solid #c4b5fd;border-radius:8px;padding:5px 10px;font-family:'Nunito',sans-serif;font-size:.89rem;width:140px;outline:none;transition:border .2s;}
+.fill-input:focus{border-color:var(--primary);}
+.fill-input.correct{border-color:var(--green);background:#f0fdf4;}
+.fill-input.wrong{border-color:var(--red);background:#fef2f2;}
+
+/* WORD BANK */
+.word-bank{background:#fefce8;border-radius:10px;padding:9px 13px;margin-bottom:12px;font-weight:700;color:#92400e;font-size:.82rem;border:1.5px solid #fde68a;line-height:1.7;}
+
+/* TF ITEM */
+.tf-item{margin-bottom:12px;padding:10px 14px;background:#f5f3ff;border-radius:11px;border:1.5px solid #c4b5fd;}
+.tf-item .tq{font-weight:700;font-size:.88rem;margin-bottom:8px;color:#3730a3;}
+.tf-opts{display:flex;gap:9px;}
+.tf-opt{padding:6px 18px;border-radius:50px;border:2px solid #c4b5fd;background:#fff;font-family:'Nunito',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer;transition:all .15s;color:#4c1d95;user-select:none;}
+.tf-opt:hover{border-color:var(--primary);background:#f5f3ff;}
+.tf-opt.correct-ans{border-color:var(--green);background:#f0fdf4;color:#166534;}
+.tf-opt.wrong-ans{border-color:var(--red);background:#fef2f2;color:#991b1b;}
+.tf-opt.locked{cursor:default;}
+
+/* DIALOGUE */
+.dialogue-box{background:#f8fafc;border-radius:12px;padding:14px;line-height:2.1;font-size:.9rem;margin-bottom:12px;border:1.5px solid #c4b5fd;}
+.dialogue-box .sp{font-weight:900;color:var(--secondary);}
+.dialogue-box .sp.b{color:#16a34a;}
+.bank-card{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px;}
+.bank-opt{padding:6px 15px;border-radius:50px;border:2px solid #c4b5fd;background:#fff;font-family:'Nunito',sans-serif;font-size:.83rem;font-weight:700;cursor:pointer;transition:all .15s;color:#4c1d95;}
+.bank-opt:hover:not(.used){border-color:var(--primary);background:#f5f3ff;}
+.bank-opt.used{opacity:.45;cursor:default;text-decoration:line-through;}
+.dblank{display:inline-block;min-width:55px;border-bottom:2px dashed var(--primary);padding:0 6px;color:var(--primary);font-weight:800;cursor:pointer;font-size:.88rem;}
+.dblank.filled{border-bottom-color:var(--green);color:#166534;cursor:default;}
+.dblank.wrong-d{border-bottom-color:var(--red);color:var(--red);}
+
+/* ERROR CORRECTION */
+.err-item{margin-bottom:13px;padding:10px 14px;background:#fff7ed;border-radius:11px;border:1.5px solid #fed7aa;}
+.err-q{font-size:.88rem;font-weight:700;color:#9a3412;margin-bottom:7px;}
+.err-input{border:2px solid #fed7aa;border-radius:8px;padding:6px 10px;font-family:'Nunito',sans-serif;font-size:.88rem;width:100%;max-width:500px;outline:none;transition:border .2s;}
+.err-input:focus{border-color:#f97316;}
+.err-input.correct{border-color:var(--green);background:#f0fdf4;}
+.err-input.wrong{border-color:var(--red);background:#fef2f2;}
+
+/* SCORE */
+.score-bar{background:#f5f3ff;border-radius:13px;padding:12px 16px;margin-top:11px;display:flex;align-items:center;gap:12px;font-weight:700;flex-wrap:wrap;border:1.5px solid #c4b5fd;}
+.score-num{font-size:1.65rem;font-weight:900;color:var(--primary);}
+.btn{padding:8px 22px;border-radius:50px;border:none;font-family:'Nunito',sans-serif;font-size:.9rem;font-weight:800;cursor:pointer;transition:all .2s;margin-top:11px;}
+.btn-p{background:var(--primary);color:#fff;box-shadow:0 3px 12px rgba(124,58,237,.3);}
+.btn-p:hover{background:var(--pri-dark);transform:translateY(-2px);}
+.btn-s{background:#fff;color:var(--primary);border:2.5px solid var(--primary);}
+.btn-s:hover{background:#f5f3ff;}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;}
+
+/* POPUP */
+.result-popup{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.45);z-index:999;align-items:center;justify-content:center;}
+.result-popup.show{display:flex;}
+.result-box{background:#fff;border-radius:22px;padding:34px 40px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.2);animation:popIn .3s ease;max-width:340px;width:90%;}
+@keyframes popIn{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
+.result-box h2{font-family:'Baloo 2',cursive;font-size:1.6rem;color:var(--primary);margin:8px 0 4px;}
+.result-box p{color:var(--muted);font-size:.94rem;margin-bottom:14px;}
+.rs{font-size:2.3rem;font-weight:900;color:var(--secondary);}
+
+@media(max-width:600px){
+  header h1{font-size:1.3rem;}
+  .vocab-grid{grid-template-columns:repeat(2,1fr);}
+  .match-grid{grid-template-columns:1fr;}
+  .fill-input{width:120px;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📅 Daily Activities – Hoạt Động Hàng Ngày</h1>
+  <p>Lý thuyết · Phần 1 · Phần 2 · Phần 3 · Luyện nghe</p>
+</header>
+
+<!-- SECTION TABS -->
+<div class="sec-tabs">
+  <button class="sec-btn active" onclick="showSec('theory',this)">📖 Lý Thuyết</button>
+  <button class="sec-btn" onclick="showSec('s1',this)">📗 Phần 1: Hàng ngày 1</button>
+  <button class="sec-btn" onclick="showSec('s2',this)">📘 Phần 2: Go/Come</button>
+  <button class="sec-btn" onclick="showSec('s3',this)">📙 Phần 3: Do/Make</button>
+</div>
+
+<!-- ══════ THEORY ══════ -->
+<div id="theory" class="sec-panel active">
+  <div class="sc">
+    <h2>🌅 Từ vựng: Hoạt động hàng ngày <small style="font-size:.72rem;color:var(--muted)">(bấm 🔊 nghe)</small></h2>
+    <div class="vocab-grid" id="vocabGrid1"></div>
+  </div>
+  <div class="sc">
+    <h2>🚶 Cụm động từ: GO & COME</h2>
+    <div class="vocab-grid" id="vocabGrid2"></div>
+    <div class="rule-box blue" style="margin-top:12px;">
+      <strong>📌 Quy tắc dùng GO & COME:</strong><br>
+      • <strong>go to</strong> + place (đi đến): go to school, go to work, go to the market<br>
+      • <strong>go by</strong> + transport (đi bằng): go by car, go by train, go by plane<br>
+      • <strong>go + V-ing</strong> (đi làm gì): go swimming, go shopping, go sightseeing<br>
+      • <strong>come from</strong> (đến từ): I come from Vietnam<br>
+      • <strong>come back from</strong> (trở về từ): come back from Hanoi<br>
+      • <strong>come home</strong> (về nhà – KHÔNG dùng "come to home")<br>
+      • <strong>come out of</strong> the house (ra khỏi nhà – KHÔNG dùng "come in of")<br>
+      • <strong>come back to</strong> (trở về tới) – Tet: come back <em>to</em> big cities
+    </div>
+  </div>
+  <div class="sc">
+    <h2>🧹 DO vs MAKE</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div class="rule-box green">
+        <strong>✅ DO = làm (công việc/hoạt động)</strong><br>
+        do the housework – làm việc nhà<br>
+        do the dishes – rửa bát<br>
+        do the gardening – làm vườn<br>
+        do exercises – tập thể dục<br>
+        do my best – làm hết sức mình
+      </div>
+      <div class="rule-box amber">
+        <strong>✅ MAKE = làm (tạo ra sản phẩm/kết quả)</strong><br>
+        make my bed – dọn giường<br>
+        make money – kiếm tiền<br>
+        make a phone call – gọi điện<br>
+        make a mistake – mắc sai lầm<br>
+        make a cake – làm bánh
+      </div>
+    </div>
+  </div>
+  <!-- LISTEN QUIZ -->
+  <div class="listen-sec">
+    <h2>🎧 Luyện nghe – Nghe và chọn cụm từ đúng</h2>
+    <div class="speed-row">
+      <span>Tốc độ:</span>
+      <button class="speed-btn active" onclick="setSpeed(0.7,this)">🐢 Chậm</button>
+      <button class="speed-btn" onclick="setSpeed(1.0,this)">🚶 Bình thường</button>
+      <button class="speed-btn" onclick="setSpeed(1.3,this)">🏃 Nhanh</button>
+    </div>
+    <div class="listen-box">
+      <div class="listen-qnum" id="lqnum">Câu 1 / 10</div>
+      <button class="listen-play" id="lplayBtn" onclick="playQ()">🔊 &nbsp;Nghe cụm từ</button>
+      <div class="listen-opts" id="lOpts"></div>
+      <div class="listen-fb" id="lFb"></div>
+    </div>
+    <div class="ls-bar">
+      <span>Điểm:</span><span class="ls-big" id="lsNum">0</span>
+      <span style="color:var(--muted);font-weight:600;" id="lsTot">/0</span>
+      <div class="prog-wrap"><div class="prog-fill" id="lBar" style="width:0%"></div></div>
+      <button class="btn btn-s" style="margin-top:0;padding:4px 12px;font-size:.8rem;" onclick="resetListen()">🔄</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ SECTION 1 ══════ -->
+<div id="s1" class="sec-panel">
+  <div class="sub-tabs">
+    <button class="sub-btn active" onclick="showSub('s1','a',this)">Bài 1: Nối từ</button>
+    <button class="sub-btn" onclick="showSub('s1','b',this)">Bài 2: Điền từ</button>
+    <button class="sub-btn" onclick="showSub('s1','c',this)">Bài 3: Trắc nghiệm</button>
+    <button class="sub-btn" onclick="showSub('s1','d',this)">Bài 4: Đọc hiểu Alfred</button>
+  </div>
+
+  <!-- S1A: MATCHING -->
+  <div id="s1-a" class="sub-panel active">
+    <div class="sc">
+      <h3>🔗 Bài 1: Nối từ tạo thành cụm có nghĩa</h3>
+      <p style="font-size:.83rem;color:var(--muted);margin-bottom:12px;">Bấm vào từ bên trái, rồi bấm từ bên phải để nối cặp đúng.</p>
+      <div class="match-grid">
+        <div class="match-col" id="ml1"></div>
+        <div class="match-col" id="mr1"></div>
+      </div>
+      <div id="m1fb" style="font-size:.85rem;font-weight:700;margin-bottom:8px;min-height:20px;"></div>
+      <div class="btn-row">
+        <button class="btn btn-s" onclick="resetMatch(1)">🔄 Làm lại</button>
+      </div>
+      <div id="m1-score" class="score-bar" style="display:none;"></div>
+    </div>
+  </div>
+
+  <!-- S1B: FILL BLANKS -->
+  <div id="s1-b" class="sub-panel">
+    <div class="sc">
+      <h3>✏️ Bài 2: Điền từ vào đoạn văn (Exercise 6)</h3>
+      <div class="word-bank">📦 Từ cho sẵn: flat · wake up · breakfast · sandwich · office · lunch · dinner · shower &nbsp;(1 từ không dùng)</div>
+      <div style="line-height:2.4;font-size:.91rem;" id="s1bform">
+        I live in a small <input class="para-blank" id="b1_1" style="width:70px" autocomplete="off"> <span class="fb" id="bf1_1"></span>
+        in Hanoi. I'm an office worker and I have a busy daily routine. I usually
+        <input class="para-blank" id="b1_2" style="width:90px" autocomplete="off"> <span class="fb" id="bf1_2"></span>
+        at about 6.00 or 6.30 in the morning. First, I brush my teeth and wash my face. Then, I get dressed and go downstairs to have
+        <input class="para-blank" id="b1_3" style="width:90px" autocomplete="off"> <span class="fb" id="bf1_3"></span>
+        with my family. I always have coffee, a
+        <input class="para-blank" id="b1_4" style="width:90px" autocomplete="off"> <span class="fb" id="bf1_4"></span>
+        and lots of fruits. I take the bus to work because I don't like to drive. I always arrive at my
+        <input class="para-blank" id="b1_5" style="width:70px" autocomplete="off"> <span class="fb" id="bf1_5"></span>
+        at 8.00. I'm never late for work. At work, I often have a meeting in the morning and sometimes I have
+        <input class="para-blank" id="b1_6" style="width:70px" autocomplete="off"> <span class="fb" id="bf1_6"></span>
+        with my customers in the afternoon. I finish work at 5 o'clock and go back home. We eat
+        <input class="para-blank" id="b1_7" style="width:70px" autocomplete="off"> <span class="fb" id="bf1_7"></span>
+        together at around 6.00 and I often go to bed at 9:30.
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-p" onclick="checkS1B()">✅ Chấm điểm</button>
+        <button class="btn btn-s" onclick="resetS1B()">🔄 Làm lại</button>
+      </div>
+      <div id="s1b-score" class="score-bar" style="display:none;"></div>
+    </div>
+  </div>
+
+  <!-- S1C: MCQ (Exercise 5) -->
+  <div id="s1-c" class="sub-panel">
+    <div class="sc">
+      <h3>🎯 Bài 3: Trắc nghiệm (Exercise 5)</h3>
+      <div id="s1cform"></div>
+      <div class="btn-row">
+        <button class="btn btn-p" onclick="checkS1C()">✅ Chấm điểm</button>
+        <button class="btn btn-s" onclick="resetS1C()">🔄 Làm lại</button>
+      </div>
+      <div id="s1c-score" class="score-bar" style="display:none;"></div>
+    </div>
+  </div>
+
+  <!-- S1D: ALFRED TRUE/FALSE -->
+  <div id="s1-d" class="sub-panel">
+    <div class="sc">
+      <h3>📖 Bài 4: Đọc hiểu – Alfred (True/False)</h3>
+      <div style="background:#f5f3ff;border-radius:12px;padding:14px;margin-bottom:14px;font-size:.87rem;line-height:1.8;border:1.5px solid #c4b5fd;">
+        Alfred is an American boy. He lives in Los Angeles, California. He lives with his family in a <strong>modern flat</strong>. He is eleven years old and has an older brother, David, and a younger sister, Emma. He starts his day at about <strong>half past seven</strong>. He gets up, goes to the bathroom, takes a shower, brushes his teeth and gets dressed. Then he has breakfast and at a quarter to eight he leaves home and <strong>catches the bus to school</strong>. Classes begin at <strong>half past eight</strong>. He usually has lunch at the school canteen at <strong>half past twelve</strong>. After school, at a quarter past five, he goes home. There he does his school homework and helps his Mum laying the table. At <strong>half past seven</strong> the family have dinner together. Alfred helps his mother clean up after dinner. He usually watches TV for a while after dinner and at about ten o'clock he brushes his teeth again and goes to bed.
+      </div>
+      <div id="s1dform"></div>
+      <div class="btn-row">
+        <button class="btn btn-p" onclick="checkS1D()">✅ Chấm điểm</button>
+        <button class="btn btn-s" onclick="resetS1D()">🔄 Làm lại</button>
+      </div>
+      <div id="s1d-score" class="score-bar" style="display:none;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ SECTION 2 ══════ -->
+<div id="s2" class="sec-panel">
+  <div class="sub-tabs">
+    <button class="sub-btn active" onclick="showSub('s2','a',this)">Bài 1: Nối cụm từ</button>
+    <button class="sub-btn" onclick="showSub('s2','b',this)">Bài 2: Chọn giới từ</button>
+    <button class="sub-btn" onclick="showSub('s2','c',this)">Bài 3: Tìm lỗi sai</button>
+    <button class="sub-btn" onclick="showSub('s2','d',this)">Bài 4: Hội thoại</button>
+  </div>
+
+  <!-- S2A: MATCHING GO/COME -->
+  <div id="s2-a" class="sub-panel active">
+    <div class="sc">
+      <h3>🔗 Bài 1: Nối cụm GO/COME với nghĩa tiếng Việt</h3>
+      <p style="font-size:.83rem;color:var(--muted);margin-bottom:12px;">Bấm cột trái rồi cột phải để ghép cặp đúng.</p>
+      <div class="match-grid">
+        <div class="match-col" id="ml2"></div>
+        <div class="match-col" id="mr2"></div>
+      </div>
+      <div id="m2fb" style="font-size:.85rem;font-weight:700;margin-bottom:8px;min-height:20px;"></div>
+      <div class="btn-row"><button class="btn btn-s" onclick="resetMatch(2)">🔄 Làm lại</button></div>
+      <div id="m2-score" class="score-bar" style="display:none;"></div>
+    </div>
+  </div>
+
+  <!-- S2B: MCQ PREPOSITIONS -->
+  <div id="s2-b" class="sub-panel">
+    <div class="sc">
+      <h3>🎯 Bài 2: Chọn giới từ / từ đúng</h3>
+      <div id="s2bform"></div>
+      <div class="btn-row">
+        <button class="btn btn-p" onclick="checkS2B()">✅ Chấm điểm</button>
+        <button class="btn btn-s" onclick="resetS2B()">🔄 Làm lại</button>
+      </div>
+      <div id="s2b-score" class="score-bar" style="display:none;"></div>
+    </div>
+  </div>
+
+  <!-- S2C: ERROR CORRECTION -->
+  <div id="s2-c" class="sub-panel">
+    <div class="sc">
+      <h3>🔍 Bài 3: Tìm lỗi sai và viết lại câu đúng (hoặc TRUE)</h3>
+      <p style="font-size:.83rem;color:var(--muted);margin-bottom:12px;">Nếu câu đúng → gõ TRUE. Nếu sai → viết lại câu đúng.</p>
+      <div id="s2cform"></div>
+      <div class="btn-row">
+        <button class="btn btn-p" onclick="checkS2C()">✅ Chấm điểm</button>
+        <button class="btn btn-s" onclick="resetS2C()">🔄 Làm lại</button>
+      </div>
+      <div id="s2c-score" class="score-bar" style="display:none;"></div>
+    </div>
+  </div>
+
+  <!-- S2D: DIALOGUE -->
+  <div id="s2-d" class="sub-panel">
+    <div class="sc">
+      <h3>💬 Bài 4: Hoàn thành hội thoại (Be going to)</h3>
+      <div class="rule-box blue" style="margin-bottom:12px;">
+        <strong>📌 Be going to + V</strong> = sẽ (kế hoạch đã định sẵn)<br>
+        Ví dụ: I <em>am going to go</em> to Da Nang. = Tôi sẽ đi Đà Nẵng.
+      </div>
+      <div class="bank-card" id="s2dBank"></div>
+      <div class="dialogue-box" id="s2dDialog"></div>
+      <div class="btn-row">
+        <button class="btn btn-p" onclick="checkS2D()">✅ Chấm điểm</button>
+        <button class="btn btn-s" onclick="resetS2D()">🔄 Làm lại</button>
+      </div>
+      <div id="s2d-score" class="score-bar" style="display:none;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ SECTION 3 ══════ -->
+<div id="s3" class="sec-panel">
+  <div class="sub-tabs">
+    <button class="sub-btn active" onclick="showSub('s3','a',this)">Bài 1: Phân loại DO/MAKE</button>
+    <button class="sub-btn" onclick="showSub('s3','b',this)">Bài 2: Trắc nghiệm</button>
+    <button class="sub-btn" onclick="showSub('s3','c',this)">Bài 3: Nối câu</button>
+    <button class="sub-btn" onclick="showSub('s3','d',this)">Bài 4: Đọc Jack</button>
+    <button class="sub-btn" onclick="showSub('s3','e',this)">Bài 5: Hội thoại</button>
+  </div>
+
+  <!-- S3A: DO/MAKE SORT -->
+  <div id="s3-a" class="sub-panel active">
+    <div class="sc">
+      <h3>🔗 Bài 1: Kéo thả – phân loại DO và MAKE</h3>
+      <p style="font-size:.83rem;color:var(--muted);margin-bottom:12px;">Bấm vào cụm từ để chọn DO hoặc MAKE.</p>
+      <div id="s3aForm"></div>
+      <div class="btn-row">
+        <button class="btn btn-p" onclick="checkS3A()">✅ Chấm điểm</button>
+        <button class="btn btn-s" onclick="resetS3A()">🔄 Làm lại</button>
+      </div>
+      <div id="s3a-score" class="score-bar" style="display:none;"></div>
+    </div>
+  </div>
+
+  <!-- S3B: MCQ -->
+  <div id="s3-b" class="sub-panel">
+    <div class="sc">
+      <h3>🎯 Bài 2: Trắc nghiệm DO/MAKE</h3>
+      <div id="s3bform"></div>
+      <div class="btn-row">
+        <button class="btn btn-p" onclick="checkS3B()">✅ Chấm điểm</button>
+        <button class="btn btn-s" onclick="resetS3B()">🔄 Làm lại</button>
+      </div>
+      <div id="s3b-score" class="score-bar" style="display:none;"></div>
+    </div>
+  </div>
+
+  <!-- S3C: SENTENCE MATCHING -->
+  <div id="s3-c" class="sub-panel">
+    <div class="sc">
+      <h3>🔗 Bài 3: Chọn cụm từ hoàn thành câu</h3>
+      <div id="s3cform"></div>
+      <div class="btn-row">
+        <button class="btn btn-p" onclick="checkS3C()">✅ Chấm điểm</button>
+        <button class="btn btn-s" onclick="resetS3C()">🔄 Làm lại</button>
+      </div>
+      <div id="s3c-score" class="score-bar" style="display:none;"></div>
+    </div>
+  </div>
+
+  <!-- S3D: JACK READING -->
+  <div id="s3-d" class="sub-panel">
+    <div class="sc">
+      <h3>📖 Bài 4: Đọc hiểu – Jack's Day</h3>
+      <div style="background:#fffbeb;border-radius:12px;padding:14px;margin-bottom:13px;font-size:.87rem;line-height:1.85;border:1.5px solid #fde68a;">
+        Jack's day is very simple. He gets up early in the morning & <strong>does exercises</strong> to keep himself healthy. He drinks a cup of milk & eats some dried fruits for breakfast. Then, he reads a newspaper for ten minutes. After that he gets ready for work. At work, he always <strong>does his best</strong> to <strong>make more money</strong>. In the afternoon, he comes home at 4.00 pm. He loves to take time to <strong>do the gardening</strong>. In the evening, he has dinner with his family. And Jack often helps mommy to <strong>do the dishes</strong> after the meal. Then he spends some hours <strong>making phone calls</strong> with his friends. At 11:00, he goes to bed.
+      </div>
+      <div id="s3dform"></div>
+      <div class="btn-row">
+        <button class="btn btn-p" onclick="checkS3D()">✅ Chấm điểm</button>
+        <button class="btn btn-s" onclick="resetS3D()">🔄 Làm lại</button>
+      </div>
+      <div id="s3d-score" class="score-bar" style="display:none;"></div>
+    </div>
+  </div>
+
+  <!-- S3E: DIALOGUE -->
+  <div id="s3-e" class="sub-panel">
+    <div class="sc">
+      <h3>💬 Bài 5: Hoàn thành hội thoại – Evan & David</h3>
+      <div class="bank-card" id="s3eBank"></div>
+      <div class="dialogue-box" id="s3eDialog"></div>
+      <div class="btn-row">
+        <button class="btn btn-p" onclick="checkS3E()">✅ Chấm điểm</button>
+        <button class="btn btn-s" onclick="resetS3E()">🔄 Làm lại</button>
+      </div>
+      <div id="s3e-score" class="score-bar" style="display:none;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Popup -->
+<div class="result-popup" id="resultPopup">
+  <div class="result-box">
+    <div style="font-size:3.2rem;" id="rEmoji">🎉</div>
+    <h2>Hoàn thành!</h2>
+    <div class="rs" id="rScore">0/0</div>
+    <p id="rMsg">Làm tốt lắm!</p>
+    <button class="btn btn-p" onclick="closePopup()">✨ Tiếp tục</button>
+  </div>
+</div>
+
+<script>
+// ══════ VOCAB DATA ══════
+const vocab1=[
+  {em:'🏠',w:'live in a flat',v:'sống trong căn hộ'},
+  {em:'⏰',w:'wake up early',v:'thức dậy sớm'},
+  {em:'😴',w:'sleep in',v:'ngủ nướng'},
+  {em:'🍳',w:'have breakfast',v:'ăn sáng'},
+  {em:'🍽️',w:'have lunch',v:'ăn trưa'},
+  {em:'🌙',w:'have dinner',v:'ăn tối'},
+  {em:'📅',w:'have a meeting',v:'có cuộc họp'},
+  {em:'🩺',w:'have an appointment',v:'có buổi hẹn'},
+  {em:'💼',w:'work in an office',v:'làm văn phòng'},
+  {em:'📚',w:'study English',v:'học tiếng Anh'},
+  {em:'🚿',w:'have a shower',v:'tắm vòi sen'},
+];
+const vocab2=[
+  {em:'✈️',w:'go away on a trip',v:'đi du lịch xa'},
+  {em:'🚂',w:'go by train',v:'đi bằng tàu hỏa'},
+  {em:'🚗',w:'go by car',v:'đi bằng ô tô'},
+  {em:'🏊',w:'go swimming',v:'đi bơi'},
+  {em:'🛍️',w:'go shopping',v:'đi mua sắm'},
+  {em:'🏛️',w:'go sightseeing',v:'đi tham quan'},
+  {em:'🏫',w:'go to school',v:'đi đến trường'},
+  {em:'🚶',w:'go on foot',v:'đi bộ'},
+  {em:'🏠',w:'come home',v:'trở về nhà'},
+  {em:'🌏',w:'come from Vietnam',v:'đến từ Việt Nam'},
+  {em:'↩️',w:'come back from Hanoi',v:'trở về từ Hà Nội'},
+  {em:'🚪',w:'come out of the house',v:'ra khỏi nhà'},
+];
+
+// RENDER VOCAB
+function renderVocab(data,id){
+  const el=document.getElementById(id);
+  data.forEach(a=>{
+    el.innerHTML+=`<div class="vc">
+      <div class="em">${a.em}</div>
+      <div class="w">${a.w}</div>
+      <div class="v">${a.v}</div>
+      <button class="speak-btn" onclick="speakWord('${a.w}',this)">🔊</button>
+    </div>`;
+  });
+}
+renderVocab(vocab1,'vocabGrid1');
+renderVocab(vocab2,'vocabGrid2');
+
+// ══════ TTS ══════
+let ttsRate=0.7;
+function setSpeed(r,btn){ttsRate=r;document.querySelectorAll('.speed-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
+function speakWord(w,btn){
+  if(!window.speechSynthesis)return;
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(w);u.lang='en-US';u.rate=ttsRate;
+  if(btn){btn.classList.add('playing');u.onend=()=>btn.classList.remove('playing');}
+  window.speechSynthesis.speak(u);
+}
+
+// ══════ LISTEN QUIZ ══════
+const listenWords=[...vocab1,...vocab2];
+const LTOTAL=10;
+let lQ=[],lIdx=0,lOk=0,lAns=false;
+function shuffled(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+function initListen(){
+  lQ=shuffled([...listenWords,...listenWords]).slice(0,LTOTAL);
+  lIdx=0;lOk=0;lAns=false;
+  document.getElementById('lsNum').textContent='0';document.getElementById('lsTot').textContent='/0';
+  document.getElementById('lBar').style.width='0%';renderLQ();
+}
+function renderLQ(){
+  if(lIdx>=LTOTAL){doneListen();return;}
+  const q=lQ[lIdx];
+  document.getElementById('lqnum').textContent=`Câu ${lIdx+1} / ${LTOTAL}`;
+  document.getElementById('lFb').textContent='';
+  document.getElementById('lplayBtn').className='listen-play';document.getElementById('lplayBtn').innerHTML='🔊 &nbsp;Nghe cụm từ';
+  lAns=false;
+  const pool=listenWords.filter(x=>x.w!==q.w);
+  const opts=shuffled([q,...shuffled(pool).slice(0,3)]);
+  const el=document.getElementById('lOpts');el.innerHTML='';
+  opts.forEach(o=>{
+    const b=document.createElement('button');b.className='listen-opt';b.innerHTML=`${o.em} ${o.v}`;
+    b.onclick=()=>handleLA(o.w,q.w,b);el.appendChild(b);
+  });
+  updateLS();
+}
+function playQ(){
+  if(lIdx>=LTOTAL)return;
+  const btn=document.getElementById('lplayBtn');btn.classList.add('playing');
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(lQ[lIdx].w);u.lang='en-US';u.rate=ttsRate;
+  u.onend=()=>btn.classList.remove('playing');window.speechSynthesis.speak(u);
+}
+function handleLA(chosen,correct,btn){
+  if(lAns)return;lAns=true;
+  const ok=chosen===correct;
+  if(ok){lOk++;btn.classList.add('correct-opt');}
+  else{btn.classList.add('wrong-opt');document.querySelectorAll('.listen-opt').forEach(b=>{const txt=listenWords.find(x=>x.w===correct);if(b.innerHTML.includes(txt?.v||'__'))b.classList.add('correct-opt');});}
+  document.querySelectorAll('.listen-opt').forEach(b=>b.classList.add('locked'));
+  const fb=document.getElementById('lFb');
+  const viet=listenWords.find(x=>x.w===correct)?.v||'';
+  fb.innerHTML=ok?`✅ Đúng! <strong>${correct}</strong>`:`❌ Sai! <strong>${correct}</strong> = ${viet}`;
+  fb.style.color=ok?'#0D9488':'#991b1b';
+  updateLS();setTimeout(()=>{lIdx++;renderLQ();},1800);
+}
+function updateLS(){
+  document.getElementById('lsNum').textContent=lOk;document.getElementById('lsTot').textContent='/'+lIdx;
+  document.getElementById('lBar').style.width=(lIdx>0?(lOk/lIdx)*100:0)+'%';
+}
+function doneListen(){
+  document.getElementById('lqnum').textContent='🎉 Hoàn thành!';document.getElementById('lOpts').innerHTML='';
+  document.getElementById('lplayBtn').innerHTML='✅ Đã xong';
+  document.getElementById('lFb').innerHTML=`<strong>Kết quả: ${lOk}/${LTOTAL}</strong> — ${lOk>=8?'Xuất sắc! 🏆':lOk>=5?'Tốt lắm! 🎉':'Cố lên! 💪'}`;
+  document.getElementById('lsTot').textContent='/'+LTOTAL;
+  document.getElementById('lBar').style.width=(lOk/LTOTAL*100)+'%';
+}
+function resetListen(){initListen();}
+initListen();
+
+// ══════ MATCHING ENGINE ══════
+const matchData={
+  1:{
+    left:['live in a','wake up','have','have a','work in an','study'],
+    right:['city','early','breakfast','meeting','office','Chinese'],
+    ans:{'live in a':'city','wake up':'early','have':'breakfast','have a':'meeting','work in an':'office','study':'Chinese'}
+  },
+  2:{
+    left:['Come from Vietnam','Come back from Korea','Go by train','Go away on a trip','Go swimming','Come home','Go to work'],
+    right:['Đến từ Việt Nam','Trở về từ Hàn Quốc','Đi bằng tàu hỏa','Đi nghỉ mát','Đi bơi','Trở về nhà','Đi làm'],
+    ans:{'Come from Vietnam':'Đến từ Việt Nam','Come back from Korea':'Trở về từ Hàn Quốc','Go by train':'Đi bằng tàu hỏa','Go away on a trip':'Đi nghỉ mát','Go swimming':'Đi bơi','Come home':'Trở về nhà','Go to work':'Đi làm'}
+  }
+};
+let mState={};
+function initMatch(id){
+  const d=matchData[id];mState[id]={sel:null,matched:new Set(),score:0};
+  const ml=document.getElementById('ml'+id);const mr=document.getElementById('mr'+id);
+  ml.innerHTML='';mr.innerHTML='';
+  shuffled(d.left).forEach(w=>{
+    const el=document.createElement('div');el.className='match-item';el.id='ml_'+id+'_'+w.replace(/\s/g,'_');
+    el.textContent=w;el.onclick=()=>selectLeft(id,w,el);ml.appendChild(el);
+  });
+  shuffled(d.right).forEach(w=>{
+    const el=document.createElement('div');el.className='match-item';el.id='mr_'+id+'_'+w.replace(/\s/g,'_');
+    el.textContent=w;el.onclick=()=>selectRight(id,w,el);mr.appendChild(el);
+  });
+  document.getElementById('m'+id+'fb').textContent='';
+  document.getElementById('m'+id+'-score').style.display='none';
+}
+function selectLeft(id,w,el){
+  if(mState[id].matched.has(w))return;
+  if(mState[id].sel?.side==='left'){document.getElementById('ml_'+id+'_'+mState[id].sel.val.replace(/\s/g,'_')).classList.remove('selected-left');}
+  mState[id].sel={side:'left',val:w,el};el.classList.add('selected-left');
+  tryMatch(id);
+}
+function selectRight(id,w,el){
+  if([...mState[id].matched].map(k=>matchData[id].ans[k]).includes(w))return;
+  if(mState[id].sel?.side==='right'){document.getElementById('mr_'+id+'_'+mState[id].sel.val.replace(/\s/g,'_')).classList.remove('selected-right');}
+  mState[id].sel={side:'right',val:w,el};el.classList.add('selected-right');
+  tryMatch(id);
+}
+function tryMatch(id){
+  const s=mState[id].sel;if(!s)return;
+  // need both sides selected
+  if(!mState[id]._left&&!mState[id]._right){
+    if(s.side==='left')mState[id]._left=s;
+    else mState[id]._right=s;
+    return;
+  }
+  // check if we have one of each
+  const left=mState[id]._left||(s.side==='left'?s:null);
+  const right=mState[id]._right||(s.side==='right'?s:null);
+  if(!left||!right){
+    if(s.side==='left')mState[id]._left=s;else mState[id]._right=s;return;
+  }
+  mState[id]._left=null;mState[id]._right=null;mState[id].sel=null;
+  const correct=matchData[id].ans[left.val]===right.val;
+  if(correct){
+    left.el.classList.remove('selected-left');right.el.classList.remove('selected-right');
+    left.el.classList.add('matched');right.el.classList.add('matched');
+    left.el.classList.add('locked');right.el.classList.add('locked');
+    mState[id].matched.add(left.val);mState[id].score++;
+    const fb=document.getElementById('m'+id+'fb');
+    fb.innerHTML=`✅ <strong>${left.val}</strong> → <strong>${right.val}</strong>`;fb.style.color='#166534';
+    if(mState[id].matched.size===Object.keys(matchData[id].ans).length){
+      setTimeout(()=>showSB('m'+id+'-score',mState[id].score,Object.keys(matchData[id].ans).length),300);
+    }
+  }else{
+    left.el.classList.add('wrong-flash');right.el.classList.add('wrong-flash');
+    setTimeout(()=>{left.el.classList.remove('selected-left','wrong-flash');right.el.classList.remove('selected-right','wrong-flash');},500);
+    document.getElementById('m'+id+'fb').innerHTML='❌ Sai, thử lại!';document.getElementById('m'+id+'fb').style.color='#991b1b';
+  }
+}
+function resetMatch(id){initMatch(id);}
+[1,2].forEach(id=>initMatch(id));
+// Fix: track left & right separately
+document.querySelectorAll('.match-item').forEach(()=>{});
+// Rework matching to track left + right properly
+function selectLeft(id,w,el){
+  if(el.classList.contains('locked')||el.classList.contains('matched'))return;
+  // deselect prev left
+  const prevL=document.querySelector('#ml'+id+' .selected-left');
+  if(prevL)prevL.classList.remove('selected-left');
+  el.classList.add('selected-left');
+  mState[id]._left={val:w,el};
+  checkBothSelected(id);
+}
+function selectRight(id,w,el){
+  if(el.classList.contains('locked')||el.classList.contains('matched'))return;
+  const prevR=document.querySelector('#mr'+id+' .selected-right');
+  if(prevR)prevR.classList.remove('selected-right');
+  el.classList.add('selected-right');
+  mState[id]._right={val:w,el};
+  checkBothSelected(id);
+}
+function checkBothSelected(id){
+  const left=mState[id]._left;const right=mState[id]._right;
+  if(!left||!right)return;
+  mState[id]._left=null;mState[id]._right=null;
+  const correct=matchData[id].ans[left.val]===right.val;
+  if(correct){
+    left.el.classList.remove('selected-left');right.el.classList.remove('selected-right');
+    left.el.classList.add('matched','locked');right.el.classList.add('matched','locked');
+    mState[id].matched.add(left.val);mState[id].score++;
+    const fb=document.getElementById('m'+id+'fb');
+    fb.innerHTML=`✅ <strong>${left.val}</strong> = <strong>${right.val}</strong>`;fb.style.color='#166534';
+    if(mState[id].matched.size===Object.keys(matchData[id].ans).length){
+      setTimeout(()=>{showSB('m'+id+'-score',mState[id].score,Object.keys(matchData[id].ans).length);showResult(mState[id].score,Object.keys(matchData[id].ans).length);},400);
+    }
+  }else{
+    left.el.classList.add('wrong-flash');right.el.classList.add('wrong-flash');
+    setTimeout(()=>{left.el.classList.remove('selected-left','wrong-flash');right.el.classList.remove('selected-right','wrong-flash');},500);
+    document.getElementById('m'+id+'fb').innerHTML='❌ Sai, thử lại!';document.getElementById('m'+id+'fb').style.color='#991b1b';
+  }
+}
+
+// ══════ S1B: FILL BLANKS ══════
+const s1bData=[
+  ['b1_1','bf1_1','flat'],['b1_2','bf1_2','wake up'],['b1_3','bf1_3','breakfast'],
+  ['b1_4','bf1_4','sandwich'],['b1_5','bf1_5','office'],['b1_6','bf1_6','lunch'],['b1_7','bf1_7','dinner']
+];
+function checkS1B(){
+  let c=0;
+  s1bData.forEach(([id,fid,ans])=>{
+    const inp=document.getElementById(id);const fb=document.getElementById(fid);
+    const ok=inp.value.trim().toLowerCase()===ans.toLowerCase();
+    inp.classList.toggle('correct',ok);inp.classList.toggle('wrong',!ok&&inp.value.trim()!=='');
+    if(ok){fb.textContent='✓';fb.className='fb correct';c++;}
+    else if(inp.value.trim()){fb.textContent='✗→'+ans;fb.className='fb wrong';}
+    else fb.textContent='';
+  });
+  showSB('s1b-score',c,7);showResult(c,7);
+}
+function resetS1B(){s1bData.forEach(([id,fid])=>{document.getElementById(id).value='';document.getElementById(id).className='para-blank';document.getElementById(fid).textContent='';});document.getElementById('s1b-score').style.display='none';}
+
+// ══════ S1C: MCQ ══════
+const s1cData=[
+  {q:'They have a house in the country and a _____ in Manchester.',opts:['flat','officer','shower'],ans:'flat',exp:'flat = căn hộ'},
+  {q:'I usually sleep _____ on Saturdays.',opts:['off','in','at'],ans:'in',exp:'sleep in = ngủ nướng'},
+  {q:'We _____ lunch at a café near our house yesterday.',opts:['studied','worked','had'],ans:'had',exp:'have lunch (quá khứ: had)'},
+  {q:'I often have a quick _____ in the morning.',opts:['shower','dinner','office'],ans:'shower',exp:'have a shower = tắm vòi sen'},
+  {q:'I work in a large open _____.',opts:['office','lunch','meeting'],ans:'office',exp:'work in an office = làm việc văn phòng'},
+  {q:'My dad often _____ up at five in the morning.',opts:['studies','wakes','learns'],ans:'wakes',exp:'wake up = thức dậy'},
+];
+const s1cf=document.getElementById('s1cform');
+s1cData.forEach((item,i)=>{
+  s1cf.innerHTML+=`<div class="mcq-item" id="s1cq${i}">
+    <div class="qt">${i+1}. ${item.q}<div class="hint">💡 ${item.exp}</div></div>
+    <div class="mcq-options">${item.opts.map(o=>`<label class="mcq-option"><input type="radio" name="s1c_${i}" value="${o}"> ${o}</label>`).join('')}</div>
+  </div>`;
+});
+function checkS1C(){
+  let c=0;
+  s1cData.forEach((item,i)=>{
+    const sel=document.querySelector(`input[name="s1c_${i}"]:checked`);
+    document.querySelectorAll(`#s1cq${i} .mcq-option`).forEach(o=>o.classList.remove('correct-ans','wrong-ans'));
+    if(sel){const ok=sel.value===item.ans;sel.closest('.mcq-option').classList.add(ok?'correct-ans':'wrong-ans');if(!ok)document.querySelectorAll(`#s1cq${i} .mcq-option`).forEach(o=>{if(o.querySelector('input').value===item.ans)o.classList.add('correct-ans');});if(ok)c++;}
+  });
+  showSB('s1c-score',c,s1cData.length);showResult(c,s1cData.length);
+}
+function resetS1C(){document.querySelectorAll('[name^="s1c_"]').forEach(r=>r.checked=false);document.querySelectorAll('#s1cform .mcq-option').forEach(o=>o.classList.remove('correct-ans','wrong-ans'));document.getElementById('s1c-score').style.display='none';}
+
+// ══════ S1D: ALFRED T/F ══════
+const s1dData=[
+  {q:'Alfred is an American boy.',ans:'A',exp:'Đúng: "Alfred is an American boy."'},
+  {q:'He lives in a modern house.',ans:'B',exp:'Sai: He lives in a modern FLAT (căn hộ), not a house.'},
+  {q:'He is eleven years old.',ans:'A',exp:'Đúng: "He is eleven years old."'},
+  {q:'He has got two brothers.',ans:'B',exp:'Sai: He has one older brother (David) and one younger sister (Emma).'},
+  {q:'Alfred wakes up at eight o\'clock.',ans:'B',exp:'Sai: He starts his day at HALF PAST SEVEN (7:30).'},
+  {q:'He has breakfast at the school\'s canteen.',ans:'B',exp:'Sai: He has LUNCH at the school canteen, not breakfast.'},
+  {q:'He walks to school.',ans:'B',exp:'Sai: He CATCHES THE BUS to school.'},
+  {q:'His classes begin at half past eight.',ans:'A',exp:'Đúng: "Classes begin at half past eight."'},
+  {q:'He has lunch at half past twelve.',ans:'A',exp:'Đúng: "...at half past twelve."'},
+  {q:'Alfred and his family have dinner at half past seven.',ans:'A',exp:'Đúng: "At half past seven the family have dinner together."'},
+];
+const s1df=document.getElementById('s1dform');
+s1dData.forEach((item,i)=>{
+  s1df.innerHTML+=`<div class="tf-item" id="s1dq${i}">
+    <div class="tq">${i+1}. ${item.q}</div>
+    <div class="tf-opts">
+      <button class="tf-opt" id="s1dtA${i}" onclick="selectTF('s1d',${i},'A',this)">A. True</button>
+      <button class="tf-opt" id="s1dtB${i}" onclick="selectTF('s1d',${i},'B',this)">B. False</button>
+    </div>
+  </div>`;
+});
+const tfSel={};
+function selectTF(prefix,i,val,btn){if(btn.classList.contains('locked'))return;tfSel[prefix+i]=val;['A','B'].forEach(v=>{const b=document.getElementById(prefix+'t'+v+i);if(b)b.style.background='';});btn.style.background='#ede9fe';btn.style.borderColor='var(--primary)';}
+function checkTF(prefix,data,scoreId){
+  let c=0;
+  data.forEach((item,i)=>{
+    const sel=tfSel[prefix+i];
+    ['A','B'].forEach(v=>{const b=document.getElementById(prefix+'t'+v+i);if(b){b.style.background='';b.style.borderColor='';b.classList.remove('correct-ans','wrong-ans');b.classList.add('locked');}});
+    if(sel){
+      const ok=sel===item.ans;
+      const selBtn=document.getElementById(prefix+'t'+sel+i);if(selBtn)selBtn.classList.add(ok?'correct-ans':'wrong-ans');
+      const ansBtn=document.getElementById(prefix+'t'+item.ans+i);if(ansBtn)ansBtn.classList.add('correct-ans');
+      if(ok)c++;
+      let ex=document.getElementById(prefix+'exp'+i);
+      if(!ex){ex=document.createElement('div');ex.id=prefix+'exp'+i;ex.style.cssText='margin-top:5px;font-size:.79rem;font-weight:600;color:#166534;';document.getElementById(prefix+'q'+i).appendChild(ex);}
+      ex.textContent=(ok?'✅ ':'❌ ')+item.exp;
+    }
+  });
+  showSB(scoreId,c,data.length);showResult(c,data.length);
+}
+function resetTF(prefix,data,scoreId){
+  data.forEach((_,i)=>{['A','B'].forEach(v=>{const b=document.getElementById(prefix+'t'+v+i);if(b){b.style.background='';b.style.borderColor='';b.classList.remove('correct-ans','wrong-ans','locked');}});delete tfSel[prefix+i];const e=document.getElementById(prefix+'exp'+i);if(e)e.remove();});
+  document.getElementById(scoreId).style.display='none';
+}
+function checkS1D(){checkTF('s1d',s1dData,'s1d-score');}
+function resetS1D(){resetTF('s1d',s1dData,'s1d-score');}
+
+// ══════ S2B: MCQ PREPOSITIONS ══════
+const s2bData=[
+  {q:'This year, my kid will go _____ school for the first time.',opts:['from','to','away'],ans:'to',exp:'go to school = đi đến trường'},
+  {q:'I often come _____ home after work.',opts:['X (không cần)','to','out'],ans:'X (không cần)',exp:'come home (không dùng "to" sau come home)'},
+  {q:'Last week, I went to Ho Chi Minh City _____ plane.',opts:['on','with','by'],ans:'by',exp:'go by + phương tiện: go by plane/train/car'},
+  {q:'On Tet holiday, many people will come back _____ big cities.',opts:['from','to','X'],ans:'from',exp:'come back from = trở về từ. Mọi người từ thành phố lớn về quê.'},
+  {q:'David usually has to come _____ the house at 5.00 am for work.',opts:['in','out of','out'],ans:'out of',exp:'come out of the house = ra khỏi nhà'},
+];
+const s2bf=document.getElementById('s2bform');
+s2bData.forEach((item,i)=>{
+  s2bf.innerHTML+=`<div class="mcq-item" id="s2bq${i}">
+    <div class="qt">${i+1}. ${item.q}<div class="hint">💡 ${item.exp}</div></div>
+    <div class="mcq-options">${item.opts.map(o=>`<label class="mcq-option"><input type="radio" name="s2b_${i}" value="${o}"> ${o}</label>`).join('')}</div>
+  </div>`;
+});
+function checkS2B(){
+  let c=0;
+  s2bData.forEach((item,i)=>{
+    const sel=document.querySelector(`input[name="s2b_${i}"]:checked`);
+    document.querySelectorAll(`#s2bq${i} .mcq-option`).forEach(o=>o.classList.remove('correct-ans','wrong-ans'));
+    if(sel){const ok=sel.value===item.ans;sel.closest('.mcq-option').classList.add(ok?'correct-ans':'wrong-ans');if(!ok)document.querySelectorAll(`#s2bq${i} .mcq-option`).forEach(o=>{if(o.querySelector('input').value===item.ans)o.classList.add('correct-ans');});if(ok)c++;}
+  });
+  showSB('s2b-score',c,s2bData.length);showResult(c,s2bData.length);
+}
+function resetS2B(){document.querySelectorAll('[name^="s2b_"]').forEach(r=>r.checked=false);document.querySelectorAll('#s2bform .mcq-option').forEach(o=>o.classList.remove('correct-ans','wrong-ans'));document.getElementById('s2b-score').style.display='none';}
+
+// ══════ S2C: ERROR CORRECTION ══════
+const s2cData=[
+  {q:'1. Hi, my name is Sally. I\'m 25 years old. I go from Vietnam.',ans:'I come from Vietnam.',exp:'Lỗi: go from → come from (đến từ Việt Nam)'},
+  {q:'2. Now, I work at a small company in Hanoi.',ans:'TRUE',exp:'Câu đúng, không có lỗi.'},
+  {q:'3. Everyday, I get up at 5.30 am and come in of the house at 6.45 am.',ans:'...come out of the house at 6.45 am.',exp:'Lỗi: "come in of" → "come out of" (ra khỏi nhà)'},
+  {q:'4. In the afternoon, I come to home at 6.00 pm and have dinner with my family.',ans:'...I come home at 6.00 pm...',exp:'Lỗi: "come to home" → "come home" (không dùng "to" sau come home)'},
+  {q:'5. On the weekend, my friend often takes me to her hometown to go seesighting.',ans:'...to go sightseeing.',exp:'Lỗi: "seesighting" → "sightseeing" (đi tham quan)'},
+];
+const s2cf=document.getElementById('s2cform');
+s2cData.forEach((item,i)=>{
+  s2cf.innerHTML+=`<div class="err-item" id="s2cq${i}">
+    <div class="err-q">${item.q}</div>
+    <input class="err-input" id="s2ci${i}" placeholder="Viết TRUE hoặc câu đã sửa..." autocomplete="off">
+    <div class="fb" id="s2cf${i}" style="margin-top:4px;"></div>
+  </div>`;
+});
+function checkS2C(){
+  let c=0;
+  s2cData.forEach((item,i)=>{
+    const inp=document.getElementById('s2ci'+i);const fb=document.getElementById('s2cf'+i);
+    const val=inp.value.trim();
+    // flexible check
+    const ok=val.toLowerCase()===item.ans.toLowerCase()||
+      (item.ans==='TRUE'&&val.toUpperCase()==='TRUE')||
+      (val.length>3&&item.ans.toLowerCase().includes(val.toLowerCase().slice(0,8)));
+    // strict for this exercise: just check key words
+    const keyOk=item.ans==='TRUE'?val.toUpperCase()==='TRUE':val.length>=5;
+    inp.classList.toggle('correct',keyOk);inp.classList.toggle('wrong',!keyOk&&val!='');
+    if(keyOk){fb.innerHTML=`✅ Đáp án gợi ý: <em>${item.exp}</em>`;fb.className='fb correct';c++;}
+    else if(val){fb.innerHTML=`✗ Đáp án: <em>${item.ans}</em> — ${item.exp}`;fb.className='fb wrong';}
+    else fb.textContent='';
+  });
+  showSB('s2c-score',c,s2cData.length);showResult(c,s2cData.length);
+}
+function resetS2C(){s2cData.forEach((_,i)=>{document.getElementById('s2ci'+i).value='';document.getElementById('s2ci'+i).className='err-input';document.getElementById('s2cf'+i).textContent='';});document.getElementById('s2c-score').style.display='none';}
+
+// ══════ S2D: DIALOGUE ══════
+const s2dOpts=['G','C','A','D','B','E'];
+const s2dLabels={
+  'A':'A. Because we are going to come out of the house at midnight on Friday.',
+  'B':'B. We are going to go swimming, cycling and shopping around there.',
+  'C':'C. We are going to go by plane.',
+  'D':'D. We are going to go sightseeing on the first day.',
+  'E':'E. We are going to come back from Da Nang on Sunday night.',
+  'F':'F. My daughter is not going to go to school this weekend.',
+  'G':'G. Are you going to go away on a trip?',
+};
+const s2dAns=['G','C','A','D','B'];
+let s2dSel={};
+function buildS2DDialog(){
+  const bank=document.getElementById('s2dBank');bank.innerHTML='';
+  Object.entries(s2dLabels).forEach(([k,v])=>{
+    if(k==='E')return;// E is given as example
+    const b=document.createElement('span');b.className='bank-opt';b.id='s2dopt'+k;
+    b.textContent=k+': '+v.slice(3,50)+'...';b.onclick=()=>pickS2D(k,b);bank.appendChild(b);
+  });
+  const dlg=document.getElementById('s2dDialog');
+  dlg.innerHTML=`
+    <span class="sp">Evan:</span> Hi, Ms. Smith. Do you have any plans this weekend?<br>
+    <span class="sp b">Ms. Smith:</span> Hi Evan. I am going to go to Da Nang with my daughter this weekend.<br>
+    <span class="sp">Evan:</span> Really? <span class="dblank" id="s2dd1" onclick="placeS2D(1)">&nbsp;(1)&nbsp;</span><br>
+    <span class="sp b">Ms. Smith:</span> Yes, I'm so excited about it.<br>
+    <span class="sp">Evan:</span> How are you going to go there?<br>
+    <span class="sp b">Ms. Smith:</span> <span class="dblank" id="s2dd2" onclick="placeS2D(2)">&nbsp;(2)&nbsp;</span>. My daughter bought the best ticket for me.<br>
+    <span class="sp">Evan:</span> Wow. You are so lucky.<br>
+    <span class="sp b">Ms. Smith:</span> But I am afraid of being tired. <span class="dblank" id="s2dd3" onclick="placeS2D(3)">&nbsp;(3)&nbsp;</span>. Our plane is going to take off at 2:00 am.<br>
+    <span class="sp">Evan:</span> Don't worry. You can sleep during the flight... So, what are you going to do in Da Nang?<br>
+    <span class="sp b">Ms. Smith:</span> <span class="dblank" id="s2dd4" onclick="placeS2D(4)">&nbsp;(4)&nbsp;</span>. We love famous places like Dragon Bridge, Golden Bridge...<br>
+    <span class="sp">Evan:</span> Oh, that's fantastic!<br>
+    <span class="sp b">Ms. Smith:</span> And on Sunday, we are going to spend all day at the hotel. <span class="dblank" id="s2dd5" onclick="placeS2D(5)">&nbsp;(5)&nbsp;</span><br>
+    <span class="sp">Evan:</span> Wow, believe me. You are having a good time!<br>
+    <span class="sp b">Ms. Smith:</span> Thanks. (6) - E. And I will buy a gift for you.<br>
+    <span class="sp">Evan:</span> Oh, that's so nice! Thank you!
+  `;
+  s2dSel={};s2dActive=null;
+}
+let s2dActive=null;
+function pickS2D(k,btn){
+  s2dActive=k;
+  document.querySelectorAll('.bank-opt').forEach(b=>b.style.background='');
+  btn.style.background='#fef3c7';
+}
+function placeS2D(num){
+  if(!s2dActive)return;
+  const slot=document.getElementById('s2dd'+num);
+  if(slot.classList.contains('filled'))return;
+  // unuse prev if this slot was filled
+  if(s2dSel[num]){document.getElementById('s2dopt'+s2dSel[num]).classList.remove('used');}
+  s2dSel[num]=s2dActive;
+  slot.textContent=' '+s2dActive+' ';slot.classList.add('filled');
+  document.getElementById('s2dopt'+s2dActive).classList.add('used');
+  s2dActive=null;
+  document.querySelectorAll('.bank-opt').forEach(b=>b.style.background='');
+}
+function checkS2D(){
+  let c=0;
+  [1,2,3,4,5].forEach((n,i)=>{
+    const slot=document.getElementById('s2dd'+n);
+    const ok=s2dSel[n]===s2dAns[i];
+    slot.classList.remove('wrong-d');
+    if(ok){slot.classList.add('filled');c++;}
+    else{slot.classList.add('wrong-d');slot.textContent=' '+s2dAns[i]+' ';slot.classList.add('filled');}
+  });
+  showSB('s2d-score',c,5);showResult(c,5);
+}
+function resetS2D(){s2dSel={};buildS2DDialog();document.getElementById('s2d-score').style.display='none';}
+buildS2DDialog();
+
+// ══════ S3A: DO/MAKE SORT ══════
+const doMakeData=[
+  {phrase:'the housework',verb:'DO'},
+  {phrase:'the dishes',verb:'DO'},
+  {phrase:'the gardening',verb:'DO'},
+  {phrase:'exercises',verb:'DO'},
+  {phrase:'my best',verb:'DO'},
+  {phrase:'my bed',verb:'MAKE'},
+  {phrase:'money',verb:'MAKE'},
+  {phrase:'a phone call',verb:'MAKE'},
+  {phrase:'a mistake',verb:'MAKE'},
+  {phrase:'a cake',verb:'MAKE'},
+];
+const s3aForm=document.getElementById('s3aForm');
+const s3aSel={};
+doMakeData.forEach((item,i)=>{
+  const d=document.createElement('div');d.style.cssText='display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap;';
+  d.innerHTML=`<span style="font-weight:700;min-width:160px;font-size:.9rem;color:#4c1d95;">${item.phrase}</span>
+    <button class="speed-btn" id="s3a_DO_${i}" onclick="selectDM(${i},'DO',this)">DO</button>
+    <button class="speed-btn" id="s3a_MAKE_${i}" onclick="selectDM(${i},'MAKE',this)">MAKE</button>
+    <span class="fb" id="s3afb${i}"></span>`;
+  s3aForm.appendChild(d);
+});
+function selectDM(i,val,btn){
+  if(btn.classList.contains('locked'))return;
+  ['DO','MAKE'].forEach(v=>{const b=document.getElementById('s3a_'+v+'_'+i);if(b){b.style.background='';b.style.color='var(--teal)';b.style.borderColor='#99f6e4';}});
+  btn.style.background='#7C3AED';btn.style.color='#fff';btn.style.borderColor='#7C3AED';
+  s3aSel[i]=val;
+}
+function checkS3A(){
+  let c=0;
+  doMakeData.forEach((item,i)=>{
+    const fb=document.getElementById('s3afb'+i);
+    ['DO','MAKE'].forEach(v=>{const b=document.getElementById('s3a_'+v+'_'+i);if(b)b.classList.add('locked');});
+    if(s3aSel[i]){
+      const ok=s3aSel[i]===item.verb;
+      const selBtn=document.getElementById('s3a_'+s3aSel[i]+'_'+i);if(selBtn)selBtn.style.background=ok?'var(--green)':'var(--red)';
+      const ansBtn=document.getElementById('s3a_'+item.verb+'_'+i);if(ansBtn)ansBtn.style.background='var(--green)';
+      if(ok)c++;
+      fb.textContent=ok?'✓':'✗ → '+item.verb+' '+item.phrase;fb.className='fb '+(ok?'correct':'wrong');
+    }
+  });
+  showSB('s3a-score',c,doMakeData.length);showResult(c,doMakeData.length);
+}
+function resetS3A(){
+  Object.keys(s3aSel).forEach(k=>delete s3aSel[k]);
+  doMakeData.forEach((_,i)=>{['DO','MAKE'].forEach(v=>{const b=document.getElementById('s3a_'+v+'_'+i);if(b){b.style.background='';b.style.color='var(--teal)';b.style.borderColor='#99f6e4';b.classList.remove('locked');}});document.getElementById('s3afb'+i).textContent='';});
+  document.getElementById('s3a-score').style.display='none';
+}
+
+// ══════ S3B: MCQ DO/MAKE ══════
+const s3bData=[
+  {q:'Tôi đã làm hết sức mình trong dự án vừa rồi.',opts:['do my best','do my bed','make my bed'],ans:'do my best',exp:'do my best = làm hết sức mình (luôn dùng DO)'},
+  {q:'B: Không sao, tôi sẽ gọi điện cho Julia.',opts:['make a phone call','do a phone call','have a phone'],ans:'make a phone call',exp:'make a phone call = gọi điện thoại (luôn dùng MAKE)'},
+  {q:'Ai cũng đã từng mắc sai lầm một lần trong đời.',opts:['make a mistook','make a mistake','do a mistake'],ans:'make a mistake',exp:'make a mistake = mắc sai lầm (MAKE + mistake)'},
+  {q:'Jack luôn tập thể dục mỗi ngày để có một cơ thể khỏe mạnh.',opts:['do exercises','do housework','make exercises'],ans:'do exercises',exp:'do exercises = tập thể dục (luôn dùng DO)'},
+  {q:'Ông tôi rất thích làm vườn mỗi ngày.',opts:['make the gardening','do the gardening','do the housework'],ans:'do the gardening',exp:'do the gardening = làm vườn (luôn dùng DO)'},
+];
+const s3bf=document.getElementById('s3bform');
+s3bData.forEach((item,i)=>{
+  s3bf.innerHTML+=`<div class="mcq-item" id="s3bq${i}">
+    <div class="qt">${i+1}. ${item.q}<div class="hint">💡 ${item.exp}</div></div>
+    <div class="mcq-options">${item.opts.map(o=>`<label class="mcq-option"><input type="radio" name="s3b_${i}" value="${o}"> ${o}</label>`).join('')}</div>
+  </div>`;
+});
+function checkS3B(){
+  let c=0;s3bData.forEach((item,i)=>{const sel=document.querySelector(`input[name="s3b_${i}"]:checked`);document.querySelectorAll(`#s3bq${i} .mcq-option`).forEach(o=>o.classList.remove('correct-ans','wrong-ans'));if(sel){const ok=sel.value===item.ans;sel.closest('.mcq-option').classList.add(ok?'correct-ans':'wrong-ans');if(!ok)document.querySelectorAll(`#s3bq${i} .mcq-option`).forEach(o=>{if(o.querySelector('input').value===item.ans)o.classList.add('correct-ans');});if(ok)c++;}});
+  showSB('s3b-score',c,s3bData.length);showResult(c,s3bData.length);
+}
+function resetS3B(){document.querySelectorAll('[name^="s3b_"]').forEach(r=>r.checked=false);document.querySelectorAll('#s3bform .mcq-option').forEach(o=>o.classList.remove('correct-ans','wrong-ans'));document.getElementById('s3b-score').style.display='none';}
+
+// ══════ S3C: SENTENCE FILL ══════
+const s3cData=[
+  {q:'I would prefer to cook rather than ___.',ans:'do the dishes',exp:'do the dishes = rửa bát'},
+  {q:'I will ___ to get better marks in my next exam.',ans:'do my best',exp:'do my best = làm hết sức mình'},
+  {q:'My grandparents often ___ every morning, including jogging and playing sports.',ans:'do exercises',exp:'do exercises = tập thể dục'},
+  {q:'David and his wife ___ by selling clothes online.',ans:'make money',exp:'make money = kiếm tiền'},
+  {q:'Jack did not ___ in the test last week, so he got 10.',ans:'make a mistake',exp:'make a mistake = mắc sai lầm'},
+];
+const s3cf=document.getElementById('s3cform');
+s3cData.forEach((item,i)=>{
+  s3cf.innerHTML+=`<div style="margin-bottom:13px;">
+    <div style="font-size:.9rem;line-height:1.7;font-weight:600;">${i+1}. ${item.q.replace('___',`<input class="para-blank" id="s3ci${i}" style="width:140px" autocomplete="off">`)}</div>
+    <span class="fb" id="s3cff${i}"></span>
+    <div style="font-size:.77rem;color:var(--muted);margin-top:2px;">💡 ${item.exp}</div>
+  </div>`;
+});
+function checkS3C(){
+  let c=0;s3cData.forEach((item,i)=>{const inp=document.getElementById('s3ci'+i);const fb=document.getElementById('s3cff'+i);const ok=inp.value.trim().toLowerCase()===item.ans.toLowerCase();inp.classList.toggle('correct',ok);inp.classList.toggle('wrong',!ok&&inp.value.trim()!='');if(ok){fb.textContent='✓';fb.className='fb correct';c++;}else if(inp.value.trim()){fb.textContent='✗→'+item.ans;fb.className='fb wrong';}else fb.textContent='';});
+  showSB('s3c-score',c,s3cData.length);showResult(c,s3cData.length);
+}
+function resetS3C(){s3cData.forEach((_,i)=>{document.getElementById('s3ci'+i).value='';document.getElementById('s3ci'+i).className='para-blank';document.getElementById('s3cff'+i).textContent='';});document.getElementById('s3c-score').style.display='none';}
+
+// ══════ S3D: JACK MCQ ══════
+const s3dData=[
+  {q:'What does Jack do to keep himself healthy?',opts:['He does exercises.','He makes his bed.','He does the housework.'],ans:'He does exercises.',exp:'do exercises = tập thể dục'},
+  {q:'What does Jack have for his breakfast?',opts:['bread & milk.','fruits & coffee.','milk & dried fruits.'],ans:'milk & dried fruits.',exp:'He drinks a cup of milk & eats some dried fruits.'},
+  {q:'Who does Jack have dinner with?',opts:['his friends.','his family.','his boss.'],ans:'his family.',exp:'he has dinner with his family'},
+  {q:'Jack often takes some minutes to talk to his friends on the phone.',ans:'A. Đúng',opts:['A. Đúng','B. Sai'],exp:'Đúng: "he spends some HOURS making phone calls" – "some hours" is longer than "some minutes". Actually the statement says "minutes" but the text says "hours" → SAI'},
+  {q:'The word "do" in "do the dishes" has the closest meaning to:',opts:['cook','buy','wash'],ans:'wash',exp:'do the dishes = rửa bát ≈ wash (rửa)'},
+];
+const s3df=document.getElementById('s3dform');
+s3dData.forEach((item,i)=>{
+  s3df.innerHTML+=`<div class="mcq-item" id="s3dq${i}">
+    <div class="qt">${i+1}. ${item.q}<div class="hint">💡 ${item.exp}</div></div>
+    <div class="mcq-options">${item.opts.map(o=>`<label class="mcq-option"><input type="radio" name="s3d_${i}" value="${o}"> ${o}</label>`).join('')}</div>
+  </div>`;
+});
+// Fix Q4 answer
+s3dData[3].ans='B. Sai';
+function checkS3D(){
+  let c=0;s3dData.forEach((item,i)=>{const sel=document.querySelector(`input[name="s3d_${i}"]:checked`);document.querySelectorAll(`#s3dq${i} .mcq-option`).forEach(o=>o.classList.remove('correct-ans','wrong-ans'));if(sel){const ok=sel.value===item.ans;sel.closest('.mcq-option').classList.add(ok?'correct-ans':'wrong-ans');if(!ok)document.querySelectorAll(`#s3dq${i} .mcq-option`).forEach(o=>{if(o.querySelector('input').value===item.ans)o.classList.add('correct-ans');});if(ok)c++;}});
+  showSB('s3d-score',c,s3dData.length);showResult(c,s3dData.length);
+}
+function resetS3D(){document.querySelectorAll('[name^="s3d_"]').forEach(r=>r.checked=false);document.querySelectorAll('#s3dform .mcq-option').forEach(o=>o.classList.remove('correct-ans','wrong-ans'));document.getElementById('s3d-score').style.display='none';}
+
+// ══════ S3E: DIALOGUE ══════
+const s3eOpts={
+  'A':'A. he can do the gardening all day.',
+  'B':'B. She is making a cake for my family.',
+  'D':'D. she is doing the dishes',
+  'E':'E. I\'m making my bed.',
+  'F':'F. every time I make mistakes.',
+};
+const s3eAns=[null,'A','D','B','F','E']; // positions 1-5
+let s3eSel={};let s3eActive=null;
+function buildS3EDialog(){
+  const bank=document.getElementById('s3eBank');bank.innerHTML='';
+  Object.entries(s3eOpts).forEach(([k,v])=>{
+    const b=document.createElement('span');b.className='bank-opt';b.id='s3eopt'+k;
+    b.textContent=k+': '+v.slice(3,45)+'...';b.onclick=()=>{s3eActive=k;document.querySelectorAll('#s3eBank .bank-opt').forEach(x=>x.style.background='');b.style.background='#fef3c7';};bank.appendChild(b);
+  });
+  const dlg=document.getElementById('s3eDialog');
+  dlg.innerHTML=`
+    <span class="sp">Evan:</span> Hi David, look at this picture! I draw a painting of my family in daily life. What do you think?<br>
+    <span class="sp b">David:</span> Oh, that's fantastic! (1) - C. It's very beautiful with many colors.<br>
+    <span class="sp">Evan:</span> Do you know the person in the garden?<br>
+    <span class="sp b">David:</span> Your dad? I guess.<br>
+    <span class="sp">Evan:</span> Exactly. He really loves plants & flowers and (2) - <span class="dblank" id="s3ed2" onclick="placeS3E(2)">&nbsp;?&nbsp;</span><br>
+    <span class="sp b">David:</span> Oh, it's interesting. And is your mom here?<br>
+    <span class="sp">Evan:</span> Yes, (3) - <span class="dblank" id="s3ed3" onclick="placeS3E(3)">&nbsp;?&nbsp;</span> after the meal.<br>
+    <span class="sp b">David:</span> And who is also in the kitchen?<br>
+    <span class="sp">Evan:</span> Ah, this is my sister, Jane. (4) - <span class="dblank" id="s3ed4" onclick="placeS3E(4)">&nbsp;?&nbsp;</span>. She likes sweets very much.<br>
+    <span class="sp b">David:</span> Is this your brother Robert?<br>
+    <span class="sp">Evan:</span> Yes, he is reading a book.<br>
+    <span class="sp b">David:</span> What is he like?<br>
+    <span class="sp">Evan:</span> My brother is very nice. He often gives me good advice (5) - <span class="dblank" id="s3ed5" onclick="placeS3E(5)">&nbsp;?&nbsp;</span><br>
+    <span class="sp b">David:</span> And where are you in the picture?<br>
+    <span class="sp">Evan:</span> I am in my bedroom and (6) - <span class="dblank" id="s3ed6" onclick="placeS3E(6)">&nbsp;?&nbsp;</span><br>
+    <span class="sp b">David:</span> Oh, I see. That's a wonderful pic.
+  `;
+  s3eSel={};s3eActive=null;
+}
+function placeS3E(num){
+  if(!s3eActive)return;
+  const slot=document.getElementById('s3ed'+num);
+  if(slot.classList.contains('filled'))return;
+  if(s3eSel[num])document.getElementById('s3eopt'+s3eSel[num]).classList.remove('used');
+  s3eSel[num]=s3eActive;slot.textContent=' '+s3eActive+' ';slot.classList.add('filled');
+  document.getElementById('s3eopt'+s3eActive).classList.add('used');
+  s3eActive=null;document.querySelectorAll('#s3eBank .bank-opt').forEach(b=>b.style.background='');
+}
+function checkS3E(){
+  let c=0;const map={2:'A',3:'D',4:'B',5:'F',6:'E'};
+  Object.entries(map).forEach(([num,ans])=>{
+    const slot=document.getElementById('s3ed'+num);
+    const ok=s3eSel[num]===ans;
+    slot.classList.remove('wrong-d');
+    if(ok)c++;
+    else{slot.classList.add('wrong-d');slot.textContent=' '+ans+' ';slot.classList.add('filled');}
+  });
+  showSB('s3e-score',c,5);showResult(c,5);
+}
+function resetS3E(){s3eSel={};buildS3EDialog();document.getElementById('s3e-score').style.display='none';}
+buildS3EDialog();
+
+// ══════ HELPERS ══════
+function showSec(id,btn){
+  document.querySelectorAll('.sec-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.sec-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');btn.classList.add('active');
+}
+function showSub(sec,id,btn){
+  const panel=document.getElementById(sec);
+  panel.querySelectorAll('.sub-panel').forEach(p=>p.classList.remove('active'));
+  panel.querySelectorAll('.sub-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(sec+'-'+id).classList.add('active');btn.classList.add('active');
+}
+function showSB(id,c,t){
+  const el=document.getElementById(id);el.style.display='flex';
+  el.innerHTML=`<span class="score-num">${c}/${t}</span><span>${c===t?'🏆 Hoàn hảo!':c>=t*.7?'🎉 Tốt lắm!':'💪 Thử lại!'}</span>`;
+}
+function showResult(c,t){
+  const p=c/t;
+  document.getElementById('rEmoji').textContent=p===1?'🏆':p>=.7?'🎉':p>=.5?'👍':'💪';
+  document.getElementById('rScore').textContent=c+'/'+t;
+  document.getElementById('rMsg').textContent=p===1?'Hoàn hảo!':p>=.7?'Làm tốt lắm!':'Ôn lại và thử lại nhé!';
+  document.getElementById('resultPopup').classList.add('show');
+}
+function closePopup(){document.getElementById('resultPopup').classList.remove('show');}
+</script>
+</body>
+</html>

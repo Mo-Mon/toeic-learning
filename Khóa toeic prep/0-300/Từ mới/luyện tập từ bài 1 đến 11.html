@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🎯 Luyện Tập Từ Vựng – Tổng Hợp</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F0F4FF;
+  --surface: #1E293B;
+  --surface2: #263548;
+  --border: #334155;
+  --text: #F1F5F9;
+  --text-muted: #94A3B8;
+  --accent: #38BDF8;
+  --accent2: #FB923C;
+  --accent3: #34D399;
+  --accent4: #F472B6;
+  --wrong: #F87171;
+  --correct: #34D399;
+  --radius: 16px;
+  --shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  background-image: radial-gradient(ellipse at 15% 15%, rgba(59,130,246,0.07) 0%, transparent 55%),
+                    radial-gradient(ellipse at 85% 85%, rgba(236,72,153,0.06) 0%, transparent 55%);
+}
+
+/* HEADER */
+.header {
+  padding: 28px 20px 20px;
+  text-align: center;
+  position: relative;
+}
+.header h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 2.2rem;
+  background: linear-gradient(135deg, #2563EB, #7C3AED);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 1px;
+}
+.header p { color: var(--text-muted); font-size: 0.95rem; margin-top: 6px; }
+
+/* TOPIC SELECTOR */
+.topic-wrap {
+  max-width: 800px;
+  margin: 0 auto 20px;
+  padding: 0 16px;
+}
+.topic-label {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  color: var(--accent);
+  margin-bottom: 10px;
+  display: block;
+}
+.topic-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 8px;
+}
+.topic-btn {
+  padding: 10px 8px;
+  border-radius: 12px;
+  border: 2px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+  line-height: 1.3;
+}
+.topic-btn:hover { border-color: var(--accent); color: var(--accent); }
+.topic-btn.active { border-color: var(--accent); background: rgba(56,189,248,0.15); color: var(--accent); }
+.topic-btn.all-btn { border-color: var(--accent2); color: var(--accent2); background: rgba(251,146,60,0.1); }
+.topic-btn.all-btn.active { background: rgba(251,146,60,0.25); }
+
+/* MODE TABS */
+.mode-wrap {
+  max-width: 800px;
+  margin: 0 auto 24px;
+  padding: 0 16px;
+}
+.mode-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+.mode-card {
+  padding: 16px 12px;
+  border-radius: var(--radius);
+  border: 2px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+.mode-card:hover { transform: translateY(-2px); }
+.mode-card.active { border-color: var(--accent); background: rgba(59,130,246,0.08); }
+.mode-card .mode-icon { font-size: 2rem; margin-bottom: 6px; }
+.mode-card .mode-name {
+  font-family: 'Fredoka One', cursive;
+  font-size: 0.95rem;
+  color: var(--text);
+}
+.mode-card .mode-desc { font-size: 0.75rem; color: var(--text-muted); margin-top: 3px; }
+.mode-card.active .mode-name { color: var(--accent); }
+
+/* MAIN PRACTICE AREA */
+.practice-area {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 16px 40px;
+}
+
+/* PROGRESS */
+.progress-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.progress-bg {
+  flex: 1;
+  height: 8px;
+  background: var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 8px;
+  border-radius: 10px;
+  background: linear-gradient(90deg, var(--accent), var(--accent4));
+  transition: width 0.5s ease;
+}
+.progress-count {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  color: var(--accent);
+  white-space: nowrap;
+}
+.score-pill {
+  background: rgba(16,185,129,0.12);
+  border: 1.5px solid var(--correct);
+  border-radius: 20px;
+  padding: 3px 12px;
+  font-weight: 800;
+  font-size: 0.85rem;
+  color: var(--correct);
+  white-space: nowrap;
+}
+
+/* CARD */
+.question-card {
+  background: var(--surface);
+  border-radius: 24px;
+  padding: 32px 28px;
+  box-shadow: var(--shadow);
+  border: 1.5px solid var(--border);
+  margin-bottom: 20px;
+  animation: cardIn 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.question-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent4));
+}
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.topic-tag {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  margin-bottom: 16px;
+  letter-spacing: 0.5px;
+}
+
+/* MODE: LISTEN */
+.listen-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  padding: 28px;
+  border-radius: 20px;
+  border: 2px dashed var(--accent);
+  background: rgba(59,130,246,0.04);
+  color: var(--accent);
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.6rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 20px;
+}
+.listen-btn:hover { background: rgba(59,130,246,0.08); transform: scale(1.01); }
+.listen-btn.played { border-style: solid; }
+.speed-row { display: flex; gap: 8px; justify-content: center; margin-bottom: 20px; }
+.speed-chip {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border);
+  background: var(--surface2);
+  color: var(--text-muted);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.speed-chip.active { border-color: var(--accent); color: var(--accent); background: rgba(56,189,248,0.1); }
+
+/* OPTIONS */
+.options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.option-btn {
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 2px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.18s;
+  text-align: center;
+  line-height: 1.3;
+}
+.option-btn:hover:not(:disabled) { border-color: var(--accent); background: rgba(59,130,246,0.06); color: var(--accent); }
+.option-btn.correct { border-color: var(--correct) !important; background: rgba(16,185,129,0.12) !important; color: var(--correct) !important; }
+.option-btn.wrong { border-color: var(--wrong) !important; background: rgba(239,68,68,0.10) !important; color: var(--wrong) !important; }
+.option-btn:disabled { cursor: default; }
+
+/* MODE: TRANSLATE (show word, choose meaning) */
+.big-word {
+  font-family: 'Fredoka One', cursive;
+  font-size: 2.6rem;
+  color: var(--accent);
+  text-align: center;
+  margin-bottom: 8px;
+  word-break: break-word;
+}
+.big-word-sub {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-bottom: 24px;
+}
+
+/* MODE: TYPE */
+.type-question {
+  font-size: 1rem;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+.meaning-display {
+  font-family: 'Fredoka One', cursive;
+  font-size: 2rem;
+  color: var(--accent2);
+  margin-bottom: 20px;
+  line-height: 1.3;
+}
+.type-input-wrap { position: relative; }
+.type-input {
+  width: 100%;
+  padding: 16px 50px 16px 18px;
+  border-radius: 14px;
+  border: 2px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 1.2rem;
+  outline: none;
+  transition: border-color 0.2s;
+  letter-spacing: 1px;
+}
+.type-input:focus { border-color: var(--accent); }
+.type-input.correct { border-color: var(--correct) !important; background: rgba(16,185,129,0.08); color: var(--correct); }
+.type-input.wrong { border-color: var(--wrong) !important; background: rgba(239,68,68,0.07); color: var(--wrong); }
+.type-speak-btn {
+  position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+  background: none; border: none; font-size: 1.3rem; cursor: pointer; color: var(--accent);
+}
+.type-hint {
+  margin-top: 10px;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+.hint-letters { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+.hint-letter {
+  width: 32px; height: 36px;
+  border-bottom: 2px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  color: var(--text-muted);
+}
+.hint-letter.revealed { color: var(--accent2); border-color: var(--accent2); }
+
+/* FEEDBACK */
+.feedback-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  margin-top: 14px;
+  font-weight: 800;
+  font-size: 0.95rem;
+  animation: fadeIn 0.2s ease;
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.feedback-row.correct-fb { background: rgba(16,185,129,0.10); color: var(--correct); border: 1.5px solid var(--correct); }
+.feedback-row.wrong-fb { background: rgba(239,68,68,0.08); color: var(--wrong); border: 1.5px solid var(--wrong); }
+
+/* NEXT BTN */
+.next-btn {
+  width: 100%;
+  padding: 16px;
+  border-radius: 14px;
+  border: none;
+  background: linear-gradient(135deg, #3B82F6, #0EA5E9);
+  color: #fff;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 4px 16px rgba(56,189,248,0.3);
+  display: none;
+}
+.next-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(56,189,248,0.4); }
+.next-btn.show { display: block; }
+
+/* SUBMIT BTN */
+.submit-btn {
+  width: 100%;
+  padding: 16px;
+  border-radius: 14px;
+  border: none;
+  background: linear-gradient(135deg, var(--accent2), #EF4444);
+  color: #fff;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.2rem;
+  cursor: pointer;
+  margin-top: 12px;
+  transition: transform 0.15s;
+  box-shadow: 0 4px 16px rgba(251,146,60,0.3);
+}
+.submit-btn:hover { transform: translateY(-2px); }
+
+/* RESULTS */
+.result-screen {
+  display: none;
+  text-align: center;
+  padding: 40px 20px;
+}
+.result-screen.show { display: block; }
+.result-emoji { font-size: 5rem; margin-bottom: 16px; animation: bounce 0.6s ease; }
+@keyframes bounce { 0%,100%{transform:scale(1)} 50%{transform:scale(1.2)} }
+.result-title { font-family: 'Fredoka One', cursive; font-size: 2.2rem; margin-bottom: 8px; background: linear-gradient(135deg, #2563EB, #7C3AED); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.result-sub { color: var(--text-muted); font-size: 1rem; margin-bottom: 24px; }
+.result-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 28px; }
+.stat-box { background: var(--surface); border-radius: var(--radius); padding: 16px; border: 1px solid var(--border); }
+.stat-num { font-family: 'Fredoka One', cursive; font-size: 2rem; }
+.stat-label { font-size: 0.8rem; color: var(--text-muted); margin-top: 4px; }
+.restart-btn {
+  padding: 14px 36px;
+  border-radius: 14px;
+  border: none;
+  background: linear-gradient(135deg, #3B82F6, #8B5CF6);
+  color: #fff;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: transform 0.15s;
+  box-shadow: 0 4px 20px rgba(56,189,248,0.3);
+}
+.restart-btn:hover { transform: scale(1.04); }
+
+/* WRONG REVIEW */
+.review-list { text-align: left; margin-top: 20px; }
+.review-title { font-family: 'Fredoka One', cursive; color: var(--wrong); margin-bottom: 12px; font-size: 1rem; }
+.review-item {
+  display: flex; gap: 12px; align-items: center;
+  padding: 10px 14px; border-radius: 10px;
+  background: var(--surface); border: 1px solid var(--border);
+  margin-bottom: 8px; font-size: 0.9rem;
+}
+.review-en { font-weight: 800; color: var(--accent2); min-width: 100px; }
+.review-vi { color: var(--text-muted); }
+
+/* COUNT SELECTOR */
+.count-wrap { max-width: 800px; margin: 0 auto 20px; padding: 0 16px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.count-label { font-family: 'Fredoka One', cursive; color: var(--accent3); font-size: 0.95rem; }
+.count-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.count-chip {
+  padding: 6px 16px; border-radius: 20px;
+  border: 1.5px solid var(--border);
+  background: var(--surface); color: var(--text-muted);
+  font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.85rem;
+  cursor: pointer; transition: all 0.2s;
+}
+.count-chip.active { border-color: var(--accent3); color: var(--accent3); background: rgba(16,185,129,0.08); }
+
+.start-btn {
+  display: block; margin: 0 auto;
+  padding: 16px 48px;
+  border-radius: 16px; border: none;
+  background: linear-gradient(135deg, #3B82F6, #8B5CF6);
+  color: #fff; font-family: 'Fredoka One', cursive; font-size: 1.3rem;
+  cursor: pointer; transition: transform 0.2s;
+  box-shadow: 0 6px 24px rgba(56,189,248,0.35);
+  margin-bottom: 30px;
+}
+.start-btn:hover { transform: scale(1.04); }
+
+.divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+@media (max-width: 480px) {
+  .mode-grid { grid-template-columns: 1fr; gap: 8px; }
+  .mode-card { display: flex; align-items: center; gap: 12px; text-align: left; }
+  .mode-card .mode-icon { font-size: 1.5rem; margin-bottom: 0; }
+  .options-grid { grid-template-columns: 1fr; }
+  .result-stats { grid-template-columns: 1fr; }
+  .big-word { font-size: 2rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🎯 Luyện Tập Từ Vựng</h1>
+  <p>Tổng hợp tất cả chủ đề đã học • 3 chế độ luyện tập</p>
+</div>
+
+<!-- TOPIC SELECTOR -->
+<div class="topic-wrap">
+  <span class="topic-label">📚 Chọn chủ đề:</span>
+  <div class="topic-grid" id="topicGrid"></div>
+</div>
+
+<!-- COUNT SELECTOR -->
+<div class="count-wrap">
+  <span class="count-label">🔢 Số câu:</span>
+  <div class="count-chips">
+    <button class="count-chip" onclick="setCount(10,this)">10 câu</button>
+    <button class="count-chip active" onclick="setCount(20,this)">20 câu</button>
+    <button class="count-chip" onclick="setCount(30,this)">30 câu</button>
+    <button class="count-chip" onclick="setCount(999,this)">Tất cả</button>
+  </div>
+</div>
+
+<!-- MODE SELECTOR -->
+<div class="mode-wrap">
+  <div class="mode-grid">
+    <div class="mode-card active" onclick="setMode('listen',this)">
+      <div class="mode-icon">🎧</div>
+      <div class="mode-name">Luyện Nghe</div>
+      <div class="mode-desc">Nghe từ → chọn nghĩa</div>
+    </div>
+    <div class="mode-card" onclick="setMode('translate',this)">
+      <div class="mode-icon">🔄</div>
+      <div class="mode-name">Luyện Dịch</div>
+      <div class="mode-desc">Xem từ → chọn nghĩa</div>
+    </div>
+    <div class="mode-card" onclick="setMode('type',this)">
+      <div class="mode-icon">✍️</div>
+      <div class="mode-name">Gõ Từ</div>
+      <div class="mode-desc">Xem nghĩa → gõ tiếng Anh</div>
+    </div>
+  </div>
+</div>
+
+<div class="practice-area">
+  <button class="start-btn" onclick="startPractice()">▶ Bắt đầu luyện tập!</button>
+
+  <!-- PRACTICE UI -->
+  <div id="practiceUI" style="display:none">
+    <div class="progress-row">
+      <div class="progress-bg"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+      <span class="progress-count" id="progressCount">1/20</span>
+      <span class="score-pill" id="scorePill">✅ 0</span>
+    </div>
+
+    <!-- LISTEN MODE -->
+    <div id="modeListenUI">
+      <div class="question-card">
+        <span class="topic-tag" id="listenTopicTag"></span>
+        <div class="speed-row">
+          <button class="speed-chip" onclick="setSpeed(0.7,this)">🐢 Chậm</button>
+          <button class="speed-chip active" onclick="setSpeed(1.0,this)">🚶 Bình thường</button>
+          <button class="speed-chip" onclick="setSpeed(1.3,this)">🏃 Nhanh</button>
+        </div>
+        <button class="listen-btn" id="listenBtn" onclick="playCurrentWord()">
+          🔊 Nhấn để nghe từ
+        </button>
+        <div class="options-grid" id="listenOptions"></div>
+        <div id="listenFeedback"></div>
+      </div>
+      <button class="next-btn" id="listenNext" onclick="nextQuestion()">Câu tiếp theo →</button>
+    </div>
+
+    <!-- TRANSLATE MODE -->
+    <div id="modeTranslateUI" style="display:none">
+      <div class="question-card">
+        <span class="topic-tag" id="translateTopicTag"></span>
+        <div class="big-word" id="translateWord"></div>
+        <div class="big-word-sub" id="translateIPA"></div>
+        <button style="display:block;margin:0 auto 20px;background:none;border:1px solid var(--border);color:var(--accent);padding:6px 18px;border-radius:20px;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:700;font-size:0.85rem;" onclick="playCurrentWord()">🔊 Nghe phát âm</button>
+        <div class="options-grid" id="translateOptions"></div>
+        <div id="translateFeedback"></div>
+      </div>
+      <button class="next-btn" id="translateNext" onclick="nextQuestion()">Câu tiếp theo →</button>
+    </div>
+
+    <!-- TYPE MODE -->
+    <div id="modeTypeUI" style="display:none">
+      <div class="question-card">
+        <span class="topic-tag" id="typeTopicTag"></span>
+        <div class="type-question">Gõ từ tiếng Anh có nghĩa:</div>
+        <div class="meaning-display" id="typeMeaning"></div>
+        <div class="type-input-wrap">
+          <input class="type-input" id="typeInput" placeholder="Gõ từ tiếng Anh..." autocomplete="off" onkeydown="handleTypeKey(event)">
+          <button class="type-speak-btn" onclick="playCurrentWord()">🔊</button>
+        </div>
+        <div class="type-hint" id="typeHint"></div>
+        <div class="hint-letters" id="typeHintLetters"></div>
+        <div id="typeFeedback"></div>
+        <button class="submit-btn" onclick="checkTypeAnswer()">✅ Kiểm tra</button>
+      </div>
+      <button class="next-btn" id="typeNext" onclick="nextQuestion()">Câu tiếp theo →</button>
+    </div>
+  </div>
+
+  <!-- RESULT SCREEN -->
+  <div class="result-screen" id="resultScreen">
+    <div class="result-emoji" id="resultEmoji"></div>
+    <div class="result-title" id="resultTitle"></div>
+    <div class="result-sub" id="resultSub"></div>
+    <div class="result-stats">
+      <div class="stat-box">
+        <div class="stat-num" id="statCorrect" style="color:var(--correct)"></div>
+        <div class="stat-label">✅ Đúng</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="statWrong" style="color:var(--wrong)"></div>
+        <div class="stat-label">❌ Sai</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num" id="statPct" style="color:var(--accent)"></div>
+        <div class="stat-label">🎯 Tỷ lệ</div>
+      </div>
+    </div>
+    <button class="restart-btn" onclick="restartPractice()">🔄 Luyện lại</button>
+    <div class="review-list" id="reviewList"></div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// VOCABULARY DATABASE
+// ============================================================
+const ALL_VOCAB = [
+  // Quốc gia - Quốc tịch (-ese)
+  {en:'Vietnamese', vi:'người Việt Nam', topic:'Quốc tịch'},
+  {en:'Chinese', vi:'người Trung Quốc', topic:'Quốc tịch'},
+  {en:'Japanese', vi:'người Nhật Bản', topic:'Quốc tịch'},
+  {en:'American', vi:'người Mỹ', topic:'Quốc tịch'},
+  {en:'Australian', vi:'người Úc', topic:'Quốc tịch'},
+  {en:'Mexican', vi:'người Mexico', topic:'Quốc tịch'},
+  {en:'Egyptian', vi:'người Ai Cập', topic:'Quốc tịch'},
+  {en:'Brazilian', vi:'người Brazil', topic:'Quốc tịch'},
+  {en:'Italian', vi:'người Ý', topic:'Quốc tịch'},
+  {en:'English', vi:'người Anh (Anh quốc)', topic:'Quốc tịch'},
+  {en:'British', vi:'người Anh (Vương quốc)', topic:'Quốc tịch'},
+  {en:'Turkish', vi:'người Thổ Nhĩ Kỳ', topic:'Quốc tịch'},
+  {en:'Vietnam', vi:'Việt Nam', topic:'Quốc gia'},
+  {en:'China', vi:'Trung Quốc', topic:'Quốc gia'},
+  {en:'Japan', vi:'Nhật Bản', topic:'Quốc gia'},
+  {en:'America', vi:'Mỹ / Hoa Kỳ', topic:'Quốc gia'},
+  {en:'Australia', vi:'Úc', topic:'Quốc gia'},
+  {en:'Egypt', vi:'Ai Cập', topic:'Quốc gia'},
+  {en:'Brazil', vi:'Brazil', topic:'Quốc gia'},
+  {en:'Italy', vi:'Ý', topic:'Quốc gia'},
+  {en:'England', vi:'Anh (nước Anh)', topic:'Quốc gia'},
+  {en:'Turkey', vi:'Thổ Nhĩ Kỳ', topic:'Quốc gia'},
+  // Số đếm
+  {en:'zero', vi:'số không (0)', topic:'Số đếm'},
+  {en:'one', vi:'một (1)', topic:'Số đếm'},
+  {en:'two', vi:'hai (2)', topic:'Số đếm'},
+  {en:'three', vi:'ba (3)', topic:'Số đếm'},
+  {en:'four', vi:'bốn (4)', topic:'Số đếm'},
+  {en:'five', vi:'năm (5)', topic:'Số đếm'},
+  {en:'six', vi:'sáu (6)', topic:'Số đếm'},
+  {en:'seven', vi:'bảy (7)', topic:'Số đếm'},
+  {en:'eight', vi:'tám (8)', topic:'Số đếm'},
+  {en:'nine', vi:'chín (9)', topic:'Số đếm'},
+  {en:'ten', vi:'mười (10)', topic:'Số đếm'},
+  {en:'eleven', vi:'mười một (11)', topic:'Số đếm'},
+  {en:'twelve', vi:'mười hai (12)', topic:'Số đếm'},
+  {en:'thirteen', vi:'mười ba (13)', topic:'Số đếm'},
+  {en:'fourteen', vi:'mười bốn (14)', topic:'Số đếm'},
+  {en:'fifteen', vi:'mười lăm (15)', topic:'Số đếm'},
+  {en:'sixteen', vi:'mười sáu (16)', topic:'Số đếm'},
+  {en:'seventeen', vi:'mười bảy (17)', topic:'Số đếm'},
+  {en:'eighteen', vi:'mười tám (18)', topic:'Số đếm'},
+  {en:'nineteen', vi:'mười chín (19)', topic:'Số đếm'},
+  {en:'twenty', vi:'hai mươi (20)', topic:'Số đếm'},
+  {en:'thirty', vi:'ba mươi (30)', topic:'Số đếm'},
+  {en:'forty', vi:'bốn mươi (40)', topic:'Số đếm'},
+  {en:'fifty', vi:'năm mươi (50)', topic:'Số đếm'},
+  {en:'sixty', vi:'sáu mươi (60)', topic:'Số đếm'},
+  {en:'seventy', vi:'bảy mươi (70)', topic:'Số đếm'},
+  {en:'eighty', vi:'tám mươi (80)', topic:'Số đếm'},
+  {en:'ninety', vi:'chín mươi (90)', topic:'Số đếm'},
+  {en:'hundred', vi:'một trăm (100)', topic:'Số đếm'},
+  {en:'thousand', vi:'một nghìn (1000)', topic:'Số đếm'},
+  {en:'million', vi:'một triệu (1,000,000)', topic:'Số đếm'},
+  // Tính từ thông dụng
+  {en:'clever', vi:'thông minh', topic:'Tính từ'},
+  {en:'angry', vi:'tức giận', topic:'Tính từ'},
+  {en:'kind', vi:'tốt bụng', topic:'Tính từ'},
+  {en:'lazy', vi:'lười biếng', topic:'Tính từ'},
+  {en:'terrible', vi:'dở tệ / khủng khiếp', topic:'Tính từ'},
+  {en:'famous', vi:'nổi tiếng', topic:'Tính từ'},
+  {en:'single', vi:'độc thân', topic:'Tính từ'},
+  {en:'special', vi:'đặc biệt', topic:'Tính từ'},
+  {en:'beautiful', vi:'đẹp', topic:'Tính từ'},
+  {en:'unlucky', vi:'không may mắn', topic:'Tính từ'},
+  // Thời tiết
+  {en:'temperature', vi:'nhiệt độ', topic:'Thời tiết'},
+  {en:'warm', vi:'ấm', topic:'Thời tiết'},
+  {en:'hot', vi:'nóng', topic:'Thời tiết'},
+  {en:'cold', vi:'lạnh', topic:'Thời tiết'},
+  {en:'chilly', vi:'lạnh thấu xương', topic:'Thời tiết'},
+  {en:'rain', vi:'mưa', topic:'Thời tiết'},
+  {en:'rainy', vi:'mưa nhiều', topic:'Thời tiết'},
+  {en:'windy', vi:'nhiều gió', topic:'Thời tiết'},
+  {en:'cloud', vi:'đám mây', topic:'Thời tiết'},
+  {en:'cloudy', vi:'nhiều mây', topic:'Thời tiết'},
+  {en:'autumn', vi:'mùa thu', topic:'Thời tiết'},
+  {en:'fog', vi:'sương mù', topic:'Thời tiết'},
+  {en:'foggy', vi:'nhiều sương mù', topic:'Thời tiết'},
+  {en:'ice', vi:'băng', topic:'Thời tiết'},
+  {en:'snow', vi:'tuyết', topic:'Thời tiết'},
+  {en:'snowy', vi:'nhiều tuyết', topic:'Thời tiết'},
+  {en:'dry', vi:'khô', topic:'Thời tiết'},
+  {en:'wet', vi:'ẩm ướt', topic:'Thời tiết'},
+  {en:'thunderstorm', vi:'bão có sấm sét', topic:'Thời tiết'},
+  {en:'flood', vi:'lũ lụt', topic:'Thời tiết'},
+  {en:'tornado', vi:'lốc xoáy', topic:'Thời tiết'},
+  {en:'sunny', vi:'nắng', topic:'Thời tiết'},
+  // Động vật
+  {en:'spider', vi:'con nhện', topic:'Động vật'},
+  {en:'dolphin', vi:'cá heo', topic:'Động vật'},
+  {en:'elephant', vi:'voi', topic:'Động vật'},
+  {en:'horse', vi:'con ngựa', topic:'Động vật'},
+  {en:'monkey', vi:'con khỉ', topic:'Động vật'},
+  {en:'bear', vi:'con gấu', topic:'Động vật'},
+  {en:'cow', vi:'con bò', topic:'Động vật'},
+  {en:'parrot', vi:'con vẹt', topic:'Động vật'},
+  {en:'chicken', vi:'con gà', topic:'Động vật'},
+  {en:'rabbit', vi:'con thỏ', topic:'Động vật'},
+  // Địa điểm & phương hướng
+  {en:'countryside', vi:'miền quê', topic:'Địa điểm'},
+  {en:'city', vi:'thành phố', topic:'Địa điểm'},
+  {en:'area', vi:'khu vực', topic:'Địa điểm'},
+  {en:'north', vi:'hướng bắc', topic:'Địa điểm'},
+  {en:'south', vi:'hướng nam', topic:'Địa điểm'},
+  {en:'east', vi:'hướng đông', topic:'Địa điểm'},
+  {en:'west', vi:'hướng tây', topic:'Địa điểm'},
+  {en:'village', vi:'ngôi làng', topic:'Địa điểm'},
+  {en:'path', vi:'con đường nhỏ / làng', topic:'Địa điểm'},
+  {en:'street', vi:'con đường ở phố', topic:'Địa điểm'},
+  {en:'road', vi:'con đường (nói chung)', topic:'Địa điểm'},
+  {en:'field', vi:'cánh đồng', topic:'Địa điểm'},
+  {en:'river', vi:'dòng sông', topic:'Địa điểm'},
+  {en:'forest', vi:'rừng', topic:'Địa điểm'},
+  {en:'hill', vi:'đồi', topic:'Địa điểm'},
+  // Hoạt động hàng ngày
+  {en:'live in a flat', vi:'sống trong căn hộ', topic:'Hoạt động'},
+  {en:'wake up early', vi:'dậy sớm', topic:'Hoạt động'},
+  {en:'sleep in', vi:'ngủ nướng', topic:'Hoạt động'},
+  {en:'have breakfast', vi:'ăn sáng', topic:'Hoạt động'},
+  {en:'have a meeting', vi:'có buổi họp', topic:'Hoạt động'},
+  {en:'have an appointment', vi:'có buổi hẹn', topic:'Hoạt động'},
+  {en:'work in an office', vi:'làm việc văn phòng', topic:'Hoạt động'},
+  {en:'study English', vi:'học tiếng Anh', topic:'Hoạt động'},
+  {en:'go on a trip', vi:'đi du lịch xa', topic:'Hoạt động'},
+  {en:'go by car', vi:'di chuyển bằng ô tô', topic:'Hoạt động'},
+  {en:'come out of the house', vi:'ra khỏi nhà', topic:'Hoạt động'},
+  {en:'go to school', vi:'đi đến trường', topic:'Hoạt động'},
+  {en:'go swimming', vi:'đi bơi', topic:'Hoạt động'},
+  {en:'go on foot', vi:'đi bộ', topic:'Hoạt động'},
+  // Gia phả
+  {en:'grandfather', vi:'ông', topic:'Gia đình'},
+  {en:'grandmother', vi:'bà', topic:'Gia đình'},
+  {en:'grandparent', vi:'ông bà', topic:'Gia đình'},
+  {en:'mother', vi:'mẹ', topic:'Gia đình'},
+  {en:'father', vi:'bố', topic:'Gia đình'},
+  {en:'parent', vi:'bố mẹ', topic:'Gia đình'},
+  {en:'brother', vi:'anh trai', topic:'Gia đình'},
+  {en:'sister', vi:'chị gái', topic:'Gia đình'},
+  {en:'sibling', vi:'anh chị em ruột', topic:'Gia đình'},
+  {en:'daughter', vi:'con gái', topic:'Gia đình'},
+  {en:'son', vi:'con trai', topic:'Gia đình'},
+  {en:'uncle', vi:'chú / bác trai', topic:'Gia đình'},
+  {en:'aunt', vi:'cô / dì', topic:'Gia đình'},
+  {en:'niece', vi:'cháu gái', topic:'Gia đình'},
+  {en:'nephew', vi:'cháu trai', topic:'Gia đình'},
+  {en:'cousin', vi:'anh chị em họ', topic:'Gia đình'},
+  {en:'nuclear family', vi:'gia đình 2 thế hệ', topic:'Gia đình'},
+  {en:'extended family', vi:'gia đình từ 3 thế hệ trở lên', topic:'Gia đình'},
+  // Đồ ăn thức uống
+  {en:'breakfast', vi:'bữa sáng', topic:'Đồ ăn'},
+  {en:'bread', vi:'bánh mỳ', topic:'Đồ ăn'},
+  {en:'coffee', vi:'cà phê', topic:'Đồ ăn'},
+  {en:'burger', vi:'bánh burger', topic:'Đồ ăn'},
+  {en:'cheese', vi:'phô mai', topic:'Đồ ăn'},
+  {en:'lunch', vi:'bữa trưa', topic:'Đồ ăn'},
+  {en:'salad', vi:'sa lát', topic:'Đồ ăn'},
+  {en:'apple', vi:'trái táo', topic:'Đồ ăn'},
+  {en:'banana', vi:'chuối', topic:'Đồ ăn'},
+  {en:'orange juice', vi:'nước cam', topic:'Đồ ăn'},
+  {en:'dinner', vi:'bữa tối', topic:'Đồ ăn'},
+  {en:'fish', vi:'cá', topic:'Đồ ăn'},
+  {en:'carrot', vi:'cà rốt', topic:'Đồ ăn'},
+  {en:'pasta', vi:'mỳ Ý', topic:'Đồ ăn'},
+  {en:'steak', vi:'bít tết', topic:'Đồ ăn'},
+  {en:'potato', vi:'khoai tây', topic:'Đồ ăn'},
+  {en:'tea', vi:'trà', topic:'Đồ ăn'},
+  {en:'chocolate cake', vi:'bánh sô cô la', topic:'Đồ ăn'},
+  {en:'ice cream', vi:'kem', topic:'Đồ ăn'},
+  // In the House
+  {en:'garage', vi:'nhà để xe / ga ra', topic:'Trong nhà'},
+  {en:'hall', vi:'hành lang / tiền sảnh', topic:'Trong nhà'},
+  {en:'living room', vi:'phòng khách', topic:'Trong nhà'},
+  {en:'carpet', vi:'thảm', topic:'Trong nhà'},
+  {en:'sofa', vi:'sô fa', topic:'Trong nhà'},
+  {en:'bookshelf', vi:'giá sách', topic:'Trong nhà'},
+  {en:'kitchen', vi:'phòng bếp', topic:'Trong nhà'},
+  {en:'oven', vi:'lò nướng', topic:'Trong nhà'},
+  {en:'rice cooker', vi:'nồi cơm điện', topic:'Trong nhà'},
+  {en:'dishwasher', vi:'máy rửa bát', topic:'Trong nhà'},
+  {en:'fridge', vi:'tủ lạnh', topic:'Trong nhà'},
+  {en:'bedroom', vi:'phòng ngủ', topic:'Trong nhà'},
+  {en:'curtain', vi:'rèm cửa', topic:'Trong nhà'},
+  {en:'lamp', vi:'đèn', topic:'Trong nhà'},
+  {en:'ceiling', vi:'trần nhà', topic:'Trong nhà'},
+  {en:'chair', vi:'ghế', topic:'Trong nhà'},
+  {en:'desk', vi:'bàn học', topic:'Trong nhà'},
+  // Căn phòng
+  {en:'wide', vi:'rộng', topic:'Căn phòng'},
+  {en:'narrow', vi:'chật hẹp', topic:'Căn phòng'},
+  {en:'noisy', vi:'ồn ào', topic:'Căn phòng'},
+  {en:'quiet', vi:'yên tĩnh', topic:'Căn phòng'},
+  {en:'wooden', vi:'làm bằng gỗ', topic:'Căn phòng'},
+  {en:'glass', vi:'kính', topic:'Căn phòng'},
+  {en:'leather', vi:'da', topic:'Căn phòng'},
+  {en:'plastic', vi:'nhựa', topic:'Căn phòng'},
+  {en:'red', vi:'màu đỏ', topic:'Căn phòng'},
+  {en:'green', vi:'xanh lá', topic:'Căn phòng'},
+  {en:'blue', vi:'xanh dương', topic:'Căn phòng'},
+  {en:'yellow', vi:'vàng', topic:'Căn phòng'},
+  {en:'orange', vi:'cam', topic:'Căn phòng'},
+  {en:'brown', vi:'màu nâu', topic:'Căn phòng'},
+  {en:'pink', vi:'hồng', topic:'Căn phòng'},
+  {en:'big', vi:'to lớn', topic:'Căn phòng'},
+  {en:'small', vi:'nhỏ', topic:'Căn phòng'},
+  {en:'heavy', vi:'nặng', topic:'Căn phòng'},
+  {en:'light', vi:'nhẹ', topic:'Căn phòng'},
+];
+
+const TOPIC_COLORS = {
+  'Quốc tịch': {bg:'rgba(251,146,60,0.15)', text:'#FB923C'},
+  'Quốc gia': {bg:'rgba(251,146,60,0.1)', text:'#F97316'},
+  'Số đếm': {bg:'rgba(56,189,248,0.12)', text:'#38BDF8'},
+  'Tính từ': {bg:'rgba(244,114,182,0.12)', text:'#F472B6'},
+  'Thời tiết': {bg:'rgba(52,211,153,0.12)', text:'#34D399'},
+  'Động vật': {bg:'rgba(167,139,250,0.12)', text:'#A78BFA'},
+  'Địa điểm': {bg:'rgba(251,191,36,0.12)', text:'#FBBF24'},
+  'Hoạt động': {bg:'rgba(248,113,113,0.12)', text:'#F87171'},
+  'Gia đình': {bg:'rgba(129,140,248,0.12)', text:'#818CF8'},
+  'Đồ ăn': {bg:'rgba(52,211,153,0.15)', text:'#10B981'},
+  'Trong nhà': {bg:'rgba(96,165,250,0.12)', text:'#60A5FA'},
+  'Căn phòng': {bg:'rgba(192,132,252,0.12)', text:'#C084FC'},
+};
+
+const ALL_TOPICS = [...new Set(ALL_VOCAB.map(v => v.topic))];
+let selectedTopics = new Set(ALL_TOPICS);
+let questionCount = 20;
+let currentMode = 'listen';
+let speechRate = 1.0;
+
+// Build topic grid — dùng array join tránh lỗi innerHTML +=
+const topicGrid = document.getElementById('topicGrid');
+const topicBtns = [`<button class="topic-btn all-btn active" id="btnAll">🌍 Tất cả</button>`];
+ALL_TOPICS.forEach((t, i) => {
+  const c = TOPIC_COLORS[t] || {bg:'rgba(255,255,255,0.05)', text:'#94A3B8'};
+  topicBtns.push(`<button class="topic-btn active" data-topicidx="${i}" style="border-color:${c.text};color:${c.text};background:${c.bg}">${t}</button>`);
+});
+topicGrid.innerHTML = topicBtns.join('');
+document.getElementById('btnAll').addEventListener('click', function(){ toggleAll(this); });
+document.querySelectorAll('.topic-btn[data-topicidx]').forEach(btn => {
+  const t = ALL_TOPICS[+btn.dataset.topicidx];
+  btn.addEventListener('click', function(){ toggleTopic(t, this); });
+});
+
+function toggleAll(btn) {
+  const allActive = selectedTopics.size === ALL_TOPICS.length;
+  if (allActive) {
+    selectedTopics.clear();
+    document.querySelectorAll('.topic-btn[data-topicidx]').forEach(b => b.classList.remove('active'));
+    btn.classList.remove('active');
+  } else {
+    selectedTopics = new Set(ALL_TOPICS);
+    document.querySelectorAll('.topic-btn[data-topicidx]').forEach(b => b.classList.add('active'));
+    btn.classList.add('active');
+  }
+}
+function toggleTopic(topic, btn) {
+  if (selectedTopics.has(topic)) { selectedTopics.delete(topic); btn.classList.remove('active'); }
+  else { selectedTopics.add(topic); btn.classList.add('active'); }
+  const allBtn = document.getElementById('btnAll');
+  if (selectedTopics.size === ALL_TOPICS.length) allBtn.classList.add('active');
+  else allBtn.classList.remove('active');
+}
+function setCount(n, btn) {
+  questionCount = n;
+  document.querySelectorAll('.count-chip').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+function setMode(mode, el) {
+  currentMode = mode;
+  document.querySelectorAll('.mode-card').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+}
+function setSpeed(r, btn) {
+  speechRate = r;
+  document.querySelectorAll('.speed-chip').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ============================================================
+// PRACTICE ENGINE
+// ============================================================
+let queue = [], qIdx = 0, correct = 0, wrongItems = [], answered = false;
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i=a.length-1;i>0;i--) { const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
+}
+
+function startPractice() {
+  const pool = ALL_VOCAB.filter(v => selectedTopics.has(v.topic));
+  if (pool.length === 0) { alert('Hãy chọn ít nhất 1 chủ đề!'); return; }
+  queue = shuffle(pool).slice(0, Math.min(questionCount, pool.length));
+  qIdx = 0; correct = 0; wrongItems = [];
+  document.querySelector('.start-btn').style.display = 'none';
+  document.getElementById('practiceUI').style.display = 'block';
+  document.getElementById('resultScreen').classList.remove('show');
+  renderQuestion();
+}
+
+function renderQuestion() {
+  if (qIdx >= queue.length) { showResult(); return; }
+  answered = false;
+  const item = queue[qIdx];
+  const total = queue.length;
+  document.getElementById('progressFill').style.width = (qIdx/total*100)+'%';
+  document.getElementById('progressCount').textContent = `${qIdx+1}/${total}`;
+  document.getElementById('scorePill').textContent = `✅ ${correct}`;
+
+  // Hide all mode UIs
+  ['modeListenUI','modeTranslateUI','modeTypeUI'].forEach(id => document.getElementById(id).style.display='none');
+  ['listenNext','translateNext','typeNext'].forEach(id => { const el=document.getElementById(id); el.classList.remove('show'); });
+
+  const tc = TOPIC_COLORS[item.topic] || {bg:'rgba(255,255,255,0.05)',text:'#94A3B8'};
+
+  if (currentMode === 'listen') {
+    document.getElementById('modeListenUI').style.display = 'block';
+    const tag = document.getElementById('listenTopicTag');
+    tag.textContent = item.topic;
+    tag.style.background = tc.bg; tag.style.color = tc.text;
+    const btn = document.getElementById('listenBtn');
+    btn.textContent = '🔊 Nhấn để nghe từ';
+    btn.classList.remove('played');
+    document.getElementById('listenFeedback').innerHTML = '';
+    buildOptions('listenOptions', item, 'listenFeedback', 'listenNext');
+  } else if (currentMode === 'translate') {
+    document.getElementById('modeTranslateUI').style.display = 'block';
+    const tag = document.getElementById('translateTopicTag');
+    tag.textContent = item.topic; tag.style.background=tc.bg; tag.style.color=tc.text;
+    document.getElementById('translateWord').textContent = item.en;
+    document.getElementById('translateFeedback').innerHTML = '';
+    buildOptions('translateOptions', item, 'translateFeedback', 'translateNext');
+  } else if (currentMode === 'type') {
+    document.getElementById('modeTypeUI').style.display = 'block';
+    const tag = document.getElementById('typeTopicTag');
+    tag.textContent = item.topic; tag.style.background=tc.bg; tag.style.color=tc.text;
+    document.getElementById('typeMeaning').textContent = item.vi;
+    document.getElementById('typeFeedback').innerHTML = '';
+    document.getElementById('typeHint').innerHTML = '';
+    const input = document.getElementById('typeInput');
+    input.value = ''; input.className = 'type-input'; input.disabled = false;
+    input.focus();
+    // Build letter blanks
+    buildHintLetters(item.en);
+  }
+}
+
+function buildHintLetters(word) {
+  const wrap = document.getElementById('typeHintLetters');
+  wrap.innerHTML = '';
+  word.split('').forEach(ch => {
+    const d = document.createElement('div');
+    d.className = 'hint-letter';
+    d.textContent = ch === ' ' ? ' ' : '_';
+    if (ch === ' ') { d.style.borderBottom='none'; d.style.width='20px'; }
+    wrap.appendChild(d);
+  });
+}
+
+function buildOptions(containerId, correctItem, feedbackId, nextId) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = '';
+  const pool = ALL_VOCAB.filter(v => v.en !== correctItem.en);
+  const sameTopicPool = pool.filter(v => v.topic === correctItem.topic);
+  let wrongPool = sameTopicPool.length >= 3 ? sameTopicPool : pool;
+  const wrongs = shuffle(wrongPool).slice(0, 3);
+  const allOpts = shuffle([correctItem, ...wrongs]);
+  allOpts.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.textContent = opt.vi;
+    btn.onclick = () => selectOption(btn, opt.vi === correctItem.vi, correctItem.vi, containerId, feedbackId, nextId);
+    container.appendChild(btn);
+  });
+}
+
+function selectOption(btn, isCorrect, correctVi, containerId, feedbackId, nextId) {
+  if (answered) return;
+  answered = true;
+  const item = queue[qIdx];
+  const allBtns = document.querySelectorAll(`#${containerId} .option-btn`);
+  allBtns.forEach(b => {
+    b.disabled = true;
+    if (b.textContent === correctVi) b.classList.add('correct');
+  });
+  if (!isCorrect) {
+    btn.classList.add('wrong');
+    wrongItems.push(item);
+    showFeedback(feedbackId, false, item.en, item.vi);
+  } else {
+    correct++;
+    showFeedback(feedbackId, true, item.en, item.vi);
+  }
+  document.getElementById('scorePill').textContent = `✅ ${correct}`;
+  document.getElementById(nextId).classList.add('show');
+  if (currentMode === 'listen') speak(item.en);
+}
+
+function showFeedback(feedbackId, isCorrect, en, vi) {
+  const el = document.getElementById(feedbackId);
+  if (isCorrect) {
+    el.innerHTML = `<div class="feedback-row correct-fb">✅ Chính xác! <b>${en}</b> = ${vi}</div>`;
+  } else {
+    el.innerHTML = `<div class="feedback-row wrong-fb">❌ Sai rồi! Đáp án đúng: <b>${vi}</b></div>`;
+  }
+}
+
+function playCurrentWord() {
+  const item = queue[qIdx];
+  if (!item) return;
+  speak(item.en);
+  const lb = document.getElementById('listenBtn');
+  if (lb) { lb.textContent = '🔊 Nghe lại'; lb.classList.add('played'); }
+}
+
+function handleTypeKey(e) {
+  if (e.key === 'Enter') checkTypeAnswer();
+  // Live hint: reveal typed letters
+  const item = queue[qIdx];
+  if (!item) return;
+  const val = e.target.value + (e.key.length === 1 ? e.key : '');
+  const letters = document.querySelectorAll('#typeHintLetters .hint-letter');
+  const wordChars = item.en.split('');
+  letters.forEach((el, i) => {
+    if (wordChars[i] === ' ') return;
+    if (val[i] && val[i].toLowerCase() === wordChars[i].toLowerCase()) {
+      el.classList.add('revealed');
+      el.textContent = wordChars[i];
+    } else {
+      el.classList.remove('revealed');
+      el.textContent = '_';
+    }
+  });
+}
+
+function checkTypeAnswer() {
+  if (answered) return;
+  answered = true;
+  const item = queue[qIdx];
+  const input = document.getElementById('typeInput');
+  const val = input.value.trim().toLowerCase();
+  const ans = item.en.toLowerCase();
+  input.disabled = true;
+  const isCorrect = val === ans;
+  if (isCorrect) {
+    correct++;
+    input.className = 'type-input correct';
+    document.getElementById('typeFeedback').innerHTML = `<div class="feedback-row correct-fb">✅ Hoàn hảo! <b>${item.en}</b> = ${item.vi}</div>`;
+    // Reveal all letters
+    document.querySelectorAll('#typeHintLetters .hint-letter').forEach((el, i) => {
+      el.classList.add('revealed');
+      el.textContent = item.en[i] || '';
+    });
+  } else {
+    input.className = 'type-input wrong';
+    wrongItems.push(item);
+    document.getElementById('typeFeedback').innerHTML = `<div class="feedback-row wrong-fb">❌ Đáp án đúng: <b>${item.en}</b></div>`;
+    // Reveal correct
+    document.querySelectorAll('#typeHintLetters .hint-letter').forEach((el, i) => {
+      el.classList.add('revealed');
+      el.textContent = item.en[i] || '';
+    });
+  }
+  document.getElementById('scorePill').textContent = `✅ ${correct}`;
+  document.getElementById('typeNext').classList.add('show');
+  speak(item.en);
+}
+
+function nextQuestion() {
+  qIdx++;
+  renderQuestion();
+}
+
+function showResult() {
+  document.getElementById('practiceUI').style.display = 'none';
+  const rs = document.getElementById('resultScreen');
+  rs.classList.add('show');
+  const total = queue.length;
+  const pct = Math.round(correct/total*100);
+  let emoji, title, sub;
+  if (pct === 100) { emoji='🏆'; title='Xuất sắc!'; sub='Hoàn hảo tuyệt đối! Bạn đã thuộc tất cả từ vựng!'; }
+  else if (pct >= 80) { emoji='🎉'; title='Tốt lắm!'; sub=`Bạn đạt ${pct}% — tiếp tục ôn luyện là giỏi ngay thôi!`; }
+  else if (pct >= 60) { emoji='💪'; title='Khá ổn!'; sub=`Bạn đạt ${pct}% — ôn thêm các từ sai nhé!`; }
+  else { emoji='📚'; title='Cần luyện thêm!'; sub=`Bạn đạt ${pct}% — hãy ôn lý thuyết rồi thử lại!`; }
+  document.getElementById('resultEmoji').textContent = emoji;
+  document.getElementById('resultTitle').textContent = title;
+  document.getElementById('resultSub').textContent = sub;
+  document.getElementById('statCorrect').textContent = correct;
+  document.getElementById('statWrong').textContent = total - correct;
+  document.getElementById('statPct').textContent = pct + '%';
+  // Wrong review
+  const reviewEl = document.getElementById('reviewList');
+  if (wrongItems.length > 0) {
+    let html = `<div class="review-title">📝 Từ cần ôn lại (${wrongItems.length} từ):</div>`;
+    wrongItems.forEach(it => {
+      const c = TOPIC_COLORS[it.topic] || {text:'#94A3B8'};
+      html += `<div class="review-item"><span class="review-en">${it.en}</span><span class="review-vi">${it.vi}</span><span style="margin-left:auto;font-size:0.75rem;color:${c.text}">${it.topic}</span></div>`;
+    });
+    reviewEl.innerHTML = html;
+  } else {
+    reviewEl.innerHTML = '';
+  }
+}
+
+function restartPractice() {
+  document.getElementById('resultScreen').classList.remove('show');
+  document.querySelector('.start-btn').style.display = 'block';
+}
+
+// ============================================================
+// SPEECH
+// ============================================================
+function speak(text) {
+  if (!window.speechSynthesis) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US'; u.rate = speechRate;
+  speechSynthesis.speak(u);
+}
+</script>
+</body>
+</html>
