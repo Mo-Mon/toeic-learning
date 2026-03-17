@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thì Quá Khứ Đơn – Bài Tập</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f3f0e8;--surface:#fff;--soft:#ece8de;--border:#ddd8cc;
+  --ink:#1a1710;--muted:#8a8270;--accent:#7c3a1e;--accent2:#1d5c8a;
+  --gold:#b8861a;--green:#1e6b3a;--red:#b03030;
+  --success-bg:#e8f5ee;--error-bg:#faeaea;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Lexend',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;}
+body::before{content:'';position:fixed;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 27px,rgba(160,150,120,.08) 27px,rgba(160,150,120,.08) 28px);pointer-events:none;z-index:0;}
+
+/* HEADER */
+header{position:relative;z-index:1;background:var(--ink);padding:2rem 2rem 1.75rem;border-bottom:4px solid var(--accent);}
+.hi{max-width:920px;margin:0 auto;display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
+.hl{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);margin-bottom:.4rem;}
+header h1{font-family:'Instrument Serif',serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:400;color:#fff;line-height:1.15;}
+header h1 em{font-style:italic;color:#f0d080;}
+.hm{text-align:right;font-size:.82rem;color:rgba(255,255,255,.5);font-weight:300;}
+
+/* PROGRESS */
+.prog-wrap{position:sticky;top:0;z-index:100;background:var(--ink);padding:.5rem 2rem;display:flex;align-items:center;gap:1.25rem;}
+.prog-track{flex:1;height:4px;background:rgba(255,255,255,.12);border-radius:2px;overflow:hidden;}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--gold));border-radius:2px;transition:width .4s;width:0%;}
+.prog-txt{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:rgba(255,255,255,.5);white-space:nowrap;}
+
+main{position:relative;z-index:1;max-width:920px;margin:0 auto;padding:2rem 1.5rem 4rem;}
+
+/* EXERCISE */
+.ex{background:var(--surface);border:1.5px solid var(--border);border-radius:16px;margin-bottom:1.75rem;overflow:hidden;transition:border-color .3s;}
+.ex.done{border-color:var(--green);}
+.ex.has-error{border-color:var(--red);}
+.ex-hd{background:var(--soft);border-bottom:1.5px solid var(--border);padding:1rem 1.5rem;display:flex;align-items:center;gap:.9rem;}
+.ex-num{width:32px;height:32px;background:var(--ink);color:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.8rem;flex-shrink:0;}
+.ex-ttl{font-size:.92rem;font-weight:600;line-height:1.4;flex:1;}
+.ex-bdg{font-family:'JetBrains Mono',monospace;font-size:.68rem;padding:.2rem .6rem;border-radius:6px;border:1px solid var(--border);color:var(--muted);white-space:nowrap;}
+.ex-body{padding:1.5rem;}
+
+.note{background:#fffbea;border:1px solid #dfc84a;border-radius:8px;padding:.65rem 1rem;font-size:.82rem;color:#6e5a00;margin-bottom:1.25rem;font-style:italic;}
+.eg{background:#f4ede8;border-left:3px solid var(--accent);padding:.6rem .9rem;border-radius:0 8px 8px 0;font-size:.85rem;color:var(--accent);margin-bottom:1rem;}
+
+/* MULTI-CHECK */
+.chk-list{display:flex;flex-direction:column;gap:.5rem;}
+.chk-item{display:flex;align-items:center;gap:.75rem;padding:.65rem .9rem;border:1.5px solid var(--border);border-radius:10px;cursor:pointer;transition:all .15s;background:var(--bg);font-size:.9rem;}
+.chk-item:hover:not(.disabled){border-color:var(--accent2);background:#eef3fa;}
+.chk-item.sel{border-color:var(--accent2);background:#eef3fa;}
+.chk-item.correct{border-color:var(--green)!important;background:var(--success-bg)!important;}
+.chk-item.wrong{border-color:var(--red)!important;background:var(--error-bg)!important;}
+.chk-item.disabled{cursor:default;}
+.chk-box{width:18px;height:18px;border:2px solid var(--border);border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all .15s;}
+.chk-item.sel .chk-box{border-color:var(--accent2);background:var(--accent2);color:#fff;}
+.chk-item.correct .chk-box{border-color:var(--green)!important;background:var(--green)!important;color:#fff!important;}
+.chk-item.wrong .chk-box{border-color:var(--red)!important;background:var(--red)!important;color:#fff!important;}
+
+/* TRUE/FALSE */
+.tf-q{margin-bottom:1.4rem;}
+.tf-q:last-child{margin-bottom:0;}
+.tf-txt{font-size:.93rem;line-height:1.6;margin-bottom:.7rem;}
+.tf-opts{display:flex;gap:.6rem;}
+.tf-btn{padding:.5rem 1.25rem;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);font-family:'Lexend',sans-serif;font-size:.85rem;font-weight:500;cursor:pointer;transition:all .15s;color:var(--ink);}
+.tf-btn:hover:not(:disabled){border-color:var(--accent2);background:#eef3fa;color:var(--accent2);}
+.tf-btn.sel{border-color:var(--accent2);background:#eef3fa;color:var(--accent2);}
+.tf-btn.ok{border-color:var(--green)!important;background:var(--success-bg)!important;color:var(--green)!important;}
+.tf-btn.err{border-color:var(--red)!important;background:var(--error-bg)!important;color:var(--red)!important;}
+.tf-btn:disabled{cursor:default;}
+
+/* MC */
+.mc-q{margin-bottom:1.4rem;}
+.mc-q:last-child{margin-bottom:0;}
+.mc-word{font-family:'JetBrains Mono',monospace;font-size:1rem;font-weight:700;color:var(--accent);margin-bottom:.6rem;}
+.mc-opts{display:flex;flex-direction:column;gap:.4rem;}
+.mc-btn{padding:.5rem .9rem;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);font-family:'Lexend',sans-serif;font-size:.87rem;font-weight:500;cursor:pointer;transition:all .15s;color:var(--ink);text-align:left;}
+.mc-btn:hover:not(:disabled){border-color:var(--accent2);background:#eef3fa;}
+.mc-btn.sel{border-color:var(--accent2);background:#eef3fa;}
+.mc-btn.ok{border-color:var(--green)!important;background:var(--success-bg)!important;color:var(--green)!important;}
+.mc-btn.err{border-color:var(--red)!important;background:var(--error-bg)!important;color:var(--red)!important;}
+.mc-btn:disabled{cursor:default;}
+
+/* FILL INPUT */
+.fi{border:none;border-bottom:2px solid var(--accent2);background:transparent;font-family:'JetBrains Mono',monospace;font-size:.88rem;font-weight:500;color:var(--accent2);padding:.2rem .1rem;outline:none;text-align:center;transition:border-color .2s;}
+.fi:focus{border-bottom-color:var(--ink);}
+.fi.ok{border-bottom-color:var(--green)!important;color:var(--green)!important;}
+.fi.err{border-bottom-color:var(--red)!important;color:var(--red)!important;}
+.fi:disabled{cursor:default;}
+.fi-sm{width:110px;} .fi-md{width:160px;} .fi-lg{width:280px;} .fi-xl{width:100%;max-width:460px;}
+
+/* CHOOSE 2 OPTIONS */
+.ch2-item{background:var(--soft);border:1.5px solid var(--border);border-radius:12px;padding:.85rem 1.1rem;margin-bottom:.7rem;display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;font-size:.9rem;line-height:1.65;}
+.ch2-item:last-child{margin-bottom:0;}
+.ch2-item select{background:var(--surface);border:1.5px solid var(--accent2);border-radius:7px;font-family:'Lexend',sans-serif;font-size:.85rem;color:var(--ink);padding:.3rem .6rem;outline:none;cursor:pointer;transition:border-color .2s;}
+.ch2-item select:focus{border-color:var(--ink);}
+.ch2-item select.ok{border-color:var(--green)!important;background:var(--success-bg)!important;color:var(--green)!important;}
+.ch2-item select.err{border-color:var(--red)!important;background:var(--error-bg)!important;color:var(--red)!important;}
+.ch2-item select:disabled{cursor:default;opacity:.85;}
+
+/* SENTENCE ROW */
+.sr{display:flex;align-items:baseline;gap:.35rem;flex-wrap:wrap;margin-bottom:.85rem;font-size:.92rem;line-height:1.7;}
+.sr:last-child{margin-bottom:0;}
+.sl{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--muted);min-width:22px;}
+
+/* INLINE FB */
+.fb{margin-top:.4rem;font-size:.78rem;font-family:'JetBrains Mono',monospace;display:none;}
+.fb.show{display:block;}
+.fb.ok{color:var(--green);}
+.fb.err{color:var(--red);}
+
+/* SCORE ROW */
+.sc-row{display:none;align-items:center;gap:.75rem;margin-top:.75rem;padding:.65rem 1rem;background:var(--soft);border-radius:8px;font-size:.85rem;}
+.sc-row.show{display:flex;}
+.sc-ok{color:var(--green);font-weight:700;font-family:'JetBrains Mono',monospace;}
+.sc-tot{color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:.8rem;}
+
+.sub-wrap{margin-top:1rem;display:flex;justify-content:flex-end;}
+.btn-ck{background:var(--ink);color:#fff;border:none;border-radius:10px;padding:.65rem 1.5rem;font-family:'Lexend',sans-serif;font-size:.88rem;font-weight:600;cursor:pointer;transition:all .18s;}
+.btn-ck:hover{background:var(--accent);transform:translateY(-1px);}
+
+.g-sub{background:var(--accent);color:white;border:none;border-radius:12px;padding:1rem 2.5rem;font-family:'Lexend',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;transition:all .2s;display:block;margin:2rem auto 0;}
+.g-sub:hover{background:#5e2b14;transform:translateY(-2px);box-shadow:0 6px 20px rgba(124,58,30,.3);}
+.g-sub:disabled{opacity:.4;cursor:default;transform:none;box-shadow:none;}
+
+.final{background:var(--ink);border-radius:20px;padding:2.5rem;text-align:center;margin-top:2rem;display:none;animation:pop .5s cubic-bezier(.34,1.56,.64,1);}
+.final.show{display:block;}
+@keyframes pop{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
+.f-emoji{font-size:3.5rem;margin-bottom:.75rem;}
+.f-score{font-family:'Instrument Serif',serif;font-size:4rem;color:#f0d080;line-height:1;margin-bottom:.4rem;}
+.f-lbl{color:rgba(255,255,255,.5);font-size:.9rem;margin-bottom:1rem;}
+.f-msg{color:#fff;font-size:1rem;line-height:1.6;margin-bottom:1.75rem;}
+.btn-retry{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:.8rem 2rem;font-family:'Lexend',sans-serif;font-size:.95rem;font-weight:600;cursor:pointer;}
+.btn-retry:hover{background:#5e2b14;}
+
+/* PARA */
+.para{font-size:.92rem;line-height:2.6;background:var(--soft);border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:.5rem;}
+
+/* MC GRID */
+.mc-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+@media(max-width:600px){.mc-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <div>
+      <div class="hl">Section 4 · Ngữ pháp tiếng Anh</div>
+      <h1>Thì Quá Khứ <em>Đơn</em></h1>
+    </div>
+    <div class="hm">8 bài tập<br>Chấm điểm tự động</div>
+  </div>
+</header>
+
+<div class="prog-wrap">
+  <div class="prog-track"><div class="prog-fill" id="pf"></div></div>
+  <div class="prog-txt" id="pt">0 / 8 bài</div>
+</div>
+
+<main>
+
+<!-- EX 1 -->
+<div class="ex" id="ex1">
+  <div class="ex-hd"><div class="ex-num">1</div><div class="ex-ttl">Chọn các trạng từ thường xuất hiện trong thì quá khứ đơn</div><div class="ex-bdg">Chọn nhiều đáp án</div></div>
+  <div class="ex-body">
+    <div class="chk-list" id="chk1">
+      <div class="chk-item" onclick="toggleChk(this,'chk1')" data-v="1"><div class="chk-box"></div>Yesterday</div>
+      <div class="chk-item" onclick="toggleChk(this,'chk1')" data-v="2"><div class="chk-box"></div>This week / month / year</div>
+      <div class="chk-item" onclick="toggleChk(this,'chk1')" data-v="3"><div class="chk-box"></div>Last week / month / year</div>
+      <div class="chk-item" onclick="toggleChk(this,'chk1')" data-v="4"><div class="chk-box"></div>Right now</div>
+      <div class="chk-item" onclick="toggleChk(this,'chk1')" data-v="5"><div class="chk-box"></div>At present</div>
+      <div class="chk-item" onclick="toggleChk(this,'chk1')" data-v="6"><div class="chk-box"></div>A week ago / two weeks ago</div>
+    </div>
+    <div class="sub-wrap"><button class="btn-ck" onclick="checkEx1()">Kiểm tra</button></div>
+    <div class="sc-row" id="score-ex1"><span class="sc-ok" id="sv-ex1"></span><span class="sc-tot">/ 3 đáp án đúng</span></div>
+  </div>
+</div>
+
+<!-- EX 2 -->
+<div class="ex" id="ex2">
+  <div class="ex-hd"><div class="ex-num">2</div><div class="ex-ttl">Chọn <strong>True</strong> hoặc <strong>False</strong> cho các khẳng định sau</div><div class="ex-bdg">True / False</div></div>
+  <div class="ex-body">
+
+    <div class="tf-q" id="tf2-1">
+      <div class="tf-txt">Thì quá khứ đơn chỉ một hành động đã xảy ra ở quá khứ <strong>và kết quả vẫn còn lưu lại ở hiện tại</strong>.</div>
+      <div class="tf-opts">
+        <button class="tf-btn" data-v="A" onclick="selTF('tf2-1','A',this)">A. True</button>
+        <button class="tf-btn" data-v="B" onclick="selTF('tf2-1','B',this)">B. False</button>
+      </div>
+      <div class="fb" id="fb-tf2-1"></div>
+    </div>
+
+    <div class="tf-q" id="tf2-2">
+      <div class="tf-txt">Ở dạng khẳng định, cấu trúc chung của câu quá khứ đơn là <strong>"S + verb (past tense)"</strong>.</div>
+      <div class="tf-opts">
+        <button class="tf-btn" data-v="A" onclick="selTF('tf2-2','A',this)">A. True</button>
+        <button class="tf-btn" data-v="B" onclick="selTF('tf2-2','B',this)">B. False</button>
+      </div>
+      <div class="fb" id="fb-tf2-2"></div>
+    </div>
+
+    <div class="tf-q" id="tf2-3">
+      <div class="tf-txt">Các động từ chia thì quá khứ đơn <strong>là các động từ bất quy tắc</strong>.</div>
+      <div class="tf-opts">
+        <button class="tf-btn" data-v="A" onclick="selTF('tf2-3','A',this)">A. True</button>
+        <button class="tf-btn" data-v="B" onclick="selTF('tf2-3','B',this)">B. False</button>
+      </div>
+      <div class="fb" id="fb-tf2-3"></div>
+    </div>
+
+    <div class="tf-q" id="tf2-4">
+      <div class="tf-txt">Dạng phủ định của thì quá khứ đơn với các động từ thường là <strong>"S + did not/didn't + verb (past tense)"</strong>.</div>
+      <div class="tf-opts">
+        <button class="tf-btn" data-v="A" onclick="selTF('tf2-4','A',this)">A. True</button>
+        <button class="tf-btn" data-v="B" onclick="selTF('tf2-4','B',this)">B. False</button>
+      </div>
+      <div class="fb" id="fb-tf2-4"></div>
+    </div>
+
+    <div class="tf-q" id="tf2-5">
+      <div class="tf-txt">Với các động từ có quy tắc và tận cùng là chữ <strong>"e"</strong>, ta phải thêm đuôi <strong>"ed"</strong> khi chia động từ ở thì quá khứ đơn.</div>
+      <div class="tf-opts">
+        <button class="tf-btn" data-v="A" onclick="selTF('tf2-5','A',this)">A. True</button>
+        <button class="tf-btn" data-v="B" onclick="selTF('tf2-5','B',this)">B. False</button>
+      </div>
+      <div class="fb" id="fb-tf2-5"></div>
+    </div>
+
+    <div class="sub-wrap"><button class="btn-ck" onclick="checkEx2()">Kiểm tra</button></div>
+    <div class="sc-row" id="score-ex2"><span class="sc-ok" id="sv-ex2"></span><span class="sc-tot">/ 5 câu đúng</span></div>
+  </div>
+</div>
+
+<!-- EX 3 -->
+<div class="ex" id="ex3">
+  <div class="ex-hd"><div class="ex-num">3</div><div class="ex-ttl">Điền dạng quá khứ của các động từ sau (V-ed có quy tắc)</div><div class="ex-bdg">Điền từ</div></div>
+  <div class="ex-body">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem 2rem;">
+      <div class="sr"><span>walk →</span><input class="fi fi-sm" id="e3-1" data-ans="walked" placeholder="___"></div>
+      <div class="sr"><span>arrive →</span><input class="fi fi-sm" id="e3-2" data-ans="arrived" placeholder="___"></div>
+      <div class="sr"><span>carry →</span><input class="fi fi-sm" id="e3-3" data-ans="carried" placeholder="___"></div>
+      <div class="sr"><span>pray →</span><input class="fi fi-sm" id="e3-4" data-ans="prayed" placeholder="___"></div>
+      <div class="sr"><span>stop →</span><input class="fi fi-sm" id="e3-5" data-ans="stopped" placeholder="___"></div>
+      <div class="sr"><span>jump →</span><input class="fi fi-sm" id="e3-6" data-ans="jumped" placeholder="___"></div>
+      <div class="sr"><span>help →</span><input class="fi fi-sm" id="e3-7" data-ans="helped" placeholder="___"></div>
+    </div>
+    <div class="sub-wrap"><button class="btn-ck" onclick="checkSimpleFill(['e3-1','e3-2','e3-3','e3-4','e3-5','e3-6','e3-7'],'ex3',7)">Kiểm tra</button></div>
+    <div class="sc-row" id="score-ex3"><span class="sc-ok" id="sv-ex3"></span><span class="sc-tot">/ 7 đúng</span></div>
+  </div>
+</div>
+
+<!-- EX 4 -->
+<div class="ex" id="ex4">
+  <div class="ex-hd"><div class="ex-num">4</div><div class="ex-ttl">Chọn dạng quá khứ đúng của các động từ bất quy tắc</div><div class="ex-bdg">Trắc nghiệm</div></div>
+  <div class="ex-body">
+    <div class="mc-grid">
+
+      <div class="mc-q" id="mc4-1">
+        <div class="mc-word">Eat</div>
+        <div class="mc-opts">
+          <button class="mc-btn" data-v="A" onclick="selMC('mc4-1','A',this)">A. Eated</button>
+          <button class="mc-btn" data-v="B" onclick="selMC('mc4-1','B',this)">B. Eaten</button>
+          <button class="mc-btn" data-v="C" onclick="selMC('mc4-1','C',this)">C. Ate</button>
+        </div>
+        <div class="fb" id="fb-mc4-1"></div>
+      </div>
+
+      <div class="mc-q" id="mc4-2">
+        <div class="mc-word">Read</div>
+        <div class="mc-opts">
+          <button class="mc-btn" data-v="A" onclick="selMC('mc4-2','A',this)">A. Readed</button>
+          <button class="mc-btn" data-v="B" onclick="selMC('mc4-2','B',this)">B. Read</button>
+          <button class="mc-btn" data-v="C" onclick="selMC('mc4-2','C',this)">C. Red</button>
+        </div>
+        <div class="fb" id="fb-mc4-2"></div>
+      </div>
+
+      <div class="mc-q" id="mc4-3">
+        <div class="mc-word">See</div>
+        <div class="mc-opts">
+          <button class="mc-btn" data-v="A" onclick="selMC('mc4-3','A',this)">A. Seed</button>
+          <button class="mc-btn" data-v="B" onclick="selMC('mc4-3','B',this)">B. Saw</button>
+          <button class="mc-btn" data-v="C" onclick="selMC('mc4-3','C',this)">C. Seen</button>
+        </div>
+        <div class="fb" id="fb-mc4-3"></div>
+      </div>
+
+      <div class="mc-q" id="mc4-4">
+        <div class="mc-word">Speak</div>
+        <div class="mc-opts">
+          <button class="mc-btn" data-v="A" onclick="selMC('mc4-4','A',this)">A. Speaked</button>
+          <button class="mc-btn" data-v="B" onclick="selMC('mc4-4','B',this)">B. Spoken</button>
+          <button class="mc-btn" data-v="C" onclick="selMC('mc4-4','C',this)">C. Spoke</button>
+        </div>
+        <div class="fb" id="fb-mc4-4"></div>
+      </div>
+
+      <div class="mc-q" id="mc4-5">
+        <div class="mc-word">Teach</div>
+        <div class="mc-opts">
+          <button class="mc-btn" data-v="A" onclick="selMC('mc4-5','A',this)">A. Taught</button>
+          <button class="mc-btn" data-v="B" onclick="selMC('mc4-5','B',this)">B. Teach</button>
+          <button class="mc-btn" data-v="C" onclick="selMC('mc4-5','C',this)">C. Teached</button>
+        </div>
+        <div class="fb" id="fb-mc4-5"></div>
+      </div>
+
+      <div class="mc-q" id="mc4-6">
+        <div class="mc-word">Give</div>
+        <div class="mc-opts">
+          <button class="mc-btn" data-v="A" onclick="selMC('mc4-6','A',this)">A. Given</button>
+          <button class="mc-btn" data-v="B" onclick="selMC('mc4-6','B',this)">B. Gave</button>
+          <button class="mc-btn" data-v="C" onclick="selMC('mc4-6','C',this)">C. Gived</button>
+        </div>
+        <div class="fb" id="fb-mc4-6"></div>
+      </div>
+
+      <div class="mc-q" id="mc4-7">
+        <div class="mc-word">Become</div>
+        <div class="mc-opts">
+          <button class="mc-btn" data-v="A" onclick="selMC('mc4-7','A',this)">A. Became</button>
+          <button class="mc-btn" data-v="B" onclick="selMC('mc4-7','B',this)">B. Become</button>
+          <button class="mc-btn" data-v="C" onclick="selMC('mc4-7','C',this)">C. Becomed</button>
+        </div>
+        <div class="fb" id="fb-mc4-7"></div>
+      </div>
+
+      <div class="mc-q" id="mc4-8">
+        <div class="mc-word">Set</div>
+        <div class="mc-opts">
+          <button class="mc-btn" data-v="A" onclick="selMC('mc4-8','A',this)">A. Setted</button>
+          <button class="mc-btn" data-v="B" onclick="selMC('mc4-8','B',this)">B. Sat</button>
+          <button class="mc-btn" data-v="C" onclick="selMC('mc4-8','C',this)">C. Set</button>
+        </div>
+        <div class="fb" id="fb-mc4-8"></div>
+      </div>
+
+      <div class="mc-q" id="mc4-9">
+        <div class="mc-word">Write</div>
+        <div class="mc-opts">
+          <button class="mc-btn" data-v="A" onclick="selMC('mc4-9','A',this)">A. Writed</button>
+          <button class="mc-btn" data-v="B" onclick="selMC('mc4-9','B',this)">B. Wrote</button>
+          <button class="mc-btn" data-v="C" onclick="selMC('mc4-9','C',this)">C. Written</button>
+        </div>
+        <div class="fb" id="fb-mc4-9"></div>
+      </div>
+
+      <div class="mc-q" id="mc4-10">
+        <div class="mc-word">Find</div>
+        <div class="mc-opts">
+          <button class="mc-btn" data-v="A" onclick="selMC('mc4-10','A',this)">A. Finded</button>
+          <button class="mc-btn" data-v="B" onclick="selMC('mc4-10','B',this)">B. Founded</button>
+          <button class="mc-btn" data-v="C" onclick="selMC('mc4-10','C',this)">C. Found</button>
+        </div>
+        <div class="fb" id="fb-mc4-10"></div>
+      </div>
+
+    </div>
+    <div class="sub-wrap"><button class="btn-ck" onclick="checkEx4()">Kiểm tra</button></div>
+    <div class="sc-row" id="score-ex4"><span class="sc-ok" id="sv-ex4"></span><span class="sc-tot">/ 10 câu đúng</span></div>
+  </div>
+</div>
+
+<!-- EX 5 -->
+<div class="ex" id="ex5">
+  <div class="ex-hd"><div class="ex-num">5</div><div class="ex-ttl">Chọn dạng đúng của động từ để điền vào chỗ trống</div><div class="ex-bdg">Chọn dạng đúng</div></div>
+  <div class="ex-body">
+    <div class="eg">Ví dụ: I <u>broke</u> (break / broke) a cup yesterday.</div>
+    <div class="note">Chọn đúng dạng trong ngoặc.</div>
+
+    <div class="ch2-item">
+      <span>Harry</span>
+      <select id="e5-1" data-ans="worked"><option value="">--</option><option value="work">work</option><option value="worked">worked</option></select>
+      <span>last Sunday.</span>
+      <div class="fb" id="fb-e5-1"></div>
+    </div>
+    <div class="ch2-item">
+      <span>I didn't</span>
+      <select id="e5-2" data-ans="know"><option value="">--</option><option value="know">know</option><option value="knew">knew</option></select>
+      <span>where I was.</span>
+      <div class="fb" id="fb-e5-2"></div>
+    </div>
+    <div class="ch2-item">
+      <span>I didn't</span>
+      <select id="e5-3" data-ans="feel"><option value="">--</option><option value="feel">feel</option><option value="felt">felt</option></select>
+      <span>well last night.</span>
+      <div class="fb" id="fb-e5-3"></div>
+    </div>
+    <div class="ch2-item">
+      <span>Alina</span>
+      <select id="e5-4" data-ans="came"><option value="">--</option><option value="come">come</option><option value="came">came</option></select>
+      <span>to see us 2 days ago.</span>
+      <div class="fb" id="fb-e5-4"></div>
+    </div>
+    <div class="ch2-item">
+      <span>I didn't</span>
+      <select id="e5-5" data-ans="see"><option value="">--</option><option value="see">see</option><option value="saw">saw</option></select>
+      <span>Bill at the party.</span>
+      <div class="fb" id="fb-e5-5"></div>
+    </div>
+    <div class="ch2-item">
+      <span>Did Theo</span>
+      <select id="e5-6" data-ans="bring"><option value="">--</option><option value="bring">bring</option><option value="brought">brought</option></select>
+      <span>his wife with him?</span>
+      <div class="fb" id="fb-e5-6"></div>
+    </div>
+    <div class="ch2-item">
+      <span>Rolf</span>
+      <select id="e5-7" data-ans="learnt"><option value="">--</option><option value="learn">learn</option><option value="learnt">learnt</option></select>
+      <span>English when he was young.</span>
+      <div class="fb" id="fb-e5-7"></div>
+    </div>
+    <div class="ch2-item">
+      <span>When did Gemma</span>
+      <select id="e5-8" data-ans="start"><option value="">--</option><option value="start">start</option><option value="starts">starts</option></select>
+      <span>school?</span>
+      <div class="fb" id="fb-e5-8"></div>
+    </div>
+
+    <div class="sub-wrap"><button class="btn-ck" onclick="checkEx5()">Kiểm tra</button></div>
+    <div class="sc-row" id="score-ex5"><span class="sc-ok" id="sv-ex5"></span><span class="sc-tot">/ 8 câu đúng</span></div>
+  </div>
+</div>
+
+<!-- EX 6 -->
+<div class="ex" id="ex6">
+  <div class="ex-hd"><div class="ex-num">6</div><div class="ex-ttl">Điền dạng đúng của các động từ trong ngoặc</div><div class="ex-bdg">Điền từ</div></div>
+  <div class="ex-body">
+
+    <div style="background:var(--soft);border:1.5px solid var(--border);border-radius:12px;padding:1rem 1.25rem;margin-bottom:.75rem;font-size:.9rem;line-height:2.4;">
+      <strong>a.</strong> I <input class="fi fi-sm" id="e6-a1" data-ans="saw" placeholder="(see)"> Maria for the first time at Ray's birthday party. We <input class="fi fi-sm" id="e6-a2" data-ans="became" placeholder="(become)"> best friends and we usually <input class="fi fi-sm" id="e6-a3" data-ans="watched" placeholder="(watch)"> movies together every Sunday evening.
+    </div>
+    <div style="background:var(--soft);border:1.5px solid var(--border);border-radius:12px;padding:1rem 1.25rem;margin-bottom:.75rem;font-size:.9rem;line-height:2.4;">
+      <strong>b.</strong> John usually <input class="fi fi-sm" id="e6-b1" data-ans="has" placeholder="(have)"> bread for breakfast every Saturday, but last Saturday he <input class="fi fi-sm" id="e6-b2" data-ans="ate" placeholder="(eat)"> a bowl of noodles.
+    </div>
+    <div style="background:var(--soft);border:1.5px solid var(--border);border-radius:12px;padding:1rem 1.25rem;margin-bottom:.75rem;font-size:.9rem;line-height:2.4;">
+      <strong>c.</strong> Last year, Denise <input class="fi fi-md" id="e6-c1" data-ans="practised" placeholder="(practice)"> this song every day until she could sing it perfectly.
+    </div>
+    <div style="background:var(--soft);border:1.5px solid var(--border);border-radius:12px;padding:1rem 1.25rem;margin-bottom:.75rem;font-size:.9rem;line-height:2.4;">
+      <strong>d.</strong> In the past, many people <input class="fi fi-md" id="e6-d1" data-ans="didn't believe" placeholder="(not believe)"> that the Earth wasn't the center of the solar system. However, in fact, the Sun <input class="fi fi-sm" id="e6-d2" data-ans="was" placeholder="(be)"> the center of the solar system.
+    </div>
+    <div style="background:var(--soft);border:1.5px solid var(--border);border-radius:12px;padding:1rem 1.25rem;font-size:.9rem;line-height:2.4;">
+      <strong>e.</strong> When he <input class="fi fi-sm" id="e6-e1" data-ans="was" placeholder="(be)"> a child, he <input class="fi fi-sm" id="e6-e2" data-ans="got" placeholder="(get)"> up at 6 a.m every morning.
+    </div>
+
+    <div class="sub-wrap"><button class="btn-ck" onclick="checkEx6()">Kiểm tra</button></div>
+    <div class="sc-row" id="score-ex6"><span class="sc-ok" id="sv-ex6"></span><span class="sc-tot">/ 9 đúng</span></div>
+  </div>
+</div>
+
+<!-- EX 7 -->
+<div class="ex" id="ex7">
+  <div class="ex-hd"><div class="ex-num">7</div><div class="ex-ttl">Dựa vào từ gợi ý, viết thành câu hoàn chỉnh (chia đúng thì)</div><div class="ex-bdg">Viết câu</div></div>
+  <div class="ex-body">
+    <div class="eg">Ví dụ: Last week / my family / have / a summer vacation / in Da Nang city.<br>→ <strong>Last week, my family had a summer vacation in Da Nang city.</strong></div>
+
+    <div style="background:var(--soft);border:1.5px solid var(--border);border-radius:12px;padding:.85rem 1.1rem;margin-bottom:.7rem;">
+      <div style="font-size:.83rem;color:var(--muted);font-family:'JetBrains Mono',monospace;margin-bottom:.4rem;">What / you / do / yesterday?</div>
+      <input class="fi fi-xl" id="e7-1" data-ans="What did you do yesterday?" placeholder="Viết câu hỏi...">
+      <div class="fb" id="fb-e7-1"></div>
+    </div>
+    <div style="background:var(--soft);border:1.5px solid var(--border);border-radius:12px;padding:.85rem 1.1rem;margin-bottom:.7rem;">
+      <div style="font-size:.83rem;color:var(--muted);font-family:'JetBrains Mono',monospace;margin-bottom:.4rem;">He / tell / his friends / the story of his dog / 2 days ago.</div>
+      <input class="fi fi-xl" id="e7-2" data-ans="He told his friends the story of his dog 2 days ago." placeholder="Viết câu...">
+      <div class="fb" id="fb-e7-2"></div>
+    </div>
+    <div style="background:var(--soft);border:1.5px solid var(--border);border-radius:12px;padding:.85rem 1.1rem;margin-bottom:.7rem;">
+      <div style="font-size:.83rem;color:var(--muted);font-family:'JetBrains Mono',monospace;margin-bottom:.4rem;">What / sport / you / play / when / a child?</div>
+      <input class="fi fi-xl" id="e7-3" data-ans="What sport did you play when you were a child?" placeholder="Viết câu hỏi...">
+      <div class="fb" id="fb-e7-3"></div>
+    </div>
+    <div style="background:var(--soft);border:1.5px solid var(--border);border-radius:12px;padding:.85rem 1.1rem;margin-bottom:.7rem;">
+      <div style="font-size:.83rem;color:var(--muted);font-family:'JetBrains Mono',monospace;margin-bottom:.4rem;">Jane / have / Chemistry class / from Monday to Wednesday?</div>
+      <input class="fi fi-xl" id="e7-4" data-ans="Did Jane have Chemistry class from Monday to Wednesday?" placeholder="Viết câu hỏi...">
+      <div class="fb" id="fb-e7-4"></div>
+    </div>
+    <div style="background:var(--soft);border:1.5px solid var(--border);border-radius:12px;padding:.85rem 1.1rem;margin-bottom:.7rem;">
+      <div style="font-size:.83rem;color:var(--muted);font-family:'JetBrains Mono',monospace;margin-bottom:.4rem;">Where / you / go / last summer holiday?</div>
+      <input class="fi fi-xl" id="e7-5" data-ans="Where did you go last summer holiday?" placeholder="Viết câu hỏi...">
+      <div class="fb" id="fb-e7-5"></div>
+    </div>
+    <div style="background:var(--soft);border:1.5px solid var(--border);border-radius:12px;padding:.85rem 1.1rem;">
+      <div style="font-size:.83rem;color:var(--muted);font-family:'JetBrains Mono',monospace;margin-bottom:.4rem;">He / not / make / the mistakes that night.</div>
+      <input class="fi fi-xl" id="e7-6" data-ans="He didn't make the mistakes that night." placeholder="Viết câu...">
+      <div class="fb" id="fb-e7-6"></div>
+    </div>
+
+    <div class="sub-wrap"><button class="btn-ck" onclick="checkEx7()">Kiểm tra</button></div>
+    <div class="sc-row" id="score-ex7"><span class="sc-ok" id="sv-ex7"></span><span class="sc-tot">/ 6 câu đúng</span></div>
+  </div>
+</div>
+
+<!-- EX 8 -->
+<div class="ex" id="ex8">
+  <div class="ex-hd"><div class="ex-num">8</div><div class="ex-ttl">Điền đúng thì của động từ để hoàn thành đoạn văn</div><div class="ex-bdg">Điền đoạn văn</div></div>
+  <div class="ex-body">
+    <div class="para">
+      My last holiday <input class="fi fi-sm" id="p1" data-ans="was" placeholder="(be)"> a five-day trip to Prague in the Czech Republic. I know Prague well because I <input class="fi fi-sm" id="p2" data-ans="lived" placeholder="(live)"> there when I <input class="fi fi-sm" id="p3" data-ans="was" placeholder="(be)"> at university, more than ten years ago.
+      <br><br>
+      Instead of staying in a hotel, I stayed with one of my old friends. It <input class="fi fi-sm" id="p4" data-ans="was" placeholder="(be)"> so much fun, and a little bit like my old life. I <input class="fi fi-sm" id="p5" data-ans="wanted" placeholder="(want)"> to do all the same things I <input class="fi fi-sm" id="p6" data-ans="did" placeholder="(do)"> during my university years, so I <input class="fi fi-sm" id="p7" data-ans="visited" placeholder="(visit)"> the university. It has changed a lot and looks more modern. I also <input class="fi fi-sm" id="p8" data-ans="went" placeholder="(go)"> to the supermarket near my old house. I <input class="fi fi-sm" id="p9" data-ans="loved" placeholder="(love)"> seeing all the different foods. I <input class="fi fi-sm" id="p10" data-ans="was" placeholder="(be)"> really happy to find my favorite cheese and chocolate biscuits, but they <input class="fi fi-sm" id="p11" data-ans="cost" placeholder="(cost)"> a bit more than I remember!
+      <br><br>
+      I <input class="fi fi-sm" id="p12" data-ans="did" placeholder="(do)"> some touristy things, too. I <input class="fi fi-sm" id="p13" data-ans="walked" placeholder="(walk)"> up beautiful Petrin Hill and around the castle. The views of the city are amazing up there. I <input class="fi fi-sm" id="p14" data-ans="took" placeholder="(take)"> the bus and <input class="fi fi-sm" id="p15" data-ans="ran" placeholder="(run)"> across the historic Charles Bridge.
+    </div>
+    <div class="sub-wrap"><button class="btn-ck" onclick="checkEx8()">Kiểm tra</button></div>
+    <div class="sc-row" id="score-ex8"><span class="sc-ok" id="sv-ex8"></span><span class="sc-tot">/ 15 đúng</span></div>
+  </div>
+</div>
+
+<button class="g-sub" id="gbtn" onclick="submitAll()">📋 Nộp bài & Xem kết quả</button>
+
+<div class="final" id="final">
+  <div class="f-emoji" id="fe">🎉</div>
+  <div class="f-score" id="fs">0/0</div>
+  <div class="f-lbl">tổng điểm</div>
+  <div class="f-msg" id="fm"></div>
+  <button class="btn-retry" onclick="location.reload()">↺ Làm lại từ đầu</button>
+</div>
+
+</main>
+
+<script>
+const submitted={}, scores={};
+
+function upProg(){
+  const d=Object.keys(submitted).length;
+  document.getElementById('pf').style.width=(d/8*100)+'%';
+  document.getElementById('pt').textContent=d+' / 8 bài';
+}
+
+function norm(s){return(s||'').toLowerCase().replace(/['']/g,"'").replace(/\s+/g,' ').replace(/[.?!,]/g,'').trim();}
+
+function finishEx(id,correct,total){
+  scores[id]=correct; submitted[id]=true;
+  document.getElementById('sv-'+id).textContent=correct;
+  document.getElementById('score-'+id).classList.add('show');
+  document.getElementById(id).classList.add(correct===total?'done':'has-error');
+  upProg();
+}
+
+// ===== EX1 MULTI CHECK =====
+const chkSel={};
+function toggleChk(el,gid){
+  if(el.classList.contains('disabled'))return;
+  if(!chkSel[gid])chkSel[gid]=new Set();
+  const v=el.dataset.v;
+  if(el.classList.contains('sel')){el.classList.remove('sel');el.querySelector('.chk-box').textContent='';chkSel[gid].delete(v);}
+  else{el.classList.add('sel');el.querySelector('.chk-box').textContent='✓';chkSel[gid].add(v);}
+}
+function checkEx1(){
+  if(submitted['ex1'])return;
+  const correct=new Set(['1','3','6']); // Yesterday, Last week/month/year, A week ago
+  const sel=chkSel['chk1']||new Set();
+  let c=0;
+  document.querySelectorAll('#chk1 .chk-item').forEach(el=>{
+    el.classList.add('disabled');el.onclick=null;
+    const v=el.dataset.v, isAns=correct.has(v), isSel=sel.has(v);
+    if(isAns){el.classList.add('correct');el.querySelector('.chk-box').textContent='✓';if(isSel)c++;}
+    else if(isSel)el.classList.add('wrong');
+  });
+  finishEx('ex1',c,3);
+}
+
+// ===== EX2 TRUE/FALSE =====
+const TF2={};
+const TF2_ANS={'tf2-1':'B','tf2-2':'A','tf2-3':'B','tf2-4':'B','tf2-5':'B'};
+const TF2_EX={
+  'tf2-1':'Sai! QKĐ chỉ hành động đã xảy ra và KẾT THÚC ở quá khứ. Hành động có kết quả lưu lại đến hiện tại là thì Hiện tại hoàn thành.',
+  'tf2-2':'Đúng! Cấu trúc khẳng định: S + V2/V-ed (động từ thường) hoặc S + was/were (to be).',
+  'tf2-3':'Sai! QKĐ có cả động từ có quy tắc (thêm -ed) VÀ bất quy tắc (dạng V2 đặc biệt).',
+  'tf2-4':'Sai! Phủ định dùng: S + didn\'t + V (nguyên thể), không phải V quá khứ. Ví dụ: He didn\'t go (không phải "didn\'t went").',
+  'tf2-5':'Sai! Nếu đã tận cùng bằng "e", chỉ thêm "d" (không thêm "ed"). Ví dụ: arrive → arrived, love → loved.'
+};
+function selTF(id,v,btn){
+  if(submitted['ex2'])return;
+  TF2[id]=v;
+  document.querySelectorAll(`#${id} .tf-btn`).forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+}
+function checkEx2(){
+  if(submitted['ex2'])return;
+  let c=0;
+  Object.keys(TF2_ANS).forEach(id=>{
+    const ans=TF2_ANS[id], chosen=TF2[id];
+    document.querySelectorAll(`#${id} .tf-btn`).forEach(b=>{
+      b.disabled=true;
+      if(b.dataset.v===ans)b.classList.add('ok');
+      else if(b.dataset.v===chosen)b.classList.add('err');
+    });
+    const fb=document.getElementById('fb-'+id);
+    fb.classList.add('show');
+    if(chosen===ans){c++;fb.className='fb show ok';fb.textContent='✓ '+TF2_EX[id];}
+    else{fb.className='fb show err';fb.textContent='✗ '+TF2_EX[id];}
+  });
+  finishEx('ex2',c,5);
+}
+
+// ===== EX3 FILL =====
+function checkSimpleFill(ids,exId,total){
+  if(submitted[exId])return;
+  let c=0;
+  ids.forEach(id=>{
+    const inp=document.getElementById(id);inp.disabled=true;
+    const v=norm(inp.value),a=norm(inp.dataset.ans);
+    if(v===a){inp.classList.add('ok');c++;}
+    else{inp.classList.add('err');inp.value=(inp.value||'(trống)')+' → '+inp.dataset.ans;}
+  });
+  finishEx(exId,c,total);
+}
+
+// ===== EX4 MC =====
+const MC4={};
+const MC4_ANS={'mc4-1':'C','mc4-2':'B','mc4-3':'B','mc4-4':'C','mc4-5':'A','mc4-6':'B','mc4-7':'A','mc4-8':'C','mc4-9':'B','mc4-10':'C'};
+const MC4_EX={
+  'mc4-1':'Ate – quá khứ bất quy tắc của eat.',
+  'mc4-2':'Read – viết giống nhau nhưng đọc khác: /red/.',
+  'mc4-3':'Saw – quá khứ của see.',
+  'mc4-4':'Spoke – quá khứ của speak (spoken là quá khứ phân từ).',
+  'mc4-5':'Taught – quá khứ bất quy tắc của teach.',
+  'mc4-6':'Gave – quá khứ của give (given là quá khứ phân từ).',
+  'mc4-7':'Became – quá khứ của become.',
+  'mc4-8':'Set – set là động từ bất biến (set/set/set).',
+  'mc4-9':'Wrote – quá khứ của write (written là quá khứ phân từ).',
+  'mc4-10':'Found – quá khứ của find.',
+};
+function selMC(id,v,btn){
+  if(submitted['ex4'])return;
+  MC4[id]=v;
+  document.querySelectorAll(`#${id} .mc-btn`).forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+}
+function checkEx4(){
+  if(submitted['ex4'])return;
+  let c=0;
+  Object.keys(MC4_ANS).forEach(id=>{
+    const ans=MC4_ANS[id],chosen=MC4[id];
+    document.querySelectorAll(`#${id} .mc-btn`).forEach(b=>{
+      b.disabled=true;
+      if(b.dataset.v===ans)b.classList.add('ok');
+      else if(b.dataset.v===chosen)b.classList.add('err');
+    });
+    const fb=document.getElementById('fb-'+id);
+    fb.classList.add('show');
+    if(chosen===ans){c++;fb.className='fb show ok';fb.textContent='✓ '+MC4_EX[id];}
+    else{fb.className='fb show err';fb.textContent='✗ Đúng: '+MC4_EX[id];}
+  });
+  finishEx('ex4',c,10);
+}
+
+// ===== EX5 SELECT =====
+function checkEx5(){
+  if(submitted['ex5'])return;
+  const ids=['e5-1','e5-2','e5-3','e5-4','e5-5','e5-6','e5-7','e5-8'];
+  let c=0;
+  ids.forEach(id=>{
+    const sel=document.getElementById(id), fb=document.getElementById('fb-'+id);
+    sel.disabled=true;
+    const v=sel.value, a=sel.dataset.ans;
+    if(v===a){sel.classList.add('ok');c++;if(fb){fb.className='fb show ok';fb.textContent='✓';}}
+    else{sel.classList.add('err');if(fb){fb.className='fb show err';fb.textContent='✗ → '+a;}}
+  });
+  finishEx('ex5',c,8);
+}
+
+// ===== EX6 FLEX FILL =====
+function checkEx6(){
+  if(submitted['ex6'])return;
+  const items=[
+    {id:'e6-a1',ans:['saw']},
+    {id:'e6-a2',ans:['became']},
+    {id:'e6-a3',ans:['watched']},
+    {id:'e6-b1',ans:['has','have']}, // present simple (usually)
+    {id:'e6-b2',ans:['ate']},
+    {id:'e6-c1',ans:['practised','practiced']},
+    {id:'e6-d1',ans:["didn't believe","did not believe"]},
+    {id:'e6-d2',ans:['was']},
+    {id:'e6-e1',ans:['was']},
+    {id:'e6-e2',ans:['got']},
+  ];
+  let c=0;
+  items.forEach(({id,ans})=>{
+    const inp=document.getElementById(id);inp.disabled=true;
+    const v=norm(inp.value);
+    const ok=ans.some(a=>norm(a)===v);
+    if(ok){inp.classList.add('ok');c++;}
+    else{inp.classList.add('err');inp.value=(inp.value||'(trống)')+' → '+ans[0];}
+  });
+  finishEx('ex6',c,9); // note b1 is present simple "has" - still counted
+}
+
+// ===== EX7 SENTENCE =====
+function checkEx7(){
+  if(submitted['ex7'])return;
+  const items=[
+    {id:'e7-1',ans:['What did you do yesterday'],fb:'fb-e7-1'},
+    {id:'e7-2',ans:['He told his friends the story of his dog 2 days ago'],fb:'fb-e7-2'},
+    {id:'e7-3',ans:['What sport did you play when you were a child','What sport did you play when you were a kid'],fb:'fb-e7-3'},
+    {id:'e7-4',ans:['Did Jane have Chemistry class from Monday to Wednesday'],fb:'fb-e7-4'},
+    {id:'e7-5',ans:['Where did you go last summer holiday','Where did you go on your last summer holiday'],fb:'fb-e7-5'},
+    {id:'e7-6',ans:["He didn't make the mistakes that night","He did not make the mistakes that night"],fb:'fb-e7-6'},
+  ];
+  let c=0;
+  items.forEach(({id,ans,fb})=>{
+    const inp=document.getElementById(id); inp.disabled=true;
+    const v=norm(inp.value);
+    const ok=ans.some(a=>norm(a)===v);
+    const fel=document.getElementById(fb);
+    if(ok){inp.classList.add('ok');c++;if(fel){fel.className='fb show ok';fel.textContent='✓ Chính xác!';}}
+    else{inp.classList.add('err');if(fel){fel.className='fb show err';fel.textContent='✗ Gợi ý: '+ans[0]+'.';}}
+  });
+  finishEx('ex7',c,6);
+}
+
+// ===== EX8 PARAGRAPH =====
+function checkEx8(){
+  if(submitted['ex8'])return;
+  const items=[
+    {id:'p1',ans:['was']},{id:'p2',ans:['lived']},{id:'p3',ans:['was']},
+    {id:'p4',ans:['was']},{id:'p5',ans:['wanted']},{id:'p6',ans:['did']},
+    {id:'p7',ans:['visited']},{id:'p8',ans:['went']},{id:'p9',ans:['loved']},
+    {id:'p10',ans:['was']},{id:'p11',ans:['cost','costed']},
+    {id:'p12',ans:['did']},{id:'p13',ans:['walked']},
+    {id:'p14',ans:['took']},{id:'p15',ans:['ran']},
+  ];
+  let c=0;
+  items.forEach(({id,ans})=>{
+    const inp=document.getElementById(id);inp.disabled=true;
+    const v=norm(inp.value);
+    const ok=ans.some(a=>norm(a)===v);
+    if(ok){inp.classList.add('ok');c++;}
+    else{inp.classList.add('err');inp.value=(inp.value||'(trống)')+' → '+ans[0];}
+  });
+  finishEx('ex8',c,15);
+}
+
+// ===== SUBMIT ALL =====
+function submitAll(){
+  if(!submitted['ex1'])checkEx1();
+  if(!submitted['ex2'])checkEx2();
+  if(!submitted['ex3'])checkSimpleFill(['e3-1','e3-2','e3-3','e3-4','e3-5','e3-6','e3-7'],'ex3',7);
+  if(!submitted['ex4'])checkEx4();
+  if(!submitted['ex5'])checkEx5();
+  if(!submitted['ex6'])checkEx6();
+  if(!submitted['ex7'])checkEx7();
+  if(!submitted['ex8'])checkEx8();
+  document.getElementById('gbtn').disabled=true;
+  const total=Object.values(scores).reduce((a,b)=>a+b,0);
+  const max=3+5+7+10+8+9+6+15; // =63
+  const pct=Math.round(total/max*100);
+  let emoji,msg;
+  if(pct===100){emoji='🏆';msg='Hoàn hảo! Bạn nắm vững toàn bộ thì quá khứ đơn!';}
+  else if(pct>=80){emoji='🎉';msg='Xuất sắc! Ôn lại vài điểm sai nhỏ là hoàn hảo!';}
+  else if(pct>=60){emoji='💪';msg='Khá tốt! Chú ý các động từ bất quy tắc và quy tắc thêm -ed nhé!';}
+  else if(pct>=40){emoji='📖';msg='Cần ôn thêm. Hãy học thuộc bảng động từ bất quy tắc!';}
+  else{emoji='🌱';msg='Hãy xem lại lý thuyết về thì quá khứ đơn từ đầu. Cố lên!';}
+  document.getElementById('fe').textContent=emoji;
+  document.getElementById('fs').textContent=total+' / '+max;
+  document.getElementById('fm').textContent=msg;
+  document.getElementById('final').classList.add('show');
+  document.getElementById('final').scrollIntoView({behavior:'smooth',block:'center'});
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thì Hiện Tại Đơn – Bài Tập</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f3ee;
+  --surface: #ffffff;
+  --soft: #eceae3;
+  --border: #ddd9ce;
+  --ink: #1c1a14;
+  --muted: #8a8474;
+  --accent: #2563a8;
+  --accent2: #c47c1a;
+  --green: #1e7d4f;
+  --red: #b83232;
+  --success-bg: #e8f5ee;
+  --error-bg: #faeaea;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family:'Lexend',sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  min-height:100vh;
+}
+
+body::before {
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:repeating-linear-gradient(0deg,transparent,transparent 27px,rgba(180,170,150,0.1) 27px,rgba(180,170,150,0.1) 28px);
+  pointer-events:none;
+  z-index:0;
+}
+
+/* HEADER */
+header {
+  position:relative;
+  z-index:1;
+  background:var(--ink);
+  padding:2rem 2rem 1.75rem;
+  border-bottom:4px solid var(--accent);
+}
+.header-inner { max-width:880px;margin:0 auto;display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;flex-wrap:wrap; }
+.header-label { font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);margin-bottom:.4rem; }
+header h1 { font-family:'Instrument Serif',serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:400;color:#fff;line-height:1.15; }
+header h1 em { font-style:italic;color:#f0d080; }
+.header-meta { text-align:right;font-size:.82rem;color:rgba(255,255,255,.5);font-weight:300; }
+
+/* PROGRESS */
+.progress-wrap { position:sticky;top:0;z-index:100;background:var(--ink);padding:.5rem 2rem;display:flex;align-items:center;gap:1.25rem; }
+.progress-track { flex:1;height:4px;background:rgba(255,255,255,.12);border-radius:2px;overflow:hidden; }
+.progress-fill { height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:2px;transition:width .4s ease;width:0%; }
+.progress-text { font-family:'JetBrains Mono',monospace;font-size:.72rem;color:rgba(255,255,255,.5);white-space:nowrap; }
+
+/* MAIN */
+main { position:relative;z-index:1;max-width:880px;margin:0 auto;padding:2rem 1.5rem 4rem; }
+
+/* EXERCISE BLOCK */
+.exercise { background:var(--surface);border:1.5px solid var(--border);border-radius:16px;margin-bottom:1.75rem;overflow:hidden;transition:border-color .3s; }
+.exercise.done { border-color:var(--green); }
+.exercise.has-error { border-color:var(--red); }
+.ex-header { background:var(--soft);border-bottom:1.5px solid var(--border);padding:1rem 1.5rem;display:flex;align-items:center;gap:.9rem; }
+.ex-num { width:32px;height:32px;background:var(--ink);color:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.8rem;flex-shrink:0; }
+.ex-title { font-size:.92rem;font-weight:600;line-height:1.4; }
+.ex-badge { margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:.68rem;padding:.2rem .6rem;border-radius:6px;border:1px solid var(--border);color:var(--muted);white-space:nowrap; }
+.ex-body { padding:1.5rem; }
+
+/* NOTE BOX */
+.note-box { background:#fffbea;border:1px solid #e8d86a;border-radius:8px;padding:.65rem 1rem;font-size:.82rem;color:#7a6a00;margin-bottom:1.25rem;font-style:italic; }
+
+/* MATCH */
+.match-layout { display:grid;grid-template-columns:1fr auto 1fr;gap:.5rem .75rem;align-items:start; }
+.match-col-header { font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);padding:0 .5rem .5rem;border-bottom:1px solid var(--border);margin-bottom:.25rem; }
+.match-mid-header { visibility:hidden; }
+.match-left-item { background:var(--soft);border:1.5px solid var(--border);border-radius:10px;padding:.75rem 1rem;font-size:.85rem;line-height:1.5;cursor:pointer;transition:all .18s;min-height:52px;display:flex;align-items:center; }
+.match-left-item:hover:not(.disabled):not(.matched) { border-color:var(--accent);background:#eef3fa; }
+.match-left-item.selected { border-color:var(--accent);background:#deeaf8;font-weight:600; }
+.match-left-item.matched { border-color:var(--green);background:var(--success-bg);cursor:default; }
+.match-left-item.wrong-match { border-color:var(--red);background:var(--error-bg); }
+.match-left-item.disabled { cursor:default; }
+.match-arrow { display:flex;align-items:center;justify-content:center;min-height:52px;color:var(--muted); }
+.match-right-item { background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:.75rem 1rem;font-size:.85rem;cursor:pointer;transition:all .18s;min-height:52px;display:flex;align-items:center;font-family:'JetBrains Mono',monospace;font-weight:500; }
+.match-right-item:hover:not(.disabled):not(.matched) { border-color:var(--accent2);background:#fdf7e3; }
+.match-right-item.selected { border-color:var(--accent2);background:#fdf7e3; }
+.match-right-item.matched { border-color:var(--green);background:var(--success-bg);cursor:default; }
+.match-right-item.wrong-match { border-color:var(--red);background:var(--error-bg); }
+.match-right-item.disabled { cursor:default; }
+.match-connection { font-size:.78rem;color:var(--green);text-align:center;font-family:'JetBrains Mono',monospace;font-weight:500; }
+
+/* MULTI-SELECT */
+.multi-options { display:flex;flex-direction:column;gap:.5rem; }
+.check-item { display:flex;align-items:center;gap:.75rem;padding:.65rem .9rem;border:1.5px solid var(--border);border-radius:10px;cursor:pointer;transition:all .15s;background:var(--bg);font-size:.9rem; }
+.check-item:hover:not(.disabled) { border-color:var(--accent);background:#eef3fa; }
+.check-item.selected { border-color:var(--accent);background:#eef3fa; }
+.check-item.correct { border-color:var(--green)!important;background:var(--success-bg)!important; }
+.check-item.wrong { border-color:var(--red)!important;background:var(--error-bg)!important; }
+.check-item.disabled { cursor:default; }
+.check-box { width:18px;height:18px;border:2px solid var(--border);border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .15s;font-size:11px; }
+.check-item.selected .check-box { border-color:var(--accent);background:var(--accent);color:white; }
+.check-item.correct .check-box { border-color:var(--green)!important;background:var(--green)!important;color:white!important; }
+.check-item.wrong .check-box { border-color:var(--red)!important;background:var(--red)!important;color:white!important; }
+
+/* TRUE/FALSE */
+.tf-question { margin-bottom:1.5rem; }
+.tf-question:last-child { margin-bottom:0; }
+.tf-text { font-size:.95rem;line-height:1.6;margin-bottom:.75rem; }
+.tf-options { display:flex;gap:.6rem; }
+.tf-btn { padding:.5rem 1.25rem;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);font-family:'Lexend',sans-serif;font-size:.85rem;font-weight:500;cursor:pointer;transition:all .15s;color:var(--ink); }
+.tf-btn:hover:not(:disabled) { border-color:var(--accent);background:#eef3fa;color:var(--accent); }
+.tf-btn.selected { border-color:var(--accent);background:#eef3fa;color:var(--accent); }
+.tf-btn.correct { border-color:var(--green)!important;background:var(--success-bg)!important;color:var(--green)!important; }
+.tf-btn.wrong { border-color:var(--red)!important;background:var(--error-bg)!important;color:var(--red)!important; }
+.tf-btn:disabled { cursor:default; }
+
+/* FILL INPUT */
+.fill-input {
+  border:none;border-bottom:2px solid var(--accent);background:transparent;
+  font-family:'JetBrains Mono',monospace;font-size:.9rem;font-weight:500;
+  color:var(--accent);padding:.2rem .1rem;width:130px;outline:none;text-align:center;transition:border-color .2s;
+}
+.fill-input:focus { border-bottom-color:var(--ink); }
+.fill-input.correct { border-bottom-color:var(--green);color:var(--green); }
+.fill-input.wrong { border-bottom-color:var(--red);color:var(--red); }
+.fill-input:disabled { cursor:default; }
+.fill-input.wide { width:300px; }
+.fill-input.medium { width:200px; }
+
+/* SENTENCE ROWS */
+.sentence-row { display:flex;align-items:baseline;gap:.4rem;flex-wrap:wrap;margin-bottom:.9rem;font-size:.92rem;line-height:1.7; }
+.sentence-row:last-child { margin-bottom:0; }
+.sent-label { font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--muted);min-width:18px; }
+
+/* ERROR FIND */
+.error-item { background:var(--soft);border:1.5px solid var(--border);border-radius:12px;padding:1rem 1.25rem;margin-bottom:.75rem; }
+.error-item:last-child { margin-bottom:0; }
+.error-orig { font-size:.92rem;font-style:italic;margin-bottom:.5rem;color:var(--ink); }
+.error-orig u { text-decoration-color:var(--red);text-underline-offset:3px; }
+.error-label { font-size:.78rem;color:var(--muted);font-family:'JetBrains Mono',monospace;margin-bottom:.35rem; }
+.error-input-row { display:flex;align-items:center;gap:.5rem;flex-wrap:wrap; }
+
+/* TEXTAREA-LIKE */
+.ans-input {
+  border:1.5px solid var(--border);border-radius:8px;background:var(--bg);
+  font-family:'Lexend',sans-serif;font-size:.88rem;color:var(--ink);
+  padding:.5rem .75rem;outline:none;transition:border-color .2s;width:100%;
+}
+.ans-input:focus { border-color:var(--accent); }
+.ans-input.correct { border-color:var(--green)!important;background:var(--success-bg)!important; }
+.ans-input.wrong { border-color:var(--red)!important;background:var(--error-bg)!important; }
+.ans-input:disabled { cursor:default; }
+
+/* INLINE FB */
+.inline-fb { margin-top:.4rem;font-size:.78rem;font-family:'JetBrains Mono',monospace;display:none; }
+.inline-fb.show { display:block; }
+.inline-fb.ok { color:var(--green); }
+.inline-fb.err { color:var(--red); }
+
+/* SCORE ROW */
+.score-row { display:none;align-items:center;gap:.75rem;margin-top:.75rem;padding:.65rem 1rem;background:var(--soft);border-radius:8px;font-size:.85rem; }
+.score-row.show { display:flex; }
+.score-ok { color:var(--green);font-weight:700;font-family:'JetBrains Mono',monospace; }
+.score-total { color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:.8rem; }
+
+/* SUBMIT WRAP */
+.submit-wrap { margin-top:1rem;display:flex;justify-content:flex-end; }
+.btn-check { background:var(--ink);color:#fff;border:none;border-radius:10px;padding:.65rem 1.5rem;font-family:'Lexend',sans-serif;font-size:.88rem;font-weight:600;cursor:pointer;transition:all .18s; }
+.btn-check:hover { background:var(--accent);transform:translateY(-1px); }
+.btn-check:disabled { opacity:.4;cursor:default;transform:none; }
+
+/* GLOBAL SUBMIT */
+.global-submit { background:var(--accent);color:white;border:none;border-radius:12px;padding:1rem 2.5rem;font-family:'Lexend',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;transition:all .2s;display:block;margin:2rem auto 0;letter-spacing:.03em; }
+.global-submit:hover { background:#1a4f8a;transform:translateY(-2px);box-shadow:0 6px 20px rgba(37,99,168,.3); }
+.global-submit:disabled { opacity:.4;cursor:default;transform:none;box-shadow:none; }
+
+/* FINAL */
+.final-wrap { background:var(--ink);border-radius:20px;padding:2.5rem;text-align:center;margin-top:2rem;display:none;animation:popIn .5s cubic-bezier(.34,1.56,.64,1); }
+.final-wrap.show { display:block; }
+@keyframes popIn { from{opacity:0;transform:scale(.85)} to{opacity:1;transform:scale(1)} }
+.final-emoji { font-size:3.5rem;margin-bottom:.75rem; }
+.final-score { font-family:'Instrument Serif',serif;font-size:4rem;color:#f0d080;line-height:1;margin-bottom:.4rem; }
+.final-label { color:rgba(255,255,255,.5);font-size:.9rem;margin-bottom:1rem; }
+.final-msg { color:#fff;font-size:1rem;line-height:1.6;margin-bottom:1.75rem; }
+.btn-retry { background:var(--accent);color:white;border:none;border-radius:10px;padding:.8rem 2rem;font-family:'Lexend',sans-serif;font-size:.95rem;font-weight:600;cursor:pointer;transition:all .2s; }
+.btn-retry:hover { background:#1a4f8a;transform:translateY(-2px); }
+
+/* EXAMPLE BOX */
+.example-box { background:#f0f5fb;border-left:3px solid var(--accent);padding:.6rem .9rem;border-radius:0 8px 8px 0;font-size:.85rem;color:var(--accent);margin-bottom:1rem;font-style:italic; }
+
+/* paragraph fill */
+.para-fill { font-size:.92rem;line-height:2.4;background:var(--soft);border-radius:12px;padding:1.25rem 1.5rem; }
+
+@media(max-width:600px){
+  .match-layout{grid-template-columns:1fr}
+  .match-arrow{display:none}
+  .match-right-item{font-size:.78rem}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div>
+      <div class="header-label">Section 2.2 · Ngữ pháp tiếng Anh</div>
+      <h1>Thì Hiện Tại <em>Đơn</em></h1>
+    </div>
+    <div class="header-meta">9 bài tập<br>Chấm điểm tự động</div>
+  </div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-track"><div class="progress-fill" id="prog-fill"></div></div>
+  <div class="progress-text" id="prog-text">0 / 9 bài</div>
+</div>
+
+<main>
+
+<!-- ===== EX 1: MATCHING chủ ngữ – chia động từ ===== -->
+<div class="exercise" id="ex1">
+  <div class="ex-header">
+    <div class="ex-num">1</div>
+    <div class="ex-title">Nối chủ ngữ với cách chia động từ đúng của thì hiện tại đơn</div>
+    <div class="ex-badge">Nối cặp</div>
+  </div>
+  <div class="ex-body">
+    <div class="match-layout">
+      <div class="match-col-header">Dạng chia</div>
+      <div class="match-mid-header">→</div>
+      <div class="match-col-header">Chủ ngữ</div>
+
+      <div class="match-left-item" id="m1l-1" onclick="matchLeft('m1','1')">is</div>
+      <div class="match-arrow" id="m1a-1">→</div>
+      <div class="match-right-item" id="m1r-A" onclick="matchRight('m1','A')">I</div>
+
+      <div class="match-left-item" id="m1l-2" onclick="matchLeft('m1','2')">V (nguyên thể)</div>
+      <div class="match-arrow" id="m1a-2">→</div>
+      <div class="match-right-item" id="m1r-B" onclick="matchRight('m1','B')">He / She / It / N(Số ít)</div>
+
+      <div class="match-left-item" id="m1l-3" onclick="matchLeft('m1','3')">am</div>
+      <div class="match-arrow" id="m1a-3">→</div>
+      <div class="match-right-item" id="m1r-C" onclick="matchRight('m1','C')">You / We / They / N(Số nhiều)</div>
+
+      <div class="match-left-item" id="m1l-4" onclick="matchLeft('m1','4')">V(S/ES)</div>
+      <div class="match-arrow" id="m1a-4">→</div>
+      <div class="match-right-item" id="m1r-D" onclick="matchRight('m1','D')">I / You / We / They / N(Số nhiều)</div>
+
+      <div class="match-left-item" id="m1l-5" onclick="matchLeft('m1','5')">are</div>
+      <div class="match-arrow" id="m1a-5">→</div>
+      <div class="match-right-item" id="m1r-E" onclick="matchRight('m1','E')">He / She / It / N(Số ít)</div>
+    </div>
+    <div class="submit-wrap"><button class="btn-check" onclick="checkMatch('m1',{'1':'A','2':'D','3':'A2','4':'E','5':'C'},5,'ex1')">Kiểm tra</button></div>
+    <div class="score-row" id="score-ex1"><span class="score-ok" id="sv-ex1"></span><span class="score-total">/ 5 cặp đúng</span></div>
+  </div>
+</div>
+
+<!-- ===== EX 2: MATCHING thêm S/ES ===== -->
+<div class="exercise" id="ex2">
+  <div class="ex-header">
+    <div class="ex-num">2</div>
+    <div class="ex-title">Nối các động từ có dấu hiệu sau với các cách thêm S/ES tương ứng</div>
+    <div class="ex-badge">Chọn đáp án</div>
+  </div>
+  <div class="ex-body">
+    <div class="note-box">Với mỗi dấu hiệu, chọn quy tắc thêm đuôi tương ứng.</div>
+
+    <div style="display:flex;flex-direction:column;gap:1rem;">
+
+      <div style="background:var(--soft);border:1.5px solid var(--border);border-radius:12px;padding:1rem 1.25rem;">
+        <div style="font-size:.92rem;margin-bottom:.65rem;font-weight:500;">1. Tận cùng bằng <strong>nguyên âm + Y</strong> <span style="font-size:.8rem;color:var(--muted)">(ví dụ: play, enjoy)</span></div>
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap;" id="r2-1">
+          <button class="tf-btn" data-val="A" onclick="sel2(this,'r2-1')">Thêm ES</button>
+          <button class="tf-btn" data-val="B" onclick="sel2(this,'r2-1')">Đổi Y→I rồi thêm ES</button>
+          <button class="tf-btn" data-val="C" onclick="sel2(this,'r2-1')">Thêm S (giữ nguyên Y)</button>
+        </div>
+        <div class="inline-fb" id="fb-r2-1"></div>
+      </div>
+
+      <div style="background:var(--soft);border:1.5px solid var(--border);border-radius:12px;padding:1rem 1.25rem;">
+        <div style="font-size:.92rem;margin-bottom:.65rem;font-weight:500;">2. Tận cùng bằng <strong>-CH, -SH, -S, -X, -O</strong> <span style="font-size:.8rem;color:var(--muted)">(ví dụ: watch, wash, kiss, fix, go)</span></div>
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap;" id="r2-2">
+          <button class="tf-btn" data-val="A" onclick="sel2(this,'r2-2')">Thêm ES</button>
+          <button class="tf-btn" data-val="B" onclick="sel2(this,'r2-2')">Đổi Y→I rồi thêm ES</button>
+          <button class="tf-btn" data-val="C" onclick="sel2(this,'r2-2')">Thêm S (giữ nguyên Y)</button>
+        </div>
+        <div class="inline-fb" id="fb-r2-2"></div>
+      </div>
+
+      <div style="background:var(--soft);border:1.5px solid var(--border);border-radius:12px;padding:1rem 1.25rem;">
+        <div style="font-size:.92rem;margin-bottom:.65rem;font-weight:500;">3. <strong>Phần lớn</strong> động từ <span style="font-size:.8rem;color:var(--muted)">(ví dụ: work, eat, run)</span></div>
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap;" id="r2-3">
+          <button class="tf-btn" data-val="A" onclick="sel2(this,'r2-3')">Thêm ES</button>
+          <button class="tf-btn" data-val="B" onclick="sel2(this,'r2-3')">Đổi Y→I rồi thêm ES</button>
+          <button class="tf-btn" data-val="C" onclick="sel2(this,'r2-3')">Thêm S (giữ nguyên Y)</button>
+        </div>
+        <div class="inline-fb" id="fb-r2-3"></div>
+      </div>
+
+      <div style="background:var(--soft);border:1.5px solid var(--border);border-radius:12px;padding:1rem 1.25rem;">
+        <div style="font-size:.92rem;margin-bottom:.65rem;font-weight:500;">4. Tận cùng bằng <strong>phụ âm + Y</strong> <span style="font-size:.8rem;color:var(--muted)">(ví dụ: study, carry, fly)</span></div>
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap;" id="r2-4">
+          <button class="tf-btn" data-val="A" onclick="sel2(this,'r2-4')">Thêm ES</button>
+          <button class="tf-btn" data-val="B" onclick="sel2(this,'r2-4')">Đổi Y→I rồi thêm ES</button>
+          <button class="tf-btn" data-val="C" onclick="sel2(this,'r2-4')">Thêm S (giữ nguyên Y)</button>
+        </div>
+        <div class="inline-fb" id="fb-r2-4"></div>
+      </div>
+
+    </div>
+    <div class="submit-wrap"><button class="btn-check" onclick="checkEx2New()">Kiểm tra</button></div>
+    <div class="score-row" id="score-ex2"><span class="score-ok" id="sv-ex2"></span><span class="score-total">/ 4 câu đúng</span></div>
+  </div>
+</div>
+
+<!-- ===== EX 3: MULTI-SELECT ===== -->
+<div class="exercise" id="ex3">
+  <div class="ex-header">
+    <div class="ex-num">3</div>
+    <div class="ex-title">Chọn các trường hợp <strong>KHÔNG</strong> phải là cách sử dụng của thì hiện tại đơn</div>
+    <div class="ex-badge">Chọn nhiều đáp án</div>
+  </div>
+  <div class="ex-body">
+    <div class="multi-options" id="multi-ex3">
+      <div class="check-item" onclick="toggleCheck(this,'ex3')" data-val="1"><div class="check-box"></div>Những hành động thường xuyên xảy ra, có tính lặp lại</div>
+      <div class="check-item" onclick="toggleCheck(this,'ex3')" data-val="2"><div class="check-box"></div>Những thói quen ở hiện tại</div>
+      <div class="check-item" onclick="toggleCheck(this,'ex3')" data-val="3"><div class="check-box"></div>Đưa ra cảm giác, nghề nghiệp, tình trạng hiện tại, tính chất, sở hữu</div>
+      <div class="check-item" onclick="toggleCheck(this,'ex3')" data-val="4"><div class="check-box"></div>Nói về một giả thiết</div>
+      <div class="check-item" onclick="toggleCheck(this,'ex3')" data-val="5"><div class="check-box"></div>Dự đoán các tình tiết, sự kiện trong phim, truyện</div>
+      <div class="check-item" onclick="toggleCheck(this,'ex3')" data-val="6"><div class="check-box"></div>Tiêu đề các bài báo</div>
+    </div>
+    <div class="submit-wrap"><button class="btn-check" onclick="checkEx3()">Kiểm tra</button></div>
+    <div class="score-row" id="score-ex3"><span class="score-ok" id="sv-ex3"></span><span class="score-total">/ 2 đáp án đúng</span></div>
+  </div>
+</div>
+
+<!-- ===== EX 4: TRUE/FALSE ===== -->
+<div class="exercise" id="ex4">
+  <div class="ex-header">
+    <div class="ex-num">4</div>
+    <div class="ex-title">Chọn <strong>True</strong> nếu khẳng định đúng – <strong>False</strong> nếu sai</div>
+    <div class="ex-badge">True / False</div>
+  </div>
+  <div class="ex-body">
+    <div class="tf-question" id="tf4-1">
+      <div class="tf-text">Trong câu phủ định, động từ to be chuyển thành <em>isn't</em> với tất cả các chủ ngữ.</div>
+      <div class="tf-options">
+        <button class="tf-btn" data-val="A" onclick="selectTF('tf4-1','A',this)">A. True</button>
+        <button class="tf-btn" data-val="B" onclick="selectTF('tf4-1','B',this)">B. False</button>
+      </div>
+      <div class="inline-fb" id="fb-tf4-1"></div>
+    </div>
+    <div class="tf-question" id="tf4-2">
+      <div class="tf-text">Trong câu phủ định, NOT sẽ đứng sau động từ thường.</div>
+      <div class="tf-options">
+        <button class="tf-btn" data-val="A" onclick="selectTF('tf4-2','A',this)">A. True</button>
+        <button class="tf-btn" data-val="B" onclick="selectTF('tf4-2','B',this)">B. False</button>
+      </div>
+      <div class="inline-fb" id="fb-tf4-2"></div>
+    </div>
+    <div class="tf-question" id="tf4-3">
+      <div class="tf-text">Trong câu hỏi, ta luôn luôn đảo trợ động từ <em>do</em> hoặc <em>does</em> lên trước chủ ngữ.</div>
+      <div class="tf-options">
+        <button class="tf-btn" data-val="A" onclick="selectTF('tf4-3','A',this)">A. True</button>
+        <button class="tf-btn" data-val="B" onclick="selectTF('tf4-3','B',this)">B. False</button>
+      </div>
+      <div class="inline-fb" id="fb-tf4-3"></div>
+    </div>
+    <div class="submit-wrap"><button class="btn-check" onclick="checkEx4()">Kiểm tra</button></div>
+    <div class="score-row" id="score-ex4"><span class="score-ok" id="sv-ex4"></span><span class="score-total">/ 3 câu đúng</span></div>
+  </div>
+</div>
+
+<!-- ===== EX 5: FILL – chia động từ ===== -->
+<div class="exercise" id="ex5">
+  <div class="ex-header">
+    <div class="ex-num">5</div>
+    <div class="ex-title">Điền dạng đúng của động từ trong ngoặc vào chỗ trống</div>
+    <div class="ex-badge">Điền từ</div>
+  </div>
+  <div class="ex-body">
+    <div class="sentence-row"><span class="sent-label">1.</span> Ben and Jack <input class="fill-input" id="e5-1" data-ans="go" placeholder="(go)"> to the same school every day.</div>
+    <div class="sentence-row"><span class="sent-label">2.</span> Tanya <input class="fill-input" id="e5-2" data-ans="speaks" placeholder="(speak)"> English very well.</div>
+    <div class="sentence-row"><span class="sent-label">3.</span> The museum <input class="fill-input" id="e5-3" data-ans="closes" placeholder="(close)"> at 4 o'clock on Mondays.</div>
+    <div class="sentence-row"><span class="sent-label">4.</span> My parents <input class="fill-input" id="e5-4" data-ans="live" placeholder="(live)"> in a very small flat.</div>
+    <div class="sentence-row"><span class="sent-label">5.</span> The Panama Canal <input class="fill-input" id="e5-5" data-ans="connects" placeholder="(connect)"> the Atlantic and Pacific oceans.</div>
+    <div class="sentence-row"><span class="sent-label">6.</span> The Olympics <input class="fill-input" id="e5-6" data-ans="take" placeholder="(take)"> place every four years.</div>
+    <div class="submit-wrap"><button class="btn-check" onclick="checkEx5()">Kiểm tra</button></div>
+    <div class="score-row" id="score-ex5"><span class="score-ok" id="sv-ex5"></span><span class="score-total">/ 6 câu đúng</span></div>
+  </div>
+</div>
+
+<!-- ===== EX 6: ERROR CORRECTION ===== -->
+<div class="exercise" id="ex6">
+  <div class="ex-header">
+    <div class="ex-num">6</div>
+    <div class="ex-title">Mỗi câu đều chứa lỗi sai. Tìm lỗi và viết lại câu đúng</div>
+    <div class="ex-badge">Sửa lỗi</div>
+  </div>
+  <div class="ex-body">
+    <div class="error-item">
+      <div class="error-orig">a. How often do you <u>plays</u> tennis?</div>
+      <div class="error-label">Sửa thành:</div>
+      <div class="error-input-row"><input class="ans-input" id="e6-a" data-ans="How often do you play tennis?" placeholder="Viết lại câu đúng..."></div>
+      <div class="inline-fb" id="fb-e6a"></div>
+    </div>
+    <div class="error-item">
+      <div class="error-orig">b. He <u>go</u> to school by bus twice a week.</div>
+      <div class="error-label">Sửa thành:</div>
+      <div class="error-input-row"><input class="ans-input" id="e6-b" data-ans="He goes to school by bus twice a week." placeholder="Viết lại câu đúng..."></div>
+      <div class="inline-fb" id="fb-e6b"></div>
+    </div>
+    <div class="error-item">
+      <div class="error-orig">c. Does she <u>carries</u> a lot of bags when she <u>go</u> shopping?</div>
+      <div class="error-label">Sửa thành:</div>
+      <div class="error-input-row"><input class="ans-input" id="e6-c" data-ans="Does she carry a lot of bags when she goes shopping?" placeholder="Viết lại câu đúng..."></div>
+      <div class="inline-fb" id="fb-e6c"></div>
+    </div>
+    <div class="error-item">
+      <div class="error-orig">d. Tony <u>studyes</u> Psychology at York University.</div>
+      <div class="error-label">Sửa thành:</div>
+      <div class="error-input-row"><input class="ans-input" id="e6-d" data-ans="Tony studies Psychology at York University." placeholder="Viết lại câu đúng..."></div>
+      <div class="inline-fb" id="fb-e6d"></div>
+    </div>
+    <div class="error-item">
+      <div class="error-orig">e. He <u>don't</u> always remember to lock the door.</div>
+      <div class="error-label">Sửa thành:</div>
+      <div class="error-input-row"><input class="ans-input" id="e6-e" data-ans="He doesn't always remember to lock the door." placeholder="Viết lại câu đúng..."></div>
+      <div class="inline-fb" id="fb-e6e"></div>
+    </div>
+    <div class="error-item">
+      <div class="error-orig">f. She doesn't <u>has</u> enough money to buy this dress.</div>
+      <div class="error-label">Sửa thành:</div>
+      <div class="error-input-row"><input class="ans-input" id="e6-f" data-ans="She doesn't have enough money to buy this dress." placeholder="Viết lại câu đúng..."></div>
+      <div class="inline-fb" id="fb-e6f"></div>
+    </div>
+    <div class="error-item">
+      <div class="error-orig">g. They <u>cooks</u> occasionally huge meals for the family.</div>
+      <div class="error-label">Sửa thành:</div>
+      <div class="error-input-row"><input class="ans-input" id="e6-g" data-ans="They cook occasionally huge meals for the family." placeholder="Viết lại câu đúng..."></div>
+      <div class="inline-fb" id="fb-e6g"></div>
+    </div>
+    <div class="error-item">
+      <div class="error-orig">h. My father watches <u>usually</u> TV after work.</div>
+      <div class="error-label">Sửa thành:</div>
+      <div class="error-input-row"><input class="ans-input" id="e6-h" data-ans="My father usually watches TV after work." placeholder="Viết lại câu đúng..."></div>
+      <div class="inline-fb" id="fb-e6h"></div>
+    </div>
+    <div class="submit-wrap"><button class="btn-check" onclick="checkEx6()">Kiểm tra</button></div>
+    <div class="score-row" id="score-ex6"><span class="score-ok" id="sv-ex6"></span><span class="score-total">/ 8 câu đúng</span></div>
+  </div>
+</div>
+
+<!-- ===== EX 7: WRITE QUESTIONS ===== -->
+<div class="exercise" id="ex7">
+  <div class="ex-header">
+    <div class="ex-num">7</div>
+    <div class="ex-title">Đọc tình huống và viết câu hỏi tương ứng</div>
+    <div class="ex-badge">Viết câu hỏi</div>
+  </div>
+  <div class="ex-body">
+    <div class="example-box">Ví dụ: You don't know what Rose does on Monday. → <strong>"What do you do on Monday?"</strong></div>
+
+    <div class="error-item">
+      <div class="error-orig">You know that Jenny plays the piano. You want to know how often. Ask her.</div>
+      <div class="error-label">"How often ___________?"</div>
+      <div class="error-input-row"><input class="ans-input medium" id="e7-1" data-ans="do you play the piano" placeholder="do you..."></div>
+      <div class="inline-fb" id="fb-e71"></div>
+    </div>
+    <div class="error-item">
+      <div class="error-orig">You don't know where Lisa's grandparents live. You want to know. Ask her.</div>
+      <div class="error-label">"Where ___________?"</div>
+      <div class="error-input-row"><input class="ans-input medium" id="e7-2" data-ans="do your grandparents live" placeholder="do your..."></div>
+      <div class="inline-fb" id="fb-e72"></div>
+    </div>
+    <div class="error-item">
+      <div class="error-orig">Does Yoko speak Japanese? You are not sure. You want to know. Ask her.</div>
+      <div class="error-label">"Do ___________?"</div>
+      <div class="error-input-row"><input class="ans-input medium" id="e7-3" data-ans="you speak japanese" placeholder="you speak..."></div>
+      <div class="inline-fb" id="fb-e73"></div>
+    </div>
+    <div class="submit-wrap"><button class="btn-check" onclick="checkEx7()">Kiểm tra</button></div>
+    <div class="score-row" id="score-ex7"><span class="score-ok" id="sv-ex7"></span><span class="score-total">/ 3 câu đúng</span></div>
+  </div>
+</div>
+
+<!-- ===== EX 8: NEGATIVE & QUESTION ===== -->
+<div class="exercise" id="ex8">
+  <div class="ex-header">
+    <div class="ex-num">8</div>
+    <div class="ex-title">Chuyển các câu sau thành câu phủ định và nghi vấn</div>
+    <div class="ex-badge">Biến đổi câu</div>
+  </div>
+  <div class="ex-body">
+    <div class="example-box">Ví dụ: He plays football every day.<br>→ Phủ định: <strong>He doesn't play football every day.</strong><br>→ Nghi vấn: <strong>Does he play football every day?</strong></div>
+
+    <div class="error-item">
+      <div class="error-orig"><strong>He listens to music and reads books every Sunday.</strong></div>
+      <div class="error-label">Phủ định:</div>
+      <input class="ans-input" id="e8-1n" data-ans="He doesn't listen to music and read books every Sunday." placeholder="Phủ định...">
+      <div class="inline-fb" id="fb-e81n"></div>
+      <div class="error-label" style="margin-top:.5rem">Nghi vấn:</div>
+      <input class="ans-input" id="e8-1q" data-ans="Does he listen to music and read books every Sunday?" placeholder="Nghi vấn...">
+      <div class="inline-fb" id="fb-e81q"></div>
+    </div>
+
+    <div class="error-item">
+      <div class="error-orig"><strong>The cookies smell good.</strong></div>
+      <div class="error-label">Phủ định:</div>
+      <input class="ans-input" id="e8-2n" data-ans="The cookies don't smell good." placeholder="Phủ định...">
+      <div class="inline-fb" id="fb-e82n"></div>
+      <div class="error-label" style="margin-top:.5rem">Nghi vấn:</div>
+      <input class="ans-input" id="e8-2q" data-ans="Do the cookies smell good?" placeholder="Nghi vấn...">
+      <div class="inline-fb" id="fb-e82q"></div>
+    </div>
+
+    <div class="error-item">
+      <div class="error-orig"><strong>Their parents go to see a movie every weekend.</strong></div>
+      <div class="error-label">Phủ định:</div>
+      <input class="ans-input" id="e8-3n" data-ans="Their parents don't go to see a movie every weekend." placeholder="Phủ định...">
+      <div class="inline-fb" id="fb-e83n"></div>
+      <div class="error-label" style="margin-top:.5rem">Nghi vấn:</div>
+      <input class="ans-input" id="e8-3q" data-ans="Do their parents go to see a movie every weekend?" placeholder="Nghi vấn...">
+      <div class="inline-fb" id="fb-e83q"></div>
+    </div>
+
+    <div class="submit-wrap"><button class="btn-check" onclick="checkEx8()">Kiểm tra</button></div>
+    <div class="score-row" id="score-ex8"><span class="score-ok" id="sv-ex8"></span><span class="score-total">/ 6 câu đúng</span></div>
+  </div>
+</div>
+
+<!-- ===== EX 9: PARAGRAPH FILL ===== -->
+<div class="exercise" id="ex9">
+  <div class="ex-header">
+    <div class="ex-num">9</div>
+    <div class="ex-title">Điền đúng thì của động từ trong ngoặc để hoàn thành đoạn văn (IELTS Speaking)</div>
+    <div class="ex-badge">Điền đoạn văn</div>
+  </div>
+  <div class="ex-body">
+    <div class="note-box">Lưu ý: Điền tối đa 2 từ vào mỗi chỗ trống. Chủ đề: <em>Talk about someone you know.</em></div>
+    <div class="para-fill">
+      I want to talk about my favorite teacher - Mary. She <input class="fill-input" id="e9-1" data-ans="is" placeholder="(be)"> an English teacher. Many children love her and they <input class="fill-input" id="e9-2" data-ans="learn" placeholder="(learn)"> a lot from her. Every day, Mary <input class="fill-input" id="e9-3" data-ans="arrives" placeholder="(arrive)"> home at 1.00 p.m. and <input class="fill-input" id="e9-4" data-ans="has" placeholder="(have)"> lunch. Then she sleeps for an hour. In the afternoon, she <input class="fill-input" id="e9-5" data-ans="goes" placeholder="(go)"> swimming or cleans her house. Sometimes, she <input class="fill-input" id="e9-6" data-ans="visits" placeholder="(visit)"> her aunt and <input class="fill-input" id="e9-7" data-ans="drinks" placeholder="(drink)"> tea with her. On Sundays, she <input class="fill-input" id="e9-8" data-ans="goes" placeholder="(go)"> shopping with her friends. Mary <input class="fill-input" id="e9-9" data-ans="is" placeholder="(be)"> a healthy person. She <input class="fill-input" id="e9-10" data-ans="doesn't drink" placeholder="(not drink)"> soft drinks or energy drinks and she never <input class="fill-input" id="e9-11" data-ans="buys" placeholder="(buy)"> snacks. She always <input class="fill-input" id="e9-12" data-ans="eats" placeholder="(eat)"> lots of vegetables and fruits. Mary <input class="fill-input" id="e9-13" data-ans="is" placeholder="(be)"> a role model for everyone.
+    </div>
+    <div class="submit-wrap"><button class="btn-check" onclick="checkEx9()">Kiểm tra</button></div>
+    <div class="score-row" id="score-ex9"><span class="score-ok" id="sv-ex9"></span><span class="score-total">/ 13 chỗ trống đúng</span></div>
+  </div>
+</div>
+
+<button class="global-submit" id="global-btn" onclick="submitAll()">📋 Nộp bài & Xem kết quả</button>
+
+<div class="final-wrap" id="final-result">
+  <div class="final-emoji" id="final-emoji">🎉</div>
+  <div class="final-score" id="final-score">0/0</div>
+  <div class="final-label">tổng điểm</div>
+  <div class="final-msg" id="final-msg"></div>
+  <button class="btn-retry" onclick="location.reload()">↺ Làm lại từ đầu</button>
+</div>
+
+</main>
+
+<script>
+// ===== MATCH STATE =====
+const matchState = {};
+const submitted = {};
+const scores = {};
+
+function initMatch(id) {
+  if (!matchState[id]) matchState[id] = { leftSel: null, pairs: {} };
+}
+
+function matchLeft(id, num) {
+  initMatch(id);
+  const el = document.getElementById(id+'l-'+num);
+  if (el.classList.contains('matched') || el.classList.contains('disabled')) return;
+  document.querySelectorAll(`[id^="${id}l-"]`).forEach(e => e.classList.remove('selected'));
+  matchState[id].leftSel = num;
+  el.classList.add('selected');
+}
+
+function matchRight(id, letter) {
+  initMatch(id);
+  const ms = matchState[id];
+  if (!ms.leftSel) return;
+  const el = document.getElementById(id+'r-'+letter);
+  if (el.classList.contains('matched') || el.classList.contains('disabled')) return;
+
+  // Unplace previous if left already had a pair
+  const prevRight = Object.entries(ms.pairs).find(([l,r]) => l === ms.leftSel);
+  if (prevRight) {
+    const prevEl = document.getElementById(id+'r-'+prevRight[1]);
+    prevEl.classList.remove('matched','selected');
+    delete ms.pairs[ms.leftSel];
+  }
+
+  ms.pairs[ms.leftSel] = letter;
+  document.getElementById(id+'l-'+ms.leftSel).classList.remove('selected');
+  document.getElementById(id+'l-'+ms.leftSel).classList.add('matched');
+  el.classList.add('matched');
+  const num = ms.leftSel;
+  document.getElementById(id+'a-'+num).innerHTML = '<span class="match-connection">✓</span>';
+  ms.leftSel = null;
+}
+
+// EX1 special: am only maps to I (single), needs custom logic
+function checkMatch(id, ansKey, total, exId) {
+  if (submitted[exId]) return;
+  initMatch(id);
+  let correct = 0;
+  document.querySelectorAll(`[id^="${id}l-"]`).forEach(el => { el.classList.add('disabled'); el.onclick = null; });
+  document.querySelectorAll(`[id^="${id}r-"]`).forEach(el => { el.classList.add('disabled'); el.onclick = null; });
+  Object.entries(ansKey).forEach(([num, ans]) => {
+    const chosen = matchState[id].pairs[num];
+    if (chosen === ans) {
+      correct++;
+      document.getElementById(id+'l-'+num).style.borderColor = 'var(--green)';
+      document.getElementById(id+'r-'+ans).style.borderColor = 'var(--green)';
+    } else {
+      document.getElementById(id+'l-'+num).classList.add('wrong-match');
+      if (chosen) document.getElementById(id+'r-'+chosen).classList.add('wrong-match');
+      document.getElementById(id+'r-'+ans).style.cssText += ';border-color:var(--green);background:var(--success-bg)';
+    }
+  });
+  scores[exId] = correct;
+  submitted[exId] = true;
+  document.getElementById('sv-'+exId).textContent = correct;
+  document.getElementById('score-'+exId).classList.add('show');
+  document.getElementById(exId).classList.add(correct === total ? 'done' : 'has-error');
+  updateProgress();
+}
+
+// EX1 answer: is→B(He/She/It), V→D(I/You/We/They), am→A(I), V(S/ES)→E(He/She/It), are→C(You/We/They)
+document.getElementById('m1l-1').onclick = () => matchLeft('m1','1');
+document.getElementById('m1l-2').onclick = () => matchLeft('m1','2');
+document.getElementById('m1l-3').onclick = () => matchLeft('m1','3');
+document.getElementById('m1l-4').onclick = () => matchLeft('m1','4');
+document.getElementById('m1l-5').onclick = () => matchLeft('m1','5');
+document.getElementById('m1r-A').onclick = () => matchRight('m1','A');
+document.getElementById('m1r-B').onclick = () => matchRight('m1','B');
+document.getElementById('m1r-C').onclick = () => matchRight('m1','C');
+document.getElementById('m1r-D').onclick = () => matchRight('m1','D');
+document.getElementById('m1r-E').onclick = () => matchRight('m1','E');
+
+document.querySelector('#ex1 .btn-check').onclick = () => checkMatch('m1',{'1':'B','2':'D','3':'A','4':'E','5':'C'},5,'ex1');
+
+// EX2 answer: 1→C(nguyên âm+Y→thêm S), 2→A(-CH/-SH/...→thêm ES), 3→C(phần lớn→thêm S), 4→B(phụ âm+Y→đổi Y+ES)
+const ex2Sel = {};
+function sel2(btn, groupId) {
+  if (submitted['ex2']) return;
+  document.querySelectorAll('#'+groupId+' .tf-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  ex2Sel[groupId] = btn.dataset.val;
+}
+
+function checkEx2New() {
+  if (submitted['ex2']) return;
+  const ans = {'r2-1':'C','r2-2':'A','r2-3':'C','r2-4':'B'};
+  const expl = {
+    'r2-1':'✓ Nguyên âm + Y → giữ nguyên Y, chỉ thêm S (play→plays, enjoy→enjoys).',
+    'r2-2':'✓ -CH/-SH/-S/-X/-O → thêm ES (watch→watches, wash→washes, go→goes).',
+    'r2-3':'✓ Phần lớn động từ → thêm S (work→works, eat→eats).',
+    'r2-4':'✓ Phụ âm + Y → đổi Y thành I rồi thêm ES (study→studies, carry→carries).'
+  };
+  let correct = 0;
+  ['r2-1','r2-2','r2-3','r2-4'].forEach(gid => {
+    const chosen = ex2Sel[gid];
+    const right = ans[gid];
+    const btns = document.querySelectorAll('#'+gid+' .tf-btn');
+    btns.forEach(b => {
+      b.disabled = true;
+      if (b.dataset.val === right) b.classList.add('correct');
+      else if (b.dataset.val === chosen && chosen !== right) b.classList.add('wrong');
+    });
+    const fb = document.getElementById('fb-'+gid);
+    fb.classList.add('show');
+    if (chosen === right) {
+      correct++;
+      fb.className = 'inline-fb show ok';
+      fb.textContent = expl[gid];
+    } else {
+      fb.className = 'inline-fb show err';
+      fb.textContent = '✗ ' + expl[gid];
+    }
+  });
+  scores['ex2'] = correct; submitted['ex2'] = true;
+  document.getElementById('sv-ex2').textContent = correct;
+  document.getElementById('score-ex2').classList.add('show');
+  document.getElementById('ex2').classList.add(correct === 4 ? 'done' : 'has-error');
+  updateProgress();
+}
+
+// ===== MULTI SELECT =====
+const multiSel = {};
+function toggleCheck(el, exId) {
+  if (el.classList.contains('disabled')) return;
+  if (!multiSel[exId]) multiSel[exId] = new Set();
+  const val = el.dataset.val;
+  if (el.classList.contains('selected')) {
+    el.classList.remove('selected'); el.querySelector('.check-box').textContent = '';
+    multiSel[exId].delete(val);
+  } else {
+    el.classList.add('selected'); el.querySelector('.check-box').textContent = '✓';
+    multiSel[exId].add(val);
+  }
+}
+
+// EX3: KHÔNG phải cách dùng = "Nói về một giả thiết"(4) và... thực ra tất cả còn lại ĐỀU là cách dùng của HTĐ
+// Đáp án KHÔNG phải: chỉ "Nói về một giả thiết" (4)
+// Nhưng PDF nói chọn "các trường hợp KHÔNG phải" → chỉ có 1 đáp án = "Nói về một giả thiết"
+function checkEx3() {
+  if (submitted['ex3']) return;
+  const correct_ans = new Set(['4']);
+  const sel = multiSel['ex3'] || new Set();
+  let correct = 0;
+  document.querySelectorAll('#multi-ex3 .check-item').forEach(item => {
+    item.classList.add('disabled'); item.onclick = null;
+    const v = item.dataset.val;
+    const isAns = correct_ans.has(v);
+    const isSel = sel.has(v);
+    if (isAns) { item.classList.add('correct'); item.querySelector('.check-box').textContent = '✓'; if (isSel) correct++; }
+    else if (isSel) { item.classList.add('wrong'); }
+  });
+  scores['ex3'] = correct;
+  submitted['ex3'] = true;
+  document.getElementById('sv-ex3').textContent = correct;
+  document.getElementById('score-ex3').querySelector('.score-total').textContent = '/ 1 đáp án đúng';
+  document.getElementById('score-ex3').classList.add('show');
+  document.getElementById('ex3').classList.add(correct === 1 && sel.size === 1 ? 'done' : 'has-error');
+  updateProgress();
+}
+
+// ===== TRUE/FALSE =====
+const tfAnswers = {};
+const TF4_ANS = { 'tf4-1':'B', 'tf4-2':'B', 'tf4-3':'B' };
+const TF4_EX = {
+  'tf4-1': 'Sai! "isn\'t" chỉ dùng cho He/She/It. I → am not, You/We/They → aren\'t.',
+  'tf4-2': 'Sai! Với động từ thường, ta dùng DON\'T/DOESN\'T + V nguyên thể (không phải NOT đứng sau động từ).',
+  'tf4-3': 'Sai! Với động từ to be, ta đảo chính nó lên trước. DO/DOES chỉ dùng cho động từ thường.'
+};
+
+function selectTF(id, val, btn) {
+  if (submitted['ex4']) return;
+  tfAnswers[id] = val;
+  document.querySelectorAll(`#${id} .tf-btn`).forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+
+function checkEx4() {
+  if (submitted['ex4']) return;
+  let correct = 0;
+  ['tf4-1','tf4-2','tf4-3'].forEach(id => {
+    const btns = document.querySelectorAll(`#${id} .tf-btn`);
+    const ans = TF4_ANS[id]; const chosen = tfAnswers[id];
+    btns.forEach(b => { b.disabled = true; if (b.dataset.val === ans) b.classList.add('correct'); else if (b.dataset.val === chosen) b.classList.add('wrong'); });
+    const fb = document.getElementById('fb-'+id);
+    fb.classList.add('show');
+    if (chosen === ans) { correct++; fb.className='inline-fb show ok'; fb.textContent='✓ '+TF4_EX[id]; }
+    else { fb.className='inline-fb show err'; fb.textContent='✗ '+TF4_EX[id]; }
+  });
+  scores['ex4'] = correct; submitted['ex4'] = true;
+  document.getElementById('sv-ex4').textContent = correct;
+  document.getElementById('score-ex4').classList.add('show');
+  document.getElementById('ex4').classList.add(correct===3?'done':'has-error');
+  updateProgress();
+}
+
+// ===== FILL INPUTS =====
+function checkFillGroup(ids, exId, total) {
+  if (submitted[exId]) return;
+  let correct = 0;
+  ids.forEach(id => {
+    const inp = document.getElementById(id);
+    if (!inp) return;
+    inp.disabled = true;
+    const val = inp.value.trim().toLowerCase();
+    const ans = inp.dataset.ans.toLowerCase();
+    if (val === ans) { inp.classList.add('correct'); correct++; }
+    else { inp.classList.add('wrong'); inp.value = inp.value + ' → ' + inp.dataset.ans; }
+  });
+  scores[exId] = correct; submitted[exId] = true;
+  document.getElementById('sv-'+exId).textContent = correct;
+  document.getElementById('score-'+exId).classList.add('show');
+  document.getElementById(exId).classList.add(correct===total?'done':'has-error');
+  updateProgress();
+}
+
+function checkEx5() { checkFillGroup(['e5-1','e5-2','e5-3','e5-4','e5-5','e5-6'],'ex5',6); }
+function checkEx9() { checkFillGroup(['e9-1','e9-2','e9-3','e9-4','e9-5','e9-6','e9-7','e9-8','e9-9','e9-10','e9-11','e9-12','e9-13'],'ex9',13); }
+
+// ===== TEXT INPUTS (flexible match) =====
+function normalize(s) { return s.toLowerCase().replace(/[.?!,]/g,'').replace(/\s+/g,' ').trim(); }
+
+function checkTextGroup(items, exId, total) {
+  if (submitted[exId]) return;
+  let correct = 0;
+  items.forEach(({id, ans, fbId}) => {
+    const inp = document.getElementById(id);
+    if (!inp) return;
+    inp.disabled = true;
+    const val = normalize(inp.value);
+    const ansList = Array.isArray(ans) ? ans : [ans];
+    const ok = ansList.some(a => normalize(a) === val);
+    const fb = document.getElementById(fbId);
+    if (ok) {
+      inp.classList.add('correct'); correct++;
+      if (fb) { fb.className='inline-fb show ok'; fb.textContent='✓ Đúng!'; }
+    } else {
+      inp.classList.add('wrong');
+      if (fb) { fb.className='inline-fb show err'; fb.textContent='✗ Đáp án: '+ansList[0]; }
+    }
+  });
+  scores[exId] = correct; submitted[exId] = true;
+  document.getElementById('sv-'+exId).textContent = correct;
+  document.getElementById('score-'+exId).classList.add('show');
+  document.getElementById(exId).classList.add(correct===total?'done':'has-error');
+  updateProgress();
+}
+
+function checkEx6() {
+  checkTextGroup([
+    {id:'e6-a', ans:['How often do you play tennis?'], fbId:'fb-e6a'},
+    {id:'e6-b', ans:['He goes to school by bus twice a week.'], fbId:'fb-e6b'},
+    {id:'e6-c', ans:['Does she carry a lot of bags when she goes shopping?'], fbId:'fb-e6c'},
+    {id:'e6-d', ans:['Tony studies Psychology at York University.'], fbId:'fb-e6d'},
+    {id:'e6-e', ans:["He doesn't always remember to lock the door.",'He does not always remember to lock the door.'], fbId:'fb-e6e'},
+    {id:'e6-f', ans:["She doesn't have enough money to buy this dress.",'She does not have enough money to buy this dress.'], fbId:'fb-e6f'},
+    {id:'e6-g', ans:['They cook occasionally huge meals for the family.'], fbId:'fb-e6g'},
+    {id:'e6-h', ans:['My father usually watches TV after work.'], fbId:'fb-e6h'},
+  ],'ex6',8);
+}
+
+function checkEx7() {
+  checkTextGroup([
+    {id:'e7-1', ans:['do you play the piano','do you play piano'], fbId:'fb-e71'},
+    {id:'e7-2', ans:['do your grandparents live','does your grandparents live'], fbId:'fb-e72'},
+    {id:'e7-3', ans:['you speak japanese','you speak Japanese'], fbId:'fb-e73'},
+  ],'ex7',3);
+}
+
+function checkEx8() {
+  checkTextGroup([
+    {id:'e8-1n', ans:["He doesn't listen to music and read books every Sunday.",'He does not listen to music and read books every Sunday.'], fbId:'fb-e81n'},
+    {id:'e8-1q', ans:['Does he listen to music and read books every Sunday?'], fbId:'fb-e81q'},
+    {id:'e8-2n', ans:["The cookies don't smell good.",'The cookies do not smell good.'], fbId:'fb-e82n'},
+    {id:'e8-2q', ans:['Do the cookies smell good?'], fbId:'fb-e82q'},
+    {id:'e8-3n', ans:["Their parents don't go to see a movie every weekend.",'Their parents do not go to see a movie every weekend.'], fbId:'fb-e83n'},
+    {id:'e8-3q', ans:['Do their parents go to see a movie every weekend?'], fbId:'fb-e83q'},
+  ],'ex8',6);
+}
+
+// ===== PROGRESS =====
+function updateProgress() {
+  const done = Object.keys(submitted).length;
+  document.getElementById('prog-fill').style.width = (done/9*100)+'%';
+  document.getElementById('prog-text').textContent = done+' / 9 bài';
+}
+
+// ===== SUBMIT ALL =====
+function submitAll() {
+  if (!submitted['ex1']) document.querySelector('#ex1 .btn-check').click();
+  if (!submitted['ex2']) checkEx2New();
+  if (!submitted['ex3']) checkEx3();
+  if (!submitted['ex4']) checkEx4();
+  if (!submitted['ex5']) checkEx5();
+  if (!submitted['ex6']) checkEx6();
+  if (!submitted['ex7']) checkEx7();
+  if (!submitted['ex8']) checkEx8();
+  if (!submitted['ex9']) checkEx9();
+
+  document.getElementById('global-btn').disabled = true;
+  const total = Object.values(scores).reduce((a,b)=>a+b,0);
+  const max = 5+4+1+3+6+8+3+6+13; // = 49
+  const pct = Math.round(total/max*100);
+  let emoji, msg;
+  if (pct===100){emoji='🏆';msg='Hoàn hảo tuyệt đối! Bạn nắm vững toàn bộ thì hiện tại đơn!';}
+  else if (pct>=80){emoji='🎉';msg='Xuất sắc! Bạn hiểu rõ phần lớn kiến thức. Ôn lại các câu sai nhé!';}
+  else if (pct>=60){emoji='💪';msg='Khá tốt! Còn một số điểm cần củng cố. Xem lại lý thuyết rồi làm lại!';}
+  else if (pct>=40){emoji='📖';msg='Cần ôn tập thêm. Hãy đọc kỹ quy tắc chia động từ và cấu trúc câu!';}
+  else{emoji='🌱';msg='Hãy xem lại lý thuyết về thì hiện tại đơn từ đầu. Cố lên!';}
+  document.getElementById('final-emoji').textContent=emoji;
+  document.getElementById('final-score').textContent=total+' / '+max;
+  document.getElementById('final-msg').textContent=msg;
+  document.getElementById('final-result').classList.add('show');
+  document.getElementById('final-result').scrollIntoView({behavior:'smooth',block:'center'});
+}
+</script>
+</body>
+</html>

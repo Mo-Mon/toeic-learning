@@ -1,0 +1,1556 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English Grammar — Ôn Tập Động Từ</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f0f4ff;
+    --surface: #ffffff;
+    --surface2: #eef2ff;
+    --border: #dde5f4;
+    --accent: #2563eb;
+    --accent-light: #eff4ff;
+    --accent-mid: #bfcffe;
+    --accent2: #16a34a;
+    --accent2-bg: #f0fdf4;
+    --accent3: #dc2626;
+    --accent3-bg: #fff1f1;
+    --accent4: #7c3aed;
+    --accent5: #ea580c;
+    --text: #1e293b;
+    --text-dim: #475569;
+    --text-muted: #94a3b8;
+    --correct: #16a34a;
+    --correct-bg: #f0fdf4;
+    --wrong: #dc2626;
+    --wrong-bg: #fff1f1;
+    --radius: 10px;
+    --radius-lg: 16px;
+    --shadow: 0 1px 4px rgba(37,99,235,.07), 0 4px 16px rgba(37,99,235,.06);
+    --shadow-sm: 0 1px 3px rgba(37,99,235,.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ─── HEADER ─── */
+  header {
+    background: var(--accent);
+    padding: 0 24px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    height: 60px;
+    box-shadow: 0 2px 12px rgba(37,99,235,.25);
+  }
+  header h1 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.5px;
+    white-space: nowrap;
+  }
+  header span { color: rgba(255,255,255,.75); font-size: 13px; }
+
+  .score-badge {
+    margin-left: auto;
+    display: flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,.18);
+    border: 1px solid rgba(255,255,255,.3);
+    border-radius: 20px;
+    padding: 4px 14px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+
+  /* ─── LAYOUT ─── */
+  .app { display: flex; min-height: calc(100vh - 60px); }
+
+  /* ─── SIDEBAR ─── */
+  nav {
+    width: 260px;
+    min-width: 260px;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    padding: 16px 0;
+    overflow-y: auto;
+    box-shadow: var(--shadow-sm);
+  }
+  .nav-section-title {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 8px 20px 6px;
+  }
+  .nav-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 20px;
+    cursor: pointer;
+    font-size: 13.5px;
+    color: var(--text-dim);
+    border-left: 3px solid transparent;
+    transition: all .15s;
+    line-height: 1.4;
+  }
+  .nav-item:hover { background: var(--accent-light); color: var(--accent); }
+  .nav-item.active {
+    background: var(--accent-light);
+    color: var(--accent);
+    border-left-color: var(--accent);
+    font-weight: 700;
+  }
+  .nav-badge {
+    margin-left: auto;
+    font-size: 10px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1px 7px;
+    color: var(--text-muted);
+  }
+  .nav-item.active .nav-badge { background: var(--accent-light); border-color: var(--accent-mid); color: var(--accent); }
+
+  /* ─── MAIN ─── */
+  main {
+    flex: 1;
+    padding: 32px;
+    overflow-y: auto;
+    max-width: 900px;
+  }
+
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ─── THEORY CARD ─── */
+  .theory-header {
+    margin-bottom: 28px;
+  }
+  .theory-header h2 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .theory-header p { color: var(--text-dim); font-size: 14px; }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+  }
+  .card-title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .card-title .icon { font-size: 18px; }
+
+  .rule-block {
+    background: var(--surface2);
+    border-left: 3px solid var(--accent-mid);
+    border-radius: 0 8px 8px 0;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text-dim);
+  }
+  .rule-block strong { color: var(--accent); }
+
+  .formula {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--accent-light);
+    border: 1px solid var(--accent-mid);
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 14px;
+    color: var(--accent);
+    font-weight: 500;
+    margin: 8px 0;
+    display: inline-block;
+  }
+
+  .example-grid {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px;
+  }
+  .eg {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+  .eg em { color: var(--accent2); font-style: normal; font-weight: 600; }
+
+  .tag { display: inline-block; border-radius: 6px; padding: 2px 10px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; margin-right: 6px; }
+  .tag-blue { background: rgba(37,99,235,.1); color: var(--accent); }
+  .tag-green { background: rgba(22,163,74,.1); color: var(--accent2); }
+  .tag-orange { background: rgba(234,88,12,.1); color: var(--accent5); }
+  .tag-purple { background: rgba(124,58,237,.1); color: var(--accent4); }
+  .tag-red { background: rgba(220,38,38,.1); color: var(--accent3); }
+
+  table {
+    width: 100%; border-collapse: collapse; font-size: 14px; margin: 12px 0;
+  }
+  th {
+    background: var(--surface2);
+    color: var(--text-dim);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 700;
+  }
+  td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--text); }
+  tr:last-child td { border-bottom: none; }
+  td code { font-family: 'JetBrains Mono', monospace; color: var(--accent); font-size: 13px; background: var(--accent-light); padding: 1px 6px; border-radius: 4px; }
+  td em { color: var(--accent2); font-style: normal; }
+
+  /* ─── QUIZ ─── */
+  .quiz-header {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 24px;
+  }
+  .quiz-header h2 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 22px; font-weight: 800;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 9px 18px;
+    border-radius: 8px;
+    font-size: 14px; font-weight: 700;
+    cursor: pointer; border: none;
+    transition: all .15s; font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+  .btn-primary { background: var(--accent); color: #ffffff; box-shadow: 0 2px 8px rgba(37,99,235,.3); }
+  .btn-primary:hover { background: #1d4ed8; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(37,99,235,.35); }
+  .btn-secondary { background: var(--surface); color: var(--text-dim); border: 1px solid var(--border); }
+  .btn-secondary:hover { background: var(--surface2); color: var(--accent); border-color: var(--accent-mid); }
+  .btn-success { background: var(--accent2); color: #ffffff; box-shadow: 0 2px 8px rgba(22,163,74,.25); }
+  .btn-success:hover { background: #15803d; transform: translateY(-1px); }
+
+  .progress-bar {
+    height: 6px; background: var(--surface2); border-radius: 4px;
+    margin-bottom: 24px; overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .progress-fill {
+    height: 100%; background: linear-gradient(90deg, var(--accent), #60a5fa);
+    border-radius: 4px; transition: width .4s ease;
+  }
+
+  .question-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+  }
+  .q-meta {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 16px;
+  }
+  .q-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; color: var(--text-muted);
+  }
+  .q-type { font-size: 11px; }
+  .q-text {
+    font-size: 17px; font-weight: 600; line-height: 1.6;
+    margin-bottom: 22px; color: var(--text);
+  }
+  .q-text .blank {
+    display: inline-block;
+    min-width: 80px; border-bottom: 2px solid var(--accent);
+    text-align: center; color: var(--accent);
+    font-family: 'JetBrains Mono', monospace; font-size: 15px;
+    margin: 0 4px;
+  }
+  .q-translation { font-size: 13px; color: var(--text-muted); margin-bottom: 20px; font-style: italic; }
+
+  .options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .option {
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    padding: 13px 16px;
+    cursor: pointer;
+    font-size: 14px; font-weight: 600;
+    color: var(--text-dim);
+    transition: all .15s;
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+  .option:hover:not(.disabled) { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+  .option.selected { border-color: var(--accent); background: var(--accent-light); color: var(--accent); }
+  .option.correct { border-color: var(--accent2); background: var(--correct-bg); color: var(--accent2); }
+  .option.wrong { border-color: var(--accent3); background: var(--wrong-bg); color: var(--accent3); }
+  .option.disabled { cursor: default; }
+  .opt-label {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--surface2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 800; flex-shrink: 0;
+    color: var(--text-muted);
+  }
+  .option:hover:not(.disabled) .opt-label { background: var(--accent); color: #fff; }
+  .option.correct .opt-label { background: var(--accent2); color: #fff; }
+  .option.wrong .opt-label { background: var(--accent3); color: #fff; }
+
+  .feedback {
+    margin-top: 16px;
+    padding: 14px 16px;
+    border-radius: 10px;
+    font-size: 14px;
+    line-height: 1.6;
+    display: none;
+  }
+  .feedback.correct { background: var(--correct-bg); border: 1px solid #bbf7d0; color: #15803d; }
+  .feedback.wrong { background: var(--wrong-bg); border: 1px solid #fecaca; color: #b91c1c; }
+  .feedback strong { font-weight: 800; }
+
+  .quiz-controls {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 16px;
+  }
+
+  /* ─── RESULT ─── */
+  .result-screen {
+    text-align: center; padding: 40px 20px;
+  }
+  .result-circle {
+    width: 120px; height: 120px; border-radius: 50%;
+    background: conic-gradient(var(--accent2) 0%, transparent 0%);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 24px;
+    font-family: 'Plus Jakarta Sans', sans-serif; font-size: 32px; font-weight: 800;
+    position: relative;
+  }
+  .result-circle::before {
+    content: ''; position: absolute; inset: 8px;
+    border-radius: 50%; background: var(--surface);
+  }
+  .result-circle span { position: relative; z-index: 1; }
+  .result-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 24px; font-weight: 800; margin-bottom: 8px; }
+  .result-sub { color: var(--text-dim); font-size: 15px; margin-bottom: 28px; }
+  .result-details {
+    display: flex; justify-content: center; gap: 24px; margin-bottom: 28px;
+    flex-wrap: wrap;
+  }
+  .rd-item { text-align: center; }
+  .rd-val { font-size: 26px; font-weight: 800; font-family: 'Plus Jakarta Sans', sans-serif; }
+  .rd-label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
+
+  /* ─── HOME ─── */
+  .home-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
+  .topic-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 22px;
+    cursor: pointer;
+    transition: all .2s;
+    position: relative; overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+  .topic-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  }
+  .topic-card:nth-child(1)::before { background: var(--accent); }
+  .topic-card:nth-child(2)::before { background: #7c3aed; }
+  .topic-card:nth-child(3)::before { background: var(--accent2); }
+  .topic-card:nth-child(4)::before { background: var(--accent5); }
+  .topic-card:nth-child(5)::before { background: var(--accent3); }
+  .topic-card:nth-child(6)::before { background: #0891b2; }
+  .topic-card:hover { border-color: var(--accent-mid); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,99,235,.12); }
+  .tc-icon { font-size: 28px; margin-bottom: 12px; }
+  .tc-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; font-weight: 700; margin-bottom: 6px; color: var(--text); }
+  .tc-sub { font-size: 12px; color: var(--text-muted); margin-bottom: 12px; }
+  .tc-actions { display: flex; gap: 8px; }
+
+  .pill {
+    font-size: 11px; font-weight: 700;
+    padding: 4px 10px; border-radius: 20px;
+    cursor: pointer; transition: all .15s;
+    border: none; font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+  .pill-theory { background: var(--accent-light); color: var(--accent); border: 1px solid var(--accent-mid); }
+  .pill-quiz { background: var(--accent2-bg); color: var(--accent2); border: 1px solid #bbf7d0; }
+  .pill-theory:hover { background: var(--accent); color: #fff; }
+  .pill-quiz:hover { background: var(--accent2); color: #fff; }
+
+  /* ─── RESPONSIVE ─── */
+  @media(max-width:768px){
+    nav { display: none; }
+    main { padding: 20px 16px; }
+    .options { grid-template-columns: 1fr; }
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  .page.active { animation: fadeIn .3s ease; }
+  .question-card { animation: fadeIn .25s ease; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+  .note-box {
+    background: #fffbeb;
+    border: 1px solid #fde68a;
+    border-radius: 10px; padding: 14px 16px;
+    font-size: 13px; color: #92400e;
+    margin: 12px 0;
+    line-height: 1.6;
+  }
+  .note-box::before { content: '⚡ '; }
+
+  .compare-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  .compare-table th { background: var(--surface2); color: var(--accent4); padding: 10px 14px; font-size: 12px; font-weight: 700; }
+  .compare-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--text-dim); }
+  .compare-table tr:last-child td { border-bottom: none; }
+  .yes { color: var(--accent2); font-weight: 700; }
+  .diff { color: var(--accent5); font-weight: 700; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>⚡ GrammarLab</h1>
+  <span>Ôn tập Động từ tiếng Anh</span>
+  <div class="score-badge" id="globalScore">🏆 0 / 0 đúng</div>
+</header>
+
+<div class="app">
+  <nav id="sidebar">
+    <div class="nav-section-title">Trang chủ</div>
+    <div class="nav-item active" data-page="home">🏠 Tổng quan</div>
+
+    <div class="nav-section-title" style="margin-top:12px">Lý thuyết</div>
+    <div class="nav-item" data-page="t1">📖 Các loại động từ <span class="nav-badge">1</span></div>
+    <div class="nav-item" data-page="t2">⏱ Hiện tại đơn <span class="nav-badge">2</span></div>
+    <div class="nav-item" data-page="t3">▶️ Hiện tại tiếp diễn <span class="nav-badge">3</span></div>
+    <div class="nav-item" data-page="t4">⏮ Quá khứ đơn <span class="nav-badge">4</span></div>
+    <div class="nav-item" data-page="t5">⏭ Tương lai <span class="nav-badge">5</span></div>
+    <div class="nav-item" data-page="t6">🔄 Gerund & Modal <span class="nav-badge">6</span></div>
+
+    <div class="nav-section-title" style="margin-top:12px">Bài tập</div>
+    <div class="nav-item" data-page="q1">✏️ Quiz: Loại động từ</div>
+    <div class="nav-item" data-page="q2">✏️ Quiz: Hiện tại đơn</div>
+    <div class="nav-item" data-page="q3">✏️ Quiz: Hiện tại tiếp diễn</div>
+    <div class="nav-item" data-page="q4">✏️ Quiz: Quá khứ đơn</div>
+    <div class="nav-item" data-page="q5">✏️ Quiz: Tương lai</div>
+    <div class="nav-item" data-page="q6">✏️ Quiz: Gerund & To V</div>
+    <div class="nav-item" data-page="qall">🎲 Quiz Tổng hợp (random)</div>
+  </nav>
+
+  <main id="mainContent">
+
+    <!-- HOME -->
+    <div class="page active" id="page-home">
+      <div class="theory-header">
+        <h2>Chào mừng bạn! 👋</h2>
+        <p>Chọn chủ đề để học lý thuyết hoặc làm bài tập ôn tập ngay bên dưới.</p>
+      </div>
+      <div class="home-grid">
+        <div class="topic-card"><div class="tc-icon">📖</div><div class="tc-title">Các loại động từ</div><div class="tc-sub">Action verbs · Stative verbs · Linking verbs</div><div class="tc-actions"><button class="pill pill-theory" onclick="goPage('t1')">Lý thuyết</button><button class="pill pill-quiz" onclick="goPage('q1')">Bài tập</button></div></div>
+        <div class="topic-card"><div class="tc-icon">⏱</div><div class="tc-title">Hiện tại đơn</div><div class="tc-sub">Chia động từ · Cách dùng · Phủ định · Nghi vấn</div><div class="tc-actions"><button class="pill pill-theory" onclick="goPage('t2')">Lý thuyết</button><button class="pill pill-quiz" onclick="goPage('q2')">Bài tập</button></div></div>
+        <div class="topic-card"><div class="tc-icon">▶️</div><div class="tc-title">Hiện tại tiếp diễn</div><div class="tc-sub">Cấu trúc · V-ing · Cách dùng</div><div class="tc-actions"><button class="pill pill-theory" onclick="goPage('t3')">Lý thuyết</button><button class="pill pill-quiz" onclick="goPage('q3')">Bài tập</button></div></div>
+        <div class="topic-card"><div class="tc-icon">⏮</div><div class="tc-title">Quá khứ đơn</div><div class="tc-sub">To be · V đều · V bất quy tắc</div><div class="tc-actions"><button class="pill pill-theory" onclick="goPage('t4')">Lý thuyết</button><button class="pill pill-quiz" onclick="goPage('q4')">Bài tập</button></div></div>
+        <div class="topic-card"><div class="tc-icon">⏭</div><div class="tc-title">Tương lai đơn & Gần</div><div class="tc-sub">Will · Be going to</div><div class="tc-actions"><button class="pill pill-theory" onclick="goPage('t5')">Lý thuyết</button><button class="pill pill-quiz" onclick="goPage('q5')">Bài tập</button></div></div>
+        <div class="topic-card"><div class="tc-icon">🔄</div><div class="tc-title">Gerund & To Infinitive</div><div class="tc-sub">Danh động từ · Động từ nguyên thể · Nghĩa khác nhau</div><div class="tc-actions"><button class="pill pill-theory" onclick="goPage('t6')">Lý thuyết</button><button class="pill pill-quiz" onclick="goPage('q6')">Bài tập</button></div></div>
+      </div>
+      <div style="margin-top:24px">
+        <button class="btn btn-success" onclick="goPage('qall')">🎲 Bắt đầu Quiz Tổng hợp (Random)</button>
+      </div>
+    </div>
+
+    <!-- THEORY 1 -->
+    <div class="page" id="page-t1">
+      <div class="theory-header"><h2>1. Các loại động từ</h2><p>Action verbs · Stative verbs · Linking verbs</p></div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">⚡</span> 1.1 Action Verbs — Động từ hành động</div>
+
+        <div class="rule-block">
+          <strong>Ngoại động từ (Transitive verb)</strong>: Những động từ <em>cần có Object (tân ngữ)</em> đi kèm để làm rõ nghĩa. Nếu đứng một mình thì câu chưa hoàn chỉnh.<br><br>
+          Ví dụ: <em>She <strong>locked</strong> the door.</em> / <em>He <strong>entered</strong> the room.</em> / <em>They <strong>received</strong> the package.</em> / <em>She <strong>threw</strong> the ball.</em>
+        </div>
+        <div class="rule-block">
+          <strong>Nội động từ (Intransitive verb)</strong>: Những động từ <em>đứng một mình đã đủ nghĩa</em>, không cần tân ngữ.<br><br>
+          Ví dụ: <em>He <strong>drives</strong> carefully.</em> / <em>She <strong>walks</strong> every morning.</em> / <em>The baby <strong>cried</strong>.</em> / <em>Birds <strong>fly</strong>.</em>
+        </div>
+        <div class="note-box">
+          Trong tiếng Anh, nhiều động từ vừa là nội động từ vừa là ngoại động từ tùy ngữ cảnh.<br>
+          Ví dụ: <em>She <strong>reads</strong>.</em> (nội — đứng một mình) | <em>She <strong>reads</strong> a book.</em> (ngoại — có tân ngữ "a book")<br>
+          Tương tự: <em>He <strong>writes</strong>.</em> | <em>He <strong>writes</strong> a letter.</em>
+        </div>
+        <div class="example-grid" style="margin-top:12px">
+          <div class="eg"><span class="tag tag-blue">Transitive</span> lock, enter, throw, receive, eat, build, send, open</div>
+          <div class="eg"><span class="tag tag-green">Intransitive</span> walk, sleep, arrive, laugh, exist, cry, swim</div>
+          <div class="eg"><span class="tag tag-orange">Cả hai</span> drive, write, read, cook, sing, run, eat</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">💭</span> 1.2 Stative Verbs — Động từ trạng thái</div>
+        <p style="font-size:14px;color:var(--text-dim);margin-bottom:16px">Diễn tả <strong>trạng thái</strong> (không phải hành động). Thường <strong>không dùng với thì tiếp diễn (-ing)</strong>.</p>
+        <table>
+          <tr><th>Nhóm</th><th>Động từ tiêu biểu</th><th>Câu ví dụ</th></tr>
+          <tr>
+            <td><span class="tag tag-red">Feelings</span><br>Cảm xúc</td>
+            <td><code>like, love, hate, fear, prefer, adore</code></td>
+            <td><em>I <strong>love</strong> coffee. / She <strong>hates</strong> spiders.</em></td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-purple">Thoughts / Opinions</span><br>Suy nghĩ, quan điểm</td>
+            <td><code>think, believe, agree, understand, know, suppose</code></td>
+            <td><em>She <strong>believes</strong> in herself. / I <strong>understand</strong> the problem.</em></td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-blue">Senses</span><br>Giác quan</td>
+            <td><code>sound, taste, smell, feel, look, seem, appear</code></td>
+            <td><em>This <strong>smells</strong> nice. / That <strong>sounds</strong> great.</em></td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-green">Possession</span><br>Sở hữu</td>
+            <td><code>have, own, belong, possess, contain</code></td>
+            <td><em>He <strong>owns</strong> a car. / This bag <strong>belongs</strong> to me.</em></td>
+          </tr>
+          <tr>
+            <td><span class="tag tag-orange">Other</span><br>Khác</td>
+            <td><code>cost, weigh, need, want, depend, matter</code></td>
+            <td><em>It <strong>costs</strong> 5 dollars. / The box <strong>weighs</strong> 2 kg.</em></td>
+          </tr>
+        </table>
+        <div class="note-box" style="margin-top:12px">
+          ❌ SAI: <em>"I am loving this song."</em> — "love" là stative verb, không dùng -ing<br>
+          ✅ ĐÚNG: <em>"I <strong>love</strong> this song."</em>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">🔗</span> 1.3 Linking Verbs — Động từ liên kết</div>
+        <div class="rule-block">
+          Động từ liên kết <strong>dẫn dắt, kết nối chủ ngữ</strong> với thông tin mô tả chủ ngữ đó (tính từ hoặc danh từ). Không diễn tả hành động cụ thể.
+        </div>
+        <div class="formula">S + linking verb + adjective / noun</div>
+        <table style="margin-top:14px">
+          <tr><th>Động từ</th><th>Ví dụ câu</th><th>Ghi chú</th></tr>
+          <tr><td><code>be (am/is/are/was/were)</code></td><td><em>She <strong>is</strong> a teacher.</em></td><td>Phổ biến nhất</td></tr>
+          <tr><td><code>become</code></td><td><em>He <strong>became</strong> angry.</em></td><td>Chỉ sự thay đổi trạng thái</td></tr>
+          <tr><td><code>seem / appear</code></td><td><em>She <strong>seems</strong> tired today.</em></td><td>Chỉ vẻ bề ngoài</td></tr>
+          <tr><td><code>sound</code></td><td><em>That <strong>sounds</strong> like a good idea.</em></td><td>Qua thính giác</td></tr>
+          <tr><td><code>taste / smell</code></td><td><em>The cake <strong>tastes</strong> sweet.</em></td><td>Qua vị giác / khứu giác</td></tr>
+          <tr><td><code>feel / look</code></td><td><em>You <strong>look</strong> happy today.</em></td><td>Qua thị giác / xúc giác</td></tr>
+          <tr><td><code>remain / stay / turn</code></td><td><em>The sky <strong>turned</strong> dark.</em></td><td>Chỉ trạng thái tiếp tục / biến đổi</td></tr>
+        </table>
+      </div>
+      <button class="btn btn-primary" onclick="goPage('q1')" style="margin-top:8px">✏️ Làm bài tập chủ đề này →</button>
+    </div>
+
+    <!-- THEORY 2 -->
+    <div class="page" id="page-t2">
+      <div class="theory-header"><h2>2. Thì Hiện Tại Đơn</h2><p>Simple Present Tense</p></div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">📐</span> 2.1 Công thức chia động từ</div>
+        <table>
+          <tr><th>Chủ ngữ</th><th>To be</th><th>Dạng rút gọn</th><th>Động từ thường</th></tr>
+          <tr><td>I</td><td><code>am</code></td><td><code>'m</code></td><td><em>I work / I drive / I play</em></td></tr>
+          <tr><td>He / She / It / N(số ít)</td><td><code>is</code></td><td><code>'s</code></td><td><em>She works / He drives / It plays</em></td></tr>
+          <tr><td>You / We / They / N(số nhiều)</td><td><code>are</code></td><td><code>'re</code></td><td><em>They work / We drive / You play</em></td></tr>
+        </table>
+        <hr>
+        <div class="card-title" style="margin-top:4px"><span class="icon">📏</span> Quy tắc thêm -s / -es cho He / She / It</div>
+        <div class="rule-block">
+          <strong>Tận cùng ch, sh, s, x, o</strong> → thêm <strong>-es</strong><br>
+          <em>teach → teach<strong>es</strong> &nbsp;|&nbsp; wash → wash<strong>es</strong> &nbsp;|&nbsp; fix → fix<strong>es</strong> &nbsp;|&nbsp; go → go<strong>es</strong> &nbsp;|&nbsp; do → do<strong>es</strong></em>
+        </div>
+        <div class="rule-block">
+          <strong>Phụ âm + y</strong> → đổi <strong>y → i</strong> rồi thêm <strong>-es</strong><br>
+          <em>study → stud<strong>ies</strong> &nbsp;|&nbsp; fly → fl<strong>ies</strong> &nbsp;|&nbsp; carry → carr<strong>ies</strong> &nbsp;|&nbsp; try → tr<strong>ies</strong></em>
+        </div>
+        <div class="rule-block">
+          <strong>Nguyên âm + y</strong> → chỉ thêm <strong>-s</strong><br>
+          <em>play → play<strong>s</strong> &nbsp;|&nbsp; say → say<strong>s</strong> &nbsp;|&nbsp; enjoy → enjoy<strong>s</strong> &nbsp;|&nbsp; stay → stay<strong>s</strong></em>
+        </div>
+        <div class="rule-block">
+          <strong>Các trường hợp còn lại</strong> → thêm <strong>-s</strong><br>
+          <em>run → run<strong>s</strong> &nbsp;|&nbsp; eat → eat<strong>s</strong> &nbsp;|&nbsp; write → write<strong>s</strong> &nbsp;|&nbsp; drink → drink<strong>s</strong></em>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">📅</span> 2.2 Các trường hợp dùng Hiện tại đơn</div>
+        <div class="rule-block">
+          🔁 <strong>Hành động thường xuyên, có tính lặp lại, thói quen ở hiện tại</strong><br>
+          Đi với trạng từ tần suất: <em>always, usually, often, sometimes, occasionally, rarely…</em><br>
+          <em>"She <strong>always drinks</strong> coffee in the morning."</em><br><br>
+          Số lần + Thời gian: <em>every day, every week, every month…</em><br>
+          <em>"I <strong>go</strong> to the gym every day."</em><br><br>
+          Tần suất cụ thể: <em>once a week, twice a month, three times a year…</em><br>
+          <em>"He <strong>visits</strong> his parents twice a month."</em>
+        </div>
+        <div class="rule-block">
+          💼 <strong>Đưa ra cảm giác, nghề nghiệp, tình trạng hiện tại, tính chất, sở hữu</strong><br>
+          <em>"He <strong>is</strong> a doctor."</em> / <em>"She <strong>has</strong> two cats."</em> / <em>"I <strong>feel</strong> great today."</em>
+        </div>
+        <div class="rule-block">
+          🌍 <strong>Nói về một chân lý, một sự thật luôn đúng</strong><br>
+          <em>"The sun <strong>rises</strong> in the east."</em> / <em>"Water <strong>boils</strong> at 100°C."</em>
+        </div>
+        <div class="rule-block">
+          🎬 <strong>Đưa ra tình tiết, sự kiện trong phim / truyện (kể chuyện)</strong><br>
+          <em>"Harry <strong>defeats</strong> Voldemort in the final battle."</em>
+        </div>
+        <div class="rule-block">
+          📰 <strong>Tiêu đề các bài báo</strong><br>
+          <em>"President <strong>signs</strong> new law." / "Scientists <strong>discover</strong> new species."</em>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">❌</span> 2.3 Câu phủ định</div>
+        <div class="formula">S + to be + not + …</div>
+        <div class="example-grid" style="margin-bottom:10px">
+          <div class="eg"><em>I <strong>am not</strong> tired.</em></div>
+          <div class="eg"><em>She <strong>is not</strong> (isn't) happy.</em></div>
+          <div class="eg"><em>They <strong>are not</strong> (aren't) ready.</em></div>
+        </div>
+        <div class="formula">S + do / does + not + V (nguyên thể)</div>
+        <div class="example-grid">
+          <div class="eg"><em>I <strong>don't</strong> like coffee.</em></div>
+          <div class="eg"><em>He <strong>doesn't</strong> play football.</em></div>
+          <div class="eg"><em>They <strong>don't</strong> know the answer.</em></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">❓</span> 2.4 Câu nghi vấn</div>
+        <div class="formula">Do / Does + S + V (nguyên thể) ?</div>
+        <div class="formula">To be + S ?</div>
+        <div class="formula">Wh- (What, Where, When, Why, How…) + do / does + S + V ?</div>
+        <div class="formula">Wh- + to be + S ?</div>
+        <div class="example-grid" style="margin-top:10px">
+          <div class="eg"><em><strong>Do</strong> you like pizza?</em></div>
+          <div class="eg"><em><strong>Does</strong> she work here?</em></div>
+          <div class="eg"><em><strong>Is</strong> he a teacher?</em></div>
+          <div class="eg"><em><strong>Where</strong> does she live?</em></div>
+          <div class="eg"><em><strong>What</strong> do you do? (Bạn làm nghề gì?)</em></div>
+          <div class="eg"><em><strong>Who</strong> are they?</em></div>
+        </div>
+      </div>
+      <button class="btn btn-primary" onclick="goPage('q2')" style="margin-top:8px">✏️ Làm bài tập →</button>
+    </div>
+
+    <!-- THEORY 3 -->
+    <div class="page" id="page-t3">
+      <div class="theory-header"><h2>3. Thì Hiện Tại Tiếp Diễn</h2><p>Present Continuous Tense</p></div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">📐</span> Công thức</div>
+        <div class="formula">I + am / 'm + V-ing</div>
+        <div class="formula">He / She / It / N(số ít) + is / 's + V-ing</div>
+        <div class="formula">You / We / They / N(số nhiều) + are / 're + V-ing</div>
+        <div class="example-grid" style="margin-top:12px">
+          <div class="eg"><em>I <strong>am studying</strong> right now.</em></div>
+          <div class="eg"><em>She <strong>is watching</strong> TV at the moment.</em></div>
+          <div class="eg"><em>They <strong>are playing</strong> football.</em></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">✍️</span> 3.1 Quy tắc thêm đuôi -ing</div>
+        <table>
+          <tr><th>Trường hợp</th><th>Quy tắc</th><th>Ví dụ từ file</th></tr>
+          <tr>
+            <td>Tận cùng <strong>-e</strong> (không phải -ee)</td>
+            <td>Bỏ -e → thêm <strong>-ing</strong></td>
+            <td><em>use → us<strong>ing</strong> | improve → improv<strong>ing</strong></em></td>
+          </tr>
+          <tr>
+            <td>Tận cùng <strong>-ee</strong></td>
+            <td>Giữ nguyên → thêm <strong>-ing</strong></td>
+            <td><em>see → see<strong>ing</strong> | free → free<strong>ing</strong></em></td>
+          </tr>
+          <tr>
+            <td>V <strong>1 âm tiết</strong>: nguyên âm + phụ âm<br><small>(không phải 2 nguyên âm)</small></td>
+            <td>Nhân đôi phụ âm → thêm <strong>-ing</strong></td>
+            <td><em>drop → drop<strong>p</strong>ing | run → run<strong>n</strong>ing | dig → dig<strong>g</strong>ing</em></td>
+          </tr>
+          <tr>
+            <td>V <strong>1 âm tiết</strong>: 2 nguyên âm (ai, ea, oo…)</td>
+            <td>❌ Không nhân đôi → thêm <strong>-ing</strong></td>
+            <td><em>wait → wait<strong>ing</strong> | read → read<strong>ing</strong> | cook → cook<strong>ing</strong></em></td>
+          </tr>
+          <tr>
+            <td>V <strong>2 âm tiết</strong>, trọng âm rơi vào <strong>âm tiết 2</strong>: nguyên âm + phụ âm</td>
+            <td>Nhân đôi phụ âm → thêm <strong>-ing</strong></td>
+            <td><em>be<strong>gin</strong> → beginn<strong>ing</strong> | ad<strong>mit</strong> → admitt<strong>ing</strong></em></td>
+          </tr>
+          <tr>
+            <td>Tận cùng <strong>-ie</strong></td>
+            <td>ie → <strong>y</strong> → thêm <strong>-ing</strong></td>
+            <td><em>lie → l<strong>y</strong>ing (nói dối) | tie → t<strong>y</strong>ing (buộc)</em></td>
+          </tr>
+          <tr>
+            <td>Tận cùng <strong>-c</strong></td>
+            <td>Thêm <strong>k</strong> → thêm <strong>-ing</strong></td>
+            <td><em>mimic → mimic<strong>k</strong>ing (bắt chước) | picnic → picnic<strong>k</strong>ing</em></td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">📅</span> 3.2 Cách dùng & Dấu hiệu nhận biết</div>
+        <div class="rule-block">
+          🎯 <strong>Diễn tả một hành động đang xảy ra tại thời điểm nói</strong><br>
+          <em>"She <strong>is talking</strong> on the phone right now."</em><br>
+          <em>"Look! It <strong>is raining</strong> outside!"</em>
+        </div>
+        <div class="rule-block">
+          😤 <strong>Dùng với "always" để chỉ một thói quen xấu</strong> (hàm ý phàn nàn, bực bội)<br>
+          <em>"He <strong>is always leaving</strong> the lights on!"</em><br>
+          <em>"She <strong>is always interrupting</strong> me!"</em>
+        </div>
+        <div class="rule-block">
+          🔖 <strong>Dấu hiệu nhận biết:</strong><br>
+          <em>now, right now, at the moment, at present, today, this week, this month, this year, currently, Look!, Listen!</em>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">❌</span> 3.3 Câu phủ định &amp; 3.4 Câu nghi vấn</div>
+        <div class="formula">S + am / is / are + NOT + V-ing</div>
+        <div class="example-grid" style="margin-bottom:12px">
+          <div class="eg"><em>I <strong>am not watching</strong> TV.</em></div>
+          <div class="eg"><em>She <strong>isn't sleeping</strong>.</em></div>
+          <div class="eg"><em>They <strong>aren't working</strong> now.</em></div>
+        </div>
+        <div class="formula">Am / Is / Are + S + V-ing ?</div>
+        <div class="formula">Wh- + am / is / are + S + V-ing ?</div>
+        <div class="example-grid" style="margin-top:10px">
+          <div class="eg"><em><strong>Is</strong> she studying now?</em></div>
+          <div class="eg"><em><strong>Are</strong> they coming?</em></div>
+          <div class="eg"><em><strong>What</strong> are you doing?</em></div>
+          <div class="eg"><em><strong>Where</strong> is he going?</em></div>
+        </div>
+      </div>
+      <button class="btn btn-primary" onclick="goPage('q3')" style="margin-top:8px">✏️ Làm bài tập →</button>
+    </div>
+
+    <!-- THEORY 4 -->
+    <div class="page" id="page-t4">
+      <div class="theory-header"><h2>4. Thì Quá Khứ Đơn</h2><p>Simple Past Tense</p></div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">📐</span> Công thức — To be quá khứ</div>
+        <table>
+          <tr><th>Chủ ngữ</th><th>To be (quá khứ)</th><th>Ví dụ</th></tr>
+          <tr><td>I, He, She, It, N(số ít)</td><td><code>was</code></td><td><em>He <strong>was</strong> tired yesterday.</em></td></tr>
+          <tr><td>You, We, They, N(số nhiều)</td><td><code>were</code></td><td><em>They <strong>were</strong> at home last night.</em></td></tr>
+        </table>
+        <div class="formula" style="margin-top:14px">S + V-ed / V2 (quá khứ bất quy tắc)</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">📏</span> Quy tắc thêm -ed (Động từ có quy tắc)</div>
+        <div class="rule-block">
+          <strong>Thêm -ed</strong> thông thường:<br>
+          <em>scream → scream<strong>ed</strong> | walk → walk<strong>ed</strong> | want → want<strong>ed</strong> | talk → talk<strong>ed</strong></em>
+        </div>
+        <div class="rule-block">
+          Tận cùng <strong>-e</strong>: chỉ thêm <strong>-d</strong>:<br>
+          <em>smile → smile<strong>d</strong> | love → love<strong>d</strong> | use → use<strong>d</strong> | improve → improve<strong>d</strong></em>
+        </div>
+        <div class="rule-block">
+          Tận cùng <strong>phụ âm + y</strong>: đổi y → i → thêm <strong>-ed</strong>:<br>
+          <em>try → tr<strong>ied</strong> | carry → carr<strong>ied</strong> | study → stud<strong>ied</strong> | cry → cr<strong>ied</strong></em>
+        </div>
+        <div class="note-box">
+          Động từ bất quy tắc (V2) — phải học thuộc:<br>
+          go → <strong>went</strong> | see → <strong>saw</strong> | run → <strong>ran</strong> | get → <strong>got</strong> | stand → <strong>stood</strong> | come → <strong>came</strong> | take → <strong>took</strong> | write → <strong>wrote</strong> | eat → <strong>ate</strong> | give → <strong>gave</strong>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">📅</span> Cách dùng & Dấu hiệu nhận biết</div>
+        <div class="rule-block">
+          Diễn tả hành động <strong>đã xảy ra và kết thúc trong quá khứ</strong>, không còn tiếp diễn tới hiện tại.<br><br>
+          <em>"She <strong>visited</strong> Paris last summer."</em> / <em>"I <strong>saw</strong> him two days ago."</em>
+        </div>
+        <div class="rule-block">
+          🔖 <strong>Dấu hiệu nhận biết:</strong><br>
+          <em>yesterday | last week / last month / last year | a week ago / two years ago | in + năm quá khứ (in 2020) | once upon a time | the other day</em>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">❌</span> Dạng phủ định & Dạng nghi vấn</div>
+        <div class="formula">S + didn't + V (nguyên thể)</div>
+        <div class="formula">S + was / were + not</div>
+        <div class="example-grid" style="margin-bottom:12px">
+          <div class="eg"><em>I <strong>didn't go</strong> to school yesterday.</em></div>
+          <div class="eg"><em>She <strong>wasn't</strong> home last night.</em></div>
+          <div class="eg"><em>They <strong>weren't</strong> ready.</em></div>
+        </div>
+        <hr>
+        <div class="formula">Did + S + V (nguyên thể) ?</div>
+        <div class="formula">Was / Were + S ?</div>
+        <div class="formula">Wh- + did + S + V ?</div>
+        <div class="formula">Wh- + was / were + S ?</div>
+        <div class="example-grid" style="margin-top:10px">
+          <div class="eg"><em><strong>Did</strong> you see that movie?</em></div>
+          <div class="eg"><em><strong>Was</strong> she at home?</em></div>
+          <div class="eg"><em><strong>Where did</strong> he go?</em></div>
+          <div class="eg"><em><strong>Why were</strong> they late?</em></div>
+        </div>
+      </div>
+      <button class="btn btn-primary" onclick="goPage('q4')" style="margin-top:8px">✏️ Làm bài tập →</button>
+    </div>
+
+    <!-- THEORY 5 -->
+    <div class="page" id="page-t5">
+      <div class="theory-header"><h2>5. Thì Tương Lai Đơn & Tương Lai Gần</h2><p>Simple Future · Be going to</p></div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">🚀</span> 5.1 Thì tương lai đơn — Will</div>
+        <div class="formula">Khẳng định: S + will + V (nguyên thể) &nbsp;|&nbsp; S + 'll + V</div>
+        <div class="formula">Phủ định: S + will not + V &nbsp;|&nbsp; S + won't + V</div>
+        <div class="formula">Nghi vấn: Will + S + V ? &nbsp;|&nbsp; Wh- + will + S + V ?</div>
+        <hr>
+        <div class="rule-block">
+          🎯 <strong>Dự đoán về tương lai</strong> (không có bằng chứng cụ thể)<br>
+          <em>"It <strong>will rain</strong> tomorrow."</em> / <em>"I think she <strong>will pass</strong> the exam."</em>
+        </div>
+        <div class="rule-block">
+          💡 <strong>Quyết định được đưa ra tại thời điểm nói</strong> (spontaneous decision)<br>
+          <em>"The phone is ringing. — I<strong>'ll answer</strong> it!"</em><br>
+          <em>"You look tired. — I<strong>'ll make</strong> you some tea."</em>
+        </div>
+        <div class="note-box">
+          🔖 Dấu hiệu nhận biết: <em>tomorrow, next week / next month / next year, in + khoảng thời gian (in two weeks' time, in 5 minutes), soon, in the future, I think…, I believe…, I expect…, probably</em>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">📅</span> 5.2 Thì tương lai gần — Be going to</div>
+        <table>
+          <tr><th>Chủ ngữ</th><th>To be</th><th>Cấu trúc đầy đủ</th></tr>
+          <tr><td>I</td><td><code>am / 'm</code></td><td><em>I <strong>am going to</strong> travel next week.</em></td></tr>
+          <tr><td>He / She / It / N(số ít)</td><td><code>is / 's</code></td><td><em>She <strong>is going to</strong> start a new job.</em></td></tr>
+          <tr><td>You / We / They / N(số nhiều)</td><td><code>are / 're</code></td><td><em>They <strong>are going to</strong> get married.</em></td></tr>
+        </table>
+        <div class="formula" style="margin-top:14px">Phủ định: S + (be) + not + going to + V</div>
+        <div class="formula">Nghi vấn: (Be) + S + going to + V ? &nbsp;|&nbsp; Wh- + (be) + S + going to + V ?</div>
+        <hr>
+        <div class="rule-block">
+          📋 <strong>Kế hoạch, dự định đã được quyết định từ trước</strong> thời điểm nói<br>
+          <em>"She <strong>is going to</strong> visit her parents next weekend."</em> (đã lên kế hoạch từ trước)<br>
+          <em>"We <strong>are going to</strong> buy a new house."</em>
+        </div>
+        <div class="rule-block">
+          🔮 <strong>Dự đoán dựa trên bằng chứng / dấu hiệu có sẵn</strong> ở hiện tại<br>
+          <em>"Look at those clouds! It <strong>is going to</strong> rain."</em> (bầu trời đã đầy mây → có bằng chứng)<br>
+          <em>"Be careful! You <strong>are going to</strong> fall!"</em>
+        </div>
+        <div class="note-box">
+          ⚖️ <strong>So sánh Will vs Going to:</strong><br>
+          <strong>Will</strong> = quyết định tức thời tại thời điểm nói / dự đoán chung chung<br>
+          <strong>Going to</strong> = kế hoạch đã có sẵn từ trước / dự đoán có bằng chứng rõ ràng
+        </div>
+      </div>
+      <button class="btn btn-primary" onclick="goPage('q5')" style="margin-top:8px">✏️ Làm bài tập →</button>
+    </div>
+
+    <!-- THEORY 6 -->
+    <div class="page" id="page-t6">
+      <div class="theory-header"><h2>6. Danh Động Từ & Động Từ Nguyên Thể</h2><p>Gerund (V-ing) · To Infinitive (to + V)</p></div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">🔤</span> 6.1 Danh động từ — Gerund (V-ing)</div>
+        <div class="rule-block">
+          Là động từ thêm đuôi <strong>-ing</strong> và đóng vai trò như một <strong>danh từ</strong> trong câu. Chỉ sự chuyển động, hành động.
+        </div>
+        <table>
+          <tr><th>Vai trò</th><th>Ví dụ</th></tr>
+          <tr><td>✅ Làm <strong>chủ ngữ</strong> (Subject)</td><td><em><strong>Swimming</strong> is fun. / <strong>Reading</strong> improves your vocabulary.</em></td></tr>
+          <tr><td>✅ Làm <strong>tân ngữ</strong> sau ngoại động từ</td><td><em>I enjoy <strong>reading</strong>. / She avoids <strong>smoking</strong>.</em></td></tr>
+          <tr><td>✅ Làm <strong>tân ngữ sau giới từ</strong></td><td><em>She is good at <strong>cooking</strong>. / He is interested in <strong>learning</strong>.</em></td></tr>
+        </table>
+        <div class="note-box" style="margin-top:12px">
+          Động từ chỉ đi với Gerund (V-ing):<br>
+          <strong>enjoy, mind, keep, finish, avoid, consider, suggest, recommend, miss, deny, practice, admit, postpone, risk, can't help, can't stand…</strong><br>
+          <em>She enjoys <strong>cooking</strong>. / I miss <strong>seeing</strong> you. / He finished <strong>writing</strong> the report.</em>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">🔤</span> 6.2 Động từ nguyên thể — To Infinitive (to + V)</div>
+        <table>
+          <tr><th>Vai trò</th><th>Ví dụ</th></tr>
+          <tr><td>✅ Làm <strong>chủ ngữ</strong></td><td><em><strong>To learn</strong> a new language is challenging.</em></td></tr>
+          <tr><td>✅ Làm <strong>tân ngữ sau động từ</strong></td><td><em>She decided <strong>to leave</strong>. / He wants <strong>to go</strong>.</em></td></tr>
+        </table>
+        <div class="note-box" style="margin-top:12px">
+          Động từ chỉ đi với To + V:<br>
+          <strong>decide to V</strong> — quyết định làm gì<br>
+          <strong>agree to V</strong> — đồng ý làm gì<br>
+          <strong>want to V</strong> — muốn làm gì<br>
+          <strong>promise to V</strong> — hứa làm gì<br>
+          <strong>refuse to V</strong> — từ chối làm gì<br>
+          <strong>hope / plan / expect / need / manage / fail to V…</strong>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">🔄</span> 6.3 Động từ đi được với cả V-ing và to V — NGHĨA GIỐNG NHAU</div>
+        <div class="rule-block">
+          Các động từ sau dùng cả <strong>V-ing</strong> và <strong>to V</strong> với nghĩa <em>tương đương nhau</em>:<br>
+          <strong>begin, start, continue, like, love, hate</strong>
+        </div>
+        <div class="example-grid">
+          <div class="eg"><em>continues <strong>smoking</strong> = continues <strong>to smoke</strong></em></div>
+          <div class="eg"><em>She loves <strong>singing</strong> = She loves <strong>to sing</strong></em></div>
+          <div class="eg"><em>He started <strong>working</strong> = He started <strong>to work</strong></em></div>
+          <div class="eg"><em>I hate <strong>waiting</strong> = I hate <strong>to wait</strong></em></div>
+        </div>
+        <div class="note-box" style="margin-top:12px">
+          ⚠️ <strong>Lưu ý:</strong> Nếu động từ trước đã ở dạng <strong>V-ing</strong>, thì động từ sau phải dùng <strong>to + V</strong>.<br>
+          <em>She is starting <strong>to run</strong>.</em> ✅ &nbsp;|&nbsp; <em>She is starting running.</em> ❌
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title"><span class="icon">⚠️</span> 6.4 Động từ đi được với cả V-ing và to V — NGHĨA KHÁC NHAU</div>
+        <table class="compare-table">
+          <tr><th>Động từ</th><th>+ to V (chưa xảy ra / hướng tới)</th><th>+ V-ing (đã / đang xảy ra)</th></tr>
+          <tr>
+            <td><strong>stop</strong></td>
+            <td class="diff">dừng lại ĐỂ làm việc khác<br><em>"He stopped <strong>to drink</strong> water."</em><br><small>(dừng lại, rồi uống nước)</small></td>
+            <td class="diff">dừng việc đang làm lại<br><em>"He stopped <strong>drinking</strong>."</em><br><small>(bỏ thói quen uống rượu)</small></td>
+          </tr>
+          <tr>
+            <td><strong>remember</strong></td>
+            <td class="diff">nhớ phải làm gì (việc chưa xảy ra)<br><em>"Remember <strong>to lock</strong> the door."</em></td>
+            <td class="diff">nhớ đã làm gì (việc đã xảy ra rồi)<br><em>"I remember <strong>locking</strong> the door."</em></td>
+          </tr>
+          <tr>
+            <td><strong>forget</strong></td>
+            <td class="diff">quên phải làm gì (việc chưa xảy ra)<br><em>"I forgot <strong>to call</strong> her."</em></td>
+            <td class="diff">quên đã làm gì (việc đã xảy ra rồi)<br><em>"I'll never forget <strong>meeting</strong> you."</em></td>
+          </tr>
+          <tr>
+            <td><strong>regret</strong></td>
+            <td class="diff">tiếc phải làm gì (chưa xảy ra)<br><em>"I regret <strong>to inform</strong> you…"</em></td>
+            <td class="diff">tiếc đã làm gì (đã xảy ra rồi)<br><em>"She regrets <strong>saying</strong> that."</em></td>
+          </tr>
+          <tr>
+            <td><strong>try</strong></td>
+            <td class="diff">cố gắng làm gì (bỏ công sức, nỗ lực)<br><em>"Try <strong>to finish</strong> it on time."</em></td>
+            <td class="diff">thử làm gì xem có hiệu quả không<br><em>"Try <strong>adding</strong> more salt."</em></td>
+          </tr>
+        </table>
+      </div>
+      <button class="btn btn-primary" onclick="goPage('q6')" style="margin-top:8px">✏️ Làm bài tập →</button>
+    </div>
+
+    <!-- QUIZ PAGES (will be rendered by JS) -->
+    <div class="page" id="page-q1"></div>
+    <div class="page" id="page-q2"></div>
+    <div class="page" id="page-q3"></div>
+    <div class="page" id="page-q4"></div>
+    <div class="page" id="page-q5"></div>
+    <div class="page" id="page-q6"></div>
+    <div class="page" id="page-qall"></div>
+
+  </main>
+</div>
+
+<script>
+// ═══════════════════════════════════════════
+//  QUESTION BANK
+// ═══════════════════════════════════════════
+const QUESTIONS = {
+  q1: [
+    {
+      type: 'MC', topic: 'Loại động từ',
+      text: 'Đâu là <strong>ngoại động từ</strong> (transitive verb)?',
+      options: ['arrive', 'receive', 'sleep', 'laugh'],
+      answer: 1,
+      explain: '"Receive" cần tân ngữ: "She received a gift." — Còn arrive/sleep/laugh là nội động từ, đứng một mình đã đủ nghĩa.'
+    },
+    {
+      type: 'MC', topic: 'Loại động từ',
+      text: '"The coffee <strong>smells</strong> wonderful." — Động từ "smells" ở đây thuộc loại nào?',
+      options: ['Action verb', 'Stative verb (Senses)', 'Linking verb', 'Cả B và C đều đúng'],
+      answer: 3,
+      explain: '"Smells" vừa là stative verb (nhóm senses/giác quan) vừa đóng vai trò linking verb kết nối chủ ngữ với tính từ "wonderful".'
+    },
+    {
+      type: 'MC', topic: 'Loại động từ',
+      text: '"She <strong>became</strong> a doctor." — Từ "became" là loại động từ gì?',
+      options: ['Action verb', 'Stative verb', 'Linking verb', 'Modal verb'],
+      answer: 2,
+      explain: '"Become" là linking verb — kết nối chủ ngữ "she" với danh từ "a doctor" (thông tin bổ sung về chủ ngữ).'
+    },
+    {
+      type: 'MC', topic: 'Loại động từ',
+      text: 'Nhóm nào sau đây TOÀN LÀ stative verbs?',
+      options: ['run, jump, swim', 'have, believe, cost', 'write, read, cook', 'go, come, stand'],
+      answer: 1,
+      explain: 'have (sở hữu), believe (suy nghĩ/quan điểm), cost (khác) đều là stative verbs — diễn tả trạng thái, không phải hành động.'
+    },
+    {
+      type: 'MC', topic: 'Loại động từ',
+      text: 'Câu nào SAI về cách dùng stative verb?',
+      options: [
+        'I understand the problem.',
+        'She is knowing the answer.',
+        'He owns a big house.',
+        'They believe in miracles.'
+      ],
+      answer: 1,
+      explain: '"Know" là stative verb, không dùng với thì tiếp diễn. Phải nói "She knows the answer", không phải "is knowing".'
+    },
+    {
+      type: 'MC', topic: 'Loại động từ',
+      text: '"He <strong>walked</strong> for an hour." — "Walked" là loại động từ gì?',
+      options: ['Transitive verb', 'Intransitive verb', 'Linking verb', 'Stative verb'],
+      answer: 1,
+      explain: '"Walk" là nội động từ (intransitive) — đứng một mình đã đủ nghĩa, không cần tân ngữ.'
+    },
+  ],
+  q2: [
+    {
+      type: 'Fill', topic: 'Hiện tại đơn',
+      text: 'She ___ (study) English every evening.',
+      blank: '___',
+      options: ['study', 'studies', 'is studying', 'studied'],
+      answer: 1,
+      explain: 'He/She/It + V-es/Vs. "Study" tận cùng là phụ âm + y → đổi y → i + es → "studies".'
+    },
+    {
+      type: 'Fill', topic: 'Hiện tại đơn',
+      text: 'The Earth ___ (go) around the Sun.',
+      blank: '___',
+      options: ['goes', 'go', 'went', 'is going'],
+      answer: 0,
+      explain: 'Chân lý hiển nhiên dùng hiện tại đơn. He/She/It → "go" tận cùng là o → thêm es → "goes".'
+    },
+    {
+      type: 'MC', topic: 'Hiện tại đơn',
+      text: 'Câu phủ định đúng của "He plays football every Sunday."',
+      options: [
+        'He not plays football every Sunday.',
+        'He doesn\'t play football every Sunday.',
+        'He don\'t play football every Sunday.',
+        'He isn\'t play football every Sunday.'
+      ],
+      answer: 1,
+      explain: 'He/She/It dùng "doesn\'t" + V nguyên thể. → "He doesn\'t play football every Sunday."'
+    },
+    {
+      type: 'MC', topic: 'Hiện tại đơn',
+      text: 'Chọn câu dùng hiện tại đơn ĐÚNG ngữ cảnh:',
+      options: [
+        'I am going to the gym right now.',
+        'She usually wakes up at 6 AM.',
+        'They were at the party last night.',
+        'He will visit us tomorrow.'
+      ],
+      answer: 1,
+      explain: '"Usually" là trạng từ tần suất → dùng hiện tại đơn. "She usually wakes up at 6 AM."'
+    },
+    {
+      type: 'Fill', topic: 'Hiện tại đơn',
+      text: '___ he ___ (watch) TV every night? — Yes, he ___.',
+      blank: '___',
+      options: ['Does / watch / does', 'Is / watching / is', 'Do / watches / does', 'Does / watches / does'],
+      answer: 0,
+      explain: 'Câu hỏi với He/She/It dùng "Does + S + V (nguyên thể)". → "Does he watch TV every night? Yes, he does."'
+    },
+    {
+      type: 'Fill', topic: 'Hiện tại đơn',
+      text: 'Tom ___ (teach) math at a high school.',
+      blank: '___',
+      options: ['teach', 'teachs', 'teaches', 'is teach'],
+      answer: 2,
+      explain: '"Teach" tận cùng là "ch" → thêm -es → "teaches". Tom (số ít) → He/She/It.'
+    },
+  ],
+  q3: [
+    {
+      type: 'Fill', topic: 'Hiện tại tiếp diễn',
+      text: 'Look! She ___ (run) in the park right now.',
+      blank: '___',
+      options: ['runs', 'run', 'is running', 'running'],
+      answer: 2,
+      explain: '"Right now" là dấu hiệu hiện tại tiếp diễn. She → is. "run" 1 âm tiết, nv+pâm → nhân đôi: "running".'
+    },
+    {
+      type: 'Fill', topic: 'Hiện tại tiếp diễn — V-ing',
+      text: 'Dạng V-ing đúng của "write" là gì?',
+      blank: 'write → ___',
+      options: ['writeing', 'writing', 'writting', 'writeing'],
+      answer: 1,
+      explain: '"Write" tận cùng -e (không phải -ee) → bỏ -e + ing → "writing".'
+    },
+    {
+      type: 'MC', topic: 'Hiện tại tiếp diễn',
+      text: 'Câu nào dùng hiện tại tiếp diễn ĐÚNG để diễn tả thói quen xấu?',
+      options: [
+        'He always forgets his keys.',
+        'He is always forgetting his keys!',
+        'He was always forgetting his keys.',
+        'He has always forgotten his keys.'
+      ],
+      answer: 1,
+      explain: 'Hiện tại tiếp diễn + "always" diễn tả thói quen xấu gây bực bội. "He is always forgetting his keys!" (hàm ý khó chịu).'
+    },
+    {
+      type: 'Fill', topic: 'Hiện tại tiếp diễn — V-ing',
+      text: 'Dạng V-ing của "swim" là gì?',
+      blank: 'swim → ___',
+      options: ['swiming', 'swimm', 'swimming', 'swimeing'],
+      answer: 2,
+      explain: '"Swim" 1 âm tiết: i-m = nguyên âm + phụ âm → nhân đôi phụ âm + ing → "swimming".'
+    },
+    {
+      type: 'MC', topic: 'Hiện tại tiếp diễn',
+      text: 'Câu phủ định đúng của "They are studying for the exam."',
+      options: [
+        'They not studying for the exam.',
+        'They don\'t studying for the exam.',
+        'They are not studying for the exam.',
+        'They aren\'t to study for the exam.'
+      ],
+      answer: 2,
+      explain: 'Phủ định HTTD: S + am/is/are + NOT + V-ing → "They are not studying..."'
+    },
+    {
+      type: 'Fill', topic: 'V-ing',
+      text: 'Dạng V-ing của "lie" (nói dối) là gì?',
+      blank: 'lie → ___',
+      options: ['lieing', 'liying', 'lying', 'lyeing'],
+      answer: 2,
+      explain: 'Tận cùng -ie → đổi ie → y + ing → "lying".'
+    },
+  ],
+  q4: [
+    {
+      type: 'Fill', topic: 'Quá khứ đơn',
+      text: 'She ___ (go) to Paris last summer.',
+      blank: '___',
+      options: ['goes', 'goed', 'went', 'was go'],
+      answer: 2,
+      explain: '"Go" là động từ bất quy tắc: go → went. "Last summer" là dấu hiệu quá khứ đơn.'
+    },
+    {
+      type: 'Fill', topic: 'Quá khứ đơn',
+      text: 'They ___ (not / see) him yesterday.',
+      blank: '___',
+      options: ['didn\'t saw', 'didn\'t see', 'don\'t saw', 'wasn\'t see'],
+      answer: 1,
+      explain: 'Phủ định quá khứ đơn: S + didn\'t + V nguyên thể → "didn\'t see" (không dùng "saw" sau didn\'t).'
+    },
+    {
+      type: 'MC', topic: 'Quá khứ đơn',
+      text: 'Câu hỏi đúng với "She was at home last night."',
+      options: [
+        'Did she at home last night?',
+        'Was she at home last night?',
+        'Were she at home last night?',
+        'Did she was at home last night?'
+      ],
+      answer: 1,
+      explain: 'To be trong quá khứ: She → was → Câu hỏi: "Was she at home last night?"'
+    },
+    {
+      type: 'Fill', topic: 'Quá khứ đơn — V-ed',
+      text: 'Dạng quá khứ của "try" là gì?',
+      blank: 'try → ___',
+      options: ['tryed', 'tried', 'tryied', 'tryes'],
+      answer: 1,
+      explain: '"Try" tận cùng phụ âm + y → đổi y → i + ed → "tried".'
+    },
+    {
+      type: 'MC', topic: 'Quá khứ đơn',
+      text: 'Chọn câu dùng quá khứ đơn ĐÚNG ngữ cảnh:',
+      options: [
+        'I see a great movie yesterday.',
+        'I saw a great movie yesterday.',
+        'I was see a great movie yesterday.',
+        'I am seeing a great movie yesterday.'
+      ],
+      answer: 1,
+      explain: '"Yesterday" → quá khứ đơn. "See" bất quy tắc → saw. → "I saw a great movie yesterday."'
+    },
+    {
+      type: 'Fill', topic: 'Quá khứ đơn',
+      text: '___ you ___ (finish) the report two days ago?',
+      blank: '___',
+      options: ['Were / finish', 'Did / finish', 'Did / finished', 'Were / finished'],
+      answer: 1,
+      explain: 'Câu hỏi quá khứ đơn V thường: Did + S + V nguyên thể? → "Did you finish the report two days ago?"'
+    },
+  ],
+  q5: [
+    {
+      type: 'MC', topic: 'Tương lai',
+      text: 'Bạn đang nghe điện thoại reng. Bạn nói: "OK, ___ it." (answer)',
+      options: ['I am going to answer', 'I will answer', 'I answer', 'I answered'],
+      answer: 1,
+      explain: 'Quyết định được đưa ra tại thời điểm nói → dùng "will". → "I will answer it." (hoặc "I\'ll answer it.")'
+    },
+    {
+      type: 'MC', topic: 'Tương lai gần',
+      text: 'Trời u ám, mây đen kéo đến. Bạn nói: "Look at those clouds! It ___ rain."',
+      options: ['will', 'is going to', 'would', 'is'],
+      answer: 1,
+      explain: 'Dự đoán DỰA TRÊN BẰNG CHỨNG hiện tại → dùng "be going to". → "It is going to rain."'
+    },
+    {
+      type: 'Fill', topic: 'Tương lai đơn',
+      text: 'Câu phủ định của "She will travel to Japan next month."',
+      blank: '___',
+      options: [
+        'She won\'t travel to Japan next month.',
+        'She will not to travel to Japan next month.',
+        'She doesn\'t travel to Japan next month.',
+        'She isn\'t going travel to Japan next month.'
+      ],
+      answer: 0,
+      explain: 'Phủ định will: S + will not (won\'t) + V → "She won\'t travel to Japan next month."'
+    },
+    {
+      type: 'MC', topic: 'Tương lai gần',
+      text: '"I ___ study abroad next year. I already applied to the university." — Chọn dạng đúng:',
+      options: ['will', 'am going to', 'was going to', 'would'],
+      answer: 1,
+      explain: 'Đây là kế hoạch đã quyết định từ trước (đã nộp đơn rồi) → dùng "be going to". → "I am going to study abroad."'
+    },
+    {
+      type: 'Fill', topic: 'Tương lai',
+      text: '___ + will + V dùng khi nào?',
+      blank: '___',
+      options: ['Kế hoạch lâu dài, đã chuẩn bị', 'Quyết định tức thời tại thời điểm nói', 'Dự đoán có bằng chứng rõ ràng', 'Hành động đang xảy ra'],
+      answer: 1,
+      explain: '"Will" dùng cho quyết định tức thời (spontaneous decision) hoặc dự đoán chung về tương lai.'
+    },
+    {
+      type: 'MC', topic: 'Tương lai',
+      text: 'Câu hỏi đúng với "He is going to buy a new car."',
+      options: [
+        'Will he going to buy a new car?',
+        'Is he going to buy a new car?',
+        'Does he going to buy a new car?',
+        'Was he going to buy a new car?'
+      ],
+      answer: 1,
+      explain: 'Câu hỏi "be going to": To be + S + going to + V? → "Is he going to buy a new car?"'
+    },
+  ],
+  q6: [
+    {
+      type: 'Fill', topic: 'Gerund / To V',
+      text: 'I enjoy ___ (read) books on weekends.',
+      blank: '___',
+      options: ['to read', 'reading', 'read', 'readed'],
+      answer: 1,
+      explain: '"Enjoy" chỉ đi với V-ing (Gerund), không dùng to V. → "I enjoy reading books."'
+    },
+    {
+      type: 'MC', topic: 'Stop to V vs Stop V-ing',
+      text: '"He stopped ___ a newspaper." — Ý nghĩa: anh ta dừng lại ĐỂ mua báo.',
+      options: ['buying', 'to buy', 'buy', 'bought'],
+      answer: 1,
+      explain: '"Stop to V" = dừng lại để làm việc khác. → "He stopped to buy a newspaper." (dừng lại, sau đó mua báo)'
+    },
+    {
+      type: 'MC', topic: 'Remember',
+      text: '"I remember ___ her for the first time. She was wearing a red dress." — Ý nghĩa: nhớ về ký ức trong quá khứ.',
+      options: ['to meet', 'meeting', 'meet', 'met'],
+      answer: 1,
+      explain: '"Remember V-ing" = nhớ lại việc ĐÃ xảy ra. → "I remember meeting her for the first time."'
+    },
+    {
+      type: 'MC', topic: 'Forget',
+      text: '"Don\'t forget ___ the door before leaving!" — việc chưa xảy ra.',
+      options: ['locking', 'to lock', 'lock', 'locked'],
+      answer: 1,
+      explain: '"Forget to V" = quên phải làm gì (việc chưa xảy ra). → "Don\'t forget to lock the door!"'
+    },
+    {
+      type: 'MC', topic: 'Try',
+      text: '"The cake isn\'t sweet enough. Try ___ more sugar." — Gợi ý thử xem có hiệu quả không.',
+      options: ['to add', 'adding', 'add', 'added'],
+      answer: 1,
+      explain: '"Try V-ing" = thử làm điều gì đó để xem kết quả. → "Try adding more sugar."'
+    },
+    {
+      type: 'MC', topic: 'Gerund / To V',
+      text: 'Câu nào đúng?',
+      options: [
+        'She decided going to London.',
+        'She decided to go to London.',
+        'She decided go to London.',
+        'She decided gone to London.'
+      ],
+      answer: 1,
+      explain: '"Decide" chỉ đi với to V (to infinitive). → "She decided to go to London."'
+    },
+    {
+      type: 'MC', topic: 'Gerund / To V',
+      text: '"He regrets ___ rude to her." — Anh ấy hối hận vì đã thô lỗ (việc đã xảy ra).',
+      options: ['to be', 'being', 'be', 'been'],
+      answer: 1,
+      explain: '"Regret V-ing" = hối tiếc về việc đã làm. → "He regrets being rude to her."'
+    },
+  ]
+};
+
+// All questions for random quiz
+QUESTIONS.qall = Object.values(QUESTIONS).flat().map((q,i) => ({...q, _orig: i}));
+
+// ═══════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════
+let totalCorrect = 0, totalAnswered = 0;
+
+// per-quiz state
+const quizState = {};
+
+function getState(qid) {
+  if (!quizState[qid]) {
+    quizState[qid] = { questions: [], idx: 0, correct: 0, answered: 0, done: false };
+  }
+  return quizState[qid];
+}
+
+// ═══════════════════════════════════════════
+//  NAVIGATION
+// ═══════════════════════════════════════════
+function goPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+  const page = document.getElementById('page-' + id);
+  if (page) page.classList.add('active');
+
+  const navItem = document.querySelector(`[data-page="${id}"]`);
+  if (navItem) navItem.classList.add('active');
+
+  // Init quiz pages
+  if (id.startsWith('q')) {
+    const state = getState(id);
+    if (!state.initialized) {
+      initQuiz(id);
+      state.initialized = true;
+    } else if (!state.done) {
+      renderQuestion(id);
+    }
+  }
+
+  window.scrollTo(0,0);
+}
+
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', () => goPage(item.dataset.page));
+});
+
+// ═══════════════════════════════════════════
+//  QUIZ ENGINE
+// ═══════════════════════════════════════════
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function initQuiz(qid) {
+  const pool = QUESTIONS[qid] || [];
+  const state = getState(qid);
+  state.questions = shuffle(pool);
+  state.idx = 0;
+  state.correct = 0;
+  state.answered = 0;
+  state.done = false;
+  renderQuestion(qid);
+}
+
+function renderQuestion(qid) {
+  const state = getState(qid);
+  const container = document.getElementById('page-' + qid);
+  const qs = state.questions;
+
+  if (qs.length === 0) {
+    container.innerHTML = '<p style="color:var(--text-dim);padding:40px">Không có câu hỏi cho chủ đề này.</p>';
+    return;
+  }
+
+  if (state.done || state.idx >= qs.length) {
+    renderResult(qid);
+    return;
+  }
+
+  const q = qs[state.idx];
+  const pct = Math.round((state.idx / qs.length) * 100);
+
+  const topicLabels = {q1:'Loại động từ',q2:'Hiện tại đơn',q3:'Hiện tại tiếp diễn',q4:'Quá khứ đơn',q5:'Tương lai',q6:'Gerund & To V',qall:'Tổng hợp'};
+
+  container.innerHTML = `
+    <div class="quiz-header">
+      <h2>✏️ ${topicLabels[qid] || 'Quiz'}</h2>
+      <button class="btn btn-secondary" onclick="restartQuiz('${qid}')">🔀 Làm lại</button>
+      ${qid !== 'qall' ? `<button class="btn btn-secondary" onclick="goPage('t${qid[1]}')">📖 Xem lý thuyết</button>` : ''}
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px">
+      <span style="font-size:13px;color:var(--text-muted)">Câu ${state.idx + 1} / ${qs.length}</span>
+      <span style="font-size:13px;color:var(--accent2)">✓ ${state.correct} đúng</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+    <div class="question-card" id="qcard-${qid}">
+      <div class="q-meta">
+        <span class="q-num">Q${state.idx + 1}</span>
+        <span class="tag tag-blue q-type">${q.topic || q.type}</span>
+      </div>
+      <div class="q-text">${q.text}</div>
+      <div class="options" id="opts-${qid}">
+        ${q.options.map((opt, i) => `
+          <div class="option" data-idx="${i}" onclick="selectOption('${qid}', ${i})">
+            <span class="opt-label">${String.fromCharCode(65+i)}</span>
+            ${opt}
+          </div>
+        `).join('')}
+      </div>
+      <div class="feedback" id="fb-${qid}"></div>
+    </div>
+    <div class="quiz-controls">
+      <span style="font-size:13px;color:var(--text-muted)">Chọn đáp án để tiếp tục</span>
+      <button class="btn btn-primary" id="nextBtn-${qid}" style="display:none" onclick="nextQuestion('${qid}')">
+        ${state.idx + 1 < qs.length ? 'Câu tiếp →' : '🏁 Xem kết quả'}
+      </button>
+    </div>
+  `;
+}
+
+function selectOption(qid, selectedIdx) {
+  const state = getState(qid);
+  const q = state.questions[state.idx];
+  const opts = document.querySelectorAll(`#opts-${qid} .option`);
+  const fb = document.getElementById(`fb-${qid}`);
+  const nextBtn = document.getElementById(`nextBtn-${qid}`);
+
+  opts.forEach(o => o.classList.add('disabled'));
+
+  const isCorrect = selectedIdx === q.answer;
+
+  opts.forEach((o, i) => {
+    if (i === q.answer) o.classList.add('correct');
+    else if (i === selectedIdx && !isCorrect) o.classList.add('wrong');
+  });
+
+  if (isCorrect) {
+    state.correct++;
+    totalCorrect++;
+    fb.className = 'feedback correct';
+    fb.innerHTML = `<strong>✅ Chính xác!</strong> ${q.explain}`;
+  } else {
+    fb.className = 'feedback wrong';
+    fb.innerHTML = `<strong>❌ Sai rồi!</strong> Đáp án đúng: <strong>${String.fromCharCode(65+q.answer)}. ${q.options[q.answer]}</strong><br>${q.explain}`;
+  }
+  fb.style.display = 'block';
+
+  state.answered++;
+  totalAnswered++;
+  updateGlobalScore();
+
+  nextBtn.style.display = 'flex';
+}
+
+function nextQuestion(qid) {
+  const state = getState(qid);
+  state.idx++;
+  if (state.idx >= state.questions.length) {
+    state.done = true;
+    renderResult(qid);
+  } else {
+    renderQuestion(qid);
+  }
+}
+
+function renderResult(qid) {
+  const state = getState(qid);
+  const container = document.getElementById('page-' + qid);
+  const pct = Math.round((state.correct / state.questions.length) * 100);
+  const topicLabels = {q1:'Loại động từ',q2:'Hiện tại đơn',q3:'Hiện tại tiếp diễn',q4:'Quá khứ đơn',q5:'Tương lai',q6:'Gerund & To V',qall:'Tổng hợp'};
+
+  let emoji = pct >= 80 ? '🏆' : pct >= 60 ? '😊' : '📚';
+  let msg = pct >= 80 ? 'Xuất sắc! Bạn nắm vững chủ đề này rồi!' : pct >= 60 ? 'Tốt lắm! Ôn thêm chút nữa nhé.' : 'Hãy xem lại lý thuyết và thử lại!';
+
+  const grad = `conic-gradient(var(--accent2) ${pct}%, var(--surface2) 0%)`;
+
+  container.innerHTML = `
+    <div class="result-screen">
+      <div class="result-circle" style="background:${grad}"><span>${emoji}</span></div>
+      <div class="result-title">${topicLabels[qid] || 'Quiz'} — Kết quả</div>
+      <div class="result-sub">${msg}</div>
+      <div class="result-details">
+        <div class="rd-item"><div class="rd-val" style="color:var(--accent2)">${state.correct}</div><div class="rd-label">Đúng</div></div>
+        <div class="rd-item"><div class="rd-val" style="color:var(--accent3)">${state.questions.length - state.correct}</div><div class="rd-label">Sai</div></div>
+        <div class="rd-item"><div class="rd-val" style="color:var(--accent)">${pct}%</div><div class="rd-label">Điểm</div></div>
+      </div>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="restartQuiz('${qid}')">🔀 Làm lại (Random)</button>
+        ${qid !== 'qall' ? `<button class="btn btn-secondary" onclick="goPage('t${qid[1]}')">📖 Xem lý thuyết</button>` : ''}
+        <button class="btn btn-secondary" onclick="goPage('home')">🏠 Trang chủ</button>
+      </div>
+    </div>
+  `;
+}
+
+function restartQuiz(qid) {
+  const state = getState(qid);
+  state.initialized = false;
+  state.done = false;
+  initQuiz(qid);
+}
+
+function updateGlobalScore() {
+  document.getElementById('globalScore').textContent = `🏆 ${totalCorrect} / ${totalAnswered} đúng`;
+}
+</script>
+</body>
+</html>

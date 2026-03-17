@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Các Loại Động Từ – Bài Tập</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #faf8f3;
+  --surface: #ffffff;
+  --card: #ffffff;
+  --border: #e8e2d6;
+  --ink: #1a1612;
+  --muted: #8a8070;
+  --accent: #c84b2f;
+  --accent2: #2d6a4f;
+  --accent3: #1d4e89;
+  --gold: #c49a2a;
+  --soft: #f0ebe0;
+  --success: #2d6a4f;
+  --error: #c84b2f;
+  --warn: #c49a2a;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Lexend', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+}
+
+/* Decorative lines background */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 27px,
+    rgba(200,190,170,0.12) 27px,
+    rgba(200,190,170,0.12) 28px
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Header */
+header {
+  position: relative;
+  z-index: 1;
+  background: var(--ink);
+  color: var(--bg);
+  padding: 2rem 2rem 1.75rem;
+  border-bottom: 4px solid var(--accent);
+}
+
+.header-inner {
+  max-width: 860px;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.header-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.4rem;
+}
+
+header h1 {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 400;
+  line-height: 1.15;
+  color: #fff;
+}
+
+header h1 em {
+  font-style: italic;
+  color: #f0d080;
+}
+
+.header-meta {
+  text-align: right;
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.5);
+  font-weight: 300;
+}
+
+/* Progress bar */
+.progress-wrap {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--ink);
+  padding: 0.5rem 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.progress-track {
+  flex: 1;
+  height: 4px;
+  background: rgba(255,255,255,0.12);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--gold));
+  border-radius: 2px;
+  transition: width 0.4s ease;
+  width: 0%;
+}
+
+.progress-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.5);
+  white-space: nowrap;
+}
+
+/* Main */
+main {
+  position: relative;
+  z-index: 1;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+/* Exercise block */
+.exercise {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 16px;
+  margin-bottom: 1.75rem;
+  overflow: hidden;
+  transition: border-color 0.3s;
+}
+
+.exercise.done { border-color: var(--success); }
+.exercise.has-error { border-color: var(--error); }
+
+.ex-header {
+  background: var(--soft);
+  border-bottom: 1.5px solid var(--border);
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.ex-num {
+  width: 32px;
+  height: 32px;
+  background: var(--ink);
+  color: #fff;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.ex-title {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.4;
+}
+
+.ex-badge {
+  margin-left: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.ex-body { padding: 1.5rem; }
+
+/* True/False */
+.tf-question { margin-bottom: 1.5rem; }
+.tf-question:last-child { margin-bottom: 0; }
+
+.tf-text {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 0.75rem;
+  color: var(--ink);
+}
+
+.tf-options {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.tf-btn {
+  padding: 0.5rem 1.25rem;
+  border-radius: 8px;
+  border: 1.5px solid var(--border);
+  background: var(--bg);
+  font-family: 'Lexend', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+  color: var(--ink);
+}
+
+.tf-btn:hover:not(:disabled) {
+  border-color: var(--accent3);
+  background: #eef3fa;
+  color: var(--accent3);
+}
+
+.tf-btn.selected { border-color: var(--accent3); background: #eef3fa; color: var(--accent3); }
+.tf-btn.correct { border-color: var(--success) !important; background: #e8f5ee !important; color: var(--success) !important; }
+.tf-btn.wrong { border-color: var(--error) !important; background: #faeae7 !important; color: var(--error) !important; }
+.tf-btn:disabled { cursor: default; }
+
+/* Multi-select */
+.multi-options { display: flex; flex-direction: column; gap: 0.5rem; }
+
+.check-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 0.9rem;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.15s;
+  background: var(--bg);
+  font-size: 0.9rem;
+}
+
+.check-item:hover:not(.disabled) { border-color: var(--accent3); background: #eef3fa; }
+.check-item.selected { border-color: var(--accent3); background: #eef3fa; }
+.check-item.correct { border-color: var(--success) !important; background: #e8f5ee !important; }
+.check-item.wrong { border-color: var(--error) !important; background: #faeae7 !important; }
+.check-item.disabled { cursor: default; }
+
+.check-box {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--border);
+  border-radius: 4px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+  font-size: 11px;
+}
+
+.check-item.selected .check-box { border-color: var(--accent3); background: var(--accent3); color: white; }
+.check-item.correct .check-box { border-color: var(--success) !important; background: var(--success) !important; color: white !important; }
+.check-item.wrong .check-box { border-color: var(--error) !important; background: var(--error) !important; color: white !important; }
+
+/* Match exercise */
+.match-layout {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 0.5rem 0.75rem;
+  align-items: start;
+}
+
+.match-col-header {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 0 0.5rem 0.5rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 0.25rem;
+}
+
+.match-mid-header { visibility: hidden; }
+
+.match-left-item {
+  background: var(--soft);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  font-size: 0.83rem;
+  line-height: 1.5;
+  color: var(--ink);
+  cursor: pointer;
+  transition: all 0.18s;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+}
+
+.match-left-item:hover:not(.disabled) { border-color: var(--accent3); background: #eef3fa; }
+.match-left-item.selected { border-color: var(--accent3); background: #deeaf8; font-weight: 600; }
+.match-left-item.matched { border-color: var(--success); background: #e8f5ee; cursor: default; }
+.match-left-item.wrong-match { border-color: var(--error); background: #faeae7; }
+.match-left-item.disabled { cursor: default; }
+
+.match-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+  color: var(--muted);
+  font-size: 1rem;
+}
+
+.match-right-item {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  font-size: 0.83rem;
+  color: var(--ink);
+  cursor: pointer;
+  transition: all 0.18s;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 500;
+}
+
+.match-right-item:hover:not(.disabled) { border-color: var(--gold); background: #fdf7e3; }
+.match-right-item.selected { border-color: var(--gold); background: #fdf7e3; font-weight: 600; }
+.match-right-item.matched { border-color: var(--success); background: #e8f5ee; cursor: default; }
+.match-right-item.wrong-match { border-color: var(--error); background: #faeae7; }
+.match-right-item.disabled { cursor: default; }
+
+.match-connection {
+  font-size: 0.78rem;
+  color: var(--success);
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 500;
+}
+
+/* Fill in blank */
+.fill-item {
+  background: var(--soft);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.fill-item:last-child { margin-bottom: 0; }
+
+.fill-sentence {
+  font-size: 0.92rem;
+  font-style: italic;
+  color: var(--ink);
+  flex: 1;
+  min-width: 200px;
+  line-height: 1.5;
+}
+
+.fill-inputs {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.fill-input {
+  border: none;
+  border-bottom: 2px solid var(--accent3);
+  background: transparent;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--accent3);
+  padding: 0.25rem 0.1rem;
+  width: 110px;
+  outline: none;
+  text-align: center;
+  transition: border-color 0.2s;
+}
+
+.fill-input:focus { border-bottom-color: var(--ink); }
+.fill-input.correct { border-bottom-color: var(--success); color: var(--success); }
+.fill-input.wrong { border-bottom-color: var(--error); color: var(--error); }
+.fill-input:disabled { cursor: default; }
+
+.fill-note {
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Drag match (Exercise 5) */
+.drag-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.6rem;
+  margin-bottom: 0.5rem;
+}
+
+@media (max-width: 600px) {
+  .drag-layout { grid-template-columns: 1fr; }
+  .match-layout { grid-template-columns: 1fr; }
+  .match-arrow { display: none; }
+}
+
+.drag-word {
+  background: var(--soft);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 0.6rem 0.9rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-align: center;
+  color: var(--ink);
+}
+
+.drag-word:hover:not(.disabled):not(.placed) { border-color: var(--accent3); background: #eef3fa; color: var(--accent3); }
+.drag-word.selected { border-color: var(--accent); background: #faeae7; color: var(--accent); }
+.drag-word.placed { opacity: 0.35; cursor: default; }
+.drag-word.disabled { cursor: default; }
+
+.group-section { margin-top: 1rem; }
+
+.group-cols { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.75rem; }
+
+@media (max-width: 600px) { .group-cols { grid-template-columns: 1fr; } }
+
+.group-box {
+  border: 1.5px dashed var(--border);
+  border-radius: 12px;
+  padding: 0.9rem;
+  min-height: 80px;
+  transition: border-color 0.2s;
+}
+
+.group-box:hover { border-color: var(--gold); border-style: solid; }
+.group-box.highlight { border-color: var(--accent3); border-style: solid; background: #f0f5fc; }
+
+.group-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+  font-weight: 600;
+}
+
+.group-title.action { color: var(--accent3); }
+.group-title.stative { color: var(--gold); }
+.group-title.linking { color: var(--accent); }
+
+.group-items { display: flex; flex-wrap: wrap; gap: 0.4rem; min-height: 36px; }
+
+.placed-tag {
+  background: var(--ink);
+  color: #fff;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  padding: 0.3rem 0.65rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.placed-tag:hover:not(.disabled) { background: var(--accent); }
+.placed-tag.disabled { cursor: default; }
+.placed-tag.correct { background: var(--success) !important; }
+.placed-tag.wrong { background: var(--error) !important; }
+
+/* MC question (Exercise 6) */
+.mc-item { margin-bottom: 1.5rem; }
+.mc-item:last-child { margin-bottom: 0; }
+
+.mc-sentence {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 0.75rem;
+  color: var(--ink);
+}
+
+.mc-sentence u {
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-underline-offset: 3px;
+  font-weight: 600;
+}
+
+.mc-options { display: flex; gap: 0.6rem; }
+
+.mc-btn {
+  padding: 0.5rem 1.1rem;
+  border-radius: 8px;
+  border: 1.5px solid var(--border);
+  background: var(--bg);
+  font-family: 'Lexend', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+  color: var(--ink);
+}
+
+.mc-btn:hover:not(:disabled) { border-color: var(--accent3); background: #eef3fa; color: var(--accent3); }
+.mc-btn.selected { border-color: var(--accent3); background: #eef3fa; color: var(--accent3); }
+.mc-btn.correct { border-color: var(--success) !important; background: #e8f5ee !important; color: var(--success) !important; }
+.mc-btn.wrong { border-color: var(--error) !important; background: #faeae7 !important; color: var(--error) !important; }
+.mc-btn:disabled { cursor: default; }
+
+/* Feedback inline */
+.inline-fb {
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  font-family: 'JetBrains Mono', monospace;
+  display: none;
+}
+.inline-fb.show { display: block; }
+.inline-fb.ok { color: var(--success); }
+.inline-fb.err { color: var(--error); }
+
+/* Submit button */
+.submit-wrap {
+  margin-top: 0.5rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-check {
+  background: var(--ink);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 0.65rem 1.5rem;
+  font-family: 'Lexend', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s;
+  letter-spacing: 0.02em;
+}
+
+.btn-check:hover { background: var(--accent); transform: translateY(-1px); }
+.btn-check:disabled { opacity: 0.4; cursor: default; transform: none; }
+
+/* Score row */
+.score-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+  padding: 0.65rem 1rem;
+  background: var(--soft);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  display: none;
+}
+.score-row.show { display: flex; }
+.score-ok { color: var(--success); font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+.score-total { color: var(--muted); font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; }
+
+/* Final result */
+.final-wrap {
+  background: var(--ink);
+  border-radius: 20px;
+  padding: 2.5rem;
+  text-align: center;
+  margin-top: 2rem;
+  display: none;
+  animation: popIn 0.5s cubic-bezier(0.34,1.56,0.64,1);
+}
+.final-wrap.show { display: block; }
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.85); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.final-emoji { font-size: 3.5rem; margin-bottom: 0.75rem; }
+
+.final-score {
+  font-family: 'Instrument Serif', serif;
+  font-size: 4rem;
+  color: #f0d080;
+  line-height: 1;
+  margin-bottom: 0.4rem;
+}
+
+.final-label { color: rgba(255,255,255,0.5); font-size: 0.9rem; margin-bottom: 1rem; }
+.final-msg { color: #fff; font-size: 1rem; line-height: 1.6; margin-bottom: 1.75rem; }
+
+.btn-retry {
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 0.8rem 2rem;
+  font-family: 'Lexend', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-retry:hover { background: #a83a20; transform: translateY(-2px); }
+
+/* Global submit */
+.global-submit {
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 1rem 2.5rem;
+  font-family: 'Lexend', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: block;
+  margin: 2rem auto 0;
+  letter-spacing: 0.03em;
+}
+.global-submit:hover { background: #a83a20; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(200,75,47,0.3); }
+.global-submit:disabled { opacity: 0.4; cursor: default; transform: none; box-shadow: none; }
+
+/* Note box */
+.note-box {
+  background: #fffbea;
+  border: 1px solid #e8d86a;
+  border-radius: 8px;
+  padding: 0.65rem 1rem;
+  font-size: 0.82rem;
+  color: #7a6a00;
+  margin-bottom: 1.25rem;
+  font-style: italic;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div>
+      <div class="header-label">Section 1 · Ngữ pháp tiếng Anh</div>
+      <h1>Các Loại <em>Động Từ</em></h1>
+    </div>
+    <div class="header-meta">6 bài tập<br>Chấm điểm tự động</div>
+  </div>
+</header>
+
+<div class="progress-wrap">
+  <div class="progress-track"><div class="progress-fill" id="prog-fill"></div></div>
+  <div class="progress-text" id="prog-text">0 / 6 bài</div>
+</div>
+
+<main>
+
+<!-- ===== EX 1: TRUE / FALSE ===== -->
+<div class="exercise" id="ex1">
+  <div class="ex-header">
+    <div class="ex-num">1</div>
+    <div class="ex-title">Chọn <strong>True</strong> nếu khẳng định đúng – <strong>False</strong> nếu khẳng định sai</div>
+    <div class="ex-badge">True / False</div>
+  </div>
+  <div class="ex-body">
+
+    <div class="tf-question" id="tf-1">
+      <div class="tf-text">Động từ được chia làm 2 loại là động từ hành động và động từ trạng thái.</div>
+      <div class="tf-options">
+        <button class="tf-btn" data-val="A" onclick="selectTF('tf-1','A',this)">A. True</button>
+        <button class="tf-btn" data-val="B" onclick="selectTF('tf-1','B',this)">B. False</button>
+      </div>
+      <div class="inline-fb" id="fb-tf-1"></div>
+    </div>
+
+    <div class="tf-question" id="tf-2">
+      <div class="tf-text">Tất cả các động từ đều được theo sau bởi tân ngữ.</div>
+      <div class="tf-options">
+        <button class="tf-btn" data-val="A" onclick="selectTF('tf-2','A',this)">A. True</button>
+        <button class="tf-btn" data-val="B" onclick="selectTF('tf-2','B',this)">B. False</button>
+      </div>
+      <div class="inline-fb" id="fb-tf-2"></div>
+    </div>
+
+    <div class="tf-question" id="tf-3">
+      <div class="tf-text">Động từ liên kết có tác dụng chuyển tiếp ý, kết nối chủ ngữ với thành phần tiếp theo trong câu.</div>
+      <div class="tf-options">
+        <button class="tf-btn" data-val="A" onclick="selectTF('tf-3','A',this)">A. True</button>
+        <button class="tf-btn" data-val="B" onclick="selectTF('tf-3','B',this)">B. False</button>
+      </div>
+      <div class="inline-fb" id="fb-tf-3"></div>
+    </div>
+
+    <div class="submit-wrap">
+      <button class="btn-check" onclick="checkEx1()">Kiểm tra</button>
+    </div>
+    <div class="score-row" id="score-ex1">
+      <span class="score-ok" id="score-ex1-val"></span>
+      <span class="score-total">/ 3 câu đúng</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== EX 2: MULTI-SELECT ===== -->
+<div class="exercise" id="ex2">
+  <div class="ex-header">
+    <div class="ex-num">2</div>
+    <div class="ex-title">Chọn các đáp án đúng: <strong>Động từ chỉ trạng thái bao gồm những loại nào?</strong></div>
+    <div class="ex-badge">Chọn nhiều đáp án</div>
+  </div>
+  <div class="ex-body">
+    <div class="multi-options" id="multi-ex2">
+      <div class="check-item" onclick="toggleCheck(this)" data-val="hoat-dong"><div class="check-box"></div>Động từ hoạt động</div>
+      <div class="check-item" onclick="toggleCheck(this)" data-val="cam-xuc"><div class="check-box"></div>Động từ cảm xúc</div>
+      <div class="check-item" onclick="toggleCheck(this)" data-val="suy-nghi"><div class="check-box"></div>Động từ suy nghĩ, quan điểm</div>
+      <div class="check-item" onclick="toggleCheck(this)" data-val="lien-ket"><div class="check-box"></div>Động từ liên kết</div>
+      <div class="check-item" onclick="toggleCheck(this)" data-val="giac-quan"><div class="check-box"></div>Động từ giác quan</div>
+      <div class="check-item" onclick="toggleCheck(this)" data-val="khuyet-thieu"><div class="check-box"></div>Động từ khuyết thiếu</div>
+      <div class="check-item" onclick="toggleCheck(this)" data-val="so-huu"><div class="check-box"></div>Động từ sở hữu</div>
+    </div>
+    <div class="submit-wrap">
+      <button class="btn-check" onclick="checkEx2()">Kiểm tra</button>
+    </div>
+    <div class="score-row" id="score-ex2">
+      <span class="score-ok" id="score-ex2-val"></span>
+      <span class="score-total">/ 4 đáp án đúng</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== EX 3: MATCHING ===== -->
+<div class="exercise" id="ex3">
+  <div class="ex-header">
+    <div class="ex-num">3</div>
+    <div class="ex-title">Nối từng loại động từ với định nghĩa của chúng</div>
+    <div class="ex-badge">Nối cặp</div>
+  </div>
+  <div class="ex-body">
+    <div class="match-layout">
+      <div class="match-col-header">Định nghĩa (tiếng Việt)</div>
+      <div class="match-mid-header">→</div>
+      <div class="match-col-header">Thuật ngữ (tiếng Anh)</div>
+
+      <div class="match-left-item" id="ml-1" onclick="selectMatchLeft('ml-1')">Ngoại động từ – đòi hỏi có tân ngữ bổ nghĩa</div>
+      <div class="match-arrow" id="ma-1">→</div>
+      <div class="match-right-item" id="mr-A" onclick="selectMatchRight('mr-A')">Transitive verbs</div>
+
+      <div class="match-left-item" id="ml-2" onclick="selectMatchLeft('ml-2')">Động từ trạng thái – chỉ suy nghĩ, cảm xúc, giác quan…</div>
+      <div class="match-arrow" id="ma-2">→</div>
+      <div class="match-right-item" id="mr-B" onclick="selectMatchRight('mr-B')">Intransitive verbs</div>
+
+      <div class="match-left-item" id="ml-3" onclick="selectMatchLeft('ml-3')">Nội động từ – không có tân ngữ, đứng một mình đã đủ nghĩa</div>
+      <div class="match-arrow" id="ma-3">→</div>
+      <div class="match-right-item" id="mr-C" onclick="selectMatchRight('mr-C')">Stative verbs</div>
+
+      <div class="match-left-item" id="ml-4" onclick="selectMatchLeft('ml-4')">Động từ liên kết – kết nối chủ ngữ với thành phần tiếp theo</div>
+      <div class="match-arrow" id="ma-4">→</div>
+      <div class="match-right-item" id="mr-D" onclick="selectMatchRight('mr-D')">Linking verbs</div>
+    </div>
+    <div class="submit-wrap">
+      <button class="btn-check" onclick="checkEx3()">Kiểm tra</button>
+    </div>
+    <div class="score-row" id="score-ex3">
+      <span class="score-ok" id="score-ex3-val"></span>
+      <span class="score-total">/ 4 cặp đúng</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== EX 4: FILL IN BLANK ===== -->
+<div class="exercise" id="ex4">
+  <div class="ex-header">
+    <div class="ex-num">4</div>
+    <div class="ex-title">Điền vào chỗ trống động từ của mỗi câu</div>
+    <div class="ex-badge">Điền từ</div>
+  </div>
+  <div class="ex-body">
+    <div class="note-box">Lưu ý: Đọc câu và điền động từ bạn xác định được vào ô trống. Giữ nguyên đuôi S/ES nếu có.</div>
+
+    <div class="fill-item">
+      <div class="fill-sentence">The children go to school by bus.</div>
+      <div class="fill-inputs"><span class="fill-note">Động từ là:</span><input class="fill-input" id="f1a" placeholder="___" data-ans="go"></div>
+    </div>
+    <div class="fill-item">
+      <div class="fill-sentence">Bats sleep during the day.</div>
+      <div class="fill-inputs"><span class="fill-note">Động từ là:</span><input class="fill-input" id="f2a" placeholder="___" data-ans="sleep"></div>
+    </div>
+    <div class="fill-item">
+      <div class="fill-sentence">These toys belong to Kathy.</div>
+      <div class="fill-inputs"><span class="fill-note">Động từ là:</span><input class="fill-input" id="f3a" placeholder="___" data-ans="belong"></div>
+    </div>
+    <div class="fill-item">
+      <div class="fill-sentence">Every pupil has a good dictionary.</div>
+      <div class="fill-inputs"><span class="fill-note">Động từ là:</span><input class="fill-input" id="f4a" placeholder="___" data-ans="has"></div>
+    </div>
+    <div class="fill-item">
+      <div class="fill-sentence">Polar bears live at the North Pole.</div>
+      <div class="fill-inputs"><span class="fill-note">Động từ là:</span><input class="fill-input" id="f5a" placeholder="___" data-ans="live"></div>
+    </div>
+    <div class="fill-item">
+      <div class="fill-sentence">Most children learn very fast.</div>
+      <div class="fill-inputs"><span class="fill-note">Động từ là:</span><input class="fill-input" id="f6a" placeholder="___" data-ans="learn"></div>
+    </div>
+    <div class="fill-item">
+      <div class="fill-sentence">Mr. Thomas teaches us science.</div>
+      <div class="fill-inputs"><span class="fill-note">Động từ là:</span><input class="fill-input" id="f7a" placeholder="___" data-ans="teaches"></div>
+    </div>
+    <div class="fill-item">
+      <div class="fill-sentence">It costs a lot to buy a house in this part of Sydney.</div>
+      <div class="fill-inputs">
+        <span class="fill-note">Động từ 1:</span>
+        <input class="fill-input" id="f8a" placeholder="___" data-ans="costs">
+        <span class="fill-note">Động từ 2:</span>
+        <input class="fill-input" id="f8b" placeholder="___" data-ans="buy">
+      </div>
+    </div>
+    <div class="fill-item">
+      <div class="fill-sentence">He becomes a US citizen.</div>
+      <div class="fill-inputs"><span class="fill-note">Động từ là:</span><input class="fill-input" id="f9a" placeholder="___" data-ans="becomes"></div>
+    </div>
+    <div class="fill-item">
+      <div class="fill-sentence">Many stores close on Sunday.</div>
+      <div class="fill-inputs"><span class="fill-note">Động từ là:</span><input class="fill-input" id="f10a" placeholder="___" data-ans="close"></div>
+    </div>
+    <div class="fill-item">
+      <div class="fill-sentence">I love the taste of garlic.</div>
+      <div class="fill-inputs"><span class="fill-note">Động từ là:</span><input class="fill-input" id="f11a" placeholder="___" data-ans="love"></div>
+    </div>
+    <div class="fill-item">
+      <div class="fill-sentence">He is 16, but he often seems younger.</div>
+      <div class="fill-inputs"><span class="fill-note">Động từ là:</span><input class="fill-input" id="f12a" placeholder="___" data-ans="seems"></div>
+    </div>
+
+    <div class="submit-wrap">
+      <button class="btn-check" onclick="checkEx4()">Kiểm tra</button>
+    </div>
+    <div class="score-row" id="score-ex4">
+      <span class="score-ok" id="score-ex4-val"></span>
+      <span class="score-total">/ 13 từ đúng</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== EX 5: GROUP SORTING ===== -->
+<div class="exercise" id="ex5">
+  <div class="ex-header">
+    <div class="ex-num">5</div>
+    <div class="ex-title">Xếp các động từ vào nhóm phù hợp</div>
+    <div class="ex-badge">Phân nhóm</div>
+  </div>
+  <div class="ex-body">
+
+    <div class="drag-layout" id="word-bank">
+      <div class="drag-word" onclick="selectDragWord(this)" data-word="Go">Go</div>
+      <div class="drag-word" onclick="selectDragWord(this)" data-word="Sleep">Sleep</div>
+      <div class="drag-word" onclick="selectDragWord(this)" data-word="Live">Live</div>
+      <div class="drag-word" onclick="selectDragWord(this)" data-word="Learn">Learn</div>
+      <div class="drag-word" onclick="selectDragWord(this)" data-word="Teaches">Teaches</div>
+      <div class="drag-word" onclick="selectDragWord(this)" data-word="Costs">Costs</div>
+      <div class="drag-word" onclick="selectDragWord(this)" data-word="Close">Close</div>
+      <div class="drag-word" onclick="selectDragWord(this)" data-word="Belong">Belong</div>
+      <div class="drag-word" onclick="selectDragWord(this)" data-word="Has">Has</div>
+      <div class="drag-word" onclick="selectDragWord(this)" data-word="Love">Love</div>
+      <div class="drag-word" onclick="selectDragWord(this)" data-word="Is">Is</div>
+      <div class="drag-word" onclick="selectDragWord(this)" data-word="Becomes">Becomes</div>
+      <div class="drag-word" onclick="selectDragWord(this)" data-word="Seems">Seems</div>
+    </div>
+
+    <div class="group-section">
+      <div class="group-cols">
+        <div class="group-box" id="grp-action" onclick="dropToGroup('action')">
+          <div class="group-title action">Action Verbs</div>
+          <div class="group-items" id="items-action"></div>
+        </div>
+        <div class="group-box" id="grp-stative" onclick="dropToGroup('stative')">
+          <div class="group-title stative">Stative Verbs</div>
+          <div class="group-items" id="items-stative"></div>
+        </div>
+        <div class="group-box" id="grp-linking" onclick="dropToGroup('linking')">
+          <div class="group-title linking">Linking Verbs</div>
+          <div class="group-items" id="items-linking"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="submit-wrap">
+      <button class="btn-check" onclick="checkEx5()">Kiểm tra</button>
+    </div>
+    <div class="score-row" id="score-ex5">
+      <span class="score-ok" id="score-ex5-val"></span>
+      <span class="score-total">/ 13 từ đúng</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== EX 6: MC TRANSITIVE / INTRANSITIVE ===== -->
+<div class="exercise" id="ex6">
+  <div class="ex-header">
+    <div class="ex-num">6</div>
+    <div class="ex-title">Động từ được gạch chân là <strong>nội động từ</strong> hay <strong>ngoại động từ</strong>?</div>
+    <div class="ex-badge">Trắc nghiệm</div>
+  </div>
+  <div class="ex-body">
+
+    <div class="mc-item" id="mc-1">
+      <div class="mc-sentence">She <u>was crying</u> all day long.</div>
+      <div class="mc-options">
+        <button class="mc-btn" data-val="A" onclick="selectMC('mc-1','A',this)">A. Nội động từ</button>
+        <button class="mc-btn" data-val="B" onclick="selectMC('mc-1','B',this)">B. Ngoại động từ</button>
+      </div>
+      <div class="inline-fb" id="fb-mc-1"></div>
+    </div>
+
+    <div class="mc-item" id="mc-2">
+      <div class="mc-sentence">We <u>showed</u> her the photo album.</div>
+      <div class="mc-options">
+        <button class="mc-btn" data-val="A" onclick="selectMC('mc-2','A',this)">A. Nội động từ</button>
+        <button class="mc-btn" data-val="B" onclick="selectMC('mc-2','B',this)">B. Ngoại động từ</button>
+      </div>
+      <div class="inline-fb" id="fb-mc-2"></div>
+    </div>
+
+    <div class="mc-item" id="mc-3">
+      <div class="mc-sentence">She <u>gave</u> the book to her teacher.</div>
+      <div class="mc-options">
+        <button class="mc-btn" data-val="A" onclick="selectMC('mc-3','A',this)">A. Nội động từ</button>
+        <button class="mc-btn" data-val="B" onclick="selectMC('mc-3','B',this)">B. Ngoại động từ</button>
+      </div>
+      <div class="inline-fb" id="fb-mc-3"></div>
+    </div>
+
+    <div class="mc-item" id="mc-4">
+      <div class="mc-sentence">He <u>slept</u> for seven hours.</div>
+      <div class="mc-options">
+        <button class="mc-btn" data-val="A" onclick="selectMC('mc-4','A',this)">A. Nội động từ</button>
+        <button class="mc-btn" data-val="B" onclick="selectMC('mc-4','B',this)">B. Ngoại động từ</button>
+      </div>
+      <div class="inline-fb" id="fb-mc-4"></div>
+    </div>
+
+    <div class="mc-item" id="mc-5">
+      <div class="mc-sentence">We <u>lived</u> in Mexico for two years.</div>
+      <div class="mc-options">
+        <button class="mc-btn" data-val="A" onclick="selectMC('mc-5','A',this)">A. Nội động từ</button>
+        <button class="mc-btn" data-val="B" onclick="selectMC('mc-5','B',this)">B. Ngoại động từ</button>
+      </div>
+      <div class="inline-fb" id="fb-mc-5"></div>
+    </div>
+
+    <div class="mc-item" id="mc-6">
+      <div class="mc-sentence">Jason <u>painted</u> his house blue.</div>
+      <div class="mc-options">
+        <button class="mc-btn" data-val="A" onclick="selectMC('mc-6','A',this)">A. Nội động từ</button>
+        <button class="mc-btn" data-val="B" onclick="selectMC('mc-6','B',this)">B. Ngoại động từ</button>
+      </div>
+      <div class="inline-fb" id="fb-mc-6"></div>
+    </div>
+
+    <div class="submit-wrap">
+      <button class="btn-check" onclick="checkEx6()">Kiểm tra</button>
+    </div>
+    <div class="score-row" id="score-ex6">
+      <span class="score-ok" id="score-ex6-val"></span>
+      <span class="score-total">/ 6 câu đúng</span>
+    </div>
+  </div>
+</div>
+
+<button class="global-submit" id="global-btn" onclick="submitAll()">📋 Nộp bài & Xem kết quả</button>
+
+<!-- Final result -->
+<div class="final-wrap" id="final-result">
+  <div class="final-emoji" id="final-emoji">🎉</div>
+  <div class="final-score" id="final-score">0/39</div>
+  <div class="final-label">tổng điểm</div>
+  <div class="final-msg" id="final-msg"></div>
+  <button class="btn-retry" onclick="retryAll()">↺ Làm lại từ đầu</button>
+</div>
+
+</main>
+
+<script>
+// ===== ANSWER KEYS =====
+const TF_ANS = { 'tf-1': 'B', 'tf-2': 'B', 'tf-3': 'A' };
+const TF_EX  = {
+  'tf-1': 'Sai! Động từ không chỉ chia 2 loại. Ngoài hành động và trạng thái, còn có nội động từ, ngoại động từ, động từ liên kết...',
+  'tf-2': 'Sai! Chỉ ngoại động từ (transitive) mới cần tân ngữ. Nội động từ (intransitive) đứng một mình đã đủ nghĩa.',
+  'tf-3': 'Đúng! Linking verbs kết nối subject với complement (danh từ/tính từ theo sau).'
+};
+
+const MULTI_ANS = ['cam-xuc','suy-nghi','giac-quan','so-huu'];
+
+const MATCH_ANS = { 'ml-1':'mr-A', 'ml-2':'mr-C', 'ml-3':'mr-B', 'ml-4':'mr-D' };
+
+const FILL_IDS = ['f1a','f2a','f3a','f4a','f5a','f6a','f7a','f8a','f8b','f9a','f10a','f11a','f12a'];
+
+const GROUP_ANS = {
+  Go:'action', Sleep:'action', Live:'action', Learn:'action', Teaches:'action',
+  Costs:'action', Close:'action',
+  Belong:'stative', Has:'stative', Love:'stative',
+  Is:'linking', Becomes:'linking', Seems:'linking'
+};
+
+const MC_ANS = { 'mc-1':'A','mc-2':'B','mc-3':'B','mc-4':'A','mc-5':'A','mc-6':'B' };
+const MC_EX  = {
+  'mc-1':'Nội động từ – "cry" không cần tân ngữ, đứng một mình đã đủ nghĩa.',
+  'mc-2':'Ngoại động từ – "show" cần tân ngữ: showed HER THE PHOTO ALBUM.',
+  'mc-3':'Ngoại động từ – "give" cần tân ngữ: gave THE BOOK.',
+  'mc-4':'Nội động từ – "sleep" không cần tân ngữ. "for seven hours" là trạng từ chỉ thời gian.',
+  'mc-5':'Nội động từ – "live" không cần tân ngữ. "in Mexico" là trạng từ chỉ nơi chốn.',
+  'mc-6':'Ngoại động từ – "paint" cần tân ngữ: painted HIS HOUSE blue.'
+};
+
+// ===== STATE =====
+let tf_answers = {};
+let multi_selected = new Set();
+let match_left_sel = null, match_pairs = {};
+let group_selected = null, group_placements = {};
+let mc_answers = {};
+let scores = {};
+let submitted = {};
+
+// ===== PROGRESS =====
+function updateProgress() {
+  const done = Object.keys(submitted).length;
+  document.getElementById('prog-fill').style.width = (done/6*100)+'%';
+  document.getElementById('prog-text').textContent = done + ' / 6 bài';
+}
+
+// ===== EX 1: TRUE / FALSE =====
+function selectTF(id, val, btn) {
+  if (submitted['ex1']) return;
+  tf_answers[id] = val;
+  const btns = document.getElementById(id).querySelectorAll('.tf-btn');
+  btns.forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+
+function checkEx1() {
+  if (submitted['ex1']) return;
+  let correct = 0;
+  ['tf-1','tf-2','tf-3'].forEach(id => {
+    const btns = document.getElementById(id).querySelectorAll('.tf-btn');
+    const ans = TF_ANS[id];
+    const chosen = tf_answers[id];
+    btns.forEach(b => {
+      b.disabled = true;
+      const v = b.dataset.val;
+      if (v === ans) b.classList.add('correct');
+      else if (v === chosen && chosen !== ans) b.classList.add('wrong');
+    });
+    const fb = document.getElementById('fb-'+id);
+    fb.classList.add('show');
+    if (chosen === ans) {
+      correct++;
+      fb.className = 'inline-fb show ok';
+      fb.textContent = '✓ ' + TF_EX[id];
+    } else {
+      fb.className = 'inline-fb show err';
+      fb.textContent = '✗ ' + TF_EX[id];
+    }
+  });
+  scores['ex1'] = correct;
+  submitted['ex1'] = true;
+  document.getElementById('score-ex1-val').textContent = correct;
+  const sr = document.getElementById('score-ex1');
+  sr.classList.add('show');
+  if (correct === 3) document.getElementById('ex1').classList.add('done');
+  else document.getElementById('ex1').classList.add('has-error');
+  updateProgress();
+}
+
+// ===== EX 2: MULTI SELECT =====
+function toggleCheck(el) {
+  if (el.classList.contains('disabled')) return;
+  const val = el.dataset.val;
+  if (el.classList.contains('selected')) {
+    el.classList.remove('selected');
+    el.querySelector('.check-box').textContent = '';
+    multi_selected.delete(val);
+  } else {
+    el.classList.add('selected');
+    el.querySelector('.check-box').textContent = '✓';
+    multi_selected.add(val);
+  }
+}
+
+function checkEx2() {
+  if (submitted['ex2']) return;
+  const items = document.querySelectorAll('#multi-ex2 .check-item');
+  let correct = 0;
+  items.forEach(item => {
+    item.classList.add('disabled');
+    item.onclick = null;
+    const val = item.dataset.val;
+    const isCorrect = MULTI_ANS.includes(val);
+    const isSelected = multi_selected.has(val);
+    if (isCorrect) {
+      item.classList.add('correct');
+      item.querySelector('.check-box').textContent = '✓';
+      if (isSelected) correct++;
+    } else if (isSelected) {
+      item.classList.add('wrong');
+    }
+  });
+  scores['ex2'] = correct;
+  submitted['ex2'] = true;
+  document.getElementById('score-ex2-val').textContent = correct;
+  document.getElementById('score-ex2').classList.add('show');
+  if (correct === 4 && multi_selected.size === 4) document.getElementById('ex2').classList.add('done');
+  else document.getElementById('ex2').classList.add('has-error');
+  updateProgress();
+}
+
+// ===== EX 3: MATCHING =====
+function selectMatchLeft(id) {
+  if (document.getElementById(id).classList.contains('disabled')) return;
+  if (document.getElementById(id).classList.contains('matched')) return;
+  document.querySelectorAll('.match-left-item').forEach(el => el.classList.remove('selected'));
+  match_left_sel = id;
+  document.getElementById(id).classList.add('selected');
+}
+
+function selectMatchRight(id) {
+  if (document.getElementById(id).classList.contains('disabled')) return;
+  if (!match_left_sel) return;
+  if (document.getElementById(id).classList.contains('matched')) return;
+
+  const left = match_left_sel;
+  match_pairs[left] = id;
+  document.getElementById(left).classList.remove('selected');
+  document.getElementById(left).classList.add('matched');
+  document.getElementById(id).classList.add('matched');
+
+  // Show arrow connection text
+  const num = left.replace('ml-','');
+  document.getElementById('ma-'+num).innerHTML = '<span class="match-connection">✓</span>';
+
+  match_left_sel = null;
+}
+
+function checkEx3() {
+  if (submitted['ex3']) return;
+  let correct = 0;
+  document.querySelectorAll('.match-left-item, .match-right-item').forEach(el => {
+    el.classList.add('disabled');
+    el.onclick = null;
+  });
+  ['ml-1','ml-2','ml-3','ml-4'].forEach(lid => {
+    const chosen = match_pairs[lid];
+    const correct_r = MATCH_ANS[lid];
+    if (chosen === correct_r) {
+      correct++;
+      document.getElementById(lid).classList.add('matched');
+      document.getElementById(chosen).classList.add('matched');
+    } else {
+      document.getElementById(lid).classList.add('wrong-match');
+      if (chosen) document.getElementById(chosen).classList.add('wrong-match');
+      // Show correct
+      document.getElementById(correct_r).style.border = '2px solid var(--success)';
+      document.getElementById(correct_r).style.background = '#e8f5ee';
+    }
+  });
+  scores['ex3'] = correct;
+  submitted['ex3'] = true;
+  document.getElementById('score-ex3-val').textContent = correct;
+  document.getElementById('score-ex3').classList.add('show');
+  if (correct === 4) document.getElementById('ex3').classList.add('done');
+  else document.getElementById('ex3').classList.add('has-error');
+  updateProgress();
+}
+
+// ===== EX 4: FILL IN BLANK =====
+function checkEx4() {
+  if (submitted['ex4']) return;
+  let correct = 0;
+  FILL_IDS.forEach(id => {
+    const inp = document.getElementById(id);
+    if (!inp) return;
+    inp.disabled = true;
+    const val = inp.value.trim().toLowerCase();
+    const ans = inp.dataset.ans.toLowerCase();
+    if (val === ans) {
+      inp.classList.add('correct');
+      correct++;
+    } else {
+      inp.classList.add('wrong');
+      inp.value = inp.value + ' → ' + inp.dataset.ans;
+    }
+  });
+  scores['ex4'] = correct;
+  submitted['ex4'] = true;
+  document.getElementById('score-ex4-val').textContent = correct;
+  document.getElementById('score-ex4').classList.add('show');
+  if (correct === 13) document.getElementById('ex4').classList.add('done');
+  else document.getElementById('ex4').classList.add('has-error');
+  updateProgress();
+}
+
+// ===== EX 5: GROUP SORT =====
+function selectDragWord(el) {
+  if (el.classList.contains('disabled') || el.classList.contains('placed')) return;
+  document.querySelectorAll('.drag-word').forEach(w => w.classList.remove('selected'));
+  group_selected = el.dataset.word;
+  el.classList.add('selected');
+}
+
+function dropToGroup(grp) {
+  if (!group_selected) return;
+  const word = group_selected;
+  group_placements[word] = grp;
+  group_selected = null;
+
+  // Mark word as placed
+  const wordEl = document.querySelector(`.drag-word[data-word="${word}"]`);
+  if (wordEl) { wordEl.classList.remove('selected'); wordEl.classList.add('placed'); }
+
+  // Add tag to group
+  const tag = document.createElement('div');
+  tag.className = 'placed-tag';
+  tag.textContent = word;
+  tag.dataset.word = word;
+  tag.onclick = function() { removeFromGroup(word, grp, this); };
+  document.getElementById('items-'+grp).appendChild(tag);
+}
+
+function removeFromGroup(word, grp, el) {
+  if (el.classList.contains('disabled')) return;
+  delete group_placements[word];
+  el.remove();
+  const wordEl = document.querySelector(`.drag-word[data-word="${word}"]`);
+  if (wordEl) wordEl.classList.remove('placed');
+}
+
+function checkEx5() {
+  if (submitted['ex5']) return;
+  let correct = 0;
+  document.querySelectorAll('.drag-word').forEach(w => { w.classList.add('disabled'); w.onclick = null; });
+  document.querySelectorAll('.placed-tag').forEach(tag => {
+    tag.classList.add('disabled');
+    tag.onclick = null;
+    const word = tag.dataset.word;
+    const placed = group_placements[word];
+    const ans = GROUP_ANS[word];
+    if (placed === ans) { correct++; tag.classList.add('correct'); }
+    else tag.classList.add('wrong');
+  });
+  // Show unplaced correct answers
+  Object.entries(GROUP_ANS).forEach(([word, grp]) => {
+    if (!group_placements[word]) {
+      const hint = document.createElement('div');
+      hint.className = 'placed-tag wrong';
+      hint.textContent = word + ' ✗';
+      document.getElementById('items-'+grp).appendChild(hint);
+    }
+  });
+  scores['ex5'] = correct;
+  submitted['ex5'] = true;
+  document.getElementById('score-ex5-val').textContent = correct;
+  document.getElementById('score-ex5').classList.add('show');
+  if (correct === 13) document.getElementById('ex5').classList.add('done');
+  else document.getElementById('ex5').classList.add('has-error');
+  updateProgress();
+}
+
+// ===== EX 6: MC =====
+function selectMC(id, val, btn) {
+  if (submitted['ex6']) return;
+  mc_answers[id] = val;
+  const btns = document.getElementById(id).querySelectorAll('.mc-btn');
+  btns.forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+
+function checkEx6() {
+  if (submitted['ex6']) return;
+  let correct = 0;
+  ['mc-1','mc-2','mc-3','mc-4','mc-5','mc-6'].forEach(id => {
+    const btns = document.getElementById(id).querySelectorAll('.mc-btn');
+    const ans = MC_ANS[id];
+    const chosen = mc_answers[id];
+    btns.forEach(b => {
+      b.disabled = true;
+      const v = b.dataset.val;
+      if (v === ans) b.classList.add('correct');
+      else if (v === chosen && chosen !== ans) b.classList.add('wrong');
+    });
+    const fb = document.getElementById('fb-'+id);
+    fb.classList.add('show');
+    if (chosen === ans) {
+      correct++;
+      fb.className = 'inline-fb show ok';
+      fb.textContent = '✓ ' + MC_EX[id];
+    } else {
+      fb.className = 'inline-fb show err';
+      fb.textContent = '✗ ' + MC_EX[id];
+    }
+  });
+  scores['ex6'] = correct;
+  submitted['ex6'] = true;
+  document.getElementById('score-ex6-val').textContent = correct;
+  document.getElementById('score-ex6').classList.add('show');
+  if (correct === 6) document.getElementById('ex6').classList.add('done');
+  else document.getElementById('ex6').classList.add('has-error');
+  updateProgress();
+}
+
+// ===== SUBMIT ALL =====
+function submitAll() {
+  // Auto-check any unchecked exercises
+  if (!submitted['ex1']) checkEx1();
+  if (!submitted['ex2']) checkEx2();
+  if (!submitted['ex3']) checkEx3();
+  if (!submitted['ex4']) checkEx4();
+  if (!submitted['ex5']) checkEx5();
+  if (!submitted['ex6']) checkEx6();
+
+  document.getElementById('global-btn').disabled = true;
+
+  const total = (scores['ex1']||0)+(scores['ex2']||0)+(scores['ex3']||0)+(scores['ex4']||0)+(scores['ex5']||0)+(scores['ex6']||0);
+  const max = 3+4+4+13+13+6; // = 43... wait let me recount: 3+4+4+13+13+6 = 43
+
+  const pct = Math.round(total/max*100);
+  let emoji, msg;
+  if (pct===100) { emoji='🏆'; msg='Hoàn hảo tuyệt đối! Bạn đã nắm vững toàn bộ các loại động từ tiếng Anh!'; }
+  else if (pct>=80) { emoji='🎉'; msg='Xuất sắc! Bạn hiểu rõ phần lớn kiến thức. Ôn lại các câu sai để hoàn thiện nhé!'; }
+  else if (pct>=60) { emoji='💪'; msg='Khá tốt! Còn một số điểm cần củng cố thêm. Xem lại phần lý thuyết rồi làm lại!'; }
+  else if (pct>=40) { emoji='📖'; msg='Cần ôn tập thêm. Hãy đọc kỹ định nghĩa từng loại động từ trước khi làm lại nhé!'; }
+  else { emoji='🌱'; msg='Hãy xem lại lý thuyết về các loại động từ từ đầu. Cố lên, bạn làm được!'; }
+
+  document.getElementById('final-emoji').textContent = emoji;
+  document.getElementById('final-score').textContent = total + ' / ' + max;
+  document.getElementById('final-msg').textContent = msg;
+  document.getElementById('final-result').classList.add('show');
+  document.getElementById('final-result').scrollIntoView({ behavior:'smooth', block:'center' });
+}
+
+// ===== RETRY =====
+function retryAll() {
+  location.reload();
+}
+</script>
+</body>
+</html>

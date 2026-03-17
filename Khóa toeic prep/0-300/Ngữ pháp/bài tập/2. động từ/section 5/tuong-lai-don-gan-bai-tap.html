@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thì Tương Lai Đơn & Tương Lai Gần – Bài Tập</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f0f4f0;--surface:#fff;--soft:#e5ece5;--border:#cdd8cd;
+  --ink:#111a11;--muted:#708070;--accent:#1a5c2a;--accent2:#2a5c8a;
+  --gold:#8a6a1a;--green:#1e7a3a;--red:#b03030;
+  --success-bg:#e8f5ee;--error-bg:#faeaea;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Lexend',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;}
+body::before{content:'';position:fixed;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 27px,rgba(120,150,120,.08) 27px,rgba(120,150,120,.08) 28px);pointer-events:none;z-index:0;}
+
+header{position:relative;z-index:1;background:var(--ink);padding:2rem 2rem 1.75rem;border-bottom:4px solid var(--accent);}
+.hi{max-width:920px;margin:0 auto;display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
+.hl{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);margin-bottom:.4rem;}
+header h1{font-family:'Instrument Serif',serif;font-size:clamp(1.5rem,4vw,2.3rem);font-weight:400;color:#fff;line-height:1.15;}
+header h1 em{font-style:italic;color:#f0d080;}
+.hm{text-align:right;font-size:.82rem;color:rgba(255,255,255,.5);font-weight:300;}
+
+.prog-wrap{position:sticky;top:0;z-index:100;background:var(--ink);padding:.5rem 2rem;display:flex;align-items:center;gap:1.25rem;}
+.prog-track{flex:1;height:4px;background:rgba(255,255,255,.12);border-radius:2px;overflow:hidden;}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--gold));border-radius:2px;transition:width .4s;width:0%;}
+.prog-txt{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:rgba(255,255,255,.5);white-space:nowrap;}
+
+main{position:relative;z-index:1;max-width:920px;margin:0 auto;padding:2rem 1.5rem 4rem;}
+
+.ex{background:var(--surface);border:1.5px solid var(--border);border-radius:16px;margin-bottom:1.75rem;overflow:hidden;transition:border-color .3s;}
+.ex.done{border-color:var(--green);}
+.ex.has-error{border-color:var(--red);}
+.ex-hd{background:var(--soft);border-bottom:1.5px solid var(--border);padding:1rem 1.5rem;display:flex;align-items:center;gap:.9rem;}
+.ex-num{width:32px;height:32px;background:var(--ink);color:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.8rem;flex-shrink:0;}
+.ex-ttl{font-size:.92rem;font-weight:600;line-height:1.4;flex:1;}
+.ex-bdg{font-family:'JetBrains Mono',monospace;font-size:.68rem;padding:.2rem .6rem;border-radius:6px;border:1px solid var(--border);color:var(--muted);white-space:nowrap;}
+.ex-body{padding:1.5rem;}
+
+.note{background:#f0faf0;border:1px solid #8ac88a;border-radius:8px;padding:.65rem 1rem;font-size:.82rem;color:#1a5c1a;margin-bottom:1.25rem;font-style:italic;}
+.eg{background:#e8f0e8;border-left:3px solid var(--accent);padding:.6rem .9rem;border-radius:0 8px 8px 0;font-size:.85rem;color:var(--accent);margin-bottom:1rem;line-height:1.6;}
+
+/* DROPDOWN */
+.dd{background:var(--surface);border:1.5px solid var(--accent2);border-radius:8px;font-family:'Lexend',sans-serif;font-size:.83rem;color:var(--ink);padding:.4rem .65rem;outline:none;cursor:pointer;transition:all .2s;}
+.dd:focus{border-color:var(--ink);}
+.dd.ok{border-color:var(--green)!important;background:var(--success-bg)!important;color:var(--green)!important;}
+.dd.err{border-color:var(--red)!important;background:var(--error-bg)!important;color:var(--red)!important;}
+.dd:disabled{cursor:default;opacity:.85;}
+
+/* MC */
+.mc-btn{width:100%;padding:.55rem .9rem;border-radius:9px;border:1.5px solid var(--border);background:var(--bg);font-family:'Lexend',sans-serif;font-size:.87rem;font-weight:500;cursor:pointer;transition:all .15s;color:var(--ink);text-align:left;margin-bottom:.4rem;}
+.mc-btn:last-child{margin-bottom:0;}
+.mc-btn:hover:not(:disabled){border-color:var(--accent2);background:#eef3fa;}
+.mc-btn.sel{border-color:var(--accent2);background:#eef3fa;}
+.mc-btn.ok{border-color:var(--green)!important;background:var(--success-bg)!important;color:var(--green)!important;}
+.mc-btn.err{border-color:var(--red)!important;background:var(--error-bg)!important;color:var(--red)!important;}
+.mc-btn:disabled{cursor:default;}
+
+/* FILL */
+.fi{border:none;border-bottom:2px solid var(--accent2);background:transparent;font-family:'JetBrains Mono',monospace;font-size:.87rem;font-weight:500;color:var(--accent2);padding:.2rem .1rem;outline:none;text-align:center;transition:border-color .2s;}
+.fi:focus{border-bottom-color:var(--ink);}
+.fi.ok{border-bottom-color:var(--green)!important;color:var(--green)!important;}
+.fi.err{border-bottom-color:var(--red)!important;color:var(--red)!important;}
+.fi:disabled{cursor:default;}
+.fi-sm{width:130px;} .fi-md{width:180px;} .fi-lg{width:260px;}
+.fi-xl{width:100%;max-width:500px;}
+
+/* SENTENCE ITEMS */
+.sent-item{background:var(--soft);border:1.5px solid var(--border);border-radius:12px;padding:.85rem 1.1rem;margin-bottom:.7rem;font-size:.9rem;line-height:1.8;}
+.sent-item:last-child{margin-bottom:0;}
+.sent-hint{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--muted);margin-bottom:.4rem;}
+.sent-type{display:inline-block;font-size:.72rem;font-weight:700;padding:.1rem .5rem;border-radius:4px;margin-right:.4rem;}
+.type-pos{background:#dbeedd;color:#1a5c2a;}
+.type-neg{background:#fdeadd;color:#8a3c1a;}
+.type-q{background:#dde8f0;color:#1a4c7a;}
+
+/* DIALOG */
+.dialog{background:var(--soft);border:1.5px solid var(--border);border-radius:12px;padding:1rem 1.25rem;margin-bottom:.75rem;}
+.dialog:last-child{margin-bottom:0;}
+.dlg-label{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--muted);margin-bottom:.3rem;}
+.dlg-a{color:var(--accent2);font-size:.88rem;margin-bottom:.3rem;}
+.dlg-b{color:var(--ink);font-size:.88rem;display:flex;align-items:baseline;gap:.4rem;flex-wrap:wrap;}
+
+/* INLINE FB */
+.fb{margin-top:.4rem;font-size:.78rem;font-family:'JetBrains Mono',monospace;display:none;}
+.fb.show{display:block;}
+.fb.ok{color:var(--green);}
+.fb.err{color:var(--red);}
+
+/* SCORE */
+.sc-row{display:none;align-items:center;gap:.75rem;margin-top:.75rem;padding:.65rem 1rem;background:var(--soft);border-radius:8px;font-size:.85rem;}
+.sc-row.show{display:flex;}
+.sc-ok{color:var(--green);font-weight:700;font-family:'JetBrains Mono',monospace;}
+.sc-tot{color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:.8rem;}
+
+.sub-wrap{margin-top:1rem;display:flex;justify-content:flex-end;}
+.btn-ck{background:var(--ink);color:#fff;border:none;border-radius:10px;padding:.65rem 1.5rem;font-family:'Lexend',sans-serif;font-size:.88rem;font-weight:600;cursor:pointer;transition:all .18s;}
+.btn-ck:hover{background:var(--accent);transform:translateY(-1px);}
+
+.g-sub{background:var(--accent);color:white;border:none;border-radius:12px;padding:1rem 2.5rem;font-family:'Lexend',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;transition:all .2s;display:block;margin:2rem auto 0;}
+.g-sub:hover{background:#134520;transform:translateY(-2px);box-shadow:0 6px 20px rgba(26,92,42,.3);}
+.g-sub:disabled{opacity:.4;cursor:default;transform:none;box-shadow:none;}
+
+.final{background:var(--ink);border-radius:20px;padding:2.5rem;text-align:center;margin-top:2rem;display:none;animation:pop .5s cubic-bezier(.34,1.56,.64,1);}
+.final.show{display:block;}
+@keyframes pop{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
+.f-emoji{font-size:3.5rem;margin-bottom:.75rem;}
+.f-score{font-family:'Instrument Serif',serif;font-size:4rem;color:#f0d080;line-height:1;margin-bottom:.4rem;}
+.f-lbl{color:rgba(255,255,255,.5);font-size:.9rem;margin-bottom:1rem;}
+.f-msg{color:#fff;font-size:1rem;line-height:1.6;margin-bottom:1.75rem;}
+.btn-retry{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:.8rem 2rem;font-family:'Lexend',sans-serif;font-size:.95rem;font-weight:600;cursor:pointer;}
+
+/* CONTEXT MC */
+.ctx-box{background:#f8f4e8;border:1.5px solid #d4c47a;border-radius:12px;padding:1rem 1.25rem;margin-bottom:1rem;}
+.ctx-title{font-weight:700;font-size:.88rem;color:var(--gold);margin-bottom:.35rem;}
+.ctx-vi{font-size:.8rem;color:var(--muted);font-style:italic;margin-bottom:.6rem;}
+.ctx-opts{display:flex;flex-direction:column;gap:.4rem;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <div>
+      <div class="hl">Section 5 · Ngữ pháp tiếng Anh</div>
+      <h1>Thì Tương Lai Đơn <em>&</em> Tương Lai Gần</h1>
+    </div>
+    <div class="hm">8 bài tập<br>Chấm điểm tự động</div>
+  </div>
+</header>
+
+<div class="prog-wrap">
+  <div class="prog-track"><div class="prog-fill" id="pf"></div></div>
+  <div class="prog-txt" id="pt">0 / 8 bài</div>
+</div>
+
+<main>
+
+<!-- EX 1 -->
+<div class="ex" id="ex1">
+  <div class="ex-hd"><div class="ex-num">1</div><div class="ex-ttl">Nối các đặc điểm với thì tương ứng</div><div class="ex-bdg">Dropdown</div></div>
+  <div class="ex-body">
+    <div style="display:flex;flex-direction:column;gap:.75rem;">
+
+      <div style="background:var(--soft);border:1.5px solid var(--border);border-radius:12px;padding:.9rem 1.1rem;">
+        <div style="font-size:.9rem;margin-bottom:.6rem;">Dự đoán 1 việc sẽ xảy ra trong tương lai</div>
+        <select class="dd" id="dd1-1" data-ans="A">
+          <option value="">-- Chọn thì --</option>
+          <option value="A">Thì tương lai đơn (will)</option>
+          <option value="B">Thì tương lai gần (be going to)</option>
+          <option value="C">Cả hai thì</option>
+        </select>
+        <div class="fb" id="fb-dd1-1"></div>
+      </div>
+
+      <div style="background:var(--soft);border:1.5px solid var(--border);border-radius:12px;padding:.9rem 1.1rem;">
+        <div style="font-size:.9rem;margin-bottom:.6rem;">Diễn tả hành động sẽ xảy ra trong thời gian gần, có tính chắc chắn cao và có kế hoạch, được quyết định <strong>trước</strong> thời điểm nói</div>
+        <select class="dd" id="dd1-2" data-ans="B">
+          <option value="">-- Chọn thì --</option>
+          <option value="A">Thì tương lai đơn (will)</option>
+          <option value="B">Thì tương lai gần (be going to)</option>
+          <option value="C">Cả hai thì</option>
+        </select>
+        <div class="fb" id="fb-dd1-2"></div>
+      </div>
+
+      <div style="background:var(--soft);border:1.5px solid var(--border);border-radius:12px;padding:.9rem 1.1rem;">
+        <div style="font-size:.9rem;margin-bottom:.6rem;">Diễn tả một quyết định được đưa ra <strong>tại thời điểm nói</strong></div>
+        <select class="dd" id="dd1-3" data-ans="A">
+          <option value="">-- Chọn thì --</option>
+          <option value="A">Thì tương lai đơn (will)</option>
+          <option value="B">Thì tương lai gần (be going to)</option>
+          <option value="C">Cả hai thì</option>
+        </select>
+        <div class="fb" id="fb-dd1-3"></div>
+      </div>
+
+    </div>
+    <div class="sub-wrap"><button class="btn-ck" onclick="checkEx1()">Kiểm tra</button></div>
+    <div class="sc-row" id="score-ex1"><span class="sc-ok" id="sv-ex1"></span><span class="sc-tot">/ 3 đúng</span></div>
+  </div>
+</div>
+
+<!-- EX 2 -->
+<div class="ex" id="ex2">
+  <div class="ex-hd"><div class="ex-num">2</div><div class="ex-ttl">Đặt câu ở thì tương lai gần (be going to) theo gợi ý</div><div class="ex-bdg">Viết câu</div></div>
+  <div class="ex-body">
+    <div class="eg">
+      (+) Andy is going to start school next week.<br>
+      (?) Are you going to see the dentist?<br>
+      (−) I'm not going to work this evening.
+    </div>
+
+    <div class="sent-item">
+      <div class="sent-hint"><span class="sent-type type-q">?</span> how / you / get to London</div>
+      <input class="fi fi-xl" id="e2-1" data-ans="How are you going to get to London?" placeholder="Viết câu hỏi...">
+      <div class="fb" id="fb-e2-1"></div>
+    </div>
+    <div class="sent-item">
+      <div class="sent-hint"><span class="sent-type type-neg">−</span> it / snow</div>
+      <input class="fi fi-xl" id="e2-2" data-ans="It is not going to snow." placeholder="Viết câu phủ định...">
+      <div class="fb" id="fb-e2-2"></div>
+    </div>
+    <div class="sent-item">
+      <div class="sent-hint"><span class="sent-type type-pos">+</span> I / cook fish / for lunch</div>
+      <input class="fi fi-xl" id="e2-3" data-ans="I am going to cook fish for lunch." placeholder="Viết câu khẳng định...">
+      <div class="fb" id="fb-e2-3"></div>
+    </div>
+    <div class="sent-item">
+      <div class="sent-hint"><span class="sent-type type-q">?</span> when / you / see the doctor</div>
+      <input class="fi fi-xl" id="e2-4" data-ans="When are you going to see the doctor?" placeholder="Viết câu hỏi...">
+      <div class="fb" id="fb-e2-4"></div>
+    </div>
+    <div class="sent-item">
+      <div class="sent-hint"><span class="sent-type type-pos">+</span> Angela / marry / her secretary</div>
+      <input class="fi fi-xl" id="e2-5" data-ans="Angela is going to marry her secretary." placeholder="Viết câu khẳng định...">
+      <div class="fb" id="fb-e2-5"></div>
+    </div>
+    <div class="sent-item">
+      <div class="sent-hint"><span class="sent-type type-q">?</span> John / call / this evening</div>
+      <input class="fi fi-xl" id="e2-6" data-ans="Is John going to call this evening?" placeholder="Viết câu hỏi...">
+      <div class="fb" id="fb-e2-6"></div>
+    </div>
+    <div class="sent-item">
+      <div class="sent-hint"><span class="sent-type type-neg">−</span> Sally / get the job</div>
+      <input class="fi fi-xl" id="e2-7" data-ans="Sally is not going to get the job." placeholder="Viết câu phủ định...">
+      <div class="fb" id="fb-e2-7"></div>
+    </div>
+
+    <div class="sub-wrap"><button class="btn-ck" onclick="checkEx2()">Kiểm tra</button></div>
+    <div class="sc-row" id="score-ex2"><span class="sc-ok" id="sv-ex2"></span><span class="sc-tot">/ 7 câu đúng</span></div>
+  </div>
+</div>
+
+<!-- EX 3 -->
+<div class="ex" id="ex3">
+  <div class="ex-hd"><div class="ex-num">3</div><div class="ex-ttl">Sắp xếp từ để được câu khẳng định hoàn chỉnh (thì tương lai đơn)</div><div class="ex-bdg">Sắp xếp từ</div></div>
+  <div class="ex-body">
+    <div class="eg">
+      here/ George/ be/ will → <strong>George will be here</strong> tomorrow.<br>
+      speak/ everybody/ English/ perhaps/ will → <strong>Perhaps everybody will speak English</strong> in the year 2100.
+    </div>
+
+    <div class="sent-item">
+      <div class="sent-hint">begin / class / will / the</div>
+      <input class="fi fi-xl" id="e3-1" data-ans="The class will begin at 9.30." placeholder="Sắp xếp thành câu...">
+      <div class="fb" id="fb-e3-1"></div>
+    </div>
+    <div class="sent-item">
+      <div class="sent-hint">be / they'll / home</div>
+      <input class="fi fi-xl" id="e3-2" data-ans="They'll be home soon." placeholder="Sắp xếp thành câu...">
+      <div class="fb" id="fb-e3-2"></div>
+    </div>
+    <div class="sent-item">
+      <div class="sent-hint">examination / will / the / difficult / be</div>
+      <input class="fi fi-xl" id="e3-3" data-ans="The examination will be difficult." placeholder="Sắp xếp thành câu...">
+      <div class="fb" id="fb-e3-3"></div>
+    </div>
+    <div class="sent-item">
+      <div class="sent-hint">walk / we'll / party / the / to</div>
+      <input class="fi fi-xl" id="e3-4" data-ans="We'll walk to the party." placeholder="Sắp xếp thành câu...">
+      <div class="fb" id="fb-e3-4"></div>
+    </div>
+    <div class="sent-item">
+      <div class="sent-hint">your / John / answer / questions / will</div>
+      <input class="fi fi-xl" id="e3-5" data-ans="John will answer your questions." placeholder="Sắp xếp thành câu...">
+      <div class="fb" id="fb-e3-5"></div>
+    </div>
+
+    <div class="sub-wrap"><button class="btn-ck" onclick="checkEx3()">Kiểm tra</button></div>
+    <div class="sc-row" id="score-ex3"><span class="sc-ok" id="sv-ex3"></span><span class="sc-tot">/ 5 câu đúng</span></div>
+  </div>
+</div>
+
+<!-- EX 4 -->
+<div class="ex" id="ex4">
+  <div class="ex-hd"><div class="ex-num">4</div><div class="ex-ttl">Hoàn thành câu phủ định và câu hỏi ở thì tương lai đơn</div><div class="ex-bdg">Điền từ</div></div>
+  <div class="ex-body">
+    <div class="eg">
+      'I <u>won't finish</u> this work today.' → 'When <u>will you finish</u> it?' (finish)<br>
+      'John <u>won't be</u> here tomorrow.' → '<u>Will he be</u> here on Tuesday?' (be)
+    </div>
+
+    <div class="dialog">
+      <div class="dlg-label">(be)</div>
+      <div class="dlg-a">'Annie <input class="fi fi-sm" id="e4-1a" data-ans="won't be" placeholder="___"> here at ten.'</div>
+      <div class="dlg-b">'When <input class="fi fi-sm" id="e4-1b" data-ans="will she be" placeholder="___"> here?'</div>
+      <div class="fb" id="fb-e4-1"></div>
+    </div>
+
+    <div class="dialog">
+      <div class="dlg-label">(have)</div>
+      <div class="dlg-a">'I <input class="fi fi-sm" id="e4-2a" data-ans="won't have" placeholder="___"> time for lunch.'</div>
+      <div class="dlg-b">'<input class="fi fi-md" id="e4-2b" data-ans="Will you have" placeholder="___"> time for a sandwich?'</div>
+      <div class="fb" id="fb-e4-2"></div>
+    </div>
+
+    <div class="dialog">
+      <div class="dlg-label">(find)</div>
+      <div class="dlg-a">'You <input class="fi fi-sm" id="e4-3a" data-ans="won't find" placeholder="___"> a pen in there.'</div>
+      <div class="dlg-b">'Where <input class="fi fi-md" id="e4-3b" data-ans="will I find" placeholder="___"> one?'</div>
+      <div class="fb" id="fb-e4-3"></div>
+    </div>
+
+    <div class="dialog">
+      <div class="dlg-label">(go)</div>
+      <div class="dlg-a">'The children <input class="fi fi-md" id="e4-4a" data-ans="won't go" placeholder="___"> to school in Ely.'</div>
+      <div class="dlg-b">'Where <input class="fi fi-md" id="e4-4b" data-ans="will they go" placeholder="___">?'</div>
+      <div class="fb" id="fb-e4-4"></div>
+    </div>
+
+    <div class="dialog">
+      <div class="dlg-label">(get)</div>
+      <div class="dlg-a">'Dylan <input class="fi fi-md" id="e4-5a" data-ans="won't get" placeholder="___"> much money if he sells that car.'</div>
+      <div class="dlg-b">'How much <input class="fi fi-md" id="e4-5b" data-ans="will he get" placeholder="___">?'</div>
+      <div class="fb" id="fb-e4-5"></div>
+    </div>
+
+    <div class="sub-wrap"><button class="btn-ck" onclick="checkEx4()">Kiểm tra</button></div>
+    <div class="sc-row" id="score-ex4"><span class="sc-ok" id="sv-ex4"></span><span class="sc-tot">/ 10 đúng</span></div>
+  </div>
+</div>
+
+<!-- EX 5 -->
+<div class="ex" id="ex5">
+  <div class="ex-hd"><div class="ex-num">5</div><div class="ex-ttl">Chọn đáp án đúng để hoàn thành câu</div><div class="ex-bdg">Trắc nghiệm</div></div>
+  <div class="ex-body">
+    <div style="background:var(--soft);border:1.5px solid var(--border);border-radius:12px;padding:1rem 1.25rem;">
+      <div style="font-size:.95rem;margin-bottom:.85rem;">I … the store to buy some stuff for a big party <strong>tomorrow</strong>.</div>
+      <div id="mc5">
+        <button class="mc-btn" data-v="A" onclick="selMC5('A',this)">A. am going to</button>
+        <button class="mc-btn" data-v="B" onclick="selMC5('B',this)">B. goes</button>
+        <button class="mc-btn" data-v="C" onclick="selMC5('C',this)">C. will go</button>
+        <button class="mc-btn" data-v="D" onclick="selMC5('D',this)">D. am going</button>
+      </div>
+      <div class="fb" id="fb-mc5"></div>
+    </div>
+    <div class="sub-wrap"><button class="btn-ck" onclick="checkEx5()">Kiểm tra</button></div>
+    <div class="sc-row" id="score-ex5"><span class="sc-ok" id="sv-ex5"></span><span class="sc-tot">/ 1 đúng</span></div>
+  </div>
+</div>
+
+<!-- EX 6 -->
+<div class="ex" id="ex6">
+  <div class="ex-hd"><div class="ex-num">6</div><div class="ex-ttl">Điền dạng đúng của động từ – Will hoặc Be going to</div><div class="ex-bdg">Điền từ</div></div>
+  <div class="ex-body">
+    <div class="note">Chú ý ngữ cảnh: quyết định tức thời → will · kế hoạch có sẵn → be going to</div>
+
+    <div class="dialog">
+      <div class="dlg-label">a. (lend)</div>
+      <div class="dlg-a">A: I forgot my wallet. I don't have any money.</div>
+      <div class="dlg-b">B: Not to worry. I <input class="fi fi-md" id="e6-a" data-ans="will lend" placeholder="(lend)"> you some.</div>
+      <div class="fb" id="fb-e6-a"></div>
+    </div>
+
+    <div class="dialog">
+      <div class="dlg-label">b. (clean)</div>
+      <div class="dlg-a">A: Why are you filling that bucket with water?</div>
+      <div class="dlg-b">B: I <input class="fi fi-md" id="e6-b" data-ans="am going to clean" placeholder="(clean)"> the car.</div>
+      <div class="fb" id="fb-e6-b"></div>
+    </div>
+
+    <div class="dialog">
+      <div class="dlg-label">c. (show)</div>
+      <div class="dlg-a">A: I don't know how to use this washing machine.</div>
+      <div class="dlg-b">B: It's easy. I <input class="fi fi-md" id="e6-c" data-ans="will show" placeholder="(show)"> you.</div>
+      <div class="fb" id="fb-e6-c"></div>
+    </div>
+
+    <div class="dialog">
+      <div class="dlg-label">d. (buy)</div>
+      <div class="dlg-a">A: Where is Jenny going? Is she going shopping?</div>
+      <div class="dlg-b">B: Yes, she <input class="fi fi-md" id="e6-d" data-ans="is going to buy" placeholder="(buy)"> some things for dinner tonight.</div>
+      <div class="fb" id="fb-e6-d"></div>
+    </div>
+
+    <div class="dialog">
+      <div class="dlg-label">e. (not/definitely/finish)</div>
+      <div class="dlg-a">A: This food doesn't taste very good, does it?</div>
+      <div class="dlg-b">B: No, it's horrible. We <input class="fi fi-lg" id="e6-e" data-ans="definitely won't finish" placeholder="(not/definitely/finish)"> this!</div>
+      <div class="fb" id="fb-e6-e"></div>
+    </div>
+
+    <div class="dialog">
+      <div class="dlg-label">f. (probably/not/go)</div>
+      <div class="dlg-a">A: Are you going to be in Danang city next month?</div>
+      <div class="dlg-b">B: Well, I <input class="fi fi-lg" id="e6-f" data-ans="probably won't go" placeholder="(probably/not/go)"> because my schedule is too busy.</div>
+      <div class="fb" id="fb-e6-f"></div>
+    </div>
+
+    <div class="sub-wrap"><button class="btn-ck" onclick="checkEx6()">Kiểm tra</button></div>
+    <div class="sc-row" id="score-ex6"><span class="sc-ok" id="sv-ex6"></span><span class="sc-tot">/ 6 đúng</span></div>
+  </div>
+</div>
+
+<!-- EX 7 -->
+<div class="ex" id="ex7">
+  <div class="ex-hd"><div class="ex-num">7</div><div class="ex-ttl">Sắp xếp các từ thành câu hoàn chỉnh</div><div class="ex-bdg">Sắp xếp từ</div></div>
+  <div class="ex-body">
+
+    <div class="sent-item">
+      <div class="sent-hint">My brother / going / work / to / as / an assistant / next week / is</div>
+      <input class="fi fi-xl" id="e7-1" data-ans="My brother is going to work as an assistant next week." placeholder="Sắp xếp...">
+      <div class="fb" id="fb-e7-1"></div>
+    </div>
+
+    <div class="sent-item">
+      <div class="sent-hint">many / buildings / beautiful / will be / There / in this area</div>
+      <input class="fi fi-xl" id="e7-2" data-ans="There will be many beautiful buildings in this area." placeholder="Sắp xếp...">
+      <div class="fb" id="fb-e7-2"></div>
+    </div>
+
+    <div class="sent-item">
+      <div class="sent-hint">dark and / full of / clouds / The sky / is / now. / definitely / It is / rain / going to</div>
+      <input class="fi fi-xl" id="e7-3" data-ans="The sky is dark and full of clouds now. It is definitely going to rain." placeholder="Sắp xếp...">
+      <div class="fb" id="fb-e7-3"></div>
+    </div>
+
+    <div class="sent-item">
+      <div class="sent-hint">studied / a lot / I / last night. / will not / certainly / fail this exam / I</div>
+      <input class="fi fi-xl" id="e7-4" data-ans="I studied a lot last night. I will not certainly fail this exam." placeholder="Sắp xếp...">
+      <div class="fb" id="fb-e7-4"></div>
+    </div>
+
+    <div class="sub-wrap"><button class="btn-ck" onclick="checkEx7()">Kiểm tra</button></div>
+    <div class="sc-row" id="score-ex7"><span class="sc-ok" id="sv-ex7"></span><span class="sc-tot">/ 4 câu đúng</span></div>
+  </div>
+</div>
+
+<!-- EX 8 -->
+<div class="ex" id="ex8">
+  <div class="ex-hd"><div class="ex-num">8</div><div class="ex-ttl">Đọc ngữ cảnh và chọn cách nói đúng thì động từ</div><div class="ex-bdg">Trắc nghiệm ngữ cảnh</div></div>
+  <div class="ex-body">
+    <div class="eg">
+      Ngữ cảnh: Bạn sẽ nói về kế hoạch mùa hè → Chọn <strong>A. I'm going to work...</strong><br>
+      (Kế hoạch đã quyết định trước → be going to ✅)
+    </div>
+
+    <div class="ctx-box">
+      <div class="ctx-title">Ngữ cảnh 1</div>
+      <div style="font-size:.88rem;margin-bottom:.3rem;">"Can you help me out? I gotta get this letter to the mail by noon."</div>
+      <div class="ctx-vi">(Bạn có thể giúp tôi không? Tôi phải gửi bức thư này qua đường bưu điện vào buổi trưa.)</div>
+      <div class="ctx-opts" id="mc8-1">
+        <button class="mc-btn" data-v="A" onclick="selMC8(1,'A',this)">A. Sure. I'm going to drop it off on my way to work.</button>
+        <button class="mc-btn" data-v="B" onclick="selMC8(1,'B',this)">B. Sure. I'll drop it off on my way to work.</button>
+      </div>
+      <div class="fb" id="fb-mc8-1"></div>
+    </div>
+
+    <div class="ctx-box">
+      <div class="ctx-title">Ngữ cảnh 2</div>
+      <div style="font-size:.88rem;margin-bottom:.3rem;">"Tell me again, why are you leaving work early?"</div>
+      <div class="ctx-vi">(Hãy nói lại cho tôi biết, tại sao bạn lại rời chỗ làm sớm?)</div>
+      <div class="ctx-opts" id="mc8-2">
+        <button class="mc-btn" data-v="A" onclick="selMC8(2,'A',this)">A. I'm going to attend my cousin's funeral.</button>
+        <button class="mc-btn" data-v="B" onclick="selMC8(2,'B',this)">B. I'll attend my cousin's funeral.</button>
+      </div>
+      <div class="fb" id="fb-mc8-2"></div>
+    </div>
+
+    <div class="ctx-box">
+      <div class="ctx-title">Ngữ cảnh 3</div>
+      <div style="font-size:.88rem;margin-bottom:.3rem;">"This flashlight doesn't work."</div>
+      <div class="ctx-vi">(Cái đèn pin này không sáng.)</div>
+      <div class="ctx-opts" id="mc8-3">
+        <button class="mc-btn" data-v="A" onclick="selMC8(3,'A',this)">A. Here, give it to me. I'm going to fix it for you.</button>
+        <button class="mc-btn" data-v="B" onclick="selMC8(3,'B',this)">B. Here, give it to me. I'll fix it for you.</button>
+      </div>
+      <div class="fb" id="fb-mc8-3"></div>
+    </div>
+
+    <div class="sub-wrap"><button class="btn-ck" onclick="checkEx8()">Kiểm tra</button></div>
+    <div class="sc-row" id="score-ex8"><span class="sc-ok" id="sv-ex8"></span><span class="sc-tot">/ 3 đúng</span></div>
+  </div>
+</div>
+
+<button class="g-sub" id="gbtn" onclick="submitAll()">📋 Nộp bài & Xem kết quả</button>
+
+<div class="final" id="final">
+  <div class="f-emoji" id="fe">🎉</div>
+  <div class="f-score" id="fs">0/0</div>
+  <div class="f-lbl">tổng điểm</div>
+  <div class="f-msg" id="fm"></div>
+  <button class="btn-retry" onclick="location.reload()">↺ Làm lại từ đầu</button>
+</div>
+
+</main>
+
+<script>
+const submitted={},scores={};
+
+function upProg(){
+  const d=Object.keys(submitted).length;
+  document.getElementById('pf').style.width=(d/8*100)+'%';
+  document.getElementById('pt').textContent=d+' / 8 bài';
+}
+
+function norm(s){
+  return(s||'').toLowerCase()
+    .replace(/i'm/g,"i am").replace(/it's/g,"it is")
+    .replace(/they'll/g,"they will").replace(/we'll/g,"we will")
+    .replace(/isn't/g,"is not").replace(/won't/g,"will not")
+    .replace(/isn't/g,"is not").replace(/aren't/g,"are not")
+    .replace(/['']/g,"'").replace(/[.?!,]/g,'').replace(/\s+/g,' ').trim();
+}
+
+function finishEx(id,correct,total){
+  scores[id]=correct;submitted[id]=true;
+  document.getElementById('sv-'+id).textContent=correct;
+  document.getElementById('score-'+id).classList.add('show');
+  document.getElementById(id).classList.add(correct===total?'done':'has-error');
+  upProg();
+}
+
+// EX1 dropdown
+const DD1_ANS={'dd1-1':'A','dd1-2':'B','dd1-3':'A'};
+const DD1_EX={
+  'dd1-1':'Đúng! Dùng "will" để đưa ra dự đoán về tương lai (thường có: think, believe, probably, perhaps...).',
+  'dd1-2':'Đúng! "be going to" dùng cho kế hoạch đã được quyết định TRƯỚC thời điểm nói.',
+  'dd1-3':'Đúng! Khi đưa ra quyết định NGAY LÚC NÓI (tức thời) → dùng "will".'
+};
+function checkEx1(){
+  if(submitted['ex1'])return;
+  let c=0;
+  Object.keys(DD1_ANS).forEach(id=>{
+    const sel=document.getElementById(id),fb=document.getElementById('fb-'+id);
+    sel.disabled=true;
+    const v=sel.value,a=DD1_ANS[id];
+    sel.classList.add(v===a?'ok':'err');
+    fb.classList.add('show');
+    if(v===a){c++;fb.className='fb show ok';fb.textContent='✓ '+DD1_EX[id];}
+    else{fb.className='fb show err';fb.textContent='✗ '+DD1_EX[id];}
+  });
+  finishEx('ex1',c,3);
+}
+
+// EX2 sentences
+function checkEx2(){
+  if(submitted['ex2'])return;
+  const items=[
+    {id:'e2-1',ans:['How are you going to get to London'],fb:'fb-e2-1'},
+    {id:'e2-2',ans:['It is not going to snow','It is not going to snow','It\'s not going to snow'],fb:'fb-e2-2'},
+    {id:'e2-3',ans:['I am going to cook fish for lunch','I\'m going to cook fish for lunch'],fb:'fb-e2-3'},
+    {id:'e2-4',ans:['When are you going to see the doctor'],fb:'fb-e2-4'},
+    {id:'e2-5',ans:['Angela is going to marry her secretary'],fb:'fb-e2-5'},
+    {id:'e2-6',ans:['Is John going to call this evening'],fb:'fb-e2-6'},
+    {id:'e2-7',ans:['Sally is not going to get the job','Sally isn\'t going to get the job'],fb:'fb-e2-7'},
+  ];
+  let c=0;
+  items.forEach(({id,ans,fb})=>{
+    const inp=document.getElementById(id);inp.disabled=true;
+    const v=norm(inp.value);
+    const ok=ans.some(a=>norm(a)===v);
+    const fel=document.getElementById(fb);
+    if(ok){inp.classList.add('ok');c++;if(fel){fel.className='fb show ok';fel.textContent='✓';}}
+    else{inp.classList.add('err');if(fel){fel.className='fb show err';fel.textContent='✗ → '+ans[0]+'.';}}
+  });
+  finishEx('ex2',c,7);
+}
+
+// EX3 word order
+function checkEx3(){
+  if(submitted['ex3'])return;
+  const items=[
+    {id:'e3-1',ans:['The class will begin at 9.30','The class will begin'],fb:'fb-e3-1'},
+    {id:'e3-2',ans:['They will be home soon','They\'ll be home soon'],fb:'fb-e3-2'},
+    {id:'e3-3',ans:['The examination will be difficult'],fb:'fb-e3-3'},
+    {id:'e3-4',ans:['We will walk to the party','We\'ll walk to the party'],fb:'fb-e3-4'},
+    {id:'e3-5',ans:['John will answer your questions'],fb:'fb-e3-5'},
+  ];
+  let c=0;
+  items.forEach(({id,ans,fb})=>{
+    const inp=document.getElementById(id);inp.disabled=true;
+    const v=norm(inp.value);
+    const ok=ans.some(a=>norm(a)===v);
+    const fel=document.getElementById(fb);
+    if(ok){inp.classList.add('ok');c++;if(fel){fel.className='fb show ok';fel.textContent='✓';}}
+    else{inp.classList.add('err');if(fel){fel.className='fb show err';fel.textContent='✗ → '+ans[0]+'.';}}
+  });
+  finishEx('ex3',c,5);
+}
+
+// EX4 neg/question pairs
+function checkEx4(){
+  if(submitted['ex4'])return;
+  const pairs=[
+    {na:'e4-1a',nb:'e4-1b',ansa:['won\'t be','will not be'],ansb:['when will she be'],fb:'fb-e4-1'},
+    {na:'e4-2a',nb:'e4-2b',ansa:['won\'t have','will not have'],ansb:['will you have'],fb:'fb-e4-2'},
+    {na:'e4-3a',nb:'e4-3b',ansa:['won\'t find','will not find'],ansb:['where will i find','will i find'],fb:'fb-e4-3'},
+    {na:'e4-4a',nb:'e4-4b',ansa:['won\'t go','will not go'],ansb:['where will they go','will they go'],fb:'fb-e4-4'},
+    {na:'e4-5a',nb:'e4-5b',ansa:['won\'t get','will not get'],ansb:['how much will he get','will he get'],fb:'fb-e4-5'},
+  ];
+  let c=0;
+  pairs.forEach(({na,nb,ansa,ansb,fb})=>{
+    const ia=document.getElementById(na),ib=document.getElementById(nb);
+    ia.disabled=true;ib.disabled=true;
+    const va=norm(ia.value),vb=norm(ib.value);
+    const oka=ansa.some(a=>norm(a)===va),okb=ansb.some(b=>norm(b)===vb);
+    ia.classList.add(oka?'ok':'err');ib.classList.add(okb?'ok':'err');
+    if(oka)c++;if(okb)c++;
+    const fel=document.getElementById(fb);
+    if(!oka||!okb){fel.className='fb show err';fel.textContent='✗ → '+ansa[0]+' / '+ansb[0];}
+    else{fel.className='fb show ok';fel.textContent='✓';}
+  });
+  finishEx('ex4',c,10);
+}
+
+// EX5 MC
+let mc5sel=null;
+function selMC5(v,btn){
+  if(submitted['ex5'])return;
+  mc5sel=v;
+  document.querySelectorAll('#mc5 .mc-btn').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+}
+function checkEx5(){
+  if(submitted['ex5'])return;
+  const ans='A';
+  document.querySelectorAll('#mc5 .mc-btn').forEach(b=>{
+    b.disabled=true;
+    if(b.dataset.v===ans)b.classList.add('ok');
+    else if(b.dataset.v===mc5sel)b.classList.add('err');
+  });
+  const fb=document.getElementById('fb-mc5');
+  fb.classList.add('show');
+  if(mc5sel===ans){fb.className='fb show ok';fb.textContent='✓ Đúng! Dùng "am going to" vì đây là kế hoạch đã quyết định trước (buy stuff for a big party tomorrow – đã lên kế hoạch).';}
+  else{fb.className='fb show err';fb.textContent='✗ Đáp án A. "am going to" – kế hoạch đã có sẵn từ trước. "will go" dùng cho quyết định tức thời.';}
+  finishEx('ex5',mc5sel===ans?1:0,1);
+}
+
+// EX6 flex fill
+function checkEx6(){
+  if(submitted['ex6'])return;
+  const items=[
+    {id:'e6-a',ans:["will lend","'ll lend"],exp:'Quyết định tức thời giúp bạn → will',fb:'fb-e6-a'},
+    {id:'e6-b',ans:['am going to clean',"'m going to clean"],exp:'Đã có kế hoạch sẵn (đang lấy xô nước) → be going to',fb:'fb-e6-b'},
+    {id:'e6-c',ans:['will show',"'ll show"],exp:'Quyết định tức thời → will',fb:'fb-e6-c'},
+    {id:'e6-d',ans:['is going to buy'],exp:'Kế hoạch đã có (đang đi shopping) → be going to',fb:'fb-e6-d'},
+    {id:'e6-e',ans:["definitely won't finish","definitely will not finish"],exp:'Quyết định tức thời + definitely → will',fb:'fb-e6-e'},
+    {id:'e6-f',ans:["probably won't go","probably will not go"],exp:'Dự đoán + probably → will',fb:'fb-e6-f'},
+  ];
+  let c=0;
+  items.forEach(({id,ans,exp,fb})=>{
+    const inp=document.getElementById(id);inp.disabled=true;
+    const v=norm(inp.value);
+    const ok=ans.some(a=>norm(a)===v);
+    const fel=document.getElementById(fb);
+    if(ok){inp.classList.add('ok');c++;if(fel){fel.className='fb show ok';fel.textContent='✓ '+exp;}}
+    else{inp.classList.add('err');if(fel){fel.className='fb show err';fel.textContent='✗ → '+ans[0]+'. ('+exp+')';}}
+  });
+  finishEx('ex6',c,6);
+}
+
+// EX7 word order
+function checkEx7(){
+  if(submitted['ex7'])return;
+  const items=[
+    {id:'e7-1',ans:['My brother is going to work as an assistant next week'],fb:'fb-e7-1'},
+    {id:'e7-2',ans:['There will be many beautiful buildings in this area'],fb:'fb-e7-2'},
+    {id:'e7-3',ans:['The sky is dark and full of clouds now it is definitely going to rain','The sky is dark and full of clouds now it is definitely going to rain'],fb:'fb-e7-3'},
+    {id:'e7-4',ans:['I studied a lot last night I will not certainly fail this exam','I studied a lot last night I certainly will not fail this exam'],fb:'fb-e7-4'},
+  ];
+  let c=0;
+  items.forEach(({id,ans,fb})=>{
+    const inp=document.getElementById(id);inp.disabled=true;
+    const v=norm(inp.value);
+    const ok=ans.some(a=>norm(a)===v);
+    const fel=document.getElementById(fb);
+    if(ok){inp.classList.add('ok');c++;if(fel){fel.className='fb show ok';fel.textContent='✓';}}
+    else{inp.classList.add('err');if(fel){fel.className='fb show err';fel.textContent='✗ Gợi ý: '+ans[0]+'.';}}
+  });
+  finishEx('ex7',c,4);
+}
+
+// EX8 context MC
+const mc8sel={};
+const MC8_ANS={1:'B',2:'A',3:'B'};
+const MC8_EX={
+  1:'B. "I\'ll drop it off" – quyết định tức thời giúp người hỏi → will ✅',
+  2:'A. "I\'m going to attend" – lý do đã biết sẵn (kế hoạch trước) → be going to ✅',
+  3:'B. "I\'ll fix it" – quyết định đưa ra ngay lúc đó khi thấy đèn hỏng → will ✅'
+};
+function selMC8(n,v,btn){
+  if(submitted['ex8'])return;
+  mc8sel[n]=v;
+  document.querySelectorAll(`#mc8-${n} .mc-btn`).forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+}
+function checkEx8(){
+  if(submitted['ex8'])return;
+  let c=0;
+  [1,2,3].forEach(n=>{
+    const ans=MC8_ANS[n],chosen=mc8sel[n];
+    document.querySelectorAll(`#mc8-${n} .mc-btn`).forEach(b=>{
+      b.disabled=true;
+      if(b.dataset.v===ans)b.classList.add('ok');
+      else if(b.dataset.v===chosen)b.classList.add('err');
+    });
+    const fb=document.getElementById(`fb-mc8-${n}`);
+    fb.classList.add('show');
+    if(chosen===ans){c++;fb.className='fb show ok';fb.textContent='✓ '+MC8_EX[n];}
+    else{fb.className='fb show err';fb.textContent='✗ '+MC8_EX[n];}
+  });
+  finishEx('ex8',c,3);
+}
+
+// SUBMIT ALL
+function submitAll(){
+  if(!submitted['ex1'])checkEx1();
+  if(!submitted['ex2'])checkEx2();
+  if(!submitted['ex3'])checkEx3();
+  if(!submitted['ex4'])checkEx4();
+  if(!submitted['ex5'])checkEx5();
+  if(!submitted['ex6'])checkEx6();
+  if(!submitted['ex7'])checkEx7();
+  if(!submitted['ex8'])checkEx8();
+  document.getElementById('gbtn').disabled=true;
+  const total=Object.values(scores).reduce((a,b)=>a+b,0);
+  const max=3+7+5+10+1+6+4+3; // =39
+  const pct=Math.round(total/max*100);
+  let emoji,msg;
+  if(pct===100){emoji='🏆';msg='Hoàn hảo! Bạn phân biệt thành thạo Will và Be going to!';}
+  else if(pct>=80){emoji='🎉';msg='Xuất sắc! Chú ý thêm một chút về ngữ cảnh dùng từng thì là hoàn hảo!';}
+  else if(pct>=60){emoji='💪';msg='Khá tốt! Hãy nhớ: Will = tức thời / dự đoán, Be going to = kế hoạch sẵn!';}
+  else if(pct>=40){emoji='📖';msg='Cần ôn thêm. Hãy chú ý ngữ cảnh của từng câu để chọn đúng thì!';}
+  else{emoji='🌱';msg='Hãy xem lại lý thuyết về tương lai đơn và tương lai gần. Cố lên!';}
+  document.getElementById('fe').textContent=emoji;
+  document.getElementById('fs').textContent=total+' / '+max;
+  document.getElementById('fm').textContent=msg;
+  document.getElementById('final').classList.add('show');
+  document.getElementById('final').scrollIntoView({behavior:'smooth',block:'center'});
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Danh Động Từ & Động Từ Nguyên Thể – Bài Tập</title>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f2f0f8;--surface:#fff;--soft:#e8e6f2;--border:#ccc8e0;
+  --ink:#14101e;--muted:#7a7490;--accent:#4a2c8a;--accent2:#2a6a8a;
+  --gold:#8a6a1a;--green:#1e7a3a;--red:#b03030;
+  --success-bg:#e8f5ee;--error-bg:#faeaea;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Lexend',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;}
+body::before{content:'';position:fixed;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 27px,rgba(100,80,160,.07) 27px,rgba(100,80,160,.07) 28px);pointer-events:none;z-index:0;}
+
+header{position:relative;z-index:1;background:var(--ink);padding:2rem 2rem 1.75rem;border-bottom:4px solid var(--accent);}
+.hi{max-width:920px;margin:0 auto;display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
+.hl{font-family:'JetBrains Mono',monospace;font-size:.68rem;letter-spacing:.25em;text-transform:uppercase;color:#a08ae0;margin-bottom:.4rem;}
+header h1{font-family:'Instrument Serif',serif;font-size:clamp(1.5rem,4vw,2.3rem);font-weight:400;color:#fff;line-height:1.15;}
+header h1 em{font-style:italic;color:#f0d080;}
+.hm{text-align:right;font-size:.82rem;color:rgba(255,255,255,.5);font-weight:300;}
+
+.prog-wrap{position:sticky;top:0;z-index:100;background:var(--ink);padding:.5rem 2rem;display:flex;align-items:center;gap:1.25rem;}
+.prog-track{flex:1;height:4px;background:rgba(255,255,255,.12);border-radius:2px;overflow:hidden;}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--gold));border-radius:2px;transition:width .4s;width:0%;}
+.prog-txt{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:rgba(255,255,255,.5);white-space:nowrap;}
+
+main{position:relative;z-index:1;max-width:920px;margin:0 auto;padding:2rem 1.5rem 4rem;}
+
+.ex{background:var(--surface);border:1.5px solid var(--border);border-radius:16px;margin-bottom:1.75rem;overflow:hidden;transition:border-color .3s;}
+.ex.done{border-color:var(--green);}
+.ex.has-error{border-color:var(--red);}
+.ex-hd{background:var(--soft);border-bottom:1.5px solid var(--border);padding:1rem 1.5rem;display:flex;align-items:center;gap:.9rem;}
+.ex-num{width:32px;height:32px;background:var(--ink);color:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:.8rem;flex-shrink:0;}
+.ex-ttl{font-size:.92rem;font-weight:600;line-height:1.4;flex:1;}
+.ex-bdg{font-family:'JetBrains Mono',monospace;font-size:.68rem;padding:.2rem .6rem;border-radius:6px;border:1px solid var(--border);color:var(--muted);white-space:nowrap;}
+.ex-body{padding:1.5rem;}
+
+.note{background:#f0ecfc;border:1px solid #b8a8e0;border-radius:8px;padding:.65rem 1rem;font-size:.82rem;color:#3a1a7a;margin-bottom:1.25rem;font-style:italic;}
+.eg{background:#eae8f8;border-left:3px solid var(--accent);padding:.6rem .9rem;border-radius:0 8px 8px 0;font-size:.85rem;color:var(--accent);margin-bottom:1rem;line-height:1.6;}
+
+/* TRUE/FALSE */
+.tf-q{margin-bottom:1.3rem;}
+.tf-q:last-child{margin-bottom:0;}
+.tf-txt{font-size:.93rem;line-height:1.6;margin-bottom:.65rem;}
+.tf-opts{display:flex;gap:.6rem;}
+.tf-btn{padding:.48rem 1.2rem;border-radius:8px;border:1.5px solid var(--border);background:var(--bg);font-family:'Lexend',sans-serif;font-size:.85rem;font-weight:500;cursor:pointer;transition:all .15s;color:var(--ink);}
+.tf-btn:hover:not(:disabled){border-color:var(--accent);background:#ede8fc;color:var(--accent);}
+.tf-btn.sel{border-color:var(--accent);background:#ede8fc;color:var(--accent);}
+.tf-btn.ok{border-color:var(--green)!important;background:var(--success-bg)!important;color:var(--green)!important;}
+.tf-btn.err{border-color:var(--red)!important;background:var(--error-bg)!important;color:var(--red)!important;}
+.tf-btn:disabled{cursor:default;}
+
+/* MULTI-CHECK */
+.chk-list{display:flex;flex-direction:column;gap:.45rem;}
+.chk-item{display:flex;align-items:center;gap:.75rem;padding:.6rem .9rem;border:1.5px solid var(--border);border-radius:10px;cursor:pointer;transition:all .15s;background:var(--bg);font-size:.9rem;}
+.chk-item:hover:not(.disabled){border-color:var(--accent);background:#ede8fc;}
+.chk-item.sel{border-color:var(--accent);background:#ede8fc;}
+.chk-item.correct{border-color:var(--green)!important;background:var(--success-bg)!important;}
+.chk-item.wrong{border-color:var(--red)!important;background:var(--error-bg)!important;}
+.chk-item.disabled{cursor:default;}
+.chk-box{width:18px;height:18px;border:2px solid var(--border);border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;transition:all .15s;}
+.chk-item.sel .chk-box{border-color:var(--accent);background:var(--accent);color:#fff;}
+.chk-item.correct .chk-box{border-color:var(--green)!important;background:var(--green)!important;color:#fff!important;}
+.chk-item.wrong .chk-box{border-color:var(--red)!important;background:var(--red)!important;color:#fff!important;}
+
+/* DROPDOWN MATCH */
+.dd-row{background:var(--soft);border:1.5px solid var(--border);border-radius:12px;padding:.85rem 1.1rem;margin-bottom:.65rem;display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;font-size:.9rem;}
+.dd-row:last-child{margin-bottom:0;}
+.dd-label{flex:1;min-width:160px;font-size:.88rem;}
+.dd{background:var(--surface);border:1.5px solid var(--accent);border-radius:8px;font-family:'Lexend',sans-serif;font-size:.83rem;color:var(--ink);padding:.4rem .65rem;outline:none;cursor:pointer;transition:all .2s;min-width:180px;}
+.dd.ok{border-color:var(--green)!important;background:var(--success-bg)!important;color:var(--green)!important;}
+.dd.err{border-color:var(--red)!important;background:var(--error-bg)!important;color:var(--red)!important;}
+.dd:disabled{cursor:default;opacity:.85;}
+
+/* MC */
+.mc-q{margin-bottom:1.3rem;}
+.mc-q:last-child{margin-bottom:0;}
+.mc-title{font-size:.88rem;margin-bottom:.6rem;line-height:1.55;}
+.mc-opts{display:flex;flex-direction:column;gap:.4rem;}
+.mc-btn{padding:.5rem .9rem;border-radius:9px;border:1.5px solid var(--border);background:var(--bg);font-family:'Lexend',sans-serif;font-size:.87rem;font-weight:500;cursor:pointer;transition:all .15s;color:var(--ink);text-align:left;}
+.mc-btn:hover:not(:disabled){border-color:var(--accent);background:#ede8fc;}
+.mc-btn.sel{border-color:var(--accent);background:#ede8fc;}
+.mc-btn.ok{border-color:var(--green)!important;background:var(--success-bg)!important;color:var(--green)!important;}
+.mc-btn.err{border-color:var(--red)!important;background:var(--error-bg)!important;color:var(--red)!important;}
+.mc-btn:disabled{cursor:default;}
+
+/* SITUATION MULTI (ex7) */
+.q7-item{background:var(--soft);border:1.5px solid var(--border);border-radius:12px;padding:1rem 1.25rem;margin-bottom:.75rem;}
+.q7-item:last-child{margin-bottom:0;}
+.q7-num{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--muted);margin-bottom:.4rem;}
+.q7-verb{font-weight:700;color:var(--accent);font-size:.9rem;margin-bottom:.3rem;}
+.q7-context{font-size:.85rem;font-style:italic;color:var(--muted);margin-bottom:.5rem;}
+.q7-opts{display:flex;gap:.45rem;flex-wrap:wrap;}
+.q7-btn{padding:.38rem .8rem;border-radius:7px;border:1.5px solid var(--border);background:var(--surface);font-family:'JetBrains Mono',monospace;font-size:.8rem;font-weight:500;cursor:pointer;transition:all .15s;color:var(--ink);}
+.q7-btn:hover:not(:disabled){border-color:var(--accent);background:#ede8fc;color:var(--accent);}
+.q7-btn.sel{border-color:var(--accent);background:#ede8fc;color:var(--accent);}
+.q7-btn.ok{border-color:var(--green)!important;background:var(--success-bg)!important;color:var(--green)!important;}
+.q7-btn.err{border-color:var(--red)!important;background:var(--error-bg)!important;color:var(--red)!important;}
+.q7-btn:disabled{cursor:default;}
+
+/* SITUATION BOX */
+.sit-box{background:#fdf8ec;border:1.5px solid #d4c47a;border-radius:12px;padding:1rem 1.25rem;margin-bottom:1rem;}
+.sit-title{font-weight:700;font-size:.85rem;color:var(--gold);margin-bottom:.4rem;}
+.sit-txt{font-size:.86rem;line-height:1.6;margin-bottom:.25rem;}
+.sit-vi{font-size:.78rem;color:var(--muted);font-style:italic;margin-bottom:.6rem;}
+.sit-q{font-size:.9rem;margin-bottom:.5rem;}
+
+/* INLINE FB */
+.fb{margin-top:.4rem;font-size:.78rem;font-family:'JetBrains Mono',monospace;display:none;}
+.fb.show{display:block;}
+.fb.ok{color:var(--green);}
+.fb.err{color:var(--red);}
+
+/* SCORE */
+.sc-row{display:none;align-items:center;gap:.75rem;margin-top:.75rem;padding:.65rem 1rem;background:var(--soft);border-radius:8px;font-size:.85rem;}
+.sc-row.show{display:flex;}
+.sc-ok{color:var(--green);font-weight:700;font-family:'JetBrains Mono',monospace;}
+.sc-tot{color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:.8rem;}
+
+.sub-wrap{margin-top:1rem;display:flex;justify-content:flex-end;}
+.btn-ck{background:var(--ink);color:#fff;border:none;border-radius:10px;padding:.65rem 1.5rem;font-family:'Lexend',sans-serif;font-size:.88rem;font-weight:600;cursor:pointer;transition:all .18s;}
+.btn-ck:hover{background:var(--accent);transform:translateY(-1px);}
+
+.g-sub{background:var(--accent);color:white;border:none;border-radius:12px;padding:1rem 2.5rem;font-family:'Lexend',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;transition:all .2s;display:block;margin:2rem auto 0;}
+.g-sub:hover{background:#360e6e;transform:translateY(-2px);box-shadow:0 6px 20px rgba(74,44,138,.3);}
+.g-sub:disabled{opacity:.4;cursor:default;transform:none;box-shadow:none;}
+
+.final{background:var(--ink);border-radius:20px;padding:2.5rem;text-align:center;margin-top:2rem;display:none;animation:pop .5s cubic-bezier(.34,1.56,.64,1);}
+.final.show{display:block;}
+@keyframes pop{from{opacity:0;transform:scale(.85)}to{opacity:1;transform:scale(1)}}
+.f-emoji{font-size:3.5rem;margin-bottom:.75rem;}
+.f-score{font-family:'Instrument Serif',serif;font-size:4rem;color:#f0d080;line-height:1;margin-bottom:.4rem;}
+.f-lbl{color:rgba(255,255,255,.5);font-size:.9rem;margin-bottom:1rem;}
+.f-msg{color:#fff;font-size:1rem;line-height:1.6;margin-bottom:1.75rem;}
+.btn-retry{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:.8rem 2rem;font-family:'Lexend',sans-serif;font-size:.95rem;font-weight:600;cursor:pointer;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <div>
+      <div class="hl">Section 6 · Ngữ pháp tiếng Anh</div>
+      <h1>Danh Động Từ <em>&</em> Động Từ Nguyên Thể</h1>
+    </div>
+    <div class="hm">7 bài tập<br>Chấm điểm tự động</div>
+  </div>
+</header>
+
+<div class="prog-wrap">
+  <div class="prog-track"><div class="prog-fill" id="pf"></div></div>
+  <div class="prog-txt" id="pt">0 / 7 bài</div>
+</div>
+
+<main>
+
+<!-- EX 1 -->
+<div class="ex" id="ex1">
+  <div class="ex-hd"><div class="ex-num">1</div><div class="ex-ttl">Chọn <strong>True</strong> nếu khẳng định đúng, <strong>False</strong> nếu sai</div><div class="ex-bdg">True / False</div></div>
+  <div class="ex-body">
+
+    <div class="tf-q" id="tf1-1">
+      <div class="tf-txt">Danh động từ là cụm <strong>một danh từ đứng cạnh một động từ</strong>.</div>
+      <div class="tf-opts">
+        <button class="tf-btn" data-v="A" onclick="selTF('tf1-1','A',this)">A. True</button>
+        <button class="tf-btn" data-v="B" onclick="selTF('tf1-1','B',this)">B. False</button>
+      </div>
+      <div class="fb" id="fb-tf1-1"></div>
+    </div>
+
+    <div class="tf-q" id="tf1-2">
+      <div class="tf-txt">Danh động từ có thể làm <strong>chủ ngữ</strong> và cũng có thể làm <strong>tân ngữ</strong> trong câu.</div>
+      <div class="tf-opts">
+        <button class="tf-btn" data-v="A" onclick="selTF('tf1-2','A',this)">A. True</button>
+        <button class="tf-btn" data-v="B" onclick="selTF('tf1-2','B',this)">B. False</button>
+      </div>
+      <div class="fb" id="fb-tf1-2"></div>
+    </div>
+
+    <div class="tf-q" id="tf1-3">
+      <div class="tf-txt">Động từ nguyên thể nếu muốn làm chủ ngữ trong câu phải được đổi thành dạng <strong>V-ing</strong>.</div>
+      <div class="tf-opts">
+        <button class="tf-btn" data-v="A" onclick="selTF('tf1-3','A',this)">A. True</button>
+        <button class="tf-btn" data-v="B" onclick="selTF('tf1-3','B',this)">B. False</button>
+      </div>
+      <div class="fb" id="fb-tf1-3"></div>
+    </div>
+
+    <div class="tf-q" id="tf1-4">
+      <div class="tf-txt">Một động từ chỉ có thể được đi sau bởi <strong>V-ing hoặc to V</strong>.</div>
+      <div class="tf-opts">
+        <button class="tf-btn" data-v="A" onclick="selTF('tf1-4','A',this)">A. True</button>
+        <button class="tf-btn" data-v="B" onclick="selTF('tf1-4','B',this)">B. False</button>
+      </div>
+      <div class="fb" id="fb-tf1-4"></div>
+    </div>
+
+    <div class="sub-wrap"><button class="btn-ck" onclick="checkEx1()">Kiểm tra</button></div>
+    <div class="sc-row" id="score-ex1"><span class="sc-ok" id="sv-ex1"></span><span class="sc-tot">/ 4 câu đúng</span></div>
+  </div>
+</div>
+
+<!-- EX 2 -->
+<div class="ex" id="ex2">
+  <div class="ex-hd"><div class="ex-num">2</div><div class="ex-ttl">Chọn các động từ khi đi theo sau bởi V-ing hay to V thì <strong>nghĩa hầu như không khác biệt</strong></div><div class="ex-bdg">Chọn nhiều đáp án</div></div>
+  <div class="ex-body">
+    <div class="note">Lưu ý: Một số động từ chỉ theo sau bởi to V (decide, want, agree, promise, refuse). Một số có thể dùng cả hai mà nghĩa KHÔNG đổi.</div>
+    <div class="chk-list" id="chk2">
+      <div class="chk-item" onclick="togChk(this,'chk2')" data-v="decide"><div class="chk-box"></div>decide</div>
+      <div class="chk-item" onclick="togChk(this,'chk2')" data-v="begin"><div class="chk-box"></div>begin</div>
+      <div class="chk-item" onclick="togChk(this,'chk2')" data-v="want"><div class="chk-box"></div>want</div>
+      <div class="chk-item" onclick="togChk(this,'chk2')" data-v="agree"><div class="chk-box"></div>agree</div>
+      <div class="chk-item" onclick="togChk(this,'chk2')" data-v="start"><div class="chk-box"></div>start</div>
+      <div class="chk-item" onclick="togChk(this,'chk2')" data-v="continue"><div class="chk-box"></div>continue</div>
+      <div class="chk-item" onclick="togChk(this,'chk2')" data-v="promise"><div class="chk-box"></div>promise</div>
+      <div class="chk-item" onclick="togChk(this,'chk2')" data-v="like"><div class="chk-box"></div>like</div>
+      <div class="chk-item" onclick="togChk(this,'chk2')" data-v="love"><div class="chk-box"></div>love</div>
+      <div class="chk-item" onclick="togChk(this,'chk2')" data-v="refuse"><div class="chk-box"></div>refuse</div>
+      <div class="chk-item" onclick="togChk(this,'chk2')" data-v="hate"><div class="chk-box"></div>hate</div>
+    </div>
+    <div class="sub-wrap"><button class="btn-ck" onclick="checkEx2()">Kiểm tra</button></div>
+    <div class="sc-row" id="score-ex2"><span class="sc-ok" id="sv-ex2"></span><span class="sc-tot">/ 5 đúng</span></div>
+  </div>
+</div>
+
+<!-- EX 3 -->
+<div class="ex" id="ex3">
+  <div class="ex-hd"><div class="ex-num">3</div><div class="ex-ttl">Nối các từ vựng với nghĩa tiếng Việt tương ứng (chỉ theo sau bởi <strong>to V</strong>)</div><div class="ex-bdg">Dropdown</div></div>
+  <div class="ex-body">
+    <div class="dd-row"><div class="dd-label">Từ chối làm việc gì</div>
+      <select class="dd" id="dd3-1" data-ans="Refuse to V"><option value="">-- Chọn --</option><option>Decide to V</option><option>Agree to V</option><option>Want to V</option><option>Promise to V</option><option>Refuse to V</option></select>
+      <div class="fb" id="fb-dd3-1"></div>
+    </div>
+    <div class="dd-row"><div class="dd-label">Hứa làm việc gì</div>
+      <select class="dd" id="dd3-2" data-ans="Promise to V"><option value="">-- Chọn --</option><option>Decide to V</option><option>Agree to V</option><option>Want to V</option><option>Promise to V</option><option>Refuse to V</option></select>
+      <div class="fb" id="fb-dd3-2"></div>
+    </div>
+    <div class="dd-row"><div class="dd-label">Quyết định làm việc gì</div>
+      <select class="dd" id="dd3-3" data-ans="Decide to V"><option value="">-- Chọn --</option><option>Decide to V</option><option>Agree to V</option><option>Want to V</option><option>Promise to V</option><option>Refuse to V</option></select>
+      <div class="fb" id="fb-dd3-3"></div>
+    </div>
+    <div class="dd-row"><div class="dd-label">Muốn làm việc gì</div>
+      <select class="dd" id="dd3-4" data-ans="Want to V"><option value="">-- Chọn --</option><option>Decide to V</option><option>Agree to V</option><option>Want to V</option><option>Promise to V</option><option>Refuse to V</option></select>
+      <div class="fb" id="fb-dd3-4"></div>
+    </div>
+    <div class="dd-row"><div class="dd-label">Đồng ý làm việc gì</div>
+      <select class="dd" id="dd3-5" data-ans="Agree to V"><option value="">-- Chọn --</option><option>Decide to V</option><option>Agree to V</option><option>Want to V</option><option>Promise to V</option><option>Refuse to V</option></select>
+      <div class="fb" id="fb-dd3-5"></div>
+    </div>
+    <div class="sub-wrap"><button class="btn-ck" onclick="checkDDEx('dd3',['1','2','3','4','5'],'ex3',5)">Kiểm tra</button></div>
+    <div class="sc-row" id="score-ex3"><span class="sc-ok" id="sv-ex3"></span><span class="sc-tot">/ 5 đúng</span></div>
+  </div>
+</div>
+
+<!-- EX 4 -->
+<div class="ex" id="ex4">
+  <div class="ex-hd"><div class="ex-num">4</div><div class="ex-ttl">Nối các từ vựng với nghĩa tiếng Việt tương ứng (theo sau bởi <strong>V-ing / to V</strong>)</div><div class="ex-bdg">Dropdown</div></div>
+  <div class="ex-body">
+    <div class="dd-row"><div class="dd-label">Tiếp tục làm việc gì</div>
+      <select class="dd" id="dd4-1" data-ans="Continue V-ing / to V"><option value="">-- Chọn --</option><option>Begin V-ing / to V</option><option>Start V-ing / to V</option><option>Continue V-ing / to V</option><option>Like V-ing / to V</option><option>Love V-ing / to V</option><option>Hate V-ing / to V</option></select>
+      <div class="fb" id="fb-dd4-1"></div>
+    </div>
+    <div class="dd-row"><div class="dd-label">Yêu thích làm việc gì (enjoy)</div>
+      <select class="dd" id="dd4-2" data-ans="Like V-ing / to V"><option value="">-- Chọn --</option><option>Begin V-ing / to V</option><option>Start V-ing / to V</option><option>Continue V-ing / to V</option><option>Like V-ing / to V</option><option>Love V-ing / to V</option><option>Hate V-ing / to V</option></select>
+      <div class="fb" id="fb-dd4-2"></div>
+    </div>
+    <div class="dd-row"><div class="dd-label">Bắt đầu làm việc gì (lần 1)</div>
+      <select class="dd" id="dd4-3" data-ans="Begin V-ing / to V"><option value="">-- Chọn --</option><option>Begin V-ing / to V</option><option>Start V-ing / to V</option><option>Continue V-ing / to V</option><option>Like V-ing / to V</option><option>Love V-ing / to V</option><option>Hate V-ing / to V</option></select>
+      <div class="fb" id="fb-dd4-3"></div>
+    </div>
+    <div class="dd-row"><div class="dd-label">Yêu thích sâu sắc làm việc gì</div>
+      <select class="dd" id="dd4-4" data-ans="Love V-ing / to V"><option value="">-- Chọn --</option><option>Begin V-ing / to V</option><option>Start V-ing / to V</option><option>Continue V-ing / to V</option><option>Like V-ing / to V</option><option>Love V-ing / to V</option><option>Hate V-ing / to V</option></select>
+      <div class="fb" id="fb-dd4-4"></div>
+    </div>
+    <div class="dd-row"><div class="dd-label">Ghét làm việc gì</div>
+      <select class="dd" id="dd4-5" data-ans="Hate V-ing / to V"><option value="">-- Chọn --</option><option>Begin V-ing / to V</option><option>Start V-ing / to V</option><option>Continue V-ing / to V</option><option>Like V-ing / to V</option><option>Love V-ing / to V</option><option>Hate V-ing / to V</option></select>
+      <div class="fb" id="fb-dd4-5"></div>
+    </div>
+    <div class="dd-row"><div class="dd-label">Bắt đầu làm việc gì (lần 2)</div>
+      <select class="dd" id="dd4-6" data-ans="Start V-ing / to V"><option value="">-- Chọn --</option><option>Begin V-ing / to V</option><option>Start V-ing / to V</option><option>Continue V-ing / to V</option><option>Like V-ing / to V</option><option>Love V-ing / to V</option><option>Hate V-ing / to V</option></select>
+      <div class="fb" id="fb-dd4-6"></div>
+    </div>
+    <div class="sub-wrap"><button class="btn-ck" onclick="checkDDEx('dd4',['1','2','3','4','5','6'],'ex4',6)">Kiểm tra</button></div>
+    <div class="sc-row" id="score-ex4"><span class="sc-ok" id="sv-ex4"></span><span class="sc-tot">/ 6 đúng</span></div>
+  </div>
+</div>
+
+<!-- EX 5 -->
+<div class="ex" id="ex5">
+  <div class="ex-hd"><div class="ex-num">5</div><div class="ex-ttl">Chọn dạng động từ theo sau phù hợp với nghĩa diễn đạt</div><div class="ex-bdg">Trắc nghiệm</div></div>
+  <div class="ex-body">
+    <div class="eg">
+      Các động từ đặc biệt thay đổi nghĩa khi dùng V-ing hay to V:<br>
+      remember / forget / regret / try / stop
+    </div>
+
+    <div class="mc-q" id="mc5-1">
+      <div class="mc-title"><strong>Remember</strong> + _____ : <em>nhớ phải làm gì</em> (việc chưa/sẽ xảy ra)</div>
+      <div class="mc-opts">
+        <button class="mc-btn" data-v="A" onclick="selMC5(1,'A',this)">A. V-ing</button>
+        <button class="mc-btn" data-v="B" onclick="selMC5(1,'B',this)">B. To V</button>
+      </div>
+      <div class="fb" id="fb-mc5-1"></div>
+    </div>
+
+    <div class="mc-q" id="mc5-2">
+      <div class="mc-title"><strong>Forget</strong> + _____ : <em>quên rằng đã làm gì</em> (việc đã xảy ra)</div>
+      <div class="mc-opts">
+        <button class="mc-btn" data-v="A" onclick="selMC5(2,'A',this)">A. V-ing</button>
+        <button class="mc-btn" data-v="B" onclick="selMC5(2,'B',this)">B. To V</button>
+      </div>
+      <div class="fb" id="fb-mc5-2"></div>
+    </div>
+
+    <div class="mc-q" id="mc5-3">
+      <div class="mc-title"><strong>Regret</strong> + _____ : <em>tiếc đã làm gì</em> (việc đã xảy ra)</div>
+      <div class="mc-opts">
+        <button class="mc-btn" data-v="A" onclick="selMC5(3,'A',this)">A. V-ing</button>
+        <button class="mc-btn" data-v="B" onclick="selMC5(3,'B',this)">B. To V</button>
+      </div>
+      <div class="fb" id="fb-mc5-3"></div>
+    </div>
+
+    <div class="mc-q" id="mc5-4">
+      <div class="mc-title"><strong>Try</strong> + _____ : <em>cố gắng làm gì</em> (nỗ lực, mục tiêu)</div>
+      <div class="mc-opts">
+        <button class="mc-btn" data-v="A" onclick="selMC5(4,'A',this)">A. V-ing</button>
+        <button class="mc-btn" data-v="B" onclick="selMC5(4,'B',this)">B. To V</button>
+      </div>
+      <div class="fb" id="fb-mc5-4"></div>
+    </div>
+
+    <div class="mc-q" id="mc5-5">
+      <div class="mc-title"><strong>Stop</strong> + _____ : <em>dừng lại để làm gì</em> (mục đích dừng lại)</div>
+      <div class="mc-opts">
+        <button class="mc-btn" data-v="A" onclick="selMC5(5,'A',this)">A. V-ing</button>
+        <button class="mc-btn" data-v="B" onclick="selMC5(5,'B',this)">B. To V</button>
+      </div>
+      <div class="fb" id="fb-mc5-5"></div>
+    </div>
+
+    <div class="sub-wrap"><button class="btn-ck" onclick="checkEx5()">Kiểm tra</button></div>
+    <div class="sc-row" id="score-ex5"><span class="sc-ok" id="sv-ex5"></span><span class="sc-tot">/ 5 câu đúng</span></div>
+  </div>
+</div>
+
+<!-- EX 6 -->
+<div class="ex" id="ex6">
+  <div class="ex-hd"><div class="ex-num">6</div><div class="ex-ttl">Đọc tình huống và chọn đáp án phù hợp</div><div class="ex-bdg">Tình huống</div></div>
+  <div class="ex-body">
+
+    <div class="sit-box">
+      <div class="sit-title">Tình huống 1</div>
+      <div class="sit-txt">JANE: "Could you possibly lend me £5?" &nbsp; ANDY: "Sure."</div>
+      <div class="sit-vi">(Bạn có thể cho tôi vay £5 không? – Được chứ.)</div>
+      <div class="sit-q">Andy _______ to lend £5 to Jane.</div>
+      <div class="mc-opts" id="mc6-1">
+        <button class="mc-btn" data-v="A" onclick="selMC6(1,'A',this)">A. wants</button>
+        <button class="mc-btn" data-v="B" onclick="selMC6(1,'B',this)">B. agrees</button>
+        <button class="mc-btn" data-v="C" onclick="selMC6(1,'C',this)">C. promises</button>
+      </div>
+      <div class="fb" id="fb-mc6-1"></div>
+    </div>
+
+    <div class="sit-box">
+      <div class="sit-title">Tình huống 2</div>
+      <div class="sit-txt">JOE: "Shall I go to the cinema or stay at home? No, I'll stay at home."</div>
+      <div class="sit-vi">(Nên đi xem phim hay ở nhà nhỉ? Không, mình sẽ ở nhà.)</div>
+      <div class="sit-q">Joe _______ to stay at home.</div>
+      <div class="mc-opts" id="mc6-2">
+        <button class="mc-btn" data-v="A" onclick="selMC6(2,'A',this)">A. decides</button>
+        <button class="mc-btn" data-v="B" onclick="selMC6(2,'B',this)">B. stops</button>
+        <button class="mc-btn" data-v="C" onclick="selMC6(2,'C',this)">C. refuses</button>
+      </div>
+      <div class="fb" id="fb-mc6-2"></div>
+    </div>
+
+    <div class="sit-box">
+      <div class="sit-title">Tình huống 3</div>
+      <div class="sit-txt">Lizzie was expecting a call from Sarah. Sarah rang the number, but it was engaged.</div>
+      <div class="sit-vi">(Lizzie mong chờ cuộc gọi từ Sarah. Sarah đã bấm số nhưng máy bận.)</div>
+      <div class="sit-q">Sarah _______ Lizzie, but the number was engaged.</div>
+      <div class="mc-opts" id="mc6-3">
+        <button class="mc-btn" data-v="A" onclick="selMC6(3,'A',this)">A. tried phoning</button>
+        <button class="mc-btn" data-v="B" onclick="selMC6(3,'B',this)">B. tried to phone</button>
+        <button class="mc-btn" data-v="C" onclick="selMC6(3,'C',this)">C. tried phone</button>
+      </div>
+      <div class="fb" id="fb-mc6-3"></div>
+    </div>
+
+    <div class="sit-box">
+      <div class="sit-title">Tình huống 4</div>
+      <div class="sit-txt">PATRICK: "I will write to you every day, Barbara."</div>
+      <div class="sit-vi">(Tôi sẽ viết thư cho bạn mỗi ngày, Barbara.)</div>
+      <div class="sit-q">Patrick _______ to write to Barbara every day.</div>
+      <div class="mc-opts" id="mc6-4">
+        <button class="mc-btn" data-v="A" onclick="selMC6(4,'A',this)">A. loves</button>
+        <button class="mc-btn" data-v="B" onclick="selMC6(4,'B',this)">B. starts</button>
+        <button class="mc-btn" data-v="C" onclick="selMC6(4,'C',this)">C. promises</button>
+      </div>
+      <div class="fb" id="fb-mc6-4"></div>
+    </div>
+
+    <div class="sit-box">
+      <div class="sit-title">Tình huống 5</div>
+      <div class="sit-txt">BOB: "I was going to post a birthday card to my mother, but I didn't remember."</div>
+      <div class="sit-vi">(Tôi định gửi thiệp sinh nhật cho mẹ nhưng đã không nhớ.)</div>
+      <div class="sit-q">Bob _______ his mother's birthday card.</div>
+      <div class="mc-opts" id="mc6-5">
+        <button class="mc-btn" data-v="A" onclick="selMC6(5,'A',this)">A. forgot post</button>
+        <button class="mc-btn" data-v="B" onclick="selMC6(5,'B',this)">B. forgot posting</button>
+        <button class="mc-btn" data-v="C" onclick="selMC6(5,'C',this)">C. forgot to post</button>
+      </div>
+      <div class="fb" id="fb-mc6-5"></div>
+    </div>
+
+    <div class="sit-box">
+      <div class="sit-title">Tình huống 6</div>
+      <div class="sit-txt">PHILIP: "Please lend me your car." &nbsp; AGNES: "No, no, no and no."</div>
+      <div class="sit-vi">(Làm ơn cho tôi mượn xe. – Không, không, không và không.)</div>
+      <div class="sit-q">Agnes _______ her car to Philip.</div>
+      <div class="mc-opts" id="mc6-6">
+        <button class="mc-btn" data-v="A" onclick="selMC6(6,'A',this)">A. refuses to lend</button>
+        <button class="mc-btn" data-v="B" onclick="selMC6(6,'B',this)">B. regrets lending</button>
+        <button class="mc-btn" data-v="C" onclick="selMC6(6,'C',this)">C. enjoys lending</button>
+      </div>
+      <div class="fb" id="fb-mc6-6"></div>
+    </div>
+
+    <div class="sit-box">
+      <div class="sit-title">Tình huống 7</div>
+      <div class="sit-txt">Helen's parents are sending her to England for two weeks. Helen is not happy.</div>
+      <div class="sit-vi">(Cha mẹ gửi Helen đến Anh 2 tuần. Helen không vui.)</div>
+      <div class="sit-q">Helen doesn't _______ to go to England.</div>
+      <div class="mc-opts" id="mc6-7">
+        <button class="mc-btn" data-v="A" onclick="selMC6(7,'A',this)">A. continue</button>
+        <button class="mc-btn" data-v="B" onclick="selMC6(7,'B',this)">B. want</button>
+        <button class="mc-btn" data-v="C" onclick="selMC6(7,'C',this)">C. hate</button>
+      </div>
+      <div class="fb" id="fb-mc6-7"></div>
+    </div>
+
+    <div class="sit-box">
+      <div class="sit-title">Tình huống 8</div>
+      <div class="sit-txt">Susan said her first word when she was seven months old.</div>
+      <div class="sit-vi">(Susan nói từ đầu tiên khi cô ấy được 7 tháng tuổi.)</div>
+      <div class="sit-q">Susan _______ to talk when she was seven months old.</div>
+      <div class="mc-opts" id="mc6-8">
+        <button class="mc-btn" data-v="A" onclick="selMC6(8,'A',this)">A. started</button>
+        <button class="mc-btn" data-v="B" onclick="selMC6(8,'B',this)">B. remembered</button>
+        <button class="mc-btn" data-v="C" onclick="selMC6(8,'C',this)">C. decided</button>
+      </div>
+      <div class="fb" id="fb-mc6-8"></div>
+    </div>
+
+    <div class="sub-wrap"><button class="btn-ck" onclick="checkEx6()">Kiểm tra</button></div>
+    <div class="sc-row" id="score-ex6"><span class="sc-ok" id="sv-ex6"></span><span class="sc-tot">/ 8 câu đúng</span></div>
+  </div>
+</div>
+
+<!-- EX 7 -->
+<div class="ex" id="ex7">
+  <div class="ex-hd"><div class="ex-num">7</div><div class="ex-ttl">Chọn dạng từ đúng để hoàn thành đoạn văn (có thể có nhiều hơn 1 đáp án đúng)</div><div class="ex-bdg">Chọn dạng</div></div>
+  <div class="ex-body">
+    <div class="note">Lưu ý: Một số ô có thể chấp nhận cả V-ing lẫn to V (begin, start, continue, like, love, hate).</div>
+
+    <div style="background:var(--soft);border:1.5px solid var(--border);border-radius:12px;padding:1.1rem 1.25rem;font-size:.88rem;line-height:2.2;margin-bottom:1rem;">
+      I'm eighteen, and I hope to be an airline pilot. My parents have <strong>agreed</strong> <span style="background:#e0d8f8;padding:.1rem .3rem;border-radius:4px;">(1)</span> for lessons if I do well in my exams. My brother says girls shouldn't be pilots, but I refuse to listen to him.<br><br>
+      When I <strong>started</strong> <span style="background:#e0d8f8;padding:.1rem .3rem;border-radius:4px;">(2)</span> here, my boss <strong>promised</strong> <span style="background:#e0d8f8;padding:.1rem .3rem;border-radius:4px;">(3)</span> me interesting work, traveling to Europe and Asia. I expected to <strong>enjoy</strong> <span style="background:#e0d8f8;padding:.1rem .3rem;border-radius:4px;">(4)</span> my job. But all my work is boring. I've <strong>tried</strong> <span style="background:#e0d8f8;padding:.1rem .3rem;border-radius:4px;">(5)</span> to my boss, but she doesn't listen. Now I've <strong>decided</strong> <span style="background:#e0d8f8;padding:.1rem .3rem;border-radius:4px;">(6)</span> for another job.<br><br>
+      I've always been afraid of water. Then I thought, 'I don't <strong>want</strong> <span style="background:#e0d8f8;padding:.1rem .3rem;border-radius:4px;">(7)</span> like this.' So I found special lessons. But I <strong>forgot</strong> <span style="background:#e0d8f8;padding:.1rem .3rem;border-radius:4px;">(8)</span> my alarm clock, and I woke up at 7.30 instead of 6.30.<br><br>
+      I <strong>began</strong> <span style="background:#e0d8f8;padding:.1rem .3rem;border-radius:4px;">(9)</span> karate four years ago, and I've <strong>continued</strong> <span style="background:#e0d8f8;padding:.1rem .3rem;border-radius:4px;">(10)</span> to lessons twice a week since then.
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.65rem;">
+
+      <div class="q7-item">
+        <div class="q7-num">Câu (1) — agreed ___</div>
+        <div class="q7-opts" id="q7-1">
+          <button class="q7-btn" data-v="pay" onclick="selQ7(1,'pay',this)">pay</button>
+          <button class="q7-btn" data-v="paying" onclick="selQ7(1,'paying',this)">paying</button>
+          <button class="q7-btn" data-v="to pay" onclick="selQ7(1,'to pay',this)">to pay</button>
+        </div>
+        <div class="fb" id="fb-q7-1"></div>
+      </div>
+
+      <div class="q7-item">
+        <div class="q7-num">Câu (2) — started ___</div>
+        <div class="q7-opts" id="q7-2">
+          <button class="q7-btn" data-v="work" onclick="selQ7(2,'work',this)">work</button>
+          <button class="q7-btn" data-v="working" onclick="selQ7(2,'working',this)">working</button>
+          <button class="q7-btn" data-v="to work" onclick="selQ7(2,'to work',this)">to work</button>
+        </div>
+        <div class="fb" id="fb-q7-2"></div>
+      </div>
+
+      <div class="q7-item">
+        <div class="q7-num">Câu (3) — promised ___</div>
+        <div class="q7-opts" id="q7-3">
+          <button class="q7-btn" data-v="give" onclick="selQ7(3,'give',this)">give</button>
+          <button class="q7-btn" data-v="giving" onclick="selQ7(3,'giving',this)">giving</button>
+          <button class="q7-btn" data-v="to give" onclick="selQ7(3,'to give',this)">to give</button>
+        </div>
+        <div class="fb" id="fb-q7-3"></div>
+      </div>
+
+      <div class="q7-item">
+        <div class="q7-num">Câu (4) — enjoy ___</div>
+        <div class="q7-opts" id="q7-4">
+          <button class="q7-btn" data-v="do" onclick="selQ7(4,'do',this)">do</button>
+          <button class="q7-btn" data-v="doing" onclick="selQ7(4,'doing',this)">doing</button>
+          <button class="q7-btn" data-v="to do" onclick="selQ7(4,'to do',this)">to do</button>
+        </div>
+        <div class="fb" id="fb-q7-4"></div>
+      </div>
+
+      <div class="q7-item">
+        <div class="q7-num">Câu (5) — tried ___</div>
+        <div class="q7-opts" id="q7-5">
+          <button class="q7-btn" data-v="talk" onclick="selQ7(5,'talk',this)">talk</button>
+          <button class="q7-btn" data-v="talking" onclick="selQ7(5,'talking',this)">talking</button>
+          <button class="q7-btn" data-v="to talk" onclick="selQ7(5,'to talk',this)">to talk</button>
+        </div>
+        <div class="fb" id="fb-q7-5"></div>
+      </div>
+
+      <div class="q7-item">
+        <div class="q7-num">Câu (6) — decided ___</div>
+        <div class="q7-opts" id="q7-6">
+          <button class="q7-btn" data-v="look" onclick="selQ7(6,'look',this)">look</button>
+          <button class="q7-btn" data-v="looking" onclick="selQ7(6,'looking',this)">looking</button>
+          <button class="q7-btn" data-v="to look" onclick="selQ7(6,'to look',this)">to look</button>
+        </div>
+        <div class="fb" id="fb-q7-6"></div>
+      </div>
+
+      <div class="q7-item">
+        <div class="q7-num">Câu (7) — want ___</div>
+        <div class="q7-opts" id="q7-7">
+          <button class="q7-btn" data-v="live" onclick="selQ7(7,'live',this)">live</button>
+          <button class="q7-btn" data-v="living" onclick="selQ7(7,'living',this)">living</button>
+          <button class="q7-btn" data-v="to live" onclick="selQ7(7,'to live',this)">to live</button>
+        </div>
+        <div class="fb" id="fb-q7-7"></div>
+      </div>
+
+      <div class="q7-item">
+        <div class="q7-num">Câu (8) — forgot ___</div>
+        <div class="q7-opts" id="q7-8">
+          <button class="q7-btn" data-v="set" onclick="selQ7(8,'set',this)">set</button>
+          <button class="q7-btn" data-v="setting" onclick="selQ7(8,'setting',this)">setting</button>
+          <button class="q7-btn" data-v="to set" onclick="selQ7(8,'to set',this)">to set</button>
+        </div>
+        <div class="fb" id="fb-q7-8"></div>
+      </div>
+
+      <div class="q7-item">
+        <div class="q7-num">Câu (9) — began ___</div>
+        <div class="q7-opts" id="q7-9">
+          <button class="q7-btn" data-v="learn" onclick="selQ7(9,'learn',this)">learn</button>
+          <button class="q7-btn" data-v="learning" onclick="selQ7(9,'learning',this)">learning</button>
+          <button class="q7-btn" data-v="to learn" onclick="selQ7(9,'to learn',this)">to learn</button>
+        </div>
+        <div class="fb" id="fb-q7-9"></div>
+      </div>
+
+      <div class="q7-item">
+        <div class="q7-num">Câu (10) — continued ___</div>
+        <div class="q7-opts" id="q7-10">
+          <button class="q7-btn" data-v="go" onclick="selQ7(10,'go',this)">go</button>
+          <button class="q7-btn" data-v="going" onclick="selQ7(10,'going',this)">going</button>
+          <button class="q7-btn" data-v="to go" onclick="selQ7(10,'to go',this)">to go</button>
+        </div>
+        <div class="fb" id="fb-q7-10"></div>
+      </div>
+
+    </div>
+
+    <div class="sub-wrap"><button class="btn-ck" onclick="checkEx7()">Kiểm tra</button></div>
+    <div class="sc-row" id="score-ex7"><span class="sc-ok" id="sv-ex7"></span><span class="sc-tot">/ 10 đúng</span></div>
+  </div>
+</div>
+
+<button class="g-sub" id="gbtn" onclick="submitAll()">📋 Nộp bài & Xem kết quả</button>
+
+<div class="final" id="final">
+  <div class="f-emoji" id="fe">🎉</div>
+  <div class="f-score" id="fs">0/0</div>
+  <div class="f-lbl">tổng điểm</div>
+  <div class="f-msg" id="fm"></div>
+  <button class="btn-retry" onclick="location.reload()">↺ Làm lại từ đầu</button>
+</div>
+
+</main>
+
+<script>
+const submitted={},scores={};
+function upProg(){
+  const d=Object.keys(submitted).length;
+  document.getElementById('pf').style.width=(d/7*100)+'%';
+  document.getElementById('pt').textContent=d+' / 7 bài';
+}
+function finishEx(id,correct,total){
+  scores[id]=correct;submitted[id]=true;
+  document.getElementById('sv-'+id).textContent=correct;
+  document.getElementById('score-'+id).classList.add('show');
+  document.getElementById(id).classList.add(correct===total?'done':'has-error');
+  upProg();
+}
+
+// ===== EX1 TRUE/FALSE =====
+const tf1={};
+const TF1_ANS={'tf1-1':'B','tf1-2':'A','tf1-3':'B','tf1-4':'B'};
+const TF1_EX={
+  'tf1-1':'Sai! Danh động từ (Gerund) là động từ thêm -ing, hoạt động như một danh từ. Ví dụ: Swimming is fun.',
+  'tf1-2':'Đúng! Swimming is fun (chủ ngữ). I enjoy swimming (tân ngữ).',
+  'tf1-3':'Sai! Danh động từ (V-ing) được dùng làm chủ ngữ không phải động từ nguyên thể.',
+  'tf1-4':'Sai! Một số động từ có thể theo sau bởi cả V-nguyên thể (không "to"), hoặc thậm chí chỉ danh từ. Ví dụ: let/make/have + V nguyên mẫu.'
+};
+function selTF(id,v,btn){
+  if(submitted['ex1'])return;
+  tf1[id]=v;
+  document.querySelectorAll(`#${id} .tf-btn`).forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+}
+function checkEx1(){
+  if(submitted['ex1'])return;
+  let c=0;
+  Object.keys(TF1_ANS).forEach(id=>{
+    const ans=TF1_ANS[id],chosen=tf1[id];
+    document.querySelectorAll(`#${id} .tf-btn`).forEach(b=>{
+      b.disabled=true;
+      if(b.dataset.v===ans)b.classList.add('ok');
+      else if(b.dataset.v===chosen)b.classList.add('err');
+    });
+    const fb=document.getElementById('fb-'+id);fb.classList.add('show');
+    if(chosen===ans){c++;fb.className='fb show ok';fb.textContent='✓ '+TF1_EX[id];}
+    else{fb.className='fb show err';fb.textContent='✗ '+TF1_EX[id];}
+  });
+  finishEx('ex1',c,4);
+}
+
+// ===== EX2 MULTI =====
+const chkSel2=new Set();
+function togChk(el,gid){
+  if(el.classList.contains('disabled'))return;
+  const v=el.dataset.v;
+  if(el.classList.contains('sel')){el.classList.remove('sel');el.querySelector('.chk-box').textContent='';chkSel2.delete(v);}
+  else{el.classList.add('sel');el.querySelector('.chk-box').textContent='✓';chkSel2.add(v);}
+}
+// begin, start, continue, like, love, hate = same meaning with V-ing or to V
+const CORRECT2=new Set(['begin','start','continue','like','love','hate']);
+function checkEx2(){
+  if(submitted['ex2'])return;
+  let c=0;
+  document.querySelectorAll('#chk2 .chk-item').forEach(el=>{
+    el.classList.add('disabled');el.onclick=null;
+    const v=el.dataset.v,isAns=CORRECT2.has(v),isSel=chkSel2.has(v);
+    if(isAns){el.classList.add('correct');el.querySelector('.chk-box').textContent='✓';if(isSel)c++;}
+    else if(isSel)el.classList.add('wrong');
+  });
+  finishEx('ex2',c,5);
+}
+
+// ===== EX3 & EX4 DROPDOWN =====
+function checkDDEx(prefix,nums,exId,total){
+  if(submitted[exId])return;
+  let c=0;
+  nums.forEach(n=>{
+    const sel=document.getElementById(`${prefix}-${n}`),fb=document.getElementById(`fb-${prefix}-${n}`);
+    sel.disabled=true;
+    const ok=sel.value===sel.dataset.ans;
+    sel.classList.add(ok?'ok':'err');
+    if(ok)c++;
+    if(fb){fb.classList.add('show');fb.className=ok?'fb show ok':'fb show err';fb.textContent=ok?'✓':('✗ → '+sel.dataset.ans);}
+  });
+  finishEx(exId,c,total);
+}
+
+// ===== EX5 MC =====
+const mc5sel={};
+const MC5_ANS={1:'B',2:'A',3:'A',4:'B',5:'B'};
+const MC5_EX={
+  1:'To V – Remember to V = nhớ phải làm gì (tương lai). Remember V-ing = nhớ lại đã từng làm gì.',
+  2:'V-ing – Forget V-ing = quên rằng đã làm gì (quá khứ). Forget to V = quên chưa làm điều gì đó.',
+  3:'V-ing – Regret V-ing = tiếc đã làm gì (quá khứ). Regret to V = tiếc phải thông báo điều gì.',
+  4:'To V – Try to V = cố gắng làm gì (mục tiêu). Try V-ing = thử làm xem sao (thí nghiệm).',
+  5:'To V – Stop to V = dừng lại để làm gì khác (mục đích). Stop V-ing = dừng hẳn không làm nữa.'
+};
+function selMC5(n,v,btn){
+  if(submitted['ex5'])return;
+  mc5sel[n]=v;
+  document.querySelectorAll(`#mc5-${n} .mc-btn`).forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+}
+function checkEx5(){
+  if(submitted['ex5'])return;
+  let c=0;
+  [1,2,3,4,5].forEach(n=>{
+    const ans=MC5_ANS[n],chosen=mc5sel[n];
+    document.querySelectorAll(`#mc5-${n} .mc-btn`).forEach(b=>{
+      b.disabled=true;
+      if(b.dataset.v===ans)b.classList.add('ok');
+      else if(b.dataset.v===chosen)b.classList.add('err');
+    });
+    const fb=document.getElementById(`fb-mc5-${n}`);fb.classList.add('show');
+    if(chosen===ans){c++;fb.className='fb show ok';fb.textContent='✓ '+MC5_EX[n];}
+    else{fb.className='fb show err';fb.textContent='✗ '+MC5_EX[n];}
+  });
+  finishEx('ex5',c,5);
+}
+
+// ===== EX6 SITUATION MC =====
+const mc6sel={};
+const MC6_ANS={1:'B',2:'A',3:'B',4:'C',5:'C',6:'A',7:'B',8:'A'};
+const MC6_EX={
+  1:'agrees – Andy đồng ý giúp → agree to V.',
+  2:'decides – Joe tự quyết định → decide to V.',
+  3:'tried to phone – Sarah cố gắng gọi (mục tiêu) nhưng không được → try to V.',
+  4:'promises – Patrick hứa viết thư mỗi ngày → promise to V.',
+  5:'forgot to post – Bob quên phải gửi thiệp (chưa làm) → forget to V.',
+  6:'refuses to lend – Agnes từ chối cho mượn xe → refuse to V.',
+  7:'want – Helen không muốn đi → want to V.',
+  8:'started – Susan bắt đầu nói → start to V.'
+};
+function selMC6(n,v,btn){
+  if(submitted['ex6'])return;
+  mc6sel[n]=v;
+  document.querySelectorAll(`#mc6-${n} .mc-btn`).forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+}
+function checkEx6(){
+  if(submitted['ex6'])return;
+  let c=0;
+  [1,2,3,4,5,6,7,8].forEach(n=>{
+    const ans=MC6_ANS[n],chosen=mc6sel[n];
+    document.querySelectorAll(`#mc6-${n} .mc-btn`).forEach(b=>{
+      b.disabled=true;
+      if(b.dataset.v===ans)b.classList.add('ok');
+      else if(b.dataset.v===chosen)b.classList.add('err');
+    });
+    const fb=document.getElementById(`fb-mc6-${n}`);fb.classList.add('show');
+    if(chosen===ans){c++;fb.className='fb show ok';fb.textContent='✓ '+MC6_EX[n];}
+    else{fb.className='fb show err';fb.textContent='✗ '+MC6_EX[n];}
+  });
+  finishEx('ex6',c,8);
+}
+
+// ===== EX7 PASSAGE =====
+const q7sel={};
+// Correct answers: 1=to pay, 2=working/to work(both ok), 3=to give, 4=doing, 5=talking/to talk(both ok), 6=to look, 7=to live, 8=to set, 9=learning/to learn(both ok), 10=going/to go(both ok)
+const Q7_ANS={
+  1:['to pay'],
+  2:['working','to work'],
+  3:['to give'],
+  4:['doing'],
+  5:['talking','to talk'],
+  6:['to look'],
+  7:['to live'],
+  8:['to set'],
+  9:['learning','to learn'],
+  10:['going','to go']
+};
+const Q7_EX={
+  1:'agree → chỉ theo sau to V: agreed to pay.',
+  2:'start → V-ing hoặc to V đều được: started working / started to work.',
+  3:'promise → chỉ theo sau to V: promised to give.',
+  4:'enjoy → chỉ theo sau V-ing: enjoy doing.',
+  5:'try → V-ing (thử) hoặc to V (cố gắng) đều chấp nhận: tried talking / tried to talk.',
+  6:'decide → chỉ theo sau to V: decided to look.',
+  7:'want → chỉ theo sau to V: want to live.',
+  8:'forget to V = quên phải làm gì (chưa làm): forgot to set.',
+  9:'begin → V-ing hoặc to V đều được: began learning / began to learn.',
+  10:'continue → V-ing hoặc to V đều được: continued going / continued to go.'
+};
+function selQ7(n,v,btn){
+  if(submitted['ex7'])return;
+  q7sel[n]=v;
+  document.querySelectorAll(`#q7-${n} .q7-btn`).forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+}
+function checkEx7(){
+  if(submitted['ex7'])return;
+  let c=0;
+  for(let n=1;n<=10;n++){
+    const chosen=q7sel[n];
+    const ans=Q7_ANS[n];
+    const ok=ans.includes(chosen);
+    document.querySelectorAll(`#q7-${n} .q7-btn`).forEach(b=>{
+      b.disabled=true;
+      if(ans.includes(b.dataset.v))b.classList.add('ok');
+      else if(b.dataset.v===chosen&&!ok)b.classList.add('err');
+    });
+    const fb=document.getElementById(`fb-q7-${n}`);fb.classList.add('show');
+    if(ok){c++;fb.className='fb show ok';fb.textContent='✓ '+Q7_EX[n];}
+    else{fb.className='fb show err';fb.textContent='✗ '+Q7_EX[n];}
+  }
+  finishEx('ex7',c,10);
+}
+
+// ===== SUBMIT ALL =====
+function submitAll(){
+  if(!submitted['ex1'])checkEx1();
+  if(!submitted['ex2'])checkEx2();
+  if(!submitted['ex3'])checkDDEx('dd3',['1','2','3','4','5'],'ex3',5);
+  if(!submitted['ex4'])checkDDEx('dd4',['1','2','3','4','5','6'],'ex4',6);
+  if(!submitted['ex5'])checkEx5();
+  if(!submitted['ex6'])checkEx6();
+  if(!submitted['ex7'])checkEx7();
+  document.getElementById('gbtn').disabled=true;
+  const total=Object.values(scores).reduce((a,b)=>a+b,0);
+  const max=4+5+5+6+5+8+10; // =43
+  const pct=Math.round(total/max*100);
+  let emoji,msg;
+  if(pct===100){emoji='🏆';msg='Hoàn hảo! Bạn nắm vững Gerund và Infinitive!';}
+  else if(pct>=80){emoji='🎉';msg='Xuất sắc! Chú ý thêm các động từ đặc biệt như remember/forget/try/stop là hoàn hảo!';}
+  else if(pct>=60){emoji='💪';msg='Khá tốt! Ôn lại quy tắc: động từ nào chỉ V-ing, chỉ to V, hay cả hai!';}
+  else if(pct>=40){emoji='📖';msg='Cần học thuộc bảng phân loại động từ theo sau V-ing / to V nhé!';}
+  else{emoji='🌱';msg='Hãy xem lại lý thuyết Gerund và Infinitive từ đầu. Cố lên!';}
+  document.getElementById('fe').textContent=emoji;
+  document.getElementById('fs').textContent=total+' / '+max;
+  document.getElementById('fm').textContent=msg;
+  document.getElementById('final').classList.add('show');
+  document.getElementById('final').scrollIntoView({behavior:'smooth',block:'center'});
+}
+</script>
+</body>
+</html>
