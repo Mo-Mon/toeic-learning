@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🛒 Mua Sắm - Shopping Vocabulary</title>
+<style>
+  :root {
+    --blue: #1565C0;
+    --blue-light: #1976D2;
+    --blue-dark: #0D47A1;
+    --blue-bg: #E3F2FD;
+    --blue-mid: #BBDEFB;
+    --accent: #FF6F00;
+    --white: #FFFFFF;
+    --gray: #F5F8FF;
+    --text: #1A237E;
+    --correct: #2E7D32;
+    --wrong: #C62828;
+    --border: #90CAF9;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #FFFFFF;
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .header {
+    background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue) 60%, #1E88E5 100%);
+    color: white;
+    text-align: center;
+    padding: 28px 20px 20px;
+    box-shadow: 0 3px 12px rgba(13,71,161,0.18);
+  }
+  .header h1 { font-size: 2rem; letter-spacing: 1px; }
+  .header p { font-size: 1rem; opacity: 0.85; margin-top: 4px; }
+
+  /* TABS */
+  .tab-bar {
+    display: flex;
+    flex-wrap: wrap;
+    background: var(--blue-dark);
+    gap: 2px;
+    padding: 0 8px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+  .tab-btn {
+    padding: 12px 16px;
+    background: transparent;
+    color: var(--blue-mid);
+    border: none;
+    cursor: pointer;
+    font-size: 0.82rem;
+    font-weight: 600;
+    transition: all 0.2s;
+    border-bottom: 3px solid transparent;
+    white-space: nowrap;
+  }
+  .tab-btn:hover { color: white; background: rgba(255,255,255,0.08); }
+  .tab-btn.active {
+    color: white;
+    border-bottom: 3px solid #FFC107;
+    background: rgba(255,255,255,0.12);
+  }
+
+  /* PANELS */
+  .panel { display: none; padding: 28px 20px; max-width: 900px; margin: 0 auto; }
+  .panel.active { display: block; }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--blue-dark);
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-left: 4px solid var(--blue);
+    padding-left: 12px;
+  }
+
+  /* VOCAB CARDS */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+  .vocab-card {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 2px 8px rgba(21,101,192,0.07);
+    transition: transform 0.15s, box-shadow 0.15s;
+    cursor: default;
+  }
+  .vocab-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(21,101,192,0.13);
+  }
+  .vocab-card .num {
+    font-size: 0.72rem;
+    color: var(--blue-light);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .vocab-card .word {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--blue-dark);
+    margin: 4px 0 2px;
+  }
+  .vocab-card .phonetic {
+    font-size: 0.88rem;
+    color: #5C6BC0;
+    font-style: italic;
+    margin-bottom: 4px;
+  }
+  .vocab-card .meaning {
+    font-size: 0.95rem;
+    color: #37474F;
+    margin-bottom: 10px;
+  }
+  .vocab-card .example {
+    font-size: 0.82rem;
+    color: #546E7A;
+    background: var(--blue-bg);
+    border-radius: 7px;
+    padding: 6px 10px;
+    font-style: italic;
+    margin-bottom: 10px;
+    line-height: 1.4;
+  }
+  .speak-btn {
+    background: var(--blue);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 7px 14px;
+    font-size: 0.82rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: 600;
+    transition: background 0.2s;
+    width: 100%;
+    justify-content: center;
+  }
+  .speak-btn:hover { background: var(--blue-dark); }
+  .speak-btn.playing { background: #F57C00; }
+
+  /* AUDIO SECTION */
+  .audio-box {
+    background: var(--blue-bg);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 24px;
+  }
+  .audio-box h3 { color: var(--blue-dark); margin-bottom: 12px; font-size: 1rem; }
+  .audio-box audio { width: 100%; margin-bottom: 8px; }
+
+  /* QUIZ / EXERCISE STYLES */
+  .exercise-box {
+    background: var(--gray);
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 22px;
+    margin-bottom: 20px;
+  }
+  .exercise-box h3 {
+    color: var(--blue-dark);
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+
+  /* MATCHING */
+  .match-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+  .match-word {
+    background: var(--blue-dark);
+    color: white;
+    padding: 7px 14px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    min-width: 140px;
+    text-align: center;
+  }
+  .match-select {
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    padding: 7px 12px;
+    font-size: 0.9rem;
+    background: white;
+    color: var(--text);
+    flex: 1;
+    min-width: 160px;
+    cursor: pointer;
+  }
+  .match-select:focus { outline: none; border-color: var(--blue); }
+  .match-select.correct { border-color: var(--correct); background: #E8F5E9; }
+  .match-select.wrong { border-color: var(--wrong); background: #FFEBEE; }
+
+  /* FILL IN BLANK */
+  .fill-sentence {
+    font-size: 0.95rem;
+    color: var(--text);
+    margin-bottom: 10px;
+    line-height: 1.7;
+    padding: 10px 14px;
+    background: white;
+    border-radius: 9px;
+    border: 1.5px solid var(--border);
+  }
+  .fill-sentence span { font-weight: 700; color: var(--blue-dark); }
+  .fill-input {
+    border: 2px solid var(--blue-light);
+    border-radius: 7px;
+    padding: 4px 10px;
+    font-size: 0.92rem;
+    color: var(--text);
+    width: 130px;
+    background: var(--blue-bg);
+  }
+  .fill-input:focus { outline: none; border-color: var(--blue-dark); }
+  .fill-input.correct { border-color: var(--correct); background: #E8F5E9; color: var(--correct); }
+  .fill-input.wrong { border-color: var(--wrong); background: #FFEBEE; color: var(--wrong); }
+
+  /* MULTIPLE CHOICE */
+  .mc-question { margin-bottom: 20px; }
+  .mc-question p {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--blue-dark);
+    margin-bottom: 10px;
+    padding: 8px 12px;
+    background: white;
+    border-radius: 9px;
+    border-left: 4px solid var(--blue);
+  }
+  .mc-options { display: flex; flex-direction: column; gap: 7px; }
+  .mc-option {
+    padding: 9px 16px;
+    background: white;
+    border: 2px solid var(--border);
+    border-radius: 9px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.18s;
+    color: var(--text);
+    text-align: left;
+  }
+  .mc-option:hover { border-color: var(--blue); background: var(--blue-bg); }
+  .mc-option.correct { border-color: var(--correct); background: #E8F5E9; color: var(--correct); font-weight: 700; }
+  .mc-option.wrong { border-color: var(--wrong); background: #FFEBEE; color: var(--wrong); }
+
+  /* CHECKBOX */
+  .check-group { display: flex; flex-direction: column; gap: 7px; margin-bottom: 10px; }
+  .check-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 14px;
+    background: white;
+    border: 2px solid var(--border);
+    border-radius: 9px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.15s;
+  }
+  .check-item:hover { border-color: var(--blue); background: var(--blue-bg); }
+  .check-item input[type="checkbox"] { width: 17px; height: 17px; accent-color: var(--blue); }
+  .check-item.correct { border-color: var(--correct); background: #E8F5E9; }
+  .check-item.wrong { border-color: var(--wrong); background: #FFEBEE; }
+
+  /* BUTTONS */
+  .btn {
+    background: var(--blue);
+    color: white;
+    border: none;
+    border-radius: 9px;
+    padding: 10px 24px;
+    font-size: 0.92rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .btn:hover { background: var(--blue-dark); }
+  .btn.accent { background: var(--accent); }
+  .btn.accent:hover { background: #E65100; }
+  .btn.green { background: var(--correct); }
+  .btn.green:hover { background: #1B5E20; }
+
+  /* RESULT */
+  .result-box {
+    margin-top: 14px;
+    padding: 12px 18px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    display: none;
+  }
+  .result-box.show { display: block; }
+  .result-box.good { background: #E8F5E9; color: var(--correct); border: 1.5px solid #A5D6A7; }
+  .result-box.bad { background: #FFEBEE; color: var(--wrong); border: 1.5px solid #EF9A9A; }
+
+  /* FLASHCARD */
+  .flashcard-wrap { display: flex; flex-direction: column; align-items: center; gap: 18px; }
+  .flashcard {
+    width: 340px;
+    height: 200px;
+    perspective: 1000px;
+    cursor: pointer;
+  }
+  .flashcard-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.5s;
+  }
+  .flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
+  .flashcard-front, .flashcard-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 18px rgba(21,101,192,0.13);
+  }
+  .flashcard-front {
+    background: linear-gradient(135deg, var(--blue-dark), var(--blue-light));
+    color: white;
+  }
+  .flashcard-back {
+    background: white;
+    border: 2px solid var(--border);
+    color: var(--text);
+    transform: rotateY(180deg);
+  }
+  .flashcard-front .fc-word { font-size: 1.6rem; font-weight: 800; }
+  .flashcard-front .fc-phonetic { font-size: 1rem; opacity: 0.8; font-style: italic; margin-top: 6px; }
+  .flashcard-back .fc-meaning { font-size: 1.3rem; font-weight: 700; color: var(--blue-dark); }
+  .flashcard-back .fc-example { font-size: 0.85rem; color: #546E7A; font-style: italic; margin-top: 8px; }
+  .flashcard-hint { font-size: 0.8rem; color: #90A4AE; margin-top: 2px; }
+
+  .fc-controls { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+
+  /* RANDOM QUIZ */
+  .rq-box {
+    background: var(--blue-bg);
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    text-align: center;
+    max-width: 500px;
+    margin: 0 auto 28px;
+  }
+  .rq-viet {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--blue-dark);
+    margin-bottom: 6px;
+  }
+  .rq-hint { font-size: 0.85rem; color: #607D8B; margin-bottom: 18px; }
+  .rq-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+  .rq-opt {
+    padding: 12px 10px;
+    background: white;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.18s;
+    color: var(--text);
+  }
+  .rq-opt:hover { border-color: var(--blue); background: #E3F2FD; }
+  .rq-opt.correct { border-color: var(--correct); background: #E8F5E9; color: var(--correct); }
+  .rq-opt.wrong { border-color: var(--wrong); background: #FFEBEE; color: var(--wrong); }
+  .rq-opt:disabled { cursor: default; }
+  .rq-score { font-size: 1rem; font-weight: 700; color: var(--blue); margin-top: 4px; }
+  .rq-feedback { font-size: 1rem; font-weight: 700; min-height: 28px; margin-bottom: 4px; }
+  .rq-feedback.ok { color: var(--correct); }
+  .rq-feedback.no { color: var(--wrong); }
+
+  /* PROGRESS BAR */
+  .progress-bar-wrap { background: #BBDEFB; border-radius: 8px; height: 8px; margin: 10px 0; }
+  .progress-bar-fill { background: var(--blue); border-radius: 8px; height: 8px; transition: width 0.3s; }
+
+  /* LISTEN SECTION */
+  .listen-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .listen-card {
+    background: white;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .listen-card .lc-word { font-size: 1.1rem; font-weight: 700; color: var(--blue-dark); }
+  .listen-card .lc-phonetic { font-size: 0.83rem; color: #5C6BC0; font-style: italic; }
+  .listen-card .lc-meaning { font-size: 0.85rem; color: #546E7A; }
+  .listen-card .lc-btn {
+    background: var(--blue);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 16px;
+    font-size: 0.82rem;
+    cursor: pointer;
+    font-weight: 600;
+    width: 100%;
+    transition: background 0.2s;
+  }
+  .listen-card .lc-btn:hover { background: var(--blue-dark); }
+  .listen-card .lc-btn.playing { background: #F57C00; }
+
+  /* IMAGE exercise — single full image */
+  .bai1-img-wrap {
+    width: 100%;
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--blue-bg);
+    margin-bottom: 20px;
+  }
+  .bai1-img-wrap img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .bai1-inputs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .bai1-inp-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .bai1-inp-item label {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--blue-dark);
+  }
+  .bai1-inp-item input {
+    width: 100%;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    padding: 7px 10px;
+    font-size: 0.92rem;
+    text-align: center;
+    background: white;
+    color: var(--text);
+  }
+  .bai1-inp-item input:focus { outline: none; border-color: var(--blue); }
+  .bai1-inp-item input.correct { border-color: var(--correct); background: #E8F5E9; color: var(--correct); font-weight: 700; }
+  .bai1-inp-item input.wrong { border-color: var(--wrong); background: #FFEBEE; color: var(--wrong); }
+
+  /* WORD BANK */
+  .word-bank {
+    background: var(--blue-bg);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .word-chip {
+    background: var(--blue-dark);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  @media (max-width: 600px) {
+    .tab-btn { padding: 9px 10px; font-size: 0.75rem; }
+    .img-ex-grid { grid-template-columns: repeat(2, 1fr); }
+    .rq-options { grid-template-columns: 1fr; }
+    .flashcard { width: 95vw; max-width: 340px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>🛒 Mua Sắm — Shopping</h1>
+  <p>Học từ vựng tiếng Anh chủ đề mua sắm · Prep.vn</p>
+</div>
+
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('vocab')">📚 Từ Vựng</button>
+  <button class="tab-btn" onclick="switchTab('listen')">🎧 Luyện Nghe</button>
+  <button class="tab-btn" onclick="switchTab('random')">🎲 Luyện Tập</button>
+  <button class="tab-btn" onclick="switchTab('bai1')">🖼️ Bài 1</button>
+  <button class="tab-btn" onclick="switchTab('bai2')">🔤 Bài 2</button>
+  <button class="tab-btn" onclick="switchTab('bai3')">🎙️ Bài 3</button>
+  <button class="tab-btn" onclick="switchTab('bai5')">✏️ Bài 5</button>
+  <button class="tab-btn" onclick="switchTab('bai6')">☑️ Bài 6</button>
+  <button class="tab-btn" onclick="switchTab('bai7')">🔵 Bài 7</button>
+  <button class="tab-btn" onclick="switchTab('bai8')">📝 Bài 8</button>
+</div>
+
+<!-- ===================== VOCAB TAB ===================== -->
+<div id="tab-vocab" class="panel active">
+  <div class="section-title">📚 15 Từ Vựng Chủ Đề Mua Sắm</div>
+  <div class="vocab-grid" id="vocabGrid"></div>
+</div>
+
+<!-- ===================== LISTEN TAB ===================== -->
+<div id="tab-listen" class="panel">
+  <div class="section-title">🎧 Luyện Nghe & Phát Âm</div>
+  <div class="exercise-box">
+    <h3>💡 Nhấn vào nút "🔊 Nghe" để nghe phát âm từng từ. Hãy lặp lại thành tiếng để luyện nói!</h3>
+    <div class="listen-grid" id="listenGrid"></div>
+    <button class="btn accent" onclick="playAllWords()">▶️ Nghe Tất Cả (tuần tự)</button>
+    <span id="playAllStatus" style="margin-left:12px;font-size:0.85rem;color:#607D8B;"></span>
+  </div>
+
+  <div class="section-title" style="margin-top:20px;">🏋️ Bài Tập Chính Tả Phát Âm</div>
+  <div class="exercise-box">
+    <h3>Nghe rồi gõ từ bạn nghe được:</h3>
+    <div id="dictationBox">
+      <div id="dictWord" style="font-size:2rem;font-weight:800;color:var(--blue-dark);text-align:center;margin:10px 0;letter-spacing:3px;">?</div>
+      <div id="dictPhonetic" style="text-align:center;color:#5C6BC0;font-style:italic;margin-bottom:12px;"></div>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+        <button class="btn" onclick="playDictWord()">🔊 Nghe lại</button>
+        <input id="dictInput" type="text" placeholder="Gõ từ bạn nghe..." style="border:2px solid var(--border);border-radius:9px;padding:9px 16px;font-size:1rem;width:200px;" onkeydown="if(event.key==='Enter')checkDict()">
+        <button class="btn green" onclick="checkDict()">✅ Kiểm tra</button>
+        <button class="btn" onclick="nextDictWord()">⏭️ Từ tiếp</button>
+      </div>
+      <div id="dictFeedback" style="text-align:center;font-size:1rem;font-weight:700;min-height:28px;margin-top:10px;"></div>
+      <div style="text-align:center;margin-top:8px;font-size:0.85rem;color:#90A4AE;">Điểm: <span id="dictScore">0</span> / <span id="dictTotal">0</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== RANDOM TAB ===================== -->
+<div id="tab-random" class="panel">
+  <div class="section-title">🎲 Luyện Tập Random — Chọn Từ Từ Nghĩa</div>
+
+  <div class="rq-box">
+    <div class="rq-viet" id="rqViet">—</div>
+    <div class="rq-hint" id="rqHint"></div>
+    <div class="rq-options" id="rqOpts"></div>
+    <div class="rq-feedback" id="rqFeedback"></div>
+    <button class="btn accent" onclick="nextRQ()">🔀 Câu tiếp theo</button>
+    <div class="rq-score">Điểm: <span id="rqScore">0</span> / <span id="rqAttempt">0</span></div>
+    <div class="progress-bar-wrap" style="margin-top:12px;">
+      <div class="progress-bar-fill" id="rqProgress" style="width:0%"></div>
+    </div>
+  </div>
+
+  <div class="section-title" style="margin-top:10px;">🃏 Flashcard</div>
+  <div class="flashcard-wrap">
+    <div class="flashcard" id="flashcard" onclick="flipCard()">
+      <div class="flashcard-inner">
+        <div class="flashcard-front">
+          <div class="fc-word" id="fcWord">—</div>
+          <div class="fc-phonetic" id="fcPhonetic"></div>
+          <div style="margin-top:12px;font-size:0.8rem;opacity:0.7;">👆 Nhấn để lật</div>
+        </div>
+        <div class="flashcard-back">
+          <div class="fc-meaning" id="fcMeaning">—</div>
+          <div class="fc-example" id="fcExample"></div>
+        </div>
+      </div>
+    </div>
+    <div class="flashcard-hint">Flashcard #{<span id="fcNum">1</span>} / 15</div>
+    <div class="fc-controls">
+      <button class="btn" onclick="prevCard()">⬅️ Trước</button>
+      <button class="btn" onclick="speakFlash()">🔊 Nghe</button>
+      <button class="btn accent" onclick="shuffleCards()">🔀 Trộn</button>
+      <button class="btn" onclick="nextCard()">Tiếp ➡️</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== BÀI 1 ===================== -->
+<div id="tab-bai1" class="panel">
+  <div class="section-title">🖼️ Bài 1 — Viết từ tương ứng với ảnh</div>
+  <div class="exercise-box">
+    <h3>Nhìn ảnh và điền từ tiếng Anh phù hợp vào ô trống (1–6):</h3>
+
+    <!-- Full single image -->
+    <div class="bai1-img-wrap">
+      <img src="bai1.png" alt="Shopping vocabulary pictures 1-6">
+    </div>
+
+    <!-- 6 input boxes -->
+    <div class="bai1-inputs">
+      <div class="bai1-inp-item"><label>Picture 1.</label><input type="text" id="b1inp0" placeholder="?"></div>
+      <div class="bai1-inp-item"><label>Picture 2.</label><input type="text" id="b1inp1" placeholder="?"></div>
+      <div class="bai1-inp-item"><label>Picture 3.</label><input type="text" id="b1inp2" placeholder="?"></div>
+      <div class="bai1-inp-item"><label>Picture 4.</label><input type="text" id="b1inp3" placeholder="?"></div>
+      <div class="bai1-inp-item"><label>Picture 5.</label><input type="text" id="b1inp4" placeholder="?"></div>
+      <div class="bai1-inp-item"><label>Picture 6.</label><input type="text" id="b1inp5" placeholder="?"></div>
+    </div>
+
+    <button class="btn" onclick="checkBai1()">✅ Kiểm tra</button>
+    <button class="btn accent" onclick="resetBai1()" style="margin-left:8px;">🔄 Làm lại</button>
+    <div class="result-box" id="bai1Result"></div>
+  </div>
+</div>
+
+<!-- ===================== BÀI 2 ===================== -->
+<div id="tab-bai2" class="panel">
+  <div class="section-title">🔤 Bài 2 — Nối từ với nghĩa</div>
+  <div class="exercise-box">
+    <h3>Chọn nghĩa tiếng Anh tương ứng cho mỗi từ tiếng Việt:</h3>
+    <div id="bai2Rows"></div>
+    <button class="btn" onclick="checkBai2()">✅ Kiểm tra</button>
+    <button class="btn accent" onclick="resetBai2()" style="margin-left:8px;">🔄 Làm lại</button>
+    <div class="result-box" id="bai2Result"></div>
+  </div>
+</div>
+
+<!-- ===================== BÀI 3 ===================== -->
+<div id="tab-bai3" class="panel">
+  <div class="section-title">🎙️ Bài 3 — Điền từ vào hội thoại</div>
+  <div class="audio-box">
+    <h3>🎧 Nghe audio bài 3:</h3>
+    <audio controls id="bai3Audio">
+      <source src="bai3.mp3" type="audio/mpeg">
+      <p style="color:#C62828;">Không tìm thấy file bai3.mp3 — hãy đặt file này cùng thư mục với file HTML.</p>
+    </audio>
+    <p style="font-size:0.82rem;color:#607D8B;">Đặt file <b>bai3.mp3</b> cùng thư mục với file HTML này.</p>
+  </div>
+  <div class="exercise-box">
+    <h3>Điền từ còn thiếu vào chỗ trống trong đoạn hội thoại:</h3>
+    <div class="word-bank">
+      <span class="word-chip">shopping</span>
+      <span class="word-chip">wine shop</span>
+      <span class="word-chip">food</span>
+      <span class="word-chip">market</span>
+      <span class="word-chip">shop</span>
+      <span class="word-chip">department store</span>
+      <span class="word-chip">pick up</span>
+      <span class="word-chip">café</span>
+      <span class="word-chip">cash</span>
+    </div>
+    <div id="bai3Dialogue"></div>
+    <button class="btn" onclick="checkBai3()">✅ Kiểm tra</button>
+    <button class="btn accent" onclick="resetBai3()" style="margin-left:8px;">🔄 Làm lại</button>
+    <div class="result-box" id="bai3Result"></div>
+  </div>
+</div>
+
+<!-- ===================== BÀI 5 ===================== -->
+<div id="tab-bai5" class="panel">
+  <div class="section-title">✏️ Bài 5 — Chọn từ điền vào chỗ trống</div>
+  <div class="exercise-box">
+    <h3>Chọn từ thích hợp (lưu ý: một số từ cần dùng dạng số nhiều):</h3>
+    <div class="word-bank">
+      <span class="word-chip">magazine</span>
+      <span class="word-chip">cash</span>
+      <span class="word-chip">bookstore</span>
+      <span class="word-chip">toothbrush</span>
+      <span class="word-chip">tinned</span>
+      <span class="word-chip">pork</span>
+    </div>
+    <div id="bai5Rows"></div>
+    <button class="btn" onclick="checkBai5()">✅ Kiểm tra</button>
+    <button class="btn accent" onclick="resetBai5()" style="margin-left:8px;">🔄 Làm lại</button>
+    <div class="result-box" id="bai5Result"></div>
+  </div>
+</div>
+
+<!-- ===================== BÀI 6 ===================== -->
+<div id="tab-bai6" class="panel">
+  <div class="section-title">☑️ Bài 6 — Chọn CÁC đáp án đúng</div>
+  <div id="bai6Container"></div>
+  <button class="btn" onclick="checkBai6()">✅ Kiểm tra tất cả</button>
+  <button class="btn accent" onclick="resetBai6()" style="margin-left:8px;">🔄 Làm lại</button>
+  <div class="result-box" id="bai6Result" style="margin-top:14px;"></div>
+</div>
+
+<!-- ===================== BÀI 7 ===================== -->
+<div id="tab-bai7" class="panel">
+  <div class="section-title">🔵 Bài 7 — Chọn từ đúng</div>
+  <div id="bai7Container"></div>
+  <button class="btn" onclick="checkBai7()">✅ Kiểm tra</button>
+  <button class="btn accent" onclick="resetBai7()" style="margin-left:8px;">🔄 Làm lại</button>
+  <div class="result-box" id="bai7Result" style="margin-top:14px;"></div>
+</div>
+
+<!-- ===================== BÀI 8 ===================== -->
+<div id="tab-bai8" class="panel">
+  <div class="section-title">📝 Bài 8 — Điền từ hoàn thành đoạn văn</div>
+  <div class="exercise-box">
+    <h3>Chọn từ phù hợp điền vào chỗ trống:</h3>
+    <div class="word-bank">
+      <span class="word-chip">supermarket</span>
+      <span class="word-chip">beef</span>
+      <span class="word-chip">tinned</span>
+      <span class="word-chip">sweets</span>
+      <span class="word-chip">toothpaste</span>
+      <span class="word-chip">shampoo</span>
+      <span class="word-chip">card</span>
+      <span class="word-chip">newsagent's</span>
+    </div>
+    <div id="bai8Text" style="font-size:0.95rem;line-height:2.2;color:var(--text);padding:10px 0;"></div>
+    <button class="btn" onclick="checkBai8()">✅ Kiểm tra</button>
+    <button class="btn accent" onclick="resetBai8()" style="margin-left:8px;">🔄 Làm lại</button>
+    <div class="result-box" id="bai8Result"></div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// DATA
+// ============================================================
+const vocab = [
+  { word: "supermarket",    phonetic: "/ˈsuːpəmɑːkɪt/",     meaning: "siêu thị",                emoji: "🏬", example: "We do our weekly shopping at the supermarket." },
+  { word: "market",         phonetic: "/ˈmɑːkɪt/",           meaning: "chợ",                      emoji: "🛍️", example: "I bought fresh vegetables at the market." },
+  { word: "department store",phonetic:"/dɪˈpɑːtmənt stɔː/",  meaning: "cửa hàng bách hóa",        emoji: "🏢", example: "You can buy clothes and electronics at a department store." },
+  { word: "newsagent's",    phonetic: "/ˈnjuːzeɪdʒənts/",    meaning: "sạp báo / cửa hàng báo",   emoji: "📰", example: "I stopped at the newsagent's to buy a newspaper." },
+  { word: "bookstore",      phonetic: "/ˈbʊkstɔː/",           meaning: "hiệu sách",                emoji: "📚", example: "She spent hours in the bookstore looking for new novels." },
+  { word: "toothpaste",     phonetic: "/ˈtuːθpeɪst/",         meaning: "kem đánh răng",             emoji: "🪥", example: "Don't forget to buy a tube of toothpaste." },
+  { word: "toothbrush",     phonetic: "/ˈtuːθbrʌʃ/",          meaning: "bàn chải đánh răng",        emoji: "🪥", example: "I use an electric toothbrush every morning." },
+  { word: "shampoo",        phonetic: "/ʃæmˈpuː/",            meaning: "dầu gội đầu",              emoji: "🧴", example: "This shampoo smells wonderful." },
+  { word: "conditioner",    phonetic: "/kənˈdɪʃənə/",         meaning: "dầu xả tóc",               emoji: "💆", example: "Use conditioner after shampoo for softer hair." },
+  { word: "pork",           phonetic: "/pɔːk/",               meaning: "thịt lợn",                 emoji: "🥩", example: "Katy's mother bought some pork at the butcher's." },
+  { word: "beef",           phonetic: "/biːf/",               meaning: "thịt bò",                  emoji: "🥩", example: "We need some beef to make the spaghetti sauce." },
+  { word: "cash",           phonetic: "/kæʃ/",                meaning: "tiền mặt",                 emoji: "💵", example: "They won't take cards, so you have to pay in cash." },
+  { word: "card",           phonetic: "/kɑːd/",               meaning: "thẻ (thanh toán)",          emoji: "💳", example: "Can I pay by card instead of cash?" },
+  { word: "tinned food",    phonetic: "/tɪnd fuːd/",           meaning: "thực phẩm đóng hộp",       emoji: "🥫", example: "My mom always says to buy fresh food instead of tinned food." },
+  { word: "sweets",         phonetic: "/swiːts/",              meaning: "kẹo / đồ ngọt",            emoji: "🍬", example: "We bought a lot of sweets for Jane's birthday party." },
+];
+
+// ============================================================
+// TABS
+// ============================================================
+function switchTab(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+// ============================================================
+// SPEECH
+// ============================================================
+function speak(text, onEnd) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-GB';
+  u.rate = 0.85;
+  if (onEnd) u.onend = onEnd;
+  window.speechSynthesis.speak(u);
+}
+
+// ============================================================
+// VOCAB CARDS
+// ============================================================
+function buildVocabGrid() {
+  const grid = document.getElementById('vocabGrid');
+  grid.innerHTML = vocab.map((v, i) => `
+    <div class="vocab-card">
+      <div class="num">${v.emoji} #${String(i+1).padStart(2,'0')}</div>
+      <div class="word">${v.word}</div>
+      <div class="phonetic">${v.phonetic}</div>
+      <div class="meaning">🇻🇳 ${v.meaning}</div>
+      <div class="example">"${v.example}"</div>
+      <button class="speak-btn" id="vbtn${i}" onclick="speakVocab(${i})">🔊 Nghe phát âm</button>
+    </div>
+  `).join('');
+}
+
+function speakVocab(i) {
+  const btn = document.getElementById('vbtn'+i);
+  btn.classList.add('playing');
+  btn.textContent = '🔊 Đang phát...';
+  speak(vocab[i].word, () => {
+    btn.classList.remove('playing');
+    btn.textContent = '🔊 Nghe phát âm';
+  });
+}
+
+// ============================================================
+// LISTEN TAB
+// ============================================================
+function buildListenGrid() {
+  const grid = document.getElementById('listenGrid');
+  grid.innerHTML = vocab.map((v, i) => `
+    <div class="listen-card">
+      <div class="lc-word">${v.emoji} ${v.word}</div>
+      <div class="lc-phonetic">${v.phonetic}</div>
+      <div class="lc-meaning">${v.meaning}</div>
+      <button class="lc-btn" id="lbtn${i}" onclick="speakListen(${i})">🔊 Nghe</button>
+    </div>
+  `).join('');
+}
+
+function speakListen(i) {
+  const btn = document.getElementById('lbtn'+i);
+  btn.classList.add('playing');
+  btn.textContent = '🔊 Đang phát...';
+  speak(vocab[i].word, () => {
+    btn.classList.remove('playing');
+    btn.textContent = '🔊 Nghe';
+  });
+}
+
+let playAllIdx = 0;
+function playAllWords() {
+  playAllIdx = 0;
+  playNext();
+}
+function playNext() {
+  if (playAllIdx >= vocab.length) {
+    document.getElementById('playAllStatus').textContent = '✅ Đã nghe xong!';
+    return;
+  }
+  document.getElementById('playAllStatus').textContent = `Đang phát: ${vocab[playAllIdx].word} (${playAllIdx+1}/${vocab.length})`;
+  speak(vocab[playAllIdx].word, () => {
+    playAllIdx++;
+    setTimeout(playNext, 600);
+  });
+}
+
+// Dictation
+let dictIdx = 0, dictScoreN = 0, dictTotalN = 0;
+function startDictation() { dictIdx = Math.floor(Math.random()*vocab.length); showDictWord(); }
+function showDictWord() {
+  document.getElementById('dictWord').textContent = '🔊 ?';
+  document.getElementById('dictPhonetic').textContent = '';
+  document.getElementById('dictInput').value = '';
+  document.getElementById('dictFeedback').textContent = '';
+  document.getElementById('dictInput').style.borderColor = 'var(--border)';
+  setTimeout(() => speak(vocab[dictIdx].word), 400);
+}
+function playDictWord() { speak(vocab[dictIdx].word); }
+function checkDict() {
+  const ans = document.getElementById('dictInput').value.trim().toLowerCase();
+  const correct = vocab[dictIdx].word.toLowerCase();
+  dictTotalN++;
+  document.getElementById('dictTotal').textContent = dictTotalN;
+  if (ans === correct) {
+    dictScoreN++;
+    document.getElementById('dictScore').textContent = dictScoreN;
+    document.getElementById('dictFeedback').textContent = '✅ Đúng! ' + vocab[dictIdx].phonetic;
+    document.getElementById('dictFeedback').style.color = 'var(--correct)';
+    document.getElementById('dictWord').textContent = vocab[dictIdx].emoji + ' ' + vocab[dictIdx].word;
+    document.getElementById('dictPhonetic').textContent = vocab[dictIdx].phonetic;
+  } else {
+    document.getElementById('dictFeedback').textContent = `❌ Sai! Đáp án: "${vocab[dictIdx].word}"`;
+    document.getElementById('dictFeedback').style.color = 'var(--wrong)';
+    document.getElementById('dictWord').textContent = vocab[dictIdx].emoji + ' ' + vocab[dictIdx].word;
+    document.getElementById('dictPhonetic').textContent = vocab[dictIdx].phonetic;
+  }
+}
+function nextDictWord() {
+  dictIdx = Math.floor(Math.random()*vocab.length);
+  showDictWord();
+}
+
+// ============================================================
+// RANDOM QUIZ
+// ============================================================
+let rqScore = 0, rqAttempt = 0, rqCurrentIdx = 0, rqAnswered = false;
+function nextRQ() {
+  rqAnswered = false;
+  rqCurrentIdx = Math.floor(Math.random()*vocab.length);
+  document.getElementById('rqViet').textContent = vocab[rqCurrentIdx].emoji + ' ' + vocab[rqCurrentIdx].meaning;
+  document.getElementById('rqHint').textContent = 'Từ tiếng Anh là gì?';
+  document.getElementById('rqFeedback').textContent = '';
+  document.getElementById('rqFeedback').className = 'rq-feedback';
+
+  // 4 options: 1 correct + 3 random
+  let opts = [rqCurrentIdx];
+  while (opts.length < 4) {
+    let r = Math.floor(Math.random()*vocab.length);
+    if (!opts.includes(r)) opts.push(r);
+  }
+  opts.sort(() => Math.random()-0.5);
+
+  const container = document.getElementById('rqOpts');
+  container.innerHTML = opts.map(idx => `
+    <button class="rq-opt" onclick="answerRQ(${idx})">${vocab[idx].word}</button>
+  `).join('');
+}
+function answerRQ(idx) {
+  if (rqAnswered) return;
+  rqAnswered = true;
+  rqAttempt++;
+  document.getElementById('rqAttempt').textContent = rqAttempt;
+  const buttons = document.querySelectorAll('.rq-opt');
+  buttons.forEach(b => b.disabled = true);
+  const fb = document.getElementById('rqFeedback');
+  if (idx === rqCurrentIdx) {
+    rqScore++;
+    fb.textContent = '✅ Chính xác! 🎉';
+    fb.className = 'rq-feedback ok';
+    speak(vocab[rqCurrentIdx].word);
+    document.getElementById('rqScore').textContent = rqScore;
+  } else {
+    fb.textContent = `❌ Sai rồi! Đáp án đúng: "${vocab[rqCurrentIdx].word}"`;
+    fb.className = 'rq-feedback no';
+    document.getElementById('rqScore').textContent = rqScore;
+  }
+  buttons.forEach(b => {
+    const txt = b.textContent;
+    if (txt === vocab[rqCurrentIdx].word) b.classList.add('correct');
+    else if (txt === vocab[idx].word && idx !== rqCurrentIdx) b.classList.add('wrong');
+  });
+  const pct = Math.round((rqScore/rqAttempt)*100);
+  document.getElementById('rqProgress').style.width = pct + '%';
+}
+
+// Flashcard
+let fcOrder = vocab.map((_,i)=>i), fcIdx = 0;
+function updateFlashcard() {
+  const v = vocab[fcOrder[fcIdx]];
+  document.getElementById('fcWord').textContent = v.emoji + ' ' + v.word;
+  document.getElementById('fcPhonetic').textContent = v.phonetic;
+  document.getElementById('fcMeaning').textContent = v.meaning;
+  document.getElementById('fcExample').textContent = '"' + v.example + '"';
+  document.getElementById('fcNum').textContent = fcIdx+1;
+  document.getElementById('flashcard').classList.remove('flipped');
+}
+function flipCard() { document.getElementById('flashcard').classList.toggle('flipped'); }
+function prevCard() { fcIdx = (fcIdx-1+vocab.length)%vocab.length; updateFlashcard(); }
+function nextCard() { fcIdx = (fcIdx+1)%vocab.length; updateFlashcard(); }
+function shuffleCards() {
+  fcOrder.sort(()=>Math.random()-0.5);
+  fcIdx = 0;
+  updateFlashcard();
+}
+function speakFlash() { speak(vocab[fcOrder[fcIdx]].word); }
+
+// ============================================================
+// BÀI 1 — Image Exercise
+// ============================================================
+// ============================================================
+// BÀI 1 — Single image, 6 inputs
+// ============================================================
+const bai1Answers = [
+  ["bookshop", "bookstore"], // Chấp nhận cả 2
+  ["toothbrush"],
+  ["sweets"],
+  ["magazine"],
+  ["tinned food"],
+  ["supermarket"]
+];
+
+function checkBai1() {
+  let correct = 0;
+  
+  bai1Answers.forEach((ansArray, i) => {
+    const inp = document.getElementById('b1inp' + i);
+    const userValue = inp.value.trim().toLowerCase();
+    
+    inp.classList.remove('correct', 'wrong');
+
+    // Kiểm tra xem userValue có tồn tại trong mảng đáp án không
+    if (ansArray.includes(userValue)) {
+      inp.classList.add('correct');
+      correct++;
+    } else {
+      inp.classList.add('wrong');
+      // Hiển thị đáp án đầu tiên trong mảng nếu làm sai
+      inp.value = ansArray[0]; 
+    }
+  });
+
+  showResult('bai1Result', correct, bai1Answers.length);
+}
+function resetBai1() {
+  bai1Answers.forEach((_,i) => {
+    const inp = document.getElementById('b1inp'+i);
+    inp.value = ''; inp.classList.remove('correct','wrong');
+  });
+  document.getElementById('bai1Result').classList.remove('show');
+}
+
+// ============================================================
+// BÀI 2 — Matching
+// ============================================================
+const bai2Data = [
+  { vi: "chợ",              en: "market" },
+  { vi: "kem đánh răng",    en: "toothpaste" },
+  { vi: "dầu gội đầu",     en: "shampoo" },
+  { vi: "cửa hàng tiện lợi",en: "department store" },
+  { vi: "thẻ",              en: "card" },
+  { vi: "thịt lợn",         en: "pork" },
+  { vi: "sạp báo",          en: "newsagent's" },
+  { vi: "dầu xả",           en: "conditioner" },
+];
+const bai2Options = ["market","toothpaste","shampoo","newsagent's","card","department store","pork","conditioner","cash","beef"];
+
+function buildBai2() {
+  const container = document.getElementById('bai2Rows');
+  container.innerHTML = bai2Data.map((item, i) => `
+    <div class="match-row">
+      <div class="match-word">${item.vi}</div>
+      <span>→</span>
+      <select class="match-select" id="b2sel${i}">
+        <option value="">-- Chọn --</option>
+        ${bai2Options.map(o=>`<option value="${o}">${o}</option>`).join('')}
+      </select>
+    </div>
+  `).join('');
+}
+function checkBai2() {
+  let correct = 0;
+  bai2Data.forEach((item, i) => {
+    const sel = document.getElementById('b2sel'+i);
+    sel.classList.remove('correct','wrong');
+    if (sel.value === item.en) { sel.classList.add('correct'); correct++; }
+    else { sel.classList.add('wrong'); }
+  });
+  showResult('bai2Result', correct, bai2Data.length);
+}
+function resetBai2() {
+  bai2Data.forEach((_,i) => {
+    const sel = document.getElementById('b2sel'+i);
+    sel.value = ''; sel.classList.remove('correct','wrong');
+  });
+  document.getElementById('bai2Result').classList.remove('show');
+}
+
+// ============================================================
+// BÀI 3 — Dialogue Fill
+// ============================================================
+const bai3Parts = [
+  { before: "(ANNA): Well, I'd like to go ", blank: "shopping", after: ". I want to buy some gifts for my family. Where is the best place to go?" },
+  { before: "(ANNA): I'm not sure, exactly. Maybe some nice marzipan for my Mum. And my Dad would like some German wine. Is there a ", blank: "wine shop", after: "?" },
+  { before: "(ROBERT): You can buy some nice ", blank: "food", after: " there. It's better quality than the supermarket." },
+  { before: "(ROBERT): There is a nice jeweller's near the ", blank: "market", after: ". You will find some nice gifts there." },
+  { before: "(ANNA): Great. And is there a toy ", blank: "shop", after: "? I'd like to buy a game for my brother." },
+  { before: "(ROBERT): But you can buy toys at Hauffman's. That's a ", blank: "department store", after: ". It's in the centre of town." },
+  { before: "(ROBERT): Actually, can you ", blank: "pick up", after: " some things for me while you are in town?" },
+  { before: "(ROBERT): It's opposite the ", blank: "café", after: ", where we went yesterday." },
+  { before: "(ROBERT): I'll give you some ", blank: "cash", after: ". Ah – no, I don't have any. I need to go to the bank." },
+];
+
+function buildBai3() {
+  const container = document.getElementById('bai3Dialogue');
+  container.innerHTML = bai3Parts.map((p, i) => `
+    <div class="fill-sentence">
+      ${p.before}<input class="fill-input" id="b3inp${i}" placeholder="...">${p.after}
+    </div>
+  `).join('');
+}
+function checkBai3() {
+  let correct = 0;
+  bai3Parts.forEach((p, i) => {
+    const inp = document.getElementById('b3inp'+i);
+    const ans = inp.value.trim().toLowerCase();
+    inp.classList.remove('correct','wrong');
+    if (ans === p.blank.toLowerCase()) { inp.classList.add('correct'); correct++; }
+    else { inp.classList.add('wrong'); inp.value = p.blank; }
+  });
+  showResult('bai3Result', correct, bai3Parts.length);
+}
+function resetBai3() {
+  bai3Parts.forEach((_,i) => {
+    const inp = document.getElementById('b3inp'+i);
+    inp.value = ''; inp.classList.remove('correct','wrong');
+  });
+  document.getElementById('bai3Result').classList.remove('show');
+}
+
+// ============================================================
+// BÀI 5 — Fill blank with word bank
+// ============================================================
+const bai5Data = [
+  { sentence: "They won't take cards, so you have to pay in ___.", answer: "cash" },
+  { sentence: "I much prefer chicken to beef or ___.", answer: "pork" },
+  { sentence: "After having dinner, I brushed my teeth with my electric ___.", answer: "toothbrush" },
+  { sentence: "There are 2 big ___ near my house so I often go there to buy books.", answer: "bookstores" },
+  { sentence: "For our lunch we brought ___ fish and some salads.", answer: "tinned" },
+  { sentence: "I bought some ___ to read on the train.", answer: "magazines" },
+];
+function buildBai5() {
+  const container = document.getElementById('bai5Rows');
+  container.innerHTML = bai5Data.map((item, i) => {
+    const parts = item.sentence.split('___');
+    return `<div class="fill-sentence">${i+1}. ${parts[0]}<input class="fill-input" id="b5inp${i}" placeholder="...">${parts[1]}</div>`;
+  }).join('');
+}
+function checkBai5() {
+  let correct = 0;
+  bai5Data.forEach((item, i) => {
+    const inp = document.getElementById('b5inp'+i);
+    const ans = inp.value.trim().toLowerCase();
+    inp.classList.remove('correct','wrong');
+    if (ans === item.answer.toLowerCase()) { inp.classList.add('correct'); correct++; }
+    else { inp.classList.add('wrong'); inp.value = item.answer; }
+  });
+  showResult('bai5Result', correct, bai5Data.length);
+}
+function resetBai5() {
+  bai5Data.forEach((_,i) => {
+    const inp = document.getElementById('b5inp'+i);
+    inp.value = ''; inp.classList.remove('correct','wrong');
+  });
+  document.getElementById('bai5Result').classList.remove('show');
+}
+
+// ============================================================
+// BÀI 6 — Checkbox multi-select
+// ============================================================
+const bai6Data = [
+  {
+    q: "What can I buy at a supermarket?",
+    options: ["cash","canned food","toothpaste","conditioner","magazine"],
+    correct: ["canned food","toothpaste","conditioner","magazine"]
+  },
+  {
+    q: "What can I buy at a bookstore?",
+    options: ["newspapers","tinned food","magazine","toothbrush","conditioner"],
+    correct: ["newspapers","magazine"]
+  },
+  {
+    q: "What can I buy at a newsagent's?",
+    options: ["newspapers","market","magazine","beef","vegetables"],
+    correct: ["newspapers","magazine"]
+  },
+  {
+    q: "What can I buy at a market?",
+    options: ["toothbrush","sweets","pork","money","newsagent's"],
+    correct: ["sweets","pork"]
+  },
+  {
+    q: "What can I buy at a department store?",
+    options: ["shampoo","beef","toothbrush","sweets","pork"],
+    correct: ["shampoo","toothbrush","sweets"]
+  },
+];
+function buildBai6() {
+  const container = document.getElementById('bai6Container');
+  container.innerHTML = bai6Data.map((q, qi) => `
+    <div class="exercise-box" style="margin-bottom:14px;">
+      <h3>${qi+1}. ${q.q}</h3>
+      <div class="check-group" id="b6g${qi}">
+        ${q.options.map((opt,oi) => `
+          <label class="check-item" id="b6item${qi}_${oi}">
+            <input type="checkbox" id="b6cb${qi}_${oi}" value="${opt}"> ${opt}
+          </label>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+function checkBai6() {
+  let totalQ = bai6Data.length, correct = 0;
+  bai6Data.forEach((q, qi) => {
+    const selected = q.options.filter((_,oi) => document.getElementById(`b6cb${qi}_${oi}`).checked);
+    const isCorrect = selected.length === q.correct.length && q.correct.every(c => selected.includes(c));
+    if (isCorrect) correct++;
+    q.options.forEach((opt, oi) => {
+      const item = document.getElementById(`b6item${qi}_${oi}`);
+      item.classList.remove('correct','wrong');
+      if (q.correct.includes(opt)) item.classList.add('correct');
+      else if (selected.includes(opt)) item.classList.add('wrong');
+    });
+  });
+  showResult('bai6Result', correct, totalQ);
+}
+function resetBai6() {
+  bai6Data.forEach((q,qi) => {
+    q.options.forEach((_,oi) => {
+      document.getElementById(`b6cb${qi}_${oi}`).checked = false;
+      const item = document.getElementById(`b6item${qi}_${oi}`);
+      item.classList.remove('correct','wrong');
+    });
+  });
+  document.getElementById('bai6Result').classList.remove('show');
+}
+
+// ============================================================
+// BÀI 7 — Multiple choice
+// ============================================================
+const bai7Data = [
+  { q: "We have bought a lot of ___ and biscuits for Jane's birthday.", opts: ["A. pork","B. sweets","C. cards"], answer: "B. sweets" },
+  { q: "I've been using a new ___ on my hair and it's very good.", opts: ["A. conditioner","B. toothpaste","C. magazine"], answer: "A. conditioner" },
+  { q: "I work as a shoe salesman in a ___ store downtown.", opts: ["A. tinned food","B. shampoo","C. department"], answer: "C. department" },
+  { q: "On my way home, I stopped at the ___ to buy a newspaper.", opts: ["A. toothbrush","B. market","C. newsagent's"], answer: "C. newsagent's" },
+  { q: "I don't have any cash — can I pay ___ card?", opts: ["A. in","B. by","C. from"], answer: "B. by" },
+  { q: "I usually buy all my vegetables at the ___.", opts: ["A. market","B. bookshop","C. newsagent's"], answer: "A. market" },
+  { q: "We need some ___ to make the spaghetti sauce.", opts: ["A. sweets","B. cash","C. beef"], answer: "C. beef" },
+  { q: "My mom always says I should buy fresh food instead of ___ food.", opts: ["A. market","B. sweet","C. canned"], answer: "C. canned" },
+];
+function buildBai7() {
+  const container = document.getElementById('bai7Container');
+  container.innerHTML = bai7Data.map((item, qi) => `
+    <div class="exercise-box mc-question" style="margin-bottom:14px;" id="b7q${qi}">
+      <p>${qi+1}. ${item.q}</p>
+      <div class="mc-options">
+        ${item.opts.map((opt,oi) => `
+          <button class="mc-option" id="b7opt${qi}_${oi}" onclick="selectMC7(${qi},${oi})">${opt}</button>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+let b7Selected = {};
+function selectMC7(qi, oi) {
+  b7Selected[qi] = oi;
+  bai7Data[qi].opts.forEach((_,i) => {
+    document.getElementById(`b7opt${qi}_${i}`).classList.remove('correct','wrong');
+  });
+  document.getElementById(`b7opt${qi}_${oi}`).style.borderColor = 'var(--blue)';
+  document.getElementById(`b7opt${qi}_${oi}`).style.background = 'var(--blue-bg)';
+}
+function checkBai7() {
+  let correct = 0;
+  bai7Data.forEach((item, qi) => {
+    item.opts.forEach((_,oi) => {
+      const btn = document.getElementById(`b7opt${qi}_${oi}`);
+      btn.classList.remove('correct','wrong');
+      btn.style.borderColor = ''; btn.style.background = '';
+    });
+    const correctIdx = item.opts.indexOf(item.answer);
+    document.getElementById(`b7opt${qi}_${correctIdx}`).classList.add('correct');
+    const sel = b7Selected[qi];
+    if (sel !== undefined && sel !== correctIdx) {
+      document.getElementById(`b7opt${qi}_${sel}`).classList.add('wrong');
+    }
+    if (b7Selected[qi] === correctIdx) correct++;
+  });
+  showResult('bai7Result', correct, bai7Data.length);
+}
+function resetBai7() {
+  b7Selected = {};
+  bai7Data.forEach((item, qi) => {
+    item.opts.forEach((_,oi) => {
+      const btn = document.getElementById(`b7opt${qi}_${oi}`);
+      btn.classList.remove('correct','wrong');
+      btn.style.borderColor = ''; btn.style.background = '';
+    });
+  });
+  document.getElementById('bai7Result').classList.remove('show');
+}
+
+// ============================================================
+// BÀI 8 — Fill paragraph
+// ============================================================
+const bai8Blanks = [
+  { blank: 1, answer: "supermarket" },
+  { blank: 2, answer: "beef" },
+  { blank: 3, answer: "tinned" },
+  { blank: 4, answer: "sweets" },
+  { blank: 5, answer: "toothpaste" },
+  { blank: 6, answer: "shampoo" },
+  { blank: 7, answer: "card" },
+  { blank: 8, answer: "newsagent's" },
+];
+function buildBai8() {
+  const text = `Last weekend, Katy and her mother went to the <input class="fill-input" id="b8_1" placeholder="..."> to do the weekly shopping. They made a long list of the things they needed to buy. Once they arrived at the supermarket, they parked their car and started shopping straight away. The first thing on the list was meat. Katy's mother bought some pork and <input class="fill-input" id="b8_2" placeholder="...">. Then they picked up some bags of frozen vegetables, some <input class="fill-input" id="b8_3" placeholder="..."> foods and a dozen eggs. That evening, they were having a small party, so Katy asked her mom to buy some <input class="fill-input" id="b8_4" placeholder="..."> like candies and chocolates for her and her friends. Last on the list was a tube of <input class="fill-input" id="b8_5" placeholder="..."> and a bottle of <input class="fill-input" id="b8_6" placeholder="...">. Once they finished, they checked out at the counter. Katy's mother didn't bring any cash so she paid by <input class="fill-input" id="b8_7" placeholder="...">. On their way home, they stopped at a <input class="fill-input" id="b8_8" placeholder="..."> and bought some magazines.`;
+  document.getElementById('bai8Text').innerHTML = text;
+}
+function checkBai8() {
+  let correct = 0;
+  bai8Blanks.forEach(item => {
+    const inp = document.getElementById('b8_'+item.blank);
+    const ans = inp.value.trim().toLowerCase();
+    inp.classList.remove('correct','wrong');
+    if (ans === item.answer.toLowerCase()) { inp.classList.add('correct'); correct++; }
+    else { inp.classList.add('wrong'); inp.value = item.answer; }
+  });
+  showResult('bai8Result', correct, bai8Blanks.length);
+}
+function resetBai8() {
+  bai8Blanks.forEach(item => {
+    const inp = document.getElementById('b8_'+item.blank);
+    inp.value = ''; inp.classList.remove('correct','wrong');
+  });
+  document.getElementById('bai8Result').classList.remove('show');
+}
+
+// ============================================================
+// HELPERS
+// ============================================================
+function showResult(id, correct, total) {
+  const box = document.getElementById(id);
+  const pct = Math.round((correct/total)*100);
+  box.classList.add('show');
+  if (pct >= 70) {
+    box.className = 'result-box show good';
+    box.textContent = `✅ Bạn đúng ${correct}/${total} câu (${pct}%) — Xuất sắc! 🎉`;
+  } else {
+    box.className = 'result-box show bad';
+    box.textContent = `❌ Bạn đúng ${correct}/${total} câu (${pct}%) — Hãy thử lại nhé!`;
+  }
+}
+
+// ============================================================
+// INIT
+// ============================================================
+buildVocabGrid();
+buildListenGrid();
+updateFlashcard();
+nextRQ();
+
+buildBai2();
+buildBai3();
+buildBai5();
+buildBai6();
+buildBai7();
+buildBai8();
+startDictation();
+</script>
+</body>
+</html>
