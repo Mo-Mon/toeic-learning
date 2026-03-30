@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luyện Tập Tiếng Anh – Hoạt Động Giải Trí</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f0f4ff;
+  --white: #ffffff;
+  --blue: #1a6fe8;
+  --blue-dark: #1455c0;
+  --blue-light: #e8f0fe;
+  --blue-mid: #c5d8fc;
+  --accent2: #ff6b6b;
+  --accent3: #00c471;
+  --accent4: #ff9f43;
+  --text: #1e2d4e;
+  --text-light: #5a6e8c;
+  --border: #d0ddf5;
+  --correct: #00c471;
+  --wrong: #ff4757;
+  --radius: 14px;
+  --shadow: 0 4px 20px rgba(26,111,232,0.12);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+header {
+  background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue) 100%);
+  padding: 22px 24px 18px; text-align: center;
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 3px 20px rgba(26,111,232,0.3);
+}
+header h1 { font-family: 'Baloo 2', cursive; font-size: 1.6rem; color: #fff; }
+header p { font-size: 0.84rem; color: rgba(255,255,255,0.75); margin-top: 3px; }
+
+.tabs {
+  background: var(--white); border-bottom: 2px solid var(--border);
+  display: flex; padding: 0 8px; overflow-x: auto; justify-content: center;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06); flex-wrap: nowrap;
+}
+.tab-btn {
+  padding: 14px 15px; border: none; border-bottom: 3px solid transparent;
+  background: transparent; color: var(--text-light); font-family: 'Nunito', sans-serif;
+  font-size: 0.8rem; font-weight: 800; cursor: pointer; transition: all 0.2s; white-space: nowrap; flex-shrink: 0;
+}
+.tab-btn:hover { color: var(--blue); }
+.tab-btn.active { color: var(--blue); border-bottom-color: var(--blue); background: var(--blue-light); }
+
+.section { display: none; padding: 24px 16px 50px; max-width: 900px; margin: 0 auto; }
+.section.active { display: block; }
+.section-title { font-family: 'Baloo 2', cursive; font-size: 1.25rem; color: var(--blue); margin-bottom: 4px; }
+.section-desc { color: var(--text-light); font-size: 0.86rem; margin-bottom: 22px; }
+
+/* VOCAB */
+.vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; margin-bottom: 32px; }
+.vocab-card {
+  background: var(--white); border: 2px solid var(--border); border-radius: var(--radius);
+  padding: 16px 18px; display: flex; align-items: center; gap: 14px;
+  cursor: pointer; transition: all 0.18s; position: relative;
+  box-shadow: 0 2px 10px rgba(26,111,232,0.07);
+}
+.vocab-card:hover { border-color: var(--blue); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(26,111,232,0.15); }
+.vocab-card .emoji { font-size: 2.2rem; flex-shrink: 0; width: 52px; text-align: center; }
+.vocab-card .en { font-weight: 800; font-size: 0.95rem; color: var(--text); }
+.vocab-card .vn { font-size: 0.8rem; color: var(--blue); margin-top: 3px; font-weight: 700; }
+.vocab-card .speak-tag {
+  position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+  background: var(--blue-light); border: 1.5px solid var(--blue-mid); color: var(--blue);
+  border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center;
+  justify-content: center; font-size: 13px; opacity: 0; transition: opacity 0.2s;
+}
+.vocab-card:hover .speak-tag { opacity: 1; }
+
+/* LISTEN PRACTICE */
+.listen-title {
+  font-family: 'Baloo 2', cursive; font-size: 1.1rem; color: var(--blue);
+  margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+  padding-top: 24px; border-top: 2px dashed var(--border); margin-top: 4px;
+}
+.listen-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+.listen-card {
+  background: var(--white); border: 2px solid var(--border); border-radius: var(--radius);
+  padding: 16px 18px; box-shadow: 0 2px 8px rgba(26,111,232,0.06); transition: border-color 0.2s;
+}
+.listen-card.playing { border-color: var(--blue); background: var(--blue-light); }
+.lc-top { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.lc-emoji { font-size: 1.8rem; }
+.lc-en { font-weight: 800; font-size: 0.92rem; color: var(--text); }
+.lc-vn { font-size: 0.78rem; color: var(--text-light); margin-top: 2px; }
+.lc-btns { display: flex; gap: 7px; flex-wrap: wrap; }
+.lc-btn {
+  display: flex; align-items: center; gap: 4px;
+  padding: 7px 12px; border-radius: 50px; font-family: 'Nunito', sans-serif;
+  font-size: 0.78rem; font-weight: 800; border: 1.5px solid; cursor: pointer; transition: all 0.15s;
+}
+.lc-btn-normal { background: var(--blue-light); color: var(--blue); border-color: var(--blue-mid); }
+.lc-btn-normal:hover { background: var(--blue); color: #fff; border-color: var(--blue); }
+.lc-btn-slow { background: #fff8e1; color: #b45309; border-color: #fcd34d; }
+.lc-btn-slow:hover { background: #f59e0b; color: #fff; border-color: #f59e0b; }
+.lc-btn-repeat { background: #f0fff4; color: #065f46; border-color: #86efac; }
+.lc-btn-repeat:hover { background: var(--correct); color: #fff; border-color: var(--correct); }
+
+/* QUIZ */
+.quiz-block {
+  background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius);
+  padding: 20px; margin-bottom: 18px; box-shadow: var(--shadow); transition: border-color 0.3s;
+}
+.quiz-block.correct { border-color: var(--correct); background: #f0fff8; }
+.quiz-block.wrong { border-color: var(--wrong); background: #fff5f5; }
+.q-num { font-size: 0.73rem; font-weight: 800; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+
+/* IMAGE wrapper with fallback */
+.img-wrap { position: relative; margin-bottom: 14px; }
+.img-wrap img { width: 100%; max-height: 200px; object-fit: cover; border-radius: 10px; border: 1.5px solid var(--border); display: block; }
+.img-fallback {
+  display: none; background: var(--blue-light); border-radius: 10px;
+  padding: 28px; text-align: center; border: 1.5px dashed var(--blue-mid);
+}
+.img-fallback .fb-emoji { font-size: 3rem; display: block; margin-bottom: 8px; }
+.img-fallback .fb-text { font-size: 0.82rem; color: var(--text-light); }
+
+.options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.options-grid.single-col { grid-template-columns: 1fr; }
+.opt-btn {
+  padding: 10px 14px; border-radius: 10px; border: 2px solid var(--border);
+  background: var(--bg); color: var(--text); font-family: 'Nunito', sans-serif;
+  font-size: 0.87rem; font-weight: 700; cursor: pointer; transition: all 0.15s; text-align: left;
+}
+.opt-btn:hover:not(:disabled) { border-color: var(--blue); background: var(--blue-light); color: var(--blue); }
+.opt-btn.sel-ok { background: #d1fae5; border-color: var(--correct); color: #065f46; }
+.opt-btn.sel-no { background: #fee2e2; border-color: var(--wrong); color: #991b1b; }
+.opt-btn.show-ok { background: #d1fae5; border-color: var(--correct); }
+.feedback-msg { margin-top: 10px; font-size: 0.84rem; font-weight: 700; display: none; }
+.feedback-msg.show { display: block; }
+.feedback-msg.ok { color: #065f46; }
+.feedback-msg.no { color: #991b1b; }
+
+.progress-wrap { background: var(--border); border-radius: 50px; height: 6px; margin-bottom: 20px; overflow: hidden; }
+.progress-fill { height: 6px; border-radius: 50px; background: linear-gradient(90deg, var(--blue), #5b9eff); transition: width 0.4s; }
+
+/* MATCH */
+.match-area { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 20px; }
+.match-col-title { font-size: 0.73rem; font-weight: 800; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.match-item {
+  background: var(--white); border: 2px solid var(--border); border-radius: 10px;
+  padding: 11px 15px; font-size: 0.88rem; font-weight: 700; cursor: pointer;
+  transition: all 0.15s; margin-bottom: 8px; user-select: none;
+  box-shadow: 0 1px 6px rgba(26,111,232,0.06);
+}
+.match-item:hover:not(.m-ok) { border-color: var(--blue); background: var(--blue-light); }
+.match-item.selected { border-color: var(--blue); background: var(--blue-light); color: var(--blue); }
+.match-item.m-ok { border-color: var(--correct); background: #d1fae5; color: #065f46; cursor: default; }
+.match-item.m-no { border-color: var(--wrong); background: #fee2e2; color: #991b1b; }
+.match-score { margin-top: 14px; font-weight: 800; font-size: 1rem; color: var(--blue); text-align: center; }
+
+/* AUDIO */
+.audio-box {
+  background: var(--blue-light); border: 2px solid var(--blue-mid); border-radius: var(--radius);
+  padding: 20px; margin-bottom: 24px; display: flex; flex-direction: column;
+  align-items: center; gap: 10px; text-align: center;
+}
+.audio-box audio { width: 100%; max-width: 480px; accent-color: var(--blue); }
+.audio-box .audio-hint { font-size: 0.8rem; color: var(--text-light); }
+
+/* DIALOGUE */
+.dialogue-box {
+  background: var(--blue-light); border-left: 4px solid var(--blue);
+  border-radius: 0 10px 10px 0; padding: 14px 18px; margin-bottom: 10px;
+  font-size: 0.9rem; line-height: 1.75;
+}
+.sp-a { font-weight: 800; color: var(--blue-dark); }
+.sp-b { font-weight: 800; color: #7c3aed; }
+
+/* READING */
+.reading-passage {
+  background: var(--white); border-radius: var(--radius); border: 1.5px solid var(--border);
+  padding: 20px; margin-bottom: 22px; font-size: 0.9rem; line-height: 2;
+  max-height: 260px; overflow-y: auto; box-shadow: var(--shadow);
+}
+.reading-passage::-webkit-scrollbar { width: 5px; }
+.reading-passage::-webkit-scrollbar-thumb { background: var(--blue-mid); border-radius: 3px; }
+
+/* INPUT */
+.input-answer {
+  background: var(--bg); border: 2px solid var(--border); border-radius: 8px;
+  padding: 10px 14px; color: var(--text); font-family: 'Nunito', sans-serif;
+  font-size: 0.9rem; font-weight: 700; width: 100%; margin-top: 6px; transition: border-color 0.2s;
+}
+.input-answer:focus { outline: none; border-color: var(--blue); background: var(--blue-light); }
+.input-answer.ok { border-color: var(--correct); background: #d1fae5; }
+.input-answer.no { border-color: var(--wrong); background: #fee2e2; }
+.input-group { margin-bottom: 14px; }
+.input-group label { font-size: 0.8rem; color: var(--text-light); font-weight: 800; }
+
+.replace-box {
+  background: var(--white); border-radius: var(--radius); border: 1.5px solid var(--border);
+  padding: 20px; margin-bottom: 18px; font-size: 0.88rem; line-height: 2.2; box-shadow: var(--shadow);
+}
+
+/* BUTTONS */
+.btn-primary {
+  background: var(--blue); color: #fff; border: none; border-radius: 50px;
+  padding: 12px 28px; font-family: 'Nunito', sans-serif; font-weight: 800;
+  font-size: 0.92rem; cursor: pointer; transition: all 0.18s;
+  box-shadow: 0 4px 16px rgba(26,111,232,0.28);
+}
+.btn-primary:hover { background: var(--blue-dark); transform: translateY(-1px); }
+.btn-secondary {
+  background: #fff; color: var(--text-light); border: 2px solid var(--border);
+  border-radius: 50px; padding: 10px 22px; font-family: 'Nunito', sans-serif;
+  font-weight: 700; font-size: 0.88rem; cursor: pointer; transition: all 0.18s;
+}
+.btn-secondary:hover { border-color: var(--blue); color: var(--blue); }
+.btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+
+.score-banner {
+  background: linear-gradient(135deg, var(--blue-light), #fff); border: 2px solid var(--blue-mid);
+  border-radius: var(--radius); padding: 20px; text-align: center; margin-top: 20px; display: none;
+  box-shadow: var(--shadow);
+}
+.score-banner.show { display: block; }
+.score-banner .big-score { font-family: 'Baloo 2', cursive; font-size: 2.6rem; color: var(--blue); }
+.score-banner .score-label { color: var(--text-light); font-size: 0.88rem; margin-top: 4px; }
+
+@media (max-width: 520px) {
+  .options-grid { grid-template-columns: 1fr; }
+  .match-area { grid-template-columns: 1fr; }
+  .listen-grid { grid-template-columns: 1fr; }
+  header h1 { font-size: 1.25rem; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🎯 Luyện Tập Tiếng Anh</h1>
+  <p>Chủ đề: Hoạt Động Giải Trí – Leisure Activities</p>
+</header>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('vocab',this)">📚 Từ Vựng</button>
+  <button class="tab-btn" onclick="showTab('ex1',this)">🖼️ Bài 1</button>
+  <button class="tab-btn" onclick="showTab('ex2',this)">🔗 Bài 2</button>
+  <button class="tab-btn" onclick="showTab('ex3',this)">🎧 Bài 3</button>
+  <button class="tab-btn" onclick="showTab('ex4',this)">💬 Bài 4</button>
+  <button class="tab-btn" onclick="showTab('ex5',this)">✏️ Bài 5</button>
+  <button class="tab-btn" onclick="showTab('ex6',this)">📖 Bài 6</button>
+</div>
+
+<!-- TỪ VỰNG -->
+<div id="vocab" class="section active">
+  <div class="section-title">📚 Bảng Từ Vựng</div>
+  <div class="section-desc">Nhấn vào thẻ để nghe phát âm. Học thuộc trước khi làm bài tập!</div>
+  <div class="vocab-grid" id="vocabGrid"></div>
+  <div class="listen-title">🎧 Luyện Nghe &amp; Phát Âm</div>
+  <div class="section-desc" style="margin-top:-12px;">Nghe kỹ từng từ — chọn <strong>Nghe thường</strong>, <strong>🐢 Chậm</strong> để nghe rõ hơn, hoặc <strong>🔁 Lặp 3 lần</strong> để luyện nhớ.</div>
+  <div class="listen-grid" id="listenGrid"></div>
+</div>
+
+<!-- BÀI 1 -->
+<div id="ex1" class="section">
+  <div class="section-title">🖼️ Bài 1 – Nhìn Tranh Chọn Đáp Án</div>
+  <div class="section-desc">Quan sát hình ảnh và chọn đáp án mô tả đúng nhất hoạt động trong ảnh.</div>
+  <div class="progress-wrap"><div class="progress-fill" id="ex1Progress" style="width:0%"></div></div>
+  <div id="ex1Container"></div>
+  <div class="btn-row">
+    <button class="btn-primary" onclick="checkEx1()">✅ Kiểm tra</button>
+    <button class="btn-secondary" onclick="resetEx1()">🔄 Làm lại</button>
+  </div>
+  <div class="score-banner" id="ex1Score"></div>
+</div>
+
+<!-- BÀI 2 -->
+<div id="ex2" class="section">
+  <div class="section-title">🔗 Bài 2 – Nối Từ Vựng</div>
+  <div class="section-desc">Nhấn từ tiếng Anh, rồi nhấn nghĩa tiếng Việt tương ứng để nối.</div>
+  <div class="match-area">
+    <div><div class="match-col-title">🇬🇧 Tiếng Anh</div><div id="matchLeft"></div></div>
+    <div><div class="match-col-title">🇻🇳 Tiếng Việt</div><div id="matchRight"></div></div>
+  </div>
+  <div class="match-score" id="matchScore"></div>
+  <div class="btn-row"><button class="btn-secondary" onclick="resetMatch()">🔄 Làm lại</button></div>
+</div>
+
+<!-- BÀI 3 -->
+<div id="ex3" class="section">
+  <div class="section-title">🎧 Bài 3 – Nghe và Chọn Đáp Án</div>
+  <div class="section-desc">Nghe audio rồi chọn đáp án đúng. Mỗi câu được đọc 2 lần.</div>
+  <div class="audio-box">
+    <div style="font-size:2rem;">🎵</div>
+    <audio id="audioPlayer" controls>
+      <source src="bai3.mp3" type="audio/mpeg">
+      Trình duyệt không hỗ trợ phát audio.
+    </audio>
+    <div class="audio-hint">📁 File audio: <strong>bai3.mp3</strong> — đặt cùng thư mục với file HTML này</div>
+  </div>
+  <div id="ex3Container"></div>
+  <div class="btn-row">
+    <button class="btn-primary" onclick="checkEx3()">✅ Kiểm tra</button>
+    <button class="btn-secondary" onclick="resetEx3()">🔄 Làm lại</button>
+  </div>
+  <div class="score-banner" id="ex3Score"></div>
+</div>
+
+<!-- BÀI 4 -->
+<div id="ex4" class="section">
+  <div class="section-title">💬 Bài 4 – Hoàn Thành Hội Thoại</div>
+  <div class="section-desc">Đọc đoạn hội thoại và chọn đáp án đúng để điền vào chỗ trống.</div>
+  <div id="ex4Container"></div>
+  <div class="btn-row">
+    <button class="btn-primary" onclick="checkEx4()">✅ Kiểm tra</button>
+    <button class="btn-secondary" onclick="resetEx4()">🔄 Làm lại</button>
+  </div>
+  <div class="score-banner" id="ex4Score"></div>
+</div>
+
+<!-- BÀI 5 -->
+<div id="ex5" class="section">
+  <div class="section-title">✏️ Bài 5 – Thay Thế Cụm Từ In Đậm</div>
+  <div class="section-desc">Đọc hội thoại bên dưới, thay thế các cụm từ <span style="color:#b45309;background:#fff8e1;padding:1px 5px;border-radius:4px;font-weight:800;">in đậm</span> bằng từ/cụm từ đã học trong bài.</div>
+  <div class="replace-box">
+    <p style="margin-bottom:6px;"><span class="sp-a">Sally:</span> Hi, David. I made you a cup of coffee. Just how you like it, milk and two sugars.</p>
+    <p style="margin-bottom:6px;"><span class="sp-a">David:</span> Oh, thanks, Sally.</p>
+    <p style="margin-bottom:6px;"><span class="sp-a">Sally:</span> You're welcome. So what do you do when you're not working?</p>
+    <p style="margin-bottom:6px;"><span class="sp-a">David:</span> Well, I'd like to <strong style="color:#b45309;background:#fff8e1;padding:1px 4px;border-radius:4px;">(1) go out and meet my friends</strong>, or <strong style="color:#b45309;background:#fff8e1;padding:1px 4px;border-radius:4px;">(2) ride my skateboard</strong> in the theme park near my house.</p>
+    <p style="margin-bottom:6px;"><span class="sp-b">Sally:</span> I especially prefer to <strong style="color:#b45309;background:#fff8e1;padding:1px 4px;border-radius:4px;">(3) watch movies at the cinema</strong>.</p>
+    <p><span class="sp-b">Sally:</span> When I am alone, I like to <strong style="color:#b45309;background:#fff8e1;padding:1px 4px;border-radius:4px;">(4) learn about new things through book's pages</strong> or <strong style="color:#b45309;background:#fff8e1;padding:1px 4px;border-radius:4px;">(5) enjoy the music</strong> of my Kpop boy band.</p>
+  </div>
+  <div id="ex5Container"></div>
+  <div class="btn-row">
+    <button class="btn-primary" onclick="checkEx5()">✅ Kiểm tra</button>
+    <button class="btn-secondary" onclick="resetEx5()">🔄 Làm lại</button>
+  </div>
+  <div class="score-banner" id="ex5Score"></div>
+</div>
+
+<!-- BÀI 6 -->
+<div id="ex6" class="section">
+  <div class="section-title">📖 Bài 6 – Đọc Hiểu</div>
+  <div class="section-desc">Đọc đoạn văn (có thể cuộn để xem hết) rồi trả lời câu hỏi bên dưới.</div>
+  <div class="reading-passage">
+    <strong style="color:var(--blue);">Hello!</strong><br><br>
+    My name is Nora and I live in Sweden. I live in a small village in the mountains with my parents and my little sister. She is six and I am eleven.<br><br>
+    My mum's name is Helen and my dad's name is Nick. My mum is a fitness coach and has to go to the gym everyday. My dad is a farmer and he has a small milk farm. That's why I love both sports and animals.<br><br>
+    Everyday, I get up at 6.30 and do morning exercises together with my mum. We have a big breakfast and our mum takes my sister and me to school by her car. After lessons I stay at school to play basketball. It's my favorite sport. At that time my sister goes dancing at the school club. After that I go home with my sister by bus because my mum has some evening classes.<br><br>
+    After school I like to help my dad to take care of cows. They are so nice! In the evening I like reading books or hanging out with friends. We are interested in going cycling on the weekend. I have got a cool green bike. I think I am the best bike rider because I go in for sports every day.
+  </div>
+  <div id="ex6Container"></div>
+  <div class="btn-row">
+    <button class="btn-primary" onclick="checkEx6()">✅ Kiểm tra</button>
+    <button class="btn-secondary" onclick="resetEx6()">🔄 Làm lại</button>
+  </div>
+  <div class="score-banner" id="ex6Score"></div>
+</div>
+
+<script>
+const vocab = [
+  { en: "Go to the movie theater", vn: "Đi đến rạp phim", emoji: "🎬" },
+  { en: "Watch a film", vn: "Xem một bộ phim", emoji: "🍿" },
+  { en: "Hang out with friends", vn: "Đi chơi với bạn bè", emoji: "👫" },
+  { en: "Go dancing", vn: "Đi nhảy", emoji: "💃" },
+  { en: "Go shopping", vn: "Đi mua sắm", emoji: "🛍️" },
+  { en: "Go cycling", vn: "Đi xe đạp", emoji: "🚴" },
+  { en: "Go skateboarding", vn: "Trượt ván", emoji: "🛹" },
+  { en: "Go to the gym", vn: "Tập thể hình", emoji: "🏋️" },
+  { en: "Listen to music", vn: "Nghe nhạc", emoji: "🎵" },
+  { en: "Read a book", vn: "Đọc sách", emoji: "📖" },
+];
+
+// Bài 1 — dùng Unsplash với nhiều fallback
+const ex1Data = [
+  { emoji:"🏋️", label:"Người tập gym / thể hình",
+    options:["A. go cycling","B. go skateboarding","C. go to the gym","D. go dancing"], correct:2,
+    imgs:["https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80",
+          "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80",
+          "https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=600&q=80"] },
+  { emoji:"🛍️", label:"Mua sắm tại trung tâm thương mại",
+    options:["A. listen to music","B. go swimming","C. go shopping","D. read books"], correct:2,
+    imgs:["https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&q=80",
+          "https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=600&q=80",
+          "https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=600&q=80"] },
+  { emoji:"🎬", label:"Rạp chiếu phim",
+    options:["A. go to the cinema","B. go to the gym","C. go to the pool","D. go to school"], correct:0,
+    imgs:["https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=600&q=80",
+          "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?w=600&q=80",
+          "https://images.unsplash.com/photo-1600430188203-bbb8dac79646?w=600&q=80"] },
+  { emoji:"🎭", label:"Nhà hát / sân khấu biểu diễn",
+    options:["A. go to the theater","B. go to the museum","C. go to the park","D. go to the gym"], correct:0,
+    imgs:["https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYX6OGLwKeN89udwo_H16mCEe3H9alOjTt-g&s",
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYX6OGLwKeN89udwo_H16mCEe3H9alOjTt-g&s",
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYX6OGLwKeN89udwo_H16mCEe3H9alOjTt-g&s"] },
+  { emoji:"🛹", label:"Trượt ván skateboard",
+    options:["A. go watching","B. go dancing","C. go running","D. go skateboarding"], correct:3,
+    imgs:["https://projectdistribution.com.au/wp-content/uploads/2018/06/project-go-skate-day-3.jpg",
+          "https://projectdistribution.com.au/wp-content/uploads/2018/06/project-go-skate-day-3.jpg",
+          "https://projectdistribution.com.au/wp-content/uploads/2018/06/project-go-skate-day-3.jpg"] },
+];
+
+const matchPairs = [
+  { en:"watch films", vn:"xem phim" },
+  { en:"hang out with friends", vn:"đi chơi với bạn bè" },
+  { en:"go cycling", vn:"đi xe đạp" },
+  { en:"listen to music", vn:"nghe nhạc" },
+  { en:"read books", vn:"đọc sách" },
+];
+
+const ex3Data = [
+  { sentence:"I hate people talking while I'm _______.", options:["A. watching a film","B. going to the movie theater","C. listening to music"], correct:0 },
+  { sentence:"I ______ every week.", options:["A. go to the gym","B. go cycling","C. go skateboarding"], correct:2 },
+  { sentence:"We ______ at a club.", options:["A. go cycling","B. go dancing","C. go shopping"], correct:1 },
+  { sentence:"We're _____ a different book this week.", options:["A. reading","B. buying","C. selling"], correct:0 },
+  { sentence:"My daughter and I go _____ together.", options:["A. cycling","B. swimming","C. shopping"], correct:2 },
+];
+
+const ex4Data = [
+  { dialogue:`<span class="sp-a">A:</span> Do you like going to a club and moving your feet and body to music?<br><span class="sp-b">B:</span> Do you mean _______?`, options:["A. read books","B. go dancing","C. watch a film"], correct:1 },
+  { dialogue:`<span class="sp-a">A:</span> In my free time, I love spending money in supermarkets or malls.<br><span class="sp-b">B:</span> You mean you like to _______?`, options:["A. go shopping","B. go cycling","C. go skateboarding"], correct:0 },
+  { dialogue:`<span class="sp-a">A:</span> I want to do exercises to keep my body fit. But I prefer to do it indoors.<br><span class="sp-b">B:</span> Too simple! You can ________.`, options:["A. read books","B. go to the cinema","C. go to the gym"], correct:2 },
+  { dialogue:`<span class="sp-a">David:</span> Hi Paul, Peter and I are going to go to the park this weekend. We are going to rent a bike there. Would you like to join us?<br><span class="sp-b">Paul:</span> Really? You guys are going to ______?`, options:["A. listen to music","B. go cycling","C. hang out with friends"], correct:1 },
+];
+
+const ex5Data = [
+  { label:"(1) go out and meet my friends", answer:"hang out with friends" },
+  { label:"(2) ride my skateboard", answer:"go skateboarding" },
+  { label:"(3) watch movies at the cinema", answer:"go to the cinema" },
+  { label:"(4) learn about new things through book's pages", answer:"read books" },
+  { label:"(5) enjoy the music", answer:"listen to music" },
+];
+
+const ex6Data = [
+  { question:"Where does Nora live?", options:["A. in a town in the mountains.","B. in a village in the mountains.","C. in a town near the beach."], correct:1 },
+  { question:"Where do Nora's mom and dad work?", options:["A. Nora's mom works at a gym and her dad works at a farm.","B. Nora's mom works at a school and her dad works at a farm.","C. Nora's mom works at a gym and her dad works at a school."], correct:0 },
+  { question:"Do Nora and her sister go to school and come home by car?", options:["A. True","B. False"], correct:1 },
+  { question:"Where does Nora's sister go after lessons?", options:["A. a farm","B. a basketball club","C. a dancing club"], correct:2 },
+  { question:"Who believes that Nora is the best at going cycling?", options:["A. Nora","B. Nora's sister","C. Nora's mom"], correct:0 },
+];
+
+// ===== SPEECH =====
+function speak(text, rate) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US'; u.rate = rate || 0.88;
+  window.speechSynthesis.speak(u);
+}
+function speakRepeat(text) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  let c = 0;
+  function go() {
+    if (c >= 3) return;
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'en-US'; u.rate = 0.88;
+    u.onend = () => { c++; setTimeout(go, 700); };
+    window.speechSynthesis.speak(u);
+  }
+  go();
+}
+
+// ===== VOCAB =====
+function buildVocab() {
+  document.getElementById('vocabGrid').innerHTML = vocab.map((v,i) => `
+    <div class="vocab-card" onclick="speak('${v.en.replace(/'/g,"\\'")}')">
+      <div class="emoji">${v.emoji}</div>
+      <div><div class="en">${v.en}</div><div class="vn">${v.vn}</div></div>
+      <div class="speak-tag">🔊</div>
+    </div>`).join('');
+
+  document.getElementById('listenGrid').innerHTML = vocab.map((v,i) => `
+    <div class="listen-card" id="lc_${i}">
+      <div class="lc-top">
+        <div class="lc-emoji">${v.emoji}</div>
+        <div><div class="lc-en">${v.en}</div><div class="lc-vn">${v.vn}</div></div>
+      </div>
+      <div class="lc-btns">
+        <button class="lc-btn lc-btn-normal" onclick="playListen(${i},'normal')">🔊 Nghe thường</button>
+        <button class="lc-btn lc-btn-slow" onclick="playListen(${i},'slow')">🐢 Chậm</button>
+        <button class="lc-btn lc-btn-repeat" onclick="playListen(${i},'repeat')">🔁 Lặp 3 lần</button>
+      </div>
+    </div>`).join('');
+}
+
+function playListen(i, mode) {
+  document.querySelectorAll('.listen-card').forEach(c => c.classList.remove('playing'));
+  document.getElementById(`lc_${i}`).classList.add('playing');
+  const text = vocab[i].en;
+  if (mode === 'slow') speak(text, 0.5);
+  else if (mode === 'repeat') speakRepeat(text);
+  else speak(text, 0.88);
+  setTimeout(() => { const el = document.getElementById(`lc_${i}`); if(el) el.classList.remove('playing'); }, 3500);
+}
+
+// ===== BÀI 1 =====
+let ex1Sel = {};
+function makeImgTag(q, qi) {
+  // Try multiple images with cascading onerror
+  const imgs = q.imgs;
+  const fallback = `<div class="img-fallback" id="fb_img_${qi}"><span class="fb-emoji">${q.emoji}</span><span class="fb-text">${q.label}</span></div>`;
+  let tag = `<img id="img1_${qi}_0" src="${imgs[0]}" alt="${q.label}"
+    onerror="tryNextImg(${qi}, 1)"
+    onload="document.getElementById('fb_img_${qi}') && (document.getElementById('fb_img_${qi}').style.display='none')"
+  >` + fallback;
+  return `<div class="img-wrap">${tag}</div>`;
+}
+
+window.tryNextImg = function(qi, idx) {
+  const q = ex1Data[qi];
+  const cur = document.getElementById(`img1_${qi}_${idx-1}`);
+  if (idx < q.imgs.length) {
+    const newImg = document.createElement('img');
+    newImg.id = `img1_${qi}_${idx}`;
+    newImg.src = q.imgs[idx];
+    newImg.alt = q.label;
+    newImg.onerror = () => tryNextImg(qi, idx+1);
+    cur.parentNode.insertBefore(newImg, cur);
+    cur.remove();
+  } else {
+    // All failed — show emoji fallback
+    if (cur) cur.style.display = 'none';
+    const fb = document.getElementById(`fb_img_${qi}`);
+    if (fb) fb.style.display = 'flex';
+  }
+};
+
+function buildEx1() {
+  ex1Sel = {};
+  document.getElementById('ex1Container').innerHTML = ex1Data.map((q,qi) => `
+    <div class="quiz-block" id="q1_${qi}">
+      <div class="q-num">Câu ${qi+1} / ${ex1Data.length}</div>
+      ${makeImgTag(q, qi)}
+      <div class="options-grid">
+        ${q.options.map((o,oi) => `<button class="opt-btn" id="opt1_${qi}_${oi}" onclick="selEx1(${qi},${oi})">${o}</button>`).join('')}
+      </div>
+      <div class="feedback-msg" id="fb1_${qi}"></div>
+    </div>`).join('');
+  document.getElementById('ex1Score').classList.remove('show');
+  updateEx1Progress();
+}
+
+function selEx1(qi, oi) {
+  const p = ex1Sel[qi];
+  if (p !== undefined) document.getElementById(`opt1_${qi}_${p}`).classList.remove('sel-ok','sel-no');
+  ex1Sel[qi] = oi;
+  document.getElementById(`opt1_${qi}_${oi}`).classList.add('sel-ok');
+  updateEx1Progress();
+}
+function updateEx1Progress() {
+  document.getElementById('ex1Progress').style.width = (Object.keys(ex1Sel).length / ex1Data.length * 100) + '%';
+}
+function checkEx1() {
+  let s = 0;
+  ex1Data.forEach((q,qi) => {
+    const sel = ex1Sel[qi], fb = document.getElementById(`fb1_${qi}`), box = document.getElementById(`q1_${qi}`);
+    q.options.forEach((_,oi) => { const b = document.getElementById(`opt1_${qi}_${oi}`); b.classList.remove('sel-ok','sel-no','show-ok'); b.disabled = true; });
+    box.classList.remove('correct','wrong');
+    if (sel === undefined) { fb.textContent = '⚠️ Chưa chọn!'; fb.className = 'feedback-msg show no'; box.classList.add('wrong'); }
+    else if (sel === q.correct) { document.getElementById(`opt1_${qi}_${sel}`).classList.add('sel-ok'); fb.textContent = '✅ Chính xác!'; fb.className = 'feedback-msg show ok'; box.classList.add('correct'); s++; }
+    else { document.getElementById(`opt1_${qi}_${sel}`).classList.add('sel-no'); document.getElementById(`opt1_${qi}_${q.correct}`).classList.add('show-ok'); fb.textContent = `❌ Đáp án đúng: ${q.options[q.correct]}`; fb.className = 'feedback-msg show no'; box.classList.add('wrong'); }
+  });
+  showScore('ex1Score', s, ex1Data.length);
+}
+function resetEx1() { buildEx1(); }
+
+// ===== BÀI 2 =====
+let mL=null, mR=null, mC=0;
+function buildMatch() {
+  mL=null; mR=null; mC=0;
+  const sh = [...matchPairs.map(p=>p.vn)].sort(()=>Math.random()-.5);
+  document.getElementById('matchLeft').innerHTML = matchPairs.map((p,i)=>`<div class="match-item" id="ml_${i}" onclick="sML(${i})">${p.en}</div>`).join('');
+  document.getElementById('matchRight').innerHTML = sh.map((v,i)=>`<div class="match-item" id="mr_${i}" onclick="sMR(${i})" data-vn="${v}">${v}</div>`).join('');
+  document.getElementById('matchScore').textContent = '';
+}
+function sML(i){if(document.getElementById(`ml_${i}`).classList.contains('m-ok'))return;if(mL!==null)document.getElementById(`ml_${mL}`).classList.remove('selected');mL=i;document.getElementById(`ml_${i}`).classList.add('selected');tM();}
+function sMR(i){if(document.getElementById(`mr_${i}`).classList.contains('m-ok'))return;if(mR!==null)document.getElementById(`mr_${mR}`).classList.remove('selected');mR=i;document.getElementById(`mr_${i}`).classList.add('selected');tM();}
+function tM(){
+  if(mL===null||mR===null)return;
+  const vn=document.getElementById(`mr_${mR}`).dataset.vn, ok=matchPairs[mL].vn===vn;
+  const lE=document.getElementById(`ml_${mL}`),rE=document.getElementById(`mr_${mR}`);
+  if(ok){lE.classList.remove('selected');lE.classList.add('m-ok');rE.classList.remove('selected');rE.classList.add('m-ok');mC++;if(mC===matchPairs.length)document.getElementById('matchScore').textContent='🎉 Xuất sắc! Bạn đã nối đúng tất cả!';}
+  else{lE.classList.add('m-no');rE.classList.add('m-no');setTimeout(()=>{lE.classList.remove('m-no','selected');rE.classList.remove('m-no','selected');},700);}
+  mL=null;mR=null;
+}
+function resetMatch(){buildMatch();}
+
+// ===== BÀI 3 =====
+let ex3Sel={};
+function buildEx3(){
+  ex3Sel={};
+  document.getElementById('ex3Container').innerHTML=ex3Data.map((q,qi)=>`
+    <div class="quiz-block" id="q3_${qi}" style="margin-bottom:16px;">
+      <div class="q-num">Câu ${qi+1} / ${ex3Data.length}</div>
+      <div style="font-size:0.92rem;margin-bottom:12px;line-height:1.7;">${q.sentence}</div>
+      <div class="options-grid single-col">
+        ${q.options.map((o,oi)=>`<button class="opt-btn" id="opt3_${qi}_${oi}" onclick="sEx3(${qi},${oi})">${o}</button>`).join('')}
+      </div>
+      <div class="feedback-msg" id="fb3_${qi}"></div>
+    </div>`).join('');
+  document.getElementById('ex3Score').classList.remove('show');
+}
+function sEx3(qi,oi){const p=ex3Sel[qi];if(p!==undefined)document.getElementById(`opt3_${qi}_${p}`).classList.remove('sel-ok','sel-no');ex3Sel[qi]=oi;document.getElementById(`opt3_${qi}_${oi}`).classList.add('sel-ok');}
+function checkEx3(){
+  let s=0;
+  ex3Data.forEach((q,qi)=>{
+    const sel=ex3Sel[qi],fb=document.getElementById(`fb3_${qi}`),box=document.getElementById(`q3_${qi}`);
+    q.options.forEach((_,oi)=>{const b=document.getElementById(`opt3_${qi}_${oi}`);b.classList.remove('sel-ok','sel-no','show-ok');b.disabled=true;});
+    box.classList.remove('correct','wrong');
+    if(sel===undefined){fb.textContent='⚠️ Chưa chọn!';fb.className='feedback-msg show no';box.classList.add('wrong');}
+    else if(sel===q.correct){document.getElementById(`opt3_${qi}_${sel}`).classList.add('sel-ok');fb.textContent='✅ Đúng!';fb.className='feedback-msg show ok';box.classList.add('correct');s++;}
+    else{document.getElementById(`opt3_${qi}_${sel}`).classList.add('sel-no');document.getElementById(`opt3_${qi}_${q.correct}`).classList.add('show-ok');fb.textContent=`❌ Đáp án: ${q.options[q.correct]}`;fb.className='feedback-msg show no';box.classList.add('wrong');}
+  });
+  showScore('ex3Score',s,ex3Data.length);
+}
+function resetEx3(){buildEx3();}
+
+// ===== BÀI 4 =====
+let ex4Sel={};
+function buildEx4(){
+  ex4Sel={};
+  document.getElementById('ex4Container').innerHTML=ex4Data.map((q,qi)=>`
+    <div class="quiz-block" id="q4_${qi}" style="margin-bottom:16px;">
+      <div class="q-num">Câu ${qi+1} / ${ex4Data.length}</div>
+      <div class="dialogue-box">${q.dialogue}</div>
+      <div class="options-grid single-col" style="margin-top:10px;">
+        ${q.options.map((o,oi)=>`<button class="opt-btn" id="opt4_${qi}_${oi}" onclick="sEx4(${qi},${oi})">${o}</button>`).join('')}
+      </div>
+      <div class="feedback-msg" id="fb4_${qi}"></div>
+    </div>`).join('');
+  document.getElementById('ex4Score').classList.remove('show');
+}
+function sEx4(qi,oi){const p=ex4Sel[qi];if(p!==undefined)document.getElementById(`opt4_${qi}_${p}`).classList.remove('sel-ok','sel-no');ex4Sel[qi]=oi;document.getElementById(`opt4_${qi}_${oi}`).classList.add('sel-ok');}
+function checkEx4(){
+  let s=0;
+  ex4Data.forEach((q,qi)=>{
+    const sel=ex4Sel[qi],fb=document.getElementById(`fb4_${qi}`);
+    q.options.forEach((_,oi)=>{document.getElementById(`opt4_${qi}_${oi}`).disabled=true;});
+    if(sel===undefined){fb.textContent='⚠️ Chưa chọn!';fb.className='feedback-msg show no';}
+    else if(sel===q.correct){document.getElementById(`opt4_${qi}_${sel}`).classList.add('sel-ok');fb.textContent='✅ Chính xác!';fb.className='feedback-msg show ok';s++;}
+    else{document.getElementById(`opt4_${qi}_${sel}`).classList.remove('sel-ok');document.getElementById(`opt4_${qi}_${sel}`).classList.add('sel-no');document.getElementById(`opt4_${qi}_${q.correct}`).classList.add('show-ok');fb.textContent=`❌ Đáp án: ${q.options[q.correct]}`;fb.className='feedback-msg show no';}
+  });
+  showScore('ex4Score',s,ex4Data.length);
+}
+function resetEx4(){buildEx4();}
+
+// ===== BÀI 5 =====
+function buildEx5(){
+  document.getElementById('ex5Container').innerHTML=ex5Data.map((item,i)=>`
+    <div class="input-group">
+      <label>${item.label}</label>
+      <input class="input-answer" id="inp5_${i}" type="text" placeholder="Nhập đáp án tiếng Anh..." autocomplete="off" spellcheck="false">
+    </div>`).join('');
+  document.getElementById('ex5Score').classList.remove('show');
+}
+function checkEx5(){
+  let s=0;
+  ex5Data.forEach((item,i)=>{
+    const inp=document.getElementById(`inp5_${i}`);
+    const val=inp.value.trim().toLowerCase().replace(/\s+/g,' ');
+    inp.classList.remove('ok','no');
+    if(val===item.answer.toLowerCase()){inp.classList.add('ok');s++;}
+    else{inp.classList.add('no');inp.placeholder=`✗ Đáp án: ${item.answer}`;}
+  });
+  showScore('ex5Score',s,ex5Data.length);
+}
+function resetEx5(){
+  ex5Data.forEach((_,i)=>{const inp=document.getElementById(`inp5_${i}`);inp.value='';inp.classList.remove('ok','no');inp.placeholder='Nhập đáp án tiếng Anh...';});
+  document.getElementById('ex5Score').classList.remove('show');
+}
+
+// ===== BÀI 6 =====
+let ex6Sel={};
+function buildEx6(){
+  ex6Sel={};
+  document.getElementById('ex6Container').innerHTML=ex6Data.map((q,qi)=>`
+    <div class="quiz-block" id="q6_${qi}" style="margin-bottom:16px;">
+      <div class="q-num">Câu ${qi+1} / ${ex6Data.length}</div>
+      <div style="font-size:0.92rem;font-weight:700;margin-bottom:12px;">${q.question}</div>
+      <div class="options-grid single-col">
+        ${q.options.map((o,oi)=>`<button class="opt-btn" id="opt6_${qi}_${oi}" onclick="sEx6(${qi},${oi})">${o}</button>`).join('')}
+      </div>
+      <div class="feedback-msg" id="fb6_${qi}"></div>
+    </div>`).join('');
+  document.getElementById('ex6Score').classList.remove('show');
+}
+function sEx6(qi,oi){const p=ex6Sel[qi];if(p!==undefined)document.getElementById(`opt6_${qi}_${p}`).classList.remove('sel-ok','sel-no');ex6Sel[qi]=oi;document.getElementById(`opt6_${qi}_${oi}`).classList.add('sel-ok');}
+function checkEx6(){
+  let s=0;
+  ex6Data.forEach((q,qi)=>{
+    const sel=ex6Sel[qi],fb=document.getElementById(`fb6_${qi}`),box=document.getElementById(`q6_${qi}`);
+    q.options.forEach((_,oi)=>{document.getElementById(`opt6_${qi}_${oi}`).disabled=true;});
+    box.classList.remove('correct','wrong');
+    if(sel===undefined){fb.textContent='⚠️ Chưa chọn!';fb.className='feedback-msg show no';}
+    else if(sel===q.correct){document.getElementById(`opt6_${qi}_${sel}`).classList.add('sel-ok');fb.textContent='✅ Đúng!';fb.className='feedback-msg show ok';box.classList.add('correct');s++;}
+    else{document.getElementById(`opt6_${qi}_${sel}`).classList.remove('sel-ok');document.getElementById(`opt6_${qi}_${sel}`).classList.add('sel-no');document.getElementById(`opt6_${qi}_${q.correct}`).classList.add('show-ok');fb.textContent=`❌ Đáp án: ${q.options[q.correct]}`;fb.className='feedback-msg show no';box.classList.add('wrong');}
+  });
+  showScore('ex6Score',s,ex6Data.length);
+}
+function resetEx6(){buildEx6();}
+
+// ===== UTILS =====
+function showScore(id, score, total) {
+  const el=document.getElementById(id), pct=Math.round(score/total*100);
+  const emoji=pct===100?'🏆':pct>=80?'🌟':pct>=60?'👍':'💪';
+  el.innerHTML=`<div class="big-score">${emoji} ${score}/${total}</div><div class="score-label">${pct}% — ${pct===100?'Xuất sắc! Hoàn hảo!':pct>=80?'Rất tốt! Gần hoàn hảo rồi!':pct>=60?'Khá! Ôn lại câu sai nhé!':'Ôn lại từ vựng và thử lại!'}</div>`;
+  el.classList.add('show');
+  el.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function showTab(id, btn) {
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+buildVocab(); buildEx1(); buildMatch(); buildEx3(); buildEx4(); buildEx5(); buildEx6();
+</script>
+</body>
+</html>
