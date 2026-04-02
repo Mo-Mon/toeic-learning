@@ -1,0 +1,1624 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS SAA-C03 — Nhóm 3: Tiếng Anh Nền Tảng</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#ffffff; --blue:#1a6bff; --deep:#0047cc; --soft:#e8f0ff;
+  --pale:#f0f5ff; --mid:#4d8bff; --main:#0d1b2a; --muted:#6b7c9a;
+  --light:#a0aec0; --border:#dce6ff; --success:#00c896;
+  --warning:#f59e0b; --danger:#ef4444; --purple:#7c3aed;
+  --teal:#0891b2; --green:#16a34a; --pink:#be185d;
+  --shadow:0 4px 24px rgba(26,107,255,.10);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--main);min-height:100vh;overflow-x:hidden;}
+
+/* ── HEADER ── */
+header{background:#fff;border-bottom:2px solid var(--border);padding:14px 28px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:200;box-shadow:0 2px 16px rgba(26,107,255,.07);}
+.logo{display:flex;align-items:center;gap:12px;}
+.logo-badge{background:var(--purple);color:#fff;font-family:'Space Mono',monospace;
+  font-size:10px;font-weight:700;padding:5px 10px;border-radius:6px;letter-spacing:1px;}
+.logo-title{font-size:15px;font-weight:800;letter-spacing:-.5px;}
+.logo-title span{color:var(--blue);}
+.logo-sub{font-size:11px;color:var(--muted);margin-top:1px;}
+.hstats{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+.chip{background:var(--pale);border:1.5px solid var(--border);border-radius:999px;
+  padding:5px 13px;font-size:12px;font-weight:600;color:var(--deep);
+  display:flex;align-items:center;gap:5px;}
+.chip .dot{width:6px;height:6px;border-radius:50%;background:var(--blue);}
+.chip.purple{background:#f5f3ff;border-color:#ddd6fe;color:var(--purple);}
+.chip.purple .dot{background:var(--purple);}
+
+/* ── LAYOUT ── */
+.container{max-width:1100px;margin:0 auto;padding:32px 22px;}
+
+/* ── NAV TABS ── */
+.nav-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:28px;}
+.nav-tab{background:var(--pale);border:2px solid var(--border);border-radius:10px;
+  padding:8px 16px;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;
+  transition:all .15s;display:flex;align-items:center;gap:6px;}
+.nav-tab:hover{border-color:var(--blue);color:var(--blue);}
+.nav-tab.active{background:var(--blue);border-color:var(--blue);color:#fff;}
+.nav-tab .nbadge{background:rgba(255,255,255,.25);border-radius:999px;padding:1px 7px;font-size:10px;}
+.nav-tab:not(.active) .nbadge{background:var(--border);color:var(--muted);}
+
+/* ── SELECTOR ── */
+.selector-wrap{background:var(--pale);border:2px solid var(--border);border-radius:18px;
+  padding:22px 26px;margin-bottom:30px;}
+.sec-label{font-family:'Space Mono',monospace;font-size:10px;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin-bottom:12px;}
+.selector-title{font-size:19px;font-weight:800;margin-bottom:3px;letter-spacing:-.5px;}
+.selector-sub{font-size:13px;color:var(--muted);margin-bottom:16px;}
+.prog-wrap{background:var(--border);border-radius:999px;height:8px;margin-bottom:16px;overflow:hidden;}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--mid));
+  border-radius:999px;transition:width .5s cubic-bezier(.4,0,.2,1);}
+.day-grid{display:flex;flex-wrap:wrap;gap:8px;}
+.day-btn{background:#fff;border:2px solid var(--border);border-radius:10px;
+  padding:9px 12px;font-family:'Space Mono',monospace;font-size:11px;font-weight:700;
+  color:var(--muted);cursor:pointer;transition:all .18s;
+  display:flex;flex-direction:column;align-items:center;gap:3px;min-width:56px;}
+.day-btn:hover{border-color:var(--blue);color:var(--blue);transform:translateY(-2px);box-shadow:var(--shadow);}
+.day-btn.active{background:var(--blue);border-color:var(--blue);color:#fff;
+  box-shadow:0 4px 16px rgba(26,107,255,.3);transform:translateY(-2px);}
+.day-btn.done{background:var(--soft);border-color:var(--blue);color:var(--deep);}
+.day-btn .ck{font-size:9px;}
+
+/* ── DAY HEADER ── */
+.day-header{display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:20px;flex-wrap:wrap;gap:12px;}
+.day-heading{font-size:24px;font-weight:800;letter-spacing:-1px;}
+.day-heading span{color:var(--blue);}
+.mtoggle{display:flex;gap:7px;}
+.mbtn{background:var(--pale);border:2px solid var(--border);border-radius:8px;
+  padding:7px 13px;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;transition:all .15s;}
+.mbtn.active{background:var(--blue);border-color:var(--blue);color:#fff;}
+
+/* ── SEARCH ── */
+.search-wrap{margin-bottom:18px;position:relative;}
+.search-input{width:100%;padding:11px 15px 11px 40px;border:2px solid var(--border);
+  border-radius:12px;font-family:'Sora',sans-serif;font-size:13px;color:var(--main);
+  background:var(--pale);outline:none;transition:border-color .15s;}
+.search-input:focus{border-color:var(--blue);background:#fff;}
+.search-ico{position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:15px;}
+
+/* ── CARD GRID ── */
+.word-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;}
+
+/* ── CARD BASE ── */
+.card{background:#fff;border:2px solid var(--border);border-radius:16px;
+  padding:18px 20px;transition:all .2s;position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;
+  border-radius:4px 0 0 4px;opacity:0;transition:opacity .2s;}
+.card:hover{border-color:var(--blue);box-shadow:var(--shadow);transform:translateY(-2px);}
+.card:hover::before{opacity:1;}
+.card.learned{border-color:var(--success);background:#f0fff9;}
+.card.learned::before{background:var(--success)!important;opacity:1!important;}
+
+/* type colors */
+.card[data-type="sentence"]::before{background:var(--blue);}
+.card[data-type="grammar"]::before{background:var(--purple);}
+.card[data-type="connector"]::before{background:var(--teal);}
+.card[data-type="question"]::before{background:var(--warning);}
+.card[data-type="comparison"]::before{background:var(--green);}
+.card[data-type="condition"]::before{background:var(--pink);}
+.card[data-type="vocab"]::before{background:var(--danger);}
+
+.cnum{font-family:'Space Mono',monospace;font-size:9px;font-weight:700;
+  color:var(--light);letter-spacing:1px;margin-bottom:6px;}
+.ctag{display:inline-flex;align-items:center;font-size:9px;font-weight:700;
+  font-family:'Space Mono',monospace;padding:3px 8px;border-radius:999px;
+  letter-spacing:.5px;margin-bottom:8px;}
+.t-sentence  {background:#e0f2fe;color:#0369a1;}
+.t-grammar   {background:#ede9fe;color:#7c3aed;}
+.t-connector {background:#ccfbf1;color:#0f766e;}
+.t-question  {background:#fef3c7;color:#b45309;}
+.t-comparison{background:#dcfce7;color:#15803d;}
+.t-condition {background:#fce7f3;color:#be185d;}
+.t-vocab     {background:#fee2e2;color:#dc2626;}
+
+/* English term */
+.cterm{font-size:13px;font-weight:700;color:var(--deep);margin-bottom:4px;letter-spacing:-.2px;}
+.cterm .en{color:var(--blue);}
+.cvi{font-size:12px;color:var(--muted);margin-bottom:6px;}
+
+/* Example sentence box */
+.cexample{background:var(--pale);border-left:3px solid var(--blue);
+  border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:6px;
+  font-size:12px;line-height:1.65;display:none;}
+.cexample .en-sent{color:var(--deep);font-weight:600;margin-bottom:4px;}
+.cexample .vi-sent{color:var(--muted);}
+.cexample .highlight{color:var(--blue);font-weight:700;text-decoration:underline;
+  text-underline-offset:2px;}
+.cexample .highlight2{color:var(--purple);font-weight:700;}
+.cexample .highlight3{color:var(--teal);font-weight:700;}
+
+/* Structure box */
+.cstructure{background:#f5f3ff;border:1px solid #ddd6fe;border-radius:8px;
+  padding:7px 11px;font-size:11px;color:var(--purple);font-family:'Space Mono',monospace;
+  margin-bottom:6px;display:none;line-height:1.6;}
+
+/* Note box */
+.cnote{background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;
+  padding:7px 11px;font-size:11px;color:#c2410c;margin-bottom:6px;display:none;line-height:1.5;}
+
+.card.expanded .cexample,
+.card.expanded .cstructure,
+.card.expanded .cnote{display:block;}
+
+.card-actions{display:flex;gap:7px;margin-top:10px;padding-top:8px;border-top:1px solid var(--border);}
+.cbtn{flex:1;background:var(--pale);border:1.5px solid var(--border);border-radius:7px;
+  padding:7px;font-size:11px;font-weight:600;color:var(--blue);cursor:pointer;transition:all .15s;}
+.cbtn:hover{background:var(--blue);color:#fff;border-color:var(--blue);}
+.cbtn.done{background:var(--success);color:#fff;border-color:var(--success);}
+
+/* ── SENTENCE PATTERN TABLE (special section) ── */
+.pattern-table{width:100%;border-collapse:collapse;margin-bottom:20px;font-size:13px;}
+.pattern-table th{background:var(--blue);color:#fff;padding:10px 14px;text-align:left;
+  font-weight:700;font-size:11px;letter-spacing:.5px;}
+.pattern-table td{padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:top;}
+.pattern-table tr:nth-child(even) td{background:var(--pale);}
+.pattern-table .subj{color:var(--blue);font-weight:700;}
+.pattern-table .verb{color:var(--purple);font-weight:700;}
+.pattern-table .cond{color:var(--teal);font-weight:700;}
+.pattern-table tr:hover td{background:var(--soft);}
+
+/* ── FLASHCARD ── */
+.fc-wrap{display:none;flex-direction:column;align-items:center;gap:20px;}
+.fc-wrap.active{display:flex;}
+.flashcard{width:100%;max-width:580px;height:320px;perspective:1000px;cursor:pointer;}
+.fc-inner{width:100%;height:100%;position:relative;transform-style:preserve-3d;
+  transition:transform .5s cubic-bezier(.4,0,.2,1);}
+.flashcard.flipped .fc-inner{transform:rotateY(180deg);}
+.fc-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:20px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:28px;text-align:center;}
+.fc-front{background:linear-gradient(135deg,var(--purple),var(--blue));
+  box-shadow:0 8px 40px rgba(124,58,237,.25);}
+.fc-front .fc-type{font-family:'Space Mono',monospace;font-size:10px;
+  color:rgba(255,255,255,.55);letter-spacing:2px;margin-bottom:12px;}
+.fc-front .fc-term{font-size:20px;font-weight:800;color:#fff;letter-spacing:-.5px;
+  margin-bottom:8px;line-height:1.3;}
+.fc-front .fc-hint{font-size:12px;color:rgba(255,255,255,.5);}
+.fc-back{background:#fff;border:3px solid var(--blue);transform:rotateY(180deg);}
+.fc-back .fc-vi{font-size:18px;font-weight:700;color:var(--deep);margin-bottom:10px;}
+.fc-back .fc-ex{font-size:12.5px;color:var(--muted);line-height:1.7;background:var(--pale);
+  border-radius:8px;padding:10px 14px;width:100%;}
+.fc-back .fc-ex b{color:var(--blue);}
+.fc-nav{display:flex;align-items:center;gap:14px;}
+.fc-nbtn{background:var(--pale);border:2px solid var(--border);border-radius:10px;
+  padding:10px 22px;font-size:13px;font-weight:700;color:var(--blue);cursor:pointer;transition:all .15s;}
+.fc-nbtn:hover{background:var(--blue);color:#fff;border-color:var(--blue);}
+.fc-ctr{font-family:'Space Mono',monospace;font-size:13px;font-weight:700;
+  color:var(--muted);min-width:60px;text-align:center;}
+
+.wgrid-wrap.hidden{display:none;}
+.site-footer{text-align:center;padding:28px;color:var(--light);font-size:12px;
+  border-top:1px solid var(--border);margin-top:50px;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+.card{animation:fadeUp .3s ease both;}
+@media(max-width:600px){
+  .word-grid{grid-template-columns:1fr;}
+  header{padding:12px 14px;flex-wrap:wrap;gap:8px;}
+  .day-heading{font-size:19px;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <span class="logo-badge">NHÓM 3</span>
+    <div>
+      <div class="logo-title">Tiếng Anh <span>Nền Tảng</span></div>
+      <div class="logo-sub">Reading Skills · Câu trúc câu AWS · Pre-Intermediate</div>
+    </div>
+  </div>
+  <div class="hstats">
+    <div class="chip"><span class="dot"></span><span id="learned-count">0</span> / 200 mục</div>
+    <div class="chip purple"><span class="dot"></span>10 ngày · 20 mục/ngày</div>
+    <div class="chip" id="day-chip">Ngày 1</div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="selector-wrap">
+    <div class="sec-label">Lộ trình học</div>
+    <div class="selector-title">Chọn ngày học hôm nay</div>
+    <div class="selector-sub">200 cấu trúc câu, từ nối, pattern đọc hiểu · Hiểu đề thi AWS ngay lần đầu đọc</div>
+    <div class="prog-wrap"><div class="prog-fill" id="overall-prog" style="width:0%"></div></div>
+    <div class="day-grid" id="day-grid"></div>
+  </div>
+
+  <div id="day-content" style="display:none">
+    <div class="day-header">
+      <div>
+        <div class="sec-label" id="day-label">NGÀY 1</div>
+        <div class="day-heading">Ngày <span id="day-num">1</span> — 20 mục</div>
+      </div>
+      <div class="mtoggle">
+        <button class="mbtn active" id="btn-grid" onclick="setMode('grid')">📋 Danh sách</button>
+        <button class="mbtn" id="btn-flash" onclick="setMode('flash')">🃏 Flashcard</button>
+      </div>
+    </div>
+
+    <div class="search-wrap" id="search-wrap">
+      <span class="search-ico">🔍</span>
+      <input class="search-input" id="search-input" placeholder="Tìm cấu trúc, từ khóa..." oninput="filterWords()">
+    </div>
+
+    <div class="wgrid-wrap" id="grid-wrap">
+      <div class="word-grid" id="word-grid"></div>
+    </div>
+
+    <div class="fc-wrap" id="flash-wrap">
+      <div class="flashcard" id="flashcard" onclick="flipCard()">
+        <div class="fc-inner">
+          <div class="fc-face fc-front">
+            <div class="fc-type" id="fc-type">CẤU TRÚC CÂU</div>
+            <div class="fc-term" id="fc-term">—</div>
+            <div class="fc-hint">Nhấn để xem nghĩa & ví dụ AWS</div>
+          </div>
+          <div class="fc-face fc-back">
+            <div class="fc-vi" id="fc-vi">—</div>
+            <div class="fc-ex" id="fc-ex">—</div>
+          </div>
+        </div>
+      </div>
+      <div class="fc-nav">
+        <button class="fc-nbtn" onclick="fcNav(-1)">← Trước</button>
+        <div class="fc-ctr" id="fc-ctr">1 / 20</div>
+        <button class="fc-nbtn" onclick="fcNav(1)">Sau →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="site-footer">AWS SAA-C03 · Nhóm 3: Tiếng Anh Nền Tảng · 200 mục · 10 ngày · Chủ ngữ + Động từ + Điều kiện</div>
+
+<script>
+const TYPE_META = {
+  sentence:  { label:"📝 Cấu trúc câu",  cls:"t-sentence"  },
+  grammar:   { label:"📐 Ngữ pháp",       cls:"t-grammar"   },
+  connector: { label:"🔗 Từ nối",         cls:"t-connector" },
+  question:  { label:"❓ Câu hỏi",        cls:"t-question"  },
+  comparison:{ label:"⚖️ So sánh",        cls:"t-comparison"},
+  condition: { label:"🔀 Điều kiện",      cls:"t-condition" },
+  vocab:     { label:"📖 Từ vựng đọc",    cls:"t-vocab"     },
+};
+
+// term        = tiêu đề/cấu trúc học
+// vi          = nghĩa tiếng Việt ngắn
+// type        = loại
+// structure   = sơ đồ cấu trúc ngữ pháp
+// example     = câu ví dụ thực tế từ đề AWS (en + vi)
+// note        = lưu ý / mẹo đọc nhanh
+const ALL = [
+
+// ══════════════════════════════════════════════════════════════
+// DAY 1 — Cấu trúc câu hỏi cơ bản (Subject + Verb + Object)
+// ══════════════════════════════════════════════════════════════
+{term:"A company needs to…",vi:"Một công ty cần phải…",type:"sentence",
+ structure:"[Chủ thể] + needs to + [ĐỘNG TỪ] + [Mục tiêu]",
+ example:{en:"A company <b class='highlight'>needs to</b> store large amounts of data at low cost.",
+          vi:"Một công ty <b>cần</b> lưu trữ lượng lớn dữ liệu với chi phí thấp."},
+ note:"'needs to' = yêu cầu bắt buộc. Đây là dạng mở đầu phổ biến nhất trong đề AWS."},
+
+{term:"A solutions architect must…",vi:"Kiến trúc sư giải pháp phải…",type:"sentence",
+ structure:"[Vai trò] + must + [ĐỘNG TỪ nguyên thể]",
+ example:{en:"A solutions architect <b class='highlight'>must</b> design a solution that is fault tolerant.",
+          vi:"Kiến trúc sư giải pháp <b>phải</b> thiết kế giải pháp có khả năng chịu lỗi."},
+ note:"'must' = bắt buộc tuyệt đối. Phân biệt với 'should' (khuyến nghị)."},
+
+{term:"Which solution will…",vi:"Giải pháp nào sẽ…",type:"question",
+ structure:"Which + [danh từ] + will + [ĐỘNG TỪ] + [kết quả mong muốn]?",
+ example:{en:"<b class='highlight'>Which solution will</b> meet these requirements with the LEAST operational overhead?",
+          vi:"Giải pháp nào sẽ đáp ứng các yêu cầu này với ÍT công vận hành NHẤT?"},
+ note:"Từ khóa 'LEAST / MOST' thường IN HOA để nhấn mạnh. Đây là từ quyết định đáp án."},
+
+{term:"What should the architect do?",vi:"Kiến trúc sư nên làm gì?",type:"question",
+ structure:"What should + [chủ thể] + do to + [mục tiêu]?",
+ example:{en:"<b class='highlight'>What should</b> the solutions architect do to improve performance?",
+          vi:"Kiến trúc sư giải pháp <b>nên làm gì</b> để cải thiện hiệu năng?"},
+ note:"'should' = lựa chọn tốt nhất theo AWS best practice, không phải bắt buộc tuyệt đối."},
+
+{term:"The company wants to…",vi:"Công ty muốn…",type:"sentence",
+ structure:"[Chủ thể] + wants to + [ĐỘNG TỪ] + [mục tiêu cụ thể]",
+ example:{en:"The company <b class='highlight'>wants to</b> migrate its database to AWS with minimal downtime.",
+          vi:"Công ty <b>muốn</b> di chuyển cơ sở dữ liệu lên AWS với thời gian gián đoạn tối thiểu."},
+ note:"'wants to' = mong muốn, nhẹ hơn 'needs to'. Nhưng vẫn cần giải pháp đáp ứng hoàn toàn."},
+
+{term:"Which AWS service…",vi:"Dịch vụ AWS nào…",type:"question",
+ structure:"Which AWS service + [ĐỘNG TỪ (enables/allows/provides)] + [chức năng]?",
+ example:{en:"<b class='highlight'>Which AWS service</b> allows users to run code without provisioning servers?",
+          vi:"Dịch vụ AWS nào cho phép người dùng chạy code mà không cần cấp phát máy chủ?"},
+ note:"Câu hỏi xác định dịch vụ. Trả lời bằng tên dịch vụ cụ thể (Lambda, RDS, S3…)."},
+
+{term:"The application currently…",vi:"Ứng dụng hiện đang…",type:"sentence",
+ structure:"[Chủ thể] + currently + [ĐỘNG TỪ] → gợi ý tình trạng hiện tại cần cải thiện",
+ example:{en:"The application <b class='highlight'>currently</b> stores session data on individual EC2 instances.",
+          vi:"Ứng dụng <b>hiện đang</b> lưu dữ liệu phiên trên từng EC2 instance riêng lẻ."},
+ note:"'currently' = mô tả vấn đề hiện tại. Câu tiếp theo thường là yêu cầu cải thiện."},
+
+{term:"The company is experiencing…",vi:"Công ty đang gặp phải…",type:"sentence",
+ structure:"[Chủ thể] + is experiencing + [VẤN ĐỀ cụ thể]",
+ example:{en:"The company <b class='highlight'>is experiencing</b> high latency when users access the application.",
+          vi:"Công ty <b>đang gặp phải</b> độ trễ cao khi người dùng truy cập ứng dụng."},
+ note:"'is experiencing' = đang xảy ra ngay bây giờ. Câu hỏi sau thường yêu cầu giải pháp ngay."},
+
+{term:"Which option meets the requirements?",vi:"Phương án nào đáp ứng yêu cầu?",type:"question",
+ structure:"Which option + [meets/satisfies/fulfills] + the requirements?",
+ example:{en:"<b class='highlight'>Which option meets the requirements</b> with the MOST cost-effective approach?",
+          vi:"Phương án nào đáp ứng yêu cầu với cách tiếp cận TIẾT KIỆM CHI PHÍ NHẤT?"},
+ note:"Đây là câu hỏi kết thúc phổ biến nhất. Luôn xem lại các yêu cầu ở đoạn đầu đề bài."},
+
+{term:"A developer is building…",vi:"Một developer đang xây dựng…",type:"sentence",
+ structure:"[Vai trò] + is building/creating/designing + [loại ứng dụng/hệ thống]",
+ example:{en:"A developer <b class='highlight'>is building</b> a serverless application that processes images.",
+          vi:"Một developer <b>đang xây dựng</b> ứng dụng serverless xử lý hình ảnh."},
+ note:"'is building' = đang trong quá trình thiết kế. Câu hỏi hỏi về giải pháp phù hợp nhất."},
+
+{term:"The team has decided to…",vi:"Nhóm đã quyết định…",type:"sentence",
+ structure:"[Chủ thể] + has decided to + [ĐỘNG TỪ] → đây là quyết định đã xong, không đổi",
+ example:{en:"The team <b class='highlight'>has decided to</b> use a microservices architecture for the new platform.",
+          vi:"Nhóm <b>đã quyết định</b> sử dụng kiến trúc microservices cho nền tảng mới."},
+ note:"'has decided to' = constraint cố định. Giải pháp PHẢI work với quyết định này."},
+
+{term:"The solution must provide…",vi:"Giải pháp phải cung cấp…",type:"sentence",
+ structure:"The solution + must + provide/ensure/support + [YÊU CẦU]",
+ example:{en:"The solution <b class='highlight'>must provide</b> high availability and automatic failover.",
+          vi:"Giải pháp <b>phải cung cấp</b> tính sẵn sàng cao và tự động chuyển đổi dự phòng."},
+ note:"'must provide' = hard requirement. Loại ngay đáp án nào không đáp ứng yêu cầu này."},
+
+{term:"What is the MOST efficient way?",vi:"Cách nào HIỆU QUẢ NHẤT?",type:"question",
+ structure:"What is the MOST + [tính từ] + way to + [ĐỘNG TỪ]?",
+ example:{en:"<b class='highlight'>What is the MOST efficient way</b> to transfer 10 TB of data to AWS?",
+          vi:"Cách nào <b>HIỆU QUẢ NHẤT</b> để chuyển 10 TB dữ liệu lên AWS?"},
+ note:"MOST IN HOA = đây là từ khóa quyết định. Có nhiều cách đúng nhưng chỉ một cách NHẤT."},
+
+{term:"The architect recommends…",vi:"Kiến trúc sư khuyến nghị…",type:"sentence",
+ structure:"[Chủ thể] + recommends + [DANH TỪ/MENH ĐỀ] as the best solution",
+ example:{en:"The architect <b class='highlight'>recommends</b> using Amazon RDS Multi-AZ for high availability.",
+          vi:"Kiến trúc sư <b>khuyến nghị</b> sử dụng Amazon RDS Multi-AZ để đảm bảo tính sẵn sàng cao."},
+ note:"'recommends' = AWS best practice. Thường xuất hiện trong câu giải thích đáp án đúng."},
+
+{term:"The existing application…",vi:"Ứng dụng hiện tại…",type:"sentence",
+ structure:"The existing + [hệ thống] + [ĐỘNG TỪ mô tả giới hạn/tình trạng]",
+ example:{en:"The <b class='highlight'>existing application</b> runs on a single EC2 instance without redundancy.",
+          vi:"Ứng dụng <b>hiện tại</b> chạy trên một EC2 instance duy nhất không có dự phòng."},
+ note:"'existing' = có sẵn rồi. Giải pháp thường phải cải thiện, không phải xây từ đầu."},
+
+{term:"The company has a requirement to…",vi:"Công ty có yêu cầu phải…",type:"sentence",
+ structure:"[Chủ thể] + has a requirement to + [ĐỘNG TỪ] / that [mệnh đề]",
+ example:{en:"The company <b class='highlight'>has a requirement to</b> retain all logs for 7 years for compliance.",
+          vi:"Công ty <b>có yêu cầu phải</b> lưu giữ toàn bộ log trong 7 năm để tuân thủ quy định."},
+ note:"'has a requirement' = đây là yêu cầu bắt buộc từ business hoặc compliance. Không thể bỏ qua."},
+
+{term:"Users are reporting…",vi:"Người dùng đang báo cáo…",type:"sentence",
+ structure:"Users + are reporting + [VẤN ĐỀ] → triệu chứng cần chẩn đoán và giải quyết",
+ example:{en:"<b class='highlight'>Users are reporting</b> slow response times when accessing the web application.",
+          vi:"Người dùng <b>đang báo cáo</b> thời gian phản hồi chậm khi truy cập ứng dụng web."},
+ note:"'users are reporting' = vấn đề đang xảy ra từ góc nhìn end-user. Cần giải pháp performance."},
+
+{term:"To meet the requirement…",vi:"Để đáp ứng yêu cầu…",type:"sentence",
+ structure:"To + [ĐỘNG TỪ mục đích] + , + [chủ thể] + should/must + [GIẢI PHÁP]",
+ example:{en:"<b class='highlight'>To meet the requirement</b> for high availability, the architect should use Multi-AZ.",
+          vi:"<b>Để đáp ứng yêu cầu</b> về tính sẵn sàng cao, kiến trúc sư nên sử dụng Multi-AZ."},
+ note:"Cấu trúc To + V đứng đầu câu = mục đích. Phần sau là giải pháp/đáp án."},
+
+{term:"Which two actions should…",vi:"Hai hành động nào nên…",type:"question",
+ structure:"Which TWO + [danh từ] + should + [chủ thể] + take/do/implement?",
+ example:{en:"<b class='highlight'>Which two actions should</b> the solutions architect take to improve availability? (Select TWO)",
+          vi:"<b>Hai hành động nào</b> kiến trúc sư nên thực hiện để cải thiện tính sẵn sàng? (Chọn HAI)"},
+ note:"'Select TWO/THREE' = câu hỏi đa lựa chọn. Đọc kỹ số lượng cần chọn ở cuối câu."},
+
+{term:"The solution should be able to…",vi:"Giải pháp phải có khả năng…",type:"sentence",
+ structure:"[Giải pháp] + should be able to + [ĐỘNG TỪ khả năng] + automatically",
+ example:{en:"The solution <b class='highlight'>should be able to</b> scale automatically during peak traffic.",
+          vi:"Giải pháp <b>phải có khả năng</b> tự động mở rộng trong thời gian lưu lượng cao điểm."},
+ note:"'should be able to' = yêu cầu về khả năng. Thường liên quan đến Auto Scaling, serverless."},
+
+// ══════════════════════════════════════════════════════════════
+// DAY 2 — Từ nối quan trọng (Connectors & Transitions)
+// ══════════════════════════════════════════════════════════════
+{term:"However",vi:"Tuy nhiên / Nhưng",type:"connector",
+ structure:"Câu 1 [vấn đề/tình huống]. However, câu 2 [điều kiện/yêu cầu đặc biệt].",
+ example:{en:"The data must be stored in S3. <b class='highlight'>However</b>, sensitive data must be encrypted.",
+          vi:"Dữ liệu phải được lưu trữ trong S3. <b>Tuy nhiên</b>, dữ liệu nhạy cảm phải được mã hóa."},
+ note:"'However' báo hiệu một constraint hoặc ngoại lệ quan trọng đang đến. Đọc kỹ câu sau."},
+
+{term:"Additionally / In addition",vi:"Ngoài ra / Thêm vào đó",type:"connector",
+ structure:"Yêu cầu 1. Additionally/In addition, yêu cầu 2 [yêu cầu bổ sung].",
+ example:{en:"The application must be highly available. <b class='highlight'>Additionally</b>, it must support auto scaling.",
+          vi:"Ứng dụng phải sẵn sàng cao. <b>Ngoài ra</b>, nó phải hỗ trợ tự động mở rộng."},
+ note:"Báo hiệu có thêm yêu cầu. Giải pháp phải đáp ứng TẤT CẢ yêu cầu, không chỉ một."},
+
+{term:"Therefore / As a result",vi:"Do đó / Kết quả là",type:"connector",
+ structure:"[Nguyên nhân]. Therefore/As a result, [Hệ quả / Yêu cầu cần giải quyết].",
+ example:{en:"Traffic is unpredictable. <b class='highlight'>Therefore</b>, the solution must scale automatically.",
+          vi:"Lưu lượng không dự đoán được. <b>Do đó</b>, giải pháp phải tự động mở rộng."},
+ note:"'Therefore' = kết luận logic từ vấn đề. Câu sau thường là yêu cầu chính của câu hỏi."},
+
+{term:"Although / Even though",vi:"Mặc dù",type:"connector",
+ structure:"Although + [điều kiện đặc biệt], [yêu cầu chính vẫn phải đáp ứng].",
+ example:{en:"<b class='highlight'>Although</b> the company uses on-premises servers, it wants to use AWS for backups.",
+          vi:"<b>Mặc dù</b> công ty dùng server tại chỗ, họ muốn sử dụng AWS để sao lưu."},
+ note:"'Although' = constraint tồn tại nhưng không loại trừ giải pháp cloud. Hybrid architecture."},
+
+{term:"While",vi:"Trong khi / Trong khi đó",type:"connector",
+ structure:"While + [hành động/trạng thái A], [yêu cầu B phải được đảm bảo].",
+ example:{en:"<b class='highlight'>While</b> minimizing costs, the solution must maintain high availability.",
+          vi:"<b>Trong khi</b> giảm thiểu chi phí, giải pháp phải duy trì tính sẵn sàng cao."},
+ note:"'While' = hai yêu cầu đồng thời. Phải tìm giải pháp cân bằng cả hai."},
+
+{term:"As well as",vi:"Cũng như / Và cả",type:"connector",
+ structure:"[Yêu cầu 1] as well as [yêu cầu 2] — cả hai đều quan trọng như nhau.",
+ example:{en:"The system must provide encryption at rest <b class='highlight'>as well as</b> encryption in transit.",
+          vi:"Hệ thống phải cung cấp mã hóa khi lưu trữ <b>cũng như</b> mã hóa khi truyền dữ liệu."},
+ note:"'As well as' = liệt kê thêm yêu cầu. Giải pháp phải đáp ứng CẢ HAI phần."},
+
+{term:"In order to",vi:"Để / Nhằm mục đích",type:"connector",
+ structure:"In order to + [ĐỘNG TỪ mục đích], [chủ thể] + should/must + [hành động].",
+ example:{en:"<b class='highlight'>In order to</b> reduce latency, the architect should use Amazon CloudFront.",
+          vi:"<b>Để</b> giảm độ trễ, kiến trúc sư nên sử dụng Amazon CloudFront."},
+ note:"'In order to' = mục đích rõ ràng. Phần sau là giải pháp. Câu này thường ở trong đáp án giải thích."},
+
+{term:"Rather than",vi:"Thay vì",type:"connector",
+ structure:"[Giải pháp A] rather than [giải pháp B — cái bị loại bỏ]",
+ example:{en:"Use managed services <b class='highlight'>rather than</b> self-managed solutions to reduce overhead.",
+          vi:"Sử dụng managed services <b>thay vì</b> giải pháp tự quản lý để giảm gánh nặng vận hành."},
+ note:"'Rather than' = so sánh và loại bỏ. Câu sau 'rather than' là thứ KHÔNG nên làm."},
+
+{term:"Without",vi:"Mà không cần / Không có",type:"connector",
+ structure:"[Thực hiện hành động] without + [điều không muốn xảy ra]",
+ example:{en:"The data must be transferred <b class='highlight'>without</b> exposing it to the public internet.",
+          vi:"Dữ liệu phải được truyền <b>mà không để lộ</b> ra internet công cộng."},
+ note:"'Without' = điều kiện loại trừ. Câu sau 'without' là thứ phải tránh. Thường liên quan security."},
+
+{term:"Unless",vi:"Trừ khi / Nếu không",type:"connector",
+ structure:"[Hệ quả xấu] unless + [điều kiện phải đáp ứng]",
+ example:{en:"The system will fail <b class='highlight'>unless</b> there is a backup in a separate Availability Zone.",
+          vi:"Hệ thống sẽ hỏng <b>trừ khi</b> có backup ở Availability Zone riêng biệt."},
+ note:"'Unless' = điều kiện bắt buộc để tránh kết quả xấu. Nếu không có X thì Y sẽ xảy ra."},
+
+{term:"Instead of",vi:"Thay thế cho",type:"connector",
+ structure:"[Làm A] instead of [B — cách cũ/không tốt]",
+ example:{en:"Use Amazon SQS <b class='highlight'>instead of</b> direct API calls between services.",
+          vi:"Sử dụng Amazon SQS <b>thay thế cho</b> các API call trực tiếp giữa các service."},
+ note:"'Instead of' = thay thế giải pháp cũ bằng giải pháp tốt hơn. Phổ biến trong refactor questions."},
+
+{term:"Due to",vi:"Do / Vì",type:"connector",
+ structure:"Due to + [NGUYÊN NHÂN], [hệ quả / yêu cầu phải giải quyết].",
+ example:{en:"<b class='highlight'>Due to</b> compliance requirements, all data must be stored within a specific region.",
+          vi:"<b>Do</b> yêu cầu tuân thủ, tất cả dữ liệu phải được lưu trữ trong một region cụ thể."},
+ note:"'Due to' = nguyên nhân dẫn đến ràng buộc. Phần sau là hard constraint phải đáp ứng."},
+
+{term:"As long as",vi:"Miễn là / Chừng nào",type:"connector",
+ structure:"[Giải pháp được chấp nhận] as long as + [điều kiện duy trì].",
+ example:{en:"Any solution is acceptable <b class='highlight'>as long as</b> the RTO is less than one hour.",
+          vi:"Bất kỳ giải pháp nào đều được chấp nhận <b>miễn là</b> RTO dưới một giờ."},
+ note:"'As long as' = điều kiện tối thiểu phải đáp ứng. Không vi phạm là được chọn."},
+
+{term:"So that",vi:"Để / Để đảm bảo rằng",type:"connector",
+ structure:"[Thực hiện hành động] so that + [kết quả mong muốn đạt được].",
+ example:{en:"Enable versioning on the S3 bucket <b class='highlight'>so that</b> files can be recovered if deleted.",
+          vi:"Bật versioning trên S3 bucket <b>để</b> các file có thể phục hồi nếu bị xóa."},
+ note:"'So that' = mục đích của hành động. Giải thích tại sao làm điều đó."},
+
+{term:"Provided that",vi:"Với điều kiện là",type:"connector",
+ structure:"[Giải pháp] is acceptable/works, provided that + [điều kiện phải thỏa mãn].",
+ example:{en:"Spot Instances can be used, <b class='highlight'>provided that</b> the workload is fault tolerant.",
+          vi:"Spot Instances có thể được dùng <b>với điều kiện là</b> workload có khả năng chịu lỗi."},
+ note:"'Provided that' = điều kiện kèm theo. Giải pháp chỉ đúng khi điều kiện được thỏa mãn."},
+
+{term:"In the event of",vi:"Trong trường hợp xảy ra",type:"connector",
+ structure:"In the event of + [SỰ CỐ/tình huống xấu], [hệ thống phải làm gì].",
+ example:{en:"<b class='highlight'>In the event of</b> an Availability Zone failure, traffic should be redirected automatically.",
+          vi:"<b>Trong trường hợp</b> một Availability Zone bị lỗi, traffic phải được chuyển hướng tự động."},
+ note:"'In the event of' = tình huống disaster. Câu hỏi về DR, failover, HA thường dùng cụm này."},
+
+{term:"On the other hand",vi:"Mặt khác / Ngược lại",type:"connector",
+ structure:"[Ưu điểm/thực tế A]. On the other hand, [ưu điểm/yêu cầu B đối lập].",
+ example:{en:"Reserved Instances are cheaper. <b class='highlight'>On the other hand</b>, they require long-term commitment.",
+          vi:"Reserved Instances rẻ hơn. <b>Mặt khác</b>, chúng yêu cầu cam kết dài hạn."},
+ note:"'On the other hand' = trade-off. Cả hai vế đều quan trọng để cân nhắc giải pháp."},
+
+{term:"As opposed to",vi:"Trái ngược với / So với",type:"connector",
+ structure:"[A] as opposed to [B] → nhấn mạnh sự khác biệt giữa hai giải pháp.",
+ example:{en:"Using managed RDS, <b class='highlight'>as opposed to</b> self-managed on EC2, reduces operational burden.",
+          vi:"Sử dụng RDS managed <b>trái ngược với</b> tự quản lý trên EC2, giảm gánh nặng vận hành."},
+ note:"'As opposed to' = so sánh đối lập. Thường dùng để giải thích tại sao chọn A thay vì B."},
+
+{term:"At the same time",vi:"Đồng thời",type:"connector",
+ structure:"[Yêu cầu 1 phải đáp ứng]. At the same time, [yêu cầu 2 cũng phải đáp ứng].",
+ example:{en:"The system must handle high throughput. <b class='highlight'>At the same time</b>, costs must remain low.",
+          vi:"Hệ thống phải xử lý thông lượng cao. <b>Đồng thời</b>, chi phí phải được giữ ở mức thấp."},
+ note:"'At the same time' = hai yêu cầu song song. Thường dẫn đến auto scaling hoặc managed services."},
+
+{term:"In contrast",vi:"Ngược lại / Tương phản",type:"connector",
+ structure:"[Đặc điểm A]. In contrast, [đặc điểm B đối lập của giải pháp khác].",
+ example:{en:"Lambda scales automatically. <b class='highlight'>In contrast</b>, EC2 requires manual configuration.",
+          vi:"Lambda tự động scale. <b>Ngược lại</b>, EC2 yêu cầu cấu hình thủ công."},
+ note:"'In contrast' = so sánh đối nghịch giữa hai dịch vụ/giải pháp. Phổ biến trong giải thích đáp án."},
+
+// ══════════════════════════════════════════════════════════════
+// DAY 3 — Cấu trúc điều kiện & điều kiện giả định
+// ══════════════════════════════════════════════════════════════
+{term:"If… then…",vi:"Nếu… thì…",type:"condition",
+ structure:"If + [ĐIỀU KIỆN xảy ra], + [chủ thể] + should/must/will + [HÀNH ĐỘNG].",
+ example:{en:"<b class='highlight'>If</b> the primary database fails, <b class='highlight'>then</b> the standby must take over automatically.",
+          vi:"<b>Nếu</b> database chính lỗi, <b>thì</b> standby phải tiếp quản tự động."},
+ note:"Đây là cấu trúc điều kiện cơ bản nhất. 'If' = tình huống xảy ra, sau 'then' = yêu cầu."},
+
+{term:"In case of",vi:"Trong trường hợp / Phòng khi",type:"condition",
+ structure:"In case of + [SỰ CỐ/tình huống], + [giải pháp dự phòng phải có].",
+ example:{en:"A backup solution must be in place <b class='highlight'>in case of</b> a region-wide outage.",
+          vi:"Giải pháp dự phòng phải có sẵn <b>trong trường hợp</b> cả region bị gián đoạn."},
+ note:"'In case of' = chuẩn bị cho tình huống xấu. Liên quan đến DR, backup, failover."},
+
+{term:"When… should…",vi:"Khi… thì nên…",type:"condition",
+ structure:"When + [SỰ KIỆN/điều kiện kích hoạt], + [chủ thể] + should + [PHẢN ỨNG].",
+ example:{en:"<b class='highlight'>When</b> traffic spikes, the system <b class='highlight'>should</b> automatically add more instances.",
+          vi:"<b>Khi</b> lưu lượng tăng đột biến, hệ thống <b>nên</b> tự động thêm nhiều instance hơn."},
+ note:"'When… should' = trigger action. Liên quan đến CloudWatch Alarm + Auto Scaling."},
+
+{term:"As soon as",vi:"Ngay khi / Vừa khi",type:"condition",
+ structure:"As soon as + [SỰ KIỆN xảy ra], + [hành động phải diễn ra ngay lập tức].",
+ example:{en:"<b class='highlight'>As soon as</b> an object is uploaded to S3, a Lambda function should process it.",
+          vi:"<b>Ngay khi</b> một object được upload lên S3, một Lambda function phải xử lý nó."},
+ note:"'As soon as' = trigger ngay lập tức. Liên quan đến S3 Event Notification → Lambda."},
+
+{term:"Only if",vi:"Chỉ khi / Chỉ trong trường hợp",type:"condition",
+ structure:"[Hành động] should only be performed only if + [điều kiện bắt buộc phải đúng].",
+ example:{en:"Data should be deleted <b class='highlight'>only if</b> it has not been accessed for 90 days.",
+          vi:"Dữ liệu chỉ nên được xóa <b>chỉ khi</b> nó không được truy cập trong 90 ngày."},
+ note:"'Only if' = điều kiện chặt chẽ. Liên quan đến S3 Lifecycle, DynamoDB TTL policies."},
+
+{term:"Regardless of",vi:"Bất kể / Không phụ thuộc vào",type:"condition",
+ structure:"[Yêu cầu phải đáp ứng] regardless of + [biến số/điều kiện thay đổi].",
+ example:{en:"The application must remain available <b class='highlight'>regardless of</b> the number of concurrent users.",
+          vi:"Ứng dụng phải duy trì hoạt động <b>bất kể</b> số lượng người dùng đồng thời là bao nhiêu."},
+ note:"'Regardless of' = không có ngoại lệ. Hệ thống phải hoạt động trong MỌI điều kiện."},
+
+{term:"Whenever",vi:"Bất cứ khi nào / Mỗi khi",type:"condition",
+ structure:"Whenever + [SỰ KIỆN lặp lại], + [hành động tự động phải xảy ra].",
+ example:{en:"<b class='highlight'>Whenever</b> a new file is added to S3, it should trigger a processing workflow.",
+          vi:"<b>Bất cứ khi nào</b> có file mới được thêm vào S3, nó nên kích hoạt một luồng xử lý."},
+ note:"'Whenever' = event-driven, recurring trigger. Liên quan đến EventBridge, S3 Events, Lambda."},
+
+{term:"Even if",vi:"Ngay cả khi / Dù có",type:"condition",
+ structure:"[Hệ thống phải hoạt động] even if + [tình huống xấu nhất xảy ra].",
+ example:{en:"The application must continue running <b class='highlight'>even if</b> one Availability Zone fails.",
+          vi:"Ứng dụng phải tiếp tục chạy <b>ngay cả khi</b> một Availability Zone bị lỗi."},
+ note:"'Even if' = worst case scenario. Đây là yêu cầu về fault tolerance hoặc High Availability."},
+
+{term:"Before / After",vi:"Trước khi / Sau khi",type:"condition",
+ structure:"Before/After + [HÀNH ĐỘNG], + [điều kiện phải được đảm bảo].",
+ example:{en:"<b class='highlight'>Before</b> deleting an EC2 instance, a snapshot must be taken.",
+          vi:"<b>Trước khi</b> xóa một EC2 instance, phải tạo snapshot."},
+ note:"Thứ tự thực hiện quan trọng. 'Before' = tiền điều kiện, 'After' = hậu điều kiện."},
+
+{term:"During",vi:"Trong suốt / Trong khi đang",type:"condition",
+ structure:"During + [GIAI ĐOẠN/sự kiện], + [hệ thống phải/không được làm gì].",
+ example:{en:"<b class='highlight'>During</b> peak hours, the system must scale to handle increased traffic.",
+          vi:"<b>Trong suốt</b> giờ cao điểm, hệ thống phải mở rộng để xử lý lưu lượng tăng cao."},
+ note:"'During' = trong khoảng thời gian cụ thể. Liên quan đến scheduled scaling, maintenance windows."},
+
+{term:"Until",vi:"Cho đến khi",type:"condition",
+ structure:"[Trạng thái/hành động duy trì] until + [điều kiện kết thúc đạt được].",
+ example:{en:"Data must be retained in S3 Standard <b class='highlight'>until</b> it is 30 days old, then moved to Glacier.",
+          vi:"Dữ liệu phải được giữ ở S3 Standard <b>cho đến khi</b> đủ 30 ngày tuổi, rồi chuyển sang Glacier."},
+ note:"'Until' = điểm kết thúc của một điều kiện. Thường trong S3 Lifecycle Policy questions."},
+
+{term:"Once",vi:"Một khi / Ngay khi (hoàn thành)",type:"condition",
+ structure:"Once + [HÀNH ĐỘNG hoàn thành], + [hành động tiếp theo phải xảy ra].",
+ example:{en:"<b class='highlight'>Once</b> the data is processed, it should be archived to S3 Glacier for long-term storage.",
+          vi:"<b>Một khi</b> dữ liệu được xử lý, nó nên được lưu trữ vào S3 Glacier dài hạn."},
+ note:"'Once' = sau khi hoàn thành bước trước. Liên quan đến Step Functions, Lambda workflows."},
+
+{term:"Assuming that",vi:"Giả sử rằng / Với giả định",type:"condition",
+ structure:"Assuming that + [ĐIỀU KIỆN tiên quyết đã đúng], [giải pháp/đánh giá].",
+ example:{en:"<b class='highlight'>Assuming that</b> the application is stateless, Auto Scaling can be implemented.",
+          vi:"<b>Giả sử rằng</b> ứng dụng là stateless, Auto Scaling có thể được triển khai."},
+ note:"'Assuming that' = điều kiện tiên quyết đề bài đưa ra. Giải pháp đúng trong điều kiện này."},
+
+{term:"Given that",vi:"Cho rằng / Căn cứ vào",type:"condition",
+ structure:"Given that + [THÔNG TIN ĐÃ CÓ], + [câu hỏi hoặc yêu cầu tiếp theo].",
+ example:{en:"<b class='highlight'>Given that</b> the company has a Direct Connect connection, which option is best?",
+          vi:"<b>Căn cứ vào việc</b> công ty đã có kết nối Direct Connect, phương án nào là tốt nhất?"},
+ note:"'Given that' = context đã được thiết lập. Giải pháp phải tận dụng hoặc tích hợp với context đó."},
+
+{term:"With the condition that",vi:"Với điều kiện là",type:"condition",
+ structure:"[Giải pháp được chấp nhận] with the condition that + [ràng buộc phải thỏa mãn].",
+ example:{en:"Any database can be used with the condition that it supports automated backups.",
+          vi:"Bất kỳ database nào đều có thể dùng <b>với điều kiện</b> nó hỗ trợ sao lưu tự động."},
+ note:"Điều kiện đi kèm. Loại đáp án không đáp ứng điều kiện kèm theo này."},
+
+{term:"Subject to",vi:"Phụ thuộc vào / Phải tuân theo",type:"condition",
+ structure:"[Giải pháp hoạt động] subject to + [ĐIỀU KIỆN ràng buộc bên ngoài].",
+ example:{en:"Data storage is flexible, subject to regulatory requirements for data residency.",
+          vi:"Lưu trữ dữ liệu linh hoạt, <b>phụ thuộc vào</b> yêu cầu quy định về nơi lưu trữ dữ liệu."},
+ note:"'Subject to' = ràng buộc bên ngoài (pháp lý, tuân thủ). Không thể bỏ qua."},
+
+{term:"As a precaution",vi:"Như một biện pháp phòng ngừa",type:"condition",
+ structure:"As a precaution, + [hành động thực hiện trước để tránh vấn đề tương lai].",
+ example:{en:"<b class='highlight'>As a precaution</b>, the architect should enable MFA for all IAM users.",
+          vi:"<b>Như một biện pháp phòng ngừa</b>, kiến trúc sư nên bật MFA cho tất cả IAM users."},
+ note:"'As a precaution' = hành động phòng ngừa chủ động. Liên quan đến security best practices."},
+
+{term:"In the unlikely event",vi:"Trong trường hợp không mong muốn",type:"condition",
+ structure:"In the unlikely event + [SỰ CỐ hiếm gặp], + [hệ thống phải phản ứng như thế nào].",
+ example:{en:"<b class='highlight'>In the unlikely event</b> of a region failure, Route 53 should redirect traffic.",
+          vi:"<b>Trong trường hợp</b> không mong muốn là region bị lỗi, Route 53 nên chuyển hướng traffic."},
+ note:"Tình huống hiếm nhưng nghiêm trọng. Liên quan đến multi-region DR strategy."},
+
+{term:"To ensure that",vi:"Để đảm bảo rằng",type:"condition",
+ structure:"To ensure that + [KẾT QUẢ mong muốn], + [hành động cần thực hiện].",
+ example:{en:"<b class='highlight'>To ensure that</b> data is not lost, enable S3 versioning and replication.",
+          vi:"<b>Để đảm bảo rằng</b> dữ liệu không bị mất, hãy bật S3 versioning và replication."},
+ note:"'To ensure that' = biện pháp bảo đảm. Thường ở trong giải thích đáp án đúng của AWS."},
+
+{term:"To prevent",vi:"Để ngăn chặn / Để tránh",type:"condition",
+ structure:"To prevent + [SỰ KIỆN XẤU], + [hành động phòng tránh cần thực hiện].",
+ example:{en:"<b class='highlight'>To prevent</b> unauthorized access, enable bucket policies and block public access.",
+          vi:"<b>Để ngăn chặn</b> truy cập trái phép, hãy bật bucket policies và chặn public access."},
+ note:"'To prevent' = hành động bảo vệ. Thường liên quan đến security và access control."},
+
+// ══════════════════════════════════════════════════════════════
+// DAY 4 — Cấu trúc so sánh trong đề thi
+// ══════════════════════════════════════════════════════════════
+{term:"More… than…",vi:"Hơn… so với…",type:"comparison",
+ structure:"[Giải pháp A] is more + [TÍNH TỪ] + than [giải pháp B].",
+ example:{en:"DynamoDB is <b class='highlight'>more scalable than</b> a relational database for this use case.",
+          vi:"DynamoDB <b>có khả năng mở rộng hơn</b> database quan hệ cho trường hợp sử dụng này."},
+ note:"So sánh hơn. Trong đề thi, bạn phải chọn giải pháp 'more [something]' so với các lựa chọn khác."},
+
+{term:"Less… than…",vi:"Ít hơn… so với…",type:"comparison",
+ structure:"[Giải pháp A] requires less + [DANH TỪ] + than [giải pháp B].",
+ example:{en:"Lambda requires <b class='highlight'>less operational overhead than</b> managing EC2 instances.",
+          vi:"Lambda yêu cầu <b>ít gánh nặng vận hành hơn</b> so với quản lý EC2 instances."},
+ note:"'Less overhead' = managed/serverless > self-managed. Keyword phổ biến trong đáp án đúng."},
+
+{term:"The most… option",vi:"Lựa chọn… nhất",type:"comparison",
+ structure:"The MOST + [TÍNH TỪ] + option/solution/approach is [giải pháp].",
+ example:{en:"<b class='highlight'>The most cost-effective option</b> for archiving is S3 Glacier Deep Archive.",
+          vi:"<b>Lựa chọn tiết kiệm chi phí nhất</b> để lưu trữ archive là S3 Glacier Deep Archive."},
+ note:"'The most' = so sánh tuyệt đối. Chỉ có MỘT đáp án đúng nhất trong các lựa chọn."},
+
+{term:"The least… approach",vi:"Cách tiếp cận… ít nhất",type:"comparison",
+ structure:"The LEAST + [TÍNH TỪ] + approach/option/solution is [giải pháp].",
+ example:{en:"<b class='highlight'>The least operationally complex approach</b> is to use a fully managed service.",
+          vi:"<b>Cách tiếp cận ít phức tạp về vận hành nhất</b> là sử dụng dịch vụ fully managed."},
+ note:"'The least complex' = đơn giản nhất về vận hành. Thường là managed service hay serverless."},
+
+{term:"Compared to / Compared with",vi:"So sánh với / So với",type:"comparison",
+ structure:"Compared to + [BASELINE/giải pháp cũ], + [giải pháp mới có ưu điểm gì].",
+ example:{en:"<b class='highlight'>Compared to</b> on-premises, cloud storage offers more flexibility and lower costs.",
+          vi:"<b>So với</b> on-premises, lưu trữ đám mây cung cấp tính linh hoạt cao hơn và chi phí thấp hơn."},
+ note:"'Compared to' = so sánh tương đối với một baseline. Thường so sánh cloud vs on-prem."},
+
+{term:"Better than / Worse than",vi:"Tốt hơn / Tệ hơn so với",type:"comparison",
+ structure:"[Giải pháp A] is better than [B] in terms of + [TIÊU CHÍ cụ thể].",
+ example:{en:"Aurora is <b class='highlight'>better than</b> standard MySQL in terms of read performance.",
+          vi:"Aurora <b>tốt hơn</b> MySQL thông thường về hiệu năng đọc."},
+ note:"So sánh theo tiêu chí cụ thể. Trong đề thi, phải chọn giải pháp tốt hơn theo tiêu chí đề bài đưa ra."},
+
+{term:"As… as… / Not as… as…",vi:"Bằng… như… / Không bằng…",type:"comparison",
+ structure:"[A] is as + [TÍNH TỪ] + as [B] — hai thứ ngang bằng nhau về tiêu chí đó.",
+ example:{en:"S3 Standard-IA is <b class='highlight'>not as expensive as</b> S3 Standard but costs more than Glacier.",
+          vi:"S3 Standard-IA <b>không đắt bằng</b> S3 Standard nhưng tốn hơn Glacier."},
+ note:"'Not as expensive as' = rẻ hơn nhưng không rẻ nhất. Quan trọng khi so sánh S3 storage classes."},
+
+{term:"Higher… lower…",vi:"Cao hơn… thấp hơn…",type:"comparison",
+ structure:"[Dịch vụ A] has higher/lower + [METRIC] + than [dịch vụ B].",
+ example:{en:"NLB has <b class='highlight'>lower latency</b> than ALB, but ALB provides more routing features.",
+          vi:"NLB có <b>độ trễ thấp hơn</b> ALB, nhưng ALB cung cấp nhiều tính năng routing hơn."},
+ note:"NLB = layer 4, low latency. ALB = layer 7, feature-rich. Phân biệt hai loại load balancer."},
+
+{term:"Significantly… than…",vi:"Đáng kể hơn… so với…",type:"comparison",
+ structure:"[A] is significantly + more/less + [TÍNH TỪ] + than [B].",
+ example:{en:"Reserved Instances are <b class='highlight'>significantly cheaper than</b> On-Demand for steady workloads.",
+          vi:"Reserved Instances <b>rẻ hơn đáng kể so với</b> On-Demand cho workload ổn định."},
+ note:"'Significantly' = sự khác biệt lớn. Reserved có thể rẻ hơn On-Demand tới 72%."},
+
+{term:"Equal to / Equivalent to",vi:"Bằng với / Tương đương với",type:"comparison",
+ structure:"[A] is equal/equivalent to [B] in terms of + [tiêu chí].",
+ example:{en:"Aurora is <b class='highlight'>equivalent to</b> MySQL in terms of compatibility but not performance.",
+          vi:"Aurora <b>tương đương với</b> MySQL về khả năng tương thích nhưng không phải hiệu năng."},
+ note:"'Equivalent to' = tương thích nhưng khác biệt. Aurora compatible nhưng nhanh hơn MySQL nhiều."},
+
+{term:"In comparison",vi:"Khi so sánh / Để so sánh",type:"comparison",
+ structure:"In comparison, + [giải pháp/dịch vụ khác có đặc điểm khác biệt].",
+ example:{en:"S3 Standard offers instant access. <b class='highlight'>In comparison</b>, Glacier requires minutes to hours.",
+          vi:"S3 Standard cung cấp truy cập ngay lập tức. <b>Khi so sánh</b>, Glacier cần phút đến giờ."},
+ note:"'In comparison' = so sánh đối chiếu hai dịch vụ. Quan trọng khi chọn giữa S3 storage classes."},
+
+{term:"While… on the other hand…",vi:"Trong khi… mặt khác…",type:"comparison",
+ structure:"While + [đặc điểm A], + on the other hand, + [đặc điểm B đối lập].",
+ example:{en:"<b class='highlight'>While</b> Lambda is serverless, <b class='highlight'>on the other hand</b> EC2 gives full control.",
+          vi:"<b>Trong khi</b> Lambda là serverless, <b>mặt khác</b> EC2 cho phép kiểm soát hoàn toàn."},
+ note:"Trình bày hai khía cạnh đối lập. Hiểu cấu trúc này giúp đọc câu giải thích đáp án nhanh hơn."},
+
+{term:"Both… and…",vi:"Cả… lẫn… / Vừa… vừa…",type:"comparison",
+ structure:"Both [A] and [B] + [ĐỘNG TỪ] — hai thứ cùng có đặc điểm hoặc cùng cần thực hiện.",
+ example:{en:"The solution must support <b class='highlight'>both</b> high availability <b class='highlight'>and</b> disaster recovery.",
+          vi:"Giải pháp phải hỗ trợ <b>cả</b> tính sẵn sàng cao <b>lẫn</b> khôi phục thảm họa."},
+ note:"'Both… and' = phải đáp ứng đồng thời cả hai yêu cầu. Không được bỏ qua một trong hai."},
+
+{term:"Either… or…",vi:"Hoặc… hoặc…",type:"comparison",
+ structure:"Either [Giải pháp A] or [Giải pháp B] can be used to + [mục đích].",
+ example:{en:"<b class='highlight'>Either</b> Direct Connect <b class='highlight'>or</b> VPN can be used to connect to the VPC.",
+          vi:"<b>Hoặc</b> Direct Connect <b>hoặc</b> VPN đều có thể dùng để kết nối vào VPC."},
+ note:"'Either… or' = cả hai đều đúng nhưng chỉ chọn một. Phải phân biệt khi nào dùng cái nào."},
+
+{term:"Neither… nor…",vi:"Không… cũng không…",type:"comparison",
+ structure:"Neither [A] nor [B] + [ĐỘNG TỪ] — loại cả hai giải pháp vì cùng thiếu đặc điểm.",
+ example:{en:"<b class='highlight'>Neither</b> S3 Standard <b class='highlight'>nor</b> EFS is suitable for block storage workloads.",
+          vi:"<b>Không</b> S3 Standard <b>cũng không</b> EFS phù hợp cho workload block storage."},
+ note:"'Neither… nor' = loại cả hai. Trong đề, giúp nhận ra đáp án sai khi đọc giải thích."},
+
+{term:"Unlike",vi:"Không giống như / Khác với",type:"comparison",
+ structure:"Unlike + [Dịch vụ/giải pháp B], + [Dịch vụ A] + [đặc điểm khác biệt].",
+ example:{en:"<b class='highlight'>Unlike</b> EC2, Lambda automatically scales based on the number of incoming requests.",
+          vi:"<b>Khác với</b> EC2, Lambda tự động scale dựa trên số lượng request đến."},
+ note:"'Unlike' = nhấn mạnh sự khác biệt quan trọng. Phổ biến khi giải thích lý do chọn managed service."},
+
+{term:"Similarly",vi:"Tương tự như vậy",type:"comparison",
+ structure:"[Dịch vụ A] does X. Similarly, [Dịch vụ B] also does X in a related context.",
+ example:{en:"RDS Multi-AZ provides HA for databases. <b class='highlight'>Similarly</b>, ALB spans multiple AZs for web tier.",
+          vi:"RDS Multi-AZ cung cấp HA cho database. <b>Tương tự</b>, ALB trải qua nhiều AZ cho web tier."},
+ note:"'Similarly' = cùng pattern, khác context. Giúp hiểu kiến trúc multi-layer HA của AWS."},
+
+{term:"The difference between… and…",vi:"Sự khác biệt giữa… và…",type:"comparison",
+ structure:"The difference between [A] and [B] is that [A] + [đặc điểm A], while [B] + [đặc điểm B].",
+ example:{en:"<b class='highlight'>The difference between</b> SQS and SNS is that SQS is a queue while SNS is pub/sub.",
+          vi:"<b>Sự khác biệt giữa</b> SQS và SNS là SQS là hàng đợi còn SNS là pub/sub."},
+ note:"Câu giải thích sự khác biệt hai dịch vụ. Phổ biến trong câu hỏi phân biệt SQS vs SNS, ALB vs NLB."},
+
+{term:"The advantage of… over…",vi:"Ưu điểm của… so với…",type:"comparison",
+ structure:"The advantage of [A] over [B] is + [lý do cụ thể].",
+ example:{en:"<b class='highlight'>The advantage of</b> Fargate <b class='highlight'>over</b> EC2 is that it eliminates server management.",
+          vi:"<b>Ưu điểm của</b> Fargate <b>so với</b> EC2 là nó loại bỏ việc quản lý server."},
+ note:"Câu trình bày ưu điểm. Hiểu để nhanh nhận ra lý do đúng khi đọc giải thích đáp án."},
+
+{term:"One key difference is",vi:"Một sự khác biệt quan trọng là",type:"comparison",
+ structure:"One key difference is that + [dịch vụ/giải pháp A] + [đặc điểm khác biệt với B].",
+ example:{en:"<b class='highlight'>One key difference is</b> that NLB operates at layer 4 while ALB operates at layer 7.",
+          vi:"<b>Một sự khác biệt quan trọng là</b> NLB hoạt động ở layer 4 còn ALB ở layer 7."},
+ note:"'One key difference' = nhấn mạnh điểm phân biệt quan trọng nhất. Hay xuất hiện trong giải thích."},
+
+// ══════════════════════════════════════════════════════════════
+// DAY 5 — Cấu trúc ngữ pháp thụ động & danh động từ
+// ══════════════════════════════════════════════════════════════
+{term:"is required to",vi:"được yêu cầu phải / phải",type:"grammar",
+ structure:"[Chủ thể] + is/are required to + [ĐỘNG TỪ nguyên thể]",
+ example:{en:"All data <b class='highlight'>is required to</b> be encrypted before being stored in S3.",
+          vi:"Tất cả dữ liệu <b>được yêu cầu phải</b> được mã hóa trước khi lưu vào S3."},
+ note:"Câu bị động thể hiện yêu cầu bắt buộc. Tương đương với 'must be'."},
+
+{term:"is designed to",vi:"được thiết kế để",type:"grammar",
+ structure:"[Dịch vụ] + is designed to + [ĐỘNG TỪ — chức năng chính]",
+ example:{en:"Amazon S3 <b class='highlight'>is designed to</b> provide 99.999999999% durability.",
+          vi:"Amazon S3 <b>được thiết kế để</b> cung cấp độ bền 99.999999999%."},
+ note:"Mô tả chức năng chính của dịch vụ AWS. Giúp nhận diện dịch vụ phù hợp với yêu cầu."},
+
+{term:"is configured to",vi:"được cấu hình để",type:"grammar",
+ structure:"[Tài nguyên] + is configured to + [ĐỘNG TỪ — hoạt động như thế nào]",
+ example:{en:"The Auto Scaling group <b class='highlight'>is configured to</b> maintain a minimum of 2 instances.",
+          vi:"Auto Scaling group <b>được cấu hình để</b> duy trì tối thiểu 2 instance."},
+ note:"Mô tả thiết lập hiện tại. 'Is configured to' = cách hệ thống đang hoạt động."},
+
+{term:"should be enabled",vi:"nên được bật / kích hoạt",type:"grammar",
+ structure:"[Tính năng/dịch vụ] + should be enabled + [để đạt mục đích]",
+ example:{en:"Versioning <b class='highlight'>should be enabled</b> on the S3 bucket to protect against accidental deletion.",
+          vi:"Versioning <b>nên được bật</b> trên S3 bucket để bảo vệ khỏi xóa nhầm."},
+ note:"Câu bị động khuyến nghị. 'Should be enabled' = AWS best practice cần thực hiện."},
+
+{term:"can be accessed",vi:"có thể được truy cập",type:"grammar",
+ structure:"[Dữ liệu/tài nguyên] + can be accessed + [bởi ai/từ đâu/khi nào]",
+ example:{en:"The data <b class='highlight'>can be accessed</b> from multiple EC2 instances simultaneously using EFS.",
+          vi:"Dữ liệu <b>có thể được truy cập</b> từ nhiều EC2 instance đồng thời bằng EFS."},
+ note:"Câu bị động mô tả khả năng. Giúp nhận diện shared storage (EFS) vs single-attach (EBS)."},
+
+{term:"will be stored",vi:"sẽ được lưu trữ",type:"grammar",
+ structure:"[Dữ liệu] + will be stored + [ở đâu/như thế nào]",
+ example:{en:"All processed data <b class='highlight'>will be stored</b> in Amazon S3 for long-term retention.",
+          vi:"Tất cả dữ liệu đã xử lý <b>sẽ được lưu trữ</b> trong Amazon S3 để lưu giữ dài hạn."},
+ note:"Thì tương lai bị động — mô tả điều sẽ xảy ra sau khi hệ thống hoạt động."},
+
+{term:"has been deployed",vi:"đã được triển khai",type:"grammar",
+ structure:"[Hệ thống/dịch vụ] + has been deployed + [ở đâu/như thế nào]",
+ example:{en:"The application <b class='highlight'>has been deployed</b> across multiple Availability Zones.",
+          vi:"Ứng dụng <b>đã được triển khai</b> trên nhiều Availability Zones."},
+ note:"Hiện tại hoàn thành bị động — điều đã xảy ra và còn hiệu lực. Mô tả kiến trúc hiện tại."},
+
+{term:"must be implemented",vi:"phải được triển khai",type:"grammar",
+ structure:"[Giải pháp/tính năng] + must be implemented + [để đạt mục tiêu]",
+ example:{en:"Encryption at rest <b class='highlight'>must be implemented</b> to meet compliance requirements.",
+          vi:"Mã hóa khi lưu trữ <b>phải được triển khai</b> để đáp ứng yêu cầu tuân thủ."},
+ note:"'Must be implemented' = hard requirement. Đây là yêu cầu không thể bỏ qua."},
+
+{term:"is integrated with",vi:"được tích hợp với",type:"grammar",
+ structure:"[Dịch vụ A] + is integrated with + [Dịch vụ B] + to + [chức năng]",
+ example:{en:"CloudWatch <b class='highlight'>is integrated with</b> Auto Scaling to trigger scaling actions.",
+          vi:"CloudWatch <b>được tích hợp với</b> Auto Scaling để kích hoạt các hành động scaling."},
+ note:"Mô tả tích hợp giữa hai dịch vụ. Giúp hiểu cách các AWS services làm việc cùng nhau."},
+
+{term:"is responsible for",vi:"chịu trách nhiệm về",type:"grammar",
+ structure:"[Dịch vụ/vai trò] + is responsible for + [DANH TỪ/GERUND — nhiệm vụ]",
+ example:{en:"The application tier <b class='highlight'>is responsible for</b> processing business logic.",
+          vi:"Tầng ứng dụng <b>chịu trách nhiệm về</b> việc xử lý logic nghiệp vụ."},
+ note:"Xác định vai trò/trách nhiệm của từng thành phần. Quan trọng trong câu hỏi phân tầng kiến trúc."},
+
+{term:"can be used to",vi:"có thể được dùng để",type:"grammar",
+ structure:"[Dịch vụ] + can be used to + [ĐỘNG TỪ — mục đích sử dụng]",
+ example:{en:"Amazon CloudFront <b class='highlight'>can be used to</b> cache and serve static content globally.",
+          vi:"Amazon CloudFront <b>có thể được dùng để</b> cache và phân phối nội dung tĩnh toàn cầu."},
+ note:"Câu mô tả use case của dịch vụ. Phổ biến trong câu hỏi 'which service can be used to'."},
+
+{term:"is not recommended",vi:"không được khuyến nghị",type:"grammar",
+ structure:"[Cách làm/giải pháp] + is not recommended + [lý do tại sao]",
+ example:{en:"Storing credentials in application code <b class='highlight'>is not recommended</b> for security reasons.",
+          vi:"Lưu credentials trong code ứng dụng <b>không được khuyến nghị</b> vì lý do bảo mật."},
+ note:"Anti-pattern. Nếu câu hỏi có 'is not recommended', loại đáp án đó ra."},
+
+{term:"is not supported",vi:"không được hỗ trợ",type:"grammar",
+ structure:"[Tính năng] + is not supported + by [dịch vụ/cấu hình cụ thể]",
+ example:{en:"Cross-region replication <b class='highlight'>is not supported</b> by SQS standard queues.",
+          vi:"Nhân bản liên vùng <b>không được hỗ trợ</b> bởi SQS standard queues."},
+ note:"Giới hạn của dịch vụ. Biết những thứ 'not supported' giúp loại trừ đáp án sai nhanh."},
+
+{term:"results in",vi:"dẫn đến / có kết quả là",type:"grammar",
+ structure:"[Hành động/cấu hình A] + results in + [KẾT QUẢ/hệ quả]",
+ example:{en:"Enabling Multi-AZ on RDS <b class='highlight'>results in</b> automatic failover during outages.",
+          vi:"Bật Multi-AZ trên RDS <b>dẫn đến</b> tự động chuyển đổi dự phòng khi có sự cố."},
+ note:"Mối quan hệ nhân-quả. Giúp hiểu tại sao thực hiện một hành động nhất định."},
+
+{term:"is limited to",vi:"bị giới hạn ở / chỉ giới hạn",type:"grammar",
+ structure:"[Dịch vụ/tính năng] + is limited to + [SỐ LƯỢNG/điều kiện cụ thể]",
+ example:{en:"An S3 bucket name <b class='highlight'>is limited to</b> 63 characters and must be globally unique.",
+          vi:"Tên S3 bucket <b>bị giới hạn</b> ở 63 ký tự và phải unique toàn cầu."},
+ note:"Giới hạn kỹ thuật. Biết limitations giúp loại trừ giải pháp không khả thi."},
+
+{term:"allows… to…",vi:"cho phép… để…",type:"grammar",
+ structure:"[Dịch vụ/cấu hình] + allows + [AI/cái gì] + to + [ĐỘNG TỪ — làm gì]",
+ example:{en:"IAM roles <b class='highlight'>allow</b> EC2 instances <b class='highlight'>to</b> access S3 securely.",
+          vi:"IAM roles <b>cho phép</b> EC2 instances <b>truy cập</b> S3 một cách an toàn."},
+ note:"'Allows… to' = grant permission. Phổ biến trong câu hỏi về IAM, cross-account access."},
+
+{term:"enables… to…",vi:"cho phép / tạo điều kiện để…",type:"grammar",
+ structure:"[Dịch vụ/tính năng] + enables + [ai/cái gì] + to + [ĐỘNG TỪ — chức năng]",
+ example:{en:"CloudFront <b class='highlight'>enables</b> users <b class='highlight'>to</b> access content with low latency globally.",
+          vi:"CloudFront <b>cho phép</b> người dùng <b>truy cập</b> nội dung với độ trễ thấp trên toàn cầu."},
+ note:"'Enables' mang nghĩa tích cực hơn 'allows'. Thường dùng khi giới thiệu tính năng của dịch vụ."},
+
+{term:"prevents… from…",vi:"ngăn… khỏi / không cho… làm",type:"grammar",
+ structure:"[Cơ chế bảo mật] + prevents + [ai/cái gì] + from + [GERUND — điều bị ngăn chặn]",
+ example:{en:"S3 Block Public Access <b class='highlight'>prevents</b> objects <b class='highlight'>from</b> being publicly exposed.",
+          vi:"S3 Block Public Access <b>ngăn</b> các object <b>khỏi bị</b> để lộ công khai."},
+ note:"'Prevents… from' = cơ chế bảo vệ. Phổ biến trong câu hỏi về security controls."},
+
+{term:"rather than",vi:"thay vì / hơn là",type:"grammar",
+ structure:"[Làm A] rather than [B] = ưu tiên A, tránh B",
+ example:{en:"Use SQS <b class='highlight'>rather than</b> direct synchronous calls to decouple services.",
+          vi:"Sử dụng SQS <b>thay vì</b> các direct synchronous calls để tách rời các service."},
+ note:"'Rather than' trong ngữ pháp = so sánh lựa chọn. Câu sau 'rather than' là cái bị loại bỏ."},
+
+{term:"such as",vi:"chẳng hạn như / như là",type:"grammar",
+ structure:"[Danh mục chung], such as [VÍ DỤ CỤ THỂ — ví dụ minh họa]",
+ example:{en:"Managed services, <b class='highlight'>such as</b> RDS and ElastiCache, reduce operational overhead.",
+          vi:"Managed services, <b>chẳng hạn như</b> RDS và ElastiCache, giảm gánh nặng vận hành."},
+ note:"'Such as' = ví dụ không đầy đủ. Còn có thể có nhiều ví dụ khác không được liệt kê."},
+
+// ══════════════════════════════════════════════════════════════
+// DAY 6 — Từ vựng đọc hiểu chuyên biệt (Technical Reading Vocab)
+// ══════════════════════════════════════════════════════════════
+{term:"appropriate",vi:"phù hợp / thích hợp",type:"vocab",
+ structure:"[Giải pháp] is the most appropriate + [danh từ] + for + [use case].",
+ example:{en:"Amazon DynamoDB is the most <b class='highlight'>appropriate</b> database for key-value workloads.",
+          vi:"Amazon DynamoDB là cơ sở dữ liệu <b>phù hợp nhất</b> cho workload key-value."},
+ note:"'Most appropriate' = câu trả lời đúng nhất theo context. Không phải 'perfect', không phải 'cheapest'."},
+
+{term:"adequate",vi:"đủ / thỏa đáng",type:"vocab",
+ structure:"[Giải pháp] provides adequate + [DANH TỪ: capacity/security/performance].",
+ example:{en:"The current instance type does not provide <b class='highlight'>adequate</b> memory for the workload.",
+          vi:"Loại instance hiện tại không cung cấp <b>đủ</b> bộ nhớ cho workload."},
+ note:"'Not adequate' = cần nâng cấp. Thường xuất hiện trong câu mô tả vấn đề cần giải quyết."},
+
+{term:"sufficient",vi:"đủ / đủ dùng",type:"vocab",
+ structure:"[Tài nguyên] is/is not sufficient + to + [ĐỘNG TỪ mục đích].",
+ example:{en:"The current bandwidth is not <b class='highlight'>sufficient</b> to transfer the data within the time limit.",
+          vi:"Băng thông hiện tại không <b>đủ</b> để truyền dữ liệu trong giới hạn thời gian."},
+ note:"'Not sufficient' = thiếu, cần giải pháp khác. Phổ biến khi đề bài mô tả giới hạn hiện tại."},
+
+{term:"ensure",vi:"đảm bảo / chắc chắn rằng",type:"vocab",
+ structure:"[Hành động] + ensures + [that + mệnh đề kết quả].",
+ example:{en:"Enabling Multi-AZ <b class='highlight'>ensures</b> that the database remains available during failures.",
+          vi:"Bật Multi-AZ <b>đảm bảo</b> rằng database vẫn sẵn sàng trong suốt thời gian xảy ra lỗi."},
+ note:"'Ensures' = mạnh hơn 'helps'. Khi muốn nói về đảm bảo chắc chắn, dùng 'ensure'."},
+
+{term:"maintain",vi:"duy trì / bảo trì",type:"vocab",
+ structure:"[Hệ thống] + maintains + [DANH TỪ — trạng thái cần giữ nguyên].",
+ example:{en:"Auto Scaling <b class='highlight'>maintains</b> the desired number of EC2 instances at all times.",
+          vi:"Auto Scaling <b>duy trì</b> số lượng EC2 instances mong muốn ở mọi thời điểm."},
+ note:"'Maintain' = giữ nguyên trạng thái mong muốn. Liên quan đến Auto Scaling, HA configurations."},
+
+{term:"facilitate",vi:"tạo điều kiện / thúc đẩy",type:"vocab",
+ structure:"[Dịch vụ] + facilitates + [DANH TỪ/GERUND — điều được hỗ trợ].",
+ example:{en:"AWS Direct Connect <b class='highlight'>facilitates</b> a dedicated connection between on-premises and AWS.",
+          vi:"AWS Direct Connect <b>tạo điều kiện</b> cho kết nối chuyên dụng giữa on-premises và AWS."},
+ note:"'Facilitates' = làm cho điều gì đó dễ xảy ra hơn. Thường dùng khi mô tả dịch vụ networking."},
+
+{term:"implement",vi:"triển khai / thực thi",type:"vocab",
+ structure:"[Chủ thể] + implements + [GIẢI PHÁP/tính năng] + to + [mục đích].",
+ example:{en:"The architect should <b class='highlight'>implement</b> caching to reduce database load.",
+          vi:"Kiến trúc sư nên <b>triển khai</b> caching để giảm tải cho database."},
+ note:"'Implement' = thực hiện một giải pháp kỹ thuật cụ thể. Động từ phổ biến nhất trong đề thi."},
+
+{term:"leverage",vi:"tận dụng / khai thác",type:"vocab",
+ structure:"[Chủ thể] + leverages + [dịch vụ/công nghệ] + to + [mục đích].",
+ example:{en:"The company should <b class='highlight'>leverage</b> AWS managed services to reduce operational costs.",
+          vi:"Công ty nên <b>tận dụng</b> AWS managed services để giảm chi phí vận hành."},
+ note:"'Leverage' = sử dụng thứ có sẵn một cách thông minh. Thường ý nói dùng managed services."},
+
+{term:"optimize",vi:"tối ưu hóa",type:"vocab",
+ structure:"[Chủ thể] + optimizes + [DANH TỪ] + by + [GERUND — cách thức].",
+ example:{en:"Using CloudFront <b class='highlight'>optimizes</b> content delivery by caching at edge locations.",
+          vi:"Sử dụng CloudFront <b>tối ưu hóa</b> việc phân phối nội dung bằng cách cache tại edge locations."},
+ note:"'Optimize' = cải thiện để đạt hiệu quả tốt nhất. Phổ biến trong câu hỏi về performance và cost."},
+
+{term:"integrate",vi:"tích hợp",type:"vocab",
+ structure:"[Dịch vụ A] + integrates with + [Dịch vụ B] + to + [chức năng đạt được].",
+ example:{en:"Lambda <b class='highlight'>integrates</b> with SQS to process messages asynchronously.",
+          vi:"Lambda <b>tích hợp</b> với SQS để xử lý messages bất đồng bộ."},
+ note:"'Integrates with' = hai dịch vụ làm việc cùng nhau. Biết native integrations giúp chọn đúng giải pháp."},
+
+{term:"provision",vi:"cấp phát / khởi tạo",type:"vocab",
+ structure:"[Dịch vụ/hệ thống] + provisions + [DANH TỪ tài nguyên] + automatically.",
+ example:{en:"CloudFormation <b class='highlight'>provisions</b> all required resources from a single template.",
+          vi:"CloudFormation <b>cấp phát</b> tất cả tài nguyên cần thiết từ một template duy nhất."},
+ note:"'Provision' = tạo và cấu hình tài nguyên sẵn sàng dùng. Khác với 'deploy' (triển khai ứng dụng)."},
+
+{term:"mitigate",vi:"giảm thiểu / khắc phục",type:"vocab",
+ structure:"[Giải pháp] + mitigates + [rủi ro/vấn đề] + by + [cách thức].",
+ example:{en:"Using WAF <b class='highlight'>mitigates</b> the risk of SQL injection attacks on the application.",
+          vi:"Sử dụng WAF <b>giảm thiểu</b> rủi ro tấn công SQL injection vào ứng dụng."},
+ note:"'Mitigate' = giảm xác suất hoặc mức độ nghiêm trọng. Phổ biến trong câu hỏi về security."},
+
+{term:"decommission",vi:"ngừng sử dụng / tắt",type:"vocab",
+ structure:"[Chủ thể] + decommissions + [tài nguyên/hệ thống cũ] + after + [điều kiện].",
+ example:{en:"After migration, the team should <b class='highlight'>decommission</b> the on-premises servers.",
+          vi:"Sau khi migration, nhóm nên <b>ngừng sử dụng</b> các server on-premises."},
+ note:"'Decommission' = tắt và loại bỏ tài nguyên không còn cần thiết. Bước cuối của migration."},
+
+{term:"aggregate",vi:"tổng hợp / gộp lại",type:"vocab",
+ structure:"[Dịch vụ] + aggregates + [DANH TỪ dữ liệu] + from + [nguồn].",
+ example:{en:"AWS Config Aggregator <b class='highlight'>aggregates</b> compliance data from multiple accounts.",
+          vi:"AWS Config Aggregator <b>tổng hợp</b> dữ liệu tuân thủ từ nhiều accounts."},
+ note:"'Aggregate' = gộp nhiều nguồn thành một. Liên quan đến centralized monitoring, logging."},
+
+{term:"replicate",vi:"nhân bản / sao chép",type:"vocab",
+ structure:"[Dữ liệu/tài nguyên] + is replicated + to + [đích] + for + [mục đích].",
+ example:{en:"S3 CRR <b class='highlight'>replicates</b> objects to another region for disaster recovery.",
+          vi:"S3 CRR <b>nhân bản</b> các objects sang region khác để phục hồi thảm họa."},
+ note:"'Replicate' = tạo bản sao chính xác ở nơi khác. Phân biệt với 'backup' (không real-time)."},
+
+{term:"terminate",vi:"kết thúc / hủy / chấm dứt",type:"vocab",
+ structure:"[Chủ thể] + terminates + [instance/session/connection] + when + [điều kiện].",
+ example:{en:"Auto Scaling <b class='highlight'>terminates</b> unhealthy instances and replaces them automatically.",
+          vi:"Auto Scaling <b>hủy</b> các instance không lành mạnh và thay thế chúng tự động."},
+ note:"'Terminate' = hủy vĩnh viễn. Khác với 'stop' (tạm dừng, có thể start lại)."},
+
+{term:"distribute",vi:"phân phối / phân tán",type:"vocab",
+ structure:"[Dịch vụ] + distributes + [DANH TỪ] + across + [phạm vi].",
+ example:{en:"ALB <b class='highlight'>distributes</b> incoming traffic across multiple EC2 instances.",
+          vi:"ALB <b>phân phối</b> lưu lượng đến trên nhiều EC2 instances."},
+ note:"'Distributes' = chia đều. Core concept của Load Balancing và multi-AZ deployments."},
+
+{term:"offload",vi:"giảm tải / chuyển sang",type:"vocab",
+ structure:"[Tác vụ/lưu lượng] + is offloaded + to + [dịch vụ chuyên biệt hơn].",
+ example:{en:"Read traffic can be <b class='highlight'>offloaded</b> to read replicas to reduce primary database load.",
+          vi:"Lưu lượng đọc có thể được <b>giảm tải</b> sang read replicas để giảm tải primary database."},
+ note:"'Offload' = chuyển bớt công việc sang nơi khác. ElastiCache, Read Replica, CDN đều offload."},
+
+{term:"expose",vi:"lộ ra / công khai",type:"vocab",
+ structure:"[Dịch vụ] + exposes + [API/endpoint] + to + [đối tượng].",
+ example:{en:"API Gateway <b class='highlight'>exposes</b> Lambda functions as RESTful HTTP endpoints.",
+          vi:"API Gateway <b>công khai</b> Lambda functions dưới dạng RESTful HTTP endpoints."},
+ note:"'Expose' không chỉ nghĩa xấu. 'Expose an API' = làm API có thể truy cập được từ bên ngoài."},
+
+{term:"invoke",vi:"gọi / kích hoạt",type:"vocab",
+ structure:"[Dịch vụ/event] + invokes + [Lambda function/API] + when + [điều kiện].",
+ example:{en:"S3 events can <b class='highlight'>invoke</b> a Lambda function to process uploaded files.",
+          vi:"S3 events có thể <b>kích hoạt</b> một Lambda function để xử lý các file được upload."},
+ note:"'Invoke' = gọi Lambda. Phân biệt với 'trigger' (kích hoạt event). Cả hai đều phổ biến."},
+
+// ══════════════════════════════════════════════════════════════
+// DAY 7 — Cấu trúc câu hỏi đặc biệt
+// ══════════════════════════════════════════════════════════════
+{term:"MOST… with the LEAST…",vi:"NHẤT… với ÍT NHẤT…",type:"question",
+ structure:"[Yêu cầu] MOST + [kết quả tốt] + with the LEAST + [chi phí/overhead]?",
+ example:{en:"Which solution is MOST scalable with the LEAST operational overhead?",
+          vi:"Giải pháp nào có khả năng mở rộng NHẤT với ÍT gánh nặng vận hành NHẤT?"},
+ note:"Câu hỏi kép: tối đa hóa A đồng thời tối thiểu hóa B. Serverless thường là đáp án."},
+
+{term:"Which… EXCEPT",vi:"Cái nào… NGOẠI TRỪ",type:"question",
+ structure:"Which of the following is true/correct EXCEPT + [chọn đáp án SAI]?",
+ example:{en:"Which of the following is a benefit of AWS cloud EXCEPT cost predictability?",
+          vi:"Điều nào sau đây là lợi ích của AWS cloud NGOẠI TRỪ khả năng dự đoán chi phí?"},
+ note:"Câu hỏi EXCEPT = tìm đáp án SAI. Đây là bẫy phổ biến — đọc kỹ trước khi chọn."},
+
+{term:"Select TWO / THREE",vi:"Chọn HAI / BA đáp án",type:"question",
+ structure:"Which TWO/THREE of the following + [điều kiện]? (Select TWO/THREE.)",
+ example:{en:"Which TWO actions should the architect take to improve resilience? (Select TWO.)",
+          vi:"Hai hành động nào kiến trúc sư nên thực hiện để cải thiện khả năng phục hồi? (Chọn HAI.)"},
+ note:"Câu hỏi multi-select. Phải đọc đến cuối câu để thấy '(Select TWO)'. Chọn thiếu/thừa đều sai."},
+
+{term:"What is the FIRST step?",vi:"Bước ĐẦU TIÊN là gì?",type:"question",
+ structure:"What is the FIRST/INITIAL step + [chủ thể] + should take + [để làm gì]?",
+ example:{en:"What is the FIRST step the architect should take to migrate the database to AWS?",
+          vi:"Bước ĐẦU TIÊN kiến trúc sư nên thực hiện để migrate database lên AWS là gì?"},
+ note:"'First step' = thứ tự quan trọng. Thường là discovery/assessment trước khi action."},
+
+{term:"Which is NOT a valid…",vi:"Điều nào KHÔNG phải là…",type:"question",
+ structure:"Which of the following is NOT a valid + [loại giải pháp/tính năng]?",
+ example:{en:"Which of the following is NOT a valid EC2 pricing model?",
+          vi:"Điều nào sau đây KHÔNG phải là mô hình định giá EC2 hợp lệ?"},
+ note:"'NOT valid' = tìm điều sai/không tồn tại. Cần biết rõ các options để không bị nhầm."},
+
+{term:"Which combination of…",vi:"Sự kết hợp nào của…",type:"question",
+ structure:"Which combination of + [DANH TỪ] + will + [đạt mục tiêu]? (Select TWO.)",
+ example:{en:"Which combination of AWS services will provide the most cost-effective solution? (Select TWO.)",
+          vi:"Sự kết hợp dịch vụ AWS nào sẽ cung cấp giải pháp tiết kiệm chi phí nhất? (Chọn HAI.)"},
+ note:"Câu hỏi yêu cầu kết hợp hai dịch vụ. Cả hai đáp án phải complement nhau."},
+
+{term:"What additional step…",vi:"Bước bổ sung nào…",type:"question",
+ structure:"What additional step + [chủ thể] + must take + to + [đảm bảo điều gì]?",
+ example:{en:"What additional step must the architect take to ensure data is encrypted in transit?",
+          vi:"Kiến trúc sư phải thực hiện bước bổ sung nào để đảm bảo dữ liệu được mã hóa khi truyền?"},
+ note:"'Additional' = thêm vào những gì đã có. Cần biết cái gì đã được làm rồi để không chọn trùng."},
+
+{term:"Which change should be made?",vi:"Thay đổi nào nên được thực hiện?",type:"question",
+ structure:"Which change should be made to + [hệ thống hiện tại] + to + [cải thiện điều gì]?",
+ example:{en:"Which change should be made to the architecture to improve availability?",
+          vi:"Thay đổi nào nên được thực hiện đối với kiến trúc để cải thiện tính sẵn sàng?"},
+ note:"Câu hỏi cải thiện kiến trúc hiện tại. Không phải thiết kế lại từ đầu — chỉ thêm/sửa một bước."},
+
+{term:"What would happen if…",vi:"Điều gì sẽ xảy ra nếu…",type:"question",
+ structure:"What would happen if + [hành động/thay đổi] + were/was made?",
+ example:{en:"What would happen if the primary RDS instance failed without Multi-AZ enabled?",
+          vi:"Điều gì sẽ xảy ra nếu RDS instance chính lỗi mà không bật Multi-AZ?"},
+ note:"Câu hỏi hệ quả. Hiểu rõ behavior của dịch vụ khi không có HA/failover configuration."},
+
+{term:"In which scenario",vi:"Trong tình huống nào",type:"question",
+ structure:"In which scenario + [điều kiện] + would [dịch vụ] be the BEST choice?",
+ example:{en:"In which scenario would Spot Instances be the MOST appropriate choice?",
+          vi:"Trong tình huống nào Spot Instances sẽ là lựa chọn PHÙ HỢP NHẤT?"},
+ note:"'In which scenario' = câu hỏi use case. Phải map scenario với đặc điểm của dịch vụ."},
+
+{term:"What is the PRIMARY purpose?",vi:"Mục đích CHÍNH là gì?",type:"question",
+ structure:"What is the PRIMARY/MAIN purpose of + [dịch vụ/tính năng AWS]?",
+ example:{en:"What is the PRIMARY purpose of an Amazon SQS Dead Letter Queue?",
+          vi:"Mục đích CHÍNH của Amazon SQS Dead Letter Queue là gì?"},
+ note:"'Primary purpose' = chức năng cốt lõi. Tránh chọn đáp án mô tả use case phụ."},
+
+{term:"What is the BEST practice?",vi:"Thực hành TỐT NHẤT là gì?",type:"question",
+ structure:"What is the BEST practice for + [tình huống/yêu cầu cụ thể]?",
+ example:{en:"What is the BEST practice for storing database credentials in an AWS application?",
+          vi:"Thực hành TỐT NHẤT để lưu trữ database credentials trong ứng dụng AWS là gì?"},
+ note:"AWS best practice thường = Secrets Manager (credentials), IAM Role (service access), KMS (encryption)."},
+
+{term:"What is the impact of…",vi:"Tác động của… là gì?",type:"question",
+ structure:"What is the impact of + [hành động/thay đổi] + on + [hệ thống/tính năng]?",
+ example:{en:"What is the impact of enabling encryption on an existing EBS volume?",
+          vi:"Tác động của việc bật mã hóa trên EBS volume hiện có là gì?"},
+ note:"EBS không thể encrypt trực tiếp — phải snapshot → copy with encryption → create new volume."},
+
+{term:"How does… work?",vi:"… hoạt động như thế nào?",type:"question",
+ structure:"How does + [dịch vụ/tính năng] + work + [in context]?",
+ example:{en:"How does Amazon S3 Transfer Acceleration work to speed up uploads?",
+          vi:"Amazon S3 Transfer Acceleration hoạt động như thế nào để tăng tốc uploads?"},
+ note:"Câu hỏi về cơ chế hoạt động. Cần hiểu underlying mechanism của dịch vụ."},
+
+{term:"Which approach is PREFERRED?",vi:"Cách tiếp cận nào được ƯU TIÊN?",type:"question",
+ structure:"Which approach is PREFERRED/RECOMMENDED for + [tình huống]?",
+ example:{en:"Which approach is PREFERRED for granting an EC2 instance access to S3?",
+          vi:"Cách tiếp cận nào được ƯU TIÊN để cấp quyền EC2 instance truy cập S3?"},
+ note:"IAM Role là PREFERRED (không hardcode credentials). IAM User với access key là NOT preferred."},
+
+{term:"What is the SIMPLEST solution?",vi:"Giải pháp ĐƠN GIẢN NHẤT là gì?",type:"question",
+ structure:"What is the SIMPLEST/EASIEST solution to + [mục tiêu] + without + [ràng buộc]?",
+ example:{en:"What is the SIMPLEST solution to host a static website on AWS?",
+          vi:"Giải pháp ĐƠN GIẢN NHẤT để host một static website trên AWS là gì?"},
+ note:"S3 static website hosting là simplest solution. Không cần EC2, không cần server."},
+
+{term:"What must be done BEFORE?",vi:"Điều gì PHẢI làm TRƯỚC?",type:"question",
+ structure:"What must be done BEFORE + [hành động chính] + can take place?",
+ example:{en:"What must be done BEFORE an EC2 instance can be launched from a custom AMI?",
+          vi:"Điều gì PHẢI được làm TRƯỚC khi EC2 instance có thể được khởi chạy từ custom AMI?"},
+ note:"'Before' = prerequisite/tiền điều kiện. AMI phải được tạo → đăng ký → sau đó mới launch EC2."},
+
+{term:"Which is the FASTEST way?",vi:"Cách nào NHANH NHẤT?",type:"question",
+ structure:"Which is the FASTEST way to + [mục tiêu] + given + [điều kiện]?",
+ example:{en:"Which is the FASTEST way to migrate 100 TB of data to AWS given limited bandwidth?",
+          vi:"Cách nào NHANH NHẤT để migrate 100 TB dữ liệu lên AWS khi bandwidth hạn chế?"},
+ note:"Bandwidth hạn chế + data lớn = Snowball (không phải Internet transfer). Faster by ship!"},
+
+{term:"What should be avoided?",vi:"Điều gì nên được tránh?",type:"question",
+ structure:"What should be avoided when + [thiết kế/triển khai một loại hệ thống]?",
+ example:{en:"What should be avoided when designing a highly available application on AWS?",
+          vi:"Điều gì nên được tránh khi thiết kế ứng dụng sẵn sàng cao trên AWS?"},
+ note:"Anti-patterns cần tránh: single point of failure, hardcoded credentials, single AZ deployment."},
+
+{term:"Under what circumstances?",vi:"Trong hoàn cảnh nào?",type:"question",
+ structure:"Under what circumstances + [điều kiện] + would + [giải pháp] be [đánh giá]?",
+ example:{en:"Under what circumstances would Reserved Instances be more cost-effective than On-Demand?",
+          vi:"Trong hoàn cảnh nào Reserved Instances tiết kiệm chi phí hơn On-Demand?"},
+ note:"Reserved tốt hơn khi: workload stable, dùng >75% thời gian, dự báo được. Không tốt cho burst."},
+
+// ══════════════════════════════════════════════════════════════
+// DAY 8 — Đọc hiểu đoạn văn kỹ thuật (Reading Comprehension)
+// ══════════════════════════════════════════════════════════════
+{term:"The following diagram illustrates",vi:"Sơ đồ sau minh họa",type:"vocab",
+ structure:"The following diagram illustrates + [DANH TỪ mô tả kiến trúc].",
+ example:{en:"<b class='highlight'>The following diagram illustrates</b> a three-tier web architecture on AWS.",
+          vi:"<b>Sơ đồ sau minh họa</b> kiến trúc web ba tầng trên AWS."},
+ note:"Giới thiệu sơ đồ kiến trúc. Đọc sơ đồ từ trái sang phải, từ trên xuống dưới."},
+
+{term:"Note that",vi:"Lưu ý rằng",type:"vocab",
+ structure:"Note that + [THÔNG TIN QUAN TRỌNG thường bị bỏ qua].",
+ example:{en:"<b class='highlight'>Note that</b> the company has already purchased Reserved Instances for its workloads.",
+          vi:"<b>Lưu ý rằng</b> công ty đã mua Reserved Instances cho các workloads của mình."},
+ note:"'Note that' = thông tin bổ sung quan trọng. Thường là constraint hoặc context ảnh hưởng đến đáp án."},
+
+{term:"As shown in the diagram",vi:"Như được hiển thị trong sơ đồ",type:"vocab",
+ structure:"As shown in the diagram, + [mô tả kiến trúc/thành phần].",
+ example:{en:"<b class='highlight'>As shown in the diagram</b>, the web server is in the public subnet.",
+          vi:"<b>Như được hiển thị trong sơ đồ</b>, web server nằm ở public subnet."},
+ note:"Tham chiếu đến sơ đồ. Phải xem sơ đồ kỹ để hiểu kiến trúc hiện tại trước khi chọn đáp án."},
+
+{term:"According to",vi:"Theo / Dựa theo",type:"vocab",
+ structure:"According to + [NGUỒN THÔNG TIN], + [thực tế được trình bày].",
+ example:{en:"<b class='highlight'>According to</b> the requirements, all data must remain within the EU region.",
+          vi:"<b>Theo</b> các yêu cầu, tất cả dữ liệu phải ở trong region EU."},
+ note:"'According to the requirements' = hard constraint từ đề bài. Không thể vi phạm."},
+
+{term:"The scenario describes",vi:"Tình huống mô tả",type:"vocab",
+ structure:"The scenario describes + [DANH TỪ mô tả tình huống/vấn đề cần giải quyết].",
+ example:{en:"<b class='highlight'>The scenario describes</b> a company migrating from a monolithic to microservices architecture.",
+          vi:"<b>Tình huống mô tả</b> một công ty đang di chuyển từ kiến trúc nguyên khối sang microservices."},
+ note:"Câu tổng kết scenario. Đọc kỹ để hiểu bức tranh toàn cảnh trước khi trả lời."},
+
+{term:"In this case",vi:"Trong trường hợp này",type:"vocab",
+ structure:"In this case, + [giải pháp hoặc nhận xét áp dụng cho tình huống cụ thể này].",
+ example:{en:"<b class='highlight'>In this case</b>, using Amazon ElastiCache would significantly reduce database load.",
+          vi:"<b>Trong trường hợp này</b>, sử dụng Amazon ElastiCache sẽ giảm đáng kể tải cho database."},
+ note:"'In this case' = áp dụng cho tình huống cụ thể. Giải pháp không phải lúc nào cũng đúng."},
+
+{term:"Refer to",vi:"Tham khảo / Xem",type:"vocab",
+ structure:"Refer to + [tài liệu/sơ đồ] + for + [thông tin cần tìm].",
+ example:{en:"<b class='highlight'>Refer to</b> the architecture diagram for the current system configuration.",
+          vi:"<b>Tham khảo</b> sơ đồ kiến trúc để biết cấu hình hệ thống hiện tại."},
+ note:"Hướng dẫn xem tài liệu bổ sung. Trong đề thi AWS, luôn xem sơ đồ nếu được cung cấp."},
+
+{term:"It is important to",vi:"Điều quan trọng là phải",type:"vocab",
+ structure:"It is important to + [ĐỘNG TỪ] + because/to + [lý do].",
+ example:{en:"<b class='highlight'>It is important to</b> enable versioning before configuring replication on S3.",
+          vi:"<b>Điều quan trọng là phải</b> bật versioning trước khi cấu hình replication trên S3."},
+ note:"'It is important to' = bước tiên quyết hoặc best practice. Thường trong câu hỏi về thứ tự."},
+
+{term:"Key considerations",vi:"Những điều cần cân nhắc chính",type:"vocab",
+ structure:"Key considerations include + [danh sách các yếu tố quan trọng].",
+ example:{en:"<b class='highlight'>Key considerations</b> include cost, performance, and compliance requirements.",
+          vi:"<b>Những điều cần cân nhắc chính</b> bao gồm chi phí, hiệu năng và yêu cầu tuân thủ."},
+ note:"'Key considerations' = các tiêu chí đánh giá. Giải pháp tốt nhất đáp ứng tất cả các tiêu chí này."},
+
+{term:"Constraints",vi:"Ràng buộc / Giới hạn",type:"vocab",
+ structure:"The following constraints apply: + [danh sách ràng buộc].",
+ example:{en:"The system has the following <b class='highlight'>constraints</b>: budget of $500/month and 2-hour RTO.",
+          vi:"Hệ thống có các <b>ràng buộc</b> sau: ngân sách $500/tháng và RTO 2 giờ."},
+ note:"'Constraints' = giới hạn không thể vượt qua. Loại ngay đáp án vi phạm constraint."},
+
+{term:"Best fit",vi:"Phù hợp nhất",type:"vocab",
+ structure:"[Dịch vụ/giải pháp] is the best fit for + [use case/tình huống cụ thể].",
+ example:{en:"Lambda is the <b class='highlight'>best fit</b> for event-driven, short-duration workloads.",
+          vi:"Lambda là giải pháp <b>phù hợp nhất</b> cho workload event-driven, thời gian ngắn."},
+ note:"'Best fit' = phù hợp nhất với use case. Không phải tốt nhất tuyệt đối, mà tốt nhất cho trường hợp này."},
+
+{term:"Trade-off",vi:"Sự đánh đổi",type:"vocab",
+ structure:"The trade-off between [A] and [B] is that + [mô tả đánh đổi].",
+ example:{en:"The <b class='highlight'>trade-off</b> is that DynamoDB offers flexibility but less query capability than SQL.",
+          vi:"<b>Sự đánh đổi</b> là DynamoDB cung cấp tính linh hoạt nhưng ít khả năng query hơn SQL."},
+ note:"Mọi quyết định kiến trúc đều có trade-off. Hiểu trade-off giúp chọn đúng theo yêu cầu đề bài."},
+
+{term:"Bottleneck",vi:"Điểm thắt cổ chai",type:"vocab",
+ structure:"The + [thành phần] + is/will become a bottleneck + when + [điều kiện].",
+ example:{en:"The database connection pool will become a <b class='highlight'>bottleneck</b> during high concurrency.",
+          vi:"Connection pool database sẽ trở thành <b>điểm thắt cổ chai</b> trong thời gian concurrency cao."},
+ note:"Nhận diện bottleneck → giải pháp: RDS Proxy, ElastiCache, read replicas, sharding."},
+
+{term:"Scalability concern",vi:"Mối lo ngại về khả năng mở rộng",type:"vocab",
+ structure:"The main scalability concern is that + [vấn đề không thể scale được].",
+ example:{en:"The main <b class='highlight'>scalability concern</b> is that the monolithic database cannot scale independently.",
+          vi:"<b>Mối lo ngại về khả năng mở rộng</b> chính là database nguyên khối không thể scale độc lập."},
+ note:"'Scalability concern' = giới hạn của kiến trúc hiện tại. Câu hỏi yêu cầu giải quyết vấn đề này."},
+
+{term:"Overhead",vi:"Gánh nặng / Chi phí vận hành",type:"vocab",
+ structure:"[Giải pháp] introduces/reduces + operational overhead + by + [cách thức].",
+ example:{en:"Self-managed databases introduce significant operational <b class='highlight'>overhead</b> compared to RDS.",
+          vi:"Database tự quản lý tạo ra <b>gánh nặng vận hành</b> đáng kể so với RDS."},
+ note:"'Overhead' = công sức quản lý. 'Least overhead' = câu hỏi yêu cầu dùng managed/serverless."},
+
+{term:"Scope",vi:"Phạm vi",type:"vocab",
+ structure:"The scope of the solution includes/excludes + [DANH TỪ].",
+ example:{en:"The <b class='highlight'>scope</b> of the migration includes all production workloads but not development environments.",
+          vi:"<b>Phạm vi</b> của migration bao gồm tất cả workload production nhưng không bao gồm môi trường dev."},
+ note:"'Scope' = ranh giới của giải pháp. Đọc kỹ để không chọn giải pháp vượt quá phạm vi cần thiết."},
+
+{term:"Implication",vi:"Hàm ý / Tác động ngầm",type:"vocab",
+ structure:"The implication of [hành động] is that + [hệ quả không nói thẳng].",
+ example:{en:"The implication of using Spot Instances is that the application must handle interruptions.",
+          vi:"<b>Hàm ý</b> của việc sử dụng Spot Instances là ứng dụng phải xử lý được việc bị thu hồi."},
+ note:"'Implication' = hệ quả quan trọng cần nghĩ đến. Spot → phải fault tolerant là implied requirement."},
+
+{term:"Assumption",vi:"Giả định / Điều mặc định là",type:"vocab",
+ structure:"The assumption is that + [điều được xem là đúng mà không cần chứng minh].",
+ example:{en:"The <b class='highlight'>assumption</b> is that the application is stateless and can scale horizontally.",
+          vi:"<b>Giả định</b> là ứng dụng là stateless và có thể scale theo chiều ngang."},
+ note:"'Assumption' = điều kiện được cho là đúng. Nếu assumption sai, giải pháp cũng có thể sai."},
+
+{term:"Prerequisite",vi:"Điều kiện tiên quyết",type:"vocab",
+ structure:"A prerequisite for [hành động] is that + [điều kiện phải đúng trước].",
+ example:{en:"A <b class='highlight'>prerequisite</b> for S3 replication is that versioning must be enabled on both buckets.",
+          vi:"<b>Điều kiện tiên quyết</b> cho S3 replication là versioning phải được bật trên cả hai bucket."},
+ note:"'Prerequisite' = bước phải làm trước. S3 Replication prerequisite = enable versioning."},
+
+// ══════════════════════════════════════════════════════════════
+// DAY 9 — Cấu trúc câu phức và danh từ kép
+// ══════════════════════════════════════════════════════════════
+{term:"noun + that + clause",vi:"danh từ + mệnh đề quan hệ 'that'",type:"grammar",
+ structure:"[DANH TỪ] + that + [mệnh đề bổ sung thông tin] → đọc cả mệnh đề mới hiểu đủ",
+ example:{en:"A solution <b class='highlight'>that</b> minimizes costs while maintaining high availability is required.",
+          vi:"Cần một giải pháp <b>mà</b> giảm thiểu chi phí trong khi vẫn duy trì tính sẵn sàng cao."},
+ note:"Mệnh đề quan hệ 'that' bổ sung thông tin quan trọng. Đừng bỏ qua phần sau 'that'."},
+
+{term:"noun + which + clause",vi:"danh từ + mệnh đề quan hệ 'which'",type:"grammar",
+ structure:"[DANH TỪ], which + [mệnh đề bổ sung — thông tin không bắt buộc]",
+ example:{en:"Amazon RDS, <b class='highlight'>which</b> is a managed database service, supports automatic backups.",
+          vi:"Amazon RDS, <b>là</b> một dịch vụ database managed, hỗ trợ tự động sao lưu."},
+ note:"Mệnh đề 'which' có dấu phẩy = thông tin bổ sung. Câu vẫn đúng nếu bỏ phần 'which'."},
+
+{term:"passive voice — is/are + past participle",vi:"Câu bị động hiện tại",type:"grammar",
+ structure:"[Chủ thể nhận tác động] + is/are + [QUÁ KHỨ PHÂN TỪ] + (by + tác nhân)",
+ example:{en:"All data <b class='highlight'>is encrypted</b> at rest using AWS KMS.",
+          vi:"Tất cả dữ liệu <b>được mã hóa</b> khi lưu trữ bằng AWS KMS."},
+ note:"Câu bị động phổ biến trong đề AWS. 'Is encrypted/stored/deployed' = trạng thái hiện tại."},
+
+{term:"present perfect — has/have + past participle",vi:"Thì hiện tại hoàn thành",type:"grammar",
+ structure:"[Chủ thể] + has/have + [QUÁ KHỨ PHÂN TỪ] → hành động hoàn thành, kết quả còn hiệu lực",
+ example:{en:"The company <b class='highlight'>has migrated</b> its infrastructure to AWS over the past year.",
+          vi:"Công ty <b>đã di chuyển</b> cơ sở hạ tầng lên AWS trong năm qua."},
+ note:"Hiện tại hoàn thành = đã làm xong và kết quả còn đó. Đây là context/tình trạng hiện tại."},
+
+{term:"conditional type 1 — if + present, will + verb",vi:"Câu điều kiện loại 1",type:"grammar",
+ structure:"If + [hiện tại đơn — điều có thể xảy ra], + [will + ĐỘNG TỪ — kết quả]",
+ example:{en:"<b class='highlight'>If</b> the primary instance fails, RDS <b class='highlight'>will</b> automatically failover to the standby.",
+          vi:"<b>Nếu</b> instance chính lỗi, RDS <b>sẽ</b> tự động chuyển đổi sang standby."},
+ note:"Điều kiện có thể xảy ra trong thực tế. 'If → will' = kết quả chắc chắn khi điều kiện đúng."},
+
+{term:"conditional type 2 — if + past, would + verb",vi:"Câu điều kiện loại 2",type:"grammar",
+ structure:"If + [quá khứ đơn — điều giả định, ít xảy ra], + [would + ĐỘNG TỪ]",
+ example:{en:"<b class='highlight'>If</b> the company used reserved instances, it <b class='highlight'>would</b> save up to 72%.",
+          vi:"<b>Nếu</b> công ty sử dụng reserved instances, họ <b>sẽ</b> tiết kiệm tới 72%."},
+ note:"Giả định hiện tại/tương lai. 'If + used → would save' = so sánh giải pháp, gợi ý thay đổi."},
+
+{term:"gerund as subject — verb+ing",vi:"Danh động từ làm chủ ngữ",type:"grammar",
+ structure:"[GERUND (V+ing)] + is/are + [tính từ/danh từ bổ ngữ] + for + [tình huống]",
+ example:{en:"<b class='highlight'>Enabling</b> Multi-AZ is essential for high availability in production environments.",
+          vi:"<b>Bật</b> Multi-AZ là điều cần thiết để đạt tính sẵn sàng cao trong môi trường production."},
+ note:"Gerund làm chủ ngữ = hành động quan trọng. 'Enabling X is essential' = X là best practice."},
+
+{term:"infinitive of purpose — to + verb",vi:"Động từ nguyên thể chỉ mục đích",type:"grammar",
+ structure:"[Hành động chính] + to + [ĐỘNG TỪ — mục đích của hành động chính]",
+ example:{en:"Use Amazon CloudFront <b class='highlight'>to</b> reduce latency for global users.",
+          vi:"Sử dụng Amazon CloudFront <b>để</b> giảm độ trễ cho người dùng toàn cầu."},
+ note:"'To + verb' chỉ mục đích = lý do tại sao làm điều đó. Rất phổ biến trong đề AWS."},
+
+{term:"noun phrase — adjective + noun",vi:"Cụm danh từ: tính từ + danh từ",type:"grammar",
+ structure:"[TÍNH TỪ] + [DANH TỪ] = đơn vị ý nghĩa, đọc cả cụm, đừng tách rời",
+ example:{en:"The architect needs a <b class='highlight'>cost-effective</b>, <b class='highlight'>fault-tolerant</b> solution.",
+          vi:"Kiến trúc sư cần một giải pháp <b>tiết kiệm chi phí</b>, <b>chịu lỗi tốt</b>."},
+ note:"Hyphenated adjectives (cost-effective, fault-tolerant) là tính từ kép. Đọc cả cụm."},
+
+{term:"compound sentence with semicolon",vi:"Câu ghép với dấu chấm phẩy",type:"grammar",
+ structure:"[Mệnh đề 1 độc lập]; [mệnh đề 2 độc lập liên quan]",
+ example:{en:"S3 provides object storage; EBS provides block storage for EC2 instances.",
+          vi:"S3 cung cấp lưu trữ object; EBS cung cấp lưu trữ block cho EC2 instances."},
+ note:"Dấu chấm phẩy nối hai ý liên quan. Hai phần đều quan trọng như nhau để hiểu full context."},
+
+{term:"appositive phrase",vi:"Cụm đồng vị ngữ (giải thích)",type:"grammar",
+ structure:"[Danh từ chính], [cụm giải thích trong dấu phẩy], + [tiếp tục câu]",
+ example:{en:"Amazon DynamoDB, <b class='highlight'>a fully managed NoSQL database</b>, can scale automatically.",
+          vi:"Amazon DynamoDB, <b>một NoSQL database được quản lý hoàn toàn</b>, có thể scale tự động."},
+ note:"Phần trong dấu phẩy = giải thích thêm về danh từ trước. Có thể bỏ qua nếu đã biết dịch vụ."},
+
+{term:"parallel structure — X, Y, and Z",vi:"Cấu trúc song song",type:"grammar",
+ structure:"[X], [Y], and [Z] — ba hoặc nhiều yếu tố cùng loại, cùng cấu trúc ngữ pháp",
+ example:{en:"The solution must be <b class='highlight'>scalable, fault-tolerant, and cost-effective</b>.",
+          vi:"Giải pháp phải <b>có khả năng mở rộng, chịu lỗi và tiết kiệm chi phí</b>."},
+ note:"Ba yêu cầu song song = phải đáp ứng cả ba. Không được bỏ qua bất kỳ yếu tố nào."},
+
+{term:"relative clause with 'where'",vi:"Mệnh đề quan hệ với 'where'",type:"grammar",
+ structure:"[Danh từ chỉ nơi chốn] + where + [mệnh đề mô tả]",
+ example:{en:"AWS provides an environment <b class='highlight'>where</b> you only pay for what you use.",
+          vi:"AWS cung cấp môi trường <b>mà ở đó</b> bạn chỉ trả tiền cho những gì bạn sử dụng."},
+ note:"'Where' sau danh từ = mệnh đề quan hệ (không phải câu hỏi địa điểm). Bổ sung mô tả."},
+
+{term:"emphatic 'do/does'",vi:"'do/does' nhấn mạnh",type:"grammar",
+ structure:"[Chủ thể] + DO/DOES + [ĐỘNG TỪ nguyên thể] — nhấn mạnh hành động là thật",
+ example:{en:"Reserved Instances <b class='highlight'>do</b> provide significant cost savings for predictable workloads.",
+          vi:"Reserved Instances <b>thực sự</b> cung cấp tiết kiệm chi phí đáng kể cho workload có thể dự đoán."},
+ note:"'Do/Does' nhấn mạnh = khẳng định mạnh. Phân biệt với câu phủ định 'do not'."},
+
+{term:"subjunctive 'it is important that'",vi:"'Điều quan trọng là…'",type:"grammar",
+ structure:"It is important/essential/critical that + [chủ thể] + [ĐỘNG TỪ nguyên thể]",
+ example:{en:"It is <b class='highlight'>essential that</b> the application handles session data externally.",
+          vi:"<b>Điều cần thiết là</b> ứng dụng xử lý dữ liệu phiên bên ngoài."},
+ note:"'It is essential that' = yêu cầu rất quan trọng. Thường đi kèm best practice hoặc security requirement."},
+
+{term:"modal verbs: could, might, may",vi:"Động từ khuyết thiếu: có thể (không chắc)",type:"grammar",
+ structure:"[Chủ thể] + could/might/may + [ĐỘNG TỪ] = khả năng có thể, không chắc chắn",
+ example:{en:"The application <b class='highlight'>might</b> experience increased latency without caching.",
+          vi:"Ứng dụng <b>có thể</b> gặp phải độ trễ tăng cao nếu không có caching."},
+ note:"'Might/Could/May' = không chắc chắn. Khác với 'will' (chắc chắn) và 'must' (bắt buộc)."},
+
+{term:"negative form: not… until",vi:"Phủ định: không… cho đến khi",type:"grammar",
+ structure:"[Chủ thể] + does not/will not + [ĐỘNG TỪ] + until + [điều kiện]",
+ example:{en:"The instance <b class='highlight'>will not</b> be terminated <b class='highlight'>until</b> the grace period expires.",
+          vi:"Instance <b>sẽ không</b> bị hủy <b>cho đến khi</b> grace period hết hạn."},
+ note:"'Not… until' = hành động trì hoãn đến khi điều kiện xảy ra. Auto Scaling termination protection."},
+
+{term:"inversion for emphasis: 'Only by…'",vi:"Đảo ngữ nhấn mạnh: 'Chỉ bằng cách…'",type:"grammar",
+ structure:"Only by + [GERUND], + [chủ thể] + can + [ĐỘNG TỪ — kết quả]",
+ example:{en:"<b class='highlight'>Only by</b> using a multi-region deployment can the company achieve near-zero RTO.",
+          vi:"<b>Chỉ bằng cách</b> sử dụng triển khai multi-region, công ty mới có thể đạt RTO gần như bằng không."},
+ note:"Đảo ngữ nhấn mạnh điều kiện duy nhất. 'Only by X, can Y' = X là điều kiện bắt buộc để đạt Y."},
+
+// ══════════════════════════════════════════════════════════════
+// DAY 10 — Câu hỏi & cụm từ thực tế từ đề thi AWS
+// ══════════════════════════════════════════════════════════════
+{term:"with minimal disruption",vi:"với sự gián đoạn tối thiểu",type:"vocab",
+ structure:"[Thực hiện hành động] with minimal disruption to + [dịch vụ/users].",
+ example:{en:"The database must be migrated <b class='highlight'>with minimal disruption</b> to production operations.",
+          vi:"Database phải được migrate <b>với sự gián đoạn tối thiểu</b> đến hoạt động production."},
+ note:"= DMS với CDC (Change Data Capture) cho continuous replication, minimal downtime khi cutover."},
+
+{term:"without any downtime",vi:"không có thời gian ngừng hoạt động",type:"vocab",
+ structure:"[Hành động] must be completed without any downtime.",
+ example:{en:"The migration must be completed <b class='highlight'>without any downtime</b> for end users.",
+          vi:"Việc migration phải được hoàn thành <b>không có thời gian ngừng hoạt động</b> cho end users."},
+ note:"Zero downtime = Blue/Green deployment, AWS DRS, Aurora Global. Không phải mọi phương pháp đều zero downtime."},
+
+{term:"in a cost-effective manner",vi:"theo cách tiết kiệm chi phí",type:"vocab",
+ structure:"[Mục tiêu] must be achieved in a cost-effective manner.",
+ example:{en:"High availability must be achieved <b class='highlight'>in a cost-effective manner</b>.",
+          vi:"Tính sẵn sàng cao phải được đạt được <b>theo cách tiết kiệm chi phí</b>."},
+ note:"= cân bằng giữa HA và cost. Multi-AZ là standard, không phải multi-region (đắt hơn)."},
+
+{term:"at scale",vi:"ở quy mô lớn",type:"vocab",
+ structure:"[Giải pháp/tính năng] works effectively at scale.",
+ example:{en:"DynamoDB is designed to operate <b class='highlight'>at scale</b> with single-digit millisecond latency.",
+          vi:"DynamoDB được thiết kế để hoạt động <b>ở quy mô lớn</b> với độ trễ single-digit millisecond."},
+ note:"'At scale' = khi hệ thống lớn/nhiều user. Cần giải pháp scalable, không bị bottleneck."},
+
+{term:"near-zero RTO",vi:"RTO gần như bằng không",type:"vocab",
+ structure:"The solution must achieve near-zero RTO and RPO.",
+ example:{en:"The DR solution must achieve <b class='highlight'>near-zero RTO</b> for the critical application.",
+          vi:"Giải pháp DR phải đạt được <b>RTO gần như bằng không</b> cho ứng dụng quan trọng."},
+ note:"Near-zero RTO = active-active multi-region hoặc Aurora Global Tables. Đắt nhất nhưng fastest recovery."},
+
+{term:"across multiple Availability Zones",vi:"trên nhiều Availability Zones",type:"vocab",
+ structure:"[Tài nguyên] should be deployed across multiple Availability Zones.",
+ example:{en:"The load balancer distributes traffic <b class='highlight'>across multiple Availability Zones</b>.",
+          vi:"Load balancer phân phối traffic <b>trên nhiều Availability Zones</b>."},
+ note:"Multi-AZ = HA pattern. ALB, NLB, ASG, RDS Multi-AZ đều spanning multiple AZs."},
+
+{term:"with a single API call",vi:"chỉ với một API call",type:"vocab",
+ structure:"[Hành động] can be performed with a single API call.",
+ example:{en:"CloudFormation deploys entire stacks <b class='highlight'>with a single API call</b>.",
+          vi:"CloudFormation triển khai toàn bộ stack <b>chỉ với một API call</b>."},
+ note:"= automation và IaC. CloudFormation, SDK, AWS CLI đều cho phép automation với API calls."},
+
+{term:"out of the box",vi:"sẵn dùng / không cần cấu hình thêm",type:"vocab",
+ structure:"[Dịch vụ] provides [tính năng] out of the box.",
+ example:{en:"DynamoDB provides auto-scaling <b class='highlight'>out of the box</b> without manual configuration.",
+          vi:"DynamoDB cung cấp auto-scaling <b>sẵn dùng</b> mà không cần cấu hình thủ công."},
+ note:"'Out of the box' = tính năng mặc định có sẵn. Không cần setup thêm."},
+
+{term:"on a per-request basis",vi:"trên mỗi request",type:"vocab",
+ structure:"[Chi phí/hành động] is calculated on a per-request basis.",
+ example:{en:"Lambda charges <b class='highlight'>on a per-request basis</b>, making it ideal for variable workloads.",
+          vi:"Lambda tính phí <b>trên mỗi request</b>, làm nó lý tưởng cho workload biến đổi."},
+ note:"'Per-request' = pay-as-you-go granular nhất. Lambda, API Gateway tính phí theo cách này."},
+
+{term:"in real time",vi:"theo thời gian thực",type:"vocab",
+ structure:"[Dữ liệu/sự kiện] is processed in real time.",
+ example:{en:"Kinesis Data Streams processes data <b class='highlight'>in real time</b> for immediate insights.",
+          vi:"Kinesis Data Streams xử lý dữ liệu <b>theo thời gian thực</b> để có insights ngay lập tức."},
+ note:"In real time = Kinesis Data Streams. Near real time = Kinesis Firehose (có buffer delay)."},
+
+{term:"with high throughput",vi:"với thông lượng cao",type:"vocab",
+ structure:"The solution must handle requests with high throughput.",
+ example:{en:"The application requires a database that can sustain <b class='highlight'>high throughput</b> writes.",
+          vi:"Ứng dụng yêu cầu database có thể duy trì <b>thông lượng ghi cao</b>."},
+ note:"High write throughput → DynamoDB on-demand hoặc provisioned với đủ WCU. Không phải RDS."},
+
+{term:"in a fully automated way",vi:"theo cách hoàn toàn tự động",type:"vocab",
+ structure:"The process should be handled in a fully automated way.",
+ example:{en:"Patch management should be handled <b class='highlight'>in a fully automated way</b> using Systems Manager.",
+          vi:"Quản lý bản vá nên được xử lý <b>theo cách hoàn toàn tự động</b> bằng Systems Manager."},
+ note:"'Fully automated' = không cần manual intervention. SSM Automation, Lambda, EventBridge."},
+
+{term:"with the least amount of effort",vi:"với ít công sức nhất",type:"vocab",
+ structure:"Which solution achieves [mục tiêu] with the least amount of effort?",
+ example:{en:"How can the team enable encryption <b class='highlight'>with the least amount of effort</b>?",
+          vi:"Nhóm có thể bật mã hóa <b>với ít công sức nhất</b> bằng cách nào?"},
+ note:"= managed service + default encryption = AWS managed keys. Không cần tự tạo và quản lý key."},
+
+{term:"on an ongoing basis",vi:"liên tục / lâu dài",type:"vocab",
+ structure:"[Giám sát/hoạt động] must be performed on an ongoing basis.",
+ example:{en:"Security findings must be reviewed <b class='highlight'>on an ongoing basis</b> using Security Hub.",
+          vi:"Các phát hiện bảo mật phải được xem xét <b>liên tục</b> bằng Security Hub."},
+ note:"'Ongoing basis' = không phải one-time, phải liên tục. GuardDuty, Config, Security Hub phù hợp."},
+
+{term:"within the same VPC",vi:"trong cùng VPC",type:"vocab",
+ structure:"[Tài nguyên A] communicates with [B] within the same VPC.",
+ example:{en:"All EC2 instances must communicate <b class='highlight'>within the same VPC</b> for security.",
+          vi:"Tất cả EC2 instances phải giao tiếp <b>trong cùng VPC</b> để đảm bảo bảo mật."},
+ note:"Traffic trong cùng VPC = miễn phí. Cross-AZ traffic = tính phí. Cross-region = tính phí cao hơn."},
+
+{term:"across geographic regions",vi:"trên các vùng địa lý khác nhau",type:"vocab",
+ structure:"The application is deployed across geographic regions for [mục đích].",
+ example:{en:"The CDN distributes content <b class='highlight'>across geographic regions</b> to minimize latency.",
+          vi:"CDN phân phối nội dung <b>trên các vùng địa lý khác nhau</b> để giảm thiểu độ trễ."},
+ note:"= CloudFront (CDN), Route 53 (DNS), Global Accelerator, Aurora Global Tables."},
+
+{term:"end-to-end",vi:"từ đầu đến cuối / toàn diện",type:"vocab",
+ structure:"The solution provides end-to-end + [DANH TỪ: security/encryption/monitoring].",
+ example:{en:"The architecture provides <b class='highlight'>end-to-end</b> encryption for all data in transit.",
+          vi:"Kiến trúc cung cấp mã hóa <b>từ đầu đến cuối</b> cho tất cả dữ liệu trong quá trình truyền."},
+ note:"'End-to-end' = toàn bộ luồng, không có điểm yếu ở giữa. TLS từ client → load balancer → backend."},
+
+{term:"with zero configuration",vi:"không cần cấu hình",type:"vocab",
+ structure:"[Dịch vụ] works with zero configuration for [use case].",
+ example:{en:"S3 Intelligent-Tiering moves objects automatically <b class='highlight'>with zero configuration</b>.",
+          vi:"S3 Intelligent-Tiering chuyển objects tự động <b>không cần cấu hình</b>."},
+ note:"'Zero configuration' = auto-managed. S3 Intelligent-Tiering, DynamoDB on-demand là ví dụ."},
+
+{term:"in a serverless fashion",vi:"theo kiểu không máy chủ",type:"vocab",
+ structure:"The application is built in a serverless fashion using [dịch vụ].",
+ example:{en:"The image processing pipeline is built <b class='highlight'>in a serverless fashion</b> using Lambda and S3.",
+          vi:"Pipeline xử lý hình ảnh được xây dựng <b>theo kiểu không máy chủ</b> bằng Lambda và S3."},
+ note:"Serverless fashion = Lambda + API Gateway + DynamoDB + S3. Không cần quản lý server."},
+
+{term:"with high confidence",vi:"với độ tin cậy cao",type:"vocab",
+ structure:"The system must deliver results with high confidence / accuracy.",
+ example:{en:"ML models should be deployed <b class='highlight'>with high confidence</b> scores before going to production.",
+          vi:"Các mô hình ML nên được triển khai <b>với điểm tin cậy cao</b> trước khi đưa vào production."},
+ note:"'High confidence' = accuracy/reliability cao. Liên quan đến ML (SageMaker) hoặc health check thresholds."},
+];
+
+// ── Engine ────────────────────────────────────────────────────
+const DAYS=[];
+for(let i=0;i<ALL.length;i+=20) DAYS.push(ALL.slice(i,i+20));
+
+let cur=0, learned=JSON.parse(localStorage.getItem('aws_g3_learned')||'{}');
+let expanded={}, fcIdx=0, fcFlip=false, mode='grid', sq='';
+
+function init(){renderGrid();updateStats();selectDay(0);}
+
+function updateStats(){
+  const c=Object.keys(learned).filter(k=>learned[k]).length;
+  document.getElementById('learned-count').textContent=c;
+  document.getElementById('overall-prog').style.width=(c/ALL.length*100).toFixed(0)+'%';
+}
+
+function renderGrid(){
+  const g=document.getElementById('day-grid'); g.innerHTML='';
+  DAYS.forEach((d,i)=>{
+    const dl=d.filter((w,wi)=>learned[i*20+wi]).length;
+    const done=dl===20;
+    const b=document.createElement('button');
+    b.className='day-btn'+(i===cur?' active':'')+(done?' done':'');
+    const types=[...new Set(d.map(w=>w.type))].slice(0,2).map(t=>TYPE_META[t]?.label.split(' ')[0]).join('');
+    b.innerHTML=`D${i+1}<span class="ck">${done?'✓':dl>0?dl+'/20':types}</span>`;
+    b.onclick=()=>selectDay(i);
+    g.appendChild(b);
+  });
+}
+
+function selectDay(d){
+  cur=d; fcIdx=0; fcFlip=false; expanded={}; sq='';
+  const si=document.getElementById('search-input'); if(si)si.value='';
+  document.getElementById('day-content').style.display='block';
+  document.getElementById('day-num').textContent=d+1;
+  document.getElementById('day-label').textContent='NGÀY '+(d+1);
+  document.getElementById('day-chip').textContent='Ngày '+(d+1);
+  renderGrid(); renderWords(); renderFC();
+}
+
+function filterWords(){sq=document.getElementById('search-input').value.toLowerCase();renderWords();}
+
+function renderWords(){
+  const words=DAYS[cur]; const g=document.getElementById('word-grid'); g.innerHTML='';
+  const filtered=words.map((w,i)=>({w,i})).filter(({w})=>
+    !sq||w.term.toLowerCase().includes(sq)||w.vi.toLowerCase().includes(sq)||w.type.includes(sq));
+  filtered.forEach(({w,i},idx)=>{
+    const gi=cur*20+i; const isL=learned[gi]; const isE=expanded[i];
+    const tm=TYPE_META[w.type]||{label:w.type,cls:'t-sentence'};
+    const c=document.createElement('div');
+    c.className='card'+(isL?' learned':'')+(isE?' expanded':'');
+    c.setAttribute('data-type',w.type);
+    c.style.animationDelay=(idx*.03)+'s';
+    c.innerHTML=`
+      <div class="cnum">${String(i+1).padStart(2,'0')} / 20</div>
+      <div class="ctag ${tm.cls}">${tm.label}</div>
+      <div class="cterm">${w.term}</div>
+      <div class="cvi">${w.vi}</div>
+      <div class="cstructure">📐 ${w.structure}</div>
+      <div class="cexample">
+        <div class="en-sent">${w.example.en}</div>
+        <div class="vi-sent">🇻🇳 ${w.example.vi}</div>
+      </div>
+      <div class="cnote">💡 ${w.note}</div>
+      <div class="card-actions">
+        <button class="cbtn" onclick="toggleExp(${i})">${isE?'▲ Thu gọn':'▼ Xem ví dụ'}</button>
+        <button class="cbtn ${isL?'done':''}" onclick="toggleL(${gi})">${isL?'✓ Đã học':'+ Đánh dấu'}</button>
+      </div>`;
+    g.appendChild(c);
+  });
+  if(!filtered.length) g.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--muted)">Không tìm thấy</div>';
+}
+
+function toggleExp(i){expanded[i]=!expanded[i];renderWords();}
+function toggleL(gi){
+  learned[gi]=!learned[gi];
+  localStorage.setItem('aws_g3_learned',JSON.stringify(learned));
+  updateStats();renderWords();renderGrid();
+}
+
+function renderFC(){
+  const w=DAYS[cur][fcIdx];
+  const tm=TYPE_META[w.type]||{label:w.type};
+  document.getElementById('fc-type').textContent=tm.label;
+  document.getElementById('fc-term').textContent=w.term;
+  document.getElementById('fc-vi').textContent=w.vi;
+  const ex=w.example.en.replace(/<b class='highlight'>/g,'').replace(/<\/b>/g,'').replace(/<b class='highlight2'>/g,'').replace(/<b class='highlight3'>/g,'');
+  document.getElementById('fc-ex').innerHTML=`<b>${ex}</b><br><br>🇻🇳 ${w.example.vi.replace(/<b>/g,'').replace(/<\/b>/g,'')}<br><br>💡 ${w.note}`;
+  document.getElementById('fc-ctr').textContent=`${fcIdx+1} / 20`;
+  document.getElementById('flashcard').classList.remove('flipped');
+  fcFlip=false;
+}
+function flipCard(){fcFlip=!fcFlip;document.getElementById('flashcard').classList.toggle('flipped',fcFlip);}
+function fcNav(d){fcIdx=(fcIdx+d+20)%20;renderFC();}
+
+function setMode(m){
+  mode=m;
+  document.getElementById('btn-grid').classList.toggle('active',m==='grid');
+  document.getElementById('btn-flash').classList.toggle('active',m==='flash');
+  document.getElementById('grid-wrap').classList.toggle('hidden',m!=='grid');
+  document.getElementById('flash-wrap').classList.toggle('active',m==='flash');
+  document.getElementById('search-wrap').style.display=m==='grid'?'block':'none';
+  if(m==='flash')renderFC();
+}
+
+init();
+</script>
+</body>
+</html>

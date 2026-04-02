@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS SAA-C03 — Nhóm 2: Từ Khóa Bẫy</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #ffffff;
+    --blue-primary: #1a6bff;
+    --blue-deep: #0047cc;
+    --blue-soft: #e8f0ff;
+    --blue-mid: #4d8bff;
+    --blue-pale: #f0f5ff;
+    --text-main: #0d1b2a;
+    --text-muted: #6b7c9a;
+    --text-light: #a0aec0;
+    --border: #dce6ff;
+    --success: #00c896;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --orange: #f97316;
+    --shadow: 0 4px 24px rgba(26,107,255,0.10);
+    --shadow-lg: 0 8px 40px rgba(26,107,255,0.18);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text-main); min-height: 100vh; overflow-x: hidden; }
+
+  /* Header */
+  header {
+    background: var(--bg);
+    border-bottom: 2px solid var(--border);
+    padding: 16px 32px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 2px 16px rgba(26,107,255,0.07);
+  }
+  .logo { display: flex; align-items: center; gap: 12px; }
+  .logo-badge {
+    background: var(--orange);
+    color: #fff;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; font-weight: 700;
+    padding: 5px 10px; border-radius: 6px; letter-spacing: 1px;
+  }
+  .logo-title { font-size: 16px; font-weight: 800; color: var(--text-main); letter-spacing: -0.5px; }
+  .logo-title span { color: var(--blue-primary); }
+  .logo-sub { font-size: 11px; color: var(--text-muted); font-weight: 400; margin-top: 2px; }
+  .header-stats { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .stat-chip {
+    background: var(--blue-pale); border: 1.5px solid var(--border);
+    border-radius: 999px; padding: 6px 14px;
+    font-size: 12px; font-weight: 600; color: var(--blue-deep);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .stat-chip .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--blue-primary); }
+  .stat-chip.orange { background: #fff7ed; border-color: #fed7aa; color: var(--orange); }
+  .stat-chip.orange .dot { background: var(--orange); }
+
+  /* Container */
+  .container { max-width: 1120px; margin: 0 auto; padding: 36px 24px; }
+
+  /* Category tabs */
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px; font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--blue-primary); margin-bottom: 14px;
+  }
+
+  .cat-tabs {
+    display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px;
+  }
+  .cat-tab {
+    background: var(--blue-pale); border: 2px solid var(--border);
+    border-radius: 10px; padding: 8px 16px;
+    font-size: 12px; font-weight: 700;
+    color: var(--text-muted); cursor: pointer; transition: all 0.15s;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .cat-tab:hover { border-color: var(--blue-primary); color: var(--blue-primary); }
+  .cat-tab.active { background: var(--blue-primary); border-color: var(--blue-primary); color: #fff; }
+  .cat-tab .badge {
+    background: rgba(255,255,255,0.25); border-radius: 999px;
+    padding: 1px 7px; font-size: 10px;
+  }
+  .cat-tab:not(.active) .badge { background: var(--border); color: var(--text-muted); }
+
+  /* Day selector */
+  .day-selector-wrap {
+    background: var(--blue-pale); border: 2px solid var(--border);
+    border-radius: 18px; padding: 22px 26px; margin-bottom: 32px;
+  }
+  .day-selector-title { font-size: 20px; font-weight: 800; margin-bottom: 4px; letter-spacing: -0.5px; }
+  .day-selector-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 18px; }
+  .progress-bar-wrap { background: var(--border); border-radius: 999px; height: 8px; margin-bottom: 18px; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--blue-primary), var(--blue-mid)); border-radius: 999px; transition: width 0.5s cubic-bezier(.4,0,.2,1); }
+  .day-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+  .day-btn {
+    background: #fff; border: 2px solid var(--border); border-radius: 10px;
+    padding: 9px 13px; font-family: 'Space Mono', monospace;
+    font-size: 11px; font-weight: 700; color: var(--text-muted);
+    cursor: pointer; transition: all 0.18s;
+    display: flex; flex-direction: column; align-items: center; gap: 3px; min-width: 58px;
+  }
+  .day-btn:hover { border-color: var(--blue-primary); color: var(--blue-primary); transform: translateY(-2px); box-shadow: var(--shadow); }
+  .day-btn.active { background: var(--blue-primary); border-color: var(--blue-primary); color: #fff; box-shadow: 0 4px 16px rgba(26,107,255,0.3); transform: translateY(-2px); }
+  .day-btn.completed { background: var(--blue-soft); border-color: var(--blue-primary); color: var(--blue-deep); }
+  .day-btn .check { font-size: 9px; }
+
+  /* Day content */
+  .day-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 22px; flex-wrap: wrap; gap: 12px;
+  }
+  .day-heading { font-size: 26px; font-weight: 800; letter-spacing: -1px; }
+  .day-heading span { color: var(--blue-primary); }
+  .mode-toggle { display: flex; gap: 8px; }
+  .mode-btn {
+    background: var(--blue-pale); border: 2px solid var(--border);
+    border-radius: 8px; padding: 8px 14px;
+    font-size: 12px; font-weight: 600; color: var(--text-muted); cursor: pointer; transition: all 0.15s;
+  }
+  .mode-btn.active { background: var(--blue-primary); border-color: var(--blue-primary); color: #fff; }
+
+  /* Word Grid */
+  .word-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 14px; }
+  .word-card {
+    background: #fff; border: 2px solid var(--border);
+    border-radius: 16px; padding: 18px 20px;
+    transition: all 0.2s; cursor: default; position: relative; overflow: hidden;
+  }
+  .word-card::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+    border-radius: 4px 0 0 4px; opacity: 0; transition: opacity 0.2s;
+  }
+  .word-card:hover { border-color: var(--blue-primary); box-shadow: var(--shadow); transform: translateY(-2px); }
+  .word-card:hover::before { opacity: 1; }
+  .word-card.learned { border-color: var(--success); background: #f0fff9; }
+  .word-card.learned::before { background: var(--success); opacity: 1; }
+
+  /* Category color accents */
+  .word-card[data-cat="cost"]::before { background: var(--success); }
+  .word-card[data-cat="time"]::before { background: var(--warning); }
+  .word-card[data-cat="ops"]::before { background: var(--blue-primary); }
+  .word-card[data-cat="perf"]::before { background: #8b5cf6; }
+  .word-card[data-cat="arch"]::before { background: var(--orange); }
+  .word-card[data-cat="security"]::before { background: var(--danger); }
+  .word-card[data-cat="migrate"]::before { background: #06b6d4; }
+  .word-card[data-cat="condition"]::before { background: #ec4899; }
+  .word-card[data-cat="scope"]::before { background: #84cc16; }
+  .word-card[data-cat="action"]::before { background: #f59e0b; }
+
+  .word-card:hover::before { opacity: 1 !important; }
+  .word-card.learned::before { background: var(--success) !important; opacity: 1 !important; }
+
+  .word-num { font-family: 'Space Mono', monospace; font-size: 9px; font-weight: 700; color: var(--text-light); letter-spacing: 1px; margin-bottom: 6px; }
+  .word-tag {
+    display: inline-flex; align-items: center;
+    font-size: 9px; font-weight: 700; font-family: 'Space Mono', monospace;
+    padding: 3px 8px; border-radius: 999px; letter-spacing: 0.5px; margin-bottom: 8px;
+  }
+  .tag-cost { background: #dcfce7; color: #16a34a; }
+  .tag-time { background: #fef9c3; color: #b45309; }
+  .tag-ops  { background: var(--blue-soft); color: var(--blue-primary); }
+  .tag-perf { background: #ede9fe; color: #7c3aed; }
+  .tag-arch { background: #fff7ed; color: #c2410c; }
+  .tag-security { background: #fee2e2; color: #dc2626; }
+  .tag-migrate  { background: #cffafe; color: #0e7490; }
+  .tag-condition{ background: #fce7f3; color: #be185d; }
+  .tag-scope    { background: #f7fee7; color: #4d7c0f; }
+  .tag-action   { background: #fef3c7; color: #b45309; }
+
+  .word-term { font-size: 14px; font-weight: 700; color: var(--blue-deep); margin-bottom: 5px; letter-spacing: -0.2px; }
+  .word-vi   { font-size: 12.5px; color: var(--text-muted); margin-bottom: 7px; }
+  .word-trap {
+    font-size: 11px; color: var(--danger);
+    background: #fff5f5; border: 1px solid #fecaca;
+    border-radius: 7px; padding: 6px 10px; margin-bottom: 7px;
+    display: none; line-height: 1.5;
+  }
+  .word-desc {
+    font-size: 12px; color: var(--text-main); line-height: 1.6;
+    border-top: 1px solid var(--border); padding-top: 8px; display: none;
+  }
+  .word-card.expanded .word-desc { display: block; }
+  .word-card.expanded .word-trap { display: block; }
+
+  .card-actions { display: flex; gap: 7px; margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--border); }
+  .learn-btn {
+    flex: 1; background: var(--blue-pale); border: 1.5px solid var(--border);
+    border-radius: 7px; padding: 7px;
+    font-size: 11px; font-weight: 600; color: var(--blue-primary); cursor: pointer; transition: all 0.15s;
+  }
+  .learn-btn:hover { background: var(--blue-primary); color: #fff; border-color: var(--blue-primary); }
+  .learn-btn.done { background: var(--success); color: #fff; border-color: var(--success); }
+
+  /* Flashcard */
+  .flashcard-wrap { display: none; flex-direction: column; align-items: center; gap: 20px; }
+  .flashcard-wrap.active { display: flex; }
+  .flashcard { width: 100%; max-width: 560px; height: 300px; perspective: 1000px; cursor: pointer; }
+  .flashcard-inner { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 0.5s cubic-bezier(.4,0,.2,1); }
+  .flashcard.flipped .flashcard-inner { transform: rotateY(180deg); }
+  .flashcard-face { position: absolute; inset: 0; backface-visibility: hidden; border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 28px; text-align: center; }
+  .flashcard-front { background: linear-gradient(135deg, var(--blue-deep) 0%, var(--blue-primary) 100%); box-shadow: 0 8px 40px rgba(26,107,255,0.3); }
+  .flashcard-front .fc-cat { font-family: 'Space Mono', monospace; font-size: 10px; color: rgba(255,255,255,0.5); letter-spacing: 2px; margin-bottom: 12px; }
+  .flashcard-front .fc-term { font-size: 24px; font-weight: 800; color: #fff; letter-spacing: -1px; margin-bottom: 8px; }
+  .flashcard-front .fc-hint { font-size: 12px; color: rgba(255,255,255,0.55); }
+  .flashcard-back { background: #fff; border: 3px solid var(--blue-primary); transform: rotateY(180deg); }
+  .flashcard-back .fc-vi { font-size: 20px; font-weight: 700; color: var(--blue-deep); margin-bottom: 10px; }
+  .flashcard-back .fc-trap { font-size: 12px; color: var(--danger); background: #fff5f5; border-radius: 8px; padding: 8px 12px; margin-bottom: 8px; width: 100%; text-align: left; }
+  .flashcard-back .fc-trap strong { display: block; margin-bottom: 2px; }
+  .flashcard-back .fc-desc { font-size: 12.5px; color: var(--text-muted); line-height: 1.6; }
+  .fc-nav { display: flex; align-items: center; gap: 14px; }
+  .fc-nav-btn { background: var(--blue-pale); border: 2px solid var(--border); border-radius: 10px; padding: 10px 22px; font-size: 13px; font-weight: 700; color: var(--blue-primary); cursor: pointer; transition: all 0.15s; }
+  .fc-nav-btn:hover { background: var(--blue-primary); color: #fff; border-color: var(--blue-primary); }
+  .fc-counter { font-family: 'Space Mono', monospace; font-size: 13px; font-weight: 700; color: var(--text-muted); min-width: 60px; text-align: center; }
+
+  .word-grid-wrap.hidden { display: none; }
+
+  /* Search */
+  .search-wrap { margin-bottom: 20px; position: relative; }
+  .search-input {
+    width: 100%; padding: 12px 16px 12px 42px;
+    border: 2px solid var(--border); border-radius: 12px;
+    font-family: 'Sora', sans-serif; font-size: 14px;
+    color: var(--text-main); background: var(--blue-pale);
+    outline: none; transition: border-color 0.15s;
+  }
+  .search-input:focus { border-color: var(--blue-primary); background: #fff; }
+  .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 16px; }
+
+  /* Footer */
+  .site-footer { text-align: center; padding: 28px 24px; color: var(--text-light); font-size: 12px; border-top: 1px solid var(--border); margin-top: 50px; }
+
+  @keyframes fadeUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+  .word-card { animation: fadeUp 0.3s ease both; }
+
+  @media (max-width: 600px) {
+    .word-grid { grid-template-columns: 1fr; }
+    .day-heading { font-size: 20px; }
+    header { padding: 12px 14px; flex-wrap: wrap; gap: 8px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <span class="logo-badge">NHÓM 2</span>
+    <div>
+      <div class="logo-title">Từ Khóa <span>Bẫy</span> AWS</div>
+      <div class="logo-sub">Question Navigation Keywords · SAA-C03</div>
+    </div>
+  </div>
+  <div class="header-stats">
+    <div class="stat-chip"><span class="dot"></span><span id="learned-count">0</span> / 200 từ</div>
+    <div class="stat-chip orange"><span class="dot"></span>10 ngày · 20 từ/ngày</div>
+    <div class="stat-chip" id="day-chip">Ngày 1</div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- Day Selector -->
+  <div class="day-selector-wrap">
+    <div class="section-label">Lộ trình học</div>
+    <div class="day-selector-title">Chọn ngày học hôm nay</div>
+    <div class="day-selector-sub">200 từ khóa điều hướng câu hỏi · Nhận diện "bẫy" trong đề thi AWS SAA-C03</div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="overall-progress" style="width:0%"></div>
+    </div>
+    <div class="day-grid" id="day-grid"></div>
+  </div>
+
+  <!-- Day Content -->
+  <div id="day-content" style="display:none">
+    <div class="day-header">
+      <div>
+        <div class="section-label" id="day-label">NGÀY 1</div>
+        <div class="day-heading" id="day-heading">Ngày <span id="day-num">1</span> — 20 từ khóa</div>
+      </div>
+      <div class="mode-toggle">
+        <button class="mode-btn active" id="btn-grid" onclick="setMode('grid')">📋 Danh sách</button>
+        <button class="mode-btn" id="btn-flash" onclick="setMode('flash')">🃏 Flashcard</button>
+      </div>
+    </div>
+
+    <!-- Search (grid only) -->
+    <div class="search-wrap" id="search-wrap">
+      <span class="search-icon">🔍</span>
+      <input class="search-input" id="search-input" placeholder="Tìm từ khóa trong ngày này..." oninput="filterWords()">
+    </div>
+
+    <!-- Grid -->
+    <div class="word-grid-wrap" id="grid-wrap">
+      <div class="word-grid" id="word-grid"></div>
+    </div>
+
+    <!-- Flashcard -->
+    <div class="flashcard-wrap" id="flash-wrap">
+      <div class="flashcard" id="flashcard" onclick="flipCard()">
+        <div class="flashcard-inner">
+          <div class="flashcard-face flashcard-front">
+            <div class="fc-cat" id="fc-cat">ĐIỀU HƯỚNG</div>
+            <div class="fc-term" id="fc-term">—</div>
+            <div class="fc-hint">Nhấn để xem nghĩa & bẫy thường gặp</div>
+          </div>
+          <div class="flashcard-face flashcard-back">
+            <div class="fc-vi" id="fc-vi">—</div>
+            <div class="fc-trap"><strong>⚠️ Bẫy thi:</strong><span id="fc-trap">—</span></div>
+            <div class="fc-desc" id="fc-desc">—</div>
+          </div>
+        </div>
+      </div>
+      <div class="fc-nav">
+        <button class="fc-nav-btn" onclick="fcNav(-1)">← Trước</button>
+        <div class="fc-counter" id="fc-counter">1 / 20</div>
+        <button class="fc-nav-btn" onclick="fcNav(1)">Sau →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="site-footer">AWS SAA-C03 · Nhóm 2: Từ vựng điều hướng câu hỏi · 200 từ · 10 ngày · Học nhận diện "bẫy"</div>
+
+<script>
+// cat: cost | time | ops | perf | arch | security | migrate | condition | scope | action
+const ALL_WORDS = [
+
+// ── DAY 1: Chi phí (Cost Keywords) ───────────────────────────────────────────
+{ term:"Most cost-effective", vi:"Tiết kiệm chi phí nhất", cat:"cost",
+  trap:"Không phải rẻ nhất — phải cân nhắc cả hiệu quả. Spot Instance rẻ nhưng có thể bị thu hồi.",
+  desc:"Lựa chọn tối ưu về chi phí tổng thể: kết hợp giá + hiệu quả + đáp ứng yêu cầu." },
+{ term:"Least expensive", vi:"Rẻ nhất", cat:"cost",
+  trap:"Chú ý: rẻ nhất ≠ phù hợp nhất. Free Tier có giới hạn, Spot có risk bị thu hồi.",
+  desc:"Tìm phương án thấp chi phí nhất trong khi vẫn đáp ứng yêu cầu kỹ thuật đề ra." },
+{ term:"Cost-optimized", vi:"Tối ưu chi phí", cat:"cost",
+  trap:"Cần xem xét cả Reserved Instances, Savings Plans, Spot trong bối cảnh workload.",
+  desc:"Kiến trúc được thiết kế giảm chi phí tối đa, thường liên quan AWS Cost Explorer, Trusted Advisor." },
+{ term:"Minimize cost", vi:"Giảm thiểu chi phí", cat:"cost",
+  trap:"Serverless thường là đáp án khi cần minimize cost với workload không đều.",
+  desc:"Giảm chi phí đến mức thấp nhất có thể. Thường dẫn đến Lambda, Fargate, hoặc Spot Instances." },
+{ term:"Pay only for what you use", vi:"Chỉ trả tiền khi sử dụng", cat:"cost",
+  trap:"Đây là đặc trưng của On-Demand và Serverless, không phải Reserved (trả cả khi không dùng).",
+  desc:"Mô hình thanh toán linh hoạt theo nhu cầu thực tế, đặc trưng của AWS cloud so với on-premises." },
+{ term:"No upfront cost", vi:"Không tốn chi phí ban đầu", cat:"cost",
+  trap:"On-Demand = no upfront. Reserved All Upfront = trả trước. Partial Upfront = một phần trước.",
+  desc:"Không yêu cầu đầu tư ban đầu. On-Demand, Fargate, Lambda đều không cần trả trước." },
+{ term:"Reduce operational cost", vi:"Giảm chi phí vận hành", cat:"cost",
+  trap:"Managed services (RDS, ElastiCache) giảm ops cost nhờ AWS lo patch, backup, failover.",
+  desc:"Giảm chi phí nhân lực và quản lý thông qua dịch vụ fully managed của AWS." },
+{ term:"Cost-efficient", vi:"Hiệu quả về chi phí", cat:"cost",
+  trap:"Không phải rẻ nhất tuyệt đối — phải đạt được mục tiêu kinh doanh với chi phí thấp.",
+  desc:"Đạt được kết quả mong muốn với chi phí hợp lý. Cân bằng giữa giá tiền và hiệu quả." },
+{ term:"Long-term commitment", vi:"Cam kết dài hạn", cat:"cost",
+  trap:"Reserved Instances và Savings Plans yêu cầu cam kết 1-3 năm để đổi lấy giảm giá.",
+  desc:"Cam kết dùng tài nguyên 1 hoặc 3 năm để hưởng mức giảm giá lên đến 72%." },
+{ term:"Variable workload", vi:"Tải không đều", cat:"cost",
+  trap:"Workload không đều → On-Demand hoặc Serverless, KHÔNG dùng Reserved (lãng phí).",
+  desc:"Nhu cầu sử dụng thay đổi theo thời gian. Phù hợp với Auto Scaling, Lambda, On-Demand." },
+{ term:"Predictable workload", vi:"Tải có thể dự đoán", cat:"cost",
+  trap:"Workload ổn định → Reserved Instance là lựa chọn tối ưu về chi phí.",
+  desc:"Nhu cầu sử dụng ổn định, dễ dự đoán. Reserved Instances tiết kiệm nhất cho workload này." },
+{ term:"Infrequently accessed", vi:"Ít khi truy cập", cat:"cost",
+  trap:"S3 Glacier cho archive, S3 Standard-IA cho dữ liệu ít dùng nhưng cần truy cập nhanh.",
+  desc:"Dữ liệu không cần truy cập thường xuyên. Lưu ở S3 Glacier hoặc S3 Standard-IA để tiết kiệm." },
+{ term:"Archive", vi:"Lưu trữ lâu dài", cat:"cost",
+  trap:"S3 Glacier Instant Retrieval (ms), Flexible (phút-giờ), Deep Archive (12-48h). Chọn đúng tier.",
+  desc:"Lưu trữ dữ liệu dài hạn ít truy cập. S3 Glacier là dịch vụ tối ưu cho use case này." },
+{ term:"Shared responsibility", vi:"Trách nhiệm chia sẻ", cat:"cost",
+  trap:"Managed service = AWS lo nhiều hơn = giảm operational overhead nhưng có thể tốn hơn.",
+  desc:"AWS lo phần hạ tầng, bạn lo phần ứng dụng và dữ liệu. Ảnh hưởng trực tiếp đến cost model." },
+{ term:"Consolidate billing", vi:"Hợp nhất thanh toán", cat:"cost",
+  trap:"Consolidated Billing chia sẻ RI benefits và volume discounts giữa tất cả accounts trong Org.",
+  desc:"AWS Organizations gộp billing nhiều account, dùng chung Reserved Instance và volume discount." },
+{ term:"Spot Instance interruption", vi:"Bị thu hồi Spot", cat:"cost",
+  trap:"Spot có thể bị thu hồi 2 phút trước. KHÔNG dùng cho workload yêu cầu liên tục như database.",
+  desc:"AWS có thể thu hồi Spot Instance khi cần capacity. Phù hợp batch jobs, fault-tolerant workloads." },
+{ term:"Savings Plans", vi:"Kế hoạch tiết kiệm", cat:"cost",
+  trap:"Compute Savings Plans linh hoạt hơn EC2 Savings Plans (áp dụng cho Lambda, Fargate cũng được).",
+  desc:"Cam kết mức chi tiêu ($/giờ) 1-3 năm thay vì loại instance cụ thể. Linh hoạt hơn Reserved." },
+{ term:"On-Demand pricing", vi:"Giá theo nhu cầu", cat:"cost",
+  trap:"On-Demand đắt nhất nhưng không cam kết. Dùng cho workload ngắn hạn hoặc không dự đoán được.",
+  desc:"Trả tiền theo giờ/giây thực tế sử dụng, không cam kết trước, giá cao nhất nhưng linh hoạt nhất." },
+{ term:"Total cost of ownership", vi:"Tổng chi phí sở hữu", cat:"cost",
+  trap:"TCO cloud thường thấp hơn on-premises khi tính đủ: điện, nhân sự, khấu hao, bảo trì.",
+  desc:"TCO – tổng chi phí bao gồm mua, vận hành, bảo trì. Dùng để so sánh on-premises vs cloud." },
+{ term:"Free Tier", vi:"Cấp miễn phí", cat:"cost",
+  trap:"Free Tier có giới hạn (ví dụ: 750 giờ EC2 t2.micro/tháng). Vượt quá sẽ bị tính phí.",
+  desc:"Sử dụng miễn phí giới hạn trong 12 tháng đầu hoặc always-free cho một số dịch vụ AWS." },
+
+// ── DAY 2: Thời gian (Time Keywords) ─────────────────────────────────────────
+{ term:"Immediately", vi:"Ngay lập tức", cat:"time",
+  trap:"Glacier không trả data ngay. ElastiCache, DAX trả data trong microseconds — 'immediately'.",
+  desc:"Yêu cầu hành động hoặc kết quả xảy ra ngay, không chờ đợi. Gắn với in-memory cache, Multi-AZ." },
+{ term:"Real-time", vi:"Thời gian thực", cat:"time",
+  trap:"Kinesis Data Streams cho real-time. Kinesis Firehose có buffer delay (60s+). Chọn đúng loại.",
+  desc:"Xử lý và phản hồi dữ liệu ngay khi phát sinh. Kinesis, DynamoDB Streams, EventBridge." },
+{ term:"Near real-time", vi:"Gần thời gian thực", cat:"time",
+  trap:"Kinesis Firehose là near real-time (có buffer), không phải real-time tuyệt đối.",
+  desc:"Xử lý dữ liệu trong vài giây đến vài phút. Firehose, Lambda with SQS thường đáp ứng được." },
+{ term:"Low latency", vi:"Độ trễ thấp", cat:"time",
+  trap:"CloudFront giảm latency cho static content. ElastiCache giảm latency cho DB. Chọn đúng layer.",
+  desc:"Thời gian phản hồi nhanh (ms). Thường cần Edge Location, CDN, in-memory cache, NLB." },
+{ term:"Within minutes", vi:"Trong vòng vài phút", cat:"time",
+  trap:"RDS Multi-AZ failover mất <2 phút. Glacier Flexible Retrieval mất phút đến giờ.",
+  desc:"Hoàn thành trong khoảng thời gian ngắn tính bằng phút. Liên quan đến RTO, failover time." },
+{ term:"Within seconds", vi:"Trong vòng vài giây", cat:"time",
+  trap:"EC2 Auto Scaling cần vài phút để scale. Lambda scale trong giây. Biết sự khác biệt.",
+  desc:"Phản hồi hoặc hoàn thành trong vài giây. Lambda, ElastiCache, DynamoDB đáp ứng được." },
+{ term:"As soon as possible", vi:"Càng sớm càng tốt", cat:"time",
+  trap:"Cần giải pháp không buffer/delay. SQS có visibility timeout. EventBridge có latency nhỏ.",
+  desc:"Ưu tiên tốc độ xử lý cao nhất. Tránh các giải pháp có buffer hoặc batch processing." },
+{ term:"Milliseconds", vi:"Mili giây", cat:"time",
+  trap:"DynamoDB standard read là single-digit ms. DAX giảm xuống microseconds. Phân biệt hai loại.",
+  desc:"Đơn vị thời gian 1/1000 giây. DynamoDB, ElastiCache Redis đáp ứng latency milliseconds." },
+{ term:"Microseconds", vi:"Micro giây", cat:"time",
+  trap:"Chỉ DAX (DynamoDB Accelerator) và ElastiCache đạt microsecond latency, không phải DynamoDB thuần.",
+  desc:"Đơn vị thời gian 1/1,000,000 giây. Cần dùng in-memory cache như DAX hoặc ElastiCache." },
+{ term:"High throughput", vi:"Thông lượng cao", cat:"time",
+  trap:"S3 multipart upload, Kinesis với nhiều shards, DynamoDB on-demand đều tăng throughput.",
+  desc:"Xử lý lượng lớn dữ liệu trong thời gian ngắn. Liên quan đến Kinesis, S3, DynamoDB provisioned." },
+{ term:"Burst traffic", vi:"Lưu lượng đột biến", cat:"time",
+  trap:"Lambda scale gần như tức thì. EC2 Auto Scaling cần vài phút. CloudFront hấp thụ burst tốt.",
+  desc:"Lưu lượng tăng đột ngột trong thời gian ngắn. Lambda và Auto Scaling xử lý tốt burst traffic." },
+{ term:"Off-peak hours", vi:"Giờ thấp điểm", cat:"time",
+  trap:"Schedule Reserved Capacity hoặc EventBridge Scheduled rules để chạy job giờ thấp điểm.",
+  desc:"Thời gian sử dụng thấp. Chạy batch jobs, backup, maintenance vào giờ thấp điểm giảm chi phí." },
+{ term:"Scheduled", vi:"Theo lịch", cat:"time",
+  trap:"EventBridge Scheduler thay thế CloudWatch Events Scheduled Rules (tương thích ngược).",
+  desc:"Hoạt động theo lịch định sẵn. EventBridge Scheduler, ASG Scheduled Scaling, Lambda cron." },
+{ term:"Expiration", vi:"Hết hạn", cat:"time",
+  trap:"S3 Lifecycle Policy xóa object sau N ngày. DynamoDB TTL xóa item tự động khi hết hạn.",
+  desc:"Dữ liệu hoặc resource hết hiệu lực sau thời gian. S3 Lifecycle, DynamoDB TTL, pre-signed URL." },
+{ term:"Retention period", vi:"Thời gian lưu giữ", cat:"time",
+  trap:"CloudWatch Logs mặc định lưu forever — tốn tiền. Đặt retention policy phù hợp để tiết kiệm.",
+  desc:"Khoảng thời gian dữ liệu được lưu giữ. Cấu hình trên CloudWatch Logs, S3 Glacier, Kinesis." },
+{ term:"RTO", vi:"Thời gian phục hồi mục tiêu", cat:"time",
+  trap:"RTO thấp → cần Multi-AZ, Multi-Region, Pilot Light hoặc Warm Standby. Backup & Restore RTO cao.",
+  desc:"Recovery Time Objective – thời gian tối đa hệ thống có thể ngừng hoạt động sau sự cố." },
+{ term:"RPO", vi:"Điểm phục hồi mục tiêu", cat:"time",
+  trap:"RPO thấp → cần replication liên tục (DRS, Aurora Global), không thể dùng daily backup.",
+  desc:"Recovery Point Objective – lượng dữ liệu tối đa có thể chấp nhận mất, tính theo thời gian." },
+{ term:"Downtime", vi:"Thời gian ngừng hoạt động", cat:"time",
+  trap:"Zero downtime → Blue/Green deployment. Multi-AZ failover có <2 phút downtime (không phải zero).",
+  desc:"Khoảng thời gian hệ thống không khả dụng. Mục tiêu minimize downtime với HA architecture." },
+{ term:"Propagation delay", vi:"Độ trễ lan truyền", cat:"time",
+  trap:"DNS propagation có thể mất phút đến giờ. Route 53 TTL thấp giúp failover nhanh hơn.",
+  desc:"Thời gian để thay đổi lan truyền khắp hệ thống. DNS changes, S3 replication lag." },
+{ term:"Time to market", vi:"Thời gian ra thị trường", cat:"time",
+  trap:"Elastic Beanstalk, App Runner, Amplify giúp deploy nhanh. IaC (CDK) tăng speed to market.",
+  desc:"Thời gian từ ý tưởng đến khi sản phẩm/tính năng đến tay khách hàng. Managed services giúp giảm." },
+
+// ── DAY 3: Vận hành (Operational Keywords) ───────────────────────────────────
+{ term:"Least operational overhead", vi:"Tốn ít công vận hành nhất", cat:"ops",
+  trap:"Managed/Serverless = ít overhead nhất. EC2 tự quản lý = nhiều overhead. Chọn managed khi đề hỏi.",
+  desc:"Giải pháp yêu cầu ít nhất công sức quản lý, vận hành. Thường là Serverless hoặc Fully Managed." },
+{ term:"Fully managed", vi:"Được quản lý hoàn toàn", cat:"ops",
+  trap:"RDS là managed nhưng không serverless. Aurora Serverless là cả hai. Phân biệt rõ khái niệm.",
+  desc:"AWS xử lý toàn bộ: patching, backup, failover, scaling. RDS, ElastiCache, DynamoDB đều managed." },
+{ term:"No server management", vi:"Không cần quản lý server", cat:"ops",
+  trap:"Fargate = serverless containers (no EC2 management). ECS on EC2 vẫn phải quản lý EC2.",
+  desc:"Không cần provision, patch, hay quản lý server. Lambda, Fargate, S3, DynamoDB đáp ứng điều này." },
+{ term:"Automate", vi:"Tự động hóa", cat:"ops",
+  trap:"Systems Manager Automation, CloudFormation, Lambda đều automate tasks. Chọn đúng tool theo context.",
+  desc:"Thực hiện tác vụ tự động không cần can thiệp thủ công. IaC, CI/CD, Auto Scaling, EventBridge." },
+{ term:"Operational excellence", vi:"Xuất sắc trong vận hành", cat:"ops",
+  trap:"Operational Excellence pillar trong Well-Architected = IaC, observability, frequent small changes.",
+  desc:"Một trong 6 trụ cột Well-Architected Framework: tự động hóa, CI/CD, monitoring, runbooks." },
+{ term:"Scalable solution", vi:"Giải pháp có thể mở rộng", cat:"ops",
+  trap:"Vertical scaling (scale up) có giới hạn. Horizontal scaling (scale out) tốt hơn cho scalability.",
+  desc:"Hệ thống có thể xử lý tải tăng dần mà không cần redesign. Auto Scaling, serverless đáp ứng tốt." },
+{ term:"Managed service", vi:"Dịch vụ được quản lý", cat:"ops",
+  trap:"Managed service giảm overhead nhưng có thể giới hạn customization. Cân nhắc trade-off.",
+  desc:"Dịch vụ AWS tự lo hạ tầng, patching, HA. RDS, MSK, OpenSearch Service đều là managed." },
+{ term:"Maintenance window", vi:"Cửa sổ bảo trì", cat:"ops",
+  trap:"RDS Multi-AZ bảo trì không có downtime. Single-AZ có thể có downtime trong maintenance window.",
+  desc:"Khoảng thời gian được phép bảo trì hệ thống. Lên lịch vào off-peak hours để giảm ảnh hưởng." },
+{ term:"Patch management", vi:"Quản lý bản vá", cat:"ops",
+  trap:"SSM Patch Manager tự động patch EC2. RDS managed patch tự động. Cần config đúng patch baseline.",
+  desc:"Cập nhật bảo mật và tính năng cho hệ điều hành và phần mềm. Systems Manager Patch Manager." },
+{ term:"Monitoring", vi:"Giám sát", cat:"ops",
+  trap:"CloudWatch metrics mặc định không có RAM. Cần CloudWatch Agent để thu thập custom metrics.",
+  desc:"Theo dõi trạng thái và hiệu năng hệ thống. CloudWatch, X-Ray, CloudTrail là bộ ba monitoring." },
+{ term:"Observability", vi:"Khả năng quan sát", cat:"ops",
+  trap:"Observability = metrics + logs + traces. X-Ray cho traces, CloudWatch cho metrics+logs.",
+  desc:"Khả năng hiểu trạng thái hệ thống từ output của nó: metrics, logs, traces. X-Ray, CloudWatch." },
+{ term:"Logging", vi:"Ghi nhật ký", cat:"ops",
+  trap:"VPC Flow Logs log network traffic. CloudTrail log API calls. CloudWatch Logs log ứng dụng.",
+  desc:"Ghi lại hoạt động hệ thống. CloudWatch Logs, CloudTrail, VPC Flow Logs, ALB Access Logs." },
+{ term:"Alerting", vi:"Cảnh báo", cat:"ops",
+  trap:"CloudWatch Alarm có thể trigger SNS, Auto Scaling, EC2 action. Không phải chỉ gửi email.",
+  desc:"Thông báo khi metric vượt ngưỡng. CloudWatch Alarms kết hợp SNS để notify qua email/SMS." },
+{ term:"Rollback", vi:"Khôi phục về trước", cat:"ops",
+  trap:"CloudFormation hỗ trợ automatic rollback. CodeDeploy Blue/Green rollback bằng route lại traffic.",
+  desc:"Khôi phục về phiên bản trước khi có vấn đề. CloudFormation, CodeDeploy hỗ trợ tự động rollback." },
+{ term:"Deployment strategy", vi:"Chiến lược triển khai", cat:"ops",
+  trap:"All-at-once nhanh nhưng risky. Rolling giảm capacity. Blue/Green không downtime nhưng tốn hơn.",
+  desc:"Cách thức deploy phiên bản mới: All-at-once, Rolling, Blue/Green, Canary. Mỗi loại có trade-off." },
+{ term:"Self-healing", vi:"Tự phục hồi", cat:"ops",
+  trap:"ASG tự thay EC2 lỗi. Route 53 health check + failover tự route sang backup. Đây là self-healing.",
+  desc:"Hệ thống tự phát hiện và phục hồi sau sự cố mà không cần can thiệp thủ công." },
+{ term:"Configuration management", vi:"Quản lý cấu hình", cat:"ops",
+  trap:"SSM Parameter Store cho config. Secrets Manager cho credentials với auto-rotate. Biết khi dùng cái nào.",
+  desc:"Quản lý cấu hình hệ thống tập trung. AWS Config, Systems Manager, Parameter Store." },
+{ term:"Infrastructure as Code", vi:"Hạ tầng dưới dạng code", cat:"ops",
+  trap:"CloudFormation là IaC native AWS. CDK viết bằng code nhưng generate CloudFormation. Terraform cũng IaC.",
+  desc:"Định nghĩa và quản lý hạ tầng bằng code (CloudFormation, CDK, Terraform). Dễ version, repeat." },
+{ term:"Drift detection", vi:"Phát hiện sai lệch cấu hình", cat:"ops",
+  trap:"CloudFormation Drift Detection phát hiện thay đổi manual ngoài stack. AWS Config cũng track drift.",
+  desc:"Phát hiện khi cấu hình thực tế khác với cấu hình mong muốn. CloudFormation, AWS Config." },
+{ term:"Runbook", vi:"Sách hướng dẫn xử lý", cat:"ops",
+  trap:"SSM Automation Runbooks tự động hóa operational tasks. AWS Incident Manager dùng runbook.",
+  desc:"Tài liệu hướng dẫn từng bước xử lý vấn đề. Tự động hóa bằng Systems Manager Automation." },
+
+// ── DAY 4: Hiệu năng & Độ tin cậy ───────────────────────────────────────────
+{ term:"Resilient", vi:"Có khả năng phục hồi", cat:"perf",
+  trap:"Resilient ≠ available. Resilient = recover sau sự cố. Multi-AZ + health check = resilient.",
+  desc:"Hệ thống có khả năng phục hồi sau sự cố, trở lại trạng thái bình thường nhanh chóng." },
+{ term:"Highly available", vi:"Sẵn sàng cao", cat:"perf",
+  trap:"HA thường yêu cầu Multi-AZ. Single-AZ không HA. Phân biệt HA (uptime) vs DR (recovery).",
+  desc:"Hệ thống hoạt động liên tục với downtime tối thiểu. Đạt bằng Multi-AZ, load balancing, health check." },
+{ term:"Fault tolerant", vi:"Chịu lỗi", cat:"perf",
+  trap:"Fault tolerant = tiếp tục hoạt động khi có lỗi. HA = giảm downtime. Hai khái niệm khác nhau.",
+  desc:"Hệ thống tiếp tục hoạt động bình thường dù có thành phần bị lỗi, không gián đoạn dịch vụ." },
+{ term:"Performance efficiency", vi:"Hiệu quả hiệu năng", cat:"perf",
+  trap:"Well-Architected Pillar: dùng đúng loại resource (compute, DB, network) cho workload cụ thể.",
+  desc:"Một trong 6 trụ cột Well-Architected: sử dụng tài nguyên tính toán hiệu quả theo nhu cầu." },
+{ term:"Scalable", vi:"Có thể mở rộng", cat:"perf",
+  trap:"Vertical scaling (larger instance) có ceiling. Horizontal scaling (more instances) tốt hơn.",
+  desc:"Hệ thống có thể tăng capacity khi nhu cầu tăng. Auto Scaling Groups, Lambda tự động scale." },
+{ term:"Elastic", vi:"Co giãn", cat:"perf",
+  trap:"Elastic = scale cả up lẫn down. Scalable chỉ nói về khả năng tăng. Phân biệt hai khái niệm.",
+  desc:"Tự động tăng giảm tài nguyên theo tải thực tế, không lãng phí khi tải thấp." },
+{ term:"Optimize performance", vi:"Tối ưu hiệu năng", cat:"perf",
+  trap:"Cache (ElastiCache/DAX), CDN (CloudFront), read replicas đều optimize performance theo cách khác nhau.",
+  desc:"Tăng tốc độ và hiệu quả xử lý. Cache, CDN, right-sizing, read replicas là các kỹ thuật phổ biến." },
+{ term:"Bottleneck", vi:"Điểm thắt cổ chai", cat:"perf",
+  trap:"X-Ray giúp tìm bottleneck trong distributed system. CloudWatch metric giúp tìm bottleneck ở EC2.",
+  desc:"Thành phần giới hạn hiệu năng toàn hệ thống. Cần identify và optimize bottleneck để cải thiện." },
+{ term:"Cache hit", vi:"Tìm thấy trong cache", cat:"perf",
+  trap:"Cache hit ratio cao = ít request đến DB = DB load thấp. ElastiCache metrics theo dõi hit ratio.",
+  desc:"Dữ liệu được tìm thấy trong cache, không cần query database. Tăng cache hit = tăng performance." },
+{ term:"Cache miss", vi:"Không tìm thấy trong cache", cat:"perf",
+  trap:"Cache miss = phải query DB. Nhiều cache miss = cache không hiệu quả, cần xem lại cache strategy.",
+  desc:"Dữ liệu không có trong cache, phải lấy từ nguồn gốc (DB). Cần minimize cache miss." },
+{ term:"Read-heavy", vi:"Nhiều thao tác đọc", cat:"perf",
+  trap:"Read-heavy workload → Read Replica (RDS), DAX (DynamoDB), ElastiCache giảm tải DB.",
+  desc:"Workload có tỷ lệ đọc cao hơn ghi. Giải pháp: Read Replicas, ElastiCache, DAX, CDN." },
+{ term:"Write-heavy", vi:"Nhiều thao tác ghi", cat:"perf",
+  trap:"Write-heavy → DynamoDB on-demand, Kinesis, SQS buffer writes. Read Replica không giúp write.",
+  desc:"Workload có tỷ lệ ghi cao. DynamoDB, Kinesis, SQS là giải pháp cho write-heavy workloads." },
+{ term:"Concurrent requests", vi:"Yêu cầu đồng thời", cat:"perf",
+  trap:"Lambda tự scale theo concurrent requests. EC2 cần ASG. RDS Proxy giúp DB handle concurrent connections.",
+  desc:"Nhiều request đến cùng một lúc. Lambda, DynamoDB, ElastiCache xử lý tốt concurrent requests." },
+{ term:"Connection pooling", vi:"Quản lý nhóm kết nối", cat:"perf",
+  trap:"Lambda tạo connection mới mỗi lần invocation. RDS Proxy pooling giúp Lambda không overwhelm DB.",
+  desc:"Tái sử dụng kết nối database thay vì tạo mới mỗi lần. RDS Proxy quản lý connection pool." },
+{ term:"Horizontal scaling", vi:"Mở rộng theo chiều ngang", cat:"perf",
+  trap:"Thêm instance (scale out) tốt hơn nâng cấu hình (scale up) vì không có ceiling và có HA.",
+  desc:"Tăng số lượng instance thay vì nâng cấu hình một instance. Linh hoạt và không giới hạn hơn." },
+{ term:"Vertical scaling", vi:"Mở rộng theo chiều dọc", cat:"perf",
+  trap:"Vertical scaling có ceiling (instance lớn nhất). Cần reboot để resize EC2. Không phải zero downtime.",
+  desc:"Nâng cấu hình instance (CPU, RAM) lớn hơn. Đơn giản nhưng có giới hạn, cần restart." },
+{ term:"Stateless", vi:"Không lưu trạng thái", cat:"perf",
+  trap:"Stateless app dễ scale vì không cần sticky session. Session lưu vào ElastiCache/DynamoDB.",
+  desc:"Ứng dụng không lưu state giữa các request. Dễ scale horizontal. Session phải lưu external store." },
+{ term:"Stateful", vi:"Lưu trạng thái", cat:"perf",
+  trap:"Stateful app khó scale. Dùng sticky session (ALB) hoặc chuyển sang stateless architecture.",
+  desc:"Ứng dụng lưu trạng thái giữa các request. Khó scale, cần giải pháp session management." },
+{ term:"Sticky session", vi:"Phiên dính", cat:"perf",
+  trap:"ALB sticky session (application cookie hoặc duration-based) giữ user ở cùng target. Hạn chế scale.",
+  desc:"Đảm bảo cùng user luôn được route đến cùng instance. ALB hỗ trợ nhưng giảm hiệu quả load balancing." },
+{ term:"Throughput optimization", vi:"Tối ưu thông lượng", cat:"perf",
+  trap:"S3 multipart, Kinesis thêm shard, DynamoDB tăng RCU/WCU đều tăng throughput theo cách khác nhau.",
+  desc:"Tối đa hóa lượng dữ liệu xử lý được trong thời gian nhất định. Multipart upload, shard, provisioned." },
+
+// ── DAY 5: Kiến trúc & Thiết kế ──────────────────────────────────────────────
+{ term:"Loosely coupled", vi:"Kết nối lỏng lẻo", cat:"arch",
+  trap:"SQS/SNS giữa services = loosely coupled. Direct API call = tightly coupled. Thi thường hỏi cái này.",
+  desc:"Các thành phần ít phụ thuộc nhau, giao tiếp qua queue/event. Dễ scale và maintain hơn." },
+{ term:"Tightly coupled", vi:"Kết nối chặt chẽ", cat:"arch",
+  trap:"Tightly coupled = bad architecture (anti-pattern). Đề bài thường yêu cầu refactor sang loosely coupled.",
+  desc:"Các thành phần phụ thuộc trực tiếp nhau. Lỗi một thành phần ảnh hưởng toàn hệ thống." },
+{ term:"Decouple", vi:"Tách rời", cat:"arch",
+  trap:"SQS decouples producer và consumer. SNS fan-out decouples publisher và subscribers.",
+  desc:"Tách hai thành phần để hoạt động độc lập. SQS, SNS, EventBridge là giải pháp decoupling." },
+{ term:"Microservices", vi:"Kiến trúc vi dịch vụ", cat:"arch",
+  trap:"Microservices cần: API Gateway, service discovery, distributed tracing (X-Ray), circuit breaker.",
+  desc:"Chia ứng dụng thành service nhỏ độc lập. Dễ scale, deploy từng phần nhưng phức tạp hơn monolith." },
+{ term:"Monolithic", vi:"Kiến trúc nguyên khối", cat:"arch",
+  trap:"Monolith không xấu per se nhưng khó scale từng phần. Đề thường hỏi refactor monolith → microservices.",
+  desc:"Ứng dụng một khối duy nhất. Đơn giản nhưng scale toàn bộ khi chỉ cần scale một phần." },
+{ term:"Serverless architecture", vi:"Kiến trúc không máy chủ", cat:"arch",
+  trap:"Serverless = Lambda + API Gateway + DynamoDB + S3. Không phải mọi workload phù hợp serverless.",
+  desc:"Không quản lý server, tự scale, trả theo dùng. Lambda, API Gateway, DynamoDB, S3." },
+{ term:"Event-driven", vi:"Hướng sự kiện", cat:"arch",
+  trap:"S3 event → Lambda là event-driven. Polling SQS trong Lambda cũng là event-driven pattern.",
+  desc:"Hệ thống phản ứng với events thay vì polling. S3 events, DynamoDB Streams, EventBridge, SNS." },
+{ term:"Fan-out", vi:"Khuếch tán thông điệp", cat:"arch",
+  trap:"SNS → nhiều SQS queue là fan-out pattern. Dùng khi cần xử lý cùng message theo nhiều cách.",
+  desc:"Một message được gửi đến nhiều consumer. SNS publish → nhiều SQS subscriptions." },
+{ term:"Idempotent", vi:"Có tính mũ thỉnh", cat:"arch",
+  trap:"Lambda cần idempotent vì có thể invoke nhiều lần với cùng event (at-least-once delivery SQS).",
+  desc:"Thực hiện cùng thao tác nhiều lần cho kết quả như nhau. Quan trọng với retry logic." },
+{ term:"Retry logic", vi:"Logic thử lại", cat:"arch",
+  trap:"SQS có visibility timeout và DLQ cho failed messages. Lambda retry 2 lần khi async invocation.",
+  desc:"Thử lại tự động khi request thất bại. SQS, Lambda, Step Functions đều có retry built-in." },
+{ term:"Dead letter queue", vi:"Hàng đợi thư chết", cat:"arch",
+  trap:"DLQ cho SQS giữ failed message sau maxReceiveCount lần. DLQ cho Lambda sau 2 lần retry.",
+  desc:"Nơi lưu message không xử lý được sau nhiều lần retry. SQS DLQ, Lambda DLQ destination." },
+{ term:"Circuit breaker", vi:"Ngắt mạch tự động", cat:"arch",
+  trap:"AWS không có managed circuit breaker. Cần implement trong code hoặc dùng App Mesh/service mesh.",
+  desc:"Dừng gọi service đang lỗi để tránh cascade failure. Phổ biến trong microservices architecture." },
+{ term:"Back pressure", vi:"Áp lực ngược", cat:"arch",
+  trap:"SQS buffer (back pressure) giữa producer nhanh và consumer chậm. Queue depth = signal to scale.",
+  desc:"Cơ chế làm chậm producer khi consumer không xử lý kịp. SQS queue tự nhiên tạo back pressure." },
+{ term:"Message ordering", vi:"Thứ tự tin nhắn", cat:"arch",
+  trap:"SQS Standard: best-effort ordering. SQS FIFO: đảm bảo thứ tự. Kinesis: thứ tự trong cùng shard.",
+  desc:"Đảm bảo message được xử lý theo đúng thứ tự. SQS FIFO hoặc Kinesis (per shard) đảm bảo ordering." },
+{ term:"Exactly-once delivery", vi:"Giao nhận chính xác một lần", cat:"arch",
+  trap:"SQS FIFO với content-based deduplication = exactly-once. Standard SQS = at-least-once.",
+  desc:"Message chỉ được xử lý đúng một lần, không trùng, không mất. SQS FIFO đảm bảo điều này." },
+{ term:"At-least-once delivery", vi:"Giao nhận ít nhất một lần", cat:"arch",
+  trap:"SQS Standard là at-least-once — có thể duplicate. Consumer cần idempotent để handle duplicates.",
+  desc:"Message được deliver ít nhất một lần, có thể trùng. Cần consumer idempotent để xử lý đúng." },
+{ term:"Cross-account access", vi:"Truy cập liên tài khoản", cat:"arch",
+  trap:"Cross-account: AssumeRole với STS, S3 bucket policy, resource-based policy. Không dùng IAM user.",
+  desc:"Cho phép tài nguyên ở account này truy cập account khác. IAM Role + STS AssumeRole." },
+{ term:"Shared VPC", vi:"VPC chia sẻ", cat:"arch",
+  trap:"VPC Sharing (RAM) chia sẻ subnet giữa accounts trong cùng Organization. Không phải VPC Peering.",
+  desc:"Nhiều AWS account dùng chung một VPC. Dùng AWS Resource Access Manager (RAM) để chia sẻ subnet." },
+{ term:"Well-Architected", vi:"Được thiết kế tốt", cat:"arch",
+  trap:"6 pillars: Operational Excellence, Security, Reliability, Performance, Cost, Sustainability.",
+  desc:"Kiến trúc tuân thủ AWS Well-Architected Framework 6 trụ cột để đảm bảo best practices." },
+{ term:"Trade-off", vi:"Đánh đổi", cat:"arch",
+  trap:"Mọi quyết định kiến trúc đều có trade-off: cost vs performance, complexity vs flexibility.",
+  desc:"Cân bằng giữa các yếu tố: cost-performance, availability-cost, simplicity-scalability." },
+
+// ── DAY 6: Bảo mật (Security Keywords) ───────────────────────────────────────
+{ term:"Least privilege", vi:"Quyền tối thiểu", cat:"security",
+  trap:"IAM Policy phải deny mọi thứ trừ những gì cần thiết. Không dùng AdministratorAccess cho service role.",
+  desc:"Chỉ cấp đúng quyền cần thiết, không hơn. Nguyên tắc vàng trong IAM — deny by default." },
+{ term:"Encryption at rest", vi:"Mã hóa khi lưu trữ", cat:"security",
+  trap:"S3 SSE-S3 (AWS managed), SSE-KMS (customer managed key), SSE-C (customer provided key).",
+  desc:"Dữ liệu được mã hóa khi lưu trữ trên disk. S3, EBS, RDS đều hỗ trợ encryption at rest." },
+{ term:"Encryption in transit", vi:"Mã hóa khi truyền", cat:"security",
+  trap:"HTTPS/TLS cho encryption in transit. ACM quản lý certificate. Bắt buộc cho HIPAA, PCI DSS.",
+  desc:"Dữ liệu được mã hóa trong quá trình truyền qua mạng. HTTPS, TLS, SSL, VPN tunnel." },
+{ term:"End-to-end encryption", vi:"Mã hóa đầu cuối", cat:"security",
+  trap:"E2E = mã hóa cả at rest lẫn in transit. Client-side encryption trước khi upload lên S3.",
+  desc:"Dữ liệu được mã hóa từ nguồn đến đích, không ai ở giữa có thể đọc được." },
+{ term:"Authentication", vi:"Xác thực danh tính", cat:"security",
+  trap:"Cognito User Pool = authentication. Cognito Identity Pool = authorization (AWS credentials).",
+  desc:"Xác minh danh tính người dùng. Cognito, IAM, SSO, MFA đều là authentication mechanisms." },
+{ term:"Authorization", vi:"Phân quyền", cat:"security",
+  trap:"IAM Policy define authorization. Cognito Identity Pool grant AWS service access sau authentication.",
+  desc:"Xác định user được phép làm gì sau khi đã xác thực. IAM Policies quyết định authorization." },
+{ term:"Compliance", vi:"Tuân thủ quy định", cat:"security",
+  trap:"AWS Artifact download compliance reports. AWS Config kiểm tra compliance rules tự động.",
+  desc:"Đáp ứng các quy định bắt buộc: HIPAA, PCI DSS, SOC, ISO. AWS hỗ trợ nhiều compliance frameworks." },
+{ term:"Audit trail", vi:"Nhật ký kiểm tra", cat:"security",
+  trap:"CloudTrail = audit trail cho API calls. Access Logs (ALB, S3) = audit trail cho requests.",
+  desc:"Ghi lại mọi hoạt động để kiểm tra sau. CloudTrail ghi tất cả API calls trong account." },
+{ term:"Data sovereignty", vi:"Chủ quyền dữ liệu", cat:"security",
+  trap:"Dữ liệu không tự động rời Region. Dùng SCP trong Org để prevent data từ rời Region nhất định.",
+  desc:"Dữ liệu phải lưu trong quốc gia/region cụ thể theo quy định pháp luật. Dùng Region restriction." },
+{ term:"Network isolation", vi:"Cô lập mạng", cat:"security",
+  trap:"Private subnet + no IGW = network isolated. VPC Endpoint giúp truy cập S3/DynamoDB mà không ra Internet.",
+  desc:"Tách biệt mạng để giảm attack surface. Private subnets, Security Groups, NACLs, VPC Endpoints." },
+{ term:"Defense in depth", vi:"Bảo vệ đa lớp", cat:"security",
+  trap:"Nhiều lớp bảo vệ: WAF → ALB → Security Group → NACL → IAM. Mỗi lớp là một barrier.",
+  desc:"Áp dụng nhiều lớp bảo mật. Nếu một lớp bị phá vỡ, các lớp khác vẫn bảo vệ hệ thống." },
+{ term:"Zero trust", vi:"Không tin tuyệt đối", cat:"security",
+  trap:"Zero trust = verify explicitly, use least privilege, assume breach. IAM + MFA + PrivateLink.",
+  desc:"Không tin tưởng mặc định bất kỳ request nào. Xác thực và authorize mọi request, kể cả internal." },
+{ term:"Sensitive data", vi:"Dữ liệu nhạy cảm", cat:"security",
+  trap:"Macie phát hiện PII trong S3. Secrets Manager lưu credentials. KMS mã hóa sensitive data.",
+  desc:"Dữ liệu cần bảo vệ đặc biệt: PII, credentials, tài chính, y tế. Cần encryption + access control." },
+{ term:"Vulnerability", vi:"Lỗ hổng bảo mật", cat:"security",
+  trap:"Inspector scan EC2/container để tìm CVE. GuardDuty phát hiện threats. Hai tool khác mục đích.",
+  desc:"Điểm yếu trong hệ thống có thể bị khai thác. Amazon Inspector tự động scan và báo cáo." },
+{ term:"Threat detection", vi:"Phát hiện mối đe dọa", cat:"security",
+  trap:"GuardDuty dùng ML phân tích CloudTrail + VPC Flow Logs + DNS logs. Không cần deploy agents.",
+  desc:"Phát hiện các hoạt động đáng ngờ hoặc tấn công. GuardDuty, Security Hub, Detective." },
+{ term:"DDoS protection", vi:"Bảo vệ tấn công DDoS", cat:"security",
+  trap:"Shield Standard free cho mọi account. Shield Advanced cho SLA, WAF tích hợp, cost protection.",
+  desc:"Bảo vệ khỏi tấn công từ chối dịch vụ. AWS Shield (Standard free, Advanced trả phí) + CloudFront." },
+{ term:"SQL injection", vi:"Tấn công SQL injection", cat:"security",
+  trap:"WAF có managed rules chặn SQL injection và XSS. Cần bật trên ALB hoặc CloudFront.",
+  desc:"Kỹ thuật tấn công chèn SQL vào input. AWS WAF với managed rules tự động chặn SQL injection." },
+{ term:"Rotate credentials", vi:"Xoay vòng thông tin xác thực", cat:"security",
+  trap:"Secrets Manager tự động rotate DB password. IAM không tự rotate access key — phải làm manual.",
+  desc:"Thường xuyên thay đổi credentials để giảm rủi ro. Secrets Manager tự động hóa rotation." },
+{ term:"Key management", vi:"Quản lý khóa mã hóa", cat:"security",
+  trap:"KMS Customer Managed Key = bạn control rotation, access. AWS Managed Key = ít control hơn.",
+  desc:"Tạo, lưu trữ, rotate, và kiểm soát khóa mã hóa. AWS KMS tích hợp với hầu hết AWS services." },
+{ term:"Cross-site scripting", vi:"Tấn công XSS", cat:"security",
+  trap:"WAF AWS Managed Rules chặn XSS. Cần enable WAF trên ALB/CloudFront/API Gateway.",
+  desc:"Kỹ thuật tấn công chèn script độc hại vào web page. AWS WAF có managed rules chặn XSS." },
+
+// ── DAY 7: Di chuyển & Tích hợp ──────────────────────────────────────────────
+{ term:"Lift and shift", vi:"Di chuyển nguyên trạng", cat:"migrate",
+  trap:"Lift and shift = Rehost (một trong 6R). Nhanh nhất nhưng không tận dụng cloud native features.",
+  desc:"Di chuyển ứng dụng lên cloud mà không thay đổi kiến trúc. Nhanh nhưng không tối ưu cloud." },
+{ term:"Replatform", vi:"Di chuyển có điều chỉnh", cat:"migrate",
+  trap:"Replatform = thay DB engine (Oracle → RDS), không rewrite code. Ít thay đổi, nhiều lợi ích hơn rehost.",
+  desc:"Di chuyển với một số thay đổi nhỏ để tận dụng cloud: dùng RDS thay tự quản lý DB." },
+{ term:"Refactor", vi:"Tái cấu trúc", cat:"migrate",
+  trap:"Refactor = re-architect hoàn toàn sang microservices/serverless. Tốn thời gian nhất nhưng lợi ích cao.",
+  desc:"Thiết kế lại kiến trúc để tận dụng tối đa cloud native: serverless, managed services, microservices." },
+{ term:"Hybrid cloud", vi:"Đám mây kết hợp", cat:"migrate",
+  trap:"Hybrid cần kết nối an toàn: Direct Connect (stable) hoặc VPN (backup). Storage Gateway bridge data.",
+  desc:"Kết hợp on-premises và AWS cloud. Direct Connect/VPN kết nối, Storage Gateway bridge dữ liệu." },
+{ term:"On-premises", vi:"Tại chỗ", cat:"migrate",
+  trap:"On-prem DB migration: DMS + SCT. On-prem data migration: DataSync hoặc Snowball.",
+  desc:"Hạ tầng nằm tại data center của doanh nghiệp, không phải cloud. Là điểm xuất phát trong migration." },
+{ term:"Cutover", vi:"Chuyển đổi hoàn toàn", cat:"migrate",
+  trap:"Cutover = thời điểm chuyển toàn bộ traffic từ old sang new. Cần test kỹ trước cutover.",
+  desc:"Thời điểm chuyển hoàn toàn từ hệ thống cũ sang mới. Cần rollback plan trong trường hợp lỗi." },
+{ term:"Data migration", vi:"Di chuyển dữ liệu", cat:"migrate",
+  trap:"< 1TB qua Internet (DataSync). Lớn hơn dùng Snowball. DB migration dùng DMS. Chọn đúng tool.",
+  desc:"Chuyển dữ liệu từ nguồn sang đích. DataSync, DMS, Snowball Family tùy theo kích thước và loại." },
+{ term:"Schema conversion", vi:"Chuyển đổi cấu trúc dữ liệu", cat:"migrate",
+  trap:"SCT cần thiết khi đổi DB engine (Oracle → PostgreSQL). Cùng engine thì không cần SCT.",
+  desc:"Chuyển đổi cấu trúc database khi đổi DB engine. AWS Schema Conversion Tool (SCT) tự động hóa." },
+{ term:"Bandwidth constraint", vi:"Giới hạn băng thông", cat:"migrate",
+  trap:"Bandwidth thấp + data lớn → Snowball. Bandwidth cao + cần online → DataSync hoặc S3 Transfer Acceleration.",
+  desc:"Hạn chế về tốc độ truyền dữ liệu qua Internet. Khi bandwidth thấp, Snowball là lựa chọn." },
+{ term:"Heterogeneous migration", vi:"Di chuyển khác nền tảng", cat:"migrate",
+  trap:"Heterogeneous (Oracle → PostgreSQL) cần SCT + DMS. Homogeneous (Oracle → RDS Oracle) chỉ cần DMS.",
+  desc:"Di chuyển giữa các DB engine khác nhau. Cần SCT để convert schema trước, sau đó DMS migrate data." },
+{ term:"Continuous replication", vi:"Nhân bản liên tục", cat:"migrate",
+  trap:"DMS CDC (Change Data Capture) enable continuous replication. Minimizes downtime khi cutover.",
+  desc:"Đồng bộ dữ liệu liên tục từ nguồn sang đích. DMS CDC, DRS, Aurora Global Tables dùng kỹ thuật này." },
+{ term:"Pilot light", vi:"Ngọn lửa mồi", cat:"migrate",
+  trap:"Pilot light = core system running, scale up khi disaster. Khác Warm Standby (full system, smaller scale).",
+  desc:"DR strategy: core system (DB) luôn chạy ở AWS, scale up phần còn lại khi disaster xảy ra." },
+{ term:"Warm standby", vi:"Chờ sẵn ấm", cat:"migrate",
+  trap:"Warm Standby = phiên bản thu nhỏ của production luôn chạy. Scale up khi failover. RTO thấp hơn Pilot Light.",
+  desc:"DR strategy: phiên bản thu nhỏ production luôn chạy ở AWS, scale up khi cần. RTO vài phút." },
+{ term:"Active-active", vi:"Hoạt động song song", cat:"migrate",
+  trap:"Active-Active = cả hai region đều xử lý traffic. Khác Active-Passive (standby không xử lý traffic).",
+  desc:"Cả hai region/AZ đều active và xử lý traffic đồng thời. Tốt nhất về RTO/RPO nhưng đắt nhất." },
+{ term:"Active-passive", vi:"Chủ động - thụ động", cat:"migrate",
+  trap:"Passive chỉ xử lý traffic khi primary lỗi. Route 53 Failover Routing cho Active-Passive pattern.",
+  desc:"Primary region xử lý traffic, secondary chờ sẵn. Failover xảy ra khi primary lỗi được detect." },
+{ term:"Cutover window", vi:"Cửa sổ chuyển đổi", cat:"migrate",
+  trap:"Cutover window phải ngắn để minimize downtime. Cần rehearse cutover nhiều lần trước ngày thật.",
+  desc:"Khoảng thời gian cho phép downtime trong quá trình cutover từ hệ thống cũ sang mới." },
+{ term:"Synchronize", vi:"Đồng bộ hóa", cat:"migrate",
+  trap:"DataSync đồng bộ file. DMS đồng bộ DB. S3 Replication đồng bộ objects. Chọn đúng service.",
+  desc:"Đồng bộ dữ liệu giữa hai nguồn để đảm bảo nhất quán. DataSync, DMS, S3 Replication." },
+{ term:"Legacy system", vi:"Hệ thống cũ", cat:"migrate",
+  trap:"Legacy thường không thể refactor hoàn toàn. Strangler Fig pattern để dần thay thế từng phần.",
+  desc:"Hệ thống cũ khó bảo trì, cần modernize. Migration strategy: Rehost → Replatform → Refactor dần." },
+{ term:"Bandwidth throttling", vi:"Giới hạn băng thông", cat:"migrate",
+  trap:"DataSync có tùy chọn throttle bandwidth để không ảnh hưởng production traffic trong giờ cao điểm.",
+  desc:"Giới hạn tốc độ truyền dữ liệu để không ảnh hưởng network khác. DataSync, Snowball hỗ trợ." },
+{ term:"Minimal downtime", vi:"Ít thời gian gián đoạn nhất", cat:"migrate",
+  trap:"DMS CDC + final sync ngay trước cutover = minimal downtime. Khác với zero downtime.",
+  desc:"Giảm thời gian ngừng hoạt động xuống mức thấp nhất. DMS, DRS, Blue/Green deployment đáp ứng." },
+
+// ── DAY 8: Điều kiện & Phạm vi ───────────────────────────────────────────────
+{ term:"If and only if", vi:"Khi và chỉ khi", cat:"condition",
+  trap:"Đọc kỹ điều kiện đề bài. 'Only if X' nghĩa là X phải đúng mới chọn option đó.",
+  desc:"Điều kiện bắt buộc chặt chẽ. Trong câu hỏi AWS, nhận diện điều kiện để loại trừ đáp án sai." },
+{ term:"Assuming that", vi:"Giả định rằng", cat:"condition",
+  trap:"Đề bài đặt giả định để giới hạn phạm vi. Đáp án phải đúng trong điều kiện giả định đó.",
+  desc:"Điều kiện cho trước để thu hẹp phạm vi giải pháp. Phải đọc kỹ giả định trước khi chọn đáp án." },
+{ term:"Must not", vi:"Không được phép", cat:"condition",
+  trap:"'Must not' là hard constraint. Loại ngay đáp án nào vi phạm yêu cầu 'must not'.",
+  desc:"Yêu cầu cấm tuyệt đối. Bất kỳ giải pháp nào vi phạm 'must not' đều bị loại ngay." },
+{ term:"Must", vi:"Bắt buộc phải", cat:"condition",
+  trap:"'Must' là hard requirement. Giải pháp không đáp ứng 'must' bị loại dù tốt đến đâu.",
+  desc:"Yêu cầu bắt buộc phải có. Loại đáp án không thỏa mãn yêu cầu 'must' trước tiên." },
+{ term:"Should", vi:"Nên có", cat:"condition",
+  trap:"'Should' là soft requirement (best practice). Vẫn phải ưu tiên 'must' trước khi xem 'should'.",
+  desc:"Yêu cầu khuyến nghị, không bắt buộc. Ưu tiên sau 'must', dùng để phân biệt đáp án tốt hơn." },
+{ term:"Cannot be changed", vi:"Không thể thay đổi", cat:"condition",
+  trap:"Đây là hard constraint về kiến trúc hiện tại. Giải pháp phải work với constraint này.",
+  desc:"Giới hạn cố định không thể thay đổi. Giải pháp phải hoạt động trong ràng buộc này." },
+{ term:"Existing infrastructure", vi:"Hạ tầng hiện có", cat:"condition",
+  trap:"Câu hỏi thường cho context về existing infra. Giải pháp phải integrate, không phải replace toàn bộ.",
+  desc:"Hạ tầng đang có sẵn. Giải pháp phải tích hợp hoặc kết hợp với hạ tầng hiện tại." },
+{ term:"Without re-architecting", vi:"Không cần thiết kế lại", cat:"condition",
+  trap:"Quick win với minimal change. Thêm ElastiCache, Read Replica, CloudFront mà không đổi code nhiều.",
+  desc:"Giải pháp phải áp dụng được mà không thay đổi kiến trúc cơ bản của ứng dụng." },
+{ term:"Without code changes", vi:"Không thay đổi code", cat:"condition",
+  trap:"RDS Proxy, ElastiCache, CloudFront thêm vào mà ứng dụng không cần biết. Transparent to app.",
+  desc:"Áp dụng giải pháp mà không cần sửa code ứng dụng. Transparent solutions như cache, CDN." },
+{ term:"In addition to", vi:"Thêm vào đó", cat:"condition",
+  trap:"Câu hỏi yêu cầu THÊM giải pháp vào những gì đã có. Không phải thay thế giải pháp cũ.",
+  desc:"Bổ sung giải pháp mới vào kiến trúc hiện tại, không thay thế. Đọc kỹ để không chọn sai." },
+{ term:"Primary concern", vi:"Mối quan tâm chính", cat:"condition",
+  trap:"Xác định primary concern (security? cost? performance?) để chọn đúng trade-off.",
+  desc:"Yêu cầu quan trọng nhất cần đáp ứng. Mọi giải pháp phải ưu tiên primary concern này." },
+{ term:"Minimum change", vi:"Thay đổi tối thiểu", cat:"condition",
+  trap:"Managed service thay thế self-managed = minimum change. Không phải refactor toàn bộ architecture.",
+  desc:"Áp dụng giải pháp với ít thay đổi nhất có thể vào hệ thống hiện tại." },
+{ term:"Currently", vi:"Hiện tại", cat:"condition",
+  trap:"'Currently' mô tả trạng thái hiện tại có thể là vấn đề cần giải quyết hoặc constraint.",
+  desc:"Trạng thái hiện tại của hệ thống. Đọc kỹ để hiểu context trước khi chọn giải pháp." },
+{ term:"Going forward", vi:"Về sau này", cat:"condition",
+  trap:"'Going forward' = cần giải pháp scalable và sustainable dài hạn, không phải quick fix.",
+  desc:"Yêu cầu áp dụng cho tương lai. Giải pháp phải sustainable, scalable về lâu dài." },
+{ term:"Except", vi:"Ngoại trừ", cat:"condition",
+  trap:"Đề bài 'EXCEPT' nghĩa là tìm đáp án SAI. Đây là dạng câu hỏi ngược — cẩn thận khi đọc.",
+  desc:"Dạng câu hỏi tìm điều không đúng trong danh sách. 'Which is NOT true?' — chọn đáp án sai." },
+{ term:"All of the following", vi:"Tất cả những điều sau", cat:"condition",
+  trap:"'All of the following EXCEPT' = chọn điều SAI. 'All of the following' = chọn nhiều đáp án đúng.",
+  desc:"Phải xem xét tất cả options. Thường xuất hiện trong câu hỏi multi-select (chọn 2-3 đáp án)." },
+{ term:"Best practice", vi:"Thực hành tốt nhất", cat:"condition",
+  trap:"Best practice AWS thường là: least privilege, encrypt, multi-AZ, use managed service, IaC.",
+  desc:"Phương pháp được AWS khuyến nghị. Dựa trên Well-Architected Framework và AWS documentation." },
+{ term:"Not recommended", vi:"Không được khuyến nghị", cat:"condition",
+  trap:"Câu hỏi có thể yêu cầu chọn option 'not recommended' — đọc kỹ câu hỏi trước khi chọn.",
+  desc:"Phương pháp AWS không khuyến nghị dùng. Thường là anti-pattern hoặc deprecated approach." },
+{ term:"Given that", vi:"Cho rằng", cat:"condition",
+  trap:"'Given that X is already implemented' — giải pháp phải leverage X, không ignore hoặc replace X.",
+  desc:"Điều kiện tiên quyết đã được đặt ra. Giải pháp phải hoạt động trong context điều kiện đó." },
+{ term:"Subject to", vi:"Phụ thuộc vào", cat:"condition",
+  trap:"'Subject to compliance requirements' → điều kiện compliance là hard constraint phải đáp ứng.",
+  desc:"Bị ràng buộc bởi điều kiện hoặc yêu cầu cụ thể. Phải đáp ứng đầy đủ yêu cầu đó." },
+
+// ── DAY 9: Phạm vi & Môi trường ──────────────────────────────────────────────
+{ term:"Globally", vi:"Toàn cầu", cat:"scope",
+  trap:"Global = multi-region. CloudFront, Route 53, Global Accelerator, IAM là global services.",
+  desc:"Trên phạm vi toàn thế giới. Giải pháp phải hoạt động ở mọi region hoặc dùng global services." },
+{ term:"Regionally", vi:"Theo vùng địa lý", cat:"scope",
+  trap:"Hầu hết AWS services là regional (S3, EC2, RDS). IAM, CloudFront, Route 53 là global.",
+  desc:"Trong phạm vi một AWS Region. Hầu hết dịch vụ AWS hoạt động ở cấp region." },
+{ term:"Cross-region", vi:"Liên vùng địa lý", cat:"scope",
+  trap:"S3 CRR, Aurora Global, DynamoDB Global Tables đều cross-region. Có replication lag giữa regions.",
+  desc:"Hoạt động hoặc sao chép dữ liệu giữa nhiều AWS Region. Phục vụ DR và giảm latency toàn cầu." },
+{ term:"Multi-AZ", vi:"Đa vùng khả dụng", cat:"scope",
+  trap:"RDS Multi-AZ = sync replication, auto failover. Multi-AZ ≠ Multi-Region. Phạm vi khác nhau.",
+  desc:"Triển khai qua nhiều Availability Zones trong cùng Region. Đảm bảo HA khi một AZ lỗi." },
+{ term:"Single AZ", vi:"Một vùng khả dụng", cat:"scope",
+  trap:"Single AZ = không có HA. Nếu AZ đó lỗi, toàn bộ service bị ảnh hưởng. Tránh cho production.",
+  desc:"Chỉ trong một Availability Zone. Rủi ro cao khi AZ lỗi. Không phù hợp cho production workloads." },
+{ term:"Across multiple accounts", vi:"Trên nhiều tài khoản", cat:"scope",
+  trap:"AWS Organizations + SCPs quản lý nhiều accounts. RAM chia sẻ resources. CloudTrail ghi cross-account.",
+  desc:"Hoạt động trên nhiều AWS accounts. Dùng Organizations, RAM, CloudTrail organization trail." },
+{ term:"Account-level", vi:"Cấp tài khoản", cat:"scope",
+  trap:"SCP áp dụng account-level. IAM Policy áp dụng user/role level. Phân biệt scope để chọn đúng.",
+  desc:"Áp dụng cho toàn bộ AWS account. Service Control Policies (SCP) hoạt động ở cấp account." },
+{ term:"Resource-level", vi:"Cấp tài nguyên", cat:"scope",
+  trap:"S3 bucket policy, SQS queue policy là resource-level policy. IAM policy là identity-level.",
+  desc:"Áp dụng cho tài nguyên cụ thể. Resource-based policy gắn trực tiếp lên resource (S3, SQS, Lambda)." },
+{ term:"Organization-level", vi:"Cấp tổ chức", cat:"scope",
+  trap:"SCP ở Org level override mọi IAM policy trong account. Root account vẫn bị SCP giới hạn.",
+  desc:"Áp dụng cho toàn bộ AWS Organization. SCP, CloudTrail organization trail, Config Aggregator." },
+{ term:"VPC-level", vi:"Cấp mạng VPC", cat:"scope",
+  trap:"VPC Flow Logs, NACL, VPC Endpoints hoạt động ở VPC level. Security Group ở instance level.",
+  desc:"Áp dụng cho toàn bộ VPC. VPC Flow Logs, NACLs, VPC Endpoints đều ở cấp độ này." },
+{ term:"Subnet-level", vi:"Cấp mạng con", cat:"scope",
+  trap:"NACL gắn với subnet (stateless). Security Group gắn với instance (stateful). Phân biệt rõ.",
+  desc:"Áp dụng cho subnet cụ thể. NACL hoạt động ở cấp subnet, ảnh hưởng tất cả instances trong subnet." },
+{ term:"Instance-level", vi:"Cấp instance", cat:"scope",
+  trap:"Security Group là instance-level, stateful. Multiple SG có thể gắn vào một instance.",
+  desc:"Áp dụng cho EC2 instance cụ thể. Security Groups hoạt động ở cấp instance." },
+{ term:"Environment", vi:"Môi trường", cat:"scope",
+  trap:"Separate VPC cho dev/staging/prod là best practice. Dùng AWS Organizations để tách account.",
+  desc:"Dev, Staging, Production environments. Best practice: tách account hoặc VPC riêng cho mỗi env." },
+{ term:"Production environment", vi:"Môi trường sản xuất", cat:"scope",
+  trap:"Production cần: Multi-AZ, encryption, backup, monitoring, IAM least privilege, WAF.",
+  desc:"Môi trường phục vụ end users thực tế. Yêu cầu cao nhất về HA, security, performance." },
+{ term:"All regions", vi:"Tất cả các vùng", cat:"scope",
+  trap:"Enable CloudTrail và AWS Config cho all regions mới capture được toàn bộ activities.",
+  desc:"Áp dụng hoặc hoạt động ở mọi AWS Region. CloudTrail, Config, GuardDuty nên enable all regions." },
+{ term:"Internet-facing", vi:"Hướng ra Internet", cat:"scope",
+  trap:"Internet-facing ALB/NLB nằm ở public subnet. Backend server ở private subnet. Đây là pattern đúng.",
+  desc:"Có thể truy cập từ Internet. ALB, CloudFront, API Gateway đặt ở public layer." },
+{ term:"Internal", vi:"Nội bộ", cat:"scope",
+  trap:"Internal ALB trong private subnet cho internal microservices. Không expose ra Internet.",
+  desc:"Chỉ truy cập được từ trong VPC hoặc private network. Internal ALB, PrivateLink, VPC Endpoints." },
+{ term:"Public subnet", vi:"Mạng con công cộng", cat:"scope",
+  trap:"Public subnet có route đến IGW. Chỉ put: ALB, NAT Gateway, Bastion Host vào public subnet.",
+  desc:"Subnet có route table trỏ đến Internet Gateway. Resources có thể có public IP, truy cập Internet." },
+{ term:"Private subnet", vi:"Mạng con riêng tư", cat:"scope",
+  trap:"Private subnet không có route đến IGW. EC2, RDS, Lambda nên ở private subnet cho security.",
+  desc:"Subnet không có route trực tiếp ra Internet. DB, application servers nên đặt ở private subnet." },
+{ term:"Isolated subnet", vi:"Mạng con cô lập", cat:"scope",
+  trap:"Isolated subnet = no internet, no NAT, dùng VPC Endpoint để reach AWS services (S3, DynamoDB).",
+  desc:"Subnet hoàn toàn cô lập, không ra Internet và không có NAT. Bảo mật cao nhất cho sensitive data." },
+
+// ── DAY 10: Hành động & Quy trình ────────────────────────────────────────────
+{ term:"Provision", vi:"Cấp phát tài nguyên", cat:"action",
+  trap:"CloudFormation provision toàn bộ stack. Elastic Beanstalk provision EC2/ELB/ASG tự động.",
+  desc:"Tạo và cấu hình tài nguyên sẵn sàng sử dụng. CloudFormation, CDK, Terraform provision resources." },
+{ term:"Deploy", vi:"Triển khai", cat:"action",
+  trap:"CodeDeploy deploy ứng dụng. CloudFormation deploy infrastructure. Elastic Beanstalk deploy cả hai.",
+  desc:"Đưa ứng dụng hoặc cập nhật vào môi trường. CodeDeploy, CodePipeline, Elastic Beanstalk." },
+{ term:"Migrate", vi:"Di chuyển", cat:"action",
+  trap:"DB migration: DMS. File migration: DataSync. Large offline: Snowball. Server migration: MGN.",
+  desc:"Chuyển workload, data, hoặc ứng dụng từ nguồn sang đích. Nhiều tool tùy loại dữ liệu." },
+{ term:"Scale", vi:"Mở rộng", cat:"action",
+  trap:"Scale out (thêm instance) vs Scale up (instance lớn hơn). Auto Scaling Group quản lý scale out.",
+  desc:"Tăng hoặc giảm tài nguyên. Scale out (horizontal) hay scale up (vertical) tùy workload." },
+{ term:"Optimize", vi:"Tối ưu hóa", cat:"action",
+  trap:"Compute Optimizer gợi ý right-sizing. Cost Explorer gợi ý Reserved Instances. Dùng đúng tool.",
+  desc:"Cải thiện hiệu suất hoặc giảm chi phí. Right-sizing, cache, CDN, Reserved Instances." },
+{ term:"Monitor", vi:"Giám sát", cat:"action",
+  trap:"CloudWatch monitor metrics + logs. X-Ray monitor traces. CloudTrail monitor API calls. Dùng cả ba.",
+  desc:"Theo dõi liên tục trạng thái và hiệu năng. CloudWatch, X-Ray, CloudTrail bộ ba giám sát." },
+{ term:"Integrate", vi:"Tích hợp", cat:"action",
+  trap:"EventBridge tích hợp nhiều service. Step Functions orchestrate. API Gateway integrate backend.",
+  desc:"Kết nối các service hoặc hệ thống với nhau. EventBridge, Step Functions, API Gateway." },
+{ term:"Restrict", vi:"Giới hạn/Hạn chế", cat:"action",
+  trap:"SCP restrict permissions ở org level. IAM deny restrict individual. NACL restrict network traffic.",
+  desc:"Giới hạn quyền truy cập hoặc hành động. SCP, IAM Deny, NACL, Security Group rules." },
+{ term:"Enforce", vi:"Bắt buộc áp dụng", cat:"action",
+  trap:"SCP enforce ở org level. AWS Config Rules + Auto Remediation enforce compliance tự động.",
+  desc:"Bắt buộc áp dụng policy hoặc quy tắc. SCP, AWS Config, Service Control Policies enforce." },
+{ term:"Validate", vi:"Xác nhận/Kiểm tra", cat:"action",
+  trap:"CloudFormation Validation check template syntax. AWS Config evaluate resource compliance.",
+  desc:"Kiểm tra tính hợp lệ. CloudFormation validate template, AWS Config validate compliance." },
+{ term:"Aggregate", vi:"Tổng hợp", cat:"action",
+  trap:"AWS Config Aggregator tổng hợp data từ nhiều accounts/regions vào một view tập trung.",
+  desc:"Thu thập và tổng hợp dữ liệu từ nhiều nguồn. Config Aggregator, Security Hub, CloudWatch." },
+{ term:"Replicate", vi:"Nhân bản", cat:"action",
+  trap:"S3 Replication (CRR/SRR), Aurora Global Tables, DynamoDB Global Tables đều replicate theo cách khác.",
+  desc:"Tạo bản sao của dữ liệu hoặc tài nguyên ở nơi khác. S3 Replication, RDS Read Replica, Global Tables." },
+{ term:"Encrypt", vi:"Mã hóa", cat:"action",
+  trap:"KMS tích hợp với S3/EBS/RDS. Enable encryption khi tạo resource, không enable sau được với EBS.",
+  desc:"Bảo vệ dữ liệu bằng mã hóa. KMS keys, S3 SSE, EBS encryption, RDS encryption." },
+{ term:"Audit", vi:"Kiểm tra/Kiểm toán", cat:"action",
+  trap:"CloudTrail audit API calls. AWS Config audit configuration changes. Access logs audit HTTP requests.",
+  desc:"Xem xét và ghi nhận hoạt động để đảm bảo compliance. CloudTrail, AWS Config, Access Logs." },
+{ term:"Throttle", vi:"Giới hạn tốc độ", cat:"action",
+  trap:"API Gateway throttling protect backend. SQS visibility timeout control processing rate. Khác nhau.",
+  desc:"Giới hạn số request trong khoảng thời gian. API Gateway throttling bảo vệ backend khỏi overload." },
+{ term:"Trigger", vi:"Kích hoạt", cat:"action",
+  trap:"S3 event trigger Lambda. CloudWatch Alarm trigger SNS/ASG. EventBridge rule trigger target.",
+  desc:"Kích hoạt tự động một action khi có event. S3 → Lambda, CloudWatch Alarm → SNS là ví dụ." },
+{ term:"Expose", vi:"Công khai/Lộ ra", cat:"action",
+  trap:"'Expose via API' = API Gateway. 'Expose publicly' = public subnet + IGW. 'Not expose' = private.",
+  desc:"Làm cho resource hoặc API có thể truy cập. API Gateway expose Lambda, ALB expose EC2." },
+{ term:"Retain", vi:"Giữ lại", cat:"action",
+  trap:"CloudFormation DeletionPolicy: Retain giữ resource khi delete stack. S3 Object Lock WORM retention.",
+  desc:"Giữ lại dữ liệu hoặc resource không bị xóa. CloudFormation Retain policy, S3 Object Lock." },
+{ term:"Archive", vi:"Lưu trữ dài hạn", cat:"action",
+  trap:"S3 Lifecycle chuyển object sang Glacier sau X ngày. Glacier Deep Archive rẻ nhất, retrieval chậm nhất.",
+  desc:"Chuyển dữ liệu sang lưu trữ dài hạn chi phí thấp. S3 Glacier, S3 Glacier Deep Archive." },
+{ term:"Deprecate", vi:"Ngừng sử dụng", cat:"action",
+  trap:"API Gateway có thể deprecate API version cũ trong khi version mới vẫn chạy. Managed deprecation.",
+  desc:"Ngừng hỗ trợ hoặc sử dụng tính năng/service cũ. Cần migration plan trước khi deprecate." }
+];
+
+// Chunk into days of 20
+const DAYS = [];
+for (let i = 0; i < ALL_WORDS.length; i += 20) {
+  DAYS.push(ALL_WORDS.slice(i, i + 20));
+}
+
+const CAT_META = {
+  cost:      { label:"💰 Chi phí",       class:"tag-cost" },
+  time:      { label:"⏱️ Thời gian",     class:"tag-time" },
+  ops:       { label:"⚙️ Vận hành",      class:"tag-ops"  },
+  perf:      { label:"🚀 Hiệu năng",     class:"tag-perf" },
+  arch:      { label:"🏗️ Kiến trúc",     class:"tag-arch" },
+  security:  { label:"🔒 Bảo mật",       class:"tag-security" },
+  migrate:   { label:"🚚 Di chuyển",     class:"tag-migrate"  },
+  condition: { label:"⚠️ Điều kiện",     class:"tag-condition"},
+  scope:     { label:"🌐 Phạm vi",       class:"tag-scope"    },
+  action:    { label:"▶️ Hành động",     class:"tag-action"   },
+};
+
+let currentDay = 0;
+let learned = JSON.parse(localStorage.getItem('aws_g2_learned') || '{}');
+let expanded = {};
+let fcIndex = 0;
+let fcFlipped = false;
+let currentMode = 'grid';
+let searchQuery = '';
+
+function init() {
+  renderDayGrid();
+  updateStats();
+  selectDay(0);
+}
+
+function updateStats() {
+  const count = Object.keys(learned).filter(k => learned[k]).length;
+  document.getElementById('learned-count').textContent = count;
+  const pct = (count / ALL_WORDS.length * 100).toFixed(0);
+  document.getElementById('overall-progress').style.width = pct + '%';
+}
+
+function renderDayGrid() {
+  const grid = document.getElementById('day-grid');
+  grid.innerHTML = '';
+  DAYS.forEach((day, i) => {
+    const dayLearned = day.filter((w, wi) => learned[i * 20 + wi]).length;
+    const done = dayLearned === 20;
+    const btn = document.createElement('button');
+    btn.className = 'day-btn' + (i === currentDay ? ' active' : '') + (done ? ' completed' : '');
+    const catLabel = [...new Set(day.map(w => w.cat))].slice(0,2).map(c => CAT_META[c]?.label.split(' ')[0]).join('');
+    btn.innerHTML = `D${i+1}<span class="check">${done ? '✓' : dayLearned > 0 ? dayLearned+'/20' : catLabel}</span>`;
+    btn.onclick = () => selectDay(i);
+    grid.appendChild(btn);
+  });
+}
+
+function selectDay(dayIdx) {
+  currentDay = dayIdx;
+  fcIndex = 0;
+  fcFlipped = false;
+  expanded = {};
+  searchQuery = '';
+  const si = document.getElementById('search-input');
+  if (si) si.value = '';
+  document.getElementById('day-content').style.display = 'block';
+  document.getElementById('day-num').textContent = dayIdx + 1;
+  document.getElementById('day-label').textContent = 'NGÀY ' + (dayIdx + 1);
+  document.getElementById('day-chip').textContent = 'Ngày ' + (dayIdx + 1);
+  renderDayGrid();
+  renderWords();
+  renderFlashcard();
+}
+
+function filterWords() {
+  searchQuery = document.getElementById('search-input').value.toLowerCase();
+  renderWords();
+}
+
+function renderWords() {
+  const words = DAYS[currentDay];
+  const grid = document.getElementById('word-grid');
+  grid.innerHTML = '';
+  const filtered = words.map((w, i) => ({ w, i })).filter(({ w }) =>
+    !searchQuery || w.term.toLowerCase().includes(searchQuery) || w.vi.toLowerCase().includes(searchQuery)
+  );
+  filtered.forEach(({ w, i }, idx) => {
+    const globalIdx = currentDay * 20 + i;
+    const isLearned = learned[globalIdx];
+    const isExpanded = expanded[i];
+    const cat = CAT_META[w.cat] || { label: w.cat, class: 'tag-ops' };
+    const card = document.createElement('div');
+    card.className = 'word-card' + (isLearned ? ' learned' : '') + (isExpanded ? ' expanded' : '');
+    card.setAttribute('data-cat', w.cat);
+    card.style.animationDelay = (idx * 0.03) + 's';
+    card.innerHTML = `
+      <div class="word-num">${String(i+1).padStart(2,'0')} / 20</div>
+      <div class="word-tag ${cat.class}">${cat.label}</div>
+      <div class="word-term">${w.term}</div>
+      <div class="word-vi">${w.vi}</div>
+      <div class="word-trap">⚠️ <strong>Bẫy thi:</strong> ${w.trap}</div>
+      <div class="word-desc">${w.desc}</div>
+      <div class="card-actions">
+        <button class="learn-btn" onclick="toggleExpand(${i})">
+          ${isExpanded ? '▲ Thu gọn' : '▼ Xem bẫy'}
+        </button>
+        <button class="learn-btn ${isLearned ? 'done' : ''}" onclick="toggleLearn(${globalIdx})">
+          ${isLearned ? '✓ Đã thuộc' : '+ Đánh dấu'}
+        </button>
+      </div>`;
+    grid.appendChild(card);
+  });
+  if (filtered.length === 0) {
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-muted)">Không tìm thấy từ nào</div>';
+  }
+}
+
+function toggleExpand(i) {
+  expanded[i] = !expanded[i];
+  renderWords();
+}
+
+function toggleLearn(globalIdx) {
+  learned[globalIdx] = !learned[globalIdx];
+  localStorage.setItem('aws_g2_learned', JSON.stringify(learned));
+  updateStats();
+  renderWords();
+  renderDayGrid();
+}
+
+function renderFlashcard() {
+  const words = DAYS[currentDay];
+  const w = words[fcIndex];
+  const cat = CAT_META[w.cat] || { label: w.cat, class: '' };
+  document.getElementById('fc-cat').textContent = cat.label;
+  document.getElementById('fc-term').textContent = w.term;
+  document.getElementById('fc-vi').textContent = w.vi;
+  document.getElementById('fc-trap').textContent = w.trap;
+  document.getElementById('fc-desc').textContent = w.desc;
+  document.getElementById('fc-counter').textContent = `${fcIndex+1} / 20`;
+  const fc = document.getElementById('flashcard');
+  fc.classList.remove('flipped');
+  fcFlipped = false;
+}
+
+function flipCard() {
+  fcFlipped = !fcFlipped;
+  document.getElementById('flashcard').classList.toggle('flipped', fcFlipped);
+}
+
+function fcNav(dir) {
+  fcIndex = (fcIndex + dir + 20) % 20;
+  renderFlashcard();
+}
+
+function setMode(mode) {
+  currentMode = mode;
+  document.getElementById('btn-grid').classList.toggle('active', mode === 'grid');
+  document.getElementById('btn-flash').classList.toggle('active', mode === 'flash');
+  document.getElementById('grid-wrap').classList.toggle('hidden', mode !== 'grid');
+  document.getElementById('flash-wrap').classList.toggle('active', mode === 'flash');
+  document.getElementById('search-wrap').style.display = mode === 'grid' ? 'block' : 'none';
+  if (mode === 'flash') renderFlashcard();
+}
+
+init();
+</script>
+</body>
+</html>
