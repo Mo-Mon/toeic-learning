@@ -1,0 +1,76 @@
+{
+  "words": [
+    {
+      "en": "fear",
+      "vi": "Sự sợ hãi, nỗi sợ.",
+      "phonetic": "/fɪr/",
+      "topicId": "177518224266311c3",
+      "note": "Ví dụ: She overcame her fear of heights to climb the mountain.\n(Cô ấy đã vượt qua nỗi sợ độ cao để leo lên ngọn núi.)",
+      "id": "177518218750390f1",
+      "createdAt": "2026-04-03T02:09:47.503Z"
+    },
+    {
+      "en": "joy",
+      "vi": "Niềm vui sướng, sự hân hoan.",
+      "phonetic": "/dʒɔɪ/",
+      "topicId": "177518224266311c3",
+      "note": "Ví dụ: The children's faces were full of joy when they saw the snow.\n(Khuôn mặt của những đứa trẻ tràn ngập niềm vui khi chúng nhìn thấy tuyết.)",
+      "id": "177518218750390f2",
+      "createdAt": "2026-04-03T02:09:47.503Z"
+    },
+    {
+      "en": "freedom",
+      "vi": "Sự tự do.",
+      "phonetic": "/ˈfriːdəm/",
+      "topicId": "177518224266311c3",
+      "note": "Ví dụ: Everyone has the right to freedom of speech.\n(Mọi người đều có quyền tự do ngôn luận.)",
+      "id": "177518218750390f3",
+      "createdAt": "2026-04-03T02:09:47.503Z"
+    },
+    {
+      "en": "justice",
+      "vi": "Công lý, sự công bằng.",
+      "phonetic": "/ˈdʒʌstɪs/",
+      "topicId": "177518224266311c3",
+      "note": "Ví dụ: They are fighting for social justice and equality.\n(Họ đang đấu tranh vì công lý và sự công bằng xã hội.)",
+      "id": "177518218750390f4",
+      "createdAt": "2026-04-03T02:09:47.503Z"
+    },
+    {
+      "en": "education",
+      "vi": "Giáo dục, sự học tập.",
+      "phonetic": "/ˌedʒuˈkeɪʃn/",
+      "topicId": "177518224266311c3",
+      "note": "Ví dụ: Education is the key to a better future.\n(Giáo dục là chìa khóa dẫn đến một tương lai tốt đẹp hơn.)",
+      "id": "177518218750390f5",
+      "createdAt": "2026-04-03T02:09:47.503Z"
+    },
+    {
+      "en": "honesty",
+      "vi": "Sự trung thực, tính thành thật.",
+      "phonetic": "/ˈɑːnəsti/",
+      "topicId": "177518224266311c3",
+      "note": "Ví dụ: I appreciate your honesty in telling me the truth.\n(Tôi trân trọng sự trung thực của bạn khi nói cho tôi biết sự thật.)",
+      "id": "177518218750390f6",
+      "createdAt": "2026-04-03T02:09:47.503Z"
+    },
+    {
+      "en": "courage",
+      "vi": "Sự can đảm, lòng dũng cảm.",
+      "phonetic": "/ˈkɜːrɪdʒ/",
+      "topicId": "177518224266311c3",
+      "note": "Ví dụ: It takes a lot of courage to admit when you are wrong.\n(Cần rất nhiều lòng dũng cảm để thừa nhận khi bạn sai.)",
+      "id": "177518218750390f7",
+      "createdAt": "2026-04-03T02:09:47.503Z"
+    }
+  ],
+  "topics": [
+    {
+      "name": "Danh từ trừu tượng",
+      "emoji": "📁",
+      "id": "177518224266311c3",
+      "createdAt": "2026-04-03T02:10:42.663Z"
+    }
+  ],
+  "version": 1
+}
