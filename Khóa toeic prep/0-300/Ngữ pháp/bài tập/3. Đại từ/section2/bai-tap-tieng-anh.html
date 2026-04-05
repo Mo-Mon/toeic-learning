@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tính từ sở hữu & Đại từ sở hữu – Prep.vn</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #1a6ed8;
+    --blue-light: #e8f1fd;
+    --blue-mid: #4a90e2;
+    --blue-dark: #0f4ea0;
+    --green: #22c55e;
+    --red: #ef4444;
+    --gray: #6b7280;
+    --gray-light: #f3f6fb;
+    --border: #d1dff5;
+    --white: #ffffff;
+    --text: #1e293b;
+    --text-soft: #475569;
+    --radius: 12px;
+    --shadow: 0 2px 16px rgba(26,110,216,0.10);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: #f0f5ff;
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  header {
+    background: var(--white);
+    border-bottom: 3px solid var(--blue);
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .logo {
+    width: 38px; height: 38px;
+    background: var(--blue);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-weight: 800; font-size: 18px;
+  }
+
+  header h1 {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--blue-dark);
+    letter-spacing: -0.5px;
+  }
+
+  header span {
+    font-size: 0.85rem;
+    color: var(--gray);
+    font-weight: 600;
+  }
+
+  .score-badge {
+    margin-left: auto;
+    background: var(--blue-light);
+    color: var(--blue-dark);
+    border-radius: 20px;
+    padding: 6px 18px;
+    font-weight: 800;
+    font-size: 1rem;
+    border: 2px solid var(--border);
+  }
+
+  main {
+    max-width: 820px;
+    margin: 36px auto;
+    padding: 0 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .section-card {
+    background: var(--white);
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+    border: 1.5px solid var(--border);
+    overflow: hidden;
+  }
+
+  .section-header {
+    background: linear-gradient(90deg, var(--blue) 0%, var(--blue-mid) 100%);
+    color: white;
+    padding: 16px 24px;
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: 0.2px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-header .badge {
+    background: rgba(255,255,255,0.25);
+    border-radius: 8px;
+    padding: 2px 10px;
+    font-size: 0.8rem;
+    font-weight: 700;
+  }
+
+  .section-body {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* True/False */
+  .tf-item {
+    background: var(--gray-light);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    border: 1.5px solid var(--border);
+  }
+
+  .tf-item p {
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--text);
+    font-size: 0.97rem;
+  }
+
+  .tf-options {
+    display: flex;
+    gap: 12px;
+  }
+
+  .tf-btn {
+    padding: 8px 28px;
+    border-radius: 8px;
+    border: 2px solid var(--border);
+    background: white;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.92rem;
+    cursor: pointer;
+    transition: all 0.18s;
+    color: var(--text);
+  }
+
+  .tf-btn:hover { border-color: var(--blue); color: var(--blue); background: var(--blue-light); }
+  .tf-btn.selected-correct { background: #dcfce7; border-color: var(--green); color: #15803d; }
+  .tf-btn.selected-wrong { background: #fee2e2; border-color: var(--red); color: #b91c1c; }
+  .tf-btn.show-correct { background: #dcfce7; border-color: var(--green); color: #15803d; }
+
+  .feedback {
+    margin-top: 8px;
+    font-size: 0.83rem;
+    font-weight: 700;
+    display: none;
+  }
+  .feedback.visible { display: block; }
+  .feedback.correct { color: #15803d; }
+  .feedback.wrong { color: #b91c1c; }
+
+  /* Table Ex2 */
+  .ex2-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.93rem;
+  }
+
+  .ex2-table th {
+    background: var(--blue);
+    color: white;
+    padding: 10px 14px;
+    text-align: center;
+    font-weight: 700;
+  }
+
+  .ex2-table td {
+    padding: 10px 14px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    font-weight: 600;
+  }
+
+  .ex2-table tr:nth-child(even) td { background: var(--gray-light); }
+
+  .ex2-input {
+    width: 90px;
+    padding: 5px 8px;
+    border: 2px solid var(--border);
+    border-radius: 7px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-align: center;
+    color: var(--text);
+    transition: border-color 0.15s;
+    background: white;
+  }
+
+  .ex2-input:focus { outline: none; border-color: var(--blue); }
+  .ex2-input.correct { border-color: var(--green); background: #dcfce7; color: #15803d; }
+  .ex2-input.wrong { border-color: var(--red); background: #fee2e2; color: #b91c1c; }
+
+  /* Multiple choice */
+  .mc-item {
+    background: var(--gray-light);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    border: 1.5px solid var(--border);
+  }
+
+  .mc-item p {
+    font-weight: 700;
+    margin-bottom: 12px;
+    font-size: 0.97rem;
+  }
+
+  .mc-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .mc-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: 2px solid var(--border);
+    background: white;
+    cursor: pointer;
+    transition: all 0.16s;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  .mc-option:hover { border-color: var(--blue); background: var(--blue-light); }
+  .mc-option.selected { border-color: var(--blue); background: var(--blue-light); }
+  .mc-option.correct { border-color: var(--green); background: #dcfce7; color: #15803d; }
+  .mc-option.wrong { border-color: var(--red); background: #fee2e2; color: #b91c1c; }
+  .mc-option.show-correct { border-color: var(--green); background: #dcfce7; color: #15803d; }
+
+  .mc-radio {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  /* Rewrite Ex4 */
+  .rw-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background: var(--gray-light);
+    border-radius: var(--radius);
+    padding: 14px 18px;
+    border: 1.5px solid var(--border);
+  }
+
+  .rw-item p {
+    font-weight: 600;
+    font-size: 0.93rem;
+    color: var(--text-soft);
+    font-style: italic;
+  }
+
+  .rw-input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.93rem;
+    color: var(--text);
+    transition: border-color 0.15s;
+    background: white;
+  }
+
+  .rw-input:focus { outline: none; border-color: var(--blue); }
+  .rw-input.correct { border-color: var(--green); background: #dcfce7; color: #15803d; }
+  .rw-input.wrong { border-color: var(--red); background: #fee2e2; color: #b91c1c; }
+
+  /* Dropdown Ex5, Ex6 */
+  .fill-sentence {
+    background: var(--gray-light);
+    border-radius: var(--radius);
+    padding: 16px 20px;
+    border: 1.5px solid var(--border);
+    line-height: 2.2;
+    font-size: 0.97rem;
+    font-weight: 600;
+  }
+
+  .fill-select {
+    display: inline-block;
+    padding: 3px 8px;
+    border: 2px solid var(--blue);
+    border-radius: 7px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--blue-dark);
+    background: white;
+    cursor: pointer;
+    margin: 0 2px;
+    transition: all 0.15s;
+    appearance: none;
+    -webkit-appearance: none;
+    padding-right: 22px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%231a6ed8' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 6px center;
+  }
+
+  .fill-select:focus { outline: none; border-color: var(--blue-dark); }
+  .fill-select.correct { border-color: var(--green); color: #15803d; background-color: #dcfce7; }
+  .fill-select.wrong { border-color: var(--red); color: #b91c1c; background-color: #fee2e2; }
+
+  /* Buttons */
+  .btn-row {
+    display: flex;
+    gap: 12px;
+    padding: 0 24px 24px;
+    flex-wrap: wrap;
+  }
+
+  .btn-check {
+    background: var(--blue);
+    color: white;
+    border: none;
+    padding: 11px 28px;
+    border-radius: 10px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.18s;
+    box-shadow: 0 3px 10px rgba(26,110,216,0.25);
+  }
+
+  .btn-check:hover { background: var(--blue-dark); transform: translateY(-1px); }
+
+  .btn-reset {
+    background: white;
+    color: var(--blue);
+    border: 2px solid var(--blue);
+    padding: 11px 24px;
+    border-radius: 10px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.18s;
+  }
+
+  .btn-reset:hover { background: var(--blue-light); }
+
+  .ex-score {
+    margin-left: auto;
+    background: var(--blue-light);
+    color: var(--blue-dark);
+    border-radius: 10px;
+    padding: 10px 18px;
+    font-weight: 800;
+    font-size: 0.95rem;
+    display: none;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .ex-score.visible { display: flex; }
+
+  .total-section {
+    background: white;
+    border-radius: 18px;
+    box-shadow: var(--shadow);
+    border: 1.5px solid var(--border);
+    padding: 28px;
+    text-align: center;
+    display: none;
+  }
+
+  .total-section.visible { display: block; }
+
+  .total-score-big {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: var(--blue);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .total-label {
+    color: var(--gray);
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 20px;
+  }
+
+  .btn-all {
+    background: var(--blue);
+    color: white;
+    border: none;
+    padding: 13px 36px;
+    border-radius: 12px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(26,110,216,0.28);
+    transition: all 0.18s;
+  }
+
+  .btn-all:hover { background: var(--blue-dark); transform: translateY(-1px); }
+
+  .ex5-select-wrap {
+    display: inline-block;
+    position: relative;
+  }
+
+  @media (max-width: 600px) {
+    header { padding: 14px 16px; }
+    .section-body { padding: 16px; }
+    .btn-row { padding: 0 16px 16px; }
+    .ex2-table { font-size: 0.82rem; }
+    .ex2-input { width: 72px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">P</div>
+  <div>
+    <h1>Tính từ sở hữu & Đại từ sở hữu</h1>
+    <span>Section 2 – Bài tập tương tác</span>
+  </div>
+  <div class="score-badge" id="totalBadge">Tổng điểm: 0</div>
+</header>
+
+<main>
+
+<!-- EXERCISE 1 -->
+<div class="section-card" id="ex1card">
+  <div class="section-header">
+    <span class="badge">Bài 1</span>
+    Chọn True / False
+  </div>
+  <div class="section-body" id="ex1body">
+    <!-- Q1 -->
+    <div class="tf-item" data-correct="true">
+      <p>1. Tính từ sở hữu đóng vai trò như 1 tính từ trong câu</p>
+      <div class="tf-options">
+        <button class="tf-btn" data-val="true">✓ True</button>
+        <button class="tf-btn" data-val="false">✗ False</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+    <!-- Q2 -->
+    <div class="tf-item" data-correct="false">
+      <p>2. Tính từ sở hữu có thể làm chủ ngữ trong câu</p>
+      <div class="tf-options">
+        <button class="tf-btn" data-val="true">✓ True</button>
+        <button class="tf-btn" data-val="false">✗ False</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+    <!-- Q3 -->
+    <div class="tf-item" data-correct="true">
+      <p>3. Đại từ sở hữu chính là đại diện cho một tính từ sở hữu đi kèm với một danh từ</p>
+      <div class="tf-options">
+        <button class="tf-btn" data-val="true">✓ True</button>
+        <button class="tf-btn" data-val="false">✗ False</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+    <!-- Q4 -->
+    <div class="tf-item" data-correct="false">
+      <p>4. Đại từ sở hữu không thể đứng đầu câu</p>
+      <div class="tf-options">
+        <button class="tf-btn" data-val="true">✓ True</button>
+        <button class="tf-btn" data-val="false">✗ False</button>
+      </div>
+      <div class="feedback"></div>
+    </div>
+  </div>
+  <div class="btn-row">
+    <button class="btn-check" onclick="checkEx1()">Kiểm tra</button>
+    <button class="btn-reset" onclick="resetEx1()">Làm lại</button>
+    <div class="ex-score" id="ex1score"></div>
+  </div>
+</div>
+
+<!-- EXERCISE 2 -->
+<div class="section-card" id="ex2card">
+  <div class="section-header">
+    <span class="badge">Bài 2</span>
+    Điền vào bảng đại từ & tính từ sở hữu
+  </div>
+  <div class="section-body">
+    <table class="ex2-table">
+      <thead>
+        <tr>
+          <th>Đại từ</th>
+          <th>Đại từ tân ngữ</th>
+          <th>Tính từ sở hữu</th>
+          <th>Đại từ sở hữu</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>I</td>
+          <td><input class="ex2-input" data-ans="me" placeholder="(1)" id="e2_1"></td>
+          <td>my</td>
+          <td><input class="ex2-input" data-ans="mine" placeholder="(2)" id="e2_2"></td>
+        </tr>
+        <tr>
+          <td>you</td>
+          <td>you</td>
+          <td><input class="ex2-input" data-ans="your" placeholder="(3)" id="e2_3"></td>
+          <td>yours</td>
+        </tr>
+        <tr>
+          <td>he</td>
+          <td>him</td>
+          <td>his</td>
+          <td><input class="ex2-input" data-ans="his" placeholder="(4)" id="e2_4"></td>
+        </tr>
+        <tr>
+          <td><input class="ex2-input" data-ans="she" placeholder="(6)" id="e2_6"></td>
+          <td>her</td>
+          <td><input class="ex2-input" data-ans="her" placeholder="(5)" id="e2_5"></td>
+          <td>hers</td>
+        </tr>
+        <tr>
+          <td>we</td>
+          <td><input class="ex2-input" data-ans="us" placeholder="(7)" id="e2_7"></td>
+          <td>our</td>
+          <td><input class="ex2-input" data-ans="ours" placeholder="(8)" id="e2_8"></td>
+        </tr>
+        <tr>
+          <td>they</td>
+          <td>them</td>
+          <td><input class="ex2-input" data-ans="their" placeholder="(9)" id="e2_9"></td>
+          <td>theirs</td>
+        </tr>
+        <tr>
+          <td>it</td>
+          <td>it</td>
+          <td>its</td>
+          <td><input class="ex2-input" data-ans="its" placeholder="(10)" id="e2_10"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="btn-row">
+    <button class="btn-check" onclick="checkEx2()">Kiểm tra</button>
+    <button class="btn-reset" onclick="resetEx2()">Làm lại</button>
+    <div class="ex-score" id="ex2score"></div>
+  </div>
+</div>
+
+<!-- EXERCISE 3 -->
+<div class="section-card" id="ex3card">
+  <div class="section-header">
+    <span class="badge">Bài 3</span>
+    Chọn đáp án đúng
+  </div>
+  <div class="section-body" id="ex3body">
+    <!-- questions filled by JS -->
+  </div>
+  <div class="btn-row">
+    <button class="btn-check" onclick="checkEx3()">Kiểm tra</button>
+    <button class="btn-reset" onclick="resetEx3()">Làm lại</button>
+    <div class="ex-score" id="ex3score"></div>
+  </div>
+</div>
+
+<!-- EXERCISE 4 -->
+<div class="section-card" id="ex4card">
+  <div class="section-header">
+    <span class="badge">Bài 4</span>
+    Viết lại câu dùng Đại từ sở hữu
+  </div>
+  <div class="section-body" id="ex4body">
+  </div>
+  <div class="btn-row">
+    <button class="btn-check" onclick="checkEx4()">Kiểm tra</button>
+    <button class="btn-reset" onclick="resetEx4()">Làm lại</button>
+    <div class="ex-score" id="ex4score"></div>
+  </div>
+</div>
+
+<!-- EXERCISE 5 (was 6) -->
+<div class="section-card" id="ex5card">
+  <div class="section-header">
+    <span class="badge">Bài 5</span>
+    Chọn từ phù hợp hoàn thành đoạn văn
+  </div>
+  <div class="section-body">
+    <div class="fill-sentence" id="ex5body">
+    </div>
+  </div>
+  <div class="btn-row">
+    <button class="btn-check" onclick="checkEx5()">Kiểm tra</button>
+    <button class="btn-reset" onclick="resetEx5()">Làm lại</button>
+    <div class="ex-score" id="ex5score"></div>
+  </div>
+</div>
+
+<!-- EXERCISE 6 (was 7) -->
+<div class="section-card" id="ex6card">
+  <div class="section-header">
+    <span class="badge">Bài 6</span>
+    Chọn từ trong bảng để điền vào chỗ trống
+  </div>
+  <div class="section-body">
+    <div class="fill-sentence" id="ex6body">
+    </div>
+  </div>
+  <div class="btn-row">
+    <button class="btn-check" onclick="checkEx6()">Kiểm tra</button>
+    <button class="btn-reset" onclick="resetEx6()">Làm lại</button>
+    <div class="ex-score" id="ex6score"></div>
+  </div>
+</div>
+
+<!-- TOTAL -->
+<div class="total-section" id="totalSection">
+  <div class="total-score-big" id="totalNum">0</div>
+  <div class="total-label">điểm tổng cộng</div>
+  <button class="btn-all" onclick="checkAll()">📝 Chấm tất cả bài</button>
+</div>
+
+<div style="text-align:center; padding: 16px 0 36px; color:var(--gray); font-size:0.83rem; font-weight:600;">
+  Học tại Prep – Đỗ mọi kỳ thi tiếng Anh · prep.vn
+</div>
+
+</main>
+
+<script>
+// ===== EXERCISE 3 DATA =====
+const ex3Questions = [
+  { q: "1. The bird sings … happy tune.", opts: ["its","it","it's"], ans: 0 },
+  { q: "2. Listen to … carefully.", opts: ["her","hers","her's"], ans: 0 },
+  { q: "3. … uncle is a doctor. He is a nice person.", opts: ["His","He","She"], ans: 0 },
+  { q: "4. That old man is kind to …", opts: ["our","us","we"], ans: 1 },
+  { q: "5. William and Tracy love … dogs so much.", opts: ["their","theirs","they"], ans: 0 },
+  { q: "6. My car is new but … is old.", opts: ["her","hers","she"], ans: 1 },
+  { q: "7. The teacher told … an interesting story.", opts: ["us","our","we"], ans: 0 },
+  { q: "8. I want to sit between you and …", opts: ["he","him","his"], ans: 1 },
+  { q: "9. She has an apple in … hand.", opts: ["she","her","hers"], ans: 1 },
+  { q: "10. Bob and Ted live near … school.", opts: ["them","their","they"], ans: 1 },
+];
+
+function buildEx3() {
+  const body = document.getElementById('ex3body');
+  body.innerHTML = '';
+  ex3Questions.forEach((item, idx) => {
+    const div = document.createElement('div');
+    div.className = 'mc-item';
+    div.dataset.ans = item.ans;
+    div.dataset.selected = '';
+    div.innerHTML = `<p>${item.q}</p><div class="mc-options">` +
+      item.opts.map((o, i) => `<div class="mc-option" data-idx="${i}" onclick="selectMC(this, ${idx})">
+        <div class="mc-radio"></div>${String.fromCharCode(65+i)}. ${o}
+      </div>`).join('') +
+      `</div><div class="feedback"></div>`;
+    body.appendChild(div);
+  });
+}
+
+function selectMC(el, qIdx) {
+  const item = el.closest('.mc-item');
+  if (item.dataset.locked) return;
+  item.querySelectorAll('.mc-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  item.dataset.selected = el.dataset.idx;
+}
+
+function checkEx3() {
+  const items = document.querySelectorAll('#ex3body .mc-item');
+  let correct = 0;
+  items.forEach(item => {
+    item.dataset.locked = '1';
+    const sel = item.dataset.selected;
+    const ans = item.dataset.ans;
+    item.querySelectorAll('.mc-option').forEach(o => {
+      o.classList.remove('selected','correct','wrong','show-correct');
+    });
+    if (sel === '') {
+      item.querySelectorAll('.mc-option')[parseInt(ans)].classList.add('show-correct');
+    } else if (sel === ans) {
+      item.querySelectorAll('.mc-option')[parseInt(sel)].classList.add('correct');
+      correct++;
+    } else {
+      item.querySelectorAll('.mc-option')[parseInt(sel)].classList.add('wrong');
+      item.querySelectorAll('.mc-option')[parseInt(ans)].classList.add('show-correct');
+    }
+  });
+  showScore('ex3score', correct, items.length);
+  updateTotal();
+}
+
+function resetEx3() {
+  buildEx3();
+  document.getElementById('ex3score').classList.remove('visible');
+  updateTotal();
+}
+
+// ===== EXERCISE 4 DATA =====
+const ex4Data = [
+  { orig: "I prefer our house to their house.", prompt: "I prefer our house to ___________.", ans: "theirs" },
+  { orig: "Her hair looks better than your hair.", prompt: "Her hair looks better than ___________.", ans: "yours" },
+  { orig: "That dog looks like our dog.", prompt: "That dog looks like ___________.", ans: "ours" },
+  { orig: "That car's not her car.", prompt: "That car's not ___________.", ans: "hers" },
+  { orig: "This coat isn't my coat.", prompt: "This coat isn't ___________.", ans: "mine" },
+  { orig: "My cooking is better than his cooking.", prompt: "My cooking is better than ___________.", ans: "his" },
+  { orig: "Is this bike your bike?", prompt: "Is this bike ___________?", ans: "yours" },
+];
+
+function buildEx4() {
+  const body = document.getElementById('ex4body');
+  body.innerHTML = '';
+  ex4Data.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'rw-item';
+    div.innerHTML = `<p>📌 ${item.orig}</p>
+      <input class="rw-input" data-ans="${item.ans}" placeholder="${item.prompt}" id="e4_${i}">
+      <div class="feedback"></div>`;
+    body.appendChild(div);
+  });
+}
+
+function checkEx4() {
+  const inputs = document.querySelectorAll('#ex4body .rw-input');
+  let correct = 0;
+  inputs.forEach(inp => {
+    const val = inp.value.trim().toLowerCase().replace(/[?.]/g,'');
+    const ans = inp.dataset.ans.toLowerCase();
+    inp.classList.remove('correct','wrong');
+    const fb = inp.nextElementSibling;
+    if (val === ans) {
+      inp.classList.add('correct');
+      fb.textContent = '✓ Đúng!';
+      fb.className = 'feedback visible correct';
+      correct++;
+    } else if (val === '') {
+      fb.textContent = `→ Đáp án: ${inp.dataset.ans}`;
+      fb.className = 'feedback visible wrong';
+      inp.classList.add('wrong');
+    } else {
+      fb.textContent = `✗ Sai. Đáp án: ${inp.dataset.ans}`;
+      fb.className = 'feedback visible wrong';
+      inp.classList.add('wrong');
+    }
+  });
+  showScore('ex4score', correct, inputs.length);
+  updateTotal();
+}
+
+function resetEx4() {
+  buildEx4();
+  document.getElementById('ex4score').classList.remove('visible');
+  updateTotal();
+}
+
+// ===== EXERCISE 5 (was 6) =====
+const ex5Blanks = [
+  { opts: ["my","me"], ans: "my" },       // next to "friend"
+  { opts: ["his","her"], ans: "his" },     // sister
+  { opts: ["ours","our"], ans: "our" },    // class
+  { opts: ["her","his"], ans: "her" },     // hair (Fiona's)
+  { opts: ["his","her"], ans: "her" },     // brother
+  { opts: ["his","her"], ans: "her" },     // fingers
+  { opts: ["Theirs","Their"], ans: "Their" }, // house
+  { opts: ["it's","its"], ans: "its" },    // garden
+  { opts: ["their","theirs"], ans: "their" }, // barbecues
+];
+
+const ex5Template = `I live next door to {0} friend David and {1} sister, Fiona. David is in {2} class at college; he's taller than Fiona and {3} hair is darker. Fiona's two years older than {4} brother. She's an art student and she's always got paint on {5} fingers! {6} house is small but {7} garden is beautiful and {8} barbecues are always great fun!`;
+
+function buildEx5() {
+  let html = ex5Template;
+  ex5Blanks.forEach((b, i) => {
+    const opts = b.opts.map(o => `<option value="${o}">${o}</option>`).join('');
+    html = html.replace(`{${i}}`, `<select class="fill-select" data-ans="${b.ans}" data-ex="5"><option value="">---</option>${opts}</select>`);
+  });
+  document.getElementById('ex5body').innerHTML = html;
+}
+
+function checkDropdowns(exId, scoreId) {
+  const sels = document.querySelectorAll(`[data-ex="${exId}"]`);
+  let correct = 0;
+  sels.forEach(sel => {
+    sel.classList.remove('correct','wrong');
+    if (sel.value === '') return;
+    if (sel.value === sel.dataset.ans) { sel.classList.add('correct'); correct++; }
+    else { sel.classList.add('wrong'); }
+    sel.disabled = true;
+  });
+  // show correct for blank ones
+  sels.forEach(sel => {
+    if (!sel.disabled) { sel.value = sel.dataset.ans; sel.classList.add('show-correct'); sel.disabled = true; }
+  });
+  showScore(scoreId, correct, sels.length);
+  updateTotal();
+}
+
+function resetDropdowns(exId, scoreId, buildFn) {
+  buildFn();
+  document.getElementById(scoreId).classList.remove('visible');
+  updateTotal();
+}
+
+function checkEx5() { checkDropdowns(5, 'ex5score'); }
+function resetEx5() { resetDropdowns(5, 'ex5score', buildEx5); }
+
+// ===== EXERCISE 6 (was 7) =====
+const ex6Blanks = [
+  { opts: ["mine","yours","ours"], ans: "mine" },
+  { opts: ["mine","yours","ours"], ans: "yours" },
+  { opts: ["my","our","your"], ans: "my" },
+  { opts: ["hers","mine","yours"], ans: "hers" },
+  { opts: ["our","my","yours"], ans: "our" },
+  { opts: ["mine","yours","ours"], ans: "yours" },
+  { opts: ["mine","yours","ours"], ans: "ours" },
+];
+
+const ex6Template = `A: Is this your suitcase, Sir?
+B: Yes. It's {0}.
+A: Can you open it for me, please? OK. Are these things {1}?
+B: Some of them are {2} clothes, but some of them belong to my wife.
+A: Is this dress {3}?
+B: Yes, she bought it in Thailand.
+A: There are a lot of toys here. Whose are they?
+B: They belong to {4} daughter.
+A: What about all this money. Is it {5}?
+B: Oh, no, it isn't {6}!`;
+
+function buildEx6() {
+  let html = ex6Template;
+  ex6Blanks.forEach((b, i) => {
+    const opts = b.opts.map(o => `<option value="${o}">${o}</option>`).join('');
+    html = html.replace(`{${i}}`, `<select class="fill-select" data-ans="${b.ans}" data-ex="6"><option value="">---</option>${opts}</select>`);
+  });
+  document.getElementById('ex6body').innerHTML = html.replace(/\n/g, '<br>');
+}
+
+function checkEx6() { checkDropdowns(6, 'ex6score'); }
+function resetEx6() { resetDropdowns(6, 'ex6score', buildEx6); }
+
+// ===== EXERCISE 1 =====
+document.querySelectorAll('.tf-item').forEach(item => {
+  item.querySelectorAll('.tf-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (item.dataset.locked) return;
+      item.querySelectorAll('.tf-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      item.dataset.selected = btn.dataset.val;
+    });
+  });
+});
+
+function checkEx1() {
+  const items = document.querySelectorAll('.tf-item');
+  let correct = 0;
+  items.forEach(item => {
+    item.dataset.locked = '1';
+    const sel = item.dataset.selected;
+    const ans = item.dataset.correct;
+    const fb = item.querySelector('.feedback');
+    item.querySelectorAll('.tf-btn').forEach(b => b.classList.remove('selected-correct','selected-wrong','show-correct'));
+    if (!sel) {
+      item.querySelectorAll('.tf-btn').forEach(b => { if(b.dataset.val===ans) b.classList.add('show-correct'); });
+      fb.textContent = `→ Đáp án: ${ans==='true'?'True':'False'}`;
+      fb.className = 'feedback visible wrong';
+    } else if (sel === ans) {
+      item.querySelectorAll('.tf-btn').forEach(b => { if(b.dataset.val===sel) b.classList.add('selected-correct'); });
+      fb.textContent = '✓ Đúng!';
+      fb.className = 'feedback visible correct';
+      correct++;
+    } else {
+      item.querySelectorAll('.tf-btn').forEach(b => {
+        if(b.dataset.val===sel) b.classList.add('selected-wrong');
+        if(b.dataset.val===ans) b.classList.add('show-correct');
+      });
+      fb.textContent = `✗ Sai. Đáp án: ${ans==='true'?'True':'False'}`;
+      fb.className = 'feedback visible wrong';
+    }
+  });
+  showScore('ex1score', correct, items.length);
+  updateTotal();
+}
+
+function resetEx1() {
+  document.querySelectorAll('.tf-item').forEach(item => {
+    delete item.dataset.locked;
+    delete item.dataset.selected;
+    item.querySelectorAll('.tf-btn').forEach(b => b.className='tf-btn');
+    const fb = item.querySelector('.feedback');
+    fb.className = 'feedback';
+    fb.textContent = '';
+  });
+  document.getElementById('ex1score').classList.remove('visible');
+  updateTotal();
+}
+
+// ===== EXERCISE 2 =====
+function checkEx2() {
+  const inputs = document.querySelectorAll('#ex2card .ex2-input');
+  let correct = 0;
+  inputs.forEach(inp => {
+    const val = inp.value.trim().toLowerCase();
+    const ans = inp.dataset.ans.toLowerCase();
+    inp.classList.remove('correct','wrong');
+    if (val === ans) { inp.classList.add('correct'); correct++; }
+    else if (val === '') { inp.classList.add('wrong'); inp.value = inp.dataset.ans; }
+    else { inp.classList.add('wrong'); }
+  });
+  showScore('ex2score', correct, inputs.length);
+  updateTotal();
+}
+
+function resetEx2() {
+  document.querySelectorAll('#ex2card .ex2-input').forEach(inp => {
+    inp.value = '';
+    inp.classList.remove('correct','wrong');
+  });
+  document.getElementById('ex2score').classList.remove('visible');
+  updateTotal();
+}
+
+// ===== HELPERS =====
+function showScore(id, correct, total) {
+  const el = document.getElementById(id);
+  el.textContent = `🎯 ${correct}/${total} đúng`;
+  el.classList.add('visible');
+}
+
+function updateTotal() {
+  let total = 0, max = 0;
+  ['ex1score','ex2score','ex3score','ex4score','ex5score','ex6score'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el.classList.contains('visible')) {
+      const m = el.textContent.match(/(\d+)\/(\d+)/);
+      if (m) { total += parseInt(m[1]); max += parseInt(m[2]); }
+    }
+  });
+  document.getElementById('totalBadge').textContent = `Tổng điểm: ${total}${max ? '/'+max : ''}`;
+  if (max > 0) {
+    const ts = document.getElementById('totalSection');
+    ts.classList.add('visible');
+    document.getElementById('totalNum').textContent = total + (max?'/'+max:'');
+  }
+}
+
+function checkAll() {
+  checkEx1(); checkEx2(); checkEx3(); checkEx4(); checkEx5(); checkEx6();
+}
+
+// ===== INIT =====
+buildEx3();
+buildEx4();
+buildEx5();
+buildEx6();
+</script>
+</body>
+</html>

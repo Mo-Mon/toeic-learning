@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Đại từ phản thân – Prep.vn</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue:#1565C0;--blue-light:#1976D2;--blue-pale:#E3F2FD;--blue-mid:#BBDEFB;
+    --accent:#0D47A1;--green:#2E7D32;--green-light:#E8F5E9;
+    --red:#C62828;--red-light:#FFEBEE;
+    --text:#1A1A2E;--text-muted:#546E7A;--border:#CFD8DC;
+    --bg:#F8FAFF;--card:#FFFFFF;
+    --shadow:0 2px 16px rgba(21,101,192,.07);--radius:14px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Be Vietnam Pro',sans-serif;background:var(--bg);color:var(--text);}
+
+  header{background:#fff;border-bottom:2px solid var(--blue-mid);padding:0 28px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(21,101,192,.06);}
+  .logo{display:flex;align-items:center;gap:9px;}
+  .logo-box{width:34px;height:34px;background:var(--blue);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#fff;}
+  .logo-text{font-size:1rem;font-weight:700;color:var(--blue);}
+  .logo-sub{font-size:.65rem;color:var(--text-muted);}
+
+  .hero{background:linear-gradient(135deg,#1565C0 0%,#1976D2 55%,#42A5F5 100%);color:#fff;padding:34px 28px 28px;text-align:center;position:relative;overflow:hidden;}
+  .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 75% 25%,rgba(255,255,255,.12) 0%,transparent 60%);}
+  .hero h1{font-family:'Playfair Display',serif;font-size:1.85rem;font-weight:700;margin-bottom:5px;position:relative;}
+  .hero p{font-size:.86rem;opacity:.88;position:relative;}
+
+  .content{max-width:780px;margin:0 auto;padding:26px 18px 80px;}
+
+  .ex-card{background:var(--card);border-radius:var(--radius);border:1.5px solid var(--border);padding:24px 24px 20px;margin-bottom:20px;box-shadow:var(--shadow);animation:fadeUp .35s ease both;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+  .ex-label{display:inline-flex;align-items:center;gap:6px;background:var(--blue);color:#fff;border-radius:50px;padding:3px 13px;font-size:.68rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;margin-bottom:11px;}
+  .ex-title{font-size:.95rem;font-weight:700;margin-bottom:13px;color:var(--text);line-height:1.5;}
+  .ex-desc{font-size:.8rem;color:var(--text-muted);margin-bottom:12px;line-height:1.6;}
+
+  /* OPTIONS */
+  .option-list{display:flex;flex-direction:column;gap:8px;}
+  .option-item{display:flex;align-items:center;gap:10px;border:1.5px solid var(--border);border-radius:9px;padding:10px 14px;cursor:pointer;transition:all .16s;background:#fff;}
+  .option-item:hover{border-color:var(--blue);background:var(--blue-pale);}
+  .option-item input{accent-color:var(--blue);width:15px;height:15px;cursor:pointer;flex-shrink:0;}
+  .option-item label{font-size:.87rem;cursor:pointer;font-weight:500;flex:1;}
+  .option-item.correct{border-color:var(--green)!important;background:var(--green-light)!important;}
+  .option-item.wrong{border-color:var(--red)!important;background:var(--red-light)!important;}
+
+  /* SELECT */
+  select.match-select{border:1.5px solid var(--border);border-radius:8px;padding:7px 30px 7px 10px;font-size:.83rem;font-weight:500;color:var(--text);background:#fff;cursor:pointer;transition:border .16s;font-family:'Be Vietnam Pro',sans-serif;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath d='M1 1l4.5 4.5L10 1' stroke='%231565C0' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;}
+  select.match-select:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(21,101,192,.1);}
+  select.match-select.correct{border-color:var(--green)!important;background-color:var(--green-light)!important;}
+  select.match-select.wrong{border-color:var(--red)!important;background-color:var(--red-light)!important;}
+
+  /* MATCH ROW */
+  .match-row{display:flex;align-items:center;gap:10px;margin-bottom:9px;}
+  .match-term{background:var(--blue-pale);border:1.5px solid var(--blue-mid);border-radius:8px;padding:8px 14px;font-size:.85rem;font-weight:700;color:var(--blue);min-width:130px;}
+
+  /* FILL IN */
+  input.fill-in{border:none;border-bottom:2px solid var(--blue-mid);padding:2px 6px;font-size:.85rem;font-family:'Be Vietnam Pro',sans-serif;color:var(--text);background:transparent;width:110px;transition:border .16s;}
+  input.fill-in:focus{outline:none;border-bottom-color:var(--blue);}
+  input.fill-in.correct{border-bottom-color:var(--green);color:var(--green);}
+  input.fill-in.wrong{border-bottom-color:var(--red);color:var(--red);}
+  input.fill-in.wide{width:140px;}
+
+  /* SENTENCE / DIALOGUE ROWS */
+  .sentence-row{background:var(--bg);border-radius:8px;padding:10px 14px;margin-bottom:8px;font-size:.87rem;line-height:2.4;border:1px solid var(--border);}
+  .dialogue-wrap{background:var(--bg);border-radius:10px;padding:16px;border:1px solid var(--border);}
+  .dialogue-line{font-size:.87rem;margin-bottom:7px;display:flex;gap:8px;align-items:baseline;line-height:1.9;}
+  .dialogue-line:last-child{margin-bottom:0;}
+  .speaker{font-weight:700;color:var(--blue);min-width:22px;flex-shrink:0;}
+
+  /* Q BLOCK */
+  .q-block{margin-bottom:18px;}
+  .q-text{font-weight:600;font-size:.87rem;margin-bottom:7px;color:var(--text);}
+  hr.divider{border:none;border-top:1.5px dashed var(--blue-mid);margin:4px 0 16px;}
+
+  /* TF */
+  .tf-question{font-weight:600;font-size:.87rem;margin-bottom:7px;color:var(--text);padding:9px 13px;background:var(--blue-pale);border-radius:8px;border-left:3px solid var(--blue);}
+  .tf-block{margin-bottom:16px;}
+
+  /* WORD BANK */
+  .word-bank{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px;padding:10px 13px;background:var(--blue-pale);border-radius:9px;border:1px dashed var(--blue-mid);}
+  .wb-label{font-size:.72rem;font-weight:700;color:var(--blue);margin-bottom:5px;display:block;width:100%;}
+  .wb-chip{background:#fff;border:1.5px solid var(--blue-mid);border-radius:6px;padding:3px 11px;font-size:.82rem;font-weight:600;color:var(--blue);}
+
+  /* PASSAGE */
+  .passage-box{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:16px;font-size:.87rem;line-height:2.6;margin-bottom:16px;}
+
+  /* EXPLAIN */
+  .explain-block{display:none;margin-top:14px;border-radius:10px;overflow:hidden;border:1.5px solid var(--blue-mid);}
+  .explain-block.show{display:block;}
+  .explain-header{background:var(--blue);color:#fff;padding:8px 14px;font-size:.75rem;font-weight:700;letter-spacing:.5px;}
+  .explain-body{padding:13px 14px;background:var(--blue-pale);}
+  .explain-row{display:flex;gap:10px;margin-bottom:9px;font-size:.82rem;line-height:1.5;}
+  .explain-row:last-child{margin-bottom:0;}
+  .explain-num{background:var(--blue);color:#fff;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:700;flex-shrink:0;margin-top:1px;}
+  .explain-num.wn{background:var(--red);}
+  .efill-ans{font-weight:700;color:var(--green);}
+  .efill-wrong{font-weight:700;color:var(--red);}
+  .explain-reason{color:var(--text-muted);}
+
+  /* SCORE */
+  .score-panel{display:none;background:linear-gradient(135deg,var(--blue) 0%,#42A5F5 100%);color:#fff;border-radius:var(--radius);padding:30px 22px;text-align:center;margin-bottom:26px;}
+  .score-panel.show{display:block;}
+  .score-big{font-size:3.4rem;font-weight:800;line-height:1;}
+  .score-label{font-size:.97rem;opacity:.92;margin-top:6px;}
+  .score-breakdown{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:16px;}
+  .score-chip{background:rgba(255,255,255,.16);border-radius:50px;padding:5px 13px;font-size:.76rem;font-weight:600;}
+  .score-chip.ok{background:rgba(255,255,255,.28);}
+  .score-chip.no{background:rgba(0,0,0,.2);}
+
+  /* SUBMIT */
+  .submit-wrap{text-align:center;padding:8px 0 0;}
+  .btn-submit{background:var(--blue);color:#fff;border:none;border-radius:50px;padding:15px 50px;font-size:.98rem;font-weight:700;cursor:pointer;transition:all .2s;font-family:'Be Vietnam Pro',sans-serif;letter-spacing:.4px;box-shadow:0 4px 18px rgba(21,101,192,.24);}
+  .btn-submit:hover{background:var(--accent);transform:translateY(-2px);}
+  .btn-reset-all{background:transparent;color:var(--blue);border:1.5px solid var(--blue);border-radius:50px;padding:13px 30px;font-size:.88rem;font-weight:600;cursor:pointer;transition:all .2s;font-family:'Be Vietnam Pro',sans-serif;margin-left:12px;}
+  .btn-reset-all:hover{background:var(--blue-pale);}
+
+  @media(max-width:560px){
+    .hero h1{font-size:1.35rem;}
+    .content{padding:16px 10px 60px;}
+    .ex-card{padding:15px 12px;}
+    .match-row{flex-direction:column;gap:6px;}
+    .btn-submit{padding:13px 34px;font-size:.9rem;}
+    .btn-reset-all{padding:11px 22px;margin-left:8px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-box">P</div>
+    <div>
+      <div class="logo-text">PREP.VN</div>
+      <div class="logo-sub">Học tiếng Anh thông minh</div>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <h1>Đại từ phản thân</h1>
+  <p>Reflexive Pronouns · Làm hết 6 bài tập rồi nhấn <strong>Nộp bài</strong> để xem điểm &amp; giải thích</p>
+</div>
+
+<div class="content">
+
+  <div class="score-panel" id="scorePanel">
+    <div class="score-big" id="scoreBig">0/6</div>
+    <div class="score-label" id="scoreLabel"></div>
+    <div class="score-breakdown" id="scoreBreakdown"></div>
+  </div>
+
+  <!-- ===== BÀI 1 – NỐI ===== -->
+  <div class="ex-card">
+    <div class="ex-label">📌 Bài 1</div>
+    <div class="ex-title">Nối mỗi đại từ phản thân với ngôi đại từ tương ứng</div>
+    <div id="ex1"></div>
+    <div class="explain-block" id="exp1">
+      <div class="explain-header">💡 Giải thích đáp án</div>
+      <div class="explain-body" id="exp1body"></div>
+    </div>
+  </div>
+
+  <!-- ===== BÀI 2 – TRUE/FALSE ===== -->
+  <div class="ex-card">
+    <div class="ex-label">📌 Bài 2</div>
+    <div class="ex-title">Chọn True nếu khẳng định đúng, False nếu sai</div>
+    <div id="ex2"></div>
+    <div class="explain-block" id="exp2">
+      <div class="explain-header">💡 Giải thích đáp án</div>
+      <div class="explain-body" id="exp2body"></div>
+    </div>
+  </div>
+
+  <!-- ===== BÀI 3 – ĐIỀN TỪ BẢN ===== -->
+  <div class="ex-card">
+    <div class="ex-label">📌 Bài 3</div>
+    <div class="ex-title">Hoàn thành câu bằng đại từ phản thân – mỗi từ chỉ dùng 1 lần</div>
+    <div class="word-bank">
+      <span class="wb-label">📦 Bảng từ</span>
+      <span class="wb-chip">yourselves</span><span class="wb-chip">themselves</span>
+      <span class="wb-chip">itself</span><span class="wb-chip">myself</span>
+      <span class="wb-chip">himself</span><span class="wb-chip">yourself</span>
+      <span class="wb-chip">ourselves</span><span class="wb-chip">herself</span>
+    </div>
+    <div id="ex3"></div>
+    <div class="explain-block" id="exp3">
+      <div class="explain-header">💡 Giải thích đáp án</div>
+      <div class="explain-body" id="exp3body"></div>
+    </div>
+  </div>
+
+  <!-- ===== BÀI 4 – ĐIỀN TỰ DO ===== -->
+  <div class="ex-card">
+    <div class="ex-label">📌 Bài 4</div>
+    <div class="ex-title">Điền đại từ phản thân phù hợp để hoàn thành câu</div>
+    <div class="ex-desc">Ví dụ: Tommy told a lie. He was ashamed of <strong>himself</strong>.</div>
+    <div id="ex4"></div>
+    <div class="explain-block" id="exp4">
+      <div class="explain-header">💡 Giải thích đáp án</div>
+      <div class="explain-body" id="exp4body"></div>
+    </div>
+  </div>
+
+  <!-- ===== BÀI 5 – NHÂN XƯNG / PHẢN THÂN ===== -->
+  <div class="ex-card">
+    <div class="ex-label">📌 Bài 5</div>
+    <div class="ex-title">Điền đại từ nhân xưng hoặc đại từ phản thân phù hợp</div>
+    <div class="ex-desc">Ví dụ: She looked at <strong>me</strong> and I looked at <strong>her</strong> but we didn't say anything.</div>
+    <div id="ex5"></div>
+    <div class="explain-block" id="exp5">
+      <div class="explain-header">💡 Giải thích đáp án</div>
+      <div class="explain-body" id="exp5body"></div>
+    </div>
+  </div>
+
+  <!-- ===== BÀI 6 – ĐOẠN VĂN TRẮC NGHIỆM ===== -->
+  <div class="ex-card">
+    <div class="ex-label">📌 Bài 6</div>
+    <div class="ex-title">Chọn đáp án đúng để hoàn thành đoạn văn</div>
+    <div class="passage-box" id="passageDisplay"></div>
+    <div id="ex6"></div>
+    <div class="explain-block" id="exp6">
+      <div class="explain-header">💡 Giải thích đáp án</div>
+      <div class="explain-body" id="exp6body"></div>
+    </div>
+  </div>
+
+  <div class="submit-wrap">
+    <button class="btn-submit" onclick="submitAll()">🎯 Nộp bài &amp; Xem điểm</button>
+    <button class="btn-reset-all" onclick="resetAll()">↺ Làm lại từ đầu</button>
+  </div>
+
+</div>
+
+<script>
+/* ===== EX1 – MATCHING ===== */
+const ex1Terms=['Yourself','Himself','Themselves','Myself','Yourselves','Herself','Ourselves','Itself'];
+const ex1Answers={
+  'Yourself':'Ngôi thứ hai số ít',
+  'Himself':'Ngôi thứ ba số ít (nam)',
+  'Themselves':'Ngôi thứ ba số nhiều',
+  'Myself':'Ngôi thứ nhất số ít',
+  'Yourselves':'Ngôi thứ hai số nhiều',
+  'Herself':'Ngôi thứ ba số ít (nữ)',
+  'Ourselves':'Ngôi thứ nhất số nhiều',
+  'Itself':'Ngôi thứ ba số ít (vật/động vật)',
+};
+const ex1Opts=[
+  'Ngôi thứ nhất số ít','Ngôi thứ nhất số nhiều',
+  'Ngôi thứ hai số ít','Ngôi thứ hai số nhiều',
+  'Ngôi thứ ba số ít (nam)','Ngôi thứ ba số ít (nữ)',
+  'Ngôi thứ ba số ít (vật/động vật)','Ngôi thứ ba số nhiều'
+];
+function buildEx1(){
+  document.getElementById('ex1').innerHTML=ex1Terms.map((t,i)=>`
+    <div class="match-row">
+      <div class="match-term">${t}</div>
+      <select class="match-select" id="ex1_${i}">
+        <option value="">-- Chọn ngôi --</option>
+        ${ex1Opts.map(o=>`<option value="${o}">${o}</option>`).join('')}
+      </select>
+    </div>`).join('');
+}
+
+/* ===== EX2 – TRUE/FALSE ===== */
+const ex2Data=[
+  {q:'Đại từ phản thân có thể làm tân ngữ đứng sau cả động từ và giới từ.',ans:'true',
+   explain:'Đúng. Đại từ phản thân dùng làm tân ngữ sau động từ (<em>He hurt <strong>himself</strong></em>) hoặc sau giới từ (<em>She talked about <strong>herself</strong></em>).'},
+  {q:'Đại từ phản thân có thể đứng trước chủ thể để nhấn mạnh.',ans:'false',
+   explain:'Sai. Khi dùng để nhấn mạnh (emphatic use), đại từ phản thân đứng <strong>ngay sau chủ ngữ</strong> hoặc <strong>cuối câu</strong>, không đứng trước chủ ngữ. Ví dụ: <em>I <strong>myself</strong> did it.</em> / <em>I did it <strong>myself</strong>.</em>'},
+];
+const ex2Sel=new Array(ex2Data.length).fill('');
+function buildEx2(){
+  document.getElementById('ex2').innerHTML=ex2Data.map((item,i)=>`
+    <div class="tf-block">
+      <div class="tf-question">${i+1}. ${item.q}</div>
+      <div class="option-list">
+        <div class="option-item" id="tf${i}_t" onclick="pickTF(${i},'true')">
+          <input type="radio" name="tf${i}" id="tft${i}"><label for="tft${i}">A. True</label>
+        </div>
+        <div class="option-item" id="tf${i}_f" onclick="pickTF(${i},'false')">
+          <input type="radio" name="tf${i}" id="tff${i}"><label for="tff${i}">B. False</label>
+        </div>
+      </div>
+      ${i<ex2Data.length-1?'<hr class="divider">':''}
+    </div>`).join('');
+}
+function pickTF(i,v){
+  ex2Sel[i]=v;
+  document.getElementById('tft'+i).checked=(v==='true');
+  document.getElementById('tff'+i).checked=(v==='false');
+}
+
+/* ===== EX3 – FILL FROM BANK (dropdown) ===== */
+const ex3Data=[
+  {sent:'No one can help us. We have to help ___.', ans:'ourselves', explain:'Chủ ngữ <em>We</em> (ngôi 1 số nhiều) → phản thân <strong>ourselves</strong>.'},
+  {sent:'Jane always makes the bed by ___.', ans:'herself', explain:'Chủ ngữ <em>Jane</em> (she, ngôi 3 số ít nữ) → <strong>herself</strong>. "By herself" = một mình.'},
+  {sent:'They painted the wall all by ___.', ans:'themselves', explain:'Chủ ngữ <em>They</em> (ngôi 3 số nhiều) → <strong>themselves</strong>.'},
+  {sent:'I hurt ___ in the playground yesterday.', ans:'myself', explain:'Chủ ngữ <em>I</em> (ngôi 1 số ít) → <strong>myself</strong>.'},
+  {sent:'John, you must behave ___ before your friends.', ans:'yourself', explain:'Chủ ngữ <em>you</em> số ít (John) → <strong>yourself</strong>.'},
+  {sent:'Children, you must do the homework ___.', ans:'yourselves', explain:'Chủ ngữ <em>you</em> số nhiều (Children) → <strong>yourselves</strong>.'},
+  {sent:'Tom defended ___ against the bullies.', ans:'himself', explain:'Chủ ngữ <em>Tom</em> (he, ngôi 3 số ít nam) → <strong>himself</strong>.'},
+  {sent:'The dog is scratching ___.', ans:'itself', explain:'Chủ ngữ <em>The dog</em> (it, ngôi 3 số ít vật) → <strong>itself</strong>.'},
+];
+const ex3Bank=['yourselves','themselves','itself','myself','himself','yourself','ourselves','herself'];
+function buildEx3(){
+  document.getElementById('ex3').innerHTML=ex3Data.map((item,i)=>{
+    const parts=item.sent.split('___');
+    return `<div class="sentence-row">
+      ${parts[0]}<select class="match-select" id="ex3_${i}">
+        <option value="">-- Chọn --</option>
+        ${ex3Bank.map(w=>`<option value="${w}">${w}</option>`).join('')}
+      </select>${parts[1]||''}
+    </div>`;
+  }).join('');
+}
+
+/* ===== EX4 – FREE FILL ===== */
+const ex4Data=[
+  {sent:'Masako cut ___ while she was chopping vegetables.',ans:'herself',
+   explain:'Chủ ngữ <em>Masako</em> = she → <strong>herself</strong>. Cắt vào tay chính mình.'},
+  {sent:'People surround ___ with friends and family during holidays.',ans:'themselves',
+   explain:'Chủ ngữ <em>People</em> = they → <strong>themselves</strong>.'},
+  {sent:'A: Should I marry Steve?\nB: No one can make that decision for you, Ann. Only you ___ can make such an important decision about your own life.',ans:'yourself',
+   explain:'Nhấn mạnh chủ ngữ <em>you</em> số ít (Ann) → <strong>yourself</strong> dùng để nhấn mạnh (emphatic).'},
+  {sent:'Emily and Ryan, be careful! You\'re going to hurt ___!',ans:'yourselves',
+   explain:'Chủ ngữ <em>you</em> số nhiều (Emily and Ryan) → <strong>yourselves</strong>.'},
+  {sent:'A: I hate my job.\nB: Me too. I envy Jacob. He\'s self-employed.\nA: Yeah. I\'d like to work for ___ too.',ans:'myself',
+   explain:'Chủ ngữ <em>I</em> → "work for myself" = tự làm chủ, tự kinh doanh.'},
+  {sent:'Jason, you need to eat better. You should take better care of ___. Your father takes care of ___, and I take care of ___. We take good care of ___. People who take care of ___ have a better chance of staying healthy.',
+   ans:'yourself|himself|myself|ourselves|themselves',
+   explain:'Lần lượt: <strong>yourself</strong> (you=Jason), <strong>himself</strong> (your father), <strong>myself</strong> (I), <strong>ourselves</strong> (we), <strong>themselves</strong> (people).'},
+];
+function buildEx4(){
+  document.getElementById('ex4').innerHTML=ex4Data.map((item,i)=>{
+    if(i===5){
+      // Special multi-blank sentence
+      const parts=item.sent.split('___');
+      let html='<div class="sentence-row" style="white-space:pre-line">';
+      parts.forEach((p,pi)=>{
+        html+=p;
+        if(pi<parts.length-1) html+=`<input class="fill-in" id="ex4_5_${pi}" placeholder="...">`;
+      });
+      html+='</div>';
+      return html;
+    }
+    const parts=item.sent.split('___');
+    const isMultiLine=item.sent.includes('\n');
+    return `<div class="sentence-row" style="${isMultiLine?'white-space:pre-line':''}">
+      ${parts[0]}<input class="fill-in" id="ex4_${i}" placeholder="...">${parts[1]||''}
+    </div>`;
+  }).join('');
+}
+
+/* ===== EX5 – PRONOUN OR REFLEXIVE ===== */
+const ex5Data=[
+  {sent:'When I\'m alone I don\'t always cook for ___.', ans:'myself',
+   explain:'Sau giới từ <em>for</em>, chủ ngữ là <em>I</em> và hành động hướng về chính mình → đại từ phản thân <strong>myself</strong>.'},
+  {sent:'When he looks at ___ in the mirror, he gets very depressed.', ans:'himself',
+   explain:'Chủ ngữ <em>he</em>, nhìn vào gương = nhìn chính mình → <strong>himself</strong>.'},
+  {sent:'Don\'t help ___, I want to do it by ___.',ans:'me|myself',
+   explain:'Chỗ 1: sau động từ <em>help</em>, tân ngữ chỉ người khác (người nói) → đại từ nhân xưng <strong>me</strong>. Chỗ 2: "by myself" = một mình → đại từ phản thân <strong>myself</strong>.'},
+  {sent:'I\'m sorry. I haven\'t got time to teach ___ to cook. You\'ll have to teach ___.',ans:'you|yourself',
+   explain:'Chỗ 1: tân ngữ của <em>teach</em> chỉ người khác (bạn) → đại từ nhân xưng <strong>you</strong>. Chỗ 2: "teach yourself" = tự học → đại từ phản thân <strong>yourself</strong>.'},
+];
+function buildEx5(){
+  document.getElementById('ex5').innerHTML=ex5Data.map((item,i)=>{
+    const parts=item.sent.split('___');
+    let html=`<div class="sentence-row">`;
+    parts.forEach((p,pi)=>{
+      html+=p;
+      if(pi<parts.length-1) html+=`<input class="fill-in" id="ex5_${i}_${pi}" placeholder="...">`;
+    });
+    html+=`</div>`;
+    return html;
+  }).join('');
+}
+
+/* ===== EX6 – MCQ PASSAGE ===== */
+const ex6Data=[
+  {q:'Q1: My brother and (1)___ girlfriend…',opts:['Him','His','He'],ans:1,
+   explain:'Trước danh từ <em>girlfriend</em> cần tính từ sở hữu. Chủ thể là <em>my brother</em> (he) → <strong>His</strong>.'},
+  {q:'Q2: …but (2)___ have only been going out together…',opts:['He','She','They'],ans:2,
+   explain:'Chủ ngữ chỉ cả hai người (my brother + his girlfriend) → <strong>They</strong>.'},
+  {q:'Q3: …he didn\'t like (3)___…',opts:['She','Her','They'],ans:1,
+   explain:'Tân ngữ sau <em>like</em>, chỉ cô gái (she) → đại từ tân ngữ <strong>her</strong>.'},
+  {q:'Q4: …and (4)___ didn\'t like him…',opts:['She','Her','Them'],ans:0,
+   explain:'Chủ ngữ của mệnh đề, chỉ cô gái → <strong>She</strong>.'},
+  {q:'Q5: …later (5)___ became good friends…',opts:['They','We','Them'],ans:0,
+   explain:'Chủ ngữ chỉ cả hai → <strong>They</strong>.'},
+  {q:'Q6: (6)___ both have small flats.',opts:['He','She','They'],ans:2,
+   explain:'Chủ ngữ chỉ cả hai người → <strong>They</strong>.'},
+  {q:'Q7: His flat is in the town centre, and (7)___ very comfortable.',opts:['It','It\'s','Its'],ans:1,
+   explain:'<strong>It\'s</strong> = It is (rút gọn). Căn hộ của anh ấy rất thoải mái. "Its" là tính từ sở hữu, "It" thiếu động từ.'},
+  {q:'Q8: (8)___ is a long way out…',opts:['Hers','Her','She'],ans:0,
+   explain:'Chủ ngữ thay cho "her flat" → đại từ sở hữu <strong>Hers</strong>.'},
+  {q:'Q9: …most of (9)___ free time at his place.',opts:['My','Them','Their'],ans:2,
+   explain:'Trước danh từ <em>free time</em> cần tính từ sở hữu. Chỉ cả hai → <strong>Their</strong>.'},
+  {q:'Q10: …she looks after it (10)___ .',opts:['Him','It','Herself'],ans:2,
+   explain:'"She looks after it herself" = cô ấy tự chăm sóc (xe) lấy, nhấn mạnh bằng đại từ phản thân → <strong>Herself</strong>.'},
+];
+const ex6Sel=new Array(ex6Data.length).fill(-1);
+
+function buildEx6(){
+  // Passage with numbered blanks
+  document.getElementById('passageDisplay').innerHTML=`
+    My brother and <span style="background:var(--blue);color:#fff;border-radius:4px;padding:1px 6px;font-size:.78rem;font-weight:700">(1)</span> girlfriend have known each other for about five years, but
+    <span style="background:var(--blue);color:#fff;border-radius:4px;padding:1px 6px;font-size:.78rem;font-weight:700">(2)</span> have only been going out together for six months. Before that, he didn't like
+    <span style="background:var(--blue);color:#fff;border-radius:4px;padding:1px 6px;font-size:.78rem;font-weight:700">(3)</span> and
+    <span style="background:var(--blue);color:#fff;border-radius:4px;padding:1px 6px;font-size:.78rem;font-weight:700">(4)</span> didn't like him, but later
+    <span style="background:var(--blue);color:#fff;border-radius:4px;padding:1px 6px;font-size:.78rem;font-weight:700">(5)</span> became good friends, and started going out together.
+    <span style="background:var(--blue);color:#fff;border-radius:4px;padding:1px 6px;font-size:.78rem;font-weight:700">(6)</span> both have small flats. His flat is in the town centre, and
+    <span style="background:var(--blue);color:#fff;border-radius:4px;padding:1px 6px;font-size:.78rem;font-weight:700">(7)</span> very comfortable.
+    <span style="background:var(--blue);color:#fff;border-radius:4px;padding:1px 6px;font-size:.78rem;font-weight:700">(8)</span> is a long way out, and it's not as nice. So they spend most of
+    <span style="background:var(--blue);color:#fff;border-radius:4px;padding:1px 6px;font-size:.78rem;font-weight:700">(9)</span> free time at his place. He works in a garage, and she's a teacher, but she doesn't let him touch her car – she looks after it
+    <span style="background:var(--blue);color:#fff;border-radius:4px;padding:1px 6px;font-size:.78rem;font-weight:700">(10)</span>. I like them both very much, and I think they are good for each other, so I hope they will stay together.`;
+
+  document.getElementById('ex6').innerHTML=ex6Data.map((item,qi)=>`
+    <div class="q-block">
+      <div class="q-text">${item.q}</div>
+      <div class="option-list">
+        ${item.opts.map((o,oi)=>`
+          <div class="option-item" id="e6_${qi}_${oi}" onclick="pick6(${qi},${oi})">
+            <input type="radio" name="ex6_${qi}" id="r6_${qi}_${oi}">
+            <label for="r6_${qi}_${oi}">${String.fromCharCode(65+oi)}. ${o}</label>
+          </div>`).join('')}
+      </div>
+      ${qi<ex6Data.length-1?'<hr class="divider">':''}
+    </div>`).join('');
+}
+function pick6(qi,oi){
+  ex6Sel[qi]=oi;
+  ex6Data[qi].opts.forEach((_,i)=>document.getElementById('r6_'+qi+'_'+i).checked=(i===oi));
+}
+
+/* ===== HELPERS ===== */
+function checkFill(id,ans){
+  const inp=document.getElementById(id);
+  if(!inp)return false;
+  inp.classList.remove('correct','wrong');
+  const ok=ans.toLowerCase().split('|').includes(inp.value.trim().toLowerCase());
+  inp.classList.add(ok?'correct':'wrong');
+  return ok;
+}
+function explainRow(num,ok,got,correct,reason){
+  return `<div class="explain-row">
+    <div class="explain-num ${ok?'':'wn'}">${num}</div>
+    <div><div style="font-size:.82rem;margin-bottom:3px">
+      ${ok?`<span class="efill-ans">✓ Đúng:</span> <strong>${correct}</strong>`
+          :`<span class="efill-wrong">✗ Sai</span>${got?` (bạn chọn/điền: <em>${got}</em>)`:''} — Đáp án: <strong>${correct}</strong>`}
+    </div><div class="explain-reason">📝 ${reason}</div></div></div>`;
+}
+
+/* ===== SUBMIT ===== */
+function submitAll(){
+  let total=0;const bd=[];
+
+  /* B1 – MATCHING */
+  {
+    let ok=0;
+    ex1Terms.forEach((t,i)=>{
+      const sel=document.getElementById('ex1_'+i);
+      sel.classList.remove('correct','wrong');
+      if(sel.value===ex1Answers[t]){sel.classList.add('correct');ok++;}
+      else sel.classList.add('wrong');
+    });
+    const pass=ok===ex1Terms.length;if(pass)total++;
+    bd.push({label:`Bài 1 (${ok}/${ex1Terms.length})`,ok:pass});
+    document.getElementById('exp1body').innerHTML=ex1Terms.map((t,i)=>{
+      const v=document.getElementById('ex1_'+i).value;
+      const uok=v===ex1Answers[t];
+      return explainRow(i+1,uok,v,ex1Answers[t],`<em>${t}</em> → ngôi đại từ: <strong>${ex1Answers[t]}</strong>`);
+    }).join('');
+    document.getElementById('exp1').classList.add('show');
+  }
+
+  /* B2 – TF */
+  {
+    let ok=0;
+    ex2Data.forEach((item,i)=>{
+      const tv=document.getElementById('tf'+i+'_t'),fv=document.getElementById('tf'+i+'_f');
+      tv.classList.remove('correct','wrong');fv.classList.remove('correct','wrong');
+      const corEl=item.ans==='true'?tv:fv;corEl.classList.add('correct');
+      if(ex2Sel[i]===item.ans)ok++;
+      else if(ex2Sel[i])(item.ans==='true'?fv:tv).classList.add('wrong');
+    });
+    const pass=ok===ex2Data.length;if(pass)total++;
+    bd.push({label:`Bài 2 (${ok}/${ex2Data.length})`,ok:pass});
+    document.getElementById('exp2body').innerHTML=ex2Data.map((item,i)=>{
+      const uok=ex2Sel[i]===item.ans;
+      return explainRow(i+1,uok,ex2Sel[i]?(ex2Sel[i]==='true'?'True':'False'):'',item.ans==='true'?'True':'False',item.explain);
+    }).join('');
+    document.getElementById('exp2').classList.add('show');
+  }
+
+  /* B3 – FILL FROM BANK */
+  {
+    let ok=0;
+    ex3Data.forEach((item,i)=>{
+      const sel=document.getElementById('ex3_'+i);
+      sel.classList.remove('correct','wrong');
+      if(sel.value===item.ans){sel.classList.add('correct');ok++;}else sel.classList.add('wrong');
+    });
+    const pass=ok===ex3Data.length;if(pass)total++;
+    bd.push({label:`Bài 3 (${ok}/${ex3Data.length})`,ok:pass});
+    document.getElementById('exp3body').innerHTML=ex3Data.map((item,i)=>{
+      const v=document.getElementById('ex3_'+i).value;
+      return explainRow(i+1,v===item.ans,v,item.ans,item.explain);
+    }).join('');
+    document.getElementById('exp3').classList.add('show');
+  }
+
+  /* B4 – FREE FILL */
+  {
+    let ok=0,tot=0;
+    // items 0-4: single blank; item 5: multi-blank
+    ex4Data.forEach((item,i)=>{
+      if(i===5){
+        const answers=['yourself','himself','myself','ourselves','themselves'];
+        answers.forEach((ans,pi)=>{
+          tot++;
+          if(checkFill('ex4_5_'+pi,ans))ok++;
+        });
+      } else {
+        tot++;
+        if(checkFill('ex4_'+i,item.ans))ok++;
+      }
+    });
+    const pass=ok===tot;if(pass)total++;
+    bd.push({label:`Bài 4 (${ok}/${tot})`,ok:pass});
+    let rows='';
+    ex4Data.forEach((item,i)=>{
+      if(i===5){
+        const answers=['yourself','himself','myself','ourselves','themselves'];
+        answers.forEach((ans,pi)=>{
+          const val=document.getElementById('ex4_5_'+pi)?.value.trim()||'';
+          const uok=val.toLowerCase()===ans.toLowerCase();
+          rows+=explainRow(`5.${pi+1}`,uok,val,ans,['你=Jason','你父亲=himself','I=myself','we=ourselves','people=themselves'][pi]||item.explain.split(',')[pi]);
+        });
+      } else {
+        const val=document.getElementById('ex4_'+i)?.value.trim()||'';
+        const uok=val.toLowerCase()===item.ans.split('|')[0].toLowerCase();
+        rows+=explainRow(i+1,uok,val,item.ans.split('|')[0],item.explain);
+      }
+    });
+    // fix 5.x labels with proper explanations
+    document.getElementById('exp4body').innerHTML=
+      ex4Data.slice(0,5).map((item,i)=>{
+        const val=document.getElementById('ex4_'+i)?.value.trim()||'';
+        const uok=val.toLowerCase()===item.ans.split('|')[0].toLowerCase();
+        return explainRow(i+1,uok,val,item.ans.split('|')[0],item.explain);
+      }).join('')+
+      ['yourself','himself','myself','ourselves','themselves'].map((ans,pi)=>{
+        const val=document.getElementById('ex4_5_'+pi)?.value.trim()||'';
+        const uok=val.toLowerCase()===ans;
+        const labels=['Chủ ngữ <em>you</em> (Jason) → <strong>yourself</strong>.','Chủ ngữ <em>your father</em> (he) → <strong>himself</strong>.','Chủ ngữ <em>I</em> → <strong>myself</strong>.','Chủ ngữ <em>we</em> (Your father and I) → <strong>ourselves</strong>.','Chủ ngữ <em>People</em> → <strong>themselves</strong>.'];
+        return explainRow(`6.${pi+1}`,uok,val,ans,labels[pi]);
+      }).join('');
+    document.getElementById('exp4').classList.add('show');
+  }
+
+  /* B5 – PRONOUN OR REFLEXIVE */
+  {
+    let ok=0,tot=0;
+    const ex5Blanks=[
+      [{id:'ex5_0_0',ans:'myself'}],
+      [{id:'ex5_1_0',ans:'himself'}],
+      [{id:'ex5_2_0',ans:'me'},{id:'ex5_2_1',ans:'myself'}],
+      [{id:'ex5_3_0',ans:'you'},{id:'ex5_3_1',ans:'yourself'}],
+    ];
+    ex5Blanks.forEach(group=>group.forEach(b=>{tot++;if(checkFill(b.id,b.ans))ok++;}));
+    const pass=ok===tot;if(pass)total++;
+    bd.push({label:`Bài 5 (${ok}/${tot})`,ok:pass});
+    document.getElementById('exp5body').innerHTML=ex5Data.map((item,i)=>{
+      const blanks=ex5Blanks[i];
+      const correct=item.ans;
+      const vals=blanks.map(b=>document.getElementById(b.id)?.value.trim()||'').join(' / ');
+      const uok=blanks.every(b=>{
+        const v=document.getElementById(b.id)?.value.trim().toLowerCase();
+        return v===b.ans.toLowerCase();
+      });
+      return explainRow(i+1,uok,vals,correct.replace('|',' / '),item.explain);
+    }).join('');
+    document.getElementById('exp5').classList.add('show');
+  }
+
+  /* B6 – MCQ */
+  {
+    let ok=0,tot=ex6Data.length;
+    ex6Data.forEach((item,qi)=>{
+      item.opts.forEach((_,oi)=>{
+        const el=document.getElementById('e6_'+qi+'_'+oi);
+        el.classList.remove('correct','wrong');
+        if(oi===item.ans)el.classList.add('correct');
+        else if(oi===ex6Sel[qi])el.classList.add('wrong');
+      });
+      if(ex6Sel[qi]===item.ans)ok++;
+    });
+    const pass=ok===tot;if(pass)total++;
+    bd.push({label:`Bài 6 (${ok}/${tot})`,ok:pass});
+    document.getElementById('exp6body').innerHTML=ex6Data.map((item,qi)=>{
+      const uok=ex6Sel[qi]===item.ans;
+      const ua=ex6Sel[qi]>=0?item.opts[ex6Sel[qi]]:'(chưa chọn)';
+      return explainRow(qi+1,uok,ua,item.opts[item.ans],item.explain);
+    }).join('');
+    document.getElementById('exp6').classList.add('show');
+  }
+
+  /* SCORE PANEL */
+  const panel=document.getElementById('scorePanel');panel.classList.add('show');
+  document.getElementById('scoreBig').textContent=total+'/6';
+  document.getElementById('scoreLabel').textContent=
+    total===6?'🎉 Xuất sắc! Bạn hoàn thành tất cả!':
+    total>=4?'👏 Rất tốt! Xem giải thích bên dưới nhé.':
+    total>=2?'💪 Cố lên! Đọc giải thích và thử lại.':
+    '📖 Ôn lại lý thuyết về đại từ phản thân rồi thử lại!';
+  document.getElementById('scoreBreakdown').innerHTML=
+    bd.map(b=>`<span class="score-chip ${b.ok?'ok':'no'}">${b.ok?'✓':'✗'} ${b.label}</span>`).join('');
+  panel.scrollIntoView({behavior:'smooth'});
+}
+
+/* ===== RESET ===== */
+function resetAll(){
+  ex1Terms.forEach((_,i)=>{const s=document.getElementById('ex1_'+i);s.value='';s.classList.remove('correct','wrong');});
+  ex2Sel.fill('');
+  ex2Data.forEach((_,i)=>{
+    ['t','f'].forEach(v=>{document.getElementById('tf'+i+'_'+v).classList.remove('correct','wrong');document.getElementById('tf'+i+(v==='t'?'t':'f')).checked=false;});
+    document.getElementById('tft'+i).checked=false;document.getElementById('tff'+i).checked=false;
+  });
+  ex3Data.forEach((_,i)=>{const s=document.getElementById('ex3_'+i);s.value='';s.classList.remove('correct','wrong');});
+  ex4Data.forEach((item,i)=>{
+    if(i===5){[0,1,2,3,4].forEach(pi=>{const inp=document.getElementById('ex4_5_'+pi);if(inp){inp.value='';inp.classList.remove('correct','wrong');}});}
+    else{const inp=document.getElementById('ex4_'+i);if(inp){inp.value='';inp.classList.remove('correct','wrong');}}
+  });
+  [[0],[0],[0,1],[0,1]].forEach((blanks,i)=>blanks.forEach(pi=>{const inp=document.getElementById('ex5_'+i+'_'+pi);if(inp){inp.value='';inp.classList.remove('correct','wrong');}}));
+  ex6Data.forEach((_,qi)=>{ex6Sel[qi]=-1;[0,1,2].forEach(oi=>{const el=document.getElementById('e6_'+qi+'_'+oi);el.classList.remove('correct','wrong');document.getElementById('r6_'+qi+'_'+oi).checked=false;});});
+  document.querySelectorAll('.explain-block').forEach(e=>e.classList.remove('show'));
+  document.getElementById('scorePanel').classList.remove('show');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+/* ===== INIT ===== */
+buildEx1();buildEx2();buildEx3();buildEx4();buildEx5();buildEx6();
+</script>
+</body>
+</html>
