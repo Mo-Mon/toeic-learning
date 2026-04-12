@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Học Tiếng Anh – Thể Thao</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Fraunces:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue-main: #2563eb;
+    --blue-light: #eff6ff;
+    --blue-mid: #bfdbfe;
+    --blue: #0369a1;
+    --blue-light: #f0f9ff;
+    --blue-mid: #bae6fd;
+    --orange: #ea580c;
+    --orange-light: #fff7ed;
+    --red: #dc2626;
+    --red-light: #fef2f2;
+    --yellow: #d97706;
+    --gray: #64748b;
+    --gray-light: #f8fafc;
+    --border: #e2e8f0;
+    --white: #ffffff;
+    --dark: #0f172a;
+    --shadow: 0 4px 24px rgba(15,23,42,0.10);
+    --shadow-lg: 0 8px 40px rgba(15,23,42,0.15);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: #f1f5f0;
+    min-height: 100vh;
+    color: var(--dark);
+  }
+
+  /* HEADER */
+  header {
+    background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 50%, #3b82f6 100%);
+    color: white;
+    padding: 32px 20px 22px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 50%;
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: -30px;
+    width: 160px; height: 160px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 50%;
+  }
+  header h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 2.1rem;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+    position: relative;
+  }
+  header p { font-size: 0.97rem; opacity: 0.88; position: relative; }
+
+  /* TAB BAR */
+  .tab-bar {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    background: white;
+    padding: 14px 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    flex-wrap: wrap;
+  }
+  .tab-btn {
+    padding: 9px 28px;
+    border-radius: 50px;
+    border: 2px solid var(--blue-main);
+    background: white;
+    color: var(--blue-main);
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .tab-btn.active, .tab-btn:hover {
+    background: var(--blue-main);
+    color: white;
+    box-shadow: 0 4px 16px rgba(22,163,74,0.3);
+  }
+
+  .tab-content { display: none; padding: 28px 16px 60px; max-width: 1100px; margin: 0 auto; }
+  .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+  /* SECTION TITLE */
+  .sec-title {
+    font-family: 'Fraunces', serif;
+    font-size: 1.5rem;
+    color: var(--blue-main);
+    margin-bottom: 22px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 10px;
+    border-bottom: 2.5px solid var(--blue-mid);
+  }
+
+  /* VOCAB CARDS */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+    gap: 16px;
+    margin-bottom: 44px;
+  }
+  .vocab-card {
+    background: white;
+    border-radius: 18px;
+    padding: 20px 18px 15px;
+    box-shadow: var(--shadow);
+    border: 1.5px solid var(--border);
+    transition: transform 0.18s, box-shadow 0.18s;
+    position: relative;
+    overflow: hidden;
+  }
+  .vocab-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #2563eb, #3b82f6);
+    border-radius: 18px 18px 0 0;
+  }
+  .vocab-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+  .vocab-card .word { font-size: 1.4rem; font-weight: 900; color: var(--blue-main); margin-bottom: 3px; }
+  .vocab-card .ipa { font-size: 0.85rem; color: var(--gray); margin-bottom: 5px; letter-spacing: 0.5px; }
+  .vocab-card .type-badge {
+    display: inline-block;
+    background: var(--blue-light);
+    color: var(--blue-main);
+    font-size: 0.72rem; font-weight: 800;
+    border-radius: 8px; padding: 2px 9px;
+    margin-bottom: 8px; text-transform: uppercase;
+  }
+  .vocab-card .meaning { font-size: 1rem; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
+  .vocab-card .note {
+    font-size: 0.82rem; color: var(--gray);
+    background: var(--gray-light);
+    border-radius: 8px; padding: 6px 10px;
+    margin-bottom: 10px; line-height: 1.5;
+  }
+  .vocab-card .example {
+    font-size: 0.85rem; color: var(--gray);
+    font-style: italic;
+    border-left: 3px solid var(--blue-mid);
+    padding-left: 9px;
+    margin-bottom: 10px; line-height: 1.5;
+  }
+  .speak-btn {
+    background: var(--blue-light); border: none;
+    border-radius: 20px; padding: 5px 13px;
+    cursor: pointer; font-size: 0.85rem;
+    font-weight: 700; color: var(--blue-main);
+    font-family: 'Outfit', sans-serif;
+    transition: background 0.15s;
+  }
+  .speak-btn:hover { background: var(--blue-mid); }
+  .cat-badge {
+    position: absolute; top: 12px; right: 12px;
+    font-size: 0.68rem; font-weight: 800;
+    background: var(--blue-main); color: white;
+    border-radius: 8px; padding: 2px 8px;
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+
+  /* QUIZ */
+  .quiz-box {
+    background: white; border-radius: 20px;
+    padding: 28px; box-shadow: var(--shadow);
+    border: 1.5px solid var(--border);
+  }
+  .quiz-controls { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; align-items: center; }
+  .toggle-btn {
+    padding: 8px 20px; border-radius: 20px;
+    border: 2px solid var(--blue-main);
+    background: white; color: var(--blue-main);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700; cursor: pointer;
+    font-size: 0.9rem; transition: all 0.15s;
+  }
+  .toggle-btn.active { background: var(--blue-main); color: white; }
+  .quiz-score { margin-left: auto; font-weight: 800; color: var(--blue-main); font-size: 0.95rem; }
+  .quiz-q {
+    font-size: 1.5rem; font-weight: 900;
+    text-align: center; color: var(--dark);
+    margin-bottom: 22px; padding: 18px;
+    background: var(--blue-light);
+    border-radius: 14px; min-height: 70px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .quiz-opts {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 10px; margin-bottom: 16px;
+  }
+  .q-opt {
+    padding: 13px 14px; border-radius: 12px;
+    border: 2px solid var(--border); background: white;
+    font-family: 'Outfit', sans-serif; font-size: 0.95rem;
+    font-weight: 700; cursor: pointer;
+    transition: all 0.15s; text-align: center;
+  }
+  .q-opt:hover:not(:disabled) { border-color: var(--blue-main); background: var(--blue-light); }
+  .q-opt.correct { background: var(--blue-light); border-color: var(--blue-main); color: var(--blue-main); }
+  .q-opt.wrong { background: var(--red-light); border-color: var(--red); color: var(--red); }
+  .q-fb { min-height: 36px; border-radius: 10px; padding: 9px 14px; font-weight: 700; font-size: 0.93rem; margin-bottom: 12px; display: none; }
+  .q-fb.show { display: block; }
+  .q-fb.ok { background: var(--blue-light); color: var(--blue-main); }
+  .q-fb.bad { background: var(--red-light); color: var(--red); }
+  .next-btn {
+    display: block; margin: 0 auto;
+    padding: 11px 36px; background: var(--blue-main);
+    color: white; border: none; border-radius: 24px;
+    font-family: 'Outfit', sans-serif; font-size: 1rem;
+    font-weight: 800; cursor: pointer; transition: background 0.15s;
+  }
+  .next-btn:hover { background: #1d4ed8; }
+
+  /* EXERCISES */
+  .ex-block {
+    background: white; border-radius: 18px;
+    padding: 26px 24px; box-shadow: var(--shadow);
+    border: 1.5px solid var(--border);
+    margin-bottom: 28px;
+    border-top: 4px solid var(--blue-main);
+  }
+  .ex-block h3 { font-size: 1.1rem; font-weight: 900; color: var(--blue-main); margin-bottom: 5px; }
+  .ex-desc { font-size: 0.9rem; color: var(--gray); margin-bottom: 18px; font-style: italic; }
+  .ex-divider { border: none; border-top: 2.5px dashed var(--blue-mid); margin: 30px 0; }
+
+  /* Bài 1 - P/S */
+  .ps-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px; margin-bottom: 10px;
+  }
+  .ps-item { display: flex; align-items: center; gap: 10px; }
+  .ps-item label { font-weight: 700; min-width: 120px; font-size: 0.95rem; }
+  .ps-select {
+    border: 2px solid var(--border); border-radius: 8px;
+    padding: 7px 12px; font-family: 'Outfit', sans-serif;
+    font-size: 0.9rem; font-weight: 700; background: white;
+    cursor: pointer; min-width: 80px;
+  }
+  .ps-select.correct { border-color: var(--blue-main); background: var(--blue-light); color: var(--blue-main); }
+  .ps-select.wrong { border-color: var(--red); background: var(--red-light); color: var(--red); }
+
+  /* Bài 2 - Nhìn tranh */
+  .picture-section { margin-bottom: 20px; }
+  .picture-img {
+    width: 100%;
+    max-width: 700px;
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    display: block;
+    margin: 0 auto 20px;
+    border: 2px solid var(--border);
+    object-fit: contain;
+  }
+  .fill-item { margin-bottom: 14px; }
+  .fill-item .fill-label { font-weight: 700; font-size: 0.95rem; margin-bottom: 6px; color: var(--dark); }
+  .fill-sentence {
+    font-size: 0.97rem; line-height: 2.2;
+    display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+  }
+  .fill-inp {
+    border: none; border-bottom: 2.5px solid var(--blue-main);
+    background: var(--blue-light); border-radius: 6px 6px 0 0;
+    padding: 3px 10px; font-family: 'Outfit', sans-serif;
+    font-size: 0.97rem; font-weight: 700;
+    width: 140px; text-align: center; outline: none;
+    transition: border 0.15s;
+  }
+  .fill-inp:focus { border-bottom-color: #1d4ed8; }
+  .fill-inp.correct { border-bottom-color: var(--blue-main); background: var(--blue-light); color: var(--blue-main); }
+  .fill-inp.wrong { border-bottom-color: var(--red); background: var(--red-light); color: var(--red); }
+
+  /* Bài 3 - Listening MCQ */
+  .audio-wrap {
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    border-radius: 14px; padding: 16px 20px;
+    margin-bottom: 20px; display: flex;
+    align-items: center; gap: 14px;
+    border: 1.5px solid #bfdbfe;
+  }
+  .audio-wrap audio { flex: 1; }
+
+  /* Bài 4 - MCQ fill */
+  .mcq-item { margin-bottom: 20px; }
+  .mcq-q { font-weight: 700; margin-bottom: 8px; font-size: 0.97rem; line-height: 1.6; }
+  .mcq-hint { font-size: 0.82rem; color: var(--gray); font-style: italic; margin-bottom: 8px; }
+  .mcq-opts-wrap { display: flex; flex-direction: column; gap: 7px; }
+  .mcq-opt {
+    padding: 9px 15px; border-radius: 10px;
+    border: 2px solid var(--border); background: white;
+    font-family: 'Outfit', sans-serif; font-size: 0.93rem;
+    font-weight: 700; cursor: pointer; transition: all 0.15s; text-align: left;
+  }
+  .mcq-opt:hover:not(.disabled) { border-color: var(--blue-main); background: var(--blue-light); }
+  .mcq-opt.correct { background: var(--blue-light); border-color: var(--blue-main); color: var(--blue-main); }
+  .mcq-opt.wrong { background: var(--red-light); border-color: var(--red); color: var(--red); }
+  .mcq-opt.disabled { cursor: default; }
+  .mcq-fb { margin-top: 8px; font-size: 0.87rem; font-weight: 700; padding: 7px 12px; border-radius: 8px; display: none; line-height: 1.5; }
+  .mcq-fb.show { display: block; }
+  .mcq-fb.ok { background: var(--blue-light); color: var(--blue-main); }
+  .mcq-fb.bad { background: var(--red-light); color: var(--red); }
+
+  /* Bài 5 - Hội thoại */
+  .dialogue-wrap {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 16px; margin-bottom: 18px;
+    background: var(--gray-light); border-radius: 14px;
+    padding: 18px; border: 1.5px solid var(--border);
+  }
+  .dialogue-col h4 { font-size: 0.78rem; font-weight: 800; color: var(--blue-main); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
+  .dialogue-col p { font-size: 0.88rem; line-height: 1.85; }
+  .dialogue-col p b { color: var(--blue); }
+  .dlg-blank {
+    display: inline-block;
+    border: none; border-bottom: 2px solid var(--blue-main);
+    background: white; border-radius: 4px 4px 0 0;
+    padding: 2px 8px; font-family: 'Outfit', sans-serif;
+    font-size: 0.88rem; font-weight: 700; width: 50px;
+    text-align: center; outline: none;
+  }
+  .dlg-blank.correct { border-bottom-color: var(--blue-main); background: var(--blue-light); color: var(--blue-main); }
+  .dlg-blank.wrong { border-bottom-color: var(--red); background: var(--red-light); color: var(--red); }
+  .options-pool {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-bottom: 14px; background: var(--blue-light);
+    padding: 12px; border-radius: 10px; border: 1.5px solid #bfdbfe;
+  }
+  .options-pool .opt-chip {
+    background: white; border: 1.5px solid #bfdbfe;
+    border-radius: 8px; padding: 4px 12px;
+    font-weight: 800; font-size: 0.88rem; color: var(--blue-main);
+  }
+
+  /* Bài 6 - Reading */
+  .reading-texts { margin-bottom: 20px; }
+  .reading-person {
+    background: var(--gray-light); border-radius: 12px;
+    padding: 16px; margin-bottom: 12px;
+    border-left: 4px solid var(--blue-main);
+  }
+  .reading-person h4 { font-size: 0.85rem; font-weight: 900; color: var(--blue-main); margin-bottom: 7px; text-transform: uppercase; letter-spacing: 1px; }
+  .reading-person p { font-size: 0.9rem; line-height: 1.75; color: #334155; }
+  .reading-mcq { margin-bottom: 14px; }
+  .reading-mcq .rq { font-weight: 700; font-size: 0.95rem; margin-bottom: 8px; }
+  .person-opts { display: flex; gap: 8px; flex-wrap: wrap; }
+  .person-opt {
+    padding: 8px 20px; border-radius: 20px;
+    border: 2px solid var(--border); background: white;
+    font-family: 'Outfit', sans-serif; font-size: 0.9rem;
+    font-weight: 700; cursor: pointer; transition: all 0.15s;
+  }
+  .person-opt:hover:not(.disabled) { border-color: var(--blue-main); background: var(--blue-light); }
+  .person-opt.correct { background: var(--blue-light); border-color: var(--blue-main); color: var(--blue-main); }
+  .person-opt.wrong { background: var(--red-light); border-color: var(--red); color: var(--red); }
+  .person-opt.disabled { cursor: default; }
+  .r-fb { margin-top: 6px; font-size: 0.85rem; font-weight: 700; padding: 6px 10px; border-radius: 8px; display: none; }
+  .r-fb.show { display: block; }
+  .r-fb.ok { background: var(--blue-light); color: var(--blue-main); }
+  .r-fb.bad { background: var(--red-light); color: var(--red); }
+
+  /* Buttons */
+  .ex-btn {
+    padding: 9px 24px; border-radius: 20px; border: none;
+    font-family: 'Outfit', sans-serif; font-size: 0.9rem;
+    font-weight: 800; cursor: pointer; transition: all 0.15s;
+    margin-right: 8px; margin-top: 14px;
+  }
+  .ex-btn.check { background: var(--blue-main); color: white; }
+  .ex-btn.check:hover { background: #1d4ed8; }
+  .ex-btn.reset { background: var(--gray-light); color: #374151; border: 2px solid var(--border); }
+  .ex-btn.reset:hover { background: var(--border); }
+  .ex-result { margin-top: 14px; display: none; }
+  .ex-result.show { display: block; }
+  .result-row {
+    display: flex; align-items: flex-start; gap: 8px;
+    padding: 8px 12px; border-radius: 9px;
+    margin-bottom: 6px; font-size: 0.88rem; font-weight: 700;
+  }
+  .result-row.ok { background: var(--blue-light); color: var(--blue-main); }
+  .result-row.bad { background: var(--red-light); color: var(--red); }
+  .result-row .exp { font-weight: 400; color: #374151; margin-left: 4px; }
+
+  /* Summary */
+  .summary-box {
+    background: white; border-radius: 20px;
+    padding: 28px; box-shadow: var(--shadow);
+    border: 1.5px solid var(--border); margin-top: 10px;
+    border-top: 4px solid var(--blue-main);
+  }
+  .summary-box h3 { font-size: 1.15rem; font-weight: 900; color: var(--blue-main); margin-bottom: 16px; }
+  .big-score { font-size: 3rem; font-weight: 900; color: var(--blue-main); text-align: center; margin-bottom: 4px; }
+  .big-score span { font-size: 1.1rem; color: var(--gray); }
+  .pct-bar { height: 14px; background: var(--blue-mid); border-radius: 20px; overflow: hidden; margin: 10px 0 18px; }
+  .pct-fill { height: 100%; background: linear-gradient(90deg, #2563eb, #3b82f6); border-radius: 20px; transition: width 0.6s ease; }
+  .sum-comment { text-align: center; font-size: 1rem; font-weight: 700; color: #374151; margin-bottom: 16px; }
+  .action-row { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 14px; }
+  .action-btn {
+    padding: 11px 28px; border-radius: 24px; border: none;
+    font-family: 'Outfit', sans-serif; font-size: 0.97rem;
+    font-weight: 800; cursor: pointer; transition: all 0.15s;
+  }
+  .action-btn.primary { background: var(--blue-main); color: white; }
+  .action-btn.primary:hover { background: #1d4ed8; }
+  .action-btn.secondary { background: var(--gray-light); color: #374151; border: 2px solid var(--border); }
+
+  @media(max-width:600px) {
+    .quiz-opts { grid-template-columns: 1fr; }
+    .dialogue-wrap { grid-template-columns: 1fr; }
+    .vocab-grid { grid-template-columns: 1fr; }
+    .ps-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>⚽ Học Tiếng Anh – Thể Thao 🏊</h1>
+  <p>Từ Vựng TOEIC Cơ Bản · Section 3</p>
+</header>
+
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="showTab('vocab',this)">📚 Học Từ Mới</button>
+  <button class="tab-btn" onclick="showTab('exercises',this)">✏️ Bài Tập</button>
+</div>
+
+<!-- ===== TAB VOCAB ===== -->
+<div id="tab-vocab" class="tab-content active">
+  <div class="sec-title">🏅 Danh Sách Từ Vựng</div>
+  <div class="vocab-grid" id="vocabGrid"></div>
+
+  <div class="sec-title">🧠 Kiểm Tra Từ Vựng</div>
+  <div class="quiz-box">
+    <div class="quiz-controls">
+      <button class="toggle-btn active" id="btn-en" onclick="setMode('en-vi')">Anh → Việt</button>
+      <button class="toggle-btn" id="btn-vi" onclick="setMode('vi-en')">Việt → Anh</button>
+      <div class="quiz-score" id="quizScore">✅ 0 &nbsp;❌ 0 &nbsp;📊 0/0</div>
+    </div>
+    <div class="quiz-q" id="quizQ">Nhấn "Câu Tiếp Theo" để bắt đầu!</div>
+    <div class="quiz-opts" id="quizOpts"></div>
+    <div class="q-fb" id="quizFb"></div>
+    <button class="next-btn" onclick="nextQuiz()">Câu Tiếp Theo ➡️</button>
+  </div>
+</div>
+
+<!-- ===== TAB EXERCISES ===== -->
+<div id="tab-exercises" class="tab-content">
+
+  <!-- BÀI 1: P/S -->
+  <div class="ex-block" id="ex1">
+    <h3>📝 Bài Tập 1 – Phân Loại Từ Vựng</h3>
+    <p class="ex-desc">Phân loại các từ thành 2 nhóm: Người (P – People) và Môn thể thao (S – Sports). Điền P hoặc S vào ô trống.</p>
+    <div class="ps-grid" id="ex1-items"></div>
+    <button class="ex-btn check" onclick="checkEx1()">✔ Kiểm Tra</button>
+    <button class="ex-btn reset" onclick="resetEx1()">🔄 Làm Lại</button>
+    <div class="ex-result" id="ex1-result"></div>
+  </div>
+  <hr class="ex-divider">
+
+  <!-- BÀI 2: Nhìn tranh điền từ -->
+  <div class="ex-block" id="ex2">
+    <h3>🖼️ Bài Tập 2 – Nhìn Tranh Điền Từ</h3>
+    <p class="ex-desc">Nhìn tranh và điền 1 từ vựng thích hợp vào chỗ trống để hoàn thành câu sau.</p>
+    <div class="picture-section">
+      <img src="bai2.png" alt="Bài tập nhìn tranh" class="picture-img" onerror="this.style.display='none'; document.getElementById('img-fallback').style.display='block'">
+      <div id="img-fallback" style="display:none; background:var(--blue-light); border-radius:14px; padding:20px; text-align:center; color:var(--blue-main); font-weight:700; margin-bottom:16px;">
+        📷 [Hình ảnh bai2.png – đặt cùng thư mục với file HTML]<br>
+        <small style="color:var(--gray)">Picture 1: đội bóng đá | Picture 2: huấn luyện viên cầm đồng hồ | Picture 3: khán giả trên sân vận động | Picture 4: cuộc thi chạy | Picture 5: bắt bóng</small>
+      </div>
+    </div>
+    <div id="ex2-items"></div>
+    <button class="ex-btn check" onclick="checkEx2()">✔ Kiểm Tra</button>
+    <button class="ex-btn reset" onclick="resetEx2()">🔄 Làm Lại</button>
+    <div class="ex-result" id="ex2-result"></div>
+  </div>
+  <hr class="ex-divider">
+
+  <!-- BÀI 3: LISTENING -->
+  <div class="ex-block" id="ex3">
+    <h3>🎧 Bài Tập 3 – Nghe Và Chọn Đáp Án</h3>
+    <p class="ex-desc">Nghe audio và chọn đáp án đúng cho mỗi câu hỏi.</p>
+    <div class="audio-wrap">
+      <span style="font-size:1.5rem">🎵</span>
+      <audio controls src="bai3.mp3" style="width:100%">Trình duyệt không hỗ trợ audio.</audio>
+    </div>
+    <div id="ex3-items"></div>
+    <button class="ex-btn check" onclick="checkEx3()">✔ Kiểm Tra</button>
+    <button class="ex-btn reset" onclick="resetEx3()">🔄 Làm Lại</button>
+    <div class="ex-result" id="ex3-result"></div>
+  </div>
+  <hr class="ex-divider">
+
+  <!-- BÀI 4: MCQ FILL -->
+  <div class="ex-block" id="ex4">
+    <h3>📖 Bài Tập 4 – Chọn Đáp Án Đúng</h3>
+    <p class="ex-desc">Chọn đáp án đúng để hoàn thành các câu dưới đây.</p>
+    <div id="ex4-items"></div>
+    <button class="ex-btn check" onclick="checkEx4()">✔ Kiểm Tra</button>
+    <button class="ex-btn reset" onclick="resetEx4()">🔄 Làm Lại</button>
+    <div class="ex-result" id="ex4-result"></div>
+  </div>
+  <hr class="ex-divider">
+
+  <!-- BÀI 5: DIALOGUE -->
+  <div class="ex-block" id="ex5">
+    <h3>💬 Bài Tập 5 – Hoàn Thành Hội Thoại</h3>
+    <p class="ex-desc">Chọn câu thích hợp (A–F) điền vào chỗ trống trong đoạn hội thoại. Có 1 câu không dùng đến.</p>
+    <div class="options-pool">
+      <strong style="color:var(--gray); margin-right:6px; font-size:0.85rem">Các câu:</strong>
+      <span class="opt-chip">A. What about going running</span>
+      <span class="opt-chip">B. When do you want to start to run</span>
+      <span class="opt-chip">C. Where is there a pool we can use</span>
+      <span class="opt-chip">D. We could join his cycling club</span>
+      <span class="opt-chip">E. It's good and faster than running</span>
+      <span class="opt-chip">F. Why is there a pool we can use</span>
+    </div>
+    <div class="dialogue-wrap" id="ex5-dialogue">
+      <div class="dialogue-col">
+        <h4>🇬🇧 English</h4>
+        <div id="dlg-en"></div>
+      </div>
+      <div class="dialogue-col">
+        <h4>🇻🇳 Tiếng Việt</h4>
+        <div id="dlg-vi"></div>
+      </div>
+    </div>
+    <button class="ex-btn check" onclick="checkEx5()">✔ Kiểm Tra</button>
+    <button class="ex-btn reset" onclick="resetEx5()">🔄 Làm Lại</button>
+    <div class="ex-result" id="ex5-result"></div>
+  </div>
+  <hr class="ex-divider">
+
+  <!-- BÀI 6: READING -->
+  <div class="ex-block" id="ex6">
+    <h3>📚 Bài Tập 6 – Đọc Hiểu</h3>
+    <p class="ex-desc">Đọc 3 đoạn văn của Jeanne, Laura và Thea, sau đó trả lời câu hỏi bằng cách chọn tên người phù hợp.</p>
+    <div class="reading-texts">
+      <div class="reading-person">
+        <h4>Jeanne</h4>
+        <p>At school, we played a lot of team sports, including basketball, volleyball, and football. But I'm not very fast or strong, so I couldn't hit or kick a ball hard. My teammates often laughed at me, so I stopped playing sports. But later I learned that you can get exercise without other people around. Now I sometimes go cycling, swimming and running, but I usually do things alone. Then no-one can get mad at me when I'm slow!</p>
+      </div>
+      <div class="reading-person" style="border-left-color: var(--blue);">
+        <h4 style="color:var(--blue)">Laura</h4>
+        <p>Back when I was in school, I joined many sports. And I liked being a member of a team. We shared some wonderful moments. We traveled to matches by bus, and had parties when we won. Then I was in a terrible car accident three years ago, and I hurt my legs. It still isn't better. It's made me really unhappy. Going fishing is the only sport I can do, and it's so boring! But one of my friends gave me advice on sailing. It sounds fun, so I think I'll try that.</p>
+      </div>
+      <div class="reading-person" style="border-left-color: var(--orange);">
+        <h4 style="color:var(--orange)">Thea</h4>
+        <p>I don't hate team sports, but I prefer doing sports when there aren't lots of other people making noise. That's why I like climbing. It's just me and the mountain and a few other people who also like quiet, beautiful places. I think I would enjoy skiing too, for the same reason, but it is expensive and only in winter.</p>
+      </div>
+    </div>
+    <div id="ex6-items"></div>
+    <button class="ex-btn check" onclick="checkEx6()">✔ Kiểm Tra</button>
+    <button class="ex-btn reset" onclick="resetEx6()">🔄 Làm Lại</button>
+    <div class="ex-result" id="ex6-result"></div>
+  </div>
+
+  <hr class="ex-divider">
+
+  <!-- SUMMARY -->
+  <div class="summary-box">
+    <h3>📊 Tổng Kết Bài Tập</h3>
+    <div class="action-row">
+      <button class="action-btn primary" onclick="checkAll()">📝 Chấm Tất Cả Bài</button>
+      <button class="action-btn secondary" onclick="resetAll()">🔄 Làm Lại Tất Cả</button>
+    </div>
+    <div id="summaryResult" style="display:none; margin-top:22px;">
+      <div class="big-score" id="bigScore"></div>
+      <div class="pct-bar"><div class="pct-fill" id="pctFill" style="width:0%"></div></div>
+      <div class="sum-comment" id="sumComment"></div>
+      <div id="sumDetail"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ===================== VOCAB DATA =====================
+const vocab = [
+  { word:"sailing", ipa:"/'seɪlɪŋ/", type:"noun", cat:"Môn thể thao", meaning:"Đi thuyền", note:"Go sailing: đi thuyền\nSailor (n): thủy thủ", example:"Laura thinks sailing sounds fun, so she'll try it." },
+  { word:"swimmer", ipa:"/'swɪmə/", type:"noun", cat:"Người", meaning:"Vận động viên bơi lội", note:"Swimming (n): bơi lội\nGo swimming: đi bơi", example:"She is a great swimmer who trains every morning." },
+  { word:"skiing", ipa:"/'skiːɪŋ/", type:"noun", cat:"Môn thể thao", meaning:"Trượt tuyết", note:"Go skiing: đi trượt tuyết\nSkier (n): người trượt tuyết", example:"_____ is my favorite winter activity." },
+  { word:"climbing", ipa:"/'klaɪmɪŋ/", type:"noun", cat:"Môn thể thao", meaning:"Leo trèo / Leo núi", note:"Mountain climbing: bộ môn leo núi", example:"Thea likes climbing because it's quiet and beautiful." },
+  { word:"catch", ipa:"/kætʃ/", type:"verb", cat:"Động từ", meaning:"Bắt", note:"catch – caught – caught", example:"I'm a goalkeeper and my job is to catch the ball." },
+  { word:"race", ipa:"/reɪs/", type:"verb/noun", cat:"Động từ", meaning:"Đua / Cuộc đua", note:"Race against others: đua với người khác\nRacer (n): người chạy đua", example:"I used to race against him when we were boys." },
+  { word:"competition", ipa:"/ˌkɒmpə'tɪʃn/", type:"noun", cat:"Danh từ", meaning:"Cuộc thi", note:"compete (v): thi đấu\ncompetitive (adj): cạnh tranh", example:"England has to win to go through to the next round of the competition." },
+  { word:"club", ipa:"/klʌb/", type:"noun", cat:"Danh từ", meaning:"Câu lạc bộ", note:"Join a club: tham gia câu lạc bộ", example:"We are a soccer team from the same club." },
+  { word:"coach", ipa:"/koʊtʃ/", type:"noun", cat:"Người", meaning:"Huấn luyện viên", note:"coaching (n): hoạt động huấn luyện", example:"We got an excellent football coach to help us train." },
+  { word:"fan", ipa:"/fæn/", type:"noun", cat:"Người", meaning:"Người hâm mộ", note:"Nguồn gốc: fanatic (n): người cuồng tín", example:"More than 53,000 fans were at Anfield stadium." },
+  { word:"sailor", ipa:"/'seɪlə/", type:"noun", cat:"Người", meaning:"Thủy thủ", note:"Từ gốc: sailing (n) → sailor (n)", example:"A sailor spends a lot of time on the sea." },
+  { word:"racer", ipa:"/'reɪsə/", type:"noun", cat:"Người", meaning:"Người chạy đua", note:"Từ gốc: race (v) → racer (n)", example:"He is a professional racer who competes internationally." },
+  { word:"skier", ipa:"/'skiːə/", type:"noun", cat:"Người", meaning:"Người trượt tuyết", note:"Từ gốc: skiing (n) → skier (n)", example:"The skier finished the race in record time." },
+  { word:"football", ipa:"/'fʊtbɔːl/", type:"noun", cat:"Môn thể thao", meaning:"Bóng đá", note:"Soccer (US) = Football (UK)", example:"At school, we played a lot of team sports including football." },
+  { word:"swimming", ipa:"/'swɪmɪŋ/", type:"noun", cat:"Môn thể thao", meaning:"Bơi lội", note:"Go swimming: đi bơi\nSwimmer (n): vận động viên bơi", example:"The doctor says swimming is a great exercise." },
+];
+
+// ===================== RENDER VOCAB =====================
+function renderVocab() {
+  document.getElementById('vocabGrid').innerHTML = vocab.map((v,i)=>`
+    <div class="vocab-card" style="animation-delay:${i*0.03}s">
+      <span class="cat-badge">${v.cat}</span>
+      <div class="word">${v.word}</div>
+      <div class="ipa">${v.ipa}</div>
+      <span class="type-badge">${v.type}</span>
+      <div class="meaning">${v.meaning}</div>
+      ${v.note ? `<div class="note">💡 ${v.note.replace(/\n/g,'<br>')}</div>` : ''}
+      <div class="example">"${v.example}"</div>
+      <button class="speak-btn" onclick="speak('${v.word.replace(/'/g,"\\'")}')">🔊 Phát âm</button>
+    </div>
+  `).join('');
+}
+
+function speak(w) {
+  const u = new SpeechSynthesisUtterance(w);
+  u.lang = 'en-US';
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(u);
+}
+
+// ===================== QUIZ =====================
+let qMode='en-vi', qCorrect=0, qWrong=0, qTotal=0, qCurrent=null, qAnswered=false;
+
+function setMode(m) {
+  qMode=m; qCorrect=0; qWrong=0; qTotal=0;
+  document.getElementById('btn-en').classList.toggle('active',m==='en-vi');
+  document.getElementById('btn-vi').classList.toggle('active',m==='vi-en');
+  updateScore(); nextQuiz();
+}
+
+function updateScore() {
+  document.getElementById('quizScore').innerHTML=`✅ ${qCorrect} &nbsp;❌ ${qWrong} &nbsp;📊 ${qCorrect+qWrong}/${qTotal}`;
+}
+
+function nextQuiz() {
+  qAnswered=false;
+  const fb=document.getElementById('quizFb');
+  fb.className='q-fb'; fb.textContent='';
+  const idx=Math.floor(Math.random()*vocab.length);
+  qCurrent=vocab[idx]; qTotal++;
+  updateScore();
+  document.getElementById('quizQ').textContent = qMode==='en-vi'?qCurrent.word:qCurrent.meaning;
+  let pool=vocab.filter((_,i)=>i!==idx).sort(()=>Math.random()-0.5).slice(0,3);
+  let opts=[...pool,qCurrent].sort(()=>Math.random()-0.5);
+  document.getElementById('quizOpts').innerHTML=opts.map(o=>{
+    const lbl=qMode==='en-vi'?o.meaning:o.word;
+    return `<button class="q-opt" onclick="answerQuiz(this,'${o.word.replace(/'/g,"\\'")}')">${lbl}</button>`;
+  }).join('');
+}
+
+function answerQuiz(btn, word) {
+  if(qAnswered) return;
+  qAnswered=true;
+  document.querySelectorAll('.q-opt').forEach(b=>b.disabled=true);
+  const fb=document.getElementById('quizFb');
+  if(word===qCurrent.word) {
+    btn.classList.add('correct'); qCorrect++;
+    fb.className='q-fb show ok';
+    fb.textContent=`✅ Chính xác! "${qCurrent.word}" = "${qCurrent.meaning}"`;
+  } else {
+    btn.classList.add('wrong'); qWrong++;
+    document.querySelectorAll('.q-opt').forEach(b=>{
+      if(qMode==='en-vi'&&b.textContent===qCurrent.meaning) b.classList.add('correct');
+      if(qMode==='vi-en'&&b.textContent===qCurrent.word) b.classList.add('correct');
+    });
+    fb.className='q-fb show bad';
+    fb.textContent=`❌ Sai! Đáp án: "${qCurrent.word}" = "${qCurrent.meaning}"`;
+  }
+  updateScore();
+}
+
+// ===================== EX1: P/S =====================
+const ex1Data = [
+  {word:"coach", answer:"P", meaning:"huấn luyện viên"},
+  {word:"skiing", answer:"S", meaning:"trượt tuyết"},
+  {word:"swimmer", answer:"P", meaning:"vận động viên bơi lội"},
+  {word:"fan", answer:"P", meaning:"người hâm mộ"},
+  {word:"sailing", answer:"S", meaning:"đi thuyền"},
+  {word:"climbing", answer:"S", meaning:"leo núi"},
+  {word:"racer", answer:"P", meaning:"người chạy đua"},
+  {word:"sailor", answer:"P", meaning:"thủy thủ"},
+  {word:"football", answer:"S", meaning:"bóng đá"},
+  {word:"skier", answer:"P", meaning:"người trượt tuyết"},
+];
+
+function renderEx1() {
+  document.getElementById('ex1-items').innerHTML = ex1Data.map((d,i)=>`
+    <div class="ps-item">
+      <label><b>${i+1}.</b> ${d.word}</label>
+      <select class="ps-select" id="ps-${i}">
+        <option value="">--</option>
+        <option value="P">P (People)</option>
+        <option value="S">S (Sports)</option>
+      </select>
+    </div>
+  `).join('');
+}
+
+function checkEx1() {
+  let html='', sc=0;
+  ex1Data.forEach((d,i)=>{
+    const s=document.getElementById(`ps-${i}`);
+    const ok=s.value===d.answer;
+    s.className='ps-select '+(ok?'correct':'wrong');
+    sc+=ok?1:0;
+    if(ok) html+=`<div class="result-row ok">✅ ${d.word}: <b>${d.answer}</b> (${d.meaning}) – Đúng!</div>`;
+    else html+=`<div class="result-row bad">❌ ${d.word}: Bạn chọn "<b>${s.value||'(chưa chọn)'}</b>" – Đáp án: <b>${d.answer}</b> <span class="exp">· ${d.meaning}</span></div>`;
+  });
+  showResult('ex1-result', sc, ex1Data.length, html);
+}
+
+function resetEx1() {
+  ex1Data.forEach((_,i)=>{ const s=document.getElementById(`ps-${i}`); s.value=''; s.className='ps-select'; });
+  document.getElementById('ex1-result').className='ex-result';
+}
+
+// ===================== EX2: PICTURE FILL =====================
+const ex2Data = [
+  { label:"Picture 1", sentence:"We are a soccer team from the same", blank:1, answer:"club", after:".", vi:"Chúng tôi là một đội bóng đến từ cùng câu lạc bộ." },
+  { label:"Picture 2", sentence:"The", blank:2, answer:"coach", after:"is holding a clock.", vi:"Huấn luyện viên đang cầm một cái đồng hồ." },
+  { label:"Picture 3", sentence:"There are a lot of", blank:3, answer:"fans", after:"in the stadium.", vi:"Có rất nhiều người hâm mộ trong sân vận động." },
+  { label:"Picture 4", sentence:"This is a running", blank:4, answer:"competition", after:".", vi:"Đây là một cuộc thi chạy." },
+  { label:"Picture 5", sentence:"They", blank:5, answer:"catch", after:"the ball.", vi:"Họ bắt bóng." },
+];
+
+function renderEx2() {
+  document.getElementById('ex2-items').innerHTML = ex2Data.map((d,i)=>`
+    <div class="fill-item">
+      <div class="fill-label">📸 ${d.label}</div>
+      <div class="fill-sentence">
+        <span>${d.sentence}</span>
+        <input class="fill-inp" type="text" id="ex2-${i}" placeholder="điền từ..." autocomplete="off">
+        <span>${d.after}</span>
+      </div>
+      <div style="font-size:0.8rem;color:var(--gray);margin-top:3px;padding-left:2px">🇻🇳 ${d.vi}</div>
+    </div>
+  `).join('');
+}
+
+function checkEx2() {
+  let html='', sc=0;
+  ex2Data.forEach((d,i)=>{
+    const inp=document.getElementById(`ex2-${i}`);
+    const ok=inp.value.trim().toLowerCase()===d.answer.toLowerCase();
+    inp.className='fill-inp '+(ok?'correct':'wrong');
+    sc+=ok?1:0;
+    if(ok) html+=`<div class="result-row ok">✅ ${d.label}: <b>${d.answer}</b> – Đúng!</div>`;
+    else html+=`<div class="result-row bad">❌ ${d.label}: Bạn viết "<b>${inp.value||'(trống)'}</b>" – Đáp án: <b>${d.answer}</b></div>`;
+  });
+  showResult('ex2-result', sc, ex2Data.length, html);
+}
+
+function resetEx2() {
+  ex2Data.forEach((_,i)=>{ const inp=document.getElementById(`ex2-${i}`); inp.value=''; inp.className='fill-inp'; });
+  document.getElementById('ex2-result').className='ex-result';
+}
+
+// ===================== EX3: LISTENING =====================
+const ex3Data = [
+  { q:"Question 1", opts:["A. race","B. face","C. lace"], answer:0, explain:"race (v) = đua. Ngữ cảnh: 'I used to ___ against him when we were boys' → đua với anh ấy." },
+  { q:"Question 2", opts:["A. sailing","B. fishing","C. swimming"], answer:1, explain:"fishing = câu cá. Ngữ cảnh: 'I never really got into ___' → chưa bao giờ thực sự thích câu cá." },
+  { q:"Question 3", opts:["A. climbing","B. sailing","C. running"], answer:0, explain:"climbing = leo núi. Ngữ cảnh: 'Chris starts ___ as a hobby' → bắt đầu leo núi như một sở thích." },
+  { q:"Question 4", opts:["A. playing","B. cycling","C. swimming"], answer:2, explain:"swimming = bơi lội. Ngữ cảnh: 'The doctor says ___ is a great exercise' → bơi lội là bài tập tốt." },
+  { q:"Question 5", opts:["A. Snowboarding","B. Skiing","C. Sledding"], answer:1, explain:"Skiing = trượt tuyết. Ngữ cảnh: '___ is my favorite winter activity' → trượt tuyết là hoạt động mùa đông yêu thích." },
+];
+
+function renderEx3() {
+  document.getElementById('ex3-items').innerHTML = ex3Data.map((d,i)=>`
+    <div class="mcq-item" id="mcq3-${i}">
+      <div class="mcq-q">${d.q}</div>
+      <div class="mcq-opts-wrap">
+        ${d.opts.map((o,j)=>`<button class="mcq-opt" onclick="pickMCQ('ex3',${i},${j},this)">${o}</button>`).join('')}
+      </div>
+      <div class="mcq-fb" id="fb3-${i}"></div>
+    </div>
+  `).join('');
+}
+
+function pickMCQ(exId, qi, chosen, btn) {
+  const dataset = exId==='ex3'?ex3Data:ex4Data;
+  const d=dataset[qi];
+  const item=document.getElementById(`mcq${exId.slice(2)}-${qi}`);
+  item.querySelectorAll('.mcq-opt').forEach(b=>{ b.classList.add('disabled'); b.onclick=null; });
+  const fb=document.getElementById(`fb${exId.slice(2)}-${qi}`);
+  if(chosen===d.answer) {
+    btn.classList.add('correct');
+    fb.className='mcq-fb show ok';
+    fb.innerHTML=`✅ Chính xác! ${d.explain}`;
+  } else {
+    btn.classList.add('wrong');
+    item.querySelectorAll('.mcq-opt')[d.answer].classList.add('correct');
+    fb.className='mcq-fb show bad';
+    fb.innerHTML=`❌ Sai! Đáp án đúng: <b>${d.opts[d.answer]}</b> – ${d.explain}`;
+  }
+}
+
+function checkEx3() {
+  let html='', sc=0;
+  ex3Data.forEach((d,i)=>{
+    const item=document.getElementById(`mcq3-${i}`);
+    const cor=item.querySelector('.mcq-opt.correct');
+    const wro=item.querySelector('.mcq-opt.wrong');
+    if(!cor&&!wro){ html+=`<div class="result-row bad">❌ ${d.q}: Chưa trả lời. Đáp án: <b>${d.opts[d.answer]}</b></div>`; return; }
+    const ok=!!cor&&!wro;
+    sc+=ok?1:0;
+    if(ok) html+=`<div class="result-row ok">✅ ${d.q}: Đúng! <span class="exp">${d.explain}</span></div>`;
+    else html+=`<div class="result-row bad">❌ ${d.q}: Sai. Đáp án: <b>${d.opts[d.answer]}</b> <span class="exp">${d.explain}</span></div>`;
+  });
+  showResult('ex3-result', sc, ex3Data.length, html);
+}
+
+function resetEx3() { renderEx3(); document.getElementById('ex3-result').className='ex-result'; }
+
+// ===================== EX4: MCQ FILL =====================
+const ex4Data = [
+  {
+    q:"1. England has to win tonight's qualifying match to go through to the next round of the _____.",
+    opts:["A. club","B. fan","C. competition"],
+    answer:2,
+    explain:"competition = cuộc thi. England cần thắng để vào vòng tiếp theo của cuộc thi. Club = câu lạc bộ, Fan = người hâm mộ – không phù hợp.",
+    vi:"Đội tuyển Anh phải giành chiến thắng trận đấu vòng loại tối nay để đi tiếp vào vòng tiếp theo của cuộc thi."
+  },
+  {
+    q:"2. Jack loves mountains, plants and nature. He has had a hobby as _____ since he was young.",
+    opts:["A. mountain climbing","B. skiing","C. sailing"],
+    answer:0,
+    explain:"mountain climbing = leo núi. Jack yêu thích núi non, thiên nhiên → leo núi là sở thích phù hợp. Skiing = trượt tuyết, Sailing = đi thuyền không liên quan đến núi.",
+    vi:"Jack yêu thích núi non, cây cỏ và thiên nhiên. Anh ấy đã có sở thích leo núi từ khi còn nhỏ."
+  },
+  {
+    q:"3. I'm a goalkeeper in my school's soccer team and my job is to _____ the ball.",
+    opts:["A. kick","B. race","C. catch"],
+    answer:2,
+    explain:"catch = bắt (bóng). Thủ môn (goalkeeper) có nhiệm vụ bắt bóng. Kick = đá bóng (việc của cầu thủ tấn công), Race = đua không phù hợp.",
+    vi:"Tôi là thủ môn trong đội bóng của trường và công việc của tôi là bắt bóng."
+  },
+  {
+    q:"4. We got an excellent football _____ to come and help us train the team.",
+    opts:["A. sailor","B. coach","C. racer"],
+    answer:1,
+    explain:"coach = huấn luyện viên. Người đến để huấn luyện đội bóng. Sailor = thủy thủ, Racer = người chạy đua – không phải HLV.",
+    vi:"Chúng tôi có một huấn luyện viên bóng đá xuất sắc đã đến và giúp đào tạo đội bóng."
+  },
+  {
+    q:"5. More than 53,000 _____ were at Anfield stadium on Saturday to watch the important football match between Liverpool and Man United.",
+    opts:["A. fans","B. swimmers","C. skiers"],
+    answer:0,
+    explain:"fans = người hâm mộ. 53.000 người đến xem trận bóng đá → họ là fans. Swimmers = vận động viên bơi, Skiers = người trượt tuyết – không liên quan.",
+    vi:"Hơn 53.000 người hâm mộ đã có mặt tại sân vận động Anfield vào thứ Bảy để theo dõi trận đấu quan trọng."
+  },
+];
+
+function renderEx4() {
+  document.getElementById('ex4-items').innerHTML = ex4Data.map((d,i)=>`
+    <div class="mcq-item" id="mcq4-${i}">
+      <div class="mcq-q">${d.q}</div>
+      <div class="mcq-opts-wrap">
+        ${d.opts.map((o,j)=>`<button class="mcq-opt" onclick="pickMCQ('ex4',${i},${j},this)">${o}</button>`).join('')}
+      </div>
+      <div class="mcq-fb" id="fb4-${i}"></div>
+    </div>
+  `).join('');
+}
+
+function checkEx4() {
+  let html='', sc=0;
+  ex4Data.forEach((d,i)=>{
+    const item=document.getElementById(`mcq4-${i}`);
+    const cor=item.querySelector('.mcq-opt.correct');
+    const wro=item.querySelector('.mcq-opt.wrong');
+    if(!cor&&!wro){ html+=`<div class="result-row bad">❌ Câu ${i+1}: Chưa trả lời. Đáp án: <b>${d.opts[d.answer]}</b></div>`; return; }
+    const ok=!!cor&&!wro;
+    sc+=ok?1:0;
+    if(ok) html+=`<div class="result-row ok">✅ Câu ${i+1}: Đúng! <span class="exp">${d.explain}</span></div>`;
+    else html+=`<div class="result-row bad">❌ Câu ${i+1}: Sai. Đáp án: <b>${d.opts[d.answer]}</b> <span class="exp">${d.explain}</span></div>`;
+  });
+  showResult('ex4-result', sc, ex4Data.length, html);
+}
+
+function resetEx4() { renderEx4(); document.getElementById('ex4-result').className='ex-result'; }
+
+// ===================== EX5: DIALOGUE =====================
+// Answers: (1)C, (2)A, (3)E, (4)D, (5)B
+const dlgEN = [
+  `<b>Bob:</b> I need to get fit and lose some weight.<br>
+   <b>Jane:</b> That's a good idea. Can I join you?<br>
+   <b>Bob:</b> Yes sure. What sport do you want to do?<br>
+   <b>Jane:</b> I'm not sure. Last year, I went swimming.<br>
+   <b>Bob:</b> I've never gone swimming. (1) – <input class="dlg-blank" id="dlg-1" placeholder="?" maxlength="1">?<br>
+   <b>Jane:</b> At my school, but we have to book the day to use it.<br>
+   <b>Bob:</b> (2) – <input class="dlg-blank" id="dlg-2" placeholder="?" maxlength="1">? We can do that whenever we want to.<br>
+   <b>Jane:</b> Yes we can use the path in the park.<br>
+   <b>Bob:</b> Do you like cycling?<br>
+   <b>Jane:</b> Yes. (3) – <input class="dlg-blank" id="dlg-3" placeholder="?" maxlength="1">.<br>
+   <b>Bob:</b> I have a friend who goes cycling every weekend. (4) – <input class="dlg-blank" id="dlg-4" placeholder="?" maxlength="1"> to meet other people with the same hobby.<br>
+   <b>Jane:</b> That would be fun. We could do the sport with lots of other people.<br>
+   <b>Bob:</b> Great. (5) – <input class="dlg-blank" id="dlg-5" placeholder="?" maxlength="1">?<br>
+   <b>Jane:</b> How about tonight?<br>
+   <b>Bob:</b> No, not tonight. It may rain.<br>
+   <b>Jane:</b> Ok. We'll wait until the weather is good.`,
+];
+
+const dlgVI = `<b>Bob:</b> Tôi cần lấy lại vóc dáng và giảm cân.<br>
+<b>Jane:</b> Đó là một ý kiến hay. Tôi có thể tham gia với bạn không?<br>
+<b>Bob:</b> Chắc chắn rồi. Bạn muốn chơi môn thể thao nào?<br>
+<b>Jane:</b> Tôi không chắc lắm. Năm ngoái, tôi đã đi bơi.<br>
+<b>Bob:</b> Tôi lại chưa bao giờ đi bơi cả. (1) – <b style="color:var(--blue-main)">[Chúng ta có thể sử dụng hồ bơi ở đâu?]</b><br>
+<b>Jane:</b> Ở trường của tôi, nhưng chúng ta phải đặt lịch trước.<br>
+<b>Bob:</b> (2) – <b style="color:var(--blue-main)">[Thế chạy bộ thì sao?]</b> Chúng ta có thể chạy bất cứ khi nào.<br>
+<b>Jane:</b> Được đó, chúng ta có thể sử dụng đường trong công viên.<br>
+<b>Bob:</b> Bạn có thích đạp xe không?<br>
+<b>Jane:</b> Có. (3) – <b style="color:var(--blue-main)">[Đạp xe tốt và còn nhanh hơn chạy]</b>.<br>
+<b>Bob:</b> Tôi có một người bạn thường đạp xe vào mỗi cuối tuần. (4) – <b style="color:var(--blue-main)">[Chúng ta có thể tham gia câu lạc bộ đạp xe của anh ấy]</b>.<br>
+<b>Jane:</b> Thật tuyệt. Chúng ta có thể chơi thể thao với nhiều người khác.<br>
+<b>Bob:</b> Tuyệt vời. (5) – <b style="color:var(--blue-main)">[Vậy khi nào bạn muốn bắt đầu chạy?]</b><br>
+<b>Jane:</b> Tối nay thì sao?<br>
+<b>Bob:</b> Không, tối nay thì không được. Trời có vẻ sắp mưa.<br>
+<b>Jane:</b> Ok, vậy thì chúng ta sẽ đợi cho đến khi thời tiết tốt hơn.`;
+
+const ex5Answers = {1:'C',2:'A',3:'E',4:'D',5:'B'};
+const ex5Explain = {
+  1:'(1) C – "Where is there a pool we can use?" = Chúng ta có thể sử dụng hồ bơi ở đâu? Bob hỏi vì Jane nói cô ấy đã đi bơi.',
+  2:'(2) A – "What about going running?" = Thế chạy bộ thì sao? Bob gợi ý hoạt động khác có thể làm bất cứ lúc nào.',
+  3:'(3) E – "It\'s good and faster than running" = Đạp xe tốt và còn nhanh hơn chạy. Jane đồng ý về đạp xe.',
+  4:'(4) D – "We could join his cycling club" = Chúng ta có thể tham gia câu lạc bộ đạp xe. Bob gợi ý tham gia club.',
+  5:'(5) B – "When do you want to start to run?" = Khi nào bạn muốn bắt đầu chạy? Bob hỏi về thời gian bắt đầu.',
+};
+
+function renderEx5() {
+  document.getElementById('dlg-en').innerHTML = dlgEN[0];
+  document.getElementById('dlg-vi').innerHTML = dlgVI;
+}
+
+function checkEx5() {
+  let html='', sc=0;
+  for(let i=1;i<=5;i++) {
+    const inp=document.getElementById(`dlg-${i}`);
+    if(!inp) continue;
+    const ok=inp.value.trim().toUpperCase()===ex5Answers[i];
+    inp.className='dlg-blank '+(ok?'correct':'wrong');
+    sc+=ok?1:0;
+    if(ok) html+=`<div class="result-row ok">✅ Chỗ trống (${i}): <b>${ex5Answers[i]}</b> – Đúng! <span class="exp">${ex5Explain[i]}</span></div>`;
+    else html+=`<div class="result-row bad">❌ Chỗ trống (${i}): Bạn điền "<b>${inp.value||'(trống)'}</b>" – Đáp án: <b>${ex5Answers[i]}</b> <span class="exp">${ex5Explain[i]}</span></div>`;
+  }
+  showResult('ex5-result', sc, 5, html);
+}
+
+function resetEx5() {
+  for(let i=1;i<=5;i++) {
+    const inp=document.getElementById(`dlg-${i}`);
+    if(inp){ inp.value=''; inp.className='dlg-blank'; }
+  }
+  document.getElementById('ex5-result').className='ex-result';
+}
+
+// ===================== EX6: READING =====================
+const ex6Data = [
+  { q:"1. Who doesn't have enough money to try sports that she's interested in?", answer:"Thea", explain:"Thea nói: 'I think I would enjoy skiing too, but it is expensive' → không đủ tiền để thử trượt tuyết." },
+  { q:"2. Who plans to try a new sport soon?", answer:"Laura", explain:"Laura nói: 'one of my friends gave me advice on sailing. It sounds fun, so I think I'll try that' → có kế hoạch thử đi thuyền." },
+  { q:"3. Who only enjoys sports she can do alone?", answer:"Jeanne", explain:"Jeanne nói: 'I usually do things alone. Then no-one can get mad at me when I'm slow' → chỉ thích tự chơi một mình." },
+  { q:"4. Who had good times by doing sports?", answer:"Laura", explain:"Laura nói: 'We shared some wonderful moments. We traveled to matches by bus, and had parties when we won' → đã có khoảng thời gian tuyệt vời." },
+  { q:"5. Who only enjoys playing sports with others if they aren't too loud?", answer:"Thea", explain:"Thea nói: 'I prefer doing sports when there aren't lots of other people making noise' → chỉ thích chơi với người khác nếu không quá ồn ào." },
+];
+
+function renderEx6() {
+  document.getElementById('ex6-items').innerHTML = ex6Data.map((d,i)=>`
+    <div class="reading-mcq" id="rmcq-${i}">
+      <div class="rq">${d.q}</div>
+      <div class="person-opts">
+        ${['Jeanne','Laura','Thea'].map(p=>`<button class="person-opt" onclick="pickPerson(${i},'${p}',this)">${p}</button>`).join('')}
+      </div>
+      <div class="r-fb" id="rfb-${i}"></div>
+    </div>
+  `).join('');
+}
+
+function pickPerson(qi, chosen, btn) {
+  const d=ex6Data[qi];
+  const item=document.getElementById(`rmcq-${qi}`);
+  item.querySelectorAll('.person-opt').forEach(b=>{ b.classList.add('disabled'); b.onclick=null; });
+  const fb=document.getElementById(`rfb-${qi}`);
+  if(chosen===d.answer) {
+    btn.classList.add('correct');
+    fb.className='r-fb show ok';
+    fb.textContent=`✅ Đúng! ${d.explain}`;
+  } else {
+    btn.classList.add('wrong');
+    item.querySelectorAll('.person-opt').forEach(b=>{ if(b.textContent===d.answer) b.classList.add('correct'); });
+    fb.className='r-fb show bad';
+    fb.textContent=`❌ Sai! Đáp án: ${d.answer} – ${d.explain}`;
+  }
+}
+
+function checkEx6() {
+  let html='', sc=0;
+  ex6Data.forEach((d,i)=>{
+    const item=document.getElementById(`rmcq-${i}`);
+    const cor=item.querySelector('.person-opt.correct');
+    const wro=item.querySelector('.person-opt.wrong');
+    if(!cor&&!wro){ html+=`<div class="result-row bad">❌ Câu ${i+1}: Chưa trả lời. Đáp án: <b>${d.answer}</b></div>`; return; }
+    const ok=!!cor&&!wro;
+    sc+=ok?1:0;
+    if(ok) html+=`<div class="result-row ok">✅ Câu ${i+1}: <b>${d.answer}</b> – Đúng! <span class="exp">${d.explain}</span></div>`;
+    else html+=`<div class="result-row bad">❌ Câu ${i+1}: Sai. Đáp án: <b>${d.answer}</b> <span class="exp">${d.explain}</span></div>`;
+  });
+  showResult('ex6-result', sc, ex6Data.length, html);
+}
+
+function resetEx6() { renderEx6(); document.getElementById('ex6-result').className='ex-result'; }
+
+// ===================== HELPER =====================
+function showResult(id, sc, total, html) {
+  const el=document.getElementById(id);
+  el.innerHTML=`<div style="font-weight:800;margin-bottom:8px;font-size:1rem;color:${sc===total?'var(--blue-main)':'var(--orange)'}">
+    ${sc===total?'🎉':'📊'} Kết quả: ${sc}/${total} câu đúng</div>`+html;
+  el.className='ex-result show';
+}
+
+// ===================== CHECK ALL =====================
+function getScoreFromResult(id, total) {
+  const el=document.getElementById(id);
+  if(el.className.indexOf('show')===-1) return {ok:0, total};
+  return {ok: el.querySelectorAll('.result-row.ok').length, total};
+}
+
+function checkAll() {
+  checkEx1(); checkEx2(); checkEx3(); checkEx4(); checkEx5(); checkEx6();
+  const scores = [
+    ['Bài 1 – Phân loại P/S', getScoreFromResult('ex1-result', ex1Data.length)],
+    ['Bài 2 – Nhìn tranh điền từ', getScoreFromResult('ex2-result', ex2Data.length)],
+    ['Bài 3 – Nghe chọn đáp án', getScoreFromResult('ex3-result', ex3Data.length)],
+    ['Bài 4 – Trắc nghiệm', getScoreFromResult('ex4-result', ex4Data.length)],
+    ['Bài 5 – Hội thoại', getScoreFromResult('ex5-result', 5)],
+    ['Bài 6 – Đọc hiểu', getScoreFromResult('ex6-result', ex6Data.length)],
+  ];
+  const totalOk = scores.reduce((a,s)=>a+s[1].ok,0);
+  const totalAll = scores.reduce((a,s)=>a+s[1].total,0);
+  const pct = Math.round(totalOk/totalAll*100);
+
+  document.getElementById('bigScore').innerHTML=`${totalOk} <span>/ ${totalAll} câu</span>`;
+  document.getElementById('pctFill').style.width=pct+'%';
+
+  let comment='';
+  if(pct>=90) comment='🌟 Xuất sắc! Bạn nắm vững toàn bộ từ vựng thể thao!';
+  else if(pct>=70) comment='👍 Tốt lắm! Ôn lại những câu sai nhé!';
+  else if(pct>=50) comment='📖 Cần cố gắng hơn! Xem lại Tab Học Từ Mới!';
+  else comment='💪 Đừng nản! Xem lại danh sách từ và thử lại!';
+  document.getElementById('sumComment').textContent=`${pct}% chính xác · ${comment}`;
+
+  document.getElementById('sumDetail').innerHTML=`<b style="display:block;margin-bottom:10px">Chi tiết từng bài:</b>`+
+    scores.map(([name,s])=>`
+      <div class="${s.ok===s.total?'result-row ok':'result-row bad'}" style="flex-direction:column;gap:6px">
+        <span>${s.ok===s.total?'✅':'⚠️'} ${name}: ${s.ok}/${s.total}</span>
+        <div style="width:100%;background:#e2e8f0;height:7px;border-radius:10px">
+          <div style="width:${s.total>0?Math.round(s.ok/s.total*100):0}%;background:${s.ok===s.total?'var(--blue-main)':'var(--yellow)'};height:7px;border-radius:10px"></div>
+        </div>
+      </div>
+    `).join('');
+
+  document.getElementById('summaryResult').style.display='block';
+  document.getElementById('summaryResult').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function resetAll() {
+  resetEx1(); resetEx2(); resetEx3(); resetEx4(); resetEx5(); resetEx6();
+  document.getElementById('summaryResult').style.display='none';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ===================== TAB SWITCH =====================
+function showTab(tab, btn) {
+  document.querySelectorAll('.tab-content').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el=>el.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ===================== INIT =====================
+renderVocab();
+renderEx1();
+renderEx2();
+renderEx3();
+renderEx4();
+renderEx5();
+renderEx6();
+</script>
+</body>
+</html>

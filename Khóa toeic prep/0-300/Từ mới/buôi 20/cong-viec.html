@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Học Tiếng Anh – Công Việc & Đồng Nghiệp</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Fraunces:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #2563eb;
+    --blue-dark: #1d4ed8;
+    --blue-light: #eff6ff;
+    --blue-mid: #bfdbfe;
+    --blue-soft: #dbeafe;
+    --green: #16a34a;
+    --green-light: #f0fdf4;
+    --red: #dc2626;
+    --red-light: #fef2f2;
+    --orange: #ea580c;
+    --yellow: #d97706;
+    --gray: #64748b;
+    --gray-light: #f8fafc;
+    --border: #e2e8f0;
+    --white: #ffffff;
+    --dark: #0f172a;
+    --shadow: 0 4px 24px rgba(37,99,235,0.10);
+    --shadow-lg: 0 8px 40px rgba(37,99,235,0.15);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: white;
+    min-height: 100vh;
+    color: var(--dark);
+  }
+
+  /* HEADER */
+  header {
+    background: linear-gradient(135deg, #1e40af 0%, #2563eb 50%, #3b82f6 100%);
+    color: white;
+    padding: 32px 20px 22px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 50%;
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: -30px;
+    width: 160px; height: 160px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 50%;
+  }
+  header h1 {
+    font-family: 'Fraunces', serif;
+    font-size: 2.1rem;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+    position: relative;
+  }
+  header p { font-size: 0.97rem; opacity: 0.88; position: relative; }
+
+  /* TAB BAR */
+  .tab-bar {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    background: white;
+    padding: 14px 16px;
+    box-shadow: 0 2px 12px rgba(37,99,235,0.10);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    flex-wrap: wrap;
+  }
+  .tab-btn {
+    padding: 9px 28px;
+    border-radius: 50px;
+    border: 2px solid var(--blue);
+    background: white;
+    color: var(--blue);
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .tab-btn.active, .tab-btn:hover {
+    background: var(--blue);
+    color: white;
+    box-shadow: 0 4px 16px rgba(37,99,235,0.3);
+  }
+
+  .tab-content { display: none; padding: 28px 16px 60px; max-width: 1100px; margin: 0 auto; }
+  .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+  /* SECTION TITLE */
+  .sec-title {
+    font-family: 'Fraunces', serif;
+    font-size: 1.5rem;
+    color: var(--blue);
+    margin-bottom: 22px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 10px;
+    border-bottom: 2.5px solid var(--blue-mid);
+  }
+
+  /* VOCAB CARDS */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 44px;
+  }
+  .vocab-card {
+    background: white;
+    border-radius: 18px;
+    padding: 20px 18px 15px;
+    box-shadow: var(--shadow);
+    border: 1.5px solid var(--border);
+    transition: transform 0.18s, box-shadow 0.18s;
+    position: relative;
+    overflow: hidden;
+  }
+  .vocab-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--blue), #3b82f6);
+    border-radius: 18px 18px 0 0;
+  }
+  .vocab-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+  .vocab-card .word { font-size: 1.4rem; font-weight: 900; color: var(--blue); margin-bottom: 3px; }
+  .vocab-card .ipa { font-size: 0.85rem; color: var(--gray); margin-bottom: 5px; letter-spacing: 0.5px; }
+  .vocab-card .type-badge {
+    display: inline-block;
+    background: var(--blue-light);
+    color: var(--blue);
+    font-size: 0.72rem; font-weight: 800;
+    border-radius: 8px; padding: 2px 9px;
+    margin-bottom: 8px; text-transform: uppercase;
+  }
+  .vocab-card .meaning { font-size: 1rem; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
+  .vocab-card .note {
+    font-size: 0.82rem; color: var(--gray);
+    background: var(--gray-light);
+    border-radius: 8px; padding: 6px 10px;
+    margin-bottom: 10px; line-height: 1.5;
+  }
+  .speak-btn {
+    background: var(--blue-light); border: none;
+    border-radius: 20px; padding: 5px 13px;
+    cursor: pointer; font-size: 0.85rem;
+    font-weight: 700; color: var(--blue);
+    font-family: 'Outfit', sans-serif;
+    transition: background 0.15s;
+  }
+  .speak-btn:hover { background: var(--blue-mid); }
+  .cat-badge {
+    position: absolute; top: 12px; right: 12px;
+    font-size: 0.68rem; font-weight: 800;
+    background: var(--blue); color: white;
+    border-radius: 8px; padding: 2px 8px;
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+
+  /* QUIZ */
+  .quiz-box {
+    background: white; border-radius: 20px;
+    padding: 28px; box-shadow: var(--shadow);
+    border: 1.5px solid var(--border);
+  }
+  .quiz-controls { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; align-items: center; }
+  .toggle-btn {
+    padding: 8px 20px; border-radius: 20px;
+    border: 2px solid var(--blue);
+    background: white; color: var(--blue);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700; cursor: pointer;
+    font-size: 0.9rem; transition: all 0.15s;
+  }
+  .toggle-btn.active { background: var(--blue); color: white; }
+  .quiz-score { margin-left: auto; font-weight: 800; color: var(--blue); font-size: 0.95rem; }
+  .quiz-q {
+    font-size: 1.5rem; font-weight: 900;
+    text-align: center; color: var(--dark);
+    margin-bottom: 22px; padding: 18px;
+    background: var(--blue-light);
+    border-radius: 14px; min-height: 70px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .quiz-opts {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 10px; margin-bottom: 16px;
+  }
+  .q-opt {
+    padding: 13px 14px; border-radius: 12px;
+    border: 2px solid var(--border); background: white;
+    font-family: 'Outfit', sans-serif; font-size: 0.95rem;
+    font-weight: 700; cursor: pointer;
+    transition: all 0.15s; text-align: center;
+  }
+  .q-opt:hover:not(:disabled) { border-color: var(--blue); background: var(--blue-light); }
+  .q-opt.correct { background: var(--green-light); border-color: var(--green); color: var(--green); }
+  .q-opt.wrong { background: var(--red-light); border-color: var(--red); color: var(--red); }
+  .q-fb { min-height: 36px; border-radius: 10px; padding: 9px 14px; font-weight: 700; font-size: 0.93rem; margin-bottom: 12px; display: none; }
+  .q-fb.show { display: block; }
+  .q-fb.ok { background: var(--green-light); color: var(--green); }
+  .q-fb.bad { background: var(--red-light); color: var(--red); }
+  .next-btn {
+    display: block; margin: 0 auto;
+    padding: 11px 36px; background: var(--blue);
+    color: white; border: none; border-radius: 24px;
+    font-family: 'Outfit', sans-serif; font-size: 1rem;
+    font-weight: 800; cursor: pointer; transition: background 0.15s;
+  }
+  .next-btn:hover { background: var(--blue-dark); }
+
+  /* EXERCISES */
+  .ex-block {
+    background: white; border-radius: 18px;
+    padding: 26px 24px; box-shadow: var(--shadow);
+    border: 1.5px solid var(--border);
+    margin-bottom: 28px;
+    border-top: 4px solid var(--blue);
+  }
+  .ex-block h3 { font-size: 1.1rem; font-weight: 900; color: var(--blue); margin-bottom: 5px; }
+  .ex-desc { font-size: 0.9rem; color: var(--gray); margin-bottom: 18px; font-style: italic; }
+  .ex-divider { border: none; border-top: 2.5px dashed var(--blue-mid); margin: 30px 0; }
+
+  /* Bài 1 - Picture + letter hint */
+  .picture-img {
+    width: 100%;
+    max-width: 750px;
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    display: block;
+    margin: 0 auto 20px;
+    border: 2px solid var(--border);
+    object-fit: contain;
+  }
+  .pic-item { margin-bottom: 14px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .pic-item label { font-weight: 700; min-width: 180px; font-size: 0.95rem; color: var(--dark); }
+  .pic-item .hint-letters {
+    background: var(--blue-light); color: var(--blue);
+    padding: 4px 12px; border-radius: 8px;
+    font-weight: 800; font-size: 0.95rem;
+    letter-spacing: 2px; font-family: 'Courier New', monospace;
+  }
+  .pic-item input {
+    border: 2px solid var(--border); border-radius: 8px;
+    padding: 7px 14px; font-family: 'Outfit', sans-serif;
+    font-size: 0.95rem; font-weight: 700;
+    width: 200px; outline: none; transition: border 0.15s;
+  }
+  .pic-item input:focus { border-color: var(--blue); }
+  .pic-item input.correct { border-color: var(--green); background: var(--green-light); color: var(--green); }
+  .pic-item input.wrong { border-color: var(--red); background: var(--red-light); color: var(--red); }
+
+  /* Bài 2 - Match meaning */
+  .match-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+  .match-item { display: flex; align-items: center; gap: 10px; }
+  .match-item label { font-weight: 700; min-width: 130px; font-size: 0.93rem; }
+  .match-select {
+    border: 2px solid var(--border); border-radius: 8px;
+    padding: 7px 12px; font-family: 'Outfit', sans-serif;
+    font-size: 0.9rem; font-weight: 700; background: white;
+    cursor: pointer; flex: 1;
+  }
+  .match-select.correct { border-color: var(--green); background: var(--green-light); color: var(--green); }
+  .match-select.wrong { border-color: var(--red); background: var(--red-light); color: var(--red); }
+
+  /* Bài 3 - Hotel/Office */
+  .ho-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 12px; margin-bottom: 10px;
+  }
+  .ho-item { display: flex; align-items: center; gap: 10px; }
+  .ho-item label { font-weight: 700; min-width: 120px; font-size: 0.93rem; }
+  .ho-select {
+    border: 2px solid var(--border); border-radius: 8px;
+    padding: 7px 12px; font-family: 'Outfit', sans-serif;
+    font-size: 0.88rem; font-weight: 700; background: white;
+    cursor: pointer; flex: 1;
+  }
+  .ho-select.correct { border-color: var(--green); background: var(--green-light); color: var(--green); }
+  .ho-select.wrong { border-color: var(--red); background: var(--red-light); color: var(--red); }
+
+  /* Audio */
+  .audio-wrap {
+    background: linear-gradient(135deg, var(--blue-light), var(--blue-soft));
+    border-radius: 14px; padding: 16px 20px;
+    margin-bottom: 20px; display: flex;
+    align-items: center; gap: 14px;
+    border: 1.5px solid var(--blue-mid);
+  }
+  .audio-wrap audio { flex: 1; }
+
+  /* Bài 5 - Dialogue fill */
+  .dlg-fill {
+    background: var(--gray-light); border-radius: 14px;
+    padding: 18px; border: 1.5px solid var(--border);
+    line-height: 2.2; font-size: 0.95rem;
+  }
+  .dlg-fill p { margin-bottom: 8px; }
+  .dlg-fill b { color: var(--blue); }
+  .dlg-fill input {
+    border: none; border-bottom: 2.5px solid var(--blue);
+    background: white; border-radius: 5px 5px 0 0;
+    padding: 2px 8px; font-family: 'Outfit', sans-serif;
+    font-size: 0.95rem; font-weight: 700;
+    width: 130px; text-align: center; outline: none;
+  }
+  .dlg-fill input.correct { border-bottom-color: var(--green); background: var(--green-light); color: var(--green); }
+  .dlg-fill input.wrong { border-bottom-color: var(--red); background: var(--red-light); color: var(--red); }
+
+  /* Bài 6 - Word match */
+  .word-bank {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    background: var(--blue-light); padding: 12px;
+    border-radius: 10px; margin-bottom: 14px;
+    border: 1.5px solid var(--blue-mid);
+  }
+  .word-bank strong { color: var(--gray); margin-right: 6px; font-size: 0.85rem; }
+  .word-bank span {
+    background: white; border: 1.5px solid var(--blue-mid);
+    border-radius: 8px; padding: 4px 12px;
+    font-weight: 800; font-size: 0.88rem; color: var(--blue);
+  }
+  .b6-item { margin-bottom: 14px; }
+  .b6-sentence { font-size: 0.95rem; line-height: 1.7; margin-bottom: 5px; }
+  .b6-sentence input {
+    border: none; border-bottom: 2.5px solid var(--blue);
+    background: var(--blue-light); border-radius: 5px 5px 0 0;
+    padding: 2px 10px; font-family: 'Outfit', sans-serif;
+    font-size: 0.95rem; font-weight: 700;
+    width: 130px; text-align: center; outline: none;
+  }
+  .b6-sentence input.correct { border-bottom-color: var(--green); background: var(--green-light); color: var(--green); }
+  .b6-sentence input.wrong { border-bottom-color: var(--red); background: var(--red-light); color: var(--red); }
+  .b6-hint { font-size: 0.8rem; color: var(--gray); font-style: italic; }
+
+  /* MCQ */
+  .mcq-item { margin-bottom: 20px; }
+  .mcq-q { font-weight: 700; margin-bottom: 6px; font-size: 0.97rem; line-height: 1.6; }
+  .mcq-hint { font-size: 0.82rem; color: var(--gray); font-style: italic; margin-bottom: 8px; }
+  .mcq-opts-wrap { display: flex; flex-direction: column; gap: 7px; }
+  .mcq-opt {
+    padding: 9px 15px; border-radius: 10px;
+    border: 2px solid var(--border); background: white;
+    font-family: 'Outfit', sans-serif; font-size: 0.93rem;
+    font-weight: 700; cursor: pointer; transition: all 0.15s; text-align: left;
+  }
+  .mcq-opt:hover:not(.disabled) { border-color: var(--blue); background: var(--blue-light); }
+  .mcq-opt.correct { background: var(--green-light); border-color: var(--green); color: var(--green); }
+  .mcq-opt.wrong { background: var(--red-light); border-color: var(--red); color: var(--red); }
+  .mcq-opt.disabled { cursor: default; }
+  .mcq-fb { margin-top: 8px; font-size: 0.87rem; font-weight: 700; padding: 7px 12px; border-radius: 8px; display: none; line-height: 1.5; }
+  .mcq-fb.show { display: block; }
+  .mcq-fb.ok { background: var(--green-light); color: var(--green); }
+  .mcq-fb.bad { background: var(--red-light); color: var(--red); }
+
+  /* Bài 8 - Reading fill */
+  .reading-block { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 18px; }
+  .reading-en, .reading-vi {
+    background: var(--gray-light); border-radius: 12px;
+    padding: 16px; font-size: 0.92rem; line-height: 1.85;
+  }
+  .reading-en { border-left: 4px solid var(--blue); }
+  .reading-vi { border-left: 4px solid #93c5fd; color: #475569; }
+  .reading-en h4, .reading-vi h4 { font-size: 0.78rem; font-weight: 800; color: var(--blue); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+
+  /* Bài 9 - 3 ads */
+  .ads-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 12px; margin-bottom: 18px;
+  }
+  .ad-card {
+    background: var(--gray-light); border-radius: 12px;
+    padding: 14px 16px; border-top: 4px solid var(--blue);
+    font-size: 0.88rem; line-height: 1.7;
+  }
+  .ad-card h4 { font-weight: 900; color: var(--blue); font-size: 1rem; margin-bottom: 6px; }
+  .ad-card p { margin-bottom: 5px; }
+  .ad-card.ad-b { border-top-color: var(--orange); }
+  .ad-card.ad-b h4 { color: var(--orange); }
+  .ad-card.ad-c { border-top-color: var(--green); }
+  .ad-card.ad-c h4 { color: var(--green); }
+
+  /* Buttons */
+  .ex-btn {
+    padding: 9px 24px; border-radius: 20px; border: none;
+    font-family: 'Outfit', sans-serif; font-size: 0.9rem;
+    font-weight: 800; cursor: pointer; transition: all 0.15s;
+    margin-right: 8px; margin-top: 14px;
+  }
+  .ex-btn.check { background: var(--blue); color: white; }
+  .ex-btn.check:hover { background: var(--blue-dark); }
+  .ex-btn.reset { background: var(--gray-light); color: #374151; border: 2px solid var(--border); }
+  .ex-btn.reset:hover { background: var(--border); }
+  .ex-result { margin-top: 14px; display: none; }
+  .ex-result.show { display: block; }
+  .result-row {
+    display: flex; align-items: flex-start; gap: 8px;
+    padding: 8px 12px; border-radius: 9px;
+    margin-bottom: 6px; font-size: 0.88rem; font-weight: 700;
+  }
+  .result-row.ok { background: var(--green-light); color: var(--green); }
+  .result-row.bad { background: var(--red-light); color: var(--red); }
+  .result-row .exp { font-weight: 400; color: #374151; margin-left: 4px; }
+
+  /* Summary */
+  .summary-box {
+    background: white; border-radius: 20px;
+    padding: 28px; box-shadow: var(--shadow);
+    border: 1.5px solid var(--border); margin-top: 10px;
+    border-top: 4px solid var(--blue);
+  }
+  .summary-box h3 { font-size: 1.15rem; font-weight: 900; color: var(--blue); margin-bottom: 16px; }
+  .big-score { font-size: 3rem; font-weight: 900; color: var(--blue); text-align: center; margin-bottom: 4px; }
+  .big-score span { font-size: 1.1rem; color: var(--gray); }
+  .pct-bar { height: 14px; background: var(--blue-mid); border-radius: 20px; overflow: hidden; margin: 10px 0 18px; }
+  .pct-fill { height: 100%; background: linear-gradient(90deg, var(--blue), #3b82f6); border-radius: 20px; transition: width 0.6s ease; }
+  .sum-comment { text-align: center; font-size: 1rem; font-weight: 700; color: #374151; margin-bottom: 16px; }
+  .action-row { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 14px; }
+  .action-btn {
+    padding: 11px 28px; border-radius: 24px; border: none;
+    font-family: 'Outfit', sans-serif; font-size: 0.97rem;
+    font-weight: 800; cursor: pointer; transition: all 0.15s;
+  }
+  .action-btn.primary { background: var(--blue); color: white; }
+  .action-btn.primary:hover { background: var(--blue-dark); }
+  .action-btn.secondary { background: var(--gray-light); color: #374151; border: 2px solid var(--border); }
+
+  @media(max-width:600px) {
+    .quiz-opts { grid-template-columns: 1fr; }
+    .reading-block { grid-template-columns: 1fr; }
+    .vocab-grid { grid-template-columns: 1fr; }
+    .match-grid { grid-template-columns: 1fr; }
+    .ho-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>💼 Học Tiếng Anh – Công Việc & Đồng Nghiệp 👔</h1>
+  <p>Từ Vựng TOEIC Cơ Bản · Section 1</p>
+</header>
+
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="showTab('vocab',this)">📚 Học Từ Mới</button>
+  <button class="tab-btn" onclick="showTab('exercises',this)">✏️ Bài Tập</button>
+</div>
+
+<!-- ===== TAB VOCAB ===== -->
+<div id="tab-vocab" class="tab-content active">
+  <div class="sec-title">🏢 Danh Sách Từ Vựng</div>
+  <div class="vocab-grid" id="vocabGrid"></div>
+
+  <div class="sec-title">🧠 Kiểm Tra Từ Vựng</div>
+  <div class="quiz-box">
+    <div class="quiz-controls">
+      <button class="toggle-btn active" id="btn-en" onclick="setMode('en-vi')">Anh → Việt</button>
+      <button class="toggle-btn" id="btn-vi" onclick="setMode('vi-en')">Việt → Anh</button>
+      <div class="quiz-score" id="quizScore">✅ 0 &nbsp;❌ 0 &nbsp;📊 0/0</div>
+    </div>
+    <div class="quiz-q" id="quizQ">Nhấn "Câu Tiếp Theo" để bắt đầu!</div>
+    <div class="quiz-opts" id="quizOpts"></div>
+    <div class="q-fb" id="quizFb"></div>
+    <button class="next-btn" onclick="nextQuiz()">Câu Tiếp Theo ➡️</button>
+  </div>
+</div>
+
+<!-- ===== TAB EXERCISES ===== -->
+<div id="tab-exercises" class="tab-content">
+
+  <!-- BÀI 1: PICTURE + LETTER -->
+  <div class="ex-block" id="ex1">
+    <h3>🖼️ Bài Tập 1 – Nhìn Ảnh & Điền Từ</h3>
+    <p class="ex-desc">Dựa vào ảnh và các chữ cái gợi ý, điền từ thích hợp vào chỗ trống.</p>
+    <img src="bai1.png" alt="Bài 1" class="picture-img" onerror="this.style.display='none'; document.getElementById('img1-fb').style.display='block'">
+    <div id="img1-fb" style="display:none; background:var(--blue-light); border-radius:14px; padding:16px; text-align:center; color:var(--blue); font-weight:700; margin-bottom:16px;">
+      📷 [Hình ảnh bai1.png – đặt cùng thư mục với file HTML]
+    </div>
+    <div id="ex1-items"></div>
+    <button class="ex-btn check" onclick="checkEx1()">✔ Kiểm Tra</button>
+    <button class="ex-btn reset" onclick="resetEx1()">🔄 Làm Lại</button>
+    <div class="ex-result" id="ex1-result"></div>
+  </div>
+  <hr class="ex-divider">
+
+  <!-- BÀI 2: MATCH MEANING -->
+  <div class="ex-block" id="ex2">
+    <h3>🔗 Bài Tập 2 – Nối Nghĩa</h3>
+    <p class="ex-desc">Chọn từ tiếng Anh thích hợp với nghĩa tiếng Việt đã cho. Lưu ý: Có một từ không được sử dụng.</p>
+    <div class="word-bank">
+      <strong>Hộp từ:</strong>
+      <span>businesswoman</span><span>staff</span><span>secretary</span><span>director</span>
+      <span>accountant</span><span>colleague</span><span>manager</span><span>chairman</span>
+    </div>
+    <div class="match-grid" id="ex2-items"></div>
+    <button class="ex-btn check" onclick="checkEx2()">✔ Kiểm Tra</button>
+    <button class="ex-btn reset" onclick="resetEx2()">🔄 Làm Lại</button>
+    <div class="ex-result" id="ex2-result"></div>
+  </div>
+  <hr class="ex-divider">
+
+  <!-- BÀI 3: HOTEL/OFFICE -->
+  <div class="ex-block" id="ex3">
+    <h3>🏨 Bài Tập 3 – Phân Loại Hotel / Office</h3>
+    <p class="ex-desc">Xác định các từ chỉ nghề nghiệp dưới đây thuộc nhóm Jobs at the Hotel hay Jobs at the Office.</p>
+    <div class="ho-grid" id="ex3-items"></div>
+    <button class="ex-btn check" onclick="checkEx3()">✔ Kiểm Tra</button>
+    <button class="ex-btn reset" onclick="resetEx3()">🔄 Làm Lại</button>
+    <div class="ex-result" id="ex3-result"></div>
+  </div>
+  <hr class="ex-divider">
+
+  <!-- BÀI 5: LISTENING DIALOGUE FILL -->
+  <div class="ex-block" id="ex5">
+    <h3>🎧 Bài Tập 5 – Nghe Và Điền Từ Vào Hội Thoại</h3>
+    <p class="ex-desc">Nghe audio và điền MỘT từ vào chỗ trống để hoàn thành đoạn hội thoại dưới đây.</p>
+    <div class="audio-wrap">
+      <span style="font-size:1.5rem">🎵</span>
+      <audio controls src="bai5.mp3" style="width:100%">Trình duyệt không hỗ trợ audio.</audio>
+    </div>
+    <div class="dlg-fill" id="ex5-dialogue"></div>
+    <button class="ex-btn check" onclick="checkEx5()">✔ Kiểm Tra</button>
+    <button class="ex-btn reset" onclick="resetEx5()">🔄 Làm Lại</button>
+    <div class="ex-result" id="ex5-result"></div>
+  </div>
+  <hr class="ex-divider">
+
+  <!-- BÀI 6: WORD MATCH FILL -->
+  <div class="ex-block" id="ex6">
+    <h3>📝 Bài Tập 6 – Chọn Từ Thích Hợp Điền Vào Câu</h3>
+    <p class="ex-desc">Chọn từ thích hợp để hoàn thành câu. Mỗi từ chỉ điền một lần.</p>
+    <div class="word-bank">
+      <strong>Hộp từ:</strong>
+      <span>waitress</span><span>staff</span><span>clean</span><span>cook</span>
+      <span>manage</span><span>hall</span>
+    </div>
+    <div id="ex6-items"></div>
+    <button class="ex-btn check" onclick="checkEx6()">✔ Kiểm Tra</button>
+    <button class="ex-btn reset" onclick="resetEx6()">🔄 Làm Lại</button>
+    <div class="ex-result" id="ex6-result"></div>
+  </div>
+  <hr class="ex-divider">
+
+  <!-- BÀI 7: MCQ -->
+  <div class="ex-block" id="ex7">
+    <h3>📖 Bài Tập 7 – Trắc Nghiệm Chọn Đáp Án</h3>
+    <p class="ex-desc">Chọn đáp án đúng để hoàn thành câu.</p>
+    <div id="ex7-items"></div>
+    <button class="ex-btn check" onclick="checkEx7()">✔ Kiểm Tra</button>
+    <button class="ex-btn reset" onclick="resetEx7()">🔄 Làm Lại</button>
+    <div class="ex-result" id="ex7-result"></div>
+  </div>
+  <hr class="ex-divider">
+
+  <!-- BÀI 8: READING FILL -->
+  <div class="ex-block" id="ex8">
+    <h3>📚 Bài Tập 8 – Đoạn Văn Về Luigi</h3>
+    <p class="ex-desc">Chọn từ thích hợp điền vào chỗ trống để hoàn thành đoạn văn.</p>
+    <div class="word-bank">
+      <strong>Hộp từ:</strong>
+      <span>chef</span><span>restaurant</span><span>manage</span><span>director</span><span>cooks</span>
+    </div>
+    <div class="reading-block">
+      <div class="reading-en">
+        <h4>🇬🇧 English</h4>
+        Luigi is a <b>(1)</b>. He was born in Rome but now he works in London. He works in an excellent Italian <b>(2)</b>. He cooks many things. He is a pizza chef, but he also cooks pasta, chicken and fish. Apart from preparing dishes, he has to <b>(3)</b> a team of 5 cooks. He also works with the restaurant <b>(4)</b> to come up with new menus and trains new <b>(5)</b>. The customers love Luigi's food. Sometimes Luigi comes out of the kitchen and greets the customers. They love that!
+      </div>
+      <div class="reading-vi">
+        <h4>🇻🇳 Tiếng Việt</h4>
+        Luigi là một <b>(1)</b>. Anh ấy sinh ra ở Rome nhưng giờ anh ấy làm việc ở London. Anh ấy làm việc trong một <b>(2)</b> Ý xuất sắc. Anh ấy nấu nhiều món. Anh ấy là một đầu bếp pizza, nhưng anh ấy cũng nấu mì ống, thịt gà và cá. Ngoài việc chuẩn bị các món ăn, anh ấy còn phải <b>(3)</b> một nhóm 5 đầu bếp. Anh ấy cũng làm việc với <b>(4)</b> nhà hàng để đưa ra thực đơn mới và đào tạo <b>(5)</b> mới. Khách hàng yêu thích đồ ăn của Luigi.
+      </div>
+    </div>
+    <div id="ex8-items"></div>
+    <button class="ex-btn check" onclick="checkEx8()">✔ Kiểm Tra</button>
+    <button class="ex-btn reset" onclick="resetEx8()">🔄 Làm Lại</button>
+    <div class="ex-result" id="ex8-result"></div>
+  </div>
+  <hr class="ex-divider">
+
+  <!-- BÀI 9: 3 ADS READING -->
+  <div class="ex-block" id="ex9">
+    <h3>📰 Bài Tập 9 – Đọc 3 Quảng Cáo Tuyển Dụng</h3>
+    <p class="ex-desc">Đọc 3 đoạn quảng cáo về 3 công việc khác nhau và chọn đáp án đúng cho mỗi câu hỏi.</p>
+    <div class="ads-grid">
+      <div class="ad-card">
+        <h4>📌 Advert A – Cleaner needed</h4>
+        <p>We need a cleaner to clean our offices from <b>4 p.m. – 6 p.m.</b>, <b>Mon – Fri</b>.</p>
+        <p>£40 a week.</p>
+        <p>Call Mary on 678345211</p>
+        <p style="margin-top:8px;color:var(--gray);font-size:0.82rem;font-style:italic">🇻🇳 Cần tuyển nhân viên dọn dẹp – làm 4–6 giờ chiều, T2–T6, lương £40/tuần.</p>
+      </div>
+      <div class="ad-card ad-b">
+        <h4>📌 Advert B – City Museum (Holiday job)</h4>
+        <p>Earn extra money <b>this summer</b>? Speak another language?</p>
+        <p>We need French, <b>English</b> or German receptionists to work in the City Museum shop <b>Tuesday – Saturday</b>.</p>
+        <p>Send CV to citymuseum@shopjob.lkj</p>
+        <p style="margin-top:8px;color:var(--gray);font-size:0.82rem;font-style:italic">🇻🇳 Tuyển lễ tân biết tiếng Anh, làm dịp lễ mùa hè, T3–T7.</p>
+      </div>
+      <div class="ad-card ad-c">
+        <h4>📌 Advert C – Munchies Café (Part-time)</h4>
+        <p>We are looking for breakfast and lunchtime waiters to work in our café <b>on Saturdays</b>.</p>
+        <p>Come in 8 a.m. – 4 p.m. or call Bella on 612398745.</p>
+        <p style="margin-top:8px;color:var(--gray);font-size:0.82rem;font-style:italic">🇻🇳 Tuyển bồi bàn bán thời gian, chỉ làm thứ Bảy.</p>
+      </div>
+    </div>
+    <div id="ex9-items"></div>
+    <button class="ex-btn check" onclick="checkEx9()">✔ Kiểm Tra</button>
+    <button class="ex-btn reset" onclick="resetEx9()">🔄 Làm Lại</button>
+    <div class="ex-result" id="ex9-result"></div>
+  </div>
+
+  <hr class="ex-divider">
+
+  <!-- SUMMARY -->
+  <div class="summary-box">
+    <h3>📊 Tổng Kết Bài Tập</h3>
+    <div class="action-row">
+      <button class="action-btn primary" onclick="checkAll()">📝 Chấm Tất Cả Bài</button>
+      <button class="action-btn secondary" onclick="resetAll()">🔄 Làm Lại Tất Cả</button>
+    </div>
+    <div id="summaryResult" style="display:none; margin-top:22px;">
+      <div class="big-score" id="bigScore"></div>
+      <div class="pct-bar"><div class="pct-fill" id="pctFill" style="width:0%"></div></div>
+      <div class="sum-comment" id="sumComment"></div>
+      <div id="sumDetail"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ===================== VOCAB =====================
+const vocab = [
+  { word:"hall", ipa:"/hɔːl/", type:"noun", cat:"Nơi chốn", meaning:"sảnh", note:"Hall of the hotel: sảnh khách sạn" },
+  { word:"receptionist", ipa:"/rɪˈsepʃənɪst/", type:"noun", cat:"Người", meaning:"Nhân viên lễ tân", note:"reception (n): bộ phận lễ tân" },
+  { word:"chef", ipa:"/ʃef/", type:"noun", cat:"Người", meaning:"Bếp trưởng", note:"chef ≠ cook (chef là bếp chính)" },
+  { word:"cook", ipa:"/kʊk/", type:"noun/verb", cat:"Người", meaning:"Đầu bếp / Nấu ăn", note:"cook (v): nấu; cook (n): đầu bếp" },
+  { word:"waiter", ipa:"/ˈweɪtə/", type:"noun", cat:"Người", meaning:"Bồi bàn nam", note:"wait (v): phục vụ" },
+  { word:"waitress", ipa:"/ˈweɪtrɪs/", type:"noun", cat:"Người", meaning:"Bồi bàn nữ", note:"Female form of waiter" },
+  { word:"cleaner", ipa:"/ˈkliːnə/", type:"noun", cat:"Người", meaning:"Người dọn dẹp", note:"clean (v): dọn dẹp → cleaner (n)" },
+  { word:"businessman", ipa:"/ˈbɪznɪsmən/", type:"noun", cat:"Người", meaning:"Doanh nhân (nam)", note:"businesswoman: doanh nhân nữ" },
+  { word:"chairman", ipa:"/ˈtʃeəmən/", type:"noun", cat:"Người", meaning:"Chủ tịch", note:"chairwoman: nữ chủ tịch" },
+  { word:"company director", ipa:"/ˈkʌmpəni dɪˈrektə/", type:"noun phrase", cat:"Người", meaning:"Giám đốc công ty", note:"director (n): giám đốc" },
+  { word:"manager", ipa:"/ˈmænɪdʒə/", type:"noun", cat:"Người", meaning:"Quản lý", note:"manage (v): quản lý" },
+  { word:"staff", ipa:"/stɑːf/", type:"noun", cat:"Người", meaning:"Nhân viên (tập thể)", note:"staff là danh từ tập hợp, dùng số nhiều" },
+  { word:"accountant", ipa:"/əˈkaʊntənt/", type:"noun", cat:"Người", meaning:"Kế toán", note:"account (n): tài khoản" },
+  { word:"secretary", ipa:"/ˈsekrətri/", type:"noun", cat:"Người", meaning:"Thư ký", note:"handle appointments: xử lý cuộc hẹn" },
+  { word:"colleague", ipa:"/ˈkɒliːɡ/", type:"noun", cat:"Người", meaning:"Đồng nghiệp", note:"= co-worker" },
+];
+
+// ===================== RENDER VOCAB =====================
+function renderVocab() {
+  document.getElementById('vocabGrid').innerHTML = vocab.map((v,i)=>`
+    <div class="vocab-card" style="animation-delay:${i*0.03}s">
+      <span class="cat-badge">${v.cat}</span>
+      <div class="word">${v.word}</div>
+      <div class="ipa">${v.ipa}</div>
+      <span class="type-badge">${v.type}</span>
+      <div class="meaning">${v.meaning}</div>
+      ${v.note ? `<div class="note">💡 ${v.note}</div>` : ''}
+      <button class="speak-btn" onclick="speak('${v.word.replace(/'/g,"\\'")}')">🔊 Phát âm</button>
+    </div>
+  `).join('');
+}
+
+function speak(w) {
+  const u = new SpeechSynthesisUtterance(w);
+  u.lang = 'en-US';
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(u);
+}
+
+// ===================== QUIZ =====================
+let qMode='en-vi', qCorrect=0, qWrong=0, qTotal=0, qCurrent=null, qAnswered=false;
+
+function setMode(m) {
+  qMode=m; qCorrect=0; qWrong=0; qTotal=0;
+  document.getElementById('btn-en').classList.toggle('active',m==='en-vi');
+  document.getElementById('btn-vi').classList.toggle('active',m==='vi-en');
+  updateScore(); nextQuiz();
+}
+
+function updateScore() {
+  document.getElementById('quizScore').innerHTML=`✅ ${qCorrect} &nbsp;❌ ${qWrong} &nbsp;📊 ${qCorrect+qWrong}/${qTotal}`;
+}
+
+function nextQuiz() {
+  qAnswered=false;
+  const fb=document.getElementById('quizFb');
+  fb.className='q-fb'; fb.textContent='';
+  const idx=Math.floor(Math.random()*vocab.length);
+  qCurrent=vocab[idx]; qTotal++;
+  updateScore();
+  document.getElementById('quizQ').textContent = qMode==='en-vi'?qCurrent.word:qCurrent.meaning;
+  let pool=vocab.filter((_,i)=>i!==idx).sort(()=>Math.random()-0.5).slice(0,3);
+  let opts=[...pool,qCurrent].sort(()=>Math.random()-0.5);
+  document.getElementById('quizOpts').innerHTML=opts.map(o=>{
+    const lbl=qMode==='en-vi'?o.meaning:o.word;
+    return `<button class="q-opt" onclick="answerQuiz(this,'${o.word.replace(/'/g,"\\'")}')">${lbl}</button>`;
+  }).join('');
+}
+
+function answerQuiz(btn, word) {
+  if(qAnswered) return;
+  qAnswered=true;
+  document.querySelectorAll('.q-opt').forEach(b=>b.disabled=true);
+  const fb=document.getElementById('quizFb');
+  if(word===qCurrent.word) {
+    btn.classList.add('correct'); qCorrect++;
+    fb.className='q-fb show ok';
+    fb.textContent=`✅ Chính xác! "${qCurrent.word}" = "${qCurrent.meaning}"`;
+  } else {
+    btn.classList.add('wrong'); qWrong++;
+    document.querySelectorAll('.q-opt').forEach(b=>{
+      if(qMode==='en-vi'&&b.textContent===qCurrent.meaning) b.classList.add('correct');
+      if(qMode==='vi-en'&&b.textContent===qCurrent.word) b.classList.add('correct');
+    });
+    fb.className='q-fb show bad';
+    fb.textContent=`❌ Sai! Đáp án: "${qCurrent.word}" = "${qCurrent.meaning}"`;
+  }
+  updateScore();
+}
+
+// ===================== EX1: PICTURE LETTER =====================
+const ex1Data = [
+  { num:1, hint:"_ _ _ F", answer:"chef", meaning:"đầu bếp" },
+  { num:2, hint:"_E_ _ P_ _ O_ _ S_", answer:"receptionist", meaning:"nhân viên lễ tân" },
+  { num:3, hint:"W_ _ _E_", answer:"waiter", meaning:"bồi bàn nam" },
+  { num:4, hint:"_E_T_ _ _ A_T", answer:"restaurant", meaning:"nhà hàng" },
+  { num:5, hint:"_A_ _", answer:"hall", meaning:"sảnh" },
+  { num:6, hint:"_L_ _ NE_", answer:"cleaner", meaning:"người dọn dẹp" },
+];
+
+function renderEx1() {
+  document.getElementById('ex1-items').innerHTML = ex1Data.map((d,i)=>`
+    <div class="pic-item">
+      <label>📸 Picture ${d.num}:</label>
+      <span class="hint-letters">${d.hint}</span>
+      <input type="text" id="ex1-${i}" placeholder="Điền từ..." autocomplete="off">
+    </div>
+  `).join('');
+}
+
+function checkEx1() {
+  let html='', sc=0;
+  ex1Data.forEach((d,i)=>{
+    const inp=document.getElementById(`ex1-${i}`);
+    const ok=inp.value.trim().toLowerCase()===d.answer.toLowerCase();
+    inp.className=ok?'correct':'wrong';
+    sc+=ok?1:0;
+    if(ok) html+=`<div class="result-row ok">✅ Picture ${d.num}: <b>${d.answer}</b> – Đúng!</div>`;
+    else html+=`<div class="result-row bad">❌ Picture ${d.num}: Bạn viết "<b>${inp.value||'(trống)'}</b>" – Đáp án: <b>${d.answer}</b> <span class="exp">(${d.meaning})</span></div>`;
+  });
+  showResult('ex1-result', sc, ex1Data.length, html);
+}
+
+function resetEx1() {
+  ex1Data.forEach((_,i)=>{ const inp=document.getElementById(`ex1-${i}`); inp.value=''; inp.className=''; });
+  document.getElementById('ex1-result').className='ex-result';
+}
+
+// ===================== EX2: MATCH MEANING =====================
+const ex2Data = [
+  { vi:"doanh nhân nữ", answer:"businesswoman" },
+  { vi:"chủ tịch", answer:"chairman" },
+  { vi:"giám đốc", answer:"director" },
+  { vi:"người quản lý", answer:"manager" },
+  { vi:"nhân viên", answer:"staff" },
+  { vi:"kế toán", answer:"accountant" },
+  { vi:"thư ký", answer:"secretary" },
+  { vi:"đồng nghiệp", answer:"colleague" },
+];
+
+function renderEx2() {
+  const opts = ['businesswoman','staff','secretary','director','accountant','colleague','manager','chairman'];
+  document.getElementById('ex2-items').innerHTML = ex2Data.map((d,i)=>`
+    <div class="match-item">
+      <label><b>${i+1}.</b> ${d.vi}</label>
+      <select class="match-select" id="ex2-${i}">
+        <option value="">-- Chọn từ --</option>
+        ${opts.map(o=>`<option>${o}</option>`).join('')}
+      </select>
+    </div>
+  `).join('');
+}
+
+function checkEx2() {
+  let html='', sc=0;
+  ex2Data.forEach((d,i)=>{
+    const s=document.getElementById(`ex2-${i}`);
+    const ok=s.value.toLowerCase()===d.answer.toLowerCase();
+    s.className='match-select '+(ok?'correct':'wrong');
+    sc+=ok?1:0;
+    if(ok) html+=`<div class="result-row ok">✅ ${d.vi}: <b>${d.answer}</b> – Đúng!</div>`;
+    else html+=`<div class="result-row bad">❌ ${d.vi}: Bạn chọn "<b>${s.value||'(chưa chọn)'}</b>" – Đáp án: <b>${d.answer}</b></div>`;
+  });
+  showResult('ex2-result', sc, ex2Data.length, html);
+}
+
+function resetEx2() {
+  ex2Data.forEach((_,i)=>{ const s=document.getElementById(`ex2-${i}`); s.value=''; s.className='match-select'; });
+  document.getElementById('ex2-result').className='ex-result';
+}
+
+// ===================== EX3: HOTEL/OFFICE =====================
+const ex3Data = [
+  { word:"chef", answer:"Hotel" },
+  { word:"director", answer:"Office" },
+  { word:"secretary", answer:"Office" },
+  { word:"businessman", answer:"Office" },
+  { word:"waiter", answer:"Hotel" },
+  { word:"chairman", answer:"Office" },
+  { word:"waitress", answer:"Hotel" },
+  { word:"accountant", answer:"Office" },
+];
+
+function renderEx3() {
+  document.getElementById('ex3-items').innerHTML = ex3Data.map((d,i)=>`
+    <div class="ho-item">
+      <label><b>${i+1}.</b> ${d.word}</label>
+      <select class="ho-select" id="ex3-${i}">
+        <option value="">-- Chọn --</option>
+        <option value="Hotel">Hotel</option>
+        <option value="Office">Office</option>
+      </select>
+    </div>
+  `).join('');
+}
+
+function checkEx3() {
+  let html='', sc=0;
+  ex3Data.forEach((d,i)=>{
+    const s=document.getElementById(`ex3-${i}`);
+    const ok=s.value===d.answer;
+    s.className='ho-select '+(ok?'correct':'wrong');
+    sc+=ok?1:0;
+    if(ok) html+=`<div class="result-row ok">✅ ${d.word}: <b>Jobs at the ${d.answer}</b> – Đúng!</div>`;
+    else html+=`<div class="result-row bad">❌ ${d.word}: Bạn chọn "<b>${s.value||'(chưa chọn)'}</b>" – Đáp án: <b>Jobs at the ${d.answer}</b></div>`;
+  });
+  showResult('ex3-result', sc, ex3Data.length, html);
+}
+
+function resetEx3() {
+  ex3Data.forEach((_,i)=>{ const s=document.getElementById(`ex3-${i}`); s.value=''; s.className='ho-select'; });
+  document.getElementById('ex3-result').className='ex-result';
+}
+
+// ===================== EX5: DIALOGUE LISTENING =====================
+const ex5Answers = ['colleagues','accountant','work','director','secretary'];
+
+function renderEx5() {
+  document.getElementById('ex5-dialogue').innerHTML = `
+    <p><b>Jani:</b> Welcome to the department, Yuki. Let me show you around and tell you about your new <input id="dlg5-0" type="text" placeholder="(1)">. I'll introduce you to them all later.</p>
+    <p><b>Yuki:</b> Great. Thanks. So, who are those people over there?</p>
+    <p><b>Jani:</b> That's the finance team. Luciana is the assistant <input id="dlg5-1" type="text" placeholder="(2)">. She's the one with short, dark hair.</p>
+    <p><b>Yuki:</b> In the purple dress?</p>
+    <p><b>Jani:</b> Yeah, that's right. You'll probably <input id="dlg5-2" type="text" placeholder="(3)"> closely with her while you are learning about bookkeeping.</p>
+    <p><b>Yuki:</b> Got it, thanks. And who's that over there? The guy who's on the phone?</p>
+    <p><b>Jani:</b> Oh, you mean the one by the window? In the green shirt? Ah, that's Ian. He's the marketing <input id="dlg5-3" type="text" placeholder="(4)">. And that's Maria beside him. She's his <input id="dlg5-4" type="text" placeholder="(5)">.</p>
+    <p><b>Yuki:</b> OK, I'll try to remember all of this. I should probably be taking notes!</p>
+  `;
+}
+
+function checkEx5() {
+  let html='', sc=0;
+  const meanings = ['đồng nghiệp','kế toán','làm việc','giám đốc','thư ký'];
+  ex5Answers.forEach((ans,i)=>{
+    const inp=document.getElementById(`dlg5-${i}`);
+    const ok=inp.value.trim().toLowerCase()===ans.toLowerCase();
+    inp.className=ok?'correct':'wrong';
+    sc+=ok?1:0;
+    if(ok) html+=`<div class="result-row ok">✅ Chỗ trống (${i+1}): <b>${ans}</b> – Đúng! <span class="exp">(${meanings[i]})</span></div>`;
+    else html+=`<div class="result-row bad">❌ Chỗ trống (${i+1}): Bạn viết "<b>${inp.value||'(trống)'}</b>" – Đáp án: <b>${ans}</b> <span class="exp">(${meanings[i]})</span></div>`;
+  });
+  showResult('ex5-result', sc, ex5Answers.length, html);
+}
+
+function resetEx5() {
+  ex5Answers.forEach((_,i)=>{ const inp=document.getElementById(`dlg5-${i}`); inp.value=''; inp.className=''; });
+  document.getElementById('ex5-result').className='ex-result';
+}
+
+// ===================== EX6: WORD MATCH FILL =====================
+const ex6Data = [
+  { sentence:"The ___ of the hotel was as big as a railway station.", answer:"hall", hint:"Chú ý 'hotel' (khách sạn) → sảnh khách sạn", before:"The", after:"of the hotel was as big as a railway station." },
+  { sentence:"Jane used to work as a ___ in an Italian restaurant.", answer:"waitress", hint:"Chú ý 'restaurant' (nhà hàng) → bồi bàn nữ", before:"Jane used to work as a", after:"in an Italian restaurant." },
+  { sentence:"The ___ comes and we order a pizza.", answer:"waitress", hint:"Chú ý 'order' (gọi món) → bồi bàn", before:"The", after:"comes and we order a pizza." },
+  { sentence:"The hotel has over 100 full-time ___.", answer:"staff", hint:"Chú ý 'full-time' (toàn thời gian) → nhân viên", before:"The hotel has over 100 full-time", after:"." },
+  { sentence:"How often do you ___ the office?", answer:"clean", hint:"Chú ý 'office' (văn phòng) → lau dọn văn phòng", before:"How often do you", after:"the office?" },
+  { sentence:"He was asked to ___ a new football team.", answer:"manage", hint:"Chú ý 'football team' (đội bóng) → quản lý đội", before:"He was asked to", after:"a new football team." },
+];
+
+function renderEx6() {
+  // Note: bài 6 trong PDF có lỗi - 'cook' không xuất hiện đúng vị trí. Theo logic ngữ cảnh
+  // Hộp từ thực tế: waitress, staff, clean, cook, manage, hall (6 từ - 6 câu)
+  // Câu 2 'work as a ___ in an Italian restaurant' → waitress (đã dùng)
+  // Câu 3 'The ___ comes and we order' → cook hoặc waitress... → ở đây dùng cook
+  // Sửa lại đáp án câu 3 = cook, để hộp từ đủ
+  ex6Data[2].answer = "cook";
+  ex6Data[2].hint = "Chú ý 'order a pizza' → đầu bếp/bồi bàn đến";
+
+  document.getElementById('ex6-items').innerHTML = ex6Data.map((d,i)=>`
+    <div class="b6-item">
+      <div class="b6-sentence">
+        <b>${i+1}.</b> ${d.before}
+        <input id="ex6-${i}" type="text" placeholder="..." autocomplete="off">
+        ${d.after}
+      </div>
+      <div class="b6-hint">💡 ${d.hint}</div>
+    </div>
+  `).join('');
+}
+
+function checkEx6() {
+  let html='', sc=0;
+  ex6Data.forEach((d,i)=>{
+    const inp=document.getElementById(`ex6-${i}`);
+    const ok=inp.value.trim().toLowerCase()===d.answer.toLowerCase();
+    inp.className=ok?'correct':'wrong';
+    sc+=ok?1:0;
+    if(ok) html+=`<div class="result-row ok">✅ Câu ${i+1}: <b>${d.answer}</b> – Đúng!</div>`;
+    else html+=`<div class="result-row bad">❌ Câu ${i+1}: Bạn viết "<b>${inp.value||'(trống)'}</b>" – Đáp án: <b>${d.answer}</b> <span class="exp">${d.hint}</span></div>`;
+  });
+  showResult('ex6-result', sc, ex6Data.length, html);
+}
+
+function resetEx6() {
+  ex6Data.forEach((_,i)=>{ const inp=document.getElementById(`ex6-${i}`); inp.value=''; inp.className=''; });
+  document.getElementById('ex6-result').className='ex-result';
+}
+
+// ===================== EX7: MCQ =====================
+const ex7Data = [
+  {
+    q:"1. When we arrived at the hotel, we checked in with the _____.",
+    hint:"Chú ý 'checked in' (nhận phòng)",
+    opts:["A. director","B. receptionist","C. accountant"],
+    answer:1,
+    explain:"receptionist = nhân viên lễ tân, người tiếp đón và làm thủ tục nhận phòng tại khách sạn."
+  },
+  {
+    q:"2. He became _____ of the new Theatre Company last year.",
+    hint:"Chú ý 'became' (trở thành), 'company' (công ty)",
+    opts:["A. director","B. restaurant","C. office"],
+    answer:0,
+    explain:"director = giám đốc. Restaurant (nhà hàng) và office (văn phòng) là nơi chốn, không phải chức vụ."
+  },
+  {
+    q:"3. Chris has an evening job as a pool _____.",
+    hint:"Chú ý 'pool' (bể bơi)",
+    opts:["A. waitress","B. businessman","C. cleaner"],
+    answer:2,
+    explain:"cleaner = người dọn dẹp (bể bơi). Waitress = bồi bàn nữ, businessman = doanh nhân – không liên quan đến bể bơi."
+  },
+  {
+    q:"4. Robin and I work in the marketing department. She is my _____.",
+    hint:"Chú ý 'work in the marketing department'",
+    opts:["A. businesswoman","B. colleague","C. waiter"],
+    answer:1,
+    explain:"colleague = đồng nghiệp. Cùng phòng marketing → là đồng nghiệp."
+  },
+  {
+    q:"5. His personal _____ handles all his appointments.",
+    hint:"Chú ý 'handle' (xử lý), 'appointments' (cuộc hẹn)",
+    opts:["A. secretary","B. company","C. chairman"],
+    answer:0,
+    explain:"secretary = thư ký, người xử lý các cuộc hẹn cá nhân."
+  },
+  {
+    q:"6. My _____ are preparing dinner for 200 guests tonight.",
+    hint:"Chú ý 'prepare' (chuẩn bị), 'guests' (vị khách)",
+    opts:["A. halls","B. cleaners","C. cooks"],
+    answer:2,
+    explain:"cooks = đầu bếp, người chuẩn bị bữa ăn. Halls = sảnh, cleaners = người dọn – không liên quan đến nấu ăn."
+  },
+];
+
+function renderEx7() {
+  document.getElementById('ex7-items').innerHTML = ex7Data.map((d,i)=>`
+    <div class="mcq-item" id="mcq7-${i}">
+      <div class="mcq-q">${d.q}</div>
+      <div class="mcq-hint">💡 ${d.hint}</div>
+      <div class="mcq-opts-wrap">
+        ${d.opts.map((o,j)=>`<button class="mcq-opt" onclick="pickMCQ(7,${i},${j},this)">${o}</button>`).join('')}
+      </div>
+      <div class="mcq-fb" id="fb7-${i}"></div>
+    </div>
+  `).join('');
+}
+
+function pickMCQ(exNum, qi, chosen, btn) {
+  const dataset = exNum===7?ex7Data:ex9Data;
+  const d=dataset[qi];
+  const item=document.getElementById(`mcq${exNum}-${qi}`);
+  item.querySelectorAll('.mcq-opt').forEach(b=>{ b.classList.add('disabled'); b.onclick=null; });
+  const fb=document.getElementById(`fb${exNum}-${qi}`);
+  if(chosen===d.answer) {
+    btn.classList.add('correct');
+    fb.className='mcq-fb show ok';
+    fb.innerHTML=`✅ Chính xác! ${d.explain}`;
+  } else {
+    btn.classList.add('wrong');
+    item.querySelectorAll('.mcq-opt')[d.answer].classList.add('correct');
+    fb.className='mcq-fb show bad';
+    fb.innerHTML=`❌ Sai! Đáp án đúng: <b>${d.opts[d.answer]}</b> – ${d.explain}`;
+  }
+}
+
+function checkEx7() {
+  let html='', sc=0;
+  ex7Data.forEach((d,i)=>{
+    const item=document.getElementById(`mcq7-${i}`);
+    const cor=item.querySelector('.mcq-opt.correct');
+    const wro=item.querySelector('.mcq-opt.wrong');
+    if(!cor&&!wro){ html+=`<div class="result-row bad">❌ Câu ${i+1}: Chưa trả lời. Đáp án: <b>${d.opts[d.answer]}</b></div>`; return; }
+    const ok=!!cor&&!wro;
+    sc+=ok?1:0;
+    if(ok) html+=`<div class="result-row ok">✅ Câu ${i+1}: Đúng! <span class="exp">${d.explain}</span></div>`;
+    else html+=`<div class="result-row bad">❌ Câu ${i+1}: Sai. Đáp án: <b>${d.opts[d.answer]}</b> <span class="exp">${d.explain}</span></div>`;
+  });
+  showResult('ex7-result', sc, ex7Data.length, html);
+}
+
+function resetEx7() { renderEx7(); document.getElementById('ex7-result').className='ex-result'; }
+
+// ===================== EX8: READING FILL =====================
+const ex8Answers = [
+  {ans:"chef", note:"Luigi nấu nhiều món, là pizza chef → là chef (bếp trưởng)"},
+  {ans:"restaurant", note:"'works in an excellent Italian ___' → restaurant (nhà hàng Ý)"},
+  {ans:"manage", note:"'manage a team of 5 cooks' → quản lý nhóm 5 đầu bếp"},
+  {ans:"director", note:"'works with the restaurant ___ to come up with new menus' → director (giám đốc nhà hàng)"},
+  {ans:"cooks", note:"'trains new ___' → trains new cooks (đào tạo đầu bếp mới)"},
+];
+
+function renderEx8() {
+  document.getElementById('ex8-items').innerHTML = ex8Answers.map((d,i)=>`
+    <div class="pic-item">
+      <label><b>(${i+1})</b> Điền số ${i+1}:</label>
+      <input type="text" id="ex8-${i}" placeholder="Nhập từ..." autocomplete="off">
+    </div>
+  `).join('');
+}
+
+function checkEx8() {
+  let html='', sc=0;
+  ex8Answers.forEach((d,i)=>{
+    const inp=document.getElementById(`ex8-${i}`);
+    const ok=inp.value.trim().toLowerCase()===d.ans.toLowerCase();
+    inp.className=ok?'correct':'wrong';
+    sc+=ok?1:0;
+    if(ok) html+=`<div class="result-row ok">✅ (${i+1}): <b>${d.ans}</b> – Đúng! <span class="exp">${d.note}</span></div>`;
+    else html+=`<div class="result-row bad">❌ (${i+1}): Bạn viết "<b>${inp.value||'(trống)'}</b>" – Đáp án: <b>${d.ans}</b> <span class="exp">${d.note}</span></div>`;
+  });
+  showResult('ex8-result', sc, ex8Answers.length, html);
+}
+
+function resetEx8() {
+  ex8Answers.forEach((_,i)=>{ const inp=document.getElementById(`ex8-${i}`); inp.value=''; inp.className=''; });
+  document.getElementById('ex8-result').className='ex-result';
+}
+
+// ===================== EX9: ADS MCQ =====================
+const ex9Data = [
+  {
+    q:"1. In which job do you only need to work on Saturdays?",
+    opts:["A. advert A","B. advert B","C. advert C"],
+    answer:2,
+    explain:"Advert C (Munchies Café) – 'work in our café on Saturdays' → chỉ làm thứ Bảy."
+  },
+  {
+    q:"2. In which job do you need to speak English?",
+    opts:["A. advert A","B. advert B","C. advert C"],
+    answer:1,
+    explain:"Advert B (City Museum) – 'We need French, English or German receptionists' → cần biết tiếng Anh."
+  },
+  {
+    q:"3. In which job do you only work during the summer holidays?",
+    opts:["A. advert A","B. advert B","C. advert C"],
+    answer:1,
+    explain:"Advert B – 'Holiday job' và 'this summer' → chỉ làm dịp lễ mùa hè."
+  },
+  {
+    q:"4. In which job do you have to work for 2 hours every day in the afternoon?",
+    opts:["A. advert A","B. advert B","C. advert C"],
+    answer:0,
+    explain:"Advert A – '4 p.m. – 6 p.m., Mon–Fri' → 2 tiếng buổi chiều mỗi ngày."
+  },
+  {
+    q:"5. In which job do you need to work from Tuesday to Saturday?",
+    opts:["A. advert A","B. advert B","C. advert C"],
+    answer:1,
+    explain:"Advert B – 'Tuesday – Saturday' → làm từ thứ Ba đến thứ Bảy."
+  },
+];
+
+function renderEx9() {
+  document.getElementById('ex9-items').innerHTML = ex9Data.map((d,i)=>`
+    <div class="mcq-item" id="mcq9-${i}">
+      <div class="mcq-q">${d.q}</div>
+      <div class="mcq-opts-wrap">
+        ${d.opts.map((o,j)=>`<button class="mcq-opt" onclick="pickMCQ(9,${i},${j},this)">${o}</button>`).join('')}
+      </div>
+      <div class="mcq-fb" id="fb9-${i}"></div>
+    </div>
+  `).join('');
+}
+
+function checkEx9() {
+  let html='', sc=0;
+  ex9Data.forEach((d,i)=>{
+    const item=document.getElementById(`mcq9-${i}`);
+    const cor=item.querySelector('.mcq-opt.correct');
+    const wro=item.querySelector('.mcq-opt.wrong');
+    if(!cor&&!wro){ html+=`<div class="result-row bad">❌ Câu ${i+1}: Chưa trả lời. Đáp án: <b>${d.opts[d.answer]}</b></div>`; return; }
+    const ok=!!cor&&!wro;
+    sc+=ok?1:0;
+    if(ok) html+=`<div class="result-row ok">✅ Câu ${i+1}: Đúng! <span class="exp">${d.explain}</span></div>`;
+    else html+=`<div class="result-row bad">❌ Câu ${i+1}: Sai. Đáp án: <b>${d.opts[d.answer]}</b> <span class="exp">${d.explain}</span></div>`;
+  });
+  showResult('ex9-result', sc, ex9Data.length, html);
+}
+
+function resetEx9() { renderEx9(); document.getElementById('ex9-result').className='ex-result'; }
+
+// ===================== HELPER =====================
+function showResult(id, sc, total, html) {
+  const el=document.getElementById(id);
+  el.innerHTML=`<div style="font-weight:800;margin-bottom:8px;font-size:1rem;color:${sc===total?'var(--green)':'var(--orange)'}">
+    ${sc===total?'🎉':'📊'} Kết quả: ${sc}/${total} câu đúng</div>`+html;
+  el.className='ex-result show';
+}
+
+function getScoreFromResult(id, total) {
+  const el=document.getElementById(id);
+  if(el.className.indexOf('show')===-1) return {ok:0, total};
+  return {ok: el.querySelectorAll('.result-row.ok').length, total};
+}
+
+function checkAll() {
+  checkEx1(); checkEx2(); checkEx3(); checkEx5(); checkEx6(); checkEx7(); checkEx8(); checkEx9();
+  const scores = [
+    ['Bài 1 – Nhìn ảnh điền từ', getScoreFromResult('ex1-result', ex1Data.length)],
+    ['Bài 2 – Nối nghĩa', getScoreFromResult('ex2-result', ex2Data.length)],
+    ['Bài 3 – Hotel/Office', getScoreFromResult('ex3-result', ex3Data.length)],
+    ['Bài 5 – Nghe điền hội thoại', getScoreFromResult('ex5-result', ex5Answers.length)],
+    ['Bài 6 – Chọn từ điền câu', getScoreFromResult('ex6-result', ex6Data.length)],
+    ['Bài 7 – Trắc nghiệm', getScoreFromResult('ex7-result', ex7Data.length)],
+    ['Bài 8 – Đoạn văn Luigi', getScoreFromResult('ex8-result', ex8Answers.length)],
+    ['Bài 9 – Quảng cáo', getScoreFromResult('ex9-result', ex9Data.length)],
+  ];
+  const totalOk = scores.reduce((a,s)=>a+s[1].ok,0);
+  const totalAll = scores.reduce((a,s)=>a+s[1].total,0);
+  const pct = Math.round(totalOk/totalAll*100);
+
+  document.getElementById('bigScore').innerHTML=`${totalOk} <span>/ ${totalAll} câu</span>`;
+  document.getElementById('pctFill').style.width=pct+'%';
+
+  let comment='';
+  if(pct>=90) comment='🌟 Xuất sắc! Bạn nắm vững toàn bộ từ vựng nghề nghiệp!';
+  else if(pct>=70) comment='👍 Tốt lắm! Ôn lại những câu sai nhé!';
+  else if(pct>=50) comment='📖 Cần cố gắng hơn! Xem lại Tab Học Từ Mới!';
+  else comment='💪 Đừng nản! Xem lại danh sách từ và thử lại!';
+  document.getElementById('sumComment').textContent=`${pct}% chính xác · ${comment}`;
+
+  document.getElementById('sumDetail').innerHTML=`<b style="display:block;margin-bottom:10px">Chi tiết từng bài:</b>`+
+    scores.map(([name,s])=>`
+      <div class="${s.ok===s.total?'result-row ok':'result-row bad'}" style="flex-direction:column;gap:6px">
+        <span>${s.ok===s.total?'✅':'⚠️'} ${name}: ${s.ok}/${s.total}</span>
+        <div style="width:100%;background:#e2e8f0;height:7px;border-radius:10px">
+          <div style="width:${s.total>0?Math.round(s.ok/s.total*100):0}%;background:${s.ok===s.total?'var(--green)':'var(--yellow)'};height:7px;border-radius:10px"></div>
+        </div>
+      </div>
+    `).join('');
+
+  document.getElementById('summaryResult').style.display='block';
+  document.getElementById('summaryResult').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function resetAll() {
+  resetEx1(); resetEx2(); resetEx3(); resetEx5(); resetEx6(); resetEx7(); resetEx8(); resetEx9();
+  document.getElementById('summaryResult').style.display='none';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function showTab(tab, btn) {
+  document.querySelectorAll('.tab-content').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el=>el.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  btn.classList.add('active');
+}
+
+// INIT
+renderVocab();
+renderEx1();
+renderEx2();
+renderEx3();
+renderEx5();
+renderEx6();
+renderEx7();
+renderEx8();
+renderEx9();
+</script>
+</body>
+</html>

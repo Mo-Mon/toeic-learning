@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Học Tiếng Anh – Du Lịch & Kỳ Nghỉ</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Roboto+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #1a6fd4;
+    --blue-light: #3a8ef6;
+    --blue-pale: #e8f1fd;
+    --blue-mid: #b3d1f8;
+    --white: #ffffff;
+    --gray-light: #f4f7fc;
+    --gray: #9aa5b4;
+    --gray-dark: #4a5568;
+    --text: #1a202c;
+    --green: #22c55e;
+    --red: #ef4444;
+    --orange: #f59e0b;
+    --shadow: 0 4px 24px rgba(26,111,212,0.10);
+    --radius: 14px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--white);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--white);
+    border-bottom: 2px solid var(--blue-pale);
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    height: 64px;
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 2px 12px rgba(26,111,212,0.07);
+  }
+  .logo { 
+    font-size: 22px; font-weight: 900; color: var(--blue);
+    letter-spacing: -0.5px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .logo-icon { font-size: 26px; }
+  header p { color: var(--gray); font-size: 13px; font-weight: 600; }
+
+  /* TABS */
+  .tab-bar {
+    display: flex;
+    gap: 0;
+    background: var(--gray-light);
+    border-bottom: 2px solid var(--blue-pale);
+    padding: 0 32px;
+  }
+  .tab-btn {
+    padding: 14px 28px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px; font-weight: 700;
+    background: none; border: none; cursor: pointer;
+    color: var(--gray-dark);
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    transition: all 0.2s;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .tab-btn.active {
+    color: var(--blue);
+    border-bottom-color: var(--blue);
+    background: var(--white);
+  }
+  .tab-btn:hover:not(.active) { color: var(--blue); background: var(--blue-pale); }
+
+  /* CONTENT */
+  .tab-content { display: none; padding: 32px; max-width: 960px; margin: 0 auto; }
+  .tab-content.active { display: block; }
+
+  /* ==================== TAB 1: TỪ MỚI ==================== */
+  .section-title {
+    font-size: 20px; font-weight: 800; color: var(--blue);
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-title span { font-size: 22px; }
+
+  /* Vocab grid */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+  .vocab-card {
+    background: var(--white);
+    border: 2px solid var(--blue-pale);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    box-shadow: var(--shadow);
+    transition: border-color 0.2s, transform 0.15s;
+    position: relative;
+    overflow: hidden;
+  }
+  .vocab-card:hover { border-color: var(--blue-light); transform: translateY(-2px); }
+  .vocab-card .word {
+    font-size: 20px; font-weight: 900; color: var(--blue);
+    margin-bottom: 4px;
+  }
+  .vocab-card .phonetic {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 12px; color: var(--gray);
+    margin-bottom: 6px;
+  }
+  .vocab-card .type-badge {
+    display: inline-block;
+    background: var(--blue-pale);
+    color: var(--blue);
+    font-size: 10px; font-weight: 700;
+    padding: 2px 8px; border-radius: 20px;
+    margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .vocab-card .meaning {
+    font-size: 15px; font-weight: 700; color: var(--text);
+    margin-bottom: 6px;
+  }
+  .vocab-card .example {
+    font-size: 12px; color: var(--gray-dark); font-style: italic;
+    line-height: 1.5;
+  }
+  .audio-btn {
+    position: absolute; top: 14px; right: 14px;
+    background: var(--blue-pale); border: none; cursor: pointer;
+    width: 34px; height: 34px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; transition: background 0.2s, transform 0.1s;
+    color: var(--blue);
+  }
+  .audio-btn:hover { background: var(--blue-mid); transform: scale(1.1); }
+  .audio-btn.playing { background: var(--blue); color: white; animation: pulse 0.6s infinite; }
+  @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.15)} }
+
+  /* QUIZ */
+  .quiz-section {
+    background: var(--gray-light);
+    border-radius: var(--radius);
+    padding: 28px;
+    border: 2px solid var(--blue-pale);
+  }
+  .quiz-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 24px; flex-wrap: gap;
+  }
+  .quiz-mode-btns { display: flex; gap: 8px; }
+  .mode-btn {
+    padding: 8px 18px; border-radius: 20px; border: 2px solid var(--blue-pale);
+    background: var(--white); cursor: pointer; font-family: 'Nunito',sans-serif;
+    font-size: 13px; font-weight: 700; color: var(--gray-dark);
+    transition: all 0.2s;
+  }
+  .mode-btn.active { background: var(--blue); color: white; border-color: var(--blue); }
+  .mode-btn:hover:not(.active) { border-color: var(--blue); color: var(--blue); }
+
+  .quiz-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 28px;
+    border: 2px solid var(--blue-pale);
+    text-align: center;
+  }
+  .quiz-question {
+    font-size: 26px; font-weight: 900; color: var(--blue);
+    margin-bottom: 8px;
+  }
+  .quiz-sub { font-size: 13px; color: var(--gray); margin-bottom: 24px; }
+  .quiz-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    max-width: 500px; margin: 0 auto 20px;
+  }
+  .quiz-opt {
+    padding: 14px 18px;
+    border: 2px solid var(--blue-pale);
+    border-radius: 10px;
+    background: var(--white);
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px; font-weight: 700;
+    color: var(--text);
+    transition: all 0.2s;
+    text-align: center;
+  }
+  .quiz-opt:hover:not(:disabled) { border-color: var(--blue); background: var(--blue-pale); color: var(--blue); }
+  .quiz-opt.correct { border-color: var(--green); background: #dcfce7; color: #15803d; }
+  .quiz-opt.wrong { border-color: var(--red); background: #fee2e2; color: #b91c1c; }
+  .quiz-opt:disabled { cursor: default; }
+  .quiz-feedback {
+    margin-top: 16px; padding: 12px 20px; border-radius: 10px;
+    font-size: 14px; font-weight: 700; display: none;
+  }
+  .quiz-feedback.correct { background: #dcfce7; color: #15803d; display: block; }
+  .quiz-feedback.wrong { background: #fee2e2; color: #b91c1c; display: block; }
+  .quiz-score {
+    display: flex; gap: 20px; justify-content: center;
+    margin-top: 16px; flex-wrap: wrap;
+  }
+  .score-item { text-align: center; }
+  .score-num { font-size: 28px; font-weight: 900; color: var(--blue); }
+  .score-label { font-size: 11px; color: var(--gray); font-weight: 700; text-transform: uppercase; }
+  .btn-next {
+    margin-top: 16px;
+    padding: 12px 32px;
+    background: var(--blue); color: white;
+    border: none; border-radius: 30px;
+    font-family: 'Nunito',sans-serif; font-size: 15px; font-weight: 800;
+    cursor: pointer; transition: background 0.2s, transform 0.1s;
+    display: none;
+  }
+  .btn-next:hover { background: var(--blue-light); transform: scale(1.03); }
+
+  /* ==================== TAB 2: BÀI TẬP ==================== */
+  .exercise-block { display: block; margin-bottom: 40px; }
+  .exercise-block + .exercise-block {
+    border-top: 2px dashed var(--blue-pale);
+    padding-top: 40px;
+  }
+
+  .ex-title {
+    font-size: 17px; font-weight: 800; color: var(--text);
+    margin-bottom: 6px;
+  }
+  .ex-subtitle {
+    font-size: 13px; color: var(--gray-dark); margin-bottom: 24px;
+    line-height: 1.6;
+  }
+
+  /* Anagram */
+  .anagram-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+  .anagram-item {
+    background: var(--white); border: 2px solid var(--blue-pale);
+    border-radius: var(--radius); padding: 18px 20px;
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  }
+  .anagram-item .num { font-weight: 900; color: var(--blue); min-width: 22px; }
+  .anagram-item .hint { flex: 1; font-size: 14px; color: var(--gray-dark); }
+  .anagram-item .letters {
+    font-family: 'Roboto Mono', monospace; font-size: 13px;
+    background: var(--blue-pale); padding: 4px 10px; border-radius: 6px;
+    color: var(--blue); font-weight: 600;
+  }
+  .ex-input {
+    padding: 9px 14px; border: 2px solid var(--blue-pale);
+    border-radius: 8px; font-family: 'Nunito',sans-serif;
+    font-size: 14px; font-weight: 700; color: var(--text);
+    outline: none; width: 140px;
+    transition: border-color 0.2s;
+  }
+  .ex-input:focus { border-color: var(--blue); }
+  .ex-input.correct { border-color: var(--green); background: #dcfce7; }
+  .ex-input.wrong { border-color: var(--red); background: #fee2e2; }
+
+  /* Fill blank */
+  .fill-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+  .fill-item {
+    background: var(--white); border: 2px solid var(--blue-pale);
+    border-radius: var(--radius); padding: 18px 22px;
+    font-size: 15px; line-height: 1.8;
+  }
+  .fill-item .num { font-weight: 900; color: var(--blue); margin-right: 8px; }
+  .fill-item .vn { font-size: 12px; color: var(--gray); margin-top: 4px; }
+
+  /* MCQ */
+  .mcq-list { list-style: none; display: flex; flex-direction: column; gap: 20px; }
+  .mcq-item {
+    background: var(--white); border: 2px solid var(--blue-pale);
+    border-radius: var(--radius); padding: 20px 24px;
+  }
+  .mcq-question { font-size: 15px; font-weight: 700; margin-bottom: 14px; line-height: 1.6; }
+  .mcq-options { display: flex; flex-direction: column; gap: 8px; }
+  .mcq-opt {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 14px; border: 2px solid var(--blue-pale);
+    border-radius: 8px; cursor: pointer;
+    font-size: 14px; font-weight: 600;
+    transition: all 0.18s; background: var(--white);
+  }
+  .mcq-opt:hover { border-color: var(--blue); background: var(--blue-pale); }
+  .mcq-opt.selected { border-color: var(--blue); background: var(--blue-pale); color: var(--blue); }
+  .mcq-opt.correct { border-color: var(--green)!important; background: #dcfce7!important; color: #15803d!important; }
+  .mcq-opt.wrong { border-color: var(--red)!important; background: #fee2e2!important; color: #b91c1c!important; }
+  .mcq-opt input[type=radio] { display: none; }
+  .mcq-radio {
+    width: 18px; height: 18px; border-radius: 50%;
+    border: 2px solid var(--blue-pale); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+  .mcq-opt.selected .mcq-radio { border-color: var(--blue); background: var(--blue); }
+  .mcq-opt.correct .mcq-radio { border-color: var(--green); background: var(--green); }
+  .mcq-opt.wrong .mcq-radio { border-color: var(--red); background: var(--red); }
+  .mcq-radio::after { content: ''; width: 7px; height: 7px; border-radius: 50%; background: white; display: none; }
+  .mcq-opt.selected .mcq-radio::after,
+  .mcq-opt.correct .mcq-radio::after,
+  .mcq-opt.wrong .mcq-radio::after { display: block; }
+
+  /* Answer explanation */
+  .explanation {
+    display: none; margin-top: 12px; padding: 14px 16px;
+    background: #f0f7ff; border-left: 4px solid var(--blue);
+    border-radius: 0 10px 10px 0;
+    font-size: 13px; line-height: 1.7; color: var(--gray-dark);
+  }
+  .explanation.show { display: block; }
+  .explanation strong { color: var(--blue); }
+  .explanation .answer-badge {
+    display: inline-block; background: var(--blue); color: white;
+    padding: 2px 10px; border-radius: 20px; font-size: 12px; font-weight: 800;
+    margin-bottom: 6px;
+  }
+  .explanation .answer-badge.correct { background: var(--green); }
+  .explanation .answer-badge.wrong-ans { background: var(--red); }
+
+  /* Submit + result */
+  .submit-row { margin-top: 28px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .btn-submit {
+    padding: 13px 36px;
+    background: var(--blue); color: white;
+    border: none; border-radius: 30px;
+    font-family: 'Nunito',sans-serif; font-size: 15px; font-weight: 800;
+    cursor: pointer; transition: all 0.2s;
+    box-shadow: 0 4px 16px rgba(26,111,212,0.25);
+  }
+  .btn-submit:hover { background: var(--blue-light); transform: translateY(-1px); }
+  .btn-reset {
+    padding: 13px 28px;
+    background: var(--white); color: var(--gray-dark);
+    border: 2px solid var(--blue-pale); border-radius: 30px;
+    font-family: 'Nunito',sans-serif; font-size: 14px; font-weight: 700;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .btn-reset:hover { border-color: var(--blue); color: var(--blue); }
+
+  .result-panel {
+    display: none; margin-top: 20px; padding: 20px 24px;
+    background: var(--white); border: 2px solid var(--blue-pale);
+    border-radius: var(--radius);
+  }
+  .result-panel.show { display: block; }
+  .result-score-big { font-size: 32px; font-weight: 900; color: var(--blue); }
+  .result-msg { font-size: 14px; color: var(--gray-dark); margin-top: 4px; }
+
+  /* Listening */
+  .audio-player-custom {
+    background: var(--blue-pale); border-radius: var(--radius);
+    padding: 20px 24px; margin-bottom: 24px;
+    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  }
+  .audio-player-custom audio { flex: 1; min-width: 200px; }
+  .audio-label { font-weight: 800; color: var(--blue); font-size: 14px; white-space: nowrap; }
+
+  /* Odd one out */
+  .odd-list { display: flex; flex-direction: column; gap: 16px; }
+  .odd-group {
+    background: var(--white); border: 2px solid var(--blue-pale);
+    border-radius: var(--radius); padding: 18px 22px;
+  }
+  .odd-group .odd-options { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
+  .odd-opt {
+    padding: 10px 20px; border: 2px solid var(--blue-pale);
+    border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: 700;
+    background: var(--white); transition: all 0.2s; color: var(--text);
+  }
+  .odd-opt:hover { border-color: var(--blue); color: var(--blue); background: var(--blue-pale); }
+  .odd-opt.selected { border-color: var(--blue); background: var(--blue-pale); color: var(--blue); }
+  .odd-opt.correct { border-color: var(--green)!important; background: #dcfce7!important; color: #15803d!important; }
+  .odd-opt.wrong { border-color: var(--red)!important; background: #fee2e2!important; color: #b91c1c!important; }
+
+  /* Reading passage */
+  .passage-box {
+    background: var(--gray-light); border-radius: var(--radius);
+    padding: 22px 26px; margin-bottom: 24px;
+    font-size: 14px; line-height: 1.9; color: var(--text);
+    border: 2px solid var(--blue-pale);
+  }
+  .passage-box .passage-name { font-weight: 900; color: var(--blue); margin-bottom: 10px; font-size: 15px; }
+  .passage-vn { font-size: 12.5px; color: var(--gray-dark); margin-top: 10px; font-style: italic; border-top: 1px solid var(--blue-pale); padding-top: 10px; }
+
+  /* word-select ex7 */
+  .word-match-table { width: 100%; border-collapse: collapse; }
+  .word-match-table td { padding: 12px 14px; border-bottom: 1px solid var(--blue-pale); vertical-align: top; font-size: 14px; }
+  .word-match-table td:first-child { width: 60%; }
+  .word-match-table tr:last-child td { border-bottom: none; }
+  .wm-sentence { font-weight: 600; line-height: 1.7; }
+  .wm-hint { font-size: 12px; color: var(--gray); font-style: italic; }
+  .word-select {
+    padding: 8px 14px; border: 2px solid var(--blue-pale);
+    border-radius: 8px; font-family: 'Nunito',sans-serif;
+    font-size: 14px; font-weight: 700; color: var(--text);
+    background: var(--white); cursor: pointer; outline: none;
+    transition: border-color 0.2s;
+  }
+  .word-select:focus { border-color: var(--blue); }
+  .word-select.correct { border-color: var(--green); background: #dcfce7; }
+  .word-select.wrong { border-color: var(--red); background: #fee2e2; }
+
+  /* Responsive */
+  @media(max-width:600px) {
+    .tab-content { padding: 16px; }
+    .quiz-options { grid-template-columns: 1fr; }
+    .tab-bar { padding: 0 8px; }
+    .tab-btn { padding: 12px 14px; font-size: 13px; }
+    .vocab-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Passage fill blanks */
+  .passage-fill { font-size: 14px; line-height: 2.2; }
+  .blank-input {
+    display: inline-block; width: 110px;
+    padding: 3px 8px; border: 2px solid var(--blue-mid);
+    border-radius: 6px; font-family: 'Nunito',sans-serif;
+    font-size: 13px; font-weight: 700; color: var(--text);
+    background: var(--white); outline: none; transition: border-color 0.2s;
+    vertical-align: middle; margin: 0 2px;
+  }
+  .blank-input:focus { border-color: var(--blue); }
+  .blank-input.correct { border-color: var(--green); background: #dcfce7; }
+  .blank-input.wrong { border-color: var(--red); background: #fee2e2; }
+
+  /* OVERALL SECTION */
+  #overall-section {
+    border-top: 3px solid var(--blue);
+    padding-top: 40px;
+    margin-top: 12px;
+  }
+  .overall-title { font-size: 22px; font-weight: 900; color: var(--blue); margin-bottom: 10px; }
+  .overall-desc { font-size: 14px; color: var(--gray-dark); margin-bottom: 24px; line-height: 1.6; }
+  .overall-btns { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 28px; }
+  .btn-overall { font-size: 16px !important; padding: 16px 44px !important; }
+
+  .overall-score-card {
+    background: linear-gradient(135deg, var(--blue) 0%, var(--blue-light) 100%);
+    border-radius: var(--radius); padding: 32px; text-align: center;
+    margin-bottom: 28px; color: white; box-shadow: 0 8px 32px rgba(26,111,212,0.3);
+  }
+  .overall-big-score { font-size: 64px; font-weight: 900; line-height: 1; }
+  .overall-pct { font-size: 24px; font-weight: 800; opacity: 0.9; margin: 6px 0; }
+  .overall-msg { font-size: 16px; opacity: 0.85; margin-bottom: 24px; }
+  .overall-bars {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(160px,1fr));
+    gap: 10px; text-align: left;
+  }
+  .bar-item { background: rgba(255,255,255,0.15); border-radius: 10px; padding: 10px 12px; }
+  .bar-label { font-size: 11px; font-weight: 800; opacity: 0.9; margin-bottom: 6px; }
+  .bar-track { background: rgba(255,255,255,0.25); border-radius: 20px; height: 8px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 20px; background: white; transition: width 0.8s ease; }
+  .bar-score { font-size: 13px; font-weight: 900; opacity: 1; margin-top: 4px; }
+
+  .breakdown-block {
+    background: var(--white); border: 2px solid var(--blue-pale);
+    border-radius: var(--radius); margin-bottom: 16px; overflow: hidden;
+  }
+  .breakdown-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 13px 18px; background: var(--gray-light);
+    border-bottom: 2px solid var(--blue-pale); flex-wrap: wrap; gap: 6px;
+  }
+  .bh-title { font-size: 14px; font-weight: 800; color: var(--text); }
+  .bh-score { font-size: 13px; font-weight: 800; padding: 4px 14px; border-radius: 20px; }
+  .bh-score.perfect { background: #dcfce7; color: #15803d; }
+  .bh-score.good { background: var(--blue-pale); color: var(--blue); }
+  .bh-score.low { background: #fee2e2; color: #b91c1c; }
+
+  .breakdown-questions { padding: 14px 16px; display: flex; flex-direction: column; gap: 12px; }
+  .bq-item { border-radius: 10px; border: 1.5px solid var(--blue-pale); overflow: hidden; }
+  .bq-top { display: flex; align-items: flex-start; gap: 10px; padding: 11px 13px; }
+  .bq-icon { font-size: 17px; flex-shrink: 0; margin-top: 1px; }
+  .bq-text { font-size: 13.5px; font-weight: 700; color: var(--text); line-height: 1.6; flex: 1; }
+  .bq-your { font-size: 12px; color: var(--gray-dark); margin-top: 3px; font-weight: 600; }
+  .bq-exp {
+    padding: 11px 13px; font-size: 13px; line-height: 1.7; color: var(--gray-dark);
+    border-top: 1.5px solid var(--blue-pale); background: #f0f7ff;
+  }
+  .bq-exp strong { color: var(--blue); }
+  .bq-item.correct-q { border-color: #86efac; }
+  .bq-item.correct-q .bq-top { background: #f0fdf4; }
+  .bq-item.correct-q .bq-exp { background: #f0fdf4; border-top-color: #bbf7d0; }
+  .bq-item.wrong-q { border-color: #fca5a5; }
+  .bq-item.wrong-q .bq-top { background: #fff5f5; }
+  .bq-item.wrong-q .bq-exp { background: #fff5f5; border-top-color: #fecaca; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo"><span class="logo-icon">✈️</span> EnglishLearn</div>
+  <p>Du Lịch & Kỳ Nghỉ • Section 1</p>
+</header>
+
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('vocab')">📚 Học Từ Mới</button>
+  <button class="tab-btn" onclick="switchTab('exercises')">✏️ Bài Tập</button>
+</div>
+
+<!-- ==================== TAB 1: TỪ MỚI ==================== -->
+<div id="tab-vocab" class="tab-content active">
+  <div class="section-title"><span>📖</span> Từ Vựng – Du Lịch & Kỳ Nghỉ</div>
+  <div class="vocab-grid" id="vocabGrid"></div>
+
+  <div class="quiz-section">
+    <div class="quiz-header">
+      <div class="section-title" style="margin:0"><span>🎯</span> Kiểm Tra Từ Vựng</div>
+      <div class="quiz-mode-btns">
+        <button class="mode-btn active" onclick="setQuizMode('en-vi')" id="mode-en-vi">Anh → Việt</button>
+        <button class="mode-btn" onclick="setQuizMode('vi-en')" id="mode-vi-en">Việt → Anh</button>
+      </div>
+    </div>
+    <div class="quiz-card" id="quizCard">
+      <div class="quiz-question" id="quizQ">—</div>
+      <div class="quiz-sub" id="quizSub">Chọn nghĩa đúng</div>
+      <div class="quiz-options" id="quizOpts"></div>
+      <div class="quiz-feedback" id="quizFeedback"></div>
+      <button class="btn-next" id="btnNext" onclick="nextQuestion()">Câu tiếp →</button>
+    </div>
+    <div class="quiz-score">
+      <div class="score-item"><div class="score-num" id="scoreCorrect">0</div><div class="score-label">Đúng</div></div>
+      <div class="score-item"><div class="score-num" id="scoreWrong">0</div><div class="score-label">Sai</div></div>
+      <div class="score-item"><div class="score-num" id="scoreTotal">0</div><div class="score-label">Tổng</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== TAB 2: BÀI TẬP ==================== -->
+<div id="tab-exercises" class="tab-content">
+
+
+  <!-- EX 1 -->
+  <div class="exercise-block" id="ex1">
+    <div class="ex-title">Bài 1. Sắp xếp lại các chữ cái để tạo thành từ đúng</div>
+    <div class="ex-subtitle">⚠️ Có một từ không cần dùng đến.</div>
+    <ul class="anagram-list">
+      <li class="anagram-item">
+        <span class="num">1.</span>
+        <span class="hint">(verb) đến (một nơi nào đó)</span>
+        <span class="letters">r/r/a/e/v/i</span>
+        <input class="ex-input" data-answer="arrive" placeholder="...">
+      </li>
+      <li class="anagram-item">
+        <span class="num">2.</span>
+        <span class="hint">(verb) đến thăm</span>
+        <span class="letters">v/t/i/s/i</span>
+        <input class="ex-input" data-answer="visit" placeholder="...">
+      </li>
+      <li class="anagram-item">
+        <span class="num">3.</span>
+        <span class="hint">(verb) lỡ (xe buýt)</span>
+        <span class="letters">s/s/m/i</span>
+        <input class="ex-input" data-answer="miss" placeholder="...">
+      </li>
+      <li class="anagram-item">
+        <span class="num">4.</span>
+        <span class="hint">(noun) chuyến đi ngắn</span>
+        <span class="letters">y/u/j/e/o/r/n</span>
+        <input class="ex-input" data-answer="journey" placeholder="...">
+      </li>
+      <li class="anagram-item">
+        <span class="num">5.</span>
+        <span class="hint">(noun) khách sạn</span>
+        <span class="letters">l/o/t/e/h</span>
+        <input class="ex-input" data-answer="hotel" placeholder="...">
+      </li>
+    </ul>
+    <div class="submit-row">
+      <button class="btn-submit" onclick="checkAnagram()">Kiểm tra</button>
+      <button class="btn-reset" onclick="resetEx('ex1')">Làm lại</button>
+    </div>
+    <div class="result-panel" id="result-ex1"></div>
+  </div>
+
+  <!-- EX 2 -->
+  <div class="exercise-block" id="ex2">
+    <div class="ex-title">Bài 2. Điền MỘT từ để tạo cụm từ thích hợp</div>
+    <ul class="fill-list">
+      <li class="fill-item">
+        <span class="num">1.</span> bến xe buýt → bus
+        <input class="ex-input" data-answer="station" placeholder="...">
+        <div class="explanation" id="exp2-1"><span class="answer-badge correct">✓ station</span><br><strong>bus station</strong> = bến xe buýt. "Station" là danh từ chỉ trạm/bến dừng của các phương tiện.</div>
+      </li>
+      <li class="fill-item">
+        <span class="num">2.</span> ở trên máy bay → on the
+        <input class="ex-input" data-answer="plane" placeholder="...">
+        <div class="explanation" id="exp2-2"><span class="answer-badge correct">✓ plane</span><br><strong>on the plane</strong> = trên máy bay. Dùng giới từ "on" cho phương tiện di chuyển công cộng lớn.</div>
+      </li>
+      <li class="fill-item">
+        <span class="num">3.</span>
+        <input class="ex-input" data-answer="tourist" placeholder="...">
+        information centre → trung tâm thông tin khách du lịch
+        <div class="explanation" id="exp2-3"><span class="answer-badge correct">✓ tourist</span><br><strong>tourist information centre</strong> = trung tâm thông tin du lịch. "Tourist" = khách du lịch (danh từ làm tính từ).</div>
+      </li>
+      <li class="fill-item">
+        <span class="num">4.</span> hướng dẫn viên du lịch → tour
+        <input class="ex-input" data-answer="guide" placeholder="...">
+        <div class="explanation" id="exp2-4"><span class="answer-badge correct">✓ guide</span><br><strong>tour guide</strong> = hướng dẫn viên du lịch. "Guide" = người hướng dẫn, dẫn đường.</div>
+      </li>
+      <li class="fill-item">
+        <span class="num">5.</span> một chuyến tham quan nhanh → a
+        <input class="ex-input" data-answer="quick" placeholder="...">
+        tour
+        <div class="explanation" id="exp2-5"><span class="answer-badge correct">✓ quick</span><br><strong>a quick tour</strong> = một chuyến tham quan nhanh. "Quick" = nhanh, vội.</div>
+      </li>
+      <li class="fill-item">
+        <span class="num">6.</span> đến sớm → arrive
+        <input class="ex-input" data-answer="early" placeholder="...">
+        <div class="explanation" id="exp2-6"><span class="answer-badge correct">✓ early</span><br><strong>arrive early</strong> = đến sớm. "Early" là trạng từ chỉ thời gian, đứng sau động từ.</div>
+      </li>
+    </ul>
+    <div class="submit-row">
+      <button class="btn-submit" onclick="checkFill('ex2', 6)">Kiểm tra</button>
+      <button class="btn-reset" onclick="resetEx('ex2')">Làm lại</button>
+    </div>
+    <div class="result-panel" id="result-ex2"></div>
+  </div>
+
+  <!-- EX 4: LISTENING -->
+  <div class="exercise-block" id="ex4">
+    <div class="ex-title">Bài 4. Nghe và điền MỘT từ vào chỗ trống</div>
+    <div class="ex-subtitle">Nghe đoạn hội thoại giữa Susan và James về kỳ nghỉ của anh ấy.</div>
+    <div class="audio-player-custom">
+      <span class="audio-label">🎧 File nghe:</span>
+      <audio controls id="audioEx4">
+        <source src="bai4.mp3" type="video/mp4">
+        Trình duyệt không hỗ trợ audio.
+      </audio>
+    </div>
+    <div class="fill-list" id="ex4fills">
+      <div class="fill-item">
+        <span class="num">1.</span> Are you excited about your
+        <input class="ex-input" data-answer="holiday" placeholder="...">
+        , James?
+        <div class="explanation" id="exp4-1"><span class="answer-badge correct">✓ holiday</span><br>Susan hỏi James: <strong>"Are you excited about your holiday?"</strong> = Bạn có hào hứng với kỳ nghỉ không? "Holiday" = kỳ nghỉ.</div>
+      </div>
+      <div class="fill-item">
+        <span class="num">2.</span> Some friends are going to
+        <input class="ex-input" data-answer="stay" placeholder="...">
+        at my house for two weeks.
+        <div class="explanation" id="exp4-2"><span class="answer-badge correct">✓ stay</span><br><strong>"stay at my house"</strong> = ở lại nhà tôi. "Stay" = ở lại, lưu trú. Đây là cụm "stay at + địa điểm".</div>
+      </div>
+      <div class="fill-item">
+        <span class="num">3.</span> Where exactly are you
+        <input class="ex-input" data-answer="going" placeholder="...">
+        ?
+        <div class="explanation" id="exp4-3"><span class="answer-badge correct">✓ going</span><br><strong>"Where are you going?"</strong> = Bạn đang đi đâu? Câu hỏi dùng Present Continuous cho kế hoạch tương lai.</div>
+      </div>
+      <div class="fill-item">
+        <span class="num">4.</span> ...exploring Paris before
+        <input class="ex-input" data-answer="flying" placeholder="...">
+        to Miami.
+        <div class="explanation" id="exp4-4"><span class="answer-badge correct">✓ flying</span><br><strong>"before flying to Miami"</strong> = trước khi bay đến Miami. Sau giới từ "before" dùng V-ing.</div>
+      </div>
+      <div class="fill-item">
+        <span class="num">5.</span> ...but I'd like to
+        <input class="ex-input" data-answer="visit" placeholder="...">
+        the USA next year.
+        <div class="explanation" id="exp4-5"><span class="answer-badge correct">✓ visit</span><br><strong>"I'd like to visit"</strong> = Tôi muốn đến thăm. "Would like to + V" = muốn làm gì.</div>
+      </div>
+      <div class="fill-item">
+        <span class="num">6.</span> But I never sleep on
+        <input class="ex-input" data-answer="planes" placeholder="...">
+        .
+        <div class="explanation" id="exp4-6"><span class="answer-badge correct">✓ planes</span><br><strong>"sleep on planes"</strong> = ngủ trên máy bay. "Planes" số nhiều vì nói chung (James không bao giờ ngủ trên máy bay).</div>
+      </div>
+      <div class="fill-item">
+        <span class="num">7.</span> I
+        <input class="ex-input" data-answer="arrive" placeholder="...">
+        at 5:35 in the afternoon.
+        <div class="explanation" id="exp4-7"><span class="answer-badge correct">✓ arrive</span><br><strong>"I arrive at 5:35"</strong> = Tôi đến lúc 5:35. Dùng thì hiện tại đơn cho lịch trình cố định.</div>
+      </div>
+      <div class="fill-item">
+        <span class="num">8.</span> I'll pick you up in the
+        <input class="ex-input" data-answer="bus station" placeholder="...">
+        , by the exit.
+        <div class="explanation" id="exp4-8"><span class="answer-badge correct">✓ bus station</span><br><strong>"bus station"</strong> = bến xe buýt. Susan sẽ đón James ở bến xe buýt gần lối ra.</div>
+      </div>
+    </div>
+    <div class="submit-row">
+      <button class="btn-submit" onclick="checkEx4()">Kiểm tra</button>
+      <button class="btn-reset" onclick="resetEx('ex4')">Làm lại</button>
+    </div>
+    <div class="result-panel" id="result-ex4"></div>
+  </div>
+
+  <!-- EX 5 -->
+  <div class="exercise-block" id="ex5">
+    <div class="ex-title">Bài 5. Chọn giới từ thích hợp điền vào chỗ trống</div>
+    <ul class="mcq-list" id="ex5List"></ul>
+    <div class="submit-row">
+      <button class="btn-submit" onclick="checkMcqEx('ex5List', 'result-ex5', ex5Data)">Kiểm tra</button>
+      <button class="btn-reset" onclick="resetMcqEx('ex5List', ex5Data, 'result-ex5')">Làm lại</button>
+    </div>
+    <div class="result-panel" id="result-ex5"></div>
+  </div>
+
+  <!-- EX 6 -->
+  <div class="exercise-block" id="ex6">
+    <div class="ex-title">Bài 6. Chọn từ KHÔNG cùng nhóm nghĩa với các từ còn lại</div>
+    <div class="odd-list" id="ex6List"></div>
+    <div class="submit-row">
+      <button class="btn-submit" onclick="checkOdd()">Kiểm tra</button>
+      <button class="btn-reset" onclick="resetOdd()">Làm lại</button>
+    </div>
+    <div class="result-panel" id="result-ex6"></div>
+  </div>
+
+  <!-- EX 7 -->
+  <div class="exercise-block" id="ex7">
+    <div class="ex-title">Bài 7. Chọn từ thích hợp để hoàn thành câu</div>
+    <div class="ex-subtitle">Từ để chọn: <strong>arrive, late, trip, tour, by, go</strong> (có 1 từ không dùng)</div>
+    <ul class="mcq-list" id="ex7List"></ul>
+    <div class="submit-row">
+      <button class="btn-submit" onclick="checkMcqEx('ex7List', 'result-ex7', ex7Data)">Kiểm tra</button>
+      <button class="btn-reset" onclick="resetMcqEx('ex7List', ex7Data, 'result-ex7')">Làm lại</button>
+    </div>
+    <div class="result-panel" id="result-ex7"></div>
+  </div>
+
+  <!-- EX 8A -->
+  <div class="exercise-block" id="ex8a">
+    <div class="ex-title">Bài 8a. Điền từ thích hợp vào chỗ trống trong đoạn văn</div>
+    <ul class="mcq-list" id="ex8aList"></ul>
+    <div class="submit-row">
+      <button class="btn-submit" onclick="checkMcqEx('ex8aList', 'result-ex8a', ex8aData)">Kiểm tra</button>
+      <button class="btn-reset" onclick="resetMcqEx('ex8aList', ex8aData, 'result-ex8a')">Làm lại</button>
+    </div>
+    <div class="result-panel" id="result-ex8a"></div>
+  </div>
+
+  <!-- EX 8B -->
+  <div class="exercise-block" id="ex8b">
+    <div class="ex-title">Bài 8b. Đọc 2 đoạn văn và chọn đáp án đúng</div>
+    <div class="passage-box">
+      <div class="passage-name">A. Jane</div>
+      We stayed at the Stella Hotel in Malaga in Spain. We had a fantastic holiday. We loved the hotel and the people were very kind to us. We went swimming every day at the lovely beach. It was only two minutes from the hotel. The rooms in the hotel were very comfortable and the food in the dining room was good. There weren't any Spanish dishes on the menu, but it wasn't a problem. We went on a tour to see the flower garden. It was beautiful!
+      <div class="passage-vn">Chúng tôi ở khách sạn Stella ở Malaga, Tây Ban Nha. Chúng tôi đã có kỳ nghỉ tuyệt vời. Mọi người rất tử tế. Chúng tôi đi bơi mỗi ngày ở bãi biển, chỉ mất 2 phút từ khách sạn. Phòng thoải mái, thức ăn ngon. Không có món Tây Ban Nha nhưng không sao. Chúng tôi đi tham quan vườn hoa. Thật đẹp!</div>
+    </div>
+    <div class="passage-box">
+      <div class="passage-name">B. Robert</div>
+      We arrived in Turkey on a sunny day and stayed in the Hotel Nova. I didn't like it because I had to stay in the same room as my brother. Our room was very small and there wasn't a TV! We couldn't see the sea from the window, but I liked the swimming pool. That was good. We took a bus to visit interesting places and it was very cheap. We visited a lot of amazing places.
+      <div class="passage-vn">Chúng tôi đến Thổ Nhĩ Kỳ và ở khách sạn Nova. Tôi không thích vì phải ở cùng phòng với anh trai. Phòng rất nhỏ, không có TV! Không thấy biển nhưng thích hồ bơi. Chúng tôi bắt xe buýt tham quan rất rẻ. Đã thăm nhiều nơi tuyệt vời.</div>
+    </div>
+    <ul class="mcq-list" id="ex8bList"></ul>
+    <div class="submit-row">
+      <button class="btn-submit" onclick="checkMcqEx('ex8bList', 'result-ex8b', ex8bData)">Kiểm tra</button>
+      <button class="btn-reset" onclick="resetMcqEx('ex8bList', ex8bData, 'result-ex8b')">Làm lại</button>
+    </div>
+    <div class="result-panel" id="result-ex8b"></div>
+  </div>
+
+  <!-- TỔNG KẾT TẤT CẢ BÀI TẬP -->
+  <div id="overall-section">
+    <div class="overall-title">🏆 Chấm Điểm Tổng Kết</div>
+    <p class="overall-desc">Nhấn <strong>Chấm Tất Cả Bài</strong> để chấm điểm toàn bộ và xem giải thích chi tiết từng câu đúng/sai.</p>
+    <div class="overall-btns">
+      <button class="btn-submit btn-overall" onclick="checkAllExercises()">📝 Chấm Tất Cả Bài</button>
+      <button class="btn-reset btn-overall-reset" onclick="resetAllExercises()">🔄 Làm Lại Tất Cả</button>
+    </div>
+    <div id="overall-result"></div>
+  </div>
+</div>
+
+<script>
+// ==================== VOCABULARY DATA ====================
+const vocabData = [
+  { word: "arrive", phonetic: "/əˈraɪv/", type: "verb", meaning: "Đi đến, đến nơi", example: "We will arrive at the hotel at 8 PM." },
+  { word: "visit", phonetic: "/ˈvɪzɪt/", type: "verb", meaning: "Thăm, ghé thăm", example: "I'd like to visit the USA next year." },
+  { word: "miss", phonetic: "/mɪs/", type: "verb", meaning: "Lỡ (xe/tàu/máy bay)", example: "Hurry up or you'll miss the bus!" },
+  { word: "early", phonetic: "/ˈɜːrli/", type: "adv/adj", meaning: "Sớm", example: "We got up very early every day." },
+  { word: "late", phonetic: "/leɪt/", type: "adv/adj", meaning: "Muộn, trễ", example: "Hurry up or you'll be late for your train!" },
+  { word: "hotel", phonetic: "/həʊˈtel/", type: "noun", meaning: "Khách sạn", example: "We stayed at a very nice hotel in the city center." },
+  { word: "journey", phonetic: "/ˈdʒɜːrni/", type: "noun", meaning: "Chuyến đi (ngắn)", example: "How was your journey from London?" },
+  { word: "tour", phonetic: "/tʊər/", type: "noun", meaning: "Chuyến du lịch tham quan", example: "We went on a special tour to watch the whales." },
+  { word: "go on a quick tour", phonetic: "/ɡəʊ ɒn ə kwɪk tʊər/", type: "phrase", meaning: "Có một chuyến tham quan nhanh", example: "Let's go on a quick tour of the city." },
+  { word: "tour guide", phonetic: "/ˈtʊər ɡaɪd/", type: "noun", meaning: "Hướng dẫn viên du lịch", example: "Kim worked as a tour guide in Cambridge last summer." },
+  { word: "plane", phonetic: "/pleɪn/", type: "noun", meaning: "Máy bay", example: "I never sleep on planes during long flights." },
+  { word: "bus", phonetic: "/bʌs/", type: "noun", meaning: "Xe buýt", example: "We went to the shopping mall by bus." },
+  { word: "a bus station", phonetic: "/ə ˈbʌs ˌsteɪʃən/", type: "noun", meaning: "Trạm xe buýt / bến xe buýt", example: "I'll pick you up at the bus station by the exit." },
+];
+
+// ==================== RENDER VOCAB ====================
+function renderVocab() {
+  const grid = document.getElementById('vocabGrid');
+  grid.innerHTML = vocabData.map((v, i) => `
+    <div class="vocab-card">
+      <button class="audio-btn" onclick="speakWord('${v.word}', this)" title="Nghe phát âm">🔊</button>
+      <div class="word">${v.word}</div>
+      <div class="phonetic">${v.phonetic}</div>
+      <span class="type-badge">${v.type}</span>
+      <div class="meaning">${v.meaning}</div>
+      <div class="example">${v.example}</div>
+    </div>
+  `).join('');
+}
+
+function speakWord(word, btn) {
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+    const utter = new SpeechSynthesisUtterance(word);
+    utter.lang = 'en-US'; utter.rate = 0.85;
+    btn.classList.add('playing');
+    utter.onend = () => btn.classList.remove('playing');
+    window.speechSynthesis.speak(utter);
+  }
+}
+
+// ==================== QUIZ ====================
+let quizMode = 'en-vi', quizIdx = 0, quizScore = {c:0, w:0, total:0};
+let quizOrder = [];
+
+function setQuizMode(mode) {
+  quizMode = mode;
+  document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('mode-' + mode).classList.add('active');
+  quizScore = {c:0, w:0, total:0};
+  updateScoreDisplay();
+  nextQuestion();
+}
+
+function shuffle(arr) { return [...arr].sort(() => Math.random() - 0.5); }
+
+function nextQuestion() {
+  document.getElementById('btnNext').style.display = 'none';
+  document.getElementById('quizFeedback').className = 'quiz-feedback';
+  document.getElementById('quizFeedback').textContent = '';
+
+  const all = [...vocabData];
+  const current = all[Math.floor(Math.random() * all.length)];
+  const wrongs = shuffle(all.filter(v => v.word !== current.word)).slice(0, 3);
+  const opts = shuffle([current, ...wrongs]);
+
+  if (quizMode === 'en-vi') {
+    document.getElementById('quizQ').textContent = current.word;
+    document.getElementById('quizSub').textContent = 'Chọn nghĩa tiếng Việt đúng';
+  } else {
+    document.getElementById('quizQ').textContent = current.meaning;
+    document.getElementById('quizSub').textContent = 'Chọn từ tiếng Anh đúng';
+  }
+
+  const optsDiv = document.getElementById('quizOpts');
+  optsDiv.innerHTML = opts.map(o => {
+    const label = quizMode === 'en-vi' ? o.meaning : o.word;
+    const isCorrect = o.word === current.word;
+    return `<button class="quiz-opt" onclick="checkQuizOpt(this, ${isCorrect}, '${current.word}', '${current.meaning}')">${label}</button>`;
+  }).join('');
+}
+
+function checkQuizOpt(btn, isCorrect, word, meaning) {
+  document.querySelectorAll('.quiz-opt').forEach(b => b.disabled = true);
+  const fb = document.getElementById('quizFeedback');
+  if (isCorrect) {
+    btn.classList.add('correct');
+    fb.className = 'quiz-feedback correct';
+    fb.textContent = '✓ Chính xác! ' + word + ' = ' + meaning;
+    quizScore.c++;
+  } else {
+    btn.classList.add('wrong');
+    fb.className = 'quiz-feedback wrong';
+    fb.textContent = '✗ Sai! Đáp án đúng: ' + word + ' = ' + meaning;
+    quizScore.w++;
+    // highlight correct
+    document.querySelectorAll('.quiz-opt').forEach(b => {
+      const txt = b.textContent.trim();
+      if ((quizMode === 'en-vi' && txt === meaning) || (quizMode !== 'en-vi' && txt === word)) {
+        b.classList.add('correct');
+      }
+    });
+  }
+  quizScore.total++;
+  updateScoreDisplay();
+  document.getElementById('btnNext').style.display = 'block';
+}
+
+function updateScoreDisplay() {
+  document.getElementById('scoreCorrect').textContent = quizScore.c;
+  document.getElementById('scoreWrong').textContent = quizScore.w;
+  document.getElementById('scoreTotal').textContent = quizScore.total;
+}
+
+// ==================== TAB SWITCHING ====================
+function switchTab(tab) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+
+// ==================== EX 1: ANAGRAM ====================
+function checkAnagram() {
+  const inputs = document.querySelectorAll('#ex1 .ex-input');
+  let correct = 0;
+  inputs.forEach(inp => {
+    inp.classList.remove('correct','wrong');
+    if (inp.value.trim().toLowerCase() === inp.dataset.answer) {
+      inp.classList.add('correct'); correct++;
+    } else { inp.classList.add('wrong'); }
+  });
+  showResult('result-ex1', correct, inputs.length);
+}
+
+// ==================== EX 2: FILL ====================
+function checkFill(exId, count) {
+  const inputs = document.querySelectorAll('#' + exId + ' .ex-input');
+  let correct = 0;
+  inputs.forEach((inp, i) => {
+    inp.classList.remove('correct','wrong');
+    const expEl = document.getElementById('exp' + exId.replace('ex','') + '-' + (i+1));
+    if (inp.value.trim().toLowerCase() === inp.dataset.answer) {
+      inp.classList.add('correct'); correct++;
+      if (expEl) expEl.classList.add('show');
+    } else {
+      inp.classList.add('wrong');
+      if (expEl) expEl.classList.add('show');
+    }
+  });
+  showResult('result-' + exId, correct, inputs.length);
+}
+
+// ==================== EX 4: LISTENING ====================
+function checkEx4() {
+  const inputs = document.querySelectorAll('#ex4 .ex-input');
+  let correct = 0;
+  inputs.forEach((inp, i) => {
+    inp.classList.remove('correct','wrong');
+    const expEl = document.getElementById('exp4-' + (i+1));
+    const ans = inp.dataset.answer.toLowerCase();
+    const val = inp.value.trim().toLowerCase();
+    if (val === ans) {
+      inp.classList.add('correct'); correct++;
+    } else { inp.classList.add('wrong'); }
+    if (expEl) expEl.classList.add('show');
+  });
+  showResult('result-ex4', correct, inputs.length);
+}
+
+// ==================== MCQ EXERCISES ====================
+const ex5Data = [
+  { q: "What time does the plane arrive _____ New York?", opts:["AT","IN","TO"], answer:"IN",
+    exp:"<strong>arrive IN + city/country</strong>: Dùng 'in' khi đến một thành phố hoặc quốc gia. VD: arrive in New York, arrive in Vietnam." },
+  { q: "They arrived _____ the airport at 10.30.", opts:["AT","IN","TO"], answer:"AT",
+    exp:"<strong>arrive AT + specific place</strong>: Dùng 'at' khi đến một địa điểm cụ thể, nhỏ hơn (sân bay, nhà ga, trường học...). VD: arrive at the airport." },
+  { q: "We went to the shopping mall in the city centre _____ bus.", opts:["BY","WITH","ON"], answer:"BY",
+    exp:"<strong>by + phương tiện</strong>: Dùng 'by' + phương tiện (không có mạo từ). VD: by bus, by car, by plane. Không dùng 'on bus' hay 'with bus'." },
+  { q: "We got _____ the plane and found our seats.", opts:["BY","WITH","ON"], answer:"ON",
+    exp:"<strong>get on the plane</strong>: Dùng 'on' khi lên các phương tiện lớn như máy bay, xe buýt, tàu. 'Get on' = lên (phương tiện). Trái nghĩa: 'get off' = xuống." },
+];
+
+const ex7Data = [
+  { q: "Kim worked as a _____ guide in Cambridge last summer.", opts:["tour","trip","arrive","go"], answer:"tour",
+    exp:"<strong>tour guide</strong> = hướng dẫn viên du lịch. Từ 'guide' (người hướng dẫn) kết hợp với 'tour' tạo thành danh từ ghép 'tour guide'. Các từ khác không phù hợp về nghĩa." },
+  { q: "We will _____ on a sightseeing tour of the city tomorrow.", opts:["go","arrive","late","by"], answer:"go",
+    exp:"<strong>go on a tour</strong> = đi tham quan. Cụm động từ cố định: 'go on a tour/trip/journey'. 'Arrive on' không đúng ngữ pháp trong ngữ cảnh này." },
+  { q: "What time does the plane _____ in New York?", opts:["arrive","go","tour","late"], answer:"arrive",
+    exp:"<strong>arrive in New York</strong> = đến New York. Động từ 'arrive' dùng với 'in' cho thành phố/quốc gia. Máy bay 'arrive' (đến), không dùng 'go' trong ngữ cảnh này." },
+  { q: "The children travel to school _____ bus.", opts:["by","on","arrive","tour"], answer:"by",
+    exp:"<strong>by bus</strong> = bằng xe buýt. 'By' + phương tiện (không có mạo từ 'the/a'). Phân biệt: 'by bus' (bằng xe buýt) vs 'on the bus' (trên xe buýt đang đi)." },
+  { q: "Did you enjoy your _____ to Disneyland?", opts:["trip","tour","journey","go"], answer:"trip",
+    exp:"<strong>trip to + địa điểm</strong> = chuyến đi đến... 'School trip', 'day trip' là các cụm từ phổ biến. 'Journey' nhấn mạnh quá trình đi, 'tour' là chuyến tham quan có hướng dẫn." },
+  { q: "Hurry up or you'll be _____ for your train!", opts:["late","early","arrive","tour"], answer:"late",
+    exp:"<strong>be late for</strong> = trễ cho... 'Late' là tính từ dùng sau động từ 'be'. Trái nghĩa với 'early' (sớm). Nếu không vội sẽ trễ tàu!" },
+];
+
+const ex8aData = [
+  { q: "My family and I got onto an (1) _____ and flew to Vancouver.", opts:["bus","airplane","station"], answer:"airplane",
+    exp:"<strong>airplane</strong> (máy bay): 'got onto an airplane' = lên máy bay. Sau đó họ 'flew' (bay) đến Vancouver → phải là máy bay. 'Bus' và 'station' không hợp lý." },
+  { q: "It was our first time to (2) _____ Canada.", opts:["visit","miss","arrive"], answer:"visit",
+    exp:"<strong>visit Canada</strong> = thăm Canada. 'Visit + quốc gia/địa điểm' = đến thăm. 'Miss' = lỡ (phương tiện), 'arrive' cần giới từ 'in/at' phía sau." },
+  { q: "We stayed at a very nice (3) _____ in the city center.", opts:["journey","station","hotel"], answer:"hotel",
+    exp:"<strong>hotel</strong> = khách sạn. 'Stay at a hotel' = ở tại khách sạn. Cụm 'stayed at a nice hotel' là cố định. 'Journey' và 'station' không phải nơi ở." },
+  { q: "We got up very (4) _____ almost every day.", opts:["early","quick","tour"], answer:"early",
+    exp:"<strong>got up early</strong> = dậy sớm. 'Early' là trạng từ chỉ thời gian. 'Quick' là tính từ/trạng từ chỉ tốc độ, không dùng cho thời gian thức dậy." },
+  { q: "We went to Stanley Park and the Art Gallery (5) _____ bus.", opts:["in","by","at"], answer:"by",
+    exp:"<strong>by bus</strong> = bằng xe buýt. 'By + phương tiện' (không mạo từ). Không dùng 'in bus' hay 'at bus'." },
+  { q: "We went on a special (6) _____ to watch the whales.", opts:["guide","center","tour"], answer:"tour",
+    exp:"<strong>a tour to watch the whales</strong> = chuyến tham quan xem cá voi. 'Go on a tour' = tham gia một chuyến tham quan. 'Guide' là người dẫn đường, không phải chuyến đi." },
+  { q: "Maybe I will visit Vancouver again during my next summer (7) _____.", opts:["holiday","tourist","journey"], answer:"holiday",
+    exp:"<strong>summer holiday</strong> = kỳ nghỉ hè. 'Holiday' là kỳ nghỉ (dịp). 'Journey' nhấn mạnh hành trình, 'tourist' là danh từ chỉ người. 'Summer holiday' là cụm từ cố định." },
+];
+
+const ex8bData = [
+  { q: "It was _____ from the Stella Hotel to the beach.", opts:["12 minutes","2 minutes","20 minutes"], answer:"2 minutes",
+    exp:"<strong>2 minutes</strong>: Trong đoạn văn của Jane: 'It was only two minutes from the hotel' = chỉ mất 2 phút từ khách sạn đến bãi biển." },
+  { q: "The Stella Hotel didn't have any _____.", opts:["Spanish food","fast food","English food"], answer:"Spanish food",
+    exp:"<strong>Spanish food</strong>: Jane viết 'There weren't any Spanish dishes on the menu' = không có món Tây Ban Nha nào trong thực đơn." },
+  { q: "Robert wasn't happy because _____.", opts:["he didn't like the pool","the room was too small","everything was expensive"], answer:"the room was too small",
+    exp:"<strong>the room was too small</strong>: Robert viết 'Our room was very small and there wasn't a TV!' → Phòng quá nhỏ và không có TV là lý do anh ấy không thích. (Anh ấy thực ra thích hồ bơi, và không đề cập đến giá cả.)" },
+  { q: "Robert and his family took a bus to _____.", opts:["go to the beach","go shopping","visit interesting places"], answer:"visit interesting places",
+    exp:"<strong>visit interesting places</strong>: Robert viết 'We took a bus to visit interesting places and it was very cheap' = bắt xe buýt tham quan nhiều nơi thú vị và rất rẻ." },
+];
+
+// EX 6: ODD ONE OUT
+const ex6Data = [
+  { opts: ["plane","bus","journey"], answer: "journey", exp: "\"Journey\" = chuyến đi (khái niệm trừu tượng). \"Plane\" và \"Bus\" đều là phương tiện giao thông cụ thể. → \"Journey\" khác nhóm." },
+  { opts: ["tourist","tour","tour guide"], answer: "tourist", exp: "\"Tour\" và \"tour guide\" đều liên quan đến việc tổ chức/hướng dẫn tham quan. \"Tourist\" = khách du lịch (người đi thăm) → thuộc nhóm khác." },
+  { opts: ["early","arrive","late"], answer: "arrive", exp: "\"Early\" và \"late\" đều là trạng từ/tính từ chỉ thời gian (sớm/muộn). \"Arrive\" là động từ → khác nhóm." },
+  { opts: ["school trip","hotel","bus station"], answer: "school trip", exp: "\"Hotel\" và \"bus station\" đều là địa điểm/cơ sở vật chất. \"School trip\" = chuyến đi học (sự kiện/hoạt động) → khác nhóm." },
+];
+
+function renderMcqEx(listId, data) {
+  const el = document.getElementById(listId);
+  el.innerHTML = data.map((item, i) => `
+    <li class="mcq-item" id="${listId}-item-${i}">
+      <div class="mcq-question">${item.q}</div>
+      <div class="mcq-options">
+        ${item.opts.map(o => `
+          <label class="mcq-opt" onclick="selectMcqOpt(this)">
+            <input type="radio" name="${listId}-q${i}" value="${o}">
+            <div class="mcq-radio"></div>
+            ${o}
+          </label>
+        `).join('')}
+      </div>
+      <div class="explanation" id="${listId}-exp-${i}">
+        <span class="answer-badge correct">✓ Đáp án: ${item.answer}</span><br>${item.exp}
+      </div>
+    </li>
+  `).join('');
+}
+
+function selectMcqOpt(label) {
+  const item = label.closest('.mcq-item');
+  item.querySelectorAll('.mcq-opt').forEach(l => l.classList.remove('selected'));
+  label.classList.add('selected');
+}
+
+function checkMcqEx(listId, resultId, data) {
+  let correct = 0;
+  data.forEach((item, i) => {
+    const itemEl = document.getElementById(listId + '-item-' + i);
+    const selected = itemEl.querySelector('.mcq-opt.selected');
+    const exp = document.getElementById(listId + '-exp-' + i);
+    itemEl.querySelectorAll('.mcq-opt').forEach(l => l.classList.remove('correct','wrong'));
+    if (selected) {
+      const val = selected.querySelector('input').value;
+      if (val === item.answer) { selected.classList.add('correct'); correct++; }
+      else {
+        selected.classList.add('wrong');
+        itemEl.querySelectorAll('.mcq-opt').forEach(l => {
+          if (l.querySelector('input').value === item.answer) l.classList.add('correct');
+        });
+      }
+    } else {
+      itemEl.querySelectorAll('.mcq-opt').forEach(l => {
+        if (l.querySelector('input').value === item.answer) l.classList.add('correct');
+      });
+    }
+    if (exp) exp.classList.add('show');
+  });
+  showResult(resultId, correct, data.length);
+}
+
+function resetMcqEx(listId, data, resultId) {
+  renderMcqEx(listId, data);
+  document.getElementById(resultId).classList.remove('show');
+  document.getElementById(resultId).innerHTML = '';
+}
+
+// ODD ONE OUT
+function renderOdd() {
+  const el = document.getElementById('ex6List');
+  el.innerHTML = ex6Data.map((item, i) => `
+    <div class="odd-group" id="odd-${i}">
+      <strong>${i+1}.</strong> Chọn từ khác nhóm:
+      <div class="explanation" id="odd-exp-${i}">
+        <span class="answer-badge correct">✓ ${item.answer}</span><br>${item.exp}
+      </div>
+      <div class="odd-options">
+        ${item.opts.map(o => `<button class="odd-opt" onclick="selectOdd(this, ${i})">${o}</button>`).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+function selectOdd(btn, groupIdx) {
+  document.querySelectorAll('#odd-' + groupIdx + ' .odd-opt').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+
+function checkOdd() {
+  let correct = 0;
+  ex6Data.forEach((item, i) => {
+    const sel = document.querySelector('#odd-' + i + ' .odd-opt.selected');
+    const exp = document.getElementById('odd-exp-' + i);
+    document.querySelectorAll('#odd-' + i + ' .odd-opt').forEach(b => b.classList.remove('correct','wrong'));
+    if (sel) {
+      if (sel.textContent.trim() === item.answer) { sel.classList.add('correct'); correct++; }
+      else {
+        sel.classList.add('wrong');
+        document.querySelectorAll('#odd-' + i + ' .odd-opt').forEach(b => {
+          if (b.textContent.trim() === item.answer) b.classList.add('correct');
+        });
+      }
+    } else {
+      document.querySelectorAll('#odd-' + i + ' .odd-opt').forEach(b => {
+        if (b.textContent.trim() === item.answer) b.classList.add('correct');
+      });
+    }
+    if (exp) exp.classList.add('show');
+  });
+  showResult('result-ex6', correct, ex6Data.length);
+}
+
+function resetOdd() {
+  renderOdd();
+  document.getElementById('result-ex6').classList.remove('show');
+}
+
+// RESULT
+function showResult(id, correct, total) {
+  const el = document.getElementById(id);
+  const pct = Math.round(correct/total*100);
+  let emoji = pct === 100 ? '🏆' : pct >= 70 ? '👍' : pct >= 50 ? '😊' : '📚';
+  let msg = pct === 100 ? 'Xuất sắc! Hoàn toàn chính xác!' : pct >= 70 ? 'Khá tốt! Tiếp tục cố gắng nhé!' : pct >= 50 ? 'Ổn rồi! Xem lại phần sai nhé.' : 'Cần ôn thêm! Đừng nản lòng nhé!';
+  el.className = 'result-panel show';
+  el.innerHTML = `<div class="result-score-big">${emoji} ${correct}/${total}</div><div class="result-msg">${msg} (${pct}%)</div>`;
+}
+
+function resetEx(exId) {
+  const ex = document.getElementById(exId);
+  ex.querySelectorAll('.ex-input').forEach(inp => { inp.value = ''; inp.classList.remove('correct','wrong'); });
+  ex.querySelectorAll('.explanation').forEach(e => e.classList.remove('show'));
+  ex.querySelectorAll('.mcq-opt').forEach(e => e.classList.remove('selected','correct','wrong'));
+  const res = document.getElementById('result-' + exId);
+  if (res) { res.classList.remove('show'); res.innerHTML = ''; }
+}
+
+// ==================== CHECK ALL EXERCISES ====================
+function checkAllExercises() {
+  // Run all individual checks silently to collect data
+  const sections = [];
+
+  // --- EX1: Anagram ---
+  {
+    const inputs = document.querySelectorAll('#ex1 .ex-input');
+    const answers = ['arrive','visit','miss','journey','hotel'];
+    const hints = ['(verb) đến (một nơi nào đó)','(verb) đến thăm','(verb) lỡ (xe buýt)','(noun) chuyến đi ngắn','(noun) khách sạn'];
+    const exps = [
+      'Các chữ cái <strong>r/r/a/e/v/i</strong> → sắp xếp thành <strong>arrive</strong> = đến nơi.',
+      'Các chữ cái <strong>v/t/i/s/i</strong> → sắp xếp thành <strong>visit</strong> = đến thăm.',
+      'Các chữ cái <strong>s/s/m/i</strong> → sắp xếp thành <strong>miss</strong> = lỡ (xe buýt/tàu).',
+      'Các chữ cái <strong>y/u/j/e/o/r/n</strong> → sắp xếp thành <strong>journey</strong> = chuyến đi ngắn.',
+      'Các chữ cái <strong>l/o/t/e/h</strong> → sắp xếp thành <strong>hotel</strong> = khách sạn.',
+    ];
+    let c=0; const qs=[];
+    inputs.forEach((inp,i)=>{
+      inp.classList.remove('correct','wrong');
+      const ok = inp.value.trim().toLowerCase()===answers[i];
+      if(ok){inp.classList.add('correct');c++;}else{inp.classList.add('wrong');}
+      qs.push({q:`${i+1}. ${hints[i]}`, your: inp.value.trim()||'(chưa điền)', answer:answers[i], ok, exp:exps[i]});
+    });
+    sections.push({title:'Bài 1 – Sắp xếp chữ cái', correct:c, total:inputs.length, questions:qs});
+  }
+
+  // --- EX2: Fill phrase ---
+  {
+    const answers=['station','plane','tourist','guide','quick','early'];
+    const qs2=[
+      {q:'1. bến xe buýt → bus ___', exp:'<strong>bus station</strong> = bến xe buýt. "Station" chỉ trạm/bến dừng.'},
+      {q:'2. ở trên máy bay → on the ___', exp:'<strong>on the plane</strong> = trên máy bay. Dùng "on" cho phương tiện lớn.'},
+      {q:'3. ___ information centre', exp:'<strong>tourist information centre</strong> = trung tâm thông tin du lịch.'},
+      {q:'4. tour ___', exp:'<strong>tour guide</strong> = hướng dẫn viên du lịch.'},
+      {q:'5. a ___ tour', exp:'<strong>a quick tour</strong> = một chuyến tham quan nhanh.'},
+      {q:'6. arrive ___', exp:'<strong>arrive early</strong> = đến sớm. "Early" là trạng từ đứng sau động từ.'},
+    ];
+    const inputs2 = document.querySelectorAll('#ex2 .ex-input');
+    let c=0; const qs=[];
+    inputs2.forEach((inp,i)=>{
+      inp.classList.remove('correct','wrong');
+      const ok = inp.value.trim().toLowerCase()===answers[i];
+      if(ok){inp.classList.add('correct');c++;}else{inp.classList.add('wrong');}
+      document.querySelectorAll('#ex2 .explanation').forEach(e=>e.classList.add('show'));
+      qs.push({q:qs2[i].q, your:inp.value.trim()||'(chưa điền)', answer:answers[i], ok, exp:qs2[i].exp});
+    });
+    sections.push({title:'Bài 2 – Điền cụm từ', correct:c, total:inputs2.length, questions:qs});
+  }
+
+  // --- EX4: Listening fill ---
+  {
+    const answers4=['holiday','stay','going','flying','visit','planes','arrive','bus station'];
+    const qs4=[
+      {q:'1. Are you excited about your ___, James?', exp:'<strong>holiday</strong> = kỳ nghỉ. Susan hỏi James có hào hứng không.'},
+      {q:'2. Some friends are going to ___ at my house.', exp:'<strong>stay</strong> = ở lại. "Stay at + địa điểm" là cụm cố định.'},
+      {q:'3. Where exactly are you ___?', exp:'<strong>going</strong>: Câu hỏi hiện tại tiếp diễn cho kế hoạch tương lai.'},
+      {q:'4. ...exploring Paris before ___ to Miami.', exp:'<strong>flying</strong>: Sau giới từ "before" dùng V-ing.'},
+      {q:"5. ...but I'd like to ___ the USA next year.", exp:'<strong>visit</strong>: "Would like to + V" = muốn làm gì.'},
+      {q:'6. But I never sleep on ___.', exp:'<strong>planes</strong>: Số nhiều vì nói về máy bay nói chung.'},
+      {q:'7. I ___ at 5:35 in the afternoon.', exp:'<strong>arrive</strong>: Hiện tại đơn cho lịch trình cố định.'},
+      {q:'8. I\'ll pick you up in the ___, by the exit.', exp:'<strong>bus station</strong> = bến xe buýt, nơi Susan đón James.'},
+    ];
+    const inputs4 = document.querySelectorAll('#ex4 .ex-input');
+    let c=0; const qs=[];
+    inputs4.forEach((inp,i)=>{
+      inp.classList.remove('correct','wrong');
+      const ok = inp.value.trim().toLowerCase()===answers4[i];
+      if(ok){inp.classList.add('correct');c++;}else{inp.classList.add('wrong');}
+      document.querySelectorAll('#ex4 .explanation').forEach(e=>e.classList.add('show'));
+      qs.push({q:qs4[i].q, your:inp.value.trim()||'(chưa điền)', answer:answers4[i], ok, exp:qs4[i].exp});
+    });
+    sections.push({title:'Bài 4 – Nghe & điền từ', correct:c, total:inputs4.length, questions:qs});
+  }
+
+  // --- EX5 MCQ ---
+  sections.push(collectMcqSection('ex5List','Bài 5 – Giới từ', ex5Data));
+  // --- EX6 ODD ---
+  sections.push(collectOddSection());
+  // --- EX7 MCQ ---
+  sections.push(collectMcqSection('ex7List','Bài 7 – Chọn từ thích hợp', ex7Data));
+  // --- EX8A MCQ ---
+  sections.push(collectMcqSection('ex8aList','Bài 8a – Điền từ vào đoạn văn', ex8aData));
+  // --- EX8B MCQ ---
+  sections.push(collectMcqSection('ex8bList','Bài 8b – Đọc hiểu', ex8bData));
+
+  // Also trigger individual checks so explanations show inline
+  checkAnagram();
+  checkFill('ex2',6);
+  checkEx4();
+  checkMcqEx('ex5List','result-ex5',ex5Data);
+  checkOdd();
+  checkMcqEx('ex7List','result-ex7',ex7Data);
+  checkMcqEx('ex8aList','result-ex8a',ex8aData);
+  checkMcqEx('ex8bList','result-ex8b',ex8bData);
+
+  renderOverallResult(sections);
+}
+
+function collectMcqSection(listId, title, data) {
+  let c=0; const qs=[];
+  data.forEach((item,i)=>{
+    const itemEl = document.getElementById(listId+'-item-'+i);
+    if(!itemEl){qs.push({q:item.q,your:'(chưa chọn)',answer:item.answer,ok:false,exp:item.exp});return;}
+    const sel = itemEl.querySelector('.mcq-opt.selected');
+    const val = sel ? sel.querySelector('input').value : '';
+    const ok = val===item.answer;
+    if(ok) c++;
+    qs.push({q:item.q, your:val||'(chưa chọn)', answer:item.answer, ok, exp:item.exp});
+  });
+  return {title, correct:c, total:data.length, questions:qs};
+}
+
+function collectOddSection() {
+  let c=0; const qs=[];
+  ex6Data.forEach((item,i)=>{
+    const sel = document.querySelector('#odd-'+i+' .odd-opt.selected');
+    const val = sel ? sel.textContent.trim() : '';
+    const ok = val===item.answer;
+    if(ok) c++;
+    qs.push({q:`Nhóm ${i+1}: ${item.opts.join(' / ')}`, your:val||'(chưa chọn)', answer:item.answer, ok, exp:item.exp});
+  });
+  return {title:'Bài 6 – Từ không cùng nhóm', correct:c, total:ex6Data.length, questions:qs};
+}
+
+function renderOverallResult(sections) {
+  const totalCorrect = sections.reduce((s,e)=>s+e.correct,0);
+  const totalQ = sections.reduce((s,e)=>s+e.total,0);
+  const pct = Math.round(totalCorrect/totalQ*100);
+  const emoji = pct===100?'🏆':pct>=80?'🌟':pct>=60?'👍':pct>=40?'😊':'📚';
+  const msg = pct===100?'Tuyệt vời! Bạn đã trả lời đúng tất cả câu hỏi!':
+              pct>=80?'Rất tốt! Chỉ còn một vài câu cần xem lại.':
+              pct>=60?'Khá tốt! Hãy xem lại những câu sai nhé.':
+              pct>=40?'Cần cố gắng thêm! Đọc kỹ giải thích nhé.':'Cần ôn luyện nhiều hơn. Đừng nản, hãy thử lại!';
+
+  const barsHTML = sections.map(s=>{
+    const sp = Math.round(s.correct/s.total*100);
+    return `<div class="bar-item">
+      <div class="bar-label">${s.title.split('–')[0].trim()}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${sp}%"></div></div>
+      <div class="bar-score">${s.correct}/${s.total}</div>
+    </div>`;
+  }).join('');
+
+  const breakdownHTML = sections.map(s=>{
+    const sp=Math.round(s.correct/s.total*100);
+    const cls=sp===100?'perfect':sp>=60?'good':'low';
+    const qsHTML = s.questions.map(q=>`
+      <div class="bq-item ${q.ok?'correct-q':'wrong-q'}">
+        <div class="bq-top">
+          <div class="bq-icon">${q.ok?'✅':'❌'}</div>
+          <div>
+            <div class="bq-text">${q.q}</div>
+            <div class="bq-your">
+              Bạn chọn: <strong>${q.your}</strong>
+              ${!q.ok?` &nbsp;→&nbsp; Đáp án đúng: <strong style="color:var(--green)">${q.answer}</strong>`:''}
+            </div>
+          </div>
+        </div>
+        <div class="bq-exp">💡 <strong>Giải thích:</strong> ${q.exp}</div>
+      </div>
+    `).join('');
+    return `<div class="breakdown-block">
+      <div class="breakdown-header">
+        <span class="bh-title">${s.title}</span>
+        <span class="bh-score ${cls}">${s.correct}/${s.total} &nbsp;(${sp}%)</span>
+      </div>
+      <div class="breakdown-questions">${qsHTML}</div>
+    </div>`;
+  }).join('');
+
+  const el = document.getElementById('overall-result');
+  el.innerHTML = `
+    <div class="overall-score-card">
+      <div class="overall-big-score">${emoji} ${totalCorrect}/${totalQ}</div>
+      <div class="overall-pct">${pct}% chính xác</div>
+      <div class="overall-msg">${msg}</div>
+      <div class="overall-bars">${barsHTML}</div>
+    </div>
+    <div id="overall-breakdown">${breakdownHTML}</div>
+  `;
+  el.style.display='block';
+  el.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function resetAllExercises() {
+  // Reset all inputs
+  document.querySelectorAll('.ex-input').forEach(inp=>{inp.value='';inp.classList.remove('correct','wrong');});
+  document.querySelectorAll('.explanation').forEach(e=>e.classList.remove('show'));
+  // Reset MCQs
+  ['ex5List','ex7List','ex8aList','ex8bList'].forEach((id,i)=>{
+    const data=[ex5Data,ex7Data,ex8aData,ex8bData][i];
+    renderMcqEx(id,data);
+    const resId=['result-ex5','result-ex7','result-ex8a','result-ex8b'][i];
+    const r=document.getElementById(resId);
+    if(r){r.classList.remove('show');r.innerHTML='';}
+  });
+  // Reset odd
+  renderOdd();
+  document.getElementById('result-ex6').classList.remove('show');
+  // Reset individual results
+  ['ex1','ex2','ex4'].forEach(id=>{
+    const r=document.getElementById('result-'+id);
+    if(r){r.classList.remove('show');r.innerHTML='';}
+  });
+  // Reset overall
+  const ov=document.getElementById('overall-result');
+  ov.innerHTML=''; ov.style.display='none';
+}
+
+// ==================== INIT ====================
+renderVocab();
+nextQuestion();
+renderMcqEx('ex5List', ex5Data);
+renderMcqEx('ex7List', ex7Data);
+renderMcqEx('ex8aList', ex8aData);
+renderMcqEx('ex8bList', ex8bData);
+renderOdd();
+</script>
+</body>
+</html>

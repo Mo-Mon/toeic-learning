@@ -1,0 +1,31 @@
+{
+  "words": [
+    {
+      "en": "Joy",
+      "vi": "Niềm vui sướng, sự hân hoan.",
+      "phonetic": "/dʒɔɪ/",
+      "topicId": "1775144024308",
+      "note": "Ví dụ: The children's faces were full of joy when they saw the snow.\n(Khuôn mặt của những đứa trẻ tràn ngập niềm vui khi chúng nhìn thấy tuyết.)",
+      "id": "1775144069502",
+      "createdAt": "2026-04-02T15:34:29.502Z"
+    },
+    {
+      "en": "Fear",
+      "vi": "Sự sợ hãi, nỗi sợ.",
+      "phonetic": "/fɪr/",
+      "topicId": "1775144024308",
+      "note": "Ví dụ: She overcame her fear of heights to climb the mountain.\n(Cô ấy đã vượt qua nỗi sợ độ cao để leo lên ngọn núi.)",
+      "id": "1775143993816",
+      "createdAt": "2026-04-02T15:33:13.816Z"
+    }
+  ],
+  "topics": [
+    {
+      "name": "Tự vựng về danh từ trừu tượng",
+      "emoji": "📁",
+      "id": "1775144024308",
+      "createdAt": "2026-04-02T15:33:44.308Z"
+    }
+  ],
+  "version": 1
+}

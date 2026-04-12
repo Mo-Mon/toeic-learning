@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Học Tiếng Anh – Âm Nhạc & Phim Ảnh</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #2563eb;
+    --blue-light: #eff6ff;
+    --blue-mid: #bfdbfe;
+    --green: #16a34a;
+    --green-light: #f0fdf4;
+    --red: #dc2626;
+    --red-light: #fef2f2;
+    --yellow: #f59e0b;
+    --gray: #6b7280;
+    --gray-light: #f9fafb;
+    --border: #e5e7eb;
+    --white: #ffffff;
+    --shadow: 0 4px 24px rgba(37,99,235,0.10);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: #f0f6ff;
+    min-height: 100vh;
+    color: #1e293b;
+  }
+  header {
+    background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 60%, #3b82f6 100%);
+    color: white;
+    padding: 28px 0 18px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(37,99,235,0.25);
+  }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+  header p { font-size: 0.97rem; opacity: 0.85; }
+
+  /* TABS */
+  .tab-bar {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    background: white;
+    padding: 14px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .tab-btn {
+    padding: 10px 36px;
+    border-radius: 24px;
+    border: 2px solid var(--blue);
+    background: white;
+    color: var(--blue);
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .tab-btn.active, .tab-btn:hover {
+    background: var(--blue);
+    color: white;
+    box-shadow: 0 4px 16px rgba(37,99,235,0.25);
+  }
+
+  .tab-content { display: none; padding: 32px 16px 60px; max-width: 1100px; margin: 0 auto; }
+  .tab-content.active { display: block; }
+
+  /* VOCAB CARDS */
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--blue);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 18px;
+    margin-bottom: 48px;
+  }
+  .vocab-card {
+    background: white;
+    border-radius: 16px;
+    padding: 22px 20px 16px;
+    box-shadow: var(--shadow);
+    border: 1.5px solid var(--border);
+    transition: transform 0.18s, box-shadow 0.18s;
+    position: relative;
+    overflow: hidden;
+  }
+  .vocab-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px rgba(37,99,235,0.16);
+  }
+  .vocab-card .word {
+    font-size: 1.45rem;
+    font-weight: 900;
+    color: var(--blue);
+    margin-bottom: 3px;
+  }
+  .vocab-card .ipa {
+    font-size: 0.88rem;
+    color: var(--gray);
+    margin-bottom: 4px;
+    letter-spacing: 0.5px;
+  }
+  .vocab-card .type-badge {
+    display: inline-block;
+    background: var(--blue-light);
+    color: var(--blue);
+    font-size: 0.75rem;
+    font-weight: 700;
+    border-radius: 8px;
+    padding: 2px 10px;
+    margin-bottom: 8px;
+  }
+  .vocab-card .meaning {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 7px;
+  }
+  .vocab-card .example {
+    font-size: 0.88rem;
+    color: var(--gray);
+    font-style: italic;
+    border-left: 3px solid var(--blue-mid);
+    padding-left: 10px;
+    margin-bottom: 10px;
+    line-height: 1.5;
+  }
+  .speak-btn {
+    background: var(--blue-light);
+    border: none;
+    border-radius: 20px;
+    padding: 5px 14px;
+    cursor: pointer;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--blue);
+    transition: background 0.15s;
+  }
+  .speak-btn:hover { background: var(--blue-mid); }
+  .category-label {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    background: var(--blue);
+    color: white;
+    border-radius: 8px;
+    padding: 2px 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* QUIZ */
+  .quiz-section {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: var(--shadow);
+    border: 1.5px solid var(--border);
+  }
+  .quiz-controls { display: flex; gap: 12px; margin-bottom: 22px; flex-wrap: wrap; align-items: center; }
+  .toggle-btn {
+    padding: 8px 22px;
+    border-radius: 20px;
+    border: 2px solid var(--blue);
+    background: white;
+    color: var(--blue);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 0.92rem;
+    transition: all 0.15s;
+  }
+  .toggle-btn.active { background: var(--blue); color: white; }
+  .quiz-score {
+    margin-left: auto;
+    font-weight: 800;
+    color: var(--blue);
+    font-size: 1rem;
+  }
+  .quiz-question {
+    font-size: 1.5rem;
+    font-weight: 900;
+    text-align: center;
+    color: #1e293b;
+    margin-bottom: 24px;
+    padding: 18px;
+    background: var(--blue-light);
+    border-radius: 14px;
+    min-height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .quiz-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+  .quiz-opt {
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 2px solid var(--border);
+    background: white;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.97rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: center;
+  }
+  .quiz-opt:hover:not(:disabled) { border-color: var(--blue); background: var(--blue-light); }
+  .quiz-opt.correct { background: var(--green-light); border-color: var(--green); color: var(--green); }
+  .quiz-opt.wrong { background: var(--red-light); border-color: var(--red); color: var(--red); }
+  .quiz-feedback {
+    min-height: 40px;
+    border-radius: 10px;
+    padding: 10px 16px;
+    font-weight: 700;
+    font-size: 0.97rem;
+    margin-bottom: 14px;
+    display: none;
+  }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.ok { background: var(--green-light); color: var(--green); }
+  .quiz-feedback.bad { background: var(--red-light); color: var(--red); }
+  .next-btn {
+    display: block;
+    margin: 0 auto;
+    padding: 11px 38px;
+    background: var(--blue);
+    color: white;
+    border: none;
+    border-radius: 24px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .next-btn:hover { background: #1d4ed8; }
+
+  /* EXERCISES TAB */
+  .exercise-block {
+    background: white;
+    border-radius: 18px;
+    padding: 28px 26px;
+    box-shadow: var(--shadow);
+    border: 1.5px solid var(--border);
+    margin-bottom: 32px;
+  }
+  .exercise-block h3 {
+    font-size: 1.1rem;
+    font-weight: 900;
+    color: var(--blue);
+    margin-bottom: 6px;
+  }
+  .exercise-block .ex-desc {
+    font-size: 0.92rem;
+    color: var(--gray);
+    margin-bottom: 18px;
+    font-style: italic;
+  }
+  .ex-divider {
+    border: none;
+    border-top: 2.5px dashed var(--blue-mid);
+    margin: 36px 0;
+  }
+
+  /* Anagram */
+  .anagram-item { margin-bottom: 14px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .anagram-item label { font-weight: 700; min-width: 220px; font-size: 0.97rem; }
+  .anagram-item input {
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    padding: 7px 14px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.97rem;
+    font-weight: 700;
+    width: 200px;
+    transition: border 0.15s;
+  }
+  .anagram-item input:focus { border-color: var(--blue); outline: none; }
+  .anagram-item input.correct { border-color: var(--green); background: var(--green-light); }
+  .anagram-item input.wrong { border-color: var(--red); background: var(--red-light); }
+  .anagram-item .hint { font-size: 0.8rem; color: var(--gray); }
+
+  /* Fill blank */
+  .fill-para {
+    font-size: 1rem;
+    line-height: 2.2;
+    margin-bottom: 14px;
+    color: #1e293b;
+  }
+  .fill-para input {
+    border: none;
+    border-bottom: 2.5px solid var(--blue);
+    background: var(--blue-light);
+    border-radius: 6px 6px 0 0;
+    padding: 2px 10px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    width: 130px;
+    text-align: center;
+    transition: border 0.15s;
+  }
+  .fill-para input:focus { outline: none; border-bottom-color: #1d4ed8; }
+  .fill-para input.correct { border-bottom-color: var(--green); background: var(--green-light); color: var(--green); }
+  .fill-para input.wrong { border-bottom-color: var(--red); background: var(--red-light); color: var(--red); }
+
+  /* MCQ */
+  .mcq-item { margin-bottom: 20px; }
+  .mcq-item .q-text { font-weight: 700; margin-bottom: 10px; font-size: 0.97rem; line-height: 1.5; }
+  .mcq-item .hint-text { font-size: 0.82rem; color: var(--gray); font-style: italic; margin-bottom: 8px; }
+  .mcq-opts { display: flex; flex-direction: column; gap: 7px; }
+  .mcq-opt {
+    padding: 9px 16px;
+    border-radius: 10px;
+    border: 2px solid var(--border);
+    background: white;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: left;
+  }
+  .mcq-opt:hover:not(.disabled) { border-color: var(--blue); background: var(--blue-light); }
+  .mcq-opt.selected { border-color: var(--blue); background: var(--blue-light); }
+  .mcq-opt.correct { background: var(--green-light); border-color: var(--green); color: var(--green); }
+  .mcq-opt.wrong { background: var(--red-light); border-color: var(--red); color: var(--red); }
+  .mcq-opt.disabled { cursor: default; }
+  .mcq-feedback { margin-top: 8px; font-size: 0.88rem; font-weight: 700; padding: 6px 12px; border-radius: 8px; display: none; }
+  .mcq-feedback.show { display: block; }
+  .mcq-feedback.ok { background: var(--green-light); color: var(--green); }
+  .mcq-feedback.bad { background: var(--red-light); color: var(--red); }
+
+  /* Categorize */
+  .cat-item { margin-bottom: 12px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .cat-item label { font-weight: 700; min-width: 150px; font-size: 0.97rem; }
+  .cat-select {
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    padding: 7px 12px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 700;
+    background: white;
+    cursor: pointer;
+    min-width: 200px;
+  }
+  .cat-select.correct { border-color: var(--green); background: var(--green-light); }
+  .cat-select.wrong { border-color: var(--red); background: var(--red-light); }
+
+  /* Listening */
+  .audio-player {
+    background: var(--blue-light);
+    border-radius: 14px;
+    padding: 16px 20px;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .audio-player audio { flex: 1; }
+  .listen-items { list-style: none; }
+  .listen-item { margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+  .listen-item label { font-weight: 700; min-width: 120px; }
+  .listen-item input {
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    padding: 7px 14px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    width: 200px;
+  }
+  .listen-item input.correct { border-color: var(--green); background: var(--green-light); }
+  .listen-item input.wrong { border-color: var(--red); background: var(--red-light); }
+
+  /* Reading */
+  .reading-block { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 20px; }
+  .reading-block .en-text, .reading-block .vi-text {
+    background: var(--gray-light);
+    border-radius: 12px;
+    padding: 16px;
+    font-size: 0.93rem;
+    line-height: 1.8;
+  }
+  .reading-block .en-text { border-left: 4px solid var(--blue); }
+  .reading-block .vi-text { border-left: 4px solid #a3c4f3; color: var(--gray); }
+  .reading-block h4 { font-size: 0.8rem; font-weight: 800; color: var(--blue); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+
+  /* Buttons */
+  .ex-btn {
+    padding: 9px 26px;
+    border-radius: 20px;
+    border: none;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.93rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.15s;
+    margin-right: 10px;
+    margin-top: 14px;
+  }
+  .ex-btn.check { background: var(--blue); color: white; }
+  .ex-btn.check:hover { background: #1d4ed8; }
+  .ex-btn.reset { background: var(--gray-light); color: #374151; border: 2px solid var(--border); }
+  .ex-btn.reset:hover { background: var(--border); }
+  .ex-result { margin-top: 14px; display: none; }
+  .ex-result.show { display: block; }
+  .ex-result .result-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 12px;
+    border-radius: 9px;
+    margin-bottom: 7px;
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+  .ex-result .result-row.ok { background: var(--green-light); color: var(--green); }
+  .ex-result .result-row.bad { background: var(--red-light); color: var(--red); }
+  .ex-result .result-row .explain { font-weight: 400; color: #374151; margin-left: 4px; }
+
+  /* Summary */
+  .summary-box {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: var(--shadow);
+    border: 1.5px solid var(--border);
+    margin-top: 16px;
+  }
+  .summary-box h3 { font-size: 1.2rem; font-weight: 900; color: var(--blue); margin-bottom: 18px; }
+  .big-score { font-size: 3rem; font-weight: 900; color: var(--blue); text-align: center; margin-bottom: 4px; }
+  .big-score span { font-size: 1.2rem; color: var(--gray); }
+  .percent-bar { height: 16px; background: var(--blue-mid); border-radius: 20px; overflow: hidden; margin: 10px 0 20px; }
+  .percent-fill { height: 100%; background: linear-gradient(90deg, var(--blue), #3b82f6); border-radius: 20px; transition: width 0.6s ease; }
+  .summary-comment { text-align: center; font-size: 1.05rem; font-weight: 700; color: #374151; margin-bottom: 18px; }
+  .summary-detail { margin-top: 16px; }
+  .summary-detail .s-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 9px 14px;
+    border-radius: 10px;
+    margin-bottom: 7px;
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+  .summary-detail .s-row.ok { background: var(--green-light); color: var(--green); }
+  .summary-detail .s-row.bad { background: var(--red-light); color: var(--red); }
+  .summary-detail .s-row .s-exp { font-weight: 400; color: #374151; }
+  .action-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px; justify-content: center; }
+  .action-btn {
+    padding: 12px 30px;
+    border-radius: 24px;
+    border: none;
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .action-btn.primary { background: var(--blue); color: white; }
+  .action-btn.primary:hover { background: #1d4ed8; }
+  .action-btn.secondary { background: var(--gray-light); color: #374151; border: 2px solid var(--border); }
+  .action-btn.secondary:hover { background: var(--border); }
+
+  .word-bank {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px;
+    background: var(--blue-light); padding: 12px; border-radius: 10px;
+  }
+  .word-bank span {
+    background: white; border: 1.5px solid var(--blue-mid); border-radius: 8px;
+    padding: 4px 13px; font-weight: 700; font-size: 0.92rem; color: var(--blue);
+  }
+
+  @media(max-width:600px) {
+    .quiz-options { grid-template-columns: 1fr; }
+    .reading-block { grid-template-columns: 1fr; }
+    .vocab-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🎵 Học Tiếng Anh – Âm Nhạc & Phim Ảnh 🎬</h1>
+  <p>Từ Vựng TOEIC Cơ Bản · Section 2</p>
+</header>
+
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="showTab('vocab')">📚 Học Từ Mới</button>
+  <button class="tab-btn" onclick="showTab('exercises')">✏️ Bài Tập</button>
+</div>
+
+<!-- TAB 1: VOCAB -->
+<div id="tab-vocab" class="tab-content active">
+  <div class="section-title">📖 Danh Sách Từ Vựng</div>
+  <div class="vocab-grid" id="vocabGrid"></div>
+
+  <div class="section-title">🧠 Kiểm Tra Từ Vựng</div>
+  <div class="quiz-section">
+    <div class="quiz-controls">
+      <button class="toggle-btn active" id="btn-en-vi" onclick="setMode('en-vi')">Anh → Việt</button>
+      <button class="toggle-btn" id="btn-vi-en" onclick="setMode('vi-en')">Việt → Anh</button>
+      <div class="quiz-score" id="quizScore">✅ 0 &nbsp;❌ 0 &nbsp;📊 0/0</div>
+    </div>
+    <div class="quiz-question" id="quizQuestion">Nhấn "Câu Tiếp Theo" để bắt đầu!</div>
+    <div class="quiz-options" id="quizOptions"></div>
+    <div class="quiz-feedback" id="quizFeedback"></div>
+    <button class="next-btn" onclick="nextQuiz()">Câu Tiếp Theo ➡️</button>
+  </div>
+</div>
+
+<!-- TAB 2: EXERCISES -->
+<div id="tab-exercises" class="tab-content">
+
+  <!-- EX 1: ANAGRAM -->
+  <div class="exercise-block" id="ex1">
+    <h3>📝 Bài Tập 1 – Sắp Xếp Chữ Cái</h3>
+    <p class="ex-desc">Sắp xếp lại các chữ cái sau thành từ tiếng Anh có nghĩa tương ứng.</p>
+    <div id="ex1-items"></div>
+    <button class="ex-btn check" onclick="checkEx1()">✔ Kiểm Tra</button>
+    <button class="ex-btn reset" onclick="resetEx1()">🔄 Làm Lại</button>
+    <div class="ex-result" id="ex1-result"></div>
+  </div>
+  <hr class="ex-divider">
+
+  <!-- EX 2: MATCH IMAGE -->
+  <div class="exercise-block" id="ex2">
+    <h3>🖼️ Bài Tập 2 – Nối Hình Với Từ</h3>
+    <p class="ex-desc">Chọn nhóm từ vựng đúng (A-F) cho mỗi từ bên dưới. A=violin, B=actor, C=cinema, D=singer, E=fantasy(film), F=guitar</p>
+    <div id="ex2-items"></div>
+    <button class="ex-btn check" onclick="checkEx2()">✔ Kiểm Tra</button>
+    <button class="ex-btn reset" onclick="resetEx2()">🔄 Làm Lại</button>
+    <div class="ex-result" id="ex2-result"></div>
+  </div>
+  <hr class="ex-divider">
+
+  <!-- EX 3: CATEGORIZE -->
+  <div class="exercise-block" id="ex3">
+    <h3>🗂️ Bài Tập 3 – Phân Loại Từ Vựng</h3>
+    <p class="ex-desc">Nối các từ sau với đúng nhóm từ vựng của nó.</p>
+    <div id="ex3-items"></div>
+    <button class="ex-btn check" onclick="checkEx3()">✔ Kiểm Tra</button>
+    <button class="ex-btn reset" onclick="resetEx3()">🔄 Làm Lại</button>
+    <div class="ex-result" id="ex3-result"></div>
+  </div>
+  <hr class="ex-divider">
+
+  <!-- EX 4: PRONUNCIATION MCQ -->
+  <div class="exercise-block" id="ex4">
+    <h3>🔊 Bài Tập 4 – Phát Âm Khác Nhóm</h3>
+    <p class="ex-desc">Chọn từ có âm được gạch chân phát âm KHÁC với các từ còn lại.</p>
+    <div id="ex4-items"></div>
+    <button class="ex-btn check" onclick="checkEx4()">✔ Kiểm Tra</button>
+    <button class="ex-btn reset" onclick="resetEx4()">🔄 Làm Lại</button>
+    <div class="ex-result" id="ex4-result"></div>
+  </div>
+  <hr class="ex-divider">
+
+  <!-- EX 5: LISTENING -->
+  <div class="exercise-block" id="ex5">
+    <h3>🎧 Bài Tập 5 – Nghe Và Điền Từ</h3>
+    <p class="ex-desc">Nghe audio và điền vào chỗ trống từ được phát âm.</p>
+    <div class="audio-player">
+      <span>🎵</span>
+      <audio controls src="bainghe.mp3" style="width:100%">Trình duyệt không hỗ trợ audio.</audio>
+    </div>
+    <ul class="listen-items" id="ex5-items"></ul>
+    <button class="ex-btn check" onclick="checkEx5()">✔ Kiểm Tra</button>
+    <button class="ex-btn reset" onclick="resetEx5()">🔄 Làm Lại</button>
+    <div class="ex-result" id="ex5-result"></div>
+  </div>
+  <hr class="ex-divider">
+
+  <!-- EX 6: MCQ FILL -->
+  <div class="exercise-block" id="ex6">
+    <h3>📖 Bài Tập 6 – Chọn Đáp Án Đúng</h3>
+    <p class="ex-desc">Chọn từ phù hợp điền vào chỗ trống trong câu.</p>
+    <div id="ex6-items"></div>
+    <button class="ex-btn check" onclick="checkEx6()">✔ Kiểm Tra</button>
+    <button class="ex-btn reset" onclick="resetEx6()">🔄 Làm Lại</button>
+    <div class="ex-result" id="ex6-result"></div>
+  </div>
+  <hr class="ex-divider">
+
+  <!-- EX 7: READING + FILL -->
+  <div class="exercise-block" id="ex7">
+    <h3>📚 Bài Tập 7 – Đọc Hiểu & Điền Từ</h3>
+    <p class="ex-desc">Đọc đoạn văn song ngữ rồi điền từ từ hộp từ vào chỗ trống.</p>
+    <div class="word-bank">
+      <strong style="margin-right:6px;color:var(--gray)">Hộp từ:</strong>
+      <span>comedy</span><span>romance</span><span>plot</span><span>scenes</span>
+      <span>cinema</span><span>music lovers</span><span>live concert</span><span>talented</span>
+    </div>
+    <div class="reading-block">
+      <div class="en-text">
+        <h4>🇬🇧 English</h4>
+        My favorite type of movie is <b>(1)</b> because whenever I watch it, I can laugh a lot. I love the Johnny English movie series. Another movie I really like is The Notebook; it's a popular <b>(2)</b> movie. The <b>(3)</b> of the movie is about a poor boy, called Noah, who meets a rich girl, called Allie, and they fall in love.<br><br>
+        I think my favourite film is Skyfall, the last James Bond movie. It's really beautiful, especially the <b>(4)</b> which were shot in Shanghai and Scotland. The song by the singer Adele is great and it won an Oscar for Best Soundtrack. I saw it in the <b>(5)</b> near my house and had a good time.<br><br>
+        My favourite singer is Michael Jackson. All <b>(6)</b> like his music because it is very good. I got to see him in a <b>(7)</b> and I enjoyed it very much.<br><br>
+        I am a big fan of the singer Taylor Swift. She was born in 1989 in the US and became famous when she was still young. She is very <b>(8)</b> because she can play the guitar very well while singing.
+      </div>
+      <div class="vi-text">
+        <h4>🇻🇳 Tiếng Việt</h4>
+        Thể loại phim yêu thích của tôi là <b>(1)</b> vì bất cứ khi nào tôi xem nó, tôi đều có thể cười rất nhiều. Tôi yêu loạt phim Johnny English. Một bộ phim khác mà tôi rất thích là The Notebook; đó là một bộ phim <b>(2)</b> nổi tiếng. <b>(3)</b> của phim kể về một chàng trai nghèo tên là Noah gặp một cô gái giàu có tên là Allie và họ yêu nhau.<br><br>
+        Tôi nghĩ bộ phim yêu thích của tôi là Skyfall, bộ phim James Bond cuối cùng. Đặc biệt là <b>(4)</b> được quay ở Thượng Hải và Scotland. Tôi đã xem nó tại <b>(5)</b> gần nhà và đã có một khoảng thời gian vui vẻ.<br><br>
+        Tất cả <b>(6)</b> đều thích âm nhạc của anh ấy. Tôi đã được nhìn thấy anh ấy trong một <b>(7)</b> và tôi rất thích nó.<br><br>
+        Cô ấy rất <b>(8)</b> vì cô ấy có thể chơi guitar rất tốt trong khi hát.
+      </div>
+    </div>
+    <div id="ex7-inputs"></div>
+    <button class="ex-btn check" onclick="checkEx7()">✔ Kiểm Tra</button>
+    <button class="ex-btn reset" onclick="resetEx7()">🔄 Làm Lại</button>
+    <div class="ex-result" id="ex7-result"></div>
+  </div>
+
+  <hr class="ex-divider">
+
+  <!-- SUMMARY -->
+  <div class="summary-box">
+    <h3>📊 Tổng Kết Bài Tập</h3>
+    <div class="action-row">
+      <button class="action-btn primary" onclick="checkAll()">📝 Chấm Tất Cả Bài</button>
+      <button class="action-btn secondary" onclick="resetAll()">🔄 Làm Lại Tất Cả</button>
+    </div>
+    <div id="summaryResult" style="display:none; margin-top:24px;">
+      <div class="big-score" id="bigScore"></div>
+      <div class="percent-bar"><div class="percent-fill" id="percentFill" style="width:0%"></div></div>
+      <div class="summary-comment" id="summaryComment"></div>
+      <div class="summary-detail" id="summaryDetail"></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ===================== DATA =====================
+const vocabData = [
+  { word:"comedy", ipa:"/ˈkɒm.ə.di/", type:"noun", category:"Thể loại phim", meaning:"phim hài", example:"I love watching comedy films because they make me laugh." },
+  { word:"romance", ipa:"/rəʊˈmæns/", type:"noun", category:"Thể loại phim", meaning:"phim lãng mạn", example:"The Notebook is a popular romance movie." },
+  { word:"action", ipa:"/ˈæk.ʃən/", type:"noun", category:"Thể loại phim", meaning:"phim hành động", example:"Mission Impossible is a great action film." },
+  { word:"fantasy", ipa:"/ˈfæn.tə.si/", type:"noun", category:"Thể loại phim", meaning:"phim giả tưởng", example:"Avatar is a stunning fantasy movie." },
+  { word:"horror", ipa:"/ˈhɒr.ər/", type:"noun", category:"Thể loại phim", meaning:"phim kinh dị", example:"My friend can't watch horror movies because they are too scary." },
+  { word:"piano", ipa:"/piˈæn.əʊ/", type:"noun", category:"Nhạc cụ", meaning:"đàn piano", example:"She plays the piano beautifully every evening." },
+  { word:"violin", ipa:"/ˌvaɪəˈlɪn/", type:"noun", category:"Nhạc cụ", meaning:"đàn violin", example:"The violin solo in that concert was amazing." },
+  { word:"guitar", ipa:"/ɡɪˈtɑːr/", type:"noun", category:"Nhạc cụ", meaning:"đàn guitar", example:"I love my guitar because I can take it with me everywhere." },
+  { word:"actress", ipa:"/ˈæk.trəs/", type:"noun", category:"Chỉ người", meaning:"diễn viên nữ", example:"She is a talented actress who won many awards." },
+  { word:"actor", ipa:"/ˈæk.tər/", type:"noun", category:"Chỉ người", meaning:"diễn viên nam", example:"Gong Yoo is a famous Korean actor." },
+  { word:"singer", ipa:"/ˈsɪŋ.ər/", type:"noun", category:"Chỉ người", meaning:"ca sĩ", example:"Adele is a wonderful singer who won an Oscar." },
+  { word:"music lover", ipa:"/ˈmjuːzɪk ˌlʌvər/", type:"noun", category:"Chỉ người", meaning:"người yêu âm nhạc", example:"All music lovers like Michael Jackson's songs." },
+  { word:"a big fan of", ipa:"—", type:"phrase", category:"Chỉ người", meaning:"fan hâm mộ lớn của", example:"I am a big fan of Taylor Swift." },
+  { word:"cinema", ipa:"/ˈsɪn.ə.mɑː/", type:"noun", category:"Điện ảnh & Âm nhạc", meaning:"rạp chiếu phim", example:"I saw the film at the cinema near my house." },
+  { word:"plot", ipa:"/plɒt/", type:"noun", category:"Điện ảnh & Âm nhạc", meaning:"cốt truyện", example:"The plot of the movie is about a poor boy who falls in love." },
+  { word:"scene / scenes", ipa:"/siːn/", type:"noun", category:"Điện ảnh & Âm nhạc", meaning:"cảnh phim", example:"The scenes shot in Scotland were breathtaking." },
+  { word:"special effects", ipa:"/ˌspeʃ.əl ɪˈfekts/", type:"noun", category:"Điện ảnh & Âm nhạc", meaning:"hiệu ứng đặc biệt", example:"The movie's special effects are amazing; the monsters look so realistic!" },
+  { word:"live concert", ipa:"/laɪv ˈkɒn.sət/", type:"noun", category:"Điện ảnh & Âm nhạc", meaning:"buổi diễn trực tiếp", example:"I got to see Michael Jackson in a live concert." },
+  { word:"catchy", ipa:"/ˈkætʃ.i/", type:"adj", category:"Tính từ", meaning:"bắt tai, dễ nhớ", example:"That song is so catchy – I can't stop humming it!" },
+  { word:"talented", ipa:"/ˈtæl.ən.tɪd/", type:"adj", category:"Tính từ", meaning:"tài năng", example:"Taylor Swift is very talented because she can play guitar and sing at the same time." },
+];
+
+// Quiz state
+let quizMode = 'en-vi';
+let correct = 0, wrong = 0, total = 0;
+let currentWord = null;
+let answered = false;
+
+// ===================== VOCAB RENDER =====================
+function renderVocab() {
+  const grid = document.getElementById('vocabGrid');
+  grid.innerHTML = vocabData.map((v,i) => `
+    <div class="vocab-card" style="animation-delay:${i*0.04}s">
+      <span class="category-label">${v.category}</span>
+      <div class="word">${v.word}</div>
+      <div class="ipa">${v.ipa}</div>
+      <span class="type-badge">${v.type}</span>
+      <div class="meaning">${v.meaning}</div>
+      <div class="example">"${v.example}"</div>
+      <button class="speak-btn" onclick="speak('${v.word.replace(/'/g,"\\'")}')">🔊 Phát âm</button>
+    </div>
+  `).join('');
+}
+
+function speak(word) {
+  const u = new SpeechSynthesisUtterance(word);
+  u.lang = 'en-US';
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(u);
+}
+
+// ===================== QUIZ =====================
+function setMode(m) {
+  quizMode = m;
+  document.getElementById('btn-en-vi').classList.toggle('active', m==='en-vi');
+  document.getElementById('btn-vi-en').classList.toggle('active', m==='vi-en');
+  correct=0; wrong=0; total=0;
+  updateScore();
+  nextQuiz();
+}
+
+function updateScore() {
+  document.getElementById('quizScore').innerHTML = `✅ ${correct} &nbsp;❌ ${wrong} &nbsp;📊 ${correct+wrong}/${total}`;
+}
+
+function nextQuiz() {
+  answered = false;
+  const fb = document.getElementById('quizFeedback');
+  fb.className = 'quiz-feedback';
+  fb.textContent = '';
+
+  // pick random word
+  const idx = Math.floor(Math.random()*vocabData.length);
+  currentWord = vocabData[idx];
+  total++;
+  updateScore();
+
+  // question
+  const q = document.getElementById('quizQuestion');
+  q.textContent = quizMode==='en-vi' ? currentWord.word : currentWord.meaning;
+
+  // 4 options: 1 correct + 3 random wrong
+  let pool = vocabData.filter((_,i)=>i!==idx);
+  pool = pool.sort(()=>Math.random()-0.5).slice(0,3);
+  let opts = [...pool, currentWord].sort(()=>Math.random()-0.5);
+
+  const div = document.getElementById('quizOptions');
+  div.innerHTML = opts.map(o => {
+    const label = quizMode==='en-vi' ? o.meaning : o.word;
+    return `<button class="quiz-opt" onclick="answerQuiz(this,'${o.word.replace(/'/g,"\\'")}')">${label}</button>`;
+  }).join('');
+}
+
+function answerQuiz(btn, word) {
+  if(answered) return;
+  answered = true;
+  const allBtns = document.querySelectorAll('.quiz-opt');
+  allBtns.forEach(b => b.disabled = true);
+
+  const fb = document.getElementById('quizFeedback');
+  if(word === currentWord.word) {
+    btn.classList.add('correct');
+    correct++;
+    fb.className = 'quiz-feedback show ok';
+    fb.textContent = `✅ Chính xác! "${currentWord.word}" = "${currentWord.meaning}"`;
+  } else {
+    btn.classList.add('wrong');
+    wrong++;
+    // highlight correct
+    allBtns.forEach(b => {
+      const label = quizMode==='en-vi' ? b.textContent : b.textContent;
+      if(quizMode==='en-vi' && b.textContent===currentWord.meaning) b.classList.add('correct');
+      if(quizMode==='vi-en' && b.textContent===currentWord.word) b.classList.add('correct');
+    });
+    fb.className = 'quiz-feedback show bad';
+    fb.textContent = `❌ Sai rồi! Đáp án đúng: "${currentWord.word}" = "${currentWord.meaning}"`;
+  }
+  updateScore();
+}
+
+// ===================== EX1: ANAGRAM =====================
+const ex1Data = [
+  { scramble:"C/M/E/D/O/Y", hint:"hài, phim hài", answer:"comedy" },
+  { scramble:"F/T/A/A/S/Y/N", hint:"giả tưởng", answer:"fantasy" },
+  { scramble:"L/T/A/T/D/N/E/E", hint:"tài năng", answer:"talented" },
+  { scramble:"C/R/S/E/T/S/A", hint:"diễn viên nữ", answer:"actress" },
+  { scramble:"L/E/V/L/R/O/E/N/T/C/C", hint:"sân khấu, buổi diễn trực tiếp", answer:"live concert" },
+  { scramble:"I/L/P/A/E/S/C/E/F/T/E/F/C", hint:"hiệu ứng đặc biệt", answer:"special effect" },
+];
+
+function renderEx1() {
+  document.getElementById('ex1-items').innerHTML = ex1Data.map((d,i)=>`
+    <div class="anagram-item">
+      <label><b>${i+1}.</b> ${d.scramble} <span class="hint">(${d.hint})</span></label>
+      <input type="text" id="ex1-${i}" placeholder="Nhập từ..." autocomplete="off">
+    </div>
+  `).join('');
+}
+
+function checkEx1() {
+  const result = document.getElementById('ex1-result');
+  let html = '';
+  let sc=0;
+  ex1Data.forEach((d,i)=>{
+    const inp = document.getElementById(`ex1-${i}`);
+    const val = inp.value.trim().toLowerCase();
+    const correct = val === d.answer.toLowerCase();
+    inp.className = correct ? 'correct' : 'wrong';
+    sc += correct?1:0;
+    if(correct) {
+      html += `<div class="result-row ok">✅ Câu ${i+1}: <b>${d.answer}</b> – Chính xác!</div>`;
+    } else {
+      html += `<div class="result-row bad">❌ Câu ${i+1}: Bạn viết "<b>${inp.value||'(trống)'}</b>" – Đáp án đúng: <b>${d.answer}</b> <span class="explain">· Nghĩa: ${d.hint}</span></div>`;
+    }
+  });
+  result.innerHTML = `<b>Kết quả: ${sc}/${ex1Data.length}</b>` + html;
+  result.className = 'ex-result show';
+}
+
+function resetEx1() {
+  ex1Data.forEach((_,i)=>{ const inp=document.getElementById(`ex1-${i}`); inp.value=''; inp.className=''; });
+  document.getElementById('ex1-result').className='ex-result';
+}
+
+// ===================== EX2: MATCH IMAGE =====================
+const ex2Data = [
+  { word:"singer", answer:"D", hint:"D = Tóc Tiên – ca sĩ" },
+  { word:"guitar", answer:"F", hint:"F = cây đàn guitar" },
+  { word:"violin", answer:"A", hint:"A = cây đàn violin" },
+  { word:"cinema", answer:"C", hint:"C = rạp chiếu phim" },
+  { word:"fantasy (film)", answer:"E", hint:"E = Avatar – phim giả tưởng" },
+  { word:"actor", answer:"B", hint:"B = Gong Yoo – diễn viên nam" },
+];
+
+function renderEx2() {
+  document.getElementById('ex2-items').innerHTML = ex2Data.map((d,i)=>`
+    <div class="cat-item">
+      <label><b>${i+1}.</b> ${d.word}</label>
+      <select class="cat-select" id="ex2-${i}">
+        <option value="">-- Chọn --</option>
+        <option value="A">A (violin)</option>
+        <option value="B">B (Gong Yoo – actor)</option>
+        <option value="C">C (cinema)</option>
+        <option value="D">D (Tóc Tiên – singer)</option>
+        <option value="E">E (Avatar – fantasy)</option>
+        <option value="F">F (guitar)</option>
+      </select>
+    </div>
+  `).join('');
+}
+
+function checkEx2() {
+  const result = document.getElementById('ex2-result');
+  let html='', sc=0;
+  ex2Data.forEach((d,i)=>{
+    const sel = document.getElementById(`ex2-${i}`);
+    const ok = sel.value === d.answer;
+    sel.className = 'cat-select ' + (ok?'correct':'wrong');
+    sc += ok?1:0;
+    if(ok) html+=`<div class="result-row ok">✅ Câu ${i+1} (${d.word}): Đúng! – ${d.hint}</div>`;
+    else html+=`<div class="result-row bad">❌ Câu ${i+1} (${d.word}): Bạn chọn "<b>${sel.value||'(chưa chọn)'}</b>" – Đáp án: <b>${d.answer}</b> <span class="explain">· ${d.hint}</span></div>`;
+  });
+  result.innerHTML = `<b>Kết quả: ${sc}/${ex2Data.length}</b>` + html;
+  result.className = 'ex-result show';
+}
+
+function resetEx2() {
+  ex2Data.forEach((_,i)=>{ const s=document.getElementById(`ex2-${i}`); s.value=''; s.className='cat-select'; });
+  document.getElementById('ex2-result').className='ex-result';
+}
+
+// ===================== EX3: CATEGORIZE =====================
+const ex3Data = [
+  { word:"actress", answer:"Từ vựng chỉ người" },
+  { word:"romance", answer:"Từ vựng chỉ thể loại phim" },
+  { word:"piano", answer:"Từ vựng chỉ nhạc cụ" },
+  { word:"music lover", answer:"Từ vựng chỉ người" },
+  { word:"action", answer:"Từ vựng chỉ thể loại phim" },
+  { word:"singer", answer:"Từ vựng chỉ người" },
+  { word:"comedy", answer:"Từ vựng chỉ thể loại phim" },
+  { word:"violin", answer:"Từ vựng chỉ nhạc cụ" },
+];
+
+function renderEx3() {
+  document.getElementById('ex3-items').innerHTML = ex3Data.map((d,i)=>`
+    <div class="cat-item">
+      <label><b>${i+1}.</b> ${d.word}</label>
+      <select class="cat-select" id="ex3-${i}">
+        <option value="">-- Chọn nhóm --</option>
+        <option>Từ vựng chỉ thể loại phim</option>
+        <option>Từ vựng chỉ người</option>
+        <option>Từ vựng chỉ nhạc cụ</option>
+      </select>
+    </div>
+  `).join('');
+}
+
+function checkEx3() {
+  const result = document.getElementById('ex3-result');
+  let html='', sc=0;
+  ex3Data.forEach((d,i)=>{
+    const sel = document.getElementById(`ex3-${i}`);
+    const ok = sel.value === d.answer;
+    sel.className = 'cat-select ' + (ok?'correct':'wrong');
+    sc += ok?1:0;
+    if(ok) html+=`<div class="result-row ok">✅ Câu ${i+1} (${d.word}): Đúng! – ${d.answer}</div>`;
+    else html+=`<div class="result-row bad">❌ Câu ${i+1} (${d.word}): Bạn chọn "<b>${sel.value||'(chưa chọn)'}</b>" – Đáp án: <b>${d.answer}</b></div>`;
+  });
+  result.innerHTML = `<b>Kết quả: ${sc}/${ex3Data.length}</b>` + html;
+  result.className = 'ex-result show';
+}
+
+function resetEx3() {
+  ex3Data.forEach((_,i)=>{ const s=document.getElementById(`ex3-${i}`); s.value=''; s.className='cat-select'; });
+  document.getElementById('ex3-result').className='ex-result';
+}
+
+// ===================== EX4: PRONUNCIATION =====================
+const ex4Data = [
+  {
+    q:"Question 1. Chọn từ có âm gạch chân phát âm KHÁC:",
+    opts:["A. Ro<u>man</u>ce", "B. Pia<u>no</u>", "C. Pl<u>o</u>t"],
+    answer:2,
+    explain: "Romance /rəʊˈmæns/ và Piano /piˈæn.əʊ/ có nguyên âm giống nhau (âm /æ/). Plot /plɒt/ có âm /ɒ/ khác. Đáp án C."
+  },
+  {
+    q:"Question 2. Chọn từ có âm gạch chân phát âm KHÁC:",
+    opts:["A. <u>Fan</u>tasy", "B. <u>Cin</u>ema", "C. <u>Tal</u>ented"],
+    answer:1,
+    explain: "Fantasy /ˈfæn.tə.si/ và Talented /ˈtæl.ən.tɪd/ có âm đầu /f/ và /t/ khác nhau. Cinema /ˈsɪn.ə.mɑː/ có âm /sɪ/ ở âm tiết đầu khác với /fæ/ và /tæ/. Đáp án B (Cinema có nguyên âm /ɪ/ trong khi Fantasy và Talented có /æ/)."
+  },
+  {
+    q:"Question 3. Chọn từ có âm gạch chân phát âm KHÁC:",
+    opts:["A. C<u>o</u>medy", "B. C<u>i</u>nema", "C. S<u>i</u>nger"],
+    answer:0,
+    explain: "Comedy /ˈkɒm.ə.di/ có âm /ɒ/. Cinema /ˈsɪn.ə.mɑː/ và Singer /ˈsɪŋ.ər/ đều có âm /ɪ/. Đáp án A (Comedy có âm /ɒ/ khác)."
+  },
+  {
+    q:"Question 4. Chọn từ có âm gạch chân phát âm KHÁC:",
+    opts:["A. <u>Ac</u>tion", "B. <u>Fan</u>tasy", "C. <u>Spe</u>cial effect"],
+    answer:1,
+    explain: "Action /ˈæk.ʃən/ và Special effect /ˌspeʃ.əl/ bắt đầu bằng âm /æ/ và /sp/. Fantasy /ˈfæn.tə.si/ có nguyên âm /æ/ ở âm tiết đầu giống Action. Đáp án B vì Fantasy có âm tiết nhấn /fæn/ khác với /æk/ của Action."
+  },
+  {
+    q:"Question 5. Chọn từ có âm gạch chân phát âm KHÁC:",
+    opts:["A. Live con<u>cert</u>", "B. Gui<u>tar</u>", "C. Vio<u>lin</u>"],
+    answer:0,
+    explain: "Guitar /ɡɪˈtɑːr/ và Violin /ˌvaɪəˈlɪn/ có âm cuối khác. Live concert /laɪv ˈkɒn.sət/ – âm 'cert' được phát âm /sət/. Guitar kết thúc bằng /ɑːr/, Violin kết thúc bằng /ɪn/. Đáp án A."
+  },
+];
+
+function renderEx4() {
+  document.getElementById('ex4-items').innerHTML = ex4Data.map((d,i)=>`
+    <div class="mcq-item" id="mcq4-${i}">
+      <div class="q-text">${d.q}</div>
+      <div class="mcq-opts">
+        ${d.opts.map((o,j)=>`<button class="mcq-opt" onclick="selectMCQ('ex4','mcq4-${i}',${j},${d.answer},'${d.explain.replace(/'/g,"\\'")}',this)">${o}</button>`).join('')}
+      </div>
+      <div class="mcq-feedback" id="fb4-${i}"></div>
+    </div>
+  `).join('');
+}
+
+function selectMCQ(exId, itemId, chosen, correct, explain, btn) {
+  const item = document.getElementById(itemId);
+  const btns = item.querySelectorAll('.mcq-opt');
+  btns.forEach(b=>{ b.classList.add('disabled'); b.onclick=null; });
+  const fbId = itemId.replace('mcq','fb');
+  const fb = document.getElementById(fbId);
+  if(chosen===correct) {
+    btn.classList.add('correct');
+    fb.className='mcq-feedback show ok';
+    fb.textContent='✅ Chính xác! ' + explain;
+  } else {
+    btn.classList.add('wrong');
+    btns[correct].classList.add('correct');
+    fb.className='mcq-feedback show bad';
+    fb.textContent='❌ Sai! ' + explain;
+  }
+  btn.setAttribute('data-chosen', chosen);
+}
+
+function checkEx4() {
+  const result = document.getElementById('ex4-result');
+  let html='', sc=0;
+  ex4Data.forEach((d,i)=>{
+    const item = document.getElementById(`mcq4-${i}`);
+    const chosen = item.querySelector('.mcq-opt.correct, .mcq-opt.wrong');
+    if(!chosen) { html+=`<div class="result-row bad">❌ Câu ${i+1}: Chưa trả lời. Đáp án: <b>${d.opts[d.answer]}</b></div>`; return; }
+    const ok = chosen.classList.contains('correct');
+    sc += ok?1:0;
+    if(ok) html+=`<div class="result-row ok">✅ Câu ${i+1}: Đúng! <span class="explain">${d.explain}</span></div>`;
+    else html+=`<div class="result-row bad">❌ Câu ${i+1}: Sai. Đáp án đúng: <b>${d.opts[d.answer]}</b> <span class="explain">${d.explain}</span></div>`;
+  });
+  result.innerHTML = `<b>Kết quả: ${sc}/${ex4Data.length}</b>` + html;
+  result.className='ex-result show';
+}
+
+function resetEx4() {
+  renderEx4();
+  document.getElementById('ex4-result').className='ex-result';
+}
+
+// ===================== EX5: LISTENING =====================
+const ex5Data = [
+  { label:"Question 1", answer:"cinema" },
+  { label:"Question 2", answer:"scene" },
+  { label:"Question 3", answer:"catchy" },
+  { label:"Question 4", answer:"live concert" },
+  { label:"Question 5", answer:"actress" },
+  { label:"Question 6", answer:"horror" },
+  { label:"Question 7", answer:"music lover" },
+  { label:"Question 8", answer:"singer" },
+  { label:"Question 9", answer:"plot" },
+  { label:"Question 10", answer:"special effect" },
+];
+
+function renderEx5() {
+  document.getElementById('ex5-items').innerHTML = ex5Data.map((d,i)=>`
+    <li class="listen-item">
+      <label>${d.label}:</label>
+      <input type="text" id="ex5-${i}" placeholder="Điền từ..." autocomplete="off">
+    </li>
+  `).join('');
+}
+
+function checkEx5() {
+  const result = document.getElementById('ex5-result');
+  let html='', sc=0;
+  ex5Data.forEach((d,i)=>{
+    const inp = document.getElementById(`ex5-${i}`);
+    const ok = inp.value.trim().toLowerCase() === d.answer.toLowerCase();
+    inp.className = ok?'correct':'wrong';
+    sc += ok?1:0;
+    if(ok) html+=`<div class="result-row ok">✅ ${d.label}: <b>${d.answer}</b> – Đúng!</div>`;
+    else html+=`<div class="result-row bad">❌ ${d.label}: Bạn viết "<b>${inp.value||'(trống)'}</b>" – Đáp án: <b>${d.answer}</b></div>`;
+  });
+  result.innerHTML = `<b>Kết quả: ${sc}/${ex5Data.length}</b>` + html;
+  result.className='ex-result show';
+}
+
+function resetEx5() {
+  ex5Data.forEach((_,i)=>{ const inp=document.getElementById(`ex5-${i}`); inp.value=''; inp.className=''; });
+  document.getElementById('ex5-result').className='ex-result';
+}
+
+// ===================== EX6: MCQ FILL =====================
+const ex6Data = [
+  {
+    q:"1. I love my _____ because I can take it with me everywhere.",
+    hint:"Chú ý: 'can take it with me everywhere' (có thể mang theo khắp mọi nơi)",
+    opts:["A. guitar","B. plot","C. piano"],
+    answer:0,
+    explain:"Guitar là nhạc cụ nhỏ, dễ mang theo. Plot = cốt truyện, Piano = đàn to không thể mang đi được.",
+    vi:"Tôi yêu cây đàn guitar của mình vì tôi có thể mang nó đi khắp mọi nơi."
+  },
+  {
+    q:"2. My friend can't watch _____ movies because they are too scary.",
+    hint:"Chú ý: 'they are too scary' (chúng quá đáng sợ)",
+    opts:["A. fantasy","B. comedy","C. horror"],
+    answer:2,
+    explain:"Horror = phim kinh dị (scary/đáng sợ). Fantasy = giả tưởng, Comedy = hài không liên quan đến 'scary'.",
+    vi:"Bạn tôi không thể xem phim kinh dị vì chúng quá đáng sợ."
+  },
+  {
+    q:"3. The movie's _____ are amazing; the monsters look so realistic!",
+    hint:"Chú ý: 'the monsters look so realistic' (những con quái vật trông rất thực tế!)",
+    opts:["A. talented","B. music lover","C. special effects"],
+    answer:2,
+    explain:"Special effects = hiệu ứng đặc biệt tạo ra hình ảnh quái vật trông thực tế. Talented = tài năng, music lover = người yêu âm nhạc không phù hợp.",
+    vi:"Hiệu ứng đặc biệt của bộ phim thật tuyệt vời; những con quái vật trông rất thực tế!"
+  },
+  {
+    q:"4. I am _____ Adele because she is a good singer.",
+    hint:"Chú ý: 'she is a good singer' (cô ấy là một ca sĩ giỏi)",
+    opts:["A. a big fan of","B. music lover","C. live concert"],
+    answer:0,
+    explain:"'A big fan of' = fan hâm mộ lớn của ai đó. Music lover = người yêu âm nhạc nói chung, không dùng với 'of + tên người'.",
+    vi:"Tôi là một fan hâm mộ lớn của Adele vì cô ấy là một ca sĩ giỏi."
+  },
+  {
+    q:"5. Do you want to go to the _____ to watch the new Marvel movie tonight?",
+    hint:"Chú ý: 'go to the _____ to watch movie' (đi đến _____ để xem phim)",
+    opts:["A. cinema","B. special effect","C. violin"],
+    answer:0,
+    explain:"Cinema = rạp chiếu phim, nơi xem phim. Special effect và violin không phải nơi chốn.",
+    vi:"Bạn có muốn đến rạp chiếu phim để xem bộ phim mới của Marvel tối nay không?"
+  },
+];
+
+function renderEx6() {
+  document.getElementById('ex6-items').innerHTML = ex6Data.map((d,i)=>`
+    <div class="mcq-item" id="mcq6-${i}">
+      <div class="q-text">${d.q}</div>
+      <div class="hint-text">💡 ${d.hint}</div>
+      <div class="mcq-opts">
+        ${d.opts.map((o,j)=>`<button class="mcq-opt" onclick="selectMCQ6(${i},${j},this)">${o}</button>`).join('')}
+      </div>
+      <div class="mcq-feedback" id="fb6-${i}"></div>
+    </div>
+  `).join('');
+}
+
+function selectMCQ6(qi, chosen, btn) {
+  const d = ex6Data[qi];
+  const item = document.getElementById(`mcq6-${qi}`);
+  const btns = item.querySelectorAll('.mcq-opt');
+  btns.forEach(b=>{ b.classList.remove('selected'); b.classList.add('disabled'); b.onclick=null; });
+  const fb = document.getElementById(`fb6-${qi}`);
+  if(chosen===d.answer) {
+    btn.classList.add('correct');
+    fb.className='mcq-feedback show ok';
+    fb.innerHTML=`✅ Đúng! ${d.vi}<br><small>${d.explain}</small>`;
+  } else {
+    btn.classList.add('wrong');
+    btns[d.answer].classList.add('correct');
+    fb.className='mcq-feedback show bad';
+    fb.innerHTML=`❌ Sai! Đáp án đúng: <b>${d.opts[d.answer]}</b> – ${d.vi}<br><small>${d.explain}</small>`;
+  }
+}
+
+function checkEx6() {
+  const result = document.getElementById('ex6-result');
+  let html='', sc=0;
+  ex6Data.forEach((d,i)=>{
+    const item = document.getElementById(`mcq6-${i}`);
+    const correctBtn = item.querySelector('.mcq-opt.correct');
+    const wrongBtn = item.querySelector('.mcq-opt.wrong');
+    if(!correctBtn && !wrongBtn) { html+=`<div class="result-row bad">❌ Câu ${i+1}: Chưa trả lời.</div>`; return; }
+    const ok = !!correctBtn && !wrongBtn;
+    sc += ok?1:0;
+    if(ok) html+=`<div class="result-row ok">✅ Câu ${i+1}: Đúng! <span class="explain">${d.explain}</span></div>`;
+    else html+=`<div class="result-row bad">❌ Câu ${i+1}: Sai. Đáp án: <b>${d.opts[d.answer]}</b> <span class="explain">${d.explain}</span></div>`;
+  });
+  result.innerHTML=`<b>Kết quả: ${sc}/${ex6Data.length}</b>`+html;
+  result.className='ex-result show';
+}
+
+function resetEx6() { renderEx6(); document.getElementById('ex6-result').className='ex-result'; }
+
+// ===================== EX7: READING FILL =====================
+const ex7Answers = ["comedy","romance","plot","scenes","cinema","music lovers","live concert","talented"];
+const ex7Explain = [
+  "comedy = phim hài vì 'I can laugh a lot'",
+  "romance = phim lãng mạn vì The Notebook là phim tình cảm",
+  "plot = cốt truyện vì 'the ___ is about a poor boy...'",
+  "scenes = cảnh phim vì 'were shot in Shanghai and Scotland'",
+  "cinema = rạp chiếu phim vì 'near my house to watch film'",
+  "music lovers = người yêu âm nhạc vì 'all ___ like his music'",
+  "live concert = buổi diễn trực tiếp vì 'I got to see him'",
+  "talented = tài năng vì 'she can play guitar very well while singing'",
+];
+
+function renderEx7() {
+  let html = '';
+  for(let i=0;i<8;i++) {
+    html += `
+      <div class="anagram-item">
+        <label><b>(${i+1})</b> Điền từ số ${i+1}:</label>
+        <input type="text" id="ex7-${i}" placeholder="Nhập từ..." autocomplete="off">
+      </div>`;
+  }
+  document.getElementById('ex7-inputs').innerHTML = html;
+}
+
+function checkEx7() {
+  const result = document.getElementById('ex7-result');
+  let html='', sc=0;
+  ex7Answers.forEach((ans,i)=>{
+    const inp = document.getElementById(`ex7-${i}`);
+    const ok = inp.value.trim().toLowerCase()===ans.toLowerCase();
+    inp.className=ok?'correct':'wrong';
+    sc+=ok?1:0;
+    if(ok) html+=`<div class="result-row ok">✅ (${i+1}): <b>${ans}</b> – Đúng! <span class="explain">${ex7Explain[i]}</span></div>`;
+    else html+=`<div class="result-row bad">❌ (${i+1}): Bạn viết "<b>${inp.value||'(trống)'}</b>" – Đáp án: <b>${ans}</b> <span class="explain">${ex7Explain[i]}</span></div>`;
+  });
+  result.innerHTML=`<b>Kết quả: ${sc}/${ex7Answers.length}</b>`+html;
+  result.className='ex-result show';
+}
+
+function resetEx7() {
+  ex7Answers.forEach((_,i)=>{ const inp=document.getElementById(`ex7-${i}`); inp.value=''; inp.className=''; });
+  document.getElementById('ex7-result').className='ex-result';
+}
+
+// ===================== CHECK ALL / RESET ALL =====================
+function checkAll() {
+  checkEx1(); checkEx2(); checkEx3(); checkEx4(); checkEx5(); checkEx6(); checkEx7();
+
+  // tally scores
+  const scores = [];
+  function getScore(resultId, total) {
+    const el = document.getElementById(resultId);
+    const rows = el.querySelectorAll('.result-row');
+    let ok=0;
+    rows.forEach(r=>{ if(r.classList.contains('ok')) ok++; });
+    return {ok, total};
+  }
+  const s1=getScore('ex1-result',ex1Data.length);
+  const s2=getScore('ex2-result',ex2Data.length);
+  const s3=getScore('ex3-result',ex3Data.length);
+  const s4=getScore('ex4-result',ex4Data.length);
+  const s5=getScore('ex5-result',ex5Data.length);
+  const s6=getScore('ex6-result',ex6Data.length);
+  const s7=getScore('ex7-result',ex7Answers.length);
+
+  const totalOk = s1.ok+s2.ok+s3.ok+s4.ok+s5.ok+s6.ok+s7.ok;
+  const totalAll = s1.total+s2.total+s3.total+s4.total+s5.total+s6.total+s7.total;
+  const pct = Math.round(totalOk/totalAll*100);
+
+  document.getElementById('bigScore').innerHTML = `${totalOk} <span>/ ${totalAll} câu</span>`;
+  document.getElementById('percentFill').style.width = pct+'%';
+
+  let comment='';
+  if(pct>=90) comment='🌟 Xuất sắc! Bạn nắm vững toàn bộ từ vựng!';
+  else if(pct>=70) comment='👍 Tốt lắm! Hãy ôn lại những câu sai nhé!';
+  else if(pct>=50) comment='📖 Cần cố gắng hơn! Ôn lại Tab Học Từ Mới nhé!';
+  else comment='💪 Đừng nản! Xem lại danh sách từ và thử lại!';
+  document.getElementById('summaryComment').textContent = `${pct}% chính xác · ${comment}`;
+
+  document.getElementById('summaryDetail').innerHTML = `
+    <b>Chi tiết từng bài:</b><br><br>
+    ${[
+      ['Bài 1 – Sắp xếp chữ cái', s1],
+      ['Bài 2 – Nối hình với từ', s2],
+      ['Bài 3 – Phân loại từ vựng', s3],
+      ['Bài 4 – Phát âm', s4],
+      ['Bài 5 – Nghe điền từ', s5],
+      ['Bài 6 – Trắc nghiệm điền từ', s6],
+      ['Bài 7 – Đọc hiểu điền từ', s7],
+    ].map(([name,s])=>`
+      <div class="${s.ok===s.total?'result-row ok':'result-row bad'}">
+        ${s.ok===s.total?'✅':'⚠️'} ${name}: ${s.ok}/${s.total}
+        <div style="width:100%;background:#e5e7eb;height:8px;border-radius:10px;margin-top:4px">
+          <div style="width:${Math.round(s.ok/s.total*100)}%;background:${s.ok===s.total?'var(--green)':'var(--yellow)'};height:8px;border-radius:10px"></div>
+        </div>
+      </div>
+    `).join('')}
+  `;
+
+  document.getElementById('summaryResult').style.display='block';
+  document.getElementById('summaryResult').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function resetAll() {
+  resetEx1(); resetEx2(); resetEx3(); resetEx4(); resetEx5(); resetEx6(); resetEx7();
+  document.getElementById('summaryResult').style.display='none';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ===================== TAB SWITCH =====================
+function showTab(tab) {
+  document.querySelectorAll('.tab-content').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el=>el.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ===================== INIT =====================
+renderVocab();
+renderEx1();
+renderEx2();
+renderEx3();
+renderEx4();
+renderEx5();
+renderEx6();
+renderEx7();
+</script>
+</body>
+</html>
