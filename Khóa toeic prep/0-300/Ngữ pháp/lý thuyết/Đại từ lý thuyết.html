@@ -1,0 +1,1992 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Học Tiếng Anh — Đại từ & Sở hữu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-soft: #f7f9fc;
+    --bg-soft-2: #eef3fb;
+    --ink: #0b1320;
+    --ink-soft: #45506b;
+    --ink-mute: #7a8499;
+    --line: #e3e9f3;
+    --line-soft: #eef2f8;
+    --blue: #1f5cff;
+    --blue-deep: #0a3ec2;
+    --blue-soft: #e8efff;
+    --blue-tint: #f3f6ff;
+    --green: #10894a;
+    --green-soft: #e7f6ee;
+    --red: #c8351b;
+    --red-soft: #fdecea;
+    --amber: #c47a08;
+    --amber-soft: #fff5e0;
+    --shadow-sm: 0 1px 2px rgba(11,19,32,.04), 0 1px 1px rgba(11,19,32,.03);
+    --shadow-md: 0 6px 24px -8px rgba(11,19,32,.1), 0 2px 6px rgba(11,19,32,.04);
+    --shadow-lg: 0 30px 60px -25px rgba(11,19,32,.18), 0 10px 25px -10px rgba(11,19,32,.06);
+    --radius: 14px;
+    --radius-lg: 22px;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.6;
+    font-size: 15.5px;
+    -webkit-font-smoothing: antialiased;
+    background-image:
+      radial-gradient(1100px 500px at 90% -20%, rgba(31,92,255,.06), transparent 60%),
+      radial-gradient(900px 400px at -10% 110%, rgba(31,92,255,.04), transparent 60%);
+    min-height: 100vh;
+  }
+
+  .display { font-family: 'Fraunces', Georgia, serif; letter-spacing: -0.01em; }
+
+  /* Header */
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(255,255,255,.85);
+    backdrop-filter: saturate(160%) blur(14px);
+    -webkit-backdrop-filter: saturate(160%) blur(14px);
+    border-bottom: 1px solid var(--line);
+  }
+  .header-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 16px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .brand-mark {
+    width: 38px; height: 38px;
+    border-radius: 11px;
+    background: linear-gradient(135deg, var(--blue) 0%, var(--blue-deep) 100%);
+    display: grid; place-items: center;
+    color: #fff;
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 19px;
+    box-shadow: 0 6px 18px -6px rgba(31,92,255,.55);
+  }
+  .brand-text h1 {
+    margin: 0;
+    font-family: 'Fraunces', serif;
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .brand-text p {
+    margin: 0;
+    font-size: 12px;
+    color: var(--ink-mute);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+
+  .tabs {
+    display: inline-flex;
+    background: var(--bg-soft);
+    padding: 4px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+  }
+  .tab-btn {
+    border: 0;
+    background: transparent;
+    padding: 9px 20px;
+    border-radius: 999px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: all .2s ease;
+    white-space: nowrap;
+  }
+  .tab-btn:hover { color: var(--ink); }
+  .tab-btn.active {
+    background: #fff;
+    color: var(--blue);
+    box-shadow: var(--shadow-sm);
+    font-weight: 600;
+  }
+
+  /* Layout */
+  main { max-width: 1180px; margin: 0 auto; padding: 40px 28px 80px; }
+
+  .panel { display: none; }
+  .panel.active { display: block; animation: fadeUp .4s ease both; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Hero */
+  .hero { margin-bottom: 36px; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 600;
+    color: var(--blue);
+    background: var(--blue-soft);
+    padding: 6px 12px;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .hero-eyebrow::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--blue);
+  }
+  .hero h2 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(30px, 4vw, 44px);
+    line-height: 1.1;
+    margin: 16px 0 12px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  .hero h2 em { font-style: italic; color: var(--blue); }
+  .hero p {
+    color: var(--ink-soft);
+    max-width: 640px;
+    font-size: 16px;
+  }
+
+  /* THEORY ============================================ */
+  .theory-grid {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 36px;
+    align-items: start;
+  }
+  @media (max-width: 880px) {
+    .theory-grid { grid-template-columns: 1fr; }
+    .toc { position: static !important; }
+  }
+
+  .toc {
+    position: sticky;
+    top: 96px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 18px;
+  }
+  .toc h3 {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-mute);
+    margin: 0 0 14px;
+    font-weight: 600;
+  }
+  .toc ul { list-style: none; margin: 0; padding: 0; }
+  .toc li { margin: 0; }
+  .toc a {
+    display: block;
+    padding: 8px 12px;
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-size: 14px;
+    border-radius: 8px;
+    border-left: 2px solid transparent;
+    margin-bottom: 2px;
+    transition: all .15s ease;
+  }
+  .toc a:hover { background: var(--bg-soft); color: var(--ink); }
+  .toc a.active {
+    background: var(--blue-tint);
+    color: var(--blue);
+    border-left-color: var(--blue);
+    font-weight: 500;
+  }
+
+  .lesson {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 36px 40px;
+    margin-bottom: 26px;
+    box-shadow: var(--shadow-sm);
+  }
+  @media (max-width: 600px) { .lesson { padding: 24px 22px; } }
+
+  .lesson-num {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--blue);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+  }
+  .lesson-num span {
+    display: grid; place-items: center;
+    width: 24px; height: 24px;
+    background: var(--blue);
+    color: #fff;
+    border-radius: 7px;
+    font-family: 'Fraunces', serif;
+    font-size: 13px;
+  }
+  .lesson h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    margin: 0 0 6px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .lesson .subtitle {
+    color: var(--ink-mute);
+    font-size: 14px;
+    margin: 0 0 24px;
+  }
+
+  .lesson h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 19px;
+    margin: 28px 0 10px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .lesson p { color: var(--ink-soft); margin: 0 0 12px; }
+  .lesson strong { color: var(--ink); font-weight: 600; }
+
+  .rule-list {
+    list-style: none;
+    padding: 0; margin: 12px 0;
+  }
+  .rule-list li {
+    position: relative;
+    padding: 10px 0 10px 28px;
+    color: var(--ink-soft);
+    border-bottom: 1px dashed var(--line-soft);
+  }
+  .rule-list li:last-child { border-bottom: 0; }
+  .rule-list li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 19px;
+    width: 14px; height: 2px;
+    background: var(--blue);
+  }
+
+  /* Pretty table */
+  .tbl-wrap {
+    overflow-x: auto;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    margin: 16px 0;
+  }
+  table.grammar {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14.5px;
+    min-width: 540px;
+  }
+  table.grammar thead th {
+    background: var(--bg-soft);
+    color: var(--ink);
+    font-weight: 600;
+    text-align: left;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--line);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  table.grammar tbody td {
+    padding: 13px 18px;
+    border-bottom: 1px solid var(--line-soft);
+    color: var(--ink-soft);
+  }
+  table.grammar tbody tr:last-child td { border-bottom: 0; }
+  table.grammar tbody tr:hover { background: var(--blue-tint); }
+  table.grammar td:first-child { font-weight: 600; color: var(--ink); }
+  table.grammar .en { font-family: 'Fraunces', serif; font-style: italic; color: var(--blue); font-weight: 500; }
+
+  .callout {
+    background: var(--blue-tint);
+    border-left: 3px solid var(--blue);
+    padding: 14px 18px;
+    border-radius: 0 12px 12px 0;
+    margin: 16px 0;
+    font-size: 14.5px;
+  }
+  .callout strong { color: var(--blue-deep); }
+
+  .example-card {
+    background: var(--bg-soft);
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin: 12px 0;
+    border: 1px solid var(--line-soft);
+  }
+  .example-card .ex-en {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    font-style: italic;
+    color: var(--ink);
+    margin: 0 0 6px;
+  }
+  .example-card .ex-en .hl {
+    background: linear-gradient(transparent 60%, rgba(31,92,255,.18) 60%);
+    padding: 0 2px;
+  }
+  .example-card .ex-vi {
+    color: var(--ink-mute);
+    font-size: 14px;
+    margin: 0;
+  }
+
+  /* PRACTICE ============================================ */
+  .practice-setup {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 36px 40px;
+    box-shadow: var(--shadow-sm);
+  }
+  @media (max-width: 600px) { .practice-setup { padding: 24px 22px; } }
+
+  .setup-section { margin-bottom: 28px; }
+  .setup-section:last-child { margin-bottom: 0; }
+  .setup-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--ink-mute);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 12px;
+  }
+
+  .topic-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 12px;
+  }
+  .topic-card {
+    position: relative;
+    background: #fff;
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    cursor: pointer;
+    transition: all .18s ease;
+    user-select: none;
+  }
+  .topic-card:hover { border-color: var(--blue); transform: translateY(-1px); }
+  .topic-card input { position: absolute; opacity: 0; pointer-events: none; }
+  .topic-card .check {
+    position: absolute;
+    top: 14px; right: 14px;
+    width: 22px; height: 22px;
+    border: 1.5px solid var(--line);
+    border-radius: 7px;
+    display: grid; place-items: center;
+    transition: all .18s ease;
+    background: #fff;
+  }
+  .topic-card .check svg { opacity: 0; transform: scale(.5); transition: all .18s ease; }
+  .topic-card.checked { border-color: var(--blue); background: var(--blue-tint); box-shadow: 0 4px 12px -4px rgba(31,92,255,.18); }
+  .topic-card.checked .check { background: var(--blue); border-color: var(--blue); }
+  .topic-card.checked .check svg { opacity: 1; transform: scale(1); }
+  .topic-card h5 {
+    margin: 0 0 4px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+    padding-right: 30px;
+  }
+  .topic-card p {
+    margin: 0;
+    font-size: 13px;
+    color: var(--ink-mute);
+  }
+
+  .input-row {
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .num-input {
+    width: 110px;
+    padding: 12px 16px;
+    border: 1.5px solid var(--line);
+    border-radius: 12px;
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--ink);
+    text-align: center;
+    transition: border-color .15s ease;
+    -moz-appearance: textfield;
+  }
+  .num-input::-webkit-outer-spin-button, .num-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  .num-input:focus { outline: none; border-color: var(--blue); }
+
+  .quick-pills { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .pill {
+    padding: 10px 16px;
+    background: var(--bg-soft);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    cursor: pointer;
+    font-family: inherit;
+    transition: all .15s ease;
+  }
+  .pill:hover { background: var(--blue-tint); color: var(--blue); border-color: var(--blue); }
+  .pill.active { background: var(--blue); color: #fff; border-color: var(--blue); }
+
+  .btn-primary {
+    background: var(--blue);
+    color: #fff;
+    border: 0;
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 8px 20px -8px rgba(31,92,255,.5);
+    transition: all .18s ease;
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .btn-primary:hover { background: var(--blue-deep); transform: translateY(-1px); box-shadow: 0 12px 24px -10px rgba(31,92,255,.6); }
+  .btn-primary:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+  .btn-primary svg { width: 16px; height: 16px; }
+
+  .btn-secondary {
+    background: #fff;
+    color: var(--ink-soft);
+    border: 1px solid var(--line);
+    padding: 12px 22px;
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all .15s ease;
+  }
+  .btn-secondary:hover { border-color: var(--blue); color: var(--blue); }
+
+  /* Quiz */
+  .quiz-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .quiz-progress {
+    flex: 1;
+    min-width: 220px;
+  }
+  .progress-meta {
+    display: flex; justify-content: space-between;
+    font-size: 13px;
+    color: var(--ink-mute);
+    margin-bottom: 6px;
+  }
+  .progress-bar {
+    height: 6px;
+    background: var(--bg-soft);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--blue), var(--blue-deep));
+    transition: width .4s ease;
+    border-radius: 999px;
+  }
+
+  .question-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 32px 36px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow-sm);
+    transition: all .25s ease;
+  }
+  @media (max-width: 600px) { .question-card { padding: 22px; } }
+
+  .q-num {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px;
+    color: var(--ink-mute);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+  }
+  .q-num .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--blue); }
+
+  .q-prompt {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--ink);
+    margin: 0 0 22px;
+    line-height: 1.45;
+  }
+  .q-prompt .blank {
+    display: inline-block;
+    min-width: 80px;
+    border-bottom: 2px solid var(--blue);
+    margin: 0 4px;
+    padding: 0 8px;
+    font-style: normal;
+  }
+  .q-prompt .blank.filled { color: var(--blue); font-weight: 600; }
+
+  .options { display: grid; gap: 10px; }
+  .option {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    border: 1.5px solid var(--line);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all .15s ease;
+    background: #fff;
+    font-size: 15px;
+    color: var(--ink);
+  }
+  .option:hover:not(.disabled) { border-color: var(--blue); background: var(--blue-tint); }
+  .option .letter {
+    width: 28px; height: 28px;
+    border-radius: 8px;
+    background: var(--bg-soft);
+    display: grid; place-items: center;
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    color: var(--ink-soft);
+    font-size: 14px;
+    flex-shrink: 0;
+    transition: all .15s ease;
+  }
+  .option.selected { border-color: var(--blue); background: var(--blue-tint); }
+  .option.selected .letter { background: var(--blue); color: #fff; }
+  .option.disabled { cursor: default; }
+  .option.correct {
+    border-color: var(--green);
+    background: var(--green-soft);
+  }
+  .option.correct .letter { background: var(--green); color: #fff; }
+  .option.wrong {
+    border-color: var(--red);
+    background: var(--red-soft);
+  }
+  .option.wrong .letter { background: var(--red); color: #fff; }
+  .option .text { flex: 1; }
+  .option .mark { margin-left: auto; flex-shrink: 0; }
+
+  .explain {
+    margin-top: 18px;
+    padding: 18px 20px;
+    border-radius: 14px;
+    border: 1px solid;
+    animation: fadeUp .3s ease both;
+  }
+  .explain.right { background: var(--green-soft); border-color: rgba(16,137,74,.25); }
+  .explain.wrong { background: var(--amber-soft); border-color: rgba(196,122,8,.25); }
+  .explain h6 {
+    margin: 0 0 8px;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .explain.right h6 { color: var(--green); }
+  .explain.wrong h6 { color: var(--amber); }
+  .explain p { margin: 0 0 8px; color: var(--ink); font-size: 14.5px; line-height: 1.6; }
+  .explain p:last-child { margin-bottom: 0; }
+  .explain .why-line {
+    display: flex; gap: 8px; margin-bottom: 6px;
+  }
+  .explain .why-line strong { min-width: 92px; flex-shrink: 0; color: var(--ink); font-size: 13px; }
+
+  .quiz-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-top: 28px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+  }
+
+  /* Result screen */
+  .result-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    padding: 48px 40px;
+    text-align: center;
+    box-shadow: var(--shadow-md);
+    margin-bottom: 24px;
+    background-image: radial-gradient(800px 300px at 50% -20%, rgba(31,92,255,.08), transparent 60%);
+  }
+  .score-ring {
+    width: 140px; height: 140px;
+    margin: 0 auto 20px;
+    position: relative;
+  }
+  .score-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+  .score-ring .track { fill: none; stroke: var(--bg-soft-2); stroke-width: 10; }
+  .score-ring .bar {
+    fill: none; stroke: var(--blue); stroke-width: 10; stroke-linecap: round;
+    transition: stroke-dashoffset 1s ease;
+  }
+  .score-num {
+    position: absolute; inset: 0;
+    display: grid; place-items: center;
+    font-family: 'Fraunces', serif;
+    font-size: 38px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .score-num small { font-size: 16px; color: var(--ink-mute); font-weight: 400; }
+  .result-card h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 28px;
+    margin: 0 0 8px;
+    font-weight: 600;
+  }
+  .result-card p { color: var(--ink-soft); margin: 0 0 24px; }
+  .result-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    max-width: 460px;
+    margin: 24px auto;
+  }
+  .stat {
+    background: var(--bg-soft);
+    border-radius: 12px;
+    padding: 14px 10px;
+  }
+  .stat .num {
+    font-family: 'Fraunces', serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--ink);
+    display: block;
+  }
+  .stat.green .num { color: var(--green); }
+  .stat.red .num { color: var(--red); }
+  .stat .lbl {
+    font-size: 12px;
+    color: var(--ink-mute);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .review-list { margin-top: 28px; }
+  .review-list h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    margin: 0 0 14px;
+    font-weight: 600;
+  }
+
+  /* utility */
+  .hidden { display: none !important; }
+  .center-row { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+
+  /* Empty/error */
+  .toast {
+    background: var(--red-soft);
+    color: var(--red);
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 13.5px;
+    margin-top: 12px;
+    border: 1px solid rgba(200,53,27,.18);
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <div class="brand">
+      <div class="brand-mark">EN</div>
+      <div class="brand-text">
+        <h1>Pronouns Studio</h1>
+        <p>Đại từ · Sở hữu · Phản thân</p>
+      </div>
+    </div>
+    <div class="tabs" role="tablist">
+      <button class="tab-btn active" data-tab="theory">Lý thuyết</button>
+      <button class="tab-btn" data-tab="practice">Luyện tập</button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ THEORY ============ -->
+  <section class="panel active" id="panel-theory">
+    <div class="hero">
+      <span class="hero-eyebrow">Grammar Foundations</span>
+      <h2>Hệ thống <em>đại từ</em> trong tiếng Anh</h2>
+      <p>Ba nhóm kiến thức nền tảng: đại từ nhân xưng (chủ ngữ &amp; tân ngữ), tính từ — đại từ sở hữu, và đại từ phản thân. Học chậm, hiểu chắc, nhớ lâu.</p>
+    </div>
+
+    <div class="theory-grid">
+      <aside class="toc">
+        <h3>Mục lục</h3>
+        <ul>
+          <li><a href="#l1" class="active">1. Đại từ nhân xưng</a></li>
+          <li><a href="#l2">2. Sở hữu</a></li>
+          <li><a href="#l3">3. Đại từ phản thân</a></li>
+        </ul>
+      </aside>
+
+      <div>
+        <!-- LESSON 1 -->
+        <article class="lesson" id="l1">
+          <div class="lesson-num"><span>1</span> Personal Pronouns</div>
+          <h3>Đại từ nhân xưng</h3>
+          <p class="subtitle">Đại từ thay thế cho người, vật được nhắc đến — đóng vai trò chủ ngữ hoặc tân ngữ trong câu.</p>
+
+          <h4>1.1. Đại từ làm chủ ngữ (Subject Pronouns)</h4>
+          <p>Đứng trước động từ, thực hiện hành động.</p>
+          <ul class="rule-list">
+            <li><strong>Ngôi thứ nhất:</strong> <em>I</em> (số ít) · <em>We</em> (số nhiều) — người nói</li>
+            <li><strong>Ngôi thứ hai:</strong> <em>You</em> (cả số ít lẫn số nhiều) — người nghe</li>
+            <li><strong>Ngôi thứ ba:</strong> <em>He, She, It</em> (số ít) · <em>They</em> (số nhiều) — người/vật được nhắc đến</li>
+          </ul>
+
+          <h4>1.2. Đại từ làm tân ngữ (Object Pronouns)</h4>
+          <p>Đứng sau động từ hoặc giới từ, là đối tượng nhận hành động.</p>
+
+          <div class="tbl-wrap">
+            <table class="grammar">
+              <thead>
+                <tr>
+                  <th>Ngôi</th>
+                  <th>Số</th>
+                  <th>Chủ ngữ</th>
+                  <th>Tân ngữ</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Thứ nhất</td><td>Số ít</td><td class="en">I</td><td class="en">me</td></tr>
+                <tr><td>Thứ nhất</td><td>Số nhiều</td><td class="en">We</td><td class="en">us</td></tr>
+                <tr><td>Thứ hai</td><td>Cả hai</td><td class="en">You</td><td class="en">you</td></tr>
+                <tr><td>Thứ ba — đực</td><td>Số ít</td><td class="en">He</td><td class="en">him</td></tr>
+                <tr><td>Thứ ba — cái</td><td>Số ít</td><td class="en">She</td><td class="en">her</td></tr>
+                <tr><td>Thứ ba — vật</td><td>Số ít</td><td class="en">It</td><td class="en">it</td></tr>
+                <tr><td>Thứ ba</td><td>Số nhiều</td><td class="en">They</td><td class="en">them</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="example-card">
+            <p class="ex-en"><span class="hl">She</span> loves <span class="hl">him</span>.</p>
+            <p class="ex-vi">Cô ấy yêu anh ấy. → <em>She</em> = chủ ngữ, <em>him</em> = tân ngữ sau động từ <em>loves</em>.</p>
+          </div>
+          <div class="example-card">
+            <p class="ex-en">My parents called <span class="hl">us</span> yesterday.</p>
+            <p class="ex-vi">Bố mẹ tôi đã gọi cho chúng tôi hôm qua. → <em>us</em> là tân ngữ.</p>
+          </div>
+
+          <div class="callout">
+            <strong>Mẹo phân biệt:</strong> Nếu trong câu thiếu chỗ trước động từ → dùng <em>chủ ngữ</em>. Nếu thiếu chỗ sau động từ hoặc sau giới từ (with, for, to, about…) → dùng <em>tân ngữ</em>.
+          </div>
+        </article>
+
+        <!-- LESSON 2 -->
+        <article class="lesson" id="l2">
+          <div class="lesson-num"><span>2</span> Possessive Forms</div>
+          <h3>Tính từ &amp; Đại từ sở hữu</h3>
+          <p class="subtitle">Hai dạng thường bị nhầm — khác nhau ở chỗ một loại đứng <em>trước</em> danh từ, một loại đứng <em>thay cho</em> cả cụm danh từ.</p>
+
+          <h4>Tính từ sở hữu (Possessive Adjectives)</h4>
+          <p>Đúng như tên gọi “tính từ” — <strong>không bao giờ đứng một mình</strong>. Luôn phải đứng <strong>trước một danh từ</strong> để bổ nghĩa cho danh từ đó.</p>
+          <div class="example-card">
+            <p class="ex-en">This is <span class="hl">my</span> book.</p>
+            <p class="ex-vi">Đây là quyển sách của tôi. (<em>my</em> bổ nghĩa cho <em>book</em>)</p>
+          </div>
+
+          <h4>Đại từ sở hữu (Possessive Pronouns)</h4>
+          <p>Được dùng để <strong>thay thế hoàn toàn cho cả cụm “tính từ sở hữu + danh từ”</strong> đã được nhắc đến trước đó. Mục đích: tránh lặp từ, làm câu ngắn gọn hơn.</p>
+          <div class="example-card">
+            <p class="ex-en">This book is <span class="hl">mine</span>. <span style="color:var(--ink-mute); font-style:normal;">(= my book)</span></p>
+            <p class="ex-vi">Quyển sách này là của tôi. → không cần lặp lại từ <em>book</em>.</p>
+          </div>
+
+          <div class="tbl-wrap">
+            <table class="grammar">
+              <thead>
+                <tr>
+                  <th>Đại từ nhân xưng</th>
+                  <th>Tính từ sở hữu</th>
+                  <th>Đại từ sở hữu</th>
+                  <th>Nghĩa</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td class="en">I</td><td class="en">My</td><td class="en">Mine</td><td>Của tôi</td></tr>
+                <tr><td class="en">You</td><td class="en">Your</td><td class="en">Yours</td><td>Của bạn / các bạn</td></tr>
+                <tr><td class="en">We</td><td class="en">Our</td><td class="en">Ours</td><td>Của chúng tôi</td></tr>
+                <tr><td class="en">They</td><td class="en">Their</td><td class="en">Theirs</td><td>Của họ</td></tr>
+                <tr><td class="en">He</td><td class="en">His</td><td class="en">His</td><td>Của anh ấy</td></tr>
+                <tr><td class="en">She</td><td class="en">Her</td><td class="en">Hers</td><td>Của cô ấy</td></tr>
+                <tr><td class="en">It</td><td class="en">Its</td><td class="en">Its</td><td>Của nó</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="callout">
+            <strong>Lưu ý quan trọng:</strong> Riêng <em>He</em> có cả tính từ và đại từ sở hữu đều là <em>His</em>. Đừng nhầm <em>Its</em> (sở hữu) với <em>It's</em> (= it is).
+          </div>
+        </article>
+
+        <!-- LESSON 3 -->
+        <article class="lesson" id="l3">
+          <div class="lesson-num"><span>3</span> Reflexive Pronouns</div>
+          <h3>Đại từ phản thân</h3>
+          <p class="subtitle">Dùng khi chủ ngữ và tân ngữ là cùng một người/vật — “tự … chính mình”.</p>
+
+          <div class="tbl-wrap">
+            <table class="grammar">
+              <thead>
+                <tr>
+                  <th>Đại từ nhân xưng</th>
+                  <th>Đại từ phản thân</th>
+                  <th>Nghĩa</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td class="en">I</td><td class="en">myself</td><td>chính tôi</td></tr>
+                <tr><td class="en">We</td><td class="en">ourselves</td><td>chính chúng tôi</td></tr>
+                <tr><td class="en">You (số ít)</td><td class="en">yourself</td><td>chính bạn</td></tr>
+                <tr><td class="en">You (số nhiều)</td><td class="en">yourselves</td><td>chính các bạn</td></tr>
+                <tr><td class="en">They</td><td class="en">themselves</td><td>chính họ</td></tr>
+                <tr><td class="en">He</td><td class="en">himself</td><td>chính anh ấy</td></tr>
+                <tr><td class="en">She</td><td class="en">herself</td><td>chính cô ấy</td></tr>
+                <tr><td class="en">It</td><td class="en">itself</td><td>chính nó</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h4>Cách dùng</h4>
+          <ul class="rule-list">
+            <li><strong>Làm tân ngữ sau động từ</strong> — khi chủ ngữ tự tác động lên chính mình.</li>
+            <li><strong>Làm tân ngữ sau giới từ</strong> — khi đối tượng giới từ chính là chủ ngữ.</li>
+            <li><strong>By + đại từ phản thân:</strong> tự làm một mình, không có sự giúp đỡ của người khác.</li>
+          </ul>
+
+          <div class="example-card">
+            <p class="ex-en">She taught <span class="hl">herself</span> to play guitar.</p>
+            <p class="ex-vi">Cô ấy tự dạy mình chơi đàn guitar. (tân ngữ sau động từ <em>taught</em>)</p>
+          </div>
+          <div class="example-card">
+            <p class="ex-en">I did it <span class="hl">by myself</span>.</p>
+            <p class="ex-vi">Tôi đã tự làm việc đó một mình. (<em>by + reflexive</em> = một mình, không cần giúp đỡ)</p>
+          </div>
+
+          <div class="callout">
+            <strong>Phân biệt:</strong> <em>“He cut him.”</em> → anh ta cắt một người khác. <em>“He cut himself.”</em> → anh ta tự cắt mình. Cùng động từ, nghĩa hoàn toàn khác.
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PRACTICE ============ -->
+  <section class="panel" id="panel-practice">
+
+    <!-- Setup screen -->
+    <div id="setup-screen">
+      <div class="hero">
+        <span class="hero-eyebrow">Practice Mode</span>
+        <h2>Bắt đầu <em>luyện tập</em></h2>
+        <p>Chọn các chủ đề bạn muốn ôn, nhập số câu hỏi, rồi nhấn “Bắt đầu”. Sau khi nộp bài, hệ thống sẽ giải thích chi tiết tại sao đúng — tại sao sai.</p>
+      </div>
+
+      <div class="practice-setup">
+        <div class="setup-section">
+          <label class="setup-label">1. Chọn chủ đề <span style="color:var(--ink-mute); font-weight:400; text-transform:none; letter-spacing:0;">— có thể chọn nhiều</span></label>
+          <div class="topic-grid" id="topic-grid">
+            <!-- injected -->
+          </div>
+        </div>
+
+        <div class="setup-section">
+          <label class="setup-label">2. Số lượng câu hỏi</label>
+          <div class="input-row" style="margin-bottom:12px;">
+            <input type="number" id="q-count" class="num-input" value="10" min="1" max="50">
+            <div class="quick-pills" id="quick-pills">
+              <button class="pill" data-n="5">5</button>
+              <button class="pill active" data-n="10">10</button>
+              <button class="pill" data-n="15">15</button>
+              <button class="pill" data-n="20">20</button>
+              <button class="pill" data-n="all">Tối đa</button>
+            </div>
+          </div>
+          <p style="font-size:13px; color:var(--ink-mute); margin:0;" id="bank-info"></p>
+        </div>
+
+        <div class="setup-section center-row" style="justify-content:flex-start;">
+          <button class="btn-primary" id="start-btn">
+            Bắt đầu luyện tập
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+
+        <div id="setup-error" class="hidden"></div>
+      </div>
+    </div>
+
+    <!-- Quiz screen -->
+    <div id="quiz-screen" class="hidden">
+      <div class="quiz-header">
+        <div>
+          <span class="hero-eyebrow">Luyện tập</span>
+          <h2 class="display" style="font-size:26px; margin:8px 0 0;" id="quiz-title">Câu hỏi</h2>
+        </div>
+        <div class="quiz-progress">
+          <div class="progress-meta">
+            <span id="progress-text">Câu 1 / 10</span>
+            <span id="answered-text">Đã trả lời: 0</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+        </div>
+      </div>
+
+      <div id="questions-list"><!-- injected --></div>
+
+      <div class="quiz-footer">
+        <button class="btn-secondary" id="cancel-btn">Hủy bỏ</button>
+        <button class="btn-primary" id="submit-btn">
+          Nộp bài &amp; xem giải thích
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Result screen -->
+    <div id="result-screen" class="hidden">
+      <div class="result-card">
+        <div class="score-ring">
+          <svg viewBox="0 0 100 100">
+            <circle class="track" cx="50" cy="50" r="44"/>
+            <circle class="bar" id="score-bar" cx="50" cy="50" r="44" stroke-dasharray="276.46" stroke-dashoffset="276.46"/>
+          </svg>
+          <div class="score-num" id="score-num">0<small>/0</small></div>
+        </div>
+        <h3 id="result-title">Hoàn thành!</h3>
+        <p id="result-msg">Cùng xem lại từng câu để hiểu sâu hơn.</p>
+        <div class="result-stats">
+          <div class="stat green"><span class="num" id="stat-correct">0</span><span class="lbl">Đúng</span></div>
+          <div class="stat red"><span class="num" id="stat-wrong">0</span><span class="lbl">Sai</span></div>
+          <div class="stat"><span class="num" id="stat-percent">0%</span><span class="lbl">Tỉ lệ</span></div>
+        </div>
+        <div class="center-row">
+          <button class="btn-primary" id="retry-btn">Luyện tập tiếp</button>
+          <button class="btn-secondary" id="back-btn">Về trang lý thuyết</button>
+        </div>
+      </div>
+
+      <div class="review-list">
+        <h4>Chi tiết từng câu</h4>
+        <div id="review-questions"></div>
+      </div>
+    </div>
+
+  </section>
+
+</main>
+
+<script>
+/* ============================================================
+   QUESTION BANK — đầy đủ với giải thích chi tiết
+   ============================================================ */
+const TOPICS = [
+  {
+    id: 'subject',
+    title: 'Đại từ làm chủ ngữ',
+    desc: 'I, You, He, She, It, We, They'
+  },
+  {
+    id: 'object',
+    title: 'Đại từ làm tân ngữ',
+    desc: 'me, you, him, her, it, us, them'
+  },
+  {
+    id: 'subj_obj_mix',
+    title: 'Phân biệt chủ ngữ & tân ngữ',
+    desc: 'Chọn dạng đúng theo vị trí trong câu'
+  },
+  {
+    id: 'poss_adj',
+    title: 'Tính từ sở hữu',
+    desc: 'my, your, his, her, its, our, their'
+  },
+  {
+    id: 'poss_pron',
+    title: 'Đại từ sở hữu',
+    desc: 'mine, yours, his, hers, ours, theirs'
+  },
+  {
+    id: 'poss_mix',
+    title: 'Phân biệt 2 loại sở hữu',
+    desc: 'Khi nào dùng my vs mine'
+  },
+  {
+    id: 'reflexive',
+    title: 'Đại từ phản thân',
+    desc: 'myself, yourself, himself, herself…'
+  },
+  {
+    id: 'mixed',
+    title: 'Tổng hợp tất cả',
+    desc: 'Câu hỏi trộn nhiều dạng'
+  },
+];
+
+/* Mỗi question:
+   { topic, prompt (HTML cho phép __ chỗ trống), options[4], answer (index), why: {right, wrong: {0,1,2,3}} }
+   why.right giải thích vì sao đáp án đúng là đúng
+   why.wrong[i] giải thích cho từng lựa chọn sai
+*/
+const BANK = [
+  // --- Subject pronouns ---
+  {
+    topic: 'subject',
+    prompt: '___ am a student.',
+    options: ['Me', 'I', 'My', 'Mine'],
+    answer: 1,
+    why: {
+      right: '“I” là đại từ nhân xưng làm chủ ngữ, ngôi thứ nhất số ít, đứng trước động từ “am”.',
+      wrong: {
+        0: '“Me” là dạng tân ngữ, không thể đứng làm chủ ngữ trước động từ.',
+        2: '“My” là tính từ sở hữu, phải đi kèm danh từ phía sau (my book…).',
+        3: '“Mine” là đại từ sở hữu, dùng để thay thế cụm sở hữu, không làm chủ ngữ.'
+      }
+    }
+  },
+  {
+    topic: 'subject',
+    prompt: '___ are my best friends.',
+    options: ['Them', 'Their', 'They', 'Theirs'],
+    answer: 2,
+    why: {
+      right: '“They” là đại từ nhân xưng số nhiều làm chủ ngữ, hợp với động từ “are”.',
+      wrong: {
+        0: '“Them” là tân ngữ, đứng sau động từ hoặc giới từ.',
+        1: '“Their” là tính từ sở hữu, phải đi với danh từ.',
+        3: '“Theirs” là đại từ sở hữu, không làm chủ ngữ trong câu này.'
+      }
+    }
+  },
+  {
+    topic: 'subject',
+    prompt: '___ is from Vietnam. Her name is Linh.',
+    options: ['He', 'It', 'She', 'They'],
+    answer: 2,
+    why: {
+      right: 'Câu sau dùng “Her name”, cho thấy người được nhắc là phụ nữ → dùng “She”.',
+      wrong: {
+        0: '“He” dùng cho nam giới, không khớp với “Her name”.',
+        1: '“It” dùng cho vật, con vật hoặc trẻ sơ sinh chưa rõ giới — không phù hợp.',
+        3: '“They” là số nhiều, không khớp với động từ “is”.'
+      }
+    }
+  },
+  {
+    topic: 'subject',
+    prompt: 'Where do ___ live now? — In Hanoi.',
+    options: ['us', 'we', 'our', 'ours'],
+    answer: 1,
+    why: {
+      right: 'Trong câu hỏi “Where do ___ live”, vị trí đó là chủ ngữ → dùng “we”.',
+      wrong: {
+        0: '“us” là tân ngữ, không đứng làm chủ ngữ.',
+        2: '“our” là tính từ sở hữu, phải đi kèm danh từ.',
+        3: '“ours” là đại từ sở hữu, không làm chủ ngữ.'
+      }
+    }
+  },
+
+  // --- Object pronouns ---
+  {
+    topic: 'object',
+    prompt: 'Can you help ___ with this exercise?',
+    options: ['I', 'me', 'my', 'mine'],
+    answer: 1,
+    why: {
+      right: 'Sau động từ “help” cần một tân ngữ → dùng “me” (dạng tân ngữ của I).',
+      wrong: {
+        0: '“I” chỉ làm chủ ngữ, không làm tân ngữ.',
+        2: '“my” là tính từ sở hữu, phải đi với danh từ.',
+        3: '“mine” là đại từ sở hữu, không phù hợp ngữ cảnh.'
+      }
+    }
+  },
+  {
+    topic: 'object',
+    prompt: 'I saw ___ at the supermarket yesterday.',
+    options: ['they', 'their', 'theirs', 'them'],
+    answer: 3,
+    why: {
+      right: 'Sau động từ “saw” cần tân ngữ → “them” (dạng tân ngữ của they).',
+      wrong: {
+        0: '“they” là chủ ngữ, không đứng sau động từ.',
+        1: '“their” là tính từ sở hữu, phải đi với danh từ.',
+        2: '“theirs” là đại từ sở hữu, không phù hợp với vị trí tân ngữ trực tiếp ở đây.'
+      }
+    }
+  },
+  {
+    topic: 'object',
+    prompt: 'My mother always cooks dinner for ___.',
+    options: ['we', 'us', 'our', 'ours'],
+    answer: 1,
+    why: {
+      right: 'Sau giới từ “for” cần tân ngữ → “us”.',
+      wrong: {
+        0: '“we” là chủ ngữ, không đứng sau giới từ.',
+        2: '“our” là tính từ sở hữu, phải đi với danh từ (our family…).',
+        3: '“ours” là đại từ sở hữu, không phù hợp ở vị trí tân ngữ của giới từ chỉ người.'
+      }
+    }
+  },
+  {
+    topic: 'object',
+    prompt: 'Look at that boy! Do you know ___?',
+    options: ['he', 'his', 'him', 'himself'],
+    answer: 2,
+    why: {
+      right: 'Sau động từ “know” cần tân ngữ chỉ người → “him”.',
+      wrong: {
+        0: '“he” là chủ ngữ, không đứng sau động từ.',
+        1: '“his” là tính từ/đại từ sở hữu, không phải tân ngữ chỉ người.',
+        3: '“himself” là phản thân, chỉ dùng khi chủ ngữ và tân ngữ là cùng một người. Ở đây chủ ngữ là “you”, không phải boy.'
+      }
+    }
+  },
+  {
+    topic: 'object',
+    prompt: 'She told ___ about the new project.',
+    options: ['I', 'me', 'my', 'myself'],
+    answer: 1,
+    why: {
+      right: 'Sau “told” cần tân ngữ chỉ người nghe → “me”.',
+      wrong: {
+        0: '“I” chỉ làm chủ ngữ.',
+        2: '“my” là tính từ sở hữu, phải đi với danh từ.',
+        3: '“myself” chỉ dùng khi chủ ngữ là “I” (I told myself…). Ở đây chủ ngữ là “She”.'
+      }
+    }
+  },
+
+  // --- subj_obj_mix ---
+  {
+    topic: 'subj_obj_mix',
+    prompt: '___ love ___ very much.',
+    options: ['I / he', 'Me / him', 'I / him', 'My / his'],
+    answer: 2,
+    why: {
+      right: 'Vị trí đầu cần chủ ngữ → “I”. Vị trí sau động từ “love” cần tân ngữ → “him”.',
+      wrong: {
+        0: '“he” là chủ ngữ, không thể làm tân ngữ sau “love”.',
+        1: '“Me” là tân ngữ, không làm chủ ngữ ở đầu câu.',
+        3: '“My” và “his” đều là sở hữu, phải đi với danh từ.'
+      }
+    }
+  },
+  {
+    topic: 'subj_obj_mix',
+    prompt: '___ called ___ last night.',
+    options: ['She / I', 'Her / me', 'She / me', 'She / my'],
+    answer: 2,
+    why: {
+      right: 'Đầu câu cần chủ ngữ → “She”. Sau “called” cần tân ngữ → “me”.',
+      wrong: {
+        0: '“I” là chủ ngữ, không làm tân ngữ.',
+        1: '“Her” là tân ngữ, không làm chủ ngữ ở đầu câu.',
+        3: '“my” là tính từ sở hữu, phải có danh từ phía sau (my brother…).'
+      }
+    }
+  },
+  {
+    topic: 'subj_obj_mix',
+    prompt: 'Between you and ___, this secret must stay safe.',
+    options: ['I', 'me', 'my', 'mine'],
+    answer: 1,
+    why: {
+      right: 'Sau giới từ “between” phải dùng tân ngữ. Đúng là “between you and me”. Đây là lỗi sai phổ biến nhất với người học tiếng Anh.',
+      wrong: {
+        0: 'Nhiều người nhầm dùng “I” cho lịch sự, nhưng sau giới từ phải là tân ngữ → “me”.',
+        2: '“my” là tính từ sở hữu, phải đi với danh từ.',
+        3: '“mine” là đại từ sở hữu, không hợp ngữ cảnh.'
+      }
+    }
+  },
+
+  // --- Possessive Adjectives ---
+  {
+    topic: 'poss_adj',
+    prompt: 'This is ___ new car. Do you like it?',
+    options: ['I', 'me', 'my', 'mine'],
+    answer: 2,
+    why: {
+      right: '“my” là tính từ sở hữu, đứng trước danh từ “car” để bổ nghĩa.',
+      wrong: {
+        0: '“I” chỉ làm chủ ngữ.',
+        1: '“me” là tân ngữ.',
+        3: '“mine” là đại từ sở hữu — đứng một mình thay thế cả cụm, không đứng trước danh từ.'
+      }
+    }
+  },
+  {
+    topic: 'poss_adj',
+    prompt: 'The dog wags ___ tail when it is happy.',
+    options: ['it', 'its', "it's", 'his'],
+    answer: 1,
+    why: {
+      right: '“its” là tính từ sở hữu của “it”, đứng trước danh từ “tail”. Lưu ý KHÔNG có dấu phẩy.',
+      wrong: {
+        0: '“it” là đại từ chủ ngữ/tân ngữ, không phải sở hữu.',
+        2: "“it's” là viết tắt của “it is”, hoàn toàn khác nghĩa.",
+        3: '“his” dùng cho người nam, không tự nhiên cho con vật ở ngữ cảnh trung tính.'
+      }
+    }
+  },
+  {
+    topic: 'poss_adj',
+    prompt: 'Linh and Mai are sisters. ___ parents are doctors.',
+    options: ['Them', 'They', 'Their', 'Theirs'],
+    answer: 2,
+    why: {
+      right: '“Their” là tính từ sở hữu, đứng trước danh từ “parents”.',
+      wrong: {
+        0: '“Them” là tân ngữ.',
+        1: '“They” là chủ ngữ, không đứng trực tiếp trước danh từ.',
+        3: '“Theirs” là đại từ sở hữu — không đứng trước danh từ.'
+      }
+    }
+  },
+  {
+    topic: 'poss_adj',
+    prompt: 'Excuse me, is this ___ umbrella?',
+    options: ['you', 'your', 'yours', 'yourself'],
+    answer: 1,
+    why: {
+      right: '“your” là tính từ sở hữu, đứng trước danh từ “umbrella”.',
+      wrong: {
+        0: '“you” là đại từ nhân xưng, không phải sở hữu.',
+        2: '“yours” là đại từ sở hữu — đứng một mình, không đi với danh từ.',
+        3: '“yourself” là đại từ phản thân, không phải sở hữu.'
+      }
+    }
+  },
+
+  // --- Possessive Pronouns ---
+  {
+    topic: 'poss_pron',
+    prompt: 'This pen isn’t yours, it’s ___.',
+    options: ['my', 'me', 'I', 'mine'],
+    answer: 3,
+    why: {
+      right: '“mine” là đại từ sở hữu, đứng một mình thay thế cho cụm “my pen”.',
+      wrong: {
+        0: '“my” phải đi kèm danh từ (my pen), không đứng cuối câu một mình.',
+        1: '“me” là tân ngữ.',
+        2: '“I” là chủ ngữ.'
+      }
+    }
+  },
+  {
+    topic: 'poss_pron',
+    prompt: 'Your house is bigger than ___.',
+    options: ['our', 'us', 'ours', 'we'],
+    answer: 2,
+    why: {
+      right: 'Sau “than” cần thay cho cụm “our house” → “ours” (đại từ sở hữu).',
+      wrong: {
+        0: '“our” phải đi kèm danh từ (our house), không đứng một mình.',
+        1: '“us” là tân ngữ.',
+        3: '“we” là chủ ngữ.'
+      }
+    }
+  },
+  {
+    topic: 'poss_pron',
+    prompt: 'Whose book is this? — It’s ___.',
+    options: ['her', 'hers', 'she', 'herself'],
+    answer: 1,
+    why: {
+      right: '“hers” là đại từ sở hữu, thay thế cho cụm “her book”, đứng một mình.',
+      wrong: {
+        0: '“her” có thể là tính từ sở hữu (her book) hoặc tân ngữ — không đứng một mình thay cụm sở hữu.',
+        2: '“she” là chủ ngữ.',
+        3: '“herself” là phản thân.'
+      }
+    }
+  },
+  {
+    topic: 'poss_pron',
+    prompt: 'My idea is good, but ___ is even better.',
+    options: ['he', 'his', "he's", 'him'],
+    answer: 1,
+    why: {
+      right: '“his” vừa là tính từ vừa là đại từ sở hữu. Ở đây “his” đứng một mình thay cho “his idea”.',
+      wrong: {
+        0: '“he” là chủ ngữ chỉ người, không thay thế được cụm “his idea”.',
+        2: "“he's” = he is, không phải sở hữu.",
+        3: '“him” là tân ngữ.'
+      }
+    }
+  },
+
+  // --- poss_mix ---
+  {
+    topic: 'poss_mix',
+    prompt: 'That bag is ___. ___ name is on it.',
+    options: ['my / My', 'mine / My', 'mine / Mine', 'my / Mine'],
+    answer: 1,
+    why: {
+      right: 'Chỗ đầu đứng một mình sau “is” → đại từ sở hữu “mine”. Chỗ sau đứng trước danh từ “name” → tính từ sở hữu “My”.',
+      wrong: {
+        0: '“my” không đứng một mình, phải có danh từ phía sau.',
+        2: '“Mine” không đứng trước danh từ “name” được.',
+        3: 'Sai cả hai vị trí: “my” thiếu danh từ ở vế đầu, “Mine” không đi với “name” được.'
+      }
+    }
+  },
+  {
+    topic: 'poss_mix',
+    prompt: 'I lost ___ keys yesterday. Have you seen ___?',
+    options: ['my / them', 'mine / them', 'my / theirs', 'mine / they'],
+    answer: 0,
+    why: {
+      right: '“my” + danh từ “keys”. Sau đó “them” là tân ngữ thay cho “the keys” sau “seen”.',
+      wrong: {
+        1: '“mine” không đứng trước danh từ.',
+        2: '“theirs” chỉ sự sở hữu của người khác, không thay thế cho “the keys” trung tính.',
+        3: '“they” là chủ ngữ, không đứng sau “seen”.'
+      }
+    }
+  },
+  {
+    topic: 'poss_mix',
+    prompt: 'These books are ___. ___ books are over there.',
+    options: ['our / Our', 'ours / Our', 'ours / Ours', 'our / Ours'],
+    answer: 1,
+    why: {
+      right: 'Vị trí đầu sau “are”, không có danh từ phía sau → đại từ sở hữu “ours”. Vị trí sau đứng trước “books” → tính từ sở hữu “Our”.',
+      wrong: {
+        0: '“our” phải có danh từ phía sau ngay.',
+        2: '“Ours” không đứng trước “books” được.',
+        3: 'Sai cả hai vế.'
+      }
+    }
+  },
+
+  // --- Reflexive ---
+  {
+    topic: 'reflexive',
+    prompt: 'She cut ___ while cooking dinner.',
+    options: ['her', 'herself', 'hers', 'she'],
+    answer: 1,
+    why: {
+      right: 'Chủ ngữ và tân ngữ cùng là một người (cô ấy tự cắt mình) → dùng phản thân “herself”.',
+      wrong: {
+        0: '“her” chỉ một người khác, không phải chính cô ấy.',
+        2: '“hers” là đại từ sở hữu.',
+        3: '“she” là chủ ngữ.'
+      }
+    }
+  },
+  {
+    topic: 'reflexive',
+    prompt: 'I made this cake all by ___.',
+    options: ['my', 'me', 'mine', 'myself'],
+    answer: 3,
+    why: {
+      right: 'Cấu trúc “by + đại từ phản thân” = tự làm một mình, không cần ai giúp → “by myself”.',
+      wrong: {
+        0: '“my” phải đi với danh từ.',
+        1: '“by me” chỉ nghĩa “bởi tôi” (chỉ tác giả), không nhấn mạnh “một mình”.',
+        2: '“mine” là đại từ sở hữu, không hợp với “by”.'
+      }
+    }
+  },
+  {
+    topic: 'reflexive',
+    prompt: 'Boys, please behave ___!',
+    options: ['yourself', 'yourselves', 'themselves', 'ourselves'],
+    answer: 1,
+    why: {
+      right: '“Boys” là số nhiều ngôi 2 → dạng phản thân là “yourselves”.',
+      wrong: {
+        0: '“yourself” là số ít — không hợp với “boys” (nhiều người).',
+        2: '“themselves” đi với “they”, nhưng đây đang gọi trực tiếp “Boys” (= you).',
+        3: '“ourselves” đi với “we”, không phải “you”.'
+      }
+    }
+  },
+  {
+    topic: 'reflexive',
+    prompt: 'The cat is washing ___ in the sun.',
+    options: ['it', 'its', 'itself', 'himself'],
+    answer: 2,
+    why: {
+      right: 'Chủ ngữ “the cat” (it) tự rửa chính mình → phản thân “itself”.',
+      wrong: {
+        0: '“it” là đại từ chủ/tân ngữ thông thường, không thể hiện sự phản thân.',
+        1: '“its” là sở hữu, phải đi với danh từ.',
+        3: '“himself” chỉ dùng cho nam giới, không phù hợp cho con vật trung tính ở đây.'
+      }
+    }
+  },
+  {
+    topic: 'reflexive',
+    prompt: 'We should be proud of ___ for finishing the project.',
+    options: ['us', 'our', 'ours', 'ourselves'],
+    answer: 3,
+    why: {
+      right: 'Chủ ngữ “we” và tân ngữ sau “of” cùng chỉ một nhóm → phản thân “ourselves”.',
+      wrong: {
+        0: '“us” chỉ một nhóm khác, không phải chính “we”.',
+        1: '“our” là tính từ sở hữu, phải đi với danh từ.',
+        2: '“ours” là đại từ sở hữu.'
+      }
+    }
+  },
+
+  // --- mixed (advanced / tricky) ---
+  {
+    topic: 'mixed',
+    prompt: '___ and ___ went to the cinema together.',
+    options: ['Me / him', 'I / he', 'He / I', 'I / him'],
+    answer: 2,
+    why: {
+      right: 'Cả hai đều là chủ ngữ của động từ “went” → phải dùng dạng chủ ngữ. Trong tiếng Anh lịch sự, người khác đứng trước → “He and I”.',
+      wrong: {
+        0: '“Me / him” là tân ngữ, không thể làm chủ ngữ.',
+        1: '“I / he” đúng dạng chủ ngữ nhưng không lịch sự — quy ước viết tên người khác trước.',
+        3: '“him” là tân ngữ, không làm chủ ngữ được.'
+      }
+    }
+  },
+  {
+    topic: 'mixed',
+    prompt: 'He gave the gift to my sister and ___.',
+    options: ['I', 'me', 'my', 'mine'],
+    answer: 1,
+    why: {
+      right: 'Sau giới từ “to” và liên từ “and”, vẫn là vị trí tân ngữ → “me”. Mẹo: thử bỏ “my sister and” đi → “He gave the gift to me” → đúng.',
+      wrong: {
+        0: 'Lỗi sai phổ biến do nghĩ “I” lịch sự hơn, nhưng sau giới từ phải dùng tân ngữ.',
+        2: '“my” là tính từ sở hữu, phải đi với danh từ.',
+        3: '“mine” không hợp ngữ cảnh.'
+      }
+    }
+  },
+  {
+    topic: 'mixed',
+    prompt: 'A: Whose laptop is broken? — B: ___.',
+    options: ['My', 'Me', 'Mine', 'I'],
+    answer: 2,
+    why: {
+      right: 'Trả lời ngắn cho câu hỏi “whose” cần đại từ sở hữu đứng một mình → “Mine”.',
+      wrong: {
+        0: '“My” phải đi với danh từ phía sau (My laptop), không đứng một mình.',
+        1: '“Me” là tân ngữ, không trả lời câu hỏi sở hữu.',
+        3: '“I” là chủ ngữ, không trả lời sự sở hữu.'
+      }
+    }
+  },
+  {
+    topic: 'mixed',
+    prompt: 'They live next to ___ in apartment 12B.',
+    options: ['we', 'us', 'our', 'ourselves'],
+    answer: 1,
+    why: {
+      right: 'Sau giới từ “to” cần tân ngữ chỉ một nhóm khác (we) → “us”.',
+      wrong: {
+        0: '“we” là chủ ngữ, không đứng sau giới từ.',
+        2: '“our” phải đi với danh từ.',
+        3: '“ourselves” chỉ dùng khi chủ ngữ chính là nhóm “we” — ở đây chủ ngữ là “they”, không phải.'
+      }
+    }
+  },
+  {
+    topic: 'mixed',
+    prompt: 'My brother taught ___ how to swim when he was a child.',
+    options: ['him', 'his', 'himself', 'he'],
+    answer: 2,
+    why: {
+      right: 'Chủ ngữ “my brother” và tân ngữ là chính anh ấy → phản thân “himself” (anh ấy tự dạy mình).',
+      wrong: {
+        0: '“him” chỉ một người khác, không phải chính “my brother”.',
+        1: '“his” là sở hữu, phải đi với danh từ.',
+        3: '“he” là chủ ngữ, không làm tân ngữ.'
+      }
+    }
+  },
+  {
+    topic: 'mixed',
+    prompt: 'This idea was developed by my team and ___.',
+    options: ['I', 'me', 'myself', 'my'],
+    answer: 1,
+    why: {
+      right: 'Sau giới từ “by” và liên từ “and” phải dùng tân ngữ → “me”. Thử bỏ “my team and”: “…by me” là đúng.',
+      wrong: {
+        0: '“I” không đứng sau giới từ. Đây là lỗi sai phổ biến vì cảm giác lịch sự.',
+        2: '“myself” chỉ dùng được khi chủ ngữ của câu là “I”. Ở đây chủ ngữ là “this idea”.',
+        3: '“my” là tính từ sở hữu, phải đi với danh từ.'
+      }
+    }
+  },
+  {
+    topic: 'mixed',
+    prompt: 'The students enjoyed ___ at the school festival last weekend.',
+    options: ['them', 'they', 'their', 'themselves'],
+    answer: 3,
+    why: {
+      right: 'Cấu trúc “enjoy + reflexive” = vui vẻ. Chủ ngữ “the students” → “themselves”.',
+      wrong: {
+        0: '“them” chỉ một nhóm khác, không phải chính các học sinh đó.',
+        1: '“they” là chủ ngữ.',
+        2: '“their” là sở hữu, phải đi với danh từ.'
+      }
+    }
+  },
+  {
+    topic: 'mixed',
+    prompt: '— Is this ___ phone? — No, ___ is in my bag.',
+    options: ['your / mine', 'yours / my', 'your / my', 'yours / mine'],
+    answer: 0,
+    why: {
+      right: 'Vế đầu đứng trước danh từ “phone” → tính từ sở hữu “your”. Vế sau đứng một mình thay cho “my phone” → đại từ sở hữu “mine”.',
+      wrong: {
+        1: '“yours” không đứng trước danh từ. “my” không đứng một mình.',
+        2: '“my” không đứng một mình ở vế sau.',
+        3: '“yours” không đứng trước danh từ ở vế đầu.'
+      }
+    }
+  },
+];
+
+/* ============================================================
+   APP
+   ============================================================ */
+
+const $ = (s, ctx=document) => ctx.querySelector(s);
+const $$ = (s, ctx=document) => [...ctx.querySelectorAll(s)];
+
+const state = {
+  selectedTopics: new Set(['mixed']),
+  questions: [],
+  answers: {}, // qIndex -> selectedOption
+  submitted: false,
+};
+
+/* Tabs */
+$$('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const tab = btn.dataset.tab;
+    $$('.tab-btn').forEach(b => b.classList.toggle('active', b === btn));
+    $$('.panel').forEach(p => p.classList.toggle('active', p.id === 'panel-' + tab));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+
+/* TOC active link */
+const tocLinks = $$('.toc a');
+tocLinks.forEach(link => {
+  link.addEventListener('click', e => {
+    const targetId = link.getAttribute('href').slice(1);
+    const target = document.getElementById(targetId);
+    if (target) {
+      e.preventDefault();
+      const headerH = 80;
+      window.scrollTo({ top: target.offsetTop - headerH, behavior: 'smooth' });
+    }
+  });
+});
+const sections = $$('.lesson');
+window.addEventListener('scroll', () => {
+  let current = sections[0]?.id;
+  for (const s of sections) {
+    if (window.scrollY + 120 >= s.offsetTop) current = s.id;
+  }
+  tocLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + current));
+}, { passive: true });
+
+/* Render topic cards */
+const topicGrid = $('#topic-grid');
+TOPICS.forEach(t => {
+  // Dùng div thay label để tránh browser tự toggle checkbox (gây double-toggle)
+  const card = document.createElement('div');
+  card.className = 'topic-card';
+  if (state.selectedTopics.has(t.id)) card.classList.add('checked');
+  card.innerHTML = `
+    <div class="check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+    <h5>${t.title}</h5>
+    <p>${t.desc}</p>
+  `;
+  card.addEventListener('click', () => {
+    const isChecked = card.classList.contains('checked');
+    if (isChecked) {
+      state.selectedTopics.delete(t.id);
+      card.classList.remove('checked');
+    } else {
+      state.selectedTopics.add(t.id);
+      card.classList.add('checked');
+    }
+    updateBankInfo();
+  });
+  topicGrid.appendChild(card);
+});
+
+/* Compute bank pool — lọc đúng theo topic được chọn */
+function getPool() {
+  if (state.selectedTopics.size === 0) return [];
+  return BANK.filter(q => state.selectedTopics.has(q.topic));
+}
+
+function updateBankInfo() {
+  const pool = getPool();
+  const info = $('#bank-info');
+  if (pool.length === 0) {
+    info.textContent = 'Hãy chọn ít nhất một chủ đề.';
+    info.style.color = 'var(--red)';
+  } else {
+    info.textContent = `Có ${pool.length} câu hỏi khả dụng cho lựa chọn của bạn.`;
+    info.style.color = 'var(--ink-mute)';
+  }
+  // clamp number
+  const input = $('#q-count');
+  const n = parseInt(input.value || '0', 10);
+  if (n > pool.length && pool.length > 0) input.value = pool.length;
+}
+updateBankInfo();
+
+/* quick pills */
+$$('#quick-pills .pill').forEach(p => {
+  p.addEventListener('click', () => {
+    $$('#quick-pills .pill').forEach(x => x.classList.remove('active'));
+    p.classList.add('active');
+    const pool = getPool();
+    const v = p.dataset.n;
+    $('#q-count').value = v === 'all' ? Math.max(1, pool.length) : v;
+  });
+});
+$('#q-count').addEventListener('input', () => {
+  $$('#quick-pills .pill').forEach(x => x.classList.remove('active'));
+});
+
+/* Start */
+$('#start-btn').addEventListener('click', () => {
+  const pool = getPool();
+  const errBox = $('#setup-error');
+  errBox.classList.add('hidden');
+  if (pool.length === 0) {
+    errBox.classList.remove('hidden');
+    errBox.className = 'toast';
+    errBox.textContent = 'Vui lòng chọn ít nhất 1 chủ đề.';
+    return;
+  }
+  let n = parseInt($('#q-count').value || '0', 10);
+  if (!n || n < 1) {
+    errBox.classList.remove('hidden');
+    errBox.className = 'toast';
+    errBox.textContent = 'Vui lòng nhập số lượng câu hỏi hợp lệ (≥ 1).';
+    return;
+  }
+  if (n > pool.length) n = pool.length;
+  state.questions = shuffle(pool).slice(0, n);
+  // shuffle options for each question while remembering correct index
+  state.questions = state.questions.map(q => {
+    const order = shuffle([0,1,2,3]);
+    return {
+      ...q,
+      _order: order,
+      _options: order.map(i => q.options[i]),
+      _answer: order.indexOf(q.answer),
+      _whyWrong: order.map(origIdx => q.why.wrong[origIdx] || q.why.wrong[String(origIdx)] || ''),
+    };
+  });
+  state.answers = {};
+  state.submitted = false;
+
+  $('#setup-screen').classList.add('hidden');
+  $('#result-screen').classList.add('hidden');
+  $('#quiz-screen').classList.remove('hidden');
+  renderQuiz();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+/* Render quiz */
+function renderQuiz() {
+  const list = $('#questions-list');
+  list.innerHTML = '';
+  state.questions.forEach((q, qi) => {
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    card.dataset.qi = qi;
+
+    // build prompt with blank styling
+    let prompt = q.prompt.replace(/_{2,}/g, '<span class="blank" data-blank></span>');
+
+    card.innerHTML = `
+      <div class="q-num"><span class="dot"></span> Câu ${qi + 1}</div>
+      <p class="q-prompt">${prompt}</p>
+      <div class="options">
+        ${q._options.map((opt, i) => `
+          <div class="option" data-opt="${i}">
+            <div class="letter">${String.fromCharCode(65 + i)}</div>
+            <div class="text">${opt}</div>
+            <div class="mark"></div>
+          </div>
+        `).join('')}
+      </div>
+      <div class="explain hidden" data-explain></div>
+    `;
+
+    card.querySelectorAll('.option').forEach(opt => {
+      opt.addEventListener('click', () => {
+        if (state.submitted) return;
+        const i = parseInt(opt.dataset.opt, 10);
+        state.answers[qi] = i;
+        // update selected style
+        card.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+        opt.classList.add('selected');
+        // fill blank preview
+        const blank = card.querySelector('[data-blank]');
+        if (blank) {
+          blank.textContent = q._options[i];
+          blank.classList.add('filled');
+        }
+        updateProgress();
+      });
+    });
+
+    list.appendChild(card);
+  });
+  $('#quiz-title').textContent = `Bộ ${state.questions.length} câu hỏi`;
+  updateProgress();
+}
+
+function updateProgress() {
+  const answered = Object.keys(state.answers).length;
+  const total = state.questions.length;
+  $('#progress-text').textContent = `Tổng: ${total} câu`;
+  $('#answered-text').textContent = `Đã trả lời: ${answered}/${total}`;
+  $('#progress-fill').style.width = (answered / total * 100) + '%';
+}
+
+/* Submit */
+$('#submit-btn').addEventListener('click', () => {
+  if (state.submitted) return;
+  const answered = Object.keys(state.answers).length;
+  if (answered < state.questions.length) {
+    if (!confirm(`Bạn còn ${state.questions.length - answered} câu chưa làm. Vẫn nộp bài?`)) return;
+  }
+  gradeAndShow();
+});
+
+function gradeAndShow() {
+  state.submitted = true;
+  let correct = 0;
+  state.questions.forEach((q, qi) => {
+    const card = document.querySelector(`.question-card[data-qi="${qi}"]`);
+    const userIdx = state.answers[qi];
+    const correctIdx = q._answer;
+    const isRight = userIdx === correctIdx;
+    if (isRight) correct++;
+
+    card.querySelectorAll('.option').forEach(opt => {
+      opt.classList.add('disabled');
+      const i = parseInt(opt.dataset.opt, 10);
+      const mark = opt.querySelector('.mark');
+      if (i === correctIdx) {
+        opt.classList.add('correct');
+        opt.classList.remove('selected');
+        mark.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10894a" stroke-width="3" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>`;
+      } else if (i === userIdx) {
+        opt.classList.add('wrong');
+        opt.classList.remove('selected');
+        mark.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c8351b" stroke-width="3" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>`;
+      }
+    });
+
+    const explainBox = card.querySelector('[data-explain]');
+    explainBox.classList.remove('hidden');
+    explainBox.classList.toggle('right', isRight);
+    explainBox.classList.toggle('wrong', !isRight);
+
+    const correctLabel = String.fromCharCode(65 + correctIdx);
+    const correctText = q._options[correctIdx];
+
+    let html = '';
+    if (isRight) {
+      html += `<h6>✦ Đúng — đáp án ${correctLabel}: <span style="font-family:'Fraunces',serif; font-style:italic;">${correctText}</span></h6>`;
+      html += `<div class="why-line"><strong>Vì sao đúng:</strong><span>${q.why.right}</span></div>`;
+    } else {
+      const userLabel = userIdx == null ? '—' : String.fromCharCode(65 + userIdx);
+      const userText = userIdx == null ? '<em>chưa trả lời</em>' : q._options[userIdx];
+      html += `<h6>✕ Chưa chính xác</h6>`;
+      html += `<div class="why-line"><strong>Bạn chọn:</strong><span>${userLabel}. ${userText}</span></div>`;
+      html += `<div class="why-line"><strong>Đáp án đúng:</strong><span>${correctLabel}. <em style="color:var(--green); font-style:normal; font-weight:600;">${correctText}</em></span></div>`;
+      if (userIdx != null && q._whyWrong[userIdx]) {
+        html += `<div class="why-line"><strong>Sai vì:</strong><span>${q._whyWrong[userIdx]}</span></div>`;
+      }
+      html += `<div class="why-line"><strong>Đúng vì:</strong><span>${q.why.right}</span></div>`;
+    }
+    explainBox.innerHTML = html;
+
+    // ensure blank shows correct
+    const blank = card.querySelector('[data-blank]');
+    if (blank) {
+      blank.textContent = correctText;
+      blank.classList.add('filled');
+      blank.style.color = isRight ? 'var(--green)' : 'var(--red)';
+      blank.style.borderBottomColor = isRight ? 'var(--green)' : 'var(--red)';
+    }
+  });
+
+  // Scroll lên câu đầu để xem giải thích
+  window.scrollTo({ top: document.getElementById('quiz-screen').offsetTop - 90, behavior: 'smooth' });
+
+  // Đổi nút submit thành "Xem kết quả tổng quan"
+  const submitBtn = document.getElementById('submit-btn');
+  submitBtn.innerHTML = 'Xem kết quả tổng quan <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  submitBtn.onclick = () => showResult(correct);
+}
+
+function showResult(correct) {
+  const total = state.questions.length;
+  const wrong = total - correct;
+  const percent = Math.round(correct / total * 100);
+
+  $('#stat-correct').textContent = correct;
+  $('#stat-wrong').textContent = wrong;
+  $('#stat-percent').textContent = percent + '%';
+  $('#score-num').innerHTML = correct + '<small>/' + total + '</small>';
+
+  // ring
+  const C = 2 * Math.PI * 44;
+  const offset = C * (1 - percent / 100);
+  const bar = $('#score-bar');
+  bar.setAttribute('stroke-dasharray', C.toFixed(2));
+  setTimeout(() => bar.setAttribute('stroke-dashoffset', offset.toFixed(2)), 50);
+
+  let title, msg, color = 'var(--blue)';
+  if (percent === 100) { title = 'Tuyệt vời! Trọn vẹn 100%'; msg = 'Bạn đã nắm chắc kiến thức này. Hãy thử bộ câu hỏi khác hoặc tăng độ khó.'; color = 'var(--green)'; }
+  else if (percent >= 80) { title = 'Rất tốt!'; msg = 'Bạn đã hiểu khá vững — chỉ cần củng cố vài điểm nhỏ.'; color = 'var(--green)'; }
+  else if (percent >= 60) { title = 'Khá ổn'; msg = 'Hãy đọc kỹ phần giải thích và thử lại để cải thiện.'; }
+  else if (percent >= 40) { title = 'Cần luyện thêm'; msg = 'Quay lại tab Lý thuyết, tập trung vào các quy tắc bạn còn yếu.'; color = 'var(--amber)'; }
+  else { title = 'Đừng nản — bắt đầu lại từ lý thuyết'; msg = 'Đọc lại phần lý thuyết, sau đó luyện ít câu trước khi tăng số lượng.'; color = 'var(--red)'; }
+  $('#result-title').textContent = title;
+  $('#result-msg').textContent = msg;
+  bar.setAttribute('stroke', color);
+
+  // review (compact)
+  const reviewBox = $('#review-questions');
+  reviewBox.innerHTML = '';
+  state.questions.forEach((q, qi) => {
+    const userIdx = state.answers[qi];
+    const correctIdx = q._answer;
+    const isRight = userIdx === correctIdx;
+    const item = document.createElement('div');
+    item.className = 'question-card';
+    item.style.padding = '20px 24px';
+    item.style.marginBottom = '10px';
+    const correctText = q._options[correctIdx];
+    const userText = userIdx == null ? '<em style="color:var(--ink-mute);">chưa trả lời</em>' : q._options[userIdx];
+    item.innerHTML = `
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+        <span style="font-family:'Fraunces',serif; font-weight:600; color:${isRight ? 'var(--green)' : 'var(--red)'}; font-size:14px;">
+          ${isRight ? '✓' : '✕'} Câu ${qi + 1}
+        </span>
+        <span style="font-size:12px; color:var(--ink-mute); text-transform:uppercase; letter-spacing:.06em;">
+          ${TOPICS.find(t => t.id === q.topic)?.title || q.topic}
+        </span>
+      </div>
+      <p style="font-family:'Fraunces',serif; font-size:16px; margin:0 0 8px;">${q.prompt.replace(/_{2,}/, `<span style="color:${isRight ? 'var(--green)' : 'var(--red)'}; border-bottom:2px solid currentColor; padding:0 6px; font-style:italic;">${correctText}</span>`)}</p>
+      <p style="font-size:13.5px; color:var(--ink-soft); margin:0;">
+        Bạn chọn: <strong style="color:${isRight ? 'var(--green)' : 'var(--red)'};">${userText}</strong>
+        ${!isRight ? ` — đúng: <strong style="color:var(--green);">${correctText}</strong>` : ''}
+      </p>
+    `;
+    reviewBox.appendChild(item);
+  });
+
+  $('#quiz-screen').classList.add('hidden');
+  $('#result-screen').classList.remove('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* Cancel / retry / back */
+$('#cancel-btn').addEventListener('click', () => {
+  if (Object.keys(state.answers).length > 0 && !state.submitted) {
+    if (!confirm('Bạn có chắc muốn hủy bài đang làm?')) return;
+  }
+  goSetup();
+});
+$('#retry-btn').addEventListener('click', goSetup);
+$('#back-btn').addEventListener('click', () => {
+  $$('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === 'theory'));
+  $$('.panel').forEach(p => p.classList.toggle('active', p.id === 'panel-theory'));
+  goSetup(false);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+function goSetup(scroll=true) {
+  $('#quiz-screen').classList.add('hidden');
+  $('#result-screen').classList.add('hidden');
+  $('#setup-screen').classList.remove('hidden');
+  state.questions = []; state.answers = {}; state.submitted = false;
+  if (scroll) window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
