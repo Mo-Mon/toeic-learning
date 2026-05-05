@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Section 2: Giới Từ Chỉ Thời Gian – Bài Tập Tiếng Anh</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #ffffff; --blue: #1a6fc4; --blue-light: #e8f1fb; --blue-mid: #4d9de0;
+    --blue-dark: #0d4a8a; --text: #1a1a2e; --text-muted: #6b7280; --border: #dde6f5;
+    --correct: #16a34a; --correct-bg: #dcfce7; --wrong: #dc2626; --wrong-bg: #fee2e2;
+    --neutral-bg: #f8faff; --shadow: 0 2px 16px rgba(26,111,196,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Be Vietnam Pro', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+  header { background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue) 60%, var(--blue-mid) 100%); color: #fff; padding: 36px 24px 28px; text-align: center; position: relative; overflow: hidden; }
+  header::before { content:''; position:absolute; inset:0; background:radial-gradient(circle at 70% 30%,rgba(255,255,255,0.08) 0%,transparent 60%); }
+  header .badge { display:inline-block; background:rgba(255,255,255,0.18); border:1px solid rgba(255,255,255,0.3); border-radius:20px; padding:4px 16px; font-size:12px; font-weight:500; letter-spacing:1px; text-transform:uppercase; margin-bottom:12px; }
+  header h1 { font-family:'Playfair Display',serif; font-size:clamp(24px,5vw,38px); font-weight:700; line-height:1.2; margin-bottom:8px; }
+  header p { font-size:14px; opacity:0.85; }
+  .progress-wrap { background:var(--blue-light); padding:14px 24px; display:flex; align-items:center; gap:12px; border-bottom:1px solid var(--border); position:sticky; top:0; z-index:10; }
+  .progress-label { font-size:13px; font-weight:600; color:var(--blue); white-space:nowrap; }
+  .progress-bar { flex:1; height:8px; background:#d1dff5; border-radius:99px; overflow:hidden; }
+  .progress-fill { height:100%; background:linear-gradient(90deg,var(--blue),var(--blue-mid)); border-radius:99px; transition:width 0.4s ease; }
+  .progress-count { font-size:13px; font-weight:600; color:var(--blue); white-space:nowrap; }
+  main { max-width:820px; margin:0 auto; padding:28px 16px 60px; }
+  .exercise-card { background:var(--bg); border:1.5px solid var(--border); border-radius:16px; margin-bottom:24px; overflow:hidden; box-shadow:var(--shadow); transition:box-shadow 0.2s; }
+  .exercise-card:hover { box-shadow:0 4px 24px rgba(26,111,196,0.13); }
+  .exercise-header { background:var(--blue-light); border-bottom:1.5px solid var(--border); padding:14px 20px; display:flex; align-items:center; gap:12px; }
+  .ex-num { background:var(--blue); color:#fff; width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; flex-shrink:0; }
+  .ex-title { font-size:15px; font-weight:600; color:var(--blue-dark); }
+  .exercise-body { padding:20px; }
+  .hint { font-size:13px; color:var(--text-muted); margin-bottom:16px; font-style:italic; }
+  .fill-blank { display:inline-block; border:none; border-bottom:2px solid var(--blue-mid); outline:none; background:transparent; font-family:'Be Vietnam Pro',sans-serif; font-size:15px; color:var(--blue-dark); padding:2px 6px; min-width:100px; transition:border-color 0.2s; }
+  .fill-blank:focus { border-color:var(--blue); }
+  .fill-blank.correct { border-color:var(--correct); background:var(--correct-bg); border-radius:4px 4px 0 0; }
+  .fill-blank.wrong   { border-color:var(--wrong);   background:var(--wrong-bg);   border-radius:4px 4px 0 0; }
+  .fill-row { margin-bottom:13px; font-size:15px; line-height:1.9; }
+  .textarea-ans { width:100%; border:1.5px solid var(--blue-mid); border-radius:10px; outline:none; padding:12px 14px; font-family:'Be Vietnam Pro',sans-serif; font-size:15px; color:var(--text); resize:vertical; min-height:80px; transition:border-color 0.2s; }
+  .textarea-ans:focus { border-color:var(--blue); }
+  .textarea-ans.correct { border-color:var(--correct); background:var(--correct-bg); }
+  .textarea-ans.wrong   { border-color:var(--wrong);   background:var(--wrong-bg); }
+  .mcq-question { margin-bottom:20px; }
+  .mcq-question + .mcq-question { border-top:1px solid var(--border); padding-top:20px; }
+  .mcq-sentence { font-weight:500; margin-bottom:10px; font-size:15px; }
+  .options { display:flex; flex-direction:column; gap:8px; }
+  .option-btn { display:flex; align-items:center; gap:10px; padding:10px 14px; border:1.5px solid var(--border); border-radius:10px; background:var(--neutral-bg); cursor:pointer; font-family:'Be Vietnam Pro',sans-serif; font-size:14px; color:var(--text); transition:all 0.18s; text-align:left; }
+  .option-btn:hover:not(:disabled) { border-color:var(--blue); background:var(--blue-light); }
+  .option-btn.selected { border-color:var(--blue); background:var(--blue-light); }
+  .option-btn.correct-ans { border-color:var(--correct); background:var(--correct-bg); color:var(--correct); font-weight:600; }
+  .option-btn.wrong-ans   { border-color:var(--wrong);   background:var(--wrong-bg);   color:var(--wrong);   font-weight:600; }
+  .option-btn:disabled { cursor:default; }
+  .option-dot { width:20px; height:20px; border-radius:50%; border:2px solid #c5d4ec; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; transition:all 0.18s; }
+  .option-btn.correct-ans .option-dot { border-color:var(--correct); background:var(--correct); color:#fff; }
+  .option-btn.wrong-ans   .option-dot { border-color:var(--wrong);   background:var(--wrong);   color:#fff; }
+  .option-btn.selected .option-dot    { border-color:var(--blue); background:var(--blue); color:#fff; }
+  .info-box { background:var(--blue-light); border:1.5px solid var(--blue-mid); border-radius:10px; padding:12px 16px; margin-bottom:16px; font-size:13px; color:var(--blue-dark); }
+  .info-box strong { display:block; margin-bottom:4px; font-size:14px; }
+  .word-bank { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px; }
+  .word-tag { background:var(--blue-light); border:1.5px solid var(--blue-mid); color:var(--blue-dark); border-radius:8px; padding:4px 12px; font-size:13px; font-weight:600; }
+  .passage-box { background:var(--neutral-bg); border:1.5px solid var(--border); border-radius:10px; padding:16px; font-size:15px; line-height:2.1; margin-bottom:4px; }
+  .answer-section { background:var(--neutral-bg); border:1.5px solid var(--border); border-radius:12px; padding:14px 16px; margin-top:14px; font-size:14px; display:none; }
+  .answer-section.show { display:block; }
+  .answer-section h4 { color:var(--blue-dark); font-size:14px; margin-bottom:8px; }
+  .ans-row { margin-bottom:7px; }
+  .ans-correct { color:var(--correct); font-weight:600; }
+  .ans-wrong   { color:var(--wrong); }
+  .ans-explanation { color:var(--text-muted); font-size:13px; margin-left:6px; }
+  .global-feedback { background:var(--blue-light); border:2px solid var(--blue); border-radius:16px; padding:24px; margin-bottom:28px; text-align:center; display:none; }
+  .global-feedback.show { display:block; }
+  .global-feedback .score { font-size:40px; font-weight:700; color:var(--blue); }
+  .global-feedback .score-label { font-size:15px; color:var(--text-muted); margin-top:4px; }
+  .btn-primary { background:linear-gradient(135deg,var(--blue-dark),var(--blue)); color:#fff; border:none; border-radius:12px; padding:14px 36px; font-family:'Be Vietnam Pro',sans-serif; font-size:16px; font-weight:600; cursor:pointer; box-shadow:0 4px 16px rgba(26,111,196,0.3); transition:all 0.2s; display:block; margin:0 auto; }
+  .btn-primary:hover { transform:translateY(-2px); box-shadow:0 6px 22px rgba(26,111,196,0.4); }
+  .btn-reset { background:transparent; color:var(--blue); border:1.5px solid var(--blue); border-radius:12px; padding:12px 28px; font-family:'Be Vietnam Pro',sans-serif; font-size:15px; font-weight:600; cursor:pointer; display:block; margin:12px auto 0; transition:all 0.2s; }
+  .btn-reset:hover { background:var(--blue-light); }
+  .submit-area { padding:8px 0 4px; text-align:center; }
+  .vi-label { font-size:14px; font-weight:600; color:var(--blue-dark); margin-bottom:6px; }
+  @media(max-width:600px){ .exercise-body{padding:14px;} }
+</style>
+</head>
+<body>
+<header>
+  <div class="badge">Prep.vn – Tiếng Anh</div>
+  <h1>Section 2: Giới Từ Chỉ Thời Gian</h1>
+  <p>Hoàn thành tất cả bài tập rồi bấm "Chấm bài" để xem đáp án chi tiết</p>
+</header>
+<div class="progress-wrap">
+  <span class="progress-label">Tiến độ</span>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+  <span class="progress-count" id="progressCount">0 / 0</span>
+</div>
+<main>
+  <div class="global-feedback" id="globalFeedback">
+    <div class="score" id="scoreDisplay">0/0</div>
+    <div class="score-label">Điểm số của bạn</div>
+  </div>
+
+  <!-- Ex1 -->
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">1</div><div class="ex-title">Tìm giới từ chỉ thời gian trong những câu dưới đây</div></div>
+    <div class="exercise-body">
+      <div id="ex1Container"></div>
+      <div class="answer-section" id="ex1Ans"></div>
+    </div>
+  </div>
+
+  <!-- Ex2 -->
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">2</div><div class="ex-title">Chọn giới từ thích hợp trong bảng để điền vào chỗ trống</div></div>
+    <div class="exercise-body">
+      <div class="word-bank"><span class="word-tag">in (×3)</span><span class="word-tag">on (×2)</span><span class="word-tag">at (×4)</span><span class="word-tag">between (×1)</span></div>
+      <div id="ex2Container"></div>
+      <div class="answer-section" id="ex2Ans"></div>
+    </div>
+  </div>
+
+  <!-- Ex3 -->
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">3</div><div class="ex-title">Chọn đáp án chính xác nhất để hoàn thành những câu sau</div></div>
+    <div class="exercise-body">
+      <div id="ex3Container"></div>
+      <div class="answer-section" id="ex3Ans"></div>
+    </div>
+  </div>
+
+  <!-- Ex4 -->
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">4</div><div class="ex-title">Hoàn thành câu dựa vào mảnh gợi ý + giới từ at, on hoặc in</div></div>
+    <div class="exercise-body">
+      <div class="word-bank"><span class="word-tag">1756</span><span class="word-tag">night</span><span class="word-tag">21 July 1969</span><span class="word-tag">a week</span><span class="word-tag">Saturday</span><span class="word-tag">the same time</span><span class="word-tag">moment</span></div>
+      <div id="ex4Container"></div>
+      <div class="answer-section" id="ex4Ans"></div>
+    </div>
+  </div>
+
+  <!-- Ex5 -->
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">5</div><div class="ex-title">Chọn đáp án đúng để hoàn thành đoạn văn về Anja</div></div>
+    <div class="exercise-body">
+      <div class="passage-box" id="ex5Passage"></div>
+      <div id="ex5Container" style="margin-top:16px"></div>
+      <div class="answer-section" id="ex5Ans"></div>
+    </div>
+  </div>
+
+  <!-- Ex6 -->
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">6</div><div class="ex-title">Dịch những câu sau sang tiếng Anh (chú ý giới từ chỉ thời gian)</div></div>
+    <div class="exercise-body">
+      <div id="ex6Container"></div>
+      <div class="answer-section" id="ex6Ans"></div>
+    </div>
+  </div>
+
+  <div class="submit-area">
+    <button class="btn-primary" onclick="submitAll()">🎯 Chấm bài &amp; Xem giải thích</button>
+    <button class="btn-reset" onclick="resetAll()">↺ Làm lại từ đầu</button>
+  </div>
+</main>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────────
+
+const ex1Data = [
+  { sentence:'The children usually get too many presents at Christmas.', answer:'at', explanation:'"at Christmas" – AT dùng với các dịp lễ đặc biệt (Christmas, Easter, New Year...).' },
+  { sentence:'I wash my face in the bathroom at 7am every day.', answer:'at', explanation:'"at 7am" – AT dùng với giờ cụ thể.' },
+  { sentence:'We usually chat with our colleagues at lunchtime.', answer:'at', explanation:'"at lunchtime" – AT dùng với các mốc thời gian cố định trong ngày (lunchtime, midnight, noon...).' },
+  { sentence:'Throughout the night, we told each other good stories.', answer:'throughout', explanation:'"throughout the night" – THROUGHOUT = xuyên suốt, trong toàn bộ khoảng thời gian.' },
+  { sentence:'During my time at highschool, I was one of the excellent students in class.', answer:'during', explanation:'"during my time at highschool" – DURING = trong suốt khoảng thời gian đó.' },
+];
+
+const ex2Data = [
+  { id:'ex2_0', template:'The bus usually arrives ___ 8:30am.',           answer:'at',      explanation:'"at 8:30am" – AT dùng với giờ cụ thể.' },
+  { id:'ex2_1', template:'She was born in Australia ___ 1952.',           answer:'in',      explanation:'"in 1952" – IN dùng với năm.' },
+  { id:'ex2_2', template:"I don't usually work ___ the weekend.",         answer:'on',      explanation:'"on the weekend" – ON dùng với thứ, ngày, cuối tuần.' },
+  { id:'ex2_3', template:'Do you work ___ Mondays?',                      answer:'on',      explanation:'"on Mondays" – ON dùng với các ngày trong tuần.' },
+  { id:'ex2_4', template:'We finished the test ___ the same time.',       answer:'at',      explanation:'"at the same time" – cụm cố định: at the same time.' },
+  { id:'ex2_5', template:'I worked in England ___ 2010 and 2012.',        answer:'between', explanation:'"between 2010 and 2012" – BETWEEN...AND dùng cho khoảng thời gian giữa 2 mốc.' },
+  { id:'ex2_6', template:'There should be a lot of progress ___ the next century.', answer:'in', explanation:'"in the next century" – IN dùng với thế kỷ, thập kỷ.' },
+  { id:'ex2_7', template:"The stars shine ___ night, but they don't ___ the morning.", answer:'at', answer2:'in', id2:'ex2_8', explanation:'"at night" (đêm tối) và "in the morning" (buổi sáng) – 2 cụm cố định khác nhau.' },
+];
+
+const ex3Data = [
+  { sentence:'We are going on vacation ___ August.', options:['A. on','B. at','C. in','D. during'], correct:2, explanation:'"in August" – IN dùng với tháng.' },
+  { sentence:'School begins ___ Monday.', options:['A. in','B. on','C. from','D. to'], correct:1, explanation:'"on Monday" – ON dùng với các ngày trong tuần.' },
+  { sentence:"You won't be working ___ Saturday nights ___ the future, will you?", options:['A. at/in','B. on/in','C. on/at','D. in/at'], correct:1, explanation:'"on Saturday nights" (ON + buổi cụ thể của ngày) + "in the future" (IN + tương lai/quá khứ dài).' },
+  { sentence:'___ special occasions, Vietnamese people usually have a family gathering.', options:['A. at','B. in','C. on','D. from'], correct:2, explanation:'"on special occasions" – ON dùng với các dịp, ngày đặc biệt.' },
+  { sentence:"Luckily he's ___ time. The lecture will begin in 3 minutes.", options:['A. in','B. off','C. at','D. on'], correct:3, explanation:'"on time" = đúng giờ (cụm thành ngữ cố định).' },
+];
+
+const ex4Data = [
+  { id:'ex4_0', template:'If the sky is clear, you can see the stars ___.', answer:'at night', explanation:'"at night" – AT dùng với night/noon/midnight.' },
+  { id:'ex4_1', template:'Lisa works from Monday to Friday. Sometimes she also works ___.', answer:'on Saturday', explanation:'"on Saturday" – ON dùng với ngày cụ thể.' },
+  { id:'ex4_2', template:'Mozart was born ___. He lived in the 18th century.', answer:'in 1756', explanation:'"in 1756" – IN dùng với năm.' },
+  { id:'ex4_3', template:'Neil Armstrong was the first man to walk on the moon ___. That was one of the most outstanding events in the 20th century.', answer:'on 21 July 1969', explanation:'"on 21 July 1969" – ON dùng với ngày tháng năm cụ thể.' },
+  { id:'ex4_4', template:"I don't think we need an umbrella. It's not raining ___.", answer:'at the moment', explanation:'"at the moment" = lúc này, hiện tại – cụm cố định với AT.' },
+  { id:'ex4_5', template:"It's difficult to listen if everyone is speaking ___.", answer:'at the same time', explanation:'"at the same time" = cùng một lúc – cụm cố định với AT.' },
+  { id:'ex4_6', template:"Andy has gone away. He'll be back ___.", answer:'in a week', explanation:'"in a week" = trong vòng một tuần (khoảng thời gian từ hiện tại) – IN dùng cho khoảng thời gian tương lai.' },
+];
+
+const ex5Passage = `Anja went to the library for her physics assignment <strong>(1)___</strong> Saturday morning. She studied physics all day and finally got out of the library <strong>(2)___</strong> 5 o'clock. Then, she rushed to the bus stop. Luckily, she was <strong>(3)___</strong> time to catch the bus. She got on a bus to go home, and met one of her old friends on the bus. Therefore, she didn't go home directly. She called her mother to tell her she would be home <strong>(4)___</strong> two hours. And then, she went to a cafe with her friend and they had a really good time with each other. She got home <strong>(5)___</strong> six when the dinner was ready. She ate spaghetti and salad for dinner, but she didn't have a delicious dessert because she was <strong>(6)___</strong> a diet. She went to her bedroom and started listening to some music. Usually, <strong>(7)___</strong> the weekend, she would stay up late <strong>(8)___</strong> night to read books. That day, she was really tired so she went to bed early.`;
+
+const ex5Data = [
+  { label:'(1)', options:['A. on','B. in','C. at','D. from'], correct:0, explanation:'"on Saturday morning" – ON dùng với buổi của một ngày cụ thể.' },
+  { label:'(2)', options:['A. in','B. on','C. at','D. about'], correct:2, explanation:'"at 5 o\'clock" – AT dùng với giờ cụ thể.' },
+  { label:'(3)', options:['A. on','B. in','C. at','D. from'], correct:0, explanation:'"on time" = đúng giờ – cụm thành ngữ cố định.' },
+  { label:'(4)', options:['A. throughout','B. during','C. in','D. under'], correct:2, explanation:'"in two hours" = trong vòng hai giờ nữa – IN cho khoảng thời gian tương lai.' },
+  { label:'(5)', options:['A. at','B. on','C. in','D. between'], correct:0, explanation:'"at six" – AT dùng với giờ cụ thể.' },
+  { label:'(6)', options:['A. under','B. on','C. to','D. and'], correct:1, explanation:'"on a diet" = đang ăn kiêng – cụm thành ngữ cố định với ON.' },
+  { label:'(7)', options:['A. at','B. in','C. above','D. next to'], correct:0, explanation:'"at the weekend" – AT dùng với the weekend (British English).' },
+  { label:'(8)', options:['A. on','B. from','C. under','D. at'], correct:3, explanation:'"at night" – AT dùng với night.' },
+];
+
+const ex6Data = [
+  { vi:'Tôi thường ăn salad vào giờ ăn trưa.', answer:'I usually eat salad at lunchtime.', explanation:'"at lunchtime" – AT dùng với lunchtime/mealtime.' },
+  { vi:'Tôi đã đi tới thành phố đó từ 7 giờ sáng đến 10 giờ sáng.', answer:'I went to that city from 7am to 10am.', explanation:'"from 7am to 10am" – FROM...TO dùng cho khoảng thời gian có điểm đầu và điểm cuối.' },
+  { vi:'Xuyên suốt đêm đấy, chúng tôi đã nói chuyện với nhau rất nhiều.', answer:'Throughout that night, we talked to each other a lot.', explanation:'"throughout that night" – THROUGHOUT = xuyên suốt toàn bộ khoảng thời gian.' },
+  { vi:'Chiến tranh thế giới thứ I đã kết thúc vào năm 1918.', answer:'World War I ended in 1918.', explanation:'"in 1918" – IN dùng với năm.' },
+  { vi:'Chuyến tàu sẽ rời đi trong vòng ít phút nữa.', answer:'The train will leave in a few minutes.', explanation:'"in a few minutes" – IN dùng cho khoảng thời gian từ hiện tại trở đi.' },
+  { vi:'Khóa học bắt đầu vào ngày 7 tháng Một và kết thúc vào một thời gian nào đó vào tháng Tư.', answer:'The course starts on January 7th and ends sometime in April.', explanation:'"on January 7th" (ON + ngày cụ thể) + "in April" (IN + tháng).' },
+];
+
+// ── RENDER ────────────────────────────────────────────────────────────────────
+const mcqSel = {};
+
+function renderEx1() {
+  const c = document.getElementById('ex1Container');
+  c.innerHTML = ex1Data.map((item, i) =>
+    `<div class="fill-row"><strong>${i+1}.</strong> <em>${item.sentence}</em><br>
+    → Giới từ chỉ thời gian: <input class="fill-blank" id="ex1_${i}" placeholder="giới từ..." style="min-width:100px" autocomplete="off"></div>`
+  ).join('');
+  c.querySelectorAll('.fill-blank').forEach(el => el.addEventListener('input', updateProgress));
+}
+
+function renderEx2() {
+  const c = document.getElementById('ex2Container');
+  c.innerHTML = ex2Data.map((item, i) => {
+    if (item.id2) {
+      const tpl = item.template.replace('___',
+        `<input class="fill-blank" id="${item.id}" placeholder="..." style="min-width:60px" autocomplete="off">`
+      ).replace('___',
+        `<input class="fill-blank" id="${item.id2}" placeholder="..." style="min-width:60px" autocomplete="off">`
+      );
+      return `<div class="fill-row"><strong>${i+1}.</strong> ${tpl}</div>`;
+    }
+    return `<div class="fill-row"><strong>${i+1}.</strong> ${item.template.replace('___',
+      `<input class="fill-blank" id="${item.id}" placeholder="..." style="min-width:80px" autocomplete="off">`
+    )}</div>`;
+  }).join('');
+  c.querySelectorAll('.fill-blank').forEach(el => el.addEventListener('input', updateProgress));
+}
+
+function renderEx3() {
+  const c = document.getElementById('ex3Container');
+  c.innerHTML = ex3Data.map((item, i) =>
+    `<div class="mcq-question">
+      <div class="mcq-sentence">${i+1}. <em>${item.sentence}</em></div>
+      <div class="options">${item.options.map((opt,j)=>
+        `<button class="option-btn" id="ex3_${i}_${j}" onclick="sel('ex3',${i},${j},${item.options.length})">
+          <span class="option-dot">${opt[0]}</span>${opt}</button>`
+      ).join('')}</div>
+    </div>`
+  ).join('');
+}
+
+function renderEx4() {
+  const c = document.getElementById('ex4Container');
+  c.innerHTML = ex4Data.map((item, i) =>
+    `<div class="fill-row"><strong>${i+1}.</strong> ${item.template.replace('___',
+      `<input class="fill-blank" id="${item.id}" placeholder="giới từ + từ..." style="min-width:160px" autocomplete="off">`
+    )}</div>`
+  ).join('');
+  c.querySelectorAll('.fill-blank').forEach(el => el.addEventListener('input', updateProgress));
+}
+
+function renderEx5() {
+  document.getElementById('ex5Passage').innerHTML = ex5Passage;
+  const c = document.getElementById('ex5Container');
+  c.innerHTML = ex5Data.map((item, i) =>
+    `<div class="mcq-question">
+      <div class="mcq-sentence">${item.label}</div>
+      <div class="options">${item.options.map((opt,j)=>
+        `<button class="option-btn" id="ex5_${i}_${j}" onclick="sel('ex5',${i},${j},${item.options.length})">
+          <span class="option-dot">${opt[0]}</span>${opt}</button>`
+      ).join('')}</div>
+    </div>`
+  ).join('');
+}
+
+function renderEx6() {
+  const c = document.getElementById('ex6Container');
+  c.innerHTML = ex6Data.map((item, i) =>
+    `<div class="fill-row">
+      <div class="vi-label">📌 ${item.vi}</div>
+      <textarea class="textarea-ans" id="ex6_${i}" placeholder="Viết câu tiếng Anh..." rows="2"></textarea>
+    </div>`
+  ).join('');
+  c.querySelectorAll('.textarea-ans').forEach(el => el.addEventListener('input', updateProgress));
+}
+
+function sel(prefix, qi, oi, total) {
+  for (let j=0;j<total;j++) document.getElementById(`${prefix}_${qi}_${j}`)?.classList.remove('selected');
+  document.getElementById(`${prefix}_${qi}_${oi}`)?.classList.add('selected');
+  mcqSel[`${prefix}_${qi}`] = oi;
+  updateProgress();
+}
+
+// ── PROGRESS ──────────────────────────────────────────────────────────────────
+function countAnswered() {
+  let filled=0, total=0;
+  ex1Data.forEach((_,i)=>{ total++; if(document.getElementById(`ex1_${i}`)?.value.trim()) filled++; });
+  ex2Data.forEach(item=>{ total++; if(document.getElementById(item.id)?.value.trim()) filled++; if(item.id2){total++;if(document.getElementById(item.id2)?.value.trim())filled++;} });
+  ex3Data.forEach((_,i)=>{ total++; if(mcqSel[`ex3_${i}`]!==undefined) filled++; });
+  ex4Data.forEach(item=>{ total++; if(document.getElementById(item.id)?.value.trim()) filled++; });
+  ex5Data.forEach((_,i)=>{ total++; if(mcqSel[`ex5_${i}`]!==undefined) filled++; });
+  ex6Data.forEach((_,i)=>{ total++; if(document.getElementById(`ex6_${i}`)?.value.trim()) filled++; });
+  return {filled,total};
+}
+function updateProgress(){
+  const {filled,total}=countAnswered();
+  document.getElementById('progressFill').style.width=(filled/total*100)+'%';
+  document.getElementById('progressCount').textContent=`${filled} / ${total}`;
+}
+
+// ── SUBMIT ────────────────────────────────────────────────────────────────────
+function norm(s){ return s.trim().toLowerCase().replace(/\s+/g,' '); }
+
+function submitAll(){
+  let score=0, total=0;
+
+  // Ex1
+  let h1='<h4>📝 Giải thích Exercise 1:</h4>';
+  ex1Data.forEach((item,i)=>{
+    total++;
+    const inp=document.getElementById(`ex1_${i}`);
+    const ok=norm(inp?.value||'')===norm(item.answer);
+    if(ok)score++; if(inp)inp.classList.add(ok?'correct':'wrong');
+    h1+=`<div class="ans-row"><span class="${ok?'ans-correct':'ans-wrong'}">${ok?'✅':'❌'} Câu ${i+1}: <strong>${item.answer}</strong></span><span class="ans-explanation">– ${item.explanation}</span></div>`;
+  });
+  const a1=document.getElementById('ex1Ans'); a1.innerHTML=h1; a1.classList.add('show');
+
+  // Ex2
+  let h2='<h4>📝 Giải thích Exercise 2:</h4>';
+  ex2Data.forEach((item,i)=>{
+    total++;
+    const inp=document.getElementById(item.id);
+    const ok=norm(inp?.value||'')===norm(item.answer);
+    if(ok)score++; if(inp)inp.classList.add(ok?'correct':'wrong');
+    if(item.id2){
+      total++;
+      const inp2=document.getElementById(item.id2);
+      const ok2=norm(inp2?.value||'')===norm(item.answer2||'');
+      if(ok2)score++; if(inp2)inp2.classList.add(ok2?'correct':'wrong');
+      h2+=`<div class="ans-row"><span class="${ok&&ok2?'ans-correct':'ans-wrong'}">${ok&&ok2?'✅':'❌'} Câu ${i+1}: <strong>${item.answer} / ${item.answer2}</strong></span><span class="ans-explanation">– ${item.explanation}</span></div>`;
+    } else {
+      h2+=`<div class="ans-row"><span class="${ok?'ans-correct':'ans-wrong'}">${ok?'✅':'❌'} Câu ${i+1}: <strong>${item.answer}</strong></span><span class="ans-explanation">– ${item.explanation}</span></div>`;
+    }
+  });
+  const a2=document.getElementById('ex2Ans'); a2.innerHTML=h2; a2.classList.add('show');
+
+  // Ex3
+  let h3='<h4>📝 Giải thích Exercise 3:</h4>';
+  ex3Data.forEach((item,i)=>{
+    total++;
+    const s=mcqSel[`ex3_${i}`]; const ok=s===item.correct; if(ok)score++;
+    for(let j=0;j<item.options.length;j++){const b=document.getElementById(`ex3_${i}_${j}`);if(!b)continue;b.disabled=true;b.classList.remove('selected');if(j===item.correct)b.classList.add('correct-ans');else if(j===s&&!ok)b.classList.add('wrong-ans');}
+    h3+=`<div class="ans-row"><span class="${ok?'ans-correct':'ans-wrong'}">${ok?'✅':'❌'} Câu ${i+1}: <strong>${item.options[item.correct]}</strong></span><span class="ans-explanation">– ${item.explanation}</span></div>`;
+  });
+  const a3=document.getElementById('ex3Ans'); a3.innerHTML=h3; a3.classList.add('show');
+
+  // Ex4
+  let h4='<h4>📝 Giải thích Exercise 4:</h4>';
+  ex4Data.forEach((item,i)=>{
+    total++;
+    const inp=document.getElementById(item.id);
+    const ok=norm(inp?.value||'')===norm(item.answer);
+    if(ok)score++; if(inp)inp.classList.add(ok?'correct':'wrong');
+    h4+=`<div class="ans-row"><span class="${ok?'ans-correct':'ans-wrong'}">${ok?'✅':'❌'} Câu ${i+1}: <strong>${item.answer}</strong></span><span class="ans-explanation">– ${item.explanation}</span></div>`;
+  });
+  const a4=document.getElementById('ex4Ans'); a4.innerHTML=h4; a4.classList.add('show');
+
+  // Ex5
+  let h5='<h4>📝 Giải thích Exercise 5:</h4>';
+  ex5Data.forEach((item,i)=>{
+    total++;
+    const s=mcqSel[`ex5_${i}`]; const ok=s===item.correct; if(ok)score++;
+    for(let j=0;j<item.options.length;j++){const b=document.getElementById(`ex5_${i}_${j}`);if(!b)continue;b.disabled=true;b.classList.remove('selected');if(j===item.correct)b.classList.add('correct-ans');else if(j===s&&!ok)b.classList.add('wrong-ans');}
+    h5+=`<div class="ans-row"><span class="${ok?'ans-correct':'ans-wrong'}">${ok?'✅':'❌'} ${item.label}: <strong>${item.options[item.correct]}</strong></span><span class="ans-explanation">– ${item.explanation}</span></div>`;
+  });
+  const a5=document.getElementById('ex5Ans'); a5.innerHTML=h5; a5.classList.add('show');
+
+  // Ex6 – flexible matching
+  let h6='<h4>📝 Giải thích Exercise 6:</h4>';
+  ex6Data.forEach((item,i)=>{
+    total++;
+    const ta=document.getElementById(`ex6_${i}`);
+    const userVal=norm(ta?.value||'');
+    // Accept multiple valid forms
+    const alts=[norm(item.answer)];
+    if(i===1) alts.push(norm('I went to that city from 7 a.m. to 10 a.m.'), norm('I traveled to that city from 7am to 10am.'));
+    if(i===2) alts.push(norm('Throughout that night, we talked with each other a lot.'), norm('Throughout that night, we spoke to each other a lot.'));
+    if(i===4) alts.push(norm('The train will depart in a few minutes.'), norm('The train will leave in a few minutes'));
+    const ok=alts.some(a=>userVal===a)||userVal.includes('at lunchtime')&&i===0||userVal.includes('from 7')&&userVal.includes('to 10')&&i===1||userVal.includes('throughout')&&i===2||userVal.includes('world war i')&&userVal.includes('in 1918')&&i===3||userVal.includes('in a few minutes')&&i===4||userVal.includes('on january')&&userVal.includes('in april')&&i===5;
+    if(ok)score++;
+    if(ta)ta.classList.add(ok?'correct':'wrong');
+    h6+=`<div class="ans-row"><span class="${ok?'ans-correct':'ans-wrong'}">${ok?'✅':'❌'} Câu ${i+1}: <strong>${item.answer}</strong></span><span class="ans-explanation">– ${item.explanation}</span></div>`;
+  });
+  const a6=document.getElementById('ex6Ans'); a6.innerHTML=h6; a6.classList.add('show');
+
+  const fb=document.getElementById('globalFeedback');
+  document.getElementById('scoreDisplay').textContent=`${score} / ${total}`;
+  fb.classList.add('show'); fb.scrollIntoView({behavior:'smooth',block:'start'});
+  updateProgress();
+}
+
+// ── RESET ─────────────────────────────────────────────────────────────────────
+function resetAll(){
+  Object.keys(mcqSel).forEach(k=>delete mcqSel[k]);
+  document.getElementById('globalFeedback').classList.remove('show');
+  ['ex1Ans','ex2Ans','ex3Ans','ex4Ans','ex5Ans','ex6Ans'].forEach(id=>{const el=document.getElementById(id);el.classList.remove('show');el.innerHTML='';});
+  renderEx1();renderEx2();renderEx3();renderEx4();renderEx5();renderEx6();
+  updateProgress();
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+renderEx1();renderEx2();renderEx3();renderEx4();renderEx5();renderEx6();
+updateProgress();
+</script>
+</body>
+</html>

@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Section 1: Giới Từ Chỉ Địa Điểm – Bài Tập Tiếng Anh</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #ffffff;
+    --blue: #1a6fc4;
+    --blue-light: #e8f1fb;
+    --blue-mid: #4d9de0;
+    --blue-dark: #0d4a8a;
+    --text: #1a1a2e;
+    --text-muted: #6b7280;
+    --border: #dde6f5;
+    --correct: #16a34a;
+    --correct-bg: #dcfce7;
+    --wrong: #dc2626;
+    --wrong-bg: #fee2e2;
+    --neutral-bg: #f8faff;
+    --shadow: 0 2px 16px rgba(26,111,196,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Be Vietnam Pro', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  header { background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue) 60%, var(--blue-mid) 100%); color: #fff; padding: 36px 24px 28px; text-align: center; position: relative; overflow: hidden; }
+  header::before { content:''; position:absolute; inset:0; background:radial-gradient(circle at 70% 30%,rgba(255,255,255,0.08) 0%,transparent 60%); }
+  header .badge { display:inline-block; background:rgba(255,255,255,0.18); border:1px solid rgba(255,255,255,0.3); border-radius:20px; padding:4px 16px; font-size:12px; font-weight:500; letter-spacing:1px; text-transform:uppercase; margin-bottom:12px; }
+  header h1 { font-family:'Playfair Display',serif; font-size:clamp(24px,5vw,38px); font-weight:700; line-height:1.2; margin-bottom:8px; }
+  header p { font-size:14px; opacity:0.85; }
+
+  .progress-wrap { background:var(--blue-light); padding:14px 24px; display:flex; align-items:center; gap:12px; border-bottom:1px solid var(--border); position:sticky; top:0; z-index:10; }
+  .progress-label { font-size:13px; font-weight:600; color:var(--blue); white-space:nowrap; }
+  .progress-bar { flex:1; height:8px; background:#d1dff5; border-radius:99px; overflow:hidden; }
+  .progress-fill { height:100%; background:linear-gradient(90deg,var(--blue),var(--blue-mid)); border-radius:99px; transition:width 0.4s ease; }
+  .progress-count { font-size:13px; font-weight:600; color:var(--blue); white-space:nowrap; }
+
+  main { max-width:820px; margin:0 auto; padding:28px 16px 60px; }
+
+  .exercise-card { background:var(--bg); border:1.5px solid var(--border); border-radius:16px; margin-bottom:24px; overflow:hidden; box-shadow:var(--shadow); transition:box-shadow 0.2s; }
+  .exercise-card:hover { box-shadow:0 4px 24px rgba(26,111,196,0.13); }
+  .exercise-header { background:var(--blue-light); border-bottom:1.5px solid var(--border); padding:14px 20px; display:flex; align-items:center; gap:12px; }
+  .ex-num { background:var(--blue); color:#fff; width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; flex-shrink:0; }
+  .ex-title { font-size:15px; font-weight:600; color:var(--blue-dark); }
+  .exercise-body { padding:20px; }
+  .hint { font-size:13px; color:var(--text-muted); margin-bottom:16px; font-style:italic; }
+
+  /* selects & inputs */
+  .prep-select { border:none; border-bottom:2px solid var(--blue-mid); outline:none; background:transparent; font-family:'Be Vietnam Pro',sans-serif; font-size:14px; color:var(--blue-dark); padding:3px 4px; cursor:pointer; min-width:100px; transition:border-color 0.2s; }
+  .prep-select:focus { border-color:var(--blue); }
+  .prep-select.correct { border-color:var(--correct); background:var(--correct-bg); border-radius:4px 4px 0 0; }
+  .prep-select.wrong   { border-color:var(--wrong);   background:var(--wrong-bg);   border-radius:4px 4px 0 0; }
+
+  .fill-blank { display:inline-block; border:none; border-bottom:2px solid var(--blue-mid); outline:none; background:transparent; font-family:'Be Vietnam Pro',sans-serif; font-size:15px; color:var(--blue-dark); padding:2px 6px; min-width:110px; transition:border-color 0.2s; }
+  .fill-blank:focus { border-color:var(--blue); }
+  .fill-blank.correct { border-color:var(--correct); background:var(--correct-bg); border-radius:4px 4px 0 0; }
+  .fill-blank.wrong   { border-color:var(--wrong);   background:var(--wrong-bg);   border-radius:4px 4px 0 0; }
+  .fill-row { margin-bottom:13px; font-size:15px; line-height:1.9; }
+
+  /* Match table ex1 */
+  .match-table { width:100%; border-collapse:collapse; }
+  .match-table th { background:var(--blue); color:#fff; padding:10px 14px; font-size:13px; text-align:left; }
+  .match-table td { padding:10px 14px; border-bottom:1px solid var(--border); font-size:14px; vertical-align:middle; }
+  .match-table tr:last-child td { border-bottom:none; }
+  .match-table tr:nth-child(even) td { background:var(--neutral-bg); }
+
+  /* Match table ex2 */
+  .match2-row { display:flex; align-items:center; gap:10px; margin-bottom:10px; flex-wrap:wrap; }
+  .match2-meaning { flex:1; min-width:130px; font-size:15px; font-weight:500; }
+  .match2-arrow { color:var(--blue-mid); font-weight:700; }
+
+  /* MCQ */
+  .mcq-question { margin-bottom:20px; }
+  .mcq-question + .mcq-question { border-top:1px solid var(--border); padding-top:20px; }
+  .mcq-sentence { font-weight:500; margin-bottom:10px; font-size:15px; }
+  .options { display:flex; flex-direction:column; gap:8px; }
+  .option-btn { display:flex; align-items:center; gap:10px; padding:10px 14px; border:1.5px solid var(--border); border-radius:10px; background:var(--neutral-bg); cursor:pointer; font-family:'Be Vietnam Pro',sans-serif; font-size:14px; color:var(--text); transition:all 0.18s; text-align:left; }
+  .option-btn:hover:not(:disabled) { border-color:var(--blue); background:var(--blue-light); }
+  .option-btn.selected { border-color:var(--blue); background:var(--blue-light); }
+  .option-btn.correct-ans { border-color:var(--correct); background:var(--correct-bg); color:var(--correct); font-weight:600; }
+  .option-btn.wrong-ans   { border-color:var(--wrong);   background:var(--wrong-bg);   color:var(--wrong);   font-weight:600; }
+  .option-btn:disabled { cursor:default; }
+  .option-dot { width:20px; height:20px; border-radius:50%; border:2px solid #c5d4ec; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; transition:all 0.18s; }
+  .option-btn.correct-ans .option-dot { border-color:var(--correct); background:var(--correct); color:#fff; }
+  .option-btn.wrong-ans   .option-dot { border-color:var(--wrong);   background:var(--wrong);   color:#fff; }
+  .option-btn.selected .option-dot    { border-color:var(--blue); background:var(--blue); color:#fff; }
+
+  /* Ex6 checkboxes */
+  .para-block { background:var(--neutral-bg); border:1.5px solid var(--border); border-radius:10px; padding:14px; margin-bottom:18px; }
+  .para-text { font-size:14px; line-height:1.8; margin-bottom:12px; }
+  .para-text .marked { font-weight:700; text-decoration:underline; color:var(--blue-dark); }
+  .check-options { display:flex; flex-wrap:wrap; gap:8px; }
+  .check-label { display:flex; align-items:center; gap:7px; padding:7px 14px; border:1.5px solid var(--border); border-radius:8px; background:var(--bg); cursor:pointer; font-size:14px; font-weight:500; transition:all 0.18s; user-select:none; }
+  .check-label:hover { border-color:var(--blue); background:var(--blue-light); }
+  .check-label.checked { border-color:var(--blue); background:var(--blue-light); color:var(--blue-dark); }
+  .check-label.correct-check { border-color:var(--correct); background:var(--correct-bg); color:var(--correct); }
+  .check-label.wrong-check   { border-color:var(--wrong);   background:var(--wrong-bg);   color:var(--wrong); }
+  .check-label input { display:none; }
+
+  .answer-section { background:var(--neutral-bg); border:1.5px solid var(--border); border-radius:12px; padding:14px 16px; margin-top:14px; font-size:14px; display:none; }
+  .answer-section.show { display:block; }
+  .answer-section h4 { color:var(--blue-dark); font-size:14px; margin-bottom:8px; }
+  .ans-row { margin-bottom:7px; }
+  .ans-correct { color:var(--correct); font-weight:600; }
+  .ans-wrong   { color:var(--wrong); }
+  .ans-explanation { color:var(--text-muted); font-size:13px; margin-left:6px; }
+
+  .global-feedback { background:var(--blue-light); border:2px solid var(--blue); border-radius:16px; padding:24px; margin-bottom:28px; text-align:center; display:none; }
+  .global-feedback.show { display:block; }
+  .global-feedback .score { font-size:40px; font-weight:700; color:var(--blue); }
+  .global-feedback .score-label { font-size:15px; color:var(--text-muted); margin-top:4px; }
+
+  .btn-primary { background:linear-gradient(135deg,var(--blue-dark),var(--blue)); color:#fff; border:none; border-radius:12px; padding:14px 36px; font-family:'Be Vietnam Pro',sans-serif; font-size:16px; font-weight:600; cursor:pointer; box-shadow:0 4px 16px rgba(26,111,196,0.3); transition:all 0.2s; display:block; margin:0 auto; }
+  .btn-primary:hover { transform:translateY(-2px); box-shadow:0 6px 22px rgba(26,111,196,0.4); }
+  .btn-reset { background:transparent; color:var(--blue); border:1.5px solid var(--blue); border-radius:12px; padding:12px 28px; font-family:'Be Vietnam Pro',sans-serif; font-size:15px; font-weight:600; cursor:pointer; display:block; margin:12px auto 0; transition:all 0.2s; }
+  .btn-reset:hover { background:var(--blue-light); }
+  .submit-area { padding:8px 0 4px; text-align:center; }
+
+  @media(max-width:600px){ .exercise-body{padding:14px;} .match2-row{flex-direction:column;gap:4px;} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="badge">Prep.vn – Tiếng Anh</div>
+  <h1>Section 1: Giới Từ Chỉ Địa Điểm</h1>
+  <p>Hoàn thành tất cả bài tập rồi bấm "Chấm bài" để xem đáp án chi tiết</p>
+</header>
+
+<div class="progress-wrap">
+  <span class="progress-label">Tiến độ</span>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+  <span class="progress-count" id="progressCount">0 / 0</span>
+</div>
+
+<main>
+  <div class="global-feedback" id="globalFeedback">
+    <div class="score" id="scoreDisplay">0/0</div>
+    <div class="score-label">Điểm số của bạn</div>
+  </div>
+
+  <!-- Exercise 1 -->
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">1</div><div class="ex-title">Nối giới từ với cách sử dụng của chúng</div></div>
+    <div class="exercise-body">
+      <table class="match-table">
+        <tr><th>Cách sử dụng</th><th>Giới từ đúng là?</th></tr>
+        <tr><td>Nơi ở, học tập, làm việc, địa điểm trong thành phố, thị trấn…</td>
+          <td><select class="prep-select" id="ex1_0" onchange="updateProgress()"><option value="">--</option><option>at</option><option>in</option><option>on</option></select></td></tr>
+        <tr><td>Một không gian lớn</td>
+          <td><select class="prep-select" id="ex1_1" onchange="updateProgress()"><option value="">--</option><option>at</option><option>in</option><option>on</option></select></td></tr>
+        <tr><td>Phương hướng (North/South/East/West)</td>
+          <td><select class="prep-select" id="ex1_2" onchange="updateProgress()"><option value="">--</option><option>at</option><option>in</option><option>on</option></select></td></tr>
+        <tr><td>Một bề mặt, vật thể</td>
+          <td><select class="prep-select" id="ex1_3" onchange="updateProgress()"><option value="">--</option><option>at</option><option>in</option><option>on</option></select></td></tr>
+        <tr><td>Phương hướng trái, phải</td>
+          <td><select class="prep-select" id="ex1_4" onchange="updateProgress()"><option value="">--</option><option>at</option><option>in</option><option>on</option></select></td></tr>
+        <tr><td>Tên tòa nhà, địa chỉ cụ thể</td>
+          <td><select class="prep-select" id="ex1_5" onchange="updateProgress()"><option value="">--</option><option>at</option><option>in</option><option>on</option></select></td></tr>
+        <tr><td>Ôtô, taxi</td>
+          <td><select class="prep-select" id="ex1_6" onchange="updateProgress()"><option value="">--</option><option>at</option><option>in</option><option>on</option></select></td></tr>
+        <tr><td>Phố, tầng trong tòa nhà</td>
+          <td><select class="prep-select" id="ex1_7" onchange="updateProgress()"><option value="">--</option><option>at</option><option>in</option><option>on</option></select></td></tr>
+        <tr><td>Địa chỉ email</td>
+          <td><select class="prep-select" id="ex1_8" onchange="updateProgress()"><option value="">--</option><option>at</option><option>in</option><option>on</option></select></td></tr>
+        <tr><td>Phương tiện giao thông công cộng</td>
+          <td><select class="prep-select" id="ex1_9" onchange="updateProgress()"><option value="">--</option><option>at</option><option>in</option><option>on</option></select></td></tr>
+      </table>
+      <div class="answer-section" id="ex1Ans"></div>
+    </div>
+  </div>
+
+  <!-- Exercise 2 -->
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">2</div><div class="ex-title">Nối giới từ với nghĩa của chúng</div></div>
+    <div class="exercise-body">
+      <div id="ex2Container"></div>
+      <div class="answer-section" id="ex2Ans"></div>
+    </div>
+  </div>
+
+  <!-- Exercise 3 -->
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">3</div><div class="ex-title">Xác định giới từ trong những câu văn dưới đây</div></div>
+    <div class="exercise-body">
+      <div id="ex3Container"></div>
+      <div class="answer-section" id="ex3Ans"></div>
+    </div>
+  </div>
+
+  <!-- Exercise 4 -->
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">4</div><div class="ex-title">Điền giới từ thích hợp vào chỗ trống</div></div>
+    <div class="exercise-body">
+      <div id="ex4Container"></div>
+      <div class="answer-section" id="ex4Ans"></div>
+    </div>
+  </div>
+
+  <!-- Exercise 5 -->
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">5</div><div class="ex-title">Chọn giới từ thích hợp để hoàn thành các câu sau</div></div>
+    <div class="exercise-body">
+      <div id="ex5Container"></div>
+      <div class="answer-section" id="ex5Ans"></div>
+    </div>
+  </div>
+
+  <!-- Exercise 6 -->
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">6</div><div class="ex-title">Mỗi đoạn văn có tối đa 2 lỗi sai – hãy xác định những lỗi sai đó</div></div>
+    <div class="exercise-body">
+      <p class="hint">💡 Bạn có thể chọn nhiều hơn một đáp án</p>
+      <div id="ex6Container"></div>
+      <div class="answer-section" id="ex6Ans"></div>
+    </div>
+  </div>
+
+  <!-- Exercise 7 -->
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">7</div><div class="ex-title">Điền giới từ vào chỗ trống để mô tả bức tranh phố</div></div>
+    <div class="exercise-body">
+      <p class="hint">💡 Dựa vào vị trí các địa điểm: Travel Agent (1), Restaurant (4), Supermarket (8), National Bank (9), xe đỏ (5), xe đạp (gần supermarket), người đàn ông (cạnh xe).</p>
+      <div id="ex7Container"></div>
+      <div class="answer-section" id="ex7Ans"></div>
+    </div>
+  </div>
+
+  <div class="submit-area">
+    <button class="btn-primary" onclick="submitAll()">🎯 Chấm bài &amp; Xem giải thích</button>
+    <button class="btn-reset" onclick="resetAll()">↺ Làm lại từ đầu</button>
+  </div>
+</main>
+
+<script>
+// ─── DATA ─────────────────────────────────────────────────────────────────────
+
+const ex1Data = [
+  { id:'ex1_0', answer:'at',  explanation:'AT dùng cho nơi ở, học tập, làm việc, địa điểm cụ thể trong thành phố/thị trấn. VD: at school, at the station.' },
+  { id:'ex1_1', answer:'in',  explanation:'IN dùng cho không gian lớn như quốc gia, thành phố, khu vực. VD: in Vietnam, in the city.' },
+  { id:'ex1_2', answer:'in',  explanation:'IN dùng với phương hướng chính (North/South/East/West). VD: in the north of the city.' },
+  { id:'ex1_3', answer:'on',  explanation:'ON dùng cho bề mặt hoặc vật thể. VD: on the table, on the wall.' },
+  { id:'ex1_4', answer:'on',  explanation:'ON dùng với phương hướng trái, phải. VD: on the left, on the right.' },
+  { id:'ex1_5', answer:'at',  explanation:'AT dùng với tên tòa nhà, địa chỉ cụ thể. VD: at 153 Oxford Street.' },
+  { id:'ex1_6', answer:'in',  explanation:'IN dùng với ôtô, taxi (phương tiện có khoang kín). VD: in the car, in a taxi.' },
+  { id:'ex1_7', answer:'on',  explanation:'ON dùng với phố và tầng trong tòa nhà. VD: on the third floor, on Baker Street.' },
+  { id:'ex1_8', answer:'at',  explanation:'AT dùng với địa chỉ email. VD: send an email at it@support.vn.' },
+  { id:'ex1_9', answer:'on',  explanation:'ON dùng với phương tiện giao thông công cộng. VD: on the bus, on the train.' },
+];
+
+const ex2Data = [
+  { id:'ex2_0', meaning:'Ở phía sau',   answer:'Behind',     explanation:'"behind" = ở phía sau.' },
+  { id:'ex2_1', meaning:'Ở phía trước', answer:'In front of',explanation:'"in front of" = ở phía trước.' },
+  { id:'ex2_2', meaning:'Ở đối diện',   answer:'Opposite',   explanation:'"opposite" = ở đối diện.' },
+  { id:'ex2_3', meaning:'Ở gần',        answer:'Near',       explanation:'"near" = ở gần.' },
+  { id:'ex2_4', meaning:'Ở cạnh',       answer:'Next to',    explanation:'"next to" = ở kề cạnh.' },
+  { id:'ex2_5', meaning:'Ở giữa',       answer:'Between',    explanation:'"between" = ở giữa (2 đối tượng).' },
+  { id:'ex2_6', meaning:'Ở dưới',       answer:'Under',      explanation:'"under" = ở dưới.' },
+];
+const ex2Options = ['Under','In front of','Behind','Between','Opposite','Next to','Near'];
+
+const ex3Data = [
+  { sentence:'Several people are waiting at the bus stop.', answers:['at'], explanation:'"at" chỉ địa điểm cụ thể (the bus stop).' },
+  { sentence:'Her parents live in Hochiminh city and their house is in Cach Mang Thang Tam Street.', answers:['in','in'], explanation:'"in" dùng cho thành phố và tên đường phố.' },
+  { sentence:'Ted is on the bus now. He will arrive in Haiphong city soon.', answers:['on','in'], explanation:'"on" cho phương tiện công cộng; "in" cho thành phố.' },
+  { sentence:'The cat is under the table.', answers:['under'], explanation:'"under" = ở dưới.' },
+  { sentence:'The police office is next to the French restaurant.', answers:['next to'], explanation:'"next to" = ở kề cạnh.' },
+];
+
+const ex4Data = [
+  { template:'The children are swimming ___ the pool.', blanks:[{id:'ex4_0',answer:'in',explanation:'"in" dùng cho không gian có kích thước lớn như hồ bơi.'}] },
+  { template:'The specials are ___ the menu.', blanks:[{id:'ex4_1',answer:'on',explanation:'"on" dùng khi đề cập đến nội dung trên một vật thể như thực đơn, danh sách.'}] },
+  { template:'The new shopping mall is ___ the south of the city.', blanks:[{id:'ex4_2',answer:'in',explanation:'"in the south" – IN dùng với phương hướng chính.'}] },
+  { template:'For more details, please send me an email ___ it@support.vn.', blanks:[{id:'ex4_3',answer:'at',explanation:'"at" dùng với địa chỉ email.'}] },
+  { template:'My mom is no longer ___ the store. She is already ___ the car.', blanks:[{id:'ex4_4',answer:'at',explanation:'"at the store" – AT cho địa điểm cụ thể.'},{id:'ex4_5',answer:'in',explanation:'"in the car" – IN cho ôtô, taxi.'}] },
+  { template:'You are in ___ of the bookstore now. The bank is ___ the bookstore, so you have to cross the road to get there.', blanks:[{id:'ex4_6',answer:'front',explanation:'"in front of" = ở phía trước.'},{id:'ex4_7',answer:'opposite',explanation:'"opposite the bookstore" = đối diện với hiệu sách.'}] },
+  { template:'My house is ___ a local market. It only takes me 3 minutes to get there.', blanks:[{id:'ex4_8',answer:'near',explanation:'"near" = ở gần. Chỉ mất 3 phút → rất gần.'}] },
+];
+
+const ex5Data = [
+  { sentence:'Please put the vase ___ the table.', options:['A. in','B. for','C. on','D. over'], correct:2, explanation:'"on the table" – ON cho bề mặt nằm ngang. Đặt lọ hoa lên mặt bàn.' },
+  { sentence:'They live ___ a small flat ___ the third floor.', options:['A. in/in','B. on/on','C. in/on','D. on/in'], correct:2, explanation:'"live in a flat" (không gian kín) + "on the third floor" (tầng trong tòa nhà).' },
+  { sentence:'She is ___ France for her business trip now.', options:['A. on','B. at','C. in','D. under'], correct:2, explanation:'"in France" – IN cho quốc gia, vùng lãnh thổ.' },
+  { sentence:'Our house is ___ the wood and the village.', options:['A. through','B. between','C. on','D. below'], correct:1, explanation:'"between the wood and the village" – BETWEEN khi ở giữa 2 đối tượng.' },
+  { sentence:'Shall we take the taxi ___ the station or shall we walk?', options:['A. on','B. at','C. in','D. into'], correct:3, explanation:'"take the taxi into the station" – INTO diễn tả chuyển động vào bên trong một địa điểm.' },
+];
+
+const ex6Data = [
+  {
+    id: 'ex6_p1',
+    text: 'Mary lives <span class="marked">(A) at</span> 153 Oxford Street in London. Her work office is <span class="marked">(B) in</span> the tenth floor of a building <span class="marked">(C) near</span> her house. Mary often says she prefers living <span class="marked">(D) at</span> the countryside.',
+    options: ['A. at 153 Oxford Street', 'B. in', 'C. near', 'D. at'],
+    correctErrors: [1, 3],
+    explanations: [
+      'A đúng: "at 153 Oxford Street" – AT cho địa chỉ cụ thể.',
+      'B SAI: "in the tenth floor" phải là "on the tenth floor" – ON cho tầng trong tòa nhà.',
+      'C đúng: "near her house" – NEAR đúng ngữ pháp.',
+      'D SAI: "at the countryside" phải là "in the countryside" – IN cho không gian rộng lớn.',
+    ]
+  },
+  {
+    id: 'ex6_p2',
+    text: 'Daisy is standing <span class="marked">(A) in</span> the table. She is opening the drawer. The drawer is right <span class="marked">(B) next</span> <span class="marked">(C) at</span> the clock, but it is too high <span class="marked">(D) to</span> reach.',
+    options: ['A. in', 'B. next', 'C. at', 'D. to'],
+    correctErrors: [0, 2],
+    explanations: [
+      'A SAI: "in the table" phải là "at the table" – AT khi đứng ở/làm việc tại bàn.',
+      'B đúng: "next" là một phần của "next to" – đúng.',
+      'C SAI: "next at the clock" phải là "next to the clock" – cụm giới từ cố định là "next to".',
+      'D đúng: "too high to reach" – "to" là to-infinitive, đúng ngữ pháp.',
+    ]
+  },
+  {
+    id: 'ex6_p3',
+    text: 'I am often <span class="marked">(A) on</span> school in the morning and do research or read books in the school library. <span class="marked">(B) At night</span>, I stay <span class="marked">(C) at home</span> and prepare <span class="marked">(D) for</span> my lessons.',
+    options: ['A. on', 'B. at night', 'C. at home', 'D. for'],
+    correctErrors: [0],
+    explanations: [
+      'A SAI: "on school" phải là "at school" – AT cho địa điểm học tập.',
+      'B đúng: "at night" – thành ngữ cố định đúng.',
+      'C đúng: "at home" – AT cho nơi ở quen thuộc.',
+      'D đúng: "prepare for" – cụm động từ cố định.',
+    ]
+  },
+  {
+    id: 'ex6_p4',
+    text: 'Peter is standing <span class="marked">(A) under</span> the bus stop to wait <span class="marked">(B) for</span> the bus. He often arrives <span class="marked">(C) in</span> the office <span class="marked">(D) on</span> time.',
+    options: ['A. under', 'B. for', 'C. in', 'D. on'],
+    correctErrors: [0, 2],
+    explanations: [
+      'A SAI: "under the bus stop" phải là "at the bus stop" – AT cho địa điểm cụ thể như trạm xe.',
+      'B đúng: "wait for the bus" – cụm cố định.',
+      'C SAI: "arrives in the office" phải là "arrives at the office" – AT cho địa điểm làm việc.',
+      'D đúng: "on time" – thành ngữ cố định.',
+    ]
+  },
+  {
+    id: 'ex6_p5',
+    text: 'The new department store is <span class="marked">(A) on</span> the north <span class="marked">(B) of</span> the city. It is <span class="marked">(C) opposite</span> the hotel. <span class="marked">(D) At</span> front of the department store is a big park.',
+    options: ['A. on', 'B. of', 'C. opposite', 'D. at'],
+    correctErrors: [0, 3],
+    explanations: [
+      'A SAI: "on the north" phải là "in the north" – IN cho phương hướng chính.',
+      'B đúng: "in the north OF the city" – OF đúng.',
+      'C đúng: "opposite the hotel" – OPPOSITE đúng.',
+      'D SAI: "At front of" phải là "In front of" – cụm giới từ cố định là "in front of".',
+    ]
+  },
+];
+
+const ex7Data = [
+  { prompt:'The travel agent / the National Bank', template:'The travel agent is ___ the National Bank.', id:'ex7_0', answer:'opposite', explanation:'Trong tranh, Travel Agent (1) và National Bank (9) nằm đối diện nhau qua đường → opposite.' },
+  { prompt:'The boy / the two women', template:'The boy is ___ the two women.', id:'ex7_1', answer:'between', explanation:'Người con trai (số 3) đứng giữa hai người phụ nữ → between.' },
+  { prompt:'The woman / bus stop', template:'The woman is ___ the bus stop.', id:'ex7_2', answer:'at', explanation:'Người phụ nữ đứng tại trạm xe buýt → at.' },
+  { prompt:'The restaurant / the travel agent', template:'The restaurant is ___ the travel agent.', id:'ex7_3', answer:'next to', explanation:'Restaurant (4) nằm ngay kề bên Travel Agent (1) → next to.' },
+  { prompt:'The red car / the restaurant', template:'The red car is ___ the restaurant.', id:'ex7_4', answer:'in front of', explanation:'Chiếc xe đỏ (5) đỗ phía trước nhà hàng → in front of.' },
+  { prompt:'The man / the car', template:'The man is ___ the car.', id:'ex7_5', answer:'next to', explanation:'Người đàn ông đứng ngay cạnh chiếc xe → next to.' },
+  { prompt:'The bicycle / the supermarket', template:'The bicycle is ___ the supermarket.', id:'ex7_6', answer:'in front of', explanation:'Chiếc xe đạp đứng trước cửa siêu thị → in front of.' },
+  { prompt:'The supermarket / the Savers bank and the National Bank', template:'The supermarket is ___ the Savers bank and the National Bank.', id:'ex7_7', answer:'between', explanation:'Supermarket (8) nằm giữa Savers Bank và National Bank (9) → between.' },
+  { prompt:'The National Bank / the supermarket', template:'The National Bank is ___ the supermarket.', id:'ex7_8', answer:'next to', explanation:'National Bank (9) nằm ngay kề siêu thị (8) → next to.' },
+];
+
+// ─── RENDER ───────────────────────────────────────────────────────────────────
+const mcqSelections = {};
+const checkSelections = {};
+
+function renderEx2() {
+  const c = document.getElementById('ex2Container');
+  c.innerHTML = ex2Data.map((item) =>
+    `<div class="match2-row">
+      <span class="match2-meaning">${item.meaning}</span>
+      <span class="match2-arrow">→</span>
+      <select class="prep-select" id="${item.id}" onchange="updateProgress()">
+        <option value="">-- chọn --</option>
+        ${ex2Options.map(o=>`<option>${o}</option>`).join('')}
+      </select>
+    </div>`
+  ).join('');
+}
+
+function renderEx3() {
+  const c = document.getElementById('ex3Container');
+  c.innerHTML = ex3Data.map((item, i) => {
+    const inputs = item.answers.map((_, j) =>
+      `<input class="fill-blank" id="ex3_${i}_${j}" placeholder="giới từ..." style="min-width:80px" autocomplete="off">`
+    ).join(' và ');
+    return `<div class="fill-row"><strong>${i+1}.</strong> <em>${item.sentence}</em><br>→ Giới từ trong câu: ${inputs}</div>`;
+  }).join('');
+  document.querySelectorAll('#ex3Container .fill-blank').forEach(el => el.addEventListener('input', updateProgress));
+}
+
+function renderEx4() {
+  const c = document.getElementById('ex4Container');
+  c.innerHTML = ex4Data.map((item, i) => {
+    let tpl = item.template;
+    item.blanks.forEach((b, j) => {
+      tpl = tpl.replace('___', `<input class="fill-blank" id="${b.id}" placeholder="..." style="min-width:75px" autocomplete="off">`);
+    });
+    return `<div class="fill-row"><strong>${i+1}.</strong> ${tpl}</div>`;
+  }).join('');
+  document.querySelectorAll('#ex4Container .fill-blank').forEach(el => el.addEventListener('input', updateProgress));
+}
+
+function renderEx5() {
+  const c = document.getElementById('ex5Container');
+  c.innerHTML = ex5Data.map((item, i) =>
+    `<div class="mcq-question">
+      <div class="mcq-sentence">${i+1}. <em>${item.sentence}</em></div>
+      <div class="options">${item.options.map((opt,j)=>
+        `<button class="option-btn" id="ex5_${i}_${j}" onclick="selectMCQ('ex5',${i},${j},${item.options.length})">
+          <span class="option-dot">${opt[0]}</span>${opt}
+        </button>`
+      ).join('')}</div>
+    </div>`
+  ).join('');
+}
+
+function renderEx6() {
+  const c = document.getElementById('ex6Container');
+  c.innerHTML = ex6Data.map((para, pi) =>
+    `<div class="para-block">
+      <div class="para-text">${para.text}</div>
+      <div class="check-options">${para.options.map((opt, oi) =>
+        `<label class="check-label" id="ex6lbl_${pi}_${oi}" onclick="toggleCheck(${pi},${oi})">
+          <input type="checkbox" id="ex6_${pi}_${oi}">${opt}
+        </label>`
+      ).join('')}</div>
+    </div>`
+  ).join('');
+}
+
+function toggleCheck(pi, oi) {
+  const inp = document.getElementById(`ex6_${pi}_${oi}`);
+  const lbl = document.getElementById(`ex6lbl_${pi}_${oi}`);
+  inp.checked = !inp.checked;
+  lbl.classList.toggle('checked', inp.checked);
+  if (!checkSelections[pi]) checkSelections[pi] = new Set();
+  if (inp.checked) checkSelections[pi].add(oi);
+  else checkSelections[pi].delete(oi);
+  updateProgress();
+}
+
+function renderEx7() {
+  const c = document.getElementById('ex7Container');
+  c.innerHTML = ex7Data.map((item, i) =>
+    `<div class="fill-row">
+      <div style="font-size:13px;color:var(--text-muted);margin-bottom:3px">📍 <em>${item.prompt}</em></div>
+      <div>${item.template.replace('___',`<input class="fill-blank" id="${item.id}" placeholder="giới từ..." style="min-width:120px" autocomplete="off">`)}</div>
+    </div>`
+  ).join('');
+  document.querySelectorAll('#ex7Container .fill-blank').forEach(el => el.addEventListener('input', updateProgress));
+}
+
+function selectMCQ(prefix, qIdx, optIdx, total) {
+  for (let j = 0; j < total; j++) document.getElementById(`${prefix}_${qIdx}_${j}`)?.classList.remove('selected');
+  document.getElementById(`${prefix}_${qIdx}_${optIdx}`)?.classList.add('selected');
+  mcqSelections[`${prefix}_${qIdx}`] = optIdx;
+  updateProgress();
+}
+
+// ─── PROGRESS ─────────────────────────────────────────────────────────────────
+function countAnswered() {
+  let filled = 0, total = 0;
+  ex1Data.forEach(b => { total++; if (document.getElementById(b.id)?.value) filled++; });
+  ex2Data.forEach(b => { total++; if (document.getElementById(b.id)?.value) filled++; });
+  ex3Data.forEach((item, i) => item.answers.forEach((_, j) => { total++; if (document.getElementById(`ex3_${i}_${j}`)?.value.trim()) filled++; }));
+  ex4Data.forEach(item => item.blanks.forEach(b => { total++; if (document.getElementById(b.id)?.value.trim()) filled++; }));
+  ex5Data.forEach((_, i) => { total++; if (mcqSelections[`ex5_${i}`] !== undefined) filled++; });
+  ex6Data.forEach((_, pi) => { total++; if (checkSelections[pi]?.size > 0) filled++; });
+  ex7Data.forEach(item => { total++; if (document.getElementById(item.id)?.value.trim()) filled++; });
+  return { filled, total };
+}
+
+function updateProgress() {
+  const { filled, total } = countAnswered();
+  document.getElementById('progressFill').style.width = (filled / total * 100) + '%';
+  document.getElementById('progressCount').textContent = `${filled} / ${total}`;
+}
+
+// ─── SUBMIT ───────────────────────────────────────────────────────────────────
+function norm(s) { return s.trim().toLowerCase().replace(/\s+/g,' '); }
+
+function submitAll() {
+  let score = 0, total = 0;
+
+  // Ex1
+  let h1 = '<h4>📝 Giải thích Exercise 1:</h4>';
+  const ex1Labels = ['Nơi ở/học/làm việc','Không gian lớn','Phương hướng chính','Bề mặt vật thể','Phương hướng trái/phải','Tên tòa nhà/địa chỉ','Ôtô, taxi','Phố, tầng','Địa chỉ email','Phương tiện công cộng'];
+  ex1Data.forEach((b, i) => {
+    total++;
+    const el = document.getElementById(b.id);
+    const ok = el?.value === b.answer;
+    if (ok) score++;
+    if (el) { el.classList.add(ok?'correct':'wrong'); el.disabled = true; }
+    h1 += `<div class="ans-row"><span class="${ok?'ans-correct':'ans-wrong'}">${ok?'✅':'❌'} ${ex1Labels[i]}: <strong>${b.answer}</strong></span><span class="ans-explanation">– ${b.explanation}</span></div>`;
+  });
+  const a1 = document.getElementById('ex1Ans'); a1.innerHTML = h1; a1.classList.add('show');
+
+  // Ex2
+  let h2 = '<h4>📝 Giải thích Exercise 2:</h4>';
+  ex2Data.forEach(b => {
+    total++;
+    const el = document.getElementById(b.id);
+    const ok = el?.value === b.answer;
+    if (ok) score++;
+    if (el) { el.classList.add(ok?'correct':'wrong'); el.disabled = true; }
+    h2 += `<div class="ans-row"><span class="${ok?'ans-correct':'ans-wrong'}">${ok?'✅':'❌'} ${b.meaning} → <strong>${b.answer}</strong></span><span class="ans-explanation">– ${b.explanation}</span></div>`;
+  });
+  const a2 = document.getElementById('ex2Ans'); a2.innerHTML = h2; a2.classList.add('show');
+
+  // Ex3
+  let h3 = '<h4>📝 Giải thích Exercise 3:</h4>';
+  ex3Data.forEach((item, i) => {
+    item.answers.forEach((ans, j) => {
+      total++;
+      const inp = document.getElementById(`ex3_${i}_${j}`);
+      const ok = norm(inp?.value||'') === norm(ans);
+      if (ok) score++;
+      if (inp) inp.classList.add(ok?'correct':'wrong');
+    });
+    h3 += `<div class="ans-row"><span class="ans-correct">✅ Câu ${i+1}: <strong>${item.answers.join(', ')}</strong></span><span class="ans-explanation">– ${item.explanation}</span></div>`;
+  });
+  const a3 = document.getElementById('ex3Ans'); a3.innerHTML = h3; a3.classList.add('show');
+
+  // Ex4
+  let h4 = '<h4>📝 Giải thích Exercise 4:</h4>';
+  ex4Data.forEach((item, i) => {
+    item.blanks.forEach(b => {
+      total++;
+      const inp = document.getElementById(b.id);
+      const ok = norm(inp?.value||'') === norm(b.answer);
+      if (ok) score++;
+      if (inp) inp.classList.add(ok?'correct':'wrong');
+      h4 += `<div class="ans-row"><span class="${ok?'ans-correct':'ans-wrong'}">${ok?'✅':'❌'} Câu ${i+1}: <strong>${b.answer}</strong></span><span class="ans-explanation">– ${b.explanation}</span></div>`;
+    });
+  });
+  const a4 = document.getElementById('ex4Ans'); a4.innerHTML = h4; a4.classList.add('show');
+
+  // Ex5
+  let h5 = '<h4>📝 Giải thích Exercise 5:</h4>';
+  ex5Data.forEach((item, i) => {
+    total++;
+    const sel = mcqSelections[`ex5_${i}`];
+    const ok = sel === item.correct;
+    if (ok) score++;
+    for (let j = 0; j < item.options.length; j++) {
+      const btn = document.getElementById(`ex5_${i}_${j}`);
+      if (!btn) continue;
+      btn.disabled = true; btn.classList.remove('selected');
+      if (j === item.correct) btn.classList.add('correct-ans');
+      else if (j === sel && !ok) btn.classList.add('wrong-ans');
+    }
+    h5 += `<div class="ans-row"><span class="${ok?'ans-correct':'ans-wrong'}">${ok?'✅':'❌'} Câu ${i+1}: <strong>${item.options[item.correct]}</strong></span><span class="ans-explanation">– ${item.explanation}</span></div>`;
+  });
+  const a5 = document.getElementById('ex5Ans'); a5.innerHTML = h5; a5.classList.add('show');
+
+  // Ex6
+  let h6 = '<h4>📝 Giải thích Exercise 6:</h4>';
+  ex6Data.forEach((para, pi) => {
+    total++;
+    const userSet = checkSelections[pi] || new Set();
+    const correctSet = new Set(para.correctErrors);
+    const ok = userSet.size === correctSet.size && [...correctSet].every(v => userSet.has(v));
+    if (ok) score++;
+    para.options.forEach((opt, oi) => {
+      const lbl = document.getElementById(`ex6lbl_${pi}_${oi}`);
+      if (!lbl) return;
+      lbl.style.pointerEvents = 'none';
+      lbl.classList.remove('checked');
+      const isCorrectError = correctSet.has(oi);
+      const wasChecked = userSet.has(oi);
+      if (isCorrectError) lbl.classList.add('correct-check');
+      else if (wasChecked) lbl.classList.add('wrong-check');
+    });
+    const correctLabels = para.correctErrors.map(i => para.options[i]).join(', ');
+    h6 += `<div class="ans-row" style="margin-bottom:12px">
+      <span class="${ok?'ans-correct':'ans-wrong'}">${ok?'✅':'❌'} Đoạn ${pi+1}: Lỗi sai là <strong>${correctLabels}</strong></span>
+      ${para.explanations.map((exp,i)=>`<div style="margin-left:14px;margin-top:4px;font-size:13px;color:${para.correctErrors.includes(i)?'var(--wrong)':'var(--text-muted)'};">${para.options[i]}: ${exp}</div>`).join('')}
+    </div>`;
+  });
+  const a6 = document.getElementById('ex6Ans'); a6.innerHTML = h6; a6.classList.add('show');
+
+  // Ex7
+  let h7 = '<h4>📝 Giải thích Exercise 7:</h4>';
+  ex7Data.forEach((item, i) => {
+    total++;
+    const inp = document.getElementById(item.id);
+    const ok = norm(inp?.value||'') === norm(item.answer);
+    if (ok) score++;
+    if (inp) inp.classList.add(ok?'correct':'wrong');
+    h7 += `<div class="ans-row"><span class="${ok?'ans-correct':'ans-wrong'}">${ok?'✅':'❌'} Câu ${i+1}: <strong>${item.answer}</strong></span><span class="ans-explanation">– ${item.explanation}</span></div>`;
+  });
+  const a7 = document.getElementById('ex7Ans'); a7.innerHTML = h7; a7.classList.add('show');
+
+  const fb = document.getElementById('globalFeedback');
+  document.getElementById('scoreDisplay').textContent = `${score} / ${total}`;
+  fb.classList.add('show');
+  fb.scrollIntoView({ behavior:'smooth', block:'start' });
+  updateProgress();
+}
+
+// ─── RESET ────────────────────────────────────────────────────────────────────
+function resetAll() {
+  Object.keys(mcqSelections).forEach(k => delete mcqSelections[k]);
+  Object.keys(checkSelections).forEach(k => delete checkSelections[k]);
+  document.getElementById('globalFeedback').classList.remove('show');
+  ['ex1Ans','ex2Ans','ex3Ans','ex4Ans','ex5Ans','ex6Ans','ex7Ans'].forEach(id => {
+    const el = document.getElementById(id); el.classList.remove('show'); el.innerHTML = '';
+  });
+  ex1Data.forEach(b => { const el=document.getElementById(b.id); if(el){el.value='';el.disabled=false;el.className='prep-select';} });
+  renderEx2(); renderEx3(); renderEx4(); renderEx5(); renderEx6(); renderEx7();
+  updateProgress();
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+renderEx2(); renderEx3(); renderEx4(); renderEx5(); renderEx6(); renderEx7();
+updateProgress();
+</script>
+</body>
+</html>
