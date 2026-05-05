@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Section 1: Bổ Ngữ – Bài Tập Tiếng Anh</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#ffffff; --blue:#1a6fc4; --blue-light:#e8f1fb; --blue-mid:#4d9de0;
+    --blue-dark:#0d4a8a; --text:#1a1a2e; --text-muted:#6b7280; --border:#dde6f5;
+    --correct:#16a34a; --correct-bg:#dcfce7; --wrong:#dc2626; --wrong-bg:#fee2e2;
+    --neutral-bg:#f8faff; --shadow:0 2px 16px rgba(26,111,196,0.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Be Vietnam Pro',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+  header{background:linear-gradient(135deg,var(--blue-dark) 0%,var(--blue) 60%,var(--blue-mid) 100%);color:#fff;padding:36px 24px 28px;text-align:center;position:relative;overflow:hidden;}
+  header::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 70% 30%,rgba(255,255,255,0.08) 0%,transparent 60%);}
+  header .badge{display:inline-block;background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.3);border-radius:20px;padding:4px 16px;font-size:12px;font-weight:500;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;}
+  header h1{font-family:'Playfair Display',serif;font-size:clamp(24px,5vw,38px);font-weight:700;line-height:1.2;margin-bottom:8px;}
+  header p{font-size:14px;opacity:0.85;}
+  .progress-wrap{background:var(--blue-light);padding:14px 24px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10;}
+  .progress-label{font-size:13px;font-weight:600;color:var(--blue);white-space:nowrap;}
+  .progress-bar{flex:1;height:8px;background:#d1dff5;border-radius:99px;overflow:hidden;}
+  .progress-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--blue-mid));border-radius:99px;transition:width 0.4s ease;}
+  .progress-count{font-size:13px;font-weight:600;color:var(--blue);white-space:nowrap;}
+  main{max-width:820px;margin:0 auto;padding:28px 16px 60px;}
+  .exercise-card{background:var(--bg);border:1.5px solid var(--border);border-radius:16px;margin-bottom:24px;overflow:hidden;box-shadow:var(--shadow);transition:box-shadow 0.2s;}
+  .exercise-card:hover{box-shadow:0 4px 24px rgba(26,111,196,0.13);}
+  .exercise-header{background:var(--blue-light);border-bottom:1.5px solid var(--border);padding:14px 20px;display:flex;align-items:center;gap:12px;}
+  .ex-num{background:var(--blue);color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0;}
+  .ex-title{font-size:15px;font-weight:600;color:var(--blue-dark);}
+  .exercise-body{padding:20px;}
+  .hint{font-size:13px;color:var(--text-muted);margin-bottom:16px;font-style:italic;}
+
+  /* Info box */
+  .info-box{background:var(--blue-light);border:1.5px solid var(--blue-mid);border-radius:10px;padding:14px 16px;margin-bottom:18px;font-size:13px;color:var(--blue-dark);line-height:1.8;}
+  .info-box strong{font-size:14px;display:block;margin-bottom:6px;}
+  .type-tag{display:inline-block;background:var(--blue);color:#fff;border-radius:6px;padding:2px 10px;font-size:12px;font-weight:700;margin:2px 3px;}
+
+  /* MCQ */
+  .mcq-question{margin-bottom:20px;}
+  .mcq-question+.mcq-question{border-top:1px solid var(--border);padding-top:20px;}
+  .mcq-sentence{font-weight:500;margin-bottom:10px;font-size:15px;}
+  .mcq-sentence u{text-decoration:underline;color:var(--blue-dark);}
+  .options{display:flex;flex-direction:column;gap:8px;}
+  .option-btn{display:flex;align-items:center;gap:10px;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;background:var(--neutral-bg);cursor:pointer;font-family:'Be Vietnam Pro',sans-serif;font-size:14px;color:var(--text);transition:all 0.18s;text-align:left;}
+  .option-btn:hover:not(:disabled){border-color:var(--blue);background:var(--blue-light);}
+  .option-btn.selected{border-color:var(--blue);background:var(--blue-light);}
+  .option-btn.correct-ans{border-color:var(--correct);background:var(--correct-bg);color:var(--correct);font-weight:600;}
+  .option-btn.wrong-ans{border-color:var(--wrong);background:var(--wrong-bg);color:var(--wrong);font-weight:600;}
+  .option-btn:disabled{cursor:default;}
+  .option-dot{width:20px;height:20px;border-radius:50%;border:2px solid #c5d4ec;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;transition:all 0.18s;}
+  .option-btn.correct-ans .option-dot{border-color:var(--correct);background:var(--correct);color:#fff;}
+  .option-btn.wrong-ans .option-dot{border-color:var(--wrong);background:var(--wrong);color:#fff;}
+  .option-btn.selected .option-dot{border-color:var(--blue);background:var(--blue);color:#fff;}
+
+  /* Fill blank */
+  .prep-select{border:none;border-bottom:2px solid var(--blue-mid);outline:none;background:transparent;font-family:'Be Vietnam Pro',sans-serif;font-size:14px;color:var(--blue-dark);padding:3px 6px;cursor:pointer;min-width:180px;transition:border-color 0.2s;}
+  .prep-select:focus{border-color:var(--blue);}
+  .prep-select.correct{border-color:var(--correct);background:var(--correct-bg);border-radius:4px 4px 0 0;}
+  .prep-select.wrong{border-color:var(--wrong);background:var(--wrong-bg);border-radius:4px 4px 0 0;}
+
+  /* Ex4 blocks */
+  .ex4-block{background:var(--neutral-bg);border:1.5px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:14px;}
+  .ex4-sentence{font-size:15px;font-weight:500;margin-bottom:10px;color:var(--blue-dark);}
+  .ex4-item{display:flex;align-items:center;gap:8px;margin-bottom:8px;font-size:14px;flex-wrap:wrap;}
+  .ex4-part{font-style:italic;color:var(--text-muted);}
+
+  .answer-section{background:var(--neutral-bg);border:1.5px solid var(--border);border-radius:12px;padding:14px 16px;margin-top:14px;font-size:14px;display:none;}
+  .answer-section.show{display:block;}
+  .answer-section h4{color:var(--blue-dark);font-size:14px;margin-bottom:8px;}
+  .ans-row{margin-bottom:7px;}
+  .ans-correct{color:var(--correct);font-weight:600;}
+  .ans-wrong{color:var(--wrong);}
+  .ans-explanation{color:var(--text-muted);font-size:13px;margin-left:6px;}
+
+  .global-feedback{background:var(--blue-light);border:2px solid var(--blue);border-radius:16px;padding:24px;margin-bottom:28px;text-align:center;display:none;}
+  .global-feedback.show{display:block;}
+  .global-feedback .score{font-size:40px;font-weight:700;color:var(--blue);}
+  .global-feedback .score-label{font-size:15px;color:var(--text-muted);margin-top:4px;}
+  .btn-primary{background:linear-gradient(135deg,var(--blue-dark),var(--blue));color:#fff;border:none;border-radius:12px;padding:14px 36px;font-family:'Be Vietnam Pro',sans-serif;font-size:16px;font-weight:600;cursor:pointer;box-shadow:0 4px 16px rgba(26,111,196,0.3);transition:all 0.2s;display:block;margin:0 auto;}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 22px rgba(26,111,196,0.4);}
+  .btn-reset{background:transparent;color:var(--blue);border:1.5px solid var(--blue);border-radius:12px;padding:12px 28px;font-family:'Be Vietnam Pro',sans-serif;font-size:15px;font-weight:600;cursor:pointer;display:block;margin:12px auto 0;transition:all 0.2s;}
+  .btn-reset:hover{background:var(--blue-light);}
+  .submit-area{padding:8px 0 4px;text-align:center;}
+  @media(max-width:600px){.exercise-body{padding:14px;}.ex4-item{flex-direction:column;gap:4px;}}
+</style>
+</head>
+<body>
+<header>
+  <div class="badge">Prep.vn – Tiếng Anh</div>
+  <h1>Section 1: Bổ Ngữ (Complements)</h1>
+  <p>Hoàn thành tất cả bài tập rồi bấm "Chấm bài" để xem đáp án chi tiết</p>
+</header>
+<div class="progress-wrap">
+  <span class="progress-label">Tiến độ</span>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+  <span class="progress-count" id="progressCount">0 / 0</span>
+</div>
+<main>
+  <div class="global-feedback" id="globalFeedback">
+    <div class="score" id="scoreDisplay">0/0</div>
+    <div class="score-label">Điểm số của bạn</div>
+  </div>
+
+  <!-- Ex2 -->
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">2</div><div class="ex-title">Xác định phần gạch chân thuộc loại bổ ngữ nào</div></div>
+    <div class="exercise-body">
+      <div class="info-box">
+        <strong>📌 Các loại bổ ngữ:</strong>
+        <span class="type-tag">A. Bổ ngữ cho chủ ngữ</span>
+        <span class="type-tag">B. Bổ ngữ cho tân ngữ</span>
+        <span class="type-tag">C. Bổ ngữ cho tính từ</span>
+        <span class="type-tag">D. Bổ ngữ cho động từ</span>
+        <span class="type-tag">E. Bổ ngữ trạng từ</span>
+      </div>
+      <div id="ex2Container"></div>
+      <div class="answer-section" id="ex2Ans"></div>
+    </div>
+  </div>
+
+  <!-- Ex3 -->
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">3</div><div class="ex-title">Bổ ngữ trạng từ được gạch chân thêm thông tin gì cho câu?</div></div>
+    <div class="exercise-body">
+      <div id="ex3Container"></div>
+      <div class="answer-section" id="ex3Ans"></div>
+    </div>
+  </div>
+
+  <!-- Ex4 -->
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">4</div><div class="ex-title">Xác định mỗi phần bổ ngữ là bổ ngữ gì</div></div>
+    <div class="exercise-body">
+      <p class="hint">💡 Chọn từ: <strong>bổ ngữ cho chủ ngữ / bổ ngữ cho tân ngữ / bổ ngữ cho tính từ / bổ ngữ trạng từ</strong></p>
+      <div id="ex4Container"></div>
+      <div class="answer-section" id="ex4Ans"></div>
+    </div>
+  </div>
+
+  <div class="submit-area">
+    <button class="btn-primary" onclick="submitAll()">🎯 Chấm bài &amp; Xem giải thích</button>
+    <button class="btn-reset" onclick="resetAll()">↺ Làm lại từ đầu</button>
+  </div>
+</main>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────────
+
+const COMP_OPTS = ['A. Bổ ngữ cho chủ ngữ','B. Bổ ngữ cho tân ngữ','C. Bổ ngữ cho tính từ','D. Bổ ngữ cho động từ','E. Bổ ngữ trạng từ'];
+
+const ex2Data = [
+  {
+    sentence:'Her house is <u>big</u>.', underlined:'big', correct:0,
+    explanation:'"big" đứng sau động từ liên kết "is" và bổ nghĩa cho chủ ngữ "Her house" → Bổ ngữ cho chủ ngữ (Subject Complement).'
+  },
+  {
+    sentence:'The boss has bought <u>another new car</u>.', underlined:'another new car', correct:1,
+    explanation:'"another new car" là tân ngữ trực tiếp sau "bought". Đây là bổ ngữ cho tân ngữ khi nó xác định danh tính của tân ngữ. Thực ra "another new car" là Object (tân ngữ) của "bought" → Bổ ngữ cho tân ngữ.'
+  },
+  {
+    sentence:'I find her attitude <u>strange</u>.', underlined:'strange', correct:1,
+    explanation:'"strange" bổ nghĩa cho tân ngữ "her attitude" (= I find her attitude to be strange) → Bổ ngữ cho tân ngữ (Object Complement).'
+  },
+  {
+    sentence:'He felt alone <u>in the world</u>.', underlined:'in the world', correct:2,
+    explanation:'"in the world" là cụm giới từ bổ nghĩa cho tính từ "alone" (alone in the world = cô đơn trong thế giới này) → Bổ ngữ cho tính từ.'
+  },
+  {
+    sentence:'The teacher sent Duke <u>home</u>.', underlined:'home', correct:1,
+    explanation:'"home" bổ nghĩa cho tân ngữ "Duke", chỉ trạng thái/vị trí của Duke sau hành động "sent" → Bổ ngữ cho tân ngữ (Object Complement).'
+  },
+  {
+    sentence:'The wedding will be <u>in the afternoon</u>.', underlined:'in the afternoon', correct:4,
+    explanation:'"in the afternoon" là cụm giới từ chỉ thời gian, bổ sung thông tin trạng từ cho toàn câu → Bổ ngữ trạng từ (Adverbial Complement).'
+  },
+  {
+    sentence:"Don't call me <u>a liar</u>.", underlined:'a liar', correct:1,
+    explanation:'"a liar" bổ nghĩa cho tân ngữ "me" (= đừng gọi tôi là kẻ nói dối) → Bổ ngữ cho tân ngữ (Object Complement).'
+  },
+  {
+    sentence:"Don't call <u>me</u> a liar.", underlined:'me', correct:1,
+    explanation:'"me" là tân ngữ của động từ "call". Tuy nhiên trong ngữ cảnh câu này "me" đóng vai trò là tân ngữ bị bổ nghĩa bởi "a liar" → Bổ ngữ cho tân ngữ (Object).'
+  },
+  {
+    sentence:'He became <u>a famous writer</u>.', underlined:'a famous writer', correct:0,
+    explanation:'"a famous writer" đứng sau động từ liên kết "became" và bổ nghĩa cho chủ ngữ "He" → Bổ ngữ cho chủ ngữ (Subject Complement).'
+  },
+];
+
+const ADV_OPTS = ['A. Địa điểm','B. Thời gian','C. Cách thức'];
+
+const ex3Data = [
+  { sentence:'Put the cash <u>in the box</u>.', underlined:'in the box', correct:0, explanation:'"in the box" = trong hộp → chỉ địa điểm (place).' },
+  { sentence:"Let's go <u>to bed</u> early.", underlined:'to bed', correct:0, explanation:'"to bed" chỉ nơi đến → địa điểm.' },
+  { sentence:'The program lasted <u>four hours</u>.', underlined:'four hours', correct:1, explanation:'"four hours" = bốn giờ → chỉ thời gian/thời lượng.' },
+  { sentence:'She drives <u>carefully</u>.', underlined:'carefully', correct:2, explanation:'"carefully" = cẩn thận → chỉ cách thức lái xe.' },
+  { sentence:'I slept <u>well</u> last night.', underlined:'well', correct:2, explanation:'"well" = ngon giấc → chỉ cách thức ngủ.' },
+  { sentence:'I slept well <u>last night</u>.', underlined:'last night', correct:1, explanation:'"last night" = tối qua → chỉ thời gian.' },
+  { sentence:'Mai Trang went <u>home</u> after work.', underlined:'home', correct:0, explanation:'"home" = về nhà → chỉ địa điểm đến.' },
+  { sentence:'Mai Trang went home <u>after work</u>.', underlined:'after work', correct:1, explanation:'"after work" = sau giờ làm → chỉ thời gian.' },
+  { sentence:'I stayed <u>in a hotel</u> yesterday.', underlined:'in a hotel', correct:0, explanation:'"in a hotel" = trong khách sạn → chỉ địa điểm.' },
+  { sentence:'I stayed in a hotel <u>yesterday</u>.', underlined:'yesterday', correct:1, explanation:'"yesterday" = hôm qua → chỉ thời gian.' },
+];
+
+const COMP_TYPES = ['bổ ngữ cho chủ ngữ','bổ ngữ cho tân ngữ','bổ ngữ cho tính từ','bổ ngữ trạng từ'];
+
+const ex4Data = [
+  {
+    num:1, sentence:"Let's paint it blue.",
+    parts:[
+      { id:'ex4_1a', label:'it', answer:'bổ ngữ cho tân ngữ', explanation:'"it" là tân ngữ trực tiếp của "paint".' },
+      { id:'ex4_1b', label:'blue', answer:'bổ ngữ cho tân ngữ', explanation:'"blue" bổ nghĩa cho tân ngữ "it" (paint it to be blue) → bổ ngữ cho tân ngữ.' },
+    ]
+  },
+  {
+    num:2, sentence:'She looks very kind.',
+    parts:[
+      { id:'ex4_2a', label:'very kind', answer:'bổ ngữ cho chủ ngữ', explanation:'"very kind" đứng sau động từ liên kết "looks", bổ nghĩa cho chủ ngữ "She" → bổ ngữ cho chủ ngữ.' },
+    ]
+  },
+  {
+    num:3, sentence:'The dog is brown.',
+    parts:[
+      { id:'ex4_3a', label:'brown', answer:'bổ ngữ cho chủ ngữ', explanation:'"brown" đứng sau "is", bổ nghĩa cho chủ ngữ "The dog" → bổ ngữ cho chủ ngữ.' },
+    ]
+  },
+  {
+    num:4, sentence:'The rain made the grass wet.',
+    parts:[
+      { id:'ex4_4a', label:'the grass', answer:'bổ ngữ cho tân ngữ', explanation:'"the grass" là tân ngữ của "made".' },
+      { id:'ex4_4b', label:'wet', answer:'bổ ngữ cho tân ngữ', explanation:'"wet" bổ nghĩa cho tân ngữ "the grass" (made the grass to be wet) → bổ ngữ cho tân ngữ.' },
+    ]
+  },
+  {
+    num:5, sentence:'My parents live in North Wales.',
+    parts:[
+      { id:'ex4_5a', label:'in North Wales', answer:'bổ ngữ trạng từ', explanation:'"in North Wales" chỉ địa điểm, bổ sung thông tin cho toàn câu → bổ ngữ trạng từ.' },
+    ]
+  },
+  {
+    num:6, sentence:'Everybody found her very pleasant.',
+    parts:[
+      { id:'ex4_6a', label:'very pleasant', answer:'bổ ngữ cho tân ngữ', explanation:'"very pleasant" bổ nghĩa cho tân ngữ "her" → bổ ngữ cho tân ngữ.' },
+    ]
+  },
+  {
+    num:7, sentence:"I'm happy to know you.",
+    parts:[
+      { id:'ex4_7a', label:'happy', answer:'bổ ngữ cho chủ ngữ', explanation:'"happy" đứng sau "am", bổ nghĩa cho chủ ngữ "I" → bổ ngữ cho chủ ngữ.' },
+      { id:'ex4_7b', label:'to know you', answer:'bổ ngữ cho tính từ', explanation:'"to know you" bổ nghĩa cho tính từ "happy" (happy to know you) → bổ ngữ cho tính từ.' },
+    ]
+  },
+  {
+    num:8, sentence:'Please put the book on the shelf.',
+    parts:[
+      { id:'ex4_8a', label:'the book', answer:'bổ ngữ cho tân ngữ', explanation:'"the book" là tân ngữ trực tiếp của "put".' },
+      { id:'ex4_8b', label:'on the shelf', answer:'bổ ngữ trạng từ', explanation:'"on the shelf" chỉ địa điểm, bổ sung thông tin trạng từ → bổ ngữ trạng từ.' },
+    ]
+  },
+];
+
+// ── RENDER ────────────────────────────────────────────────────────────────────
+const mcqSel = {};
+
+function renderEx2() {
+  const c = document.getElementById('ex2Container');
+  c.innerHTML = ex2Data.map((item,i) =>
+    `<div class="mcq-question">
+      <div class="mcq-sentence">${i+1}. ${item.sentence}</div>
+      <div class="options">${COMP_OPTS.map((opt,j)=>
+        `<button class="option-btn" id="ex2_${i}_${j}" onclick="sel('ex2',${i},${j},${COMP_OPTS.length})">
+          <span class="option-dot">${opt[0]}</span>${opt}</button>`
+      ).join('')}</div>
+    </div>`
+  ).join('');
+}
+
+function renderEx3() {
+  const c = document.getElementById('ex3Container');
+  c.innerHTML = ex3Data.map((item,i) =>
+    `<div class="mcq-question">
+      <div class="mcq-sentence">${i+1}. ${item.sentence}</div>
+      <div class="options">${ADV_OPTS.map((opt,j)=>
+        `<button class="option-btn" id="ex3_${i}_${j}" onclick="sel('ex3',${i},${j},${ADV_OPTS.length})">
+          <span class="option-dot">${opt[0]}</span>${opt}</button>`
+      ).join('')}</div>
+    </div>`
+  ).join('');
+}
+
+function renderEx4() {
+  const c = document.getElementById('ex4Container');
+  c.innerHTML = ex4Data.map(block =>
+    `<div class="ex4-block">
+      <div class="ex4-sentence">${block.num}. <em>${block.sentence}</em></div>
+      ${block.parts.map(p =>
+        `<div class="ex4-item">
+          <span class="ex4-part">"${p.label}"</span> là bổ ngữ:
+          <select class="prep-select" id="${p.id}" onchange="updateProgress()">
+            <option value="">-- chọn loại --</option>
+            ${COMP_TYPES.map(t=>`<option value="${t}">${t}</option>`).join('')}
+          </select>
+        </div>`
+      ).join('')}
+    </div>`
+  ).join('');
+}
+
+function sel(prefix,qi,oi,total){
+  for(let j=0;j<total;j++) document.getElementById(`${prefix}_${qi}_${j}`)?.classList.remove('selected');
+  document.getElementById(`${prefix}_${qi}_${oi}`)?.classList.add('selected');
+  mcqSel[`${prefix}_${qi}`]=oi;
+  updateProgress();
+}
+
+// ── PROGRESS ──────────────────────────────────────────────────────────────────
+function countAnswered(){
+  let filled=0,total=0;
+  ex2Data.forEach((_,i)=>{total++;if(mcqSel[`ex2_${i}`]!==undefined)filled++;});
+  ex3Data.forEach((_,i)=>{total++;if(mcqSel[`ex3_${i}`]!==undefined)filled++;});
+  ex4Data.forEach(block=>block.parts.forEach(p=>{total++;if(document.getElementById(p.id)?.value)filled++;}));
+  return{filled,total};
+}
+function updateProgress(){
+  const{filled,total}=countAnswered();
+  document.getElementById('progressFill').style.width=(filled/total*100)+'%';
+  document.getElementById('progressCount').textContent=`${filled} / ${total}`;
+}
+
+// ── SUBMIT ────────────────────────────────────────────────────────────────────
+function submitAll(){
+  let score=0,total=0;
+
+  // Ex2
+  let h2='<h4>📝 Giải thích Exercise 2:</h4>';
+  ex2Data.forEach((item,i)=>{
+    total++;
+    const s=mcqSel[`ex2_${i}`]; const ok=s===item.correct; if(ok)score++;
+    for(let j=0;j<COMP_OPTS.length;j++){const b=document.getElementById(`ex2_${i}_${j}`);if(!b)continue;b.disabled=true;b.classList.remove('selected');if(j===item.correct)b.classList.add('correct-ans');else if(j===s&&!ok)b.classList.add('wrong-ans');}
+    h2+=`<div class="ans-row"><span class="${ok?'ans-correct':'ans-wrong'}">${ok?'✅':'❌'} Câu ${i+1} (<em>${item.underlined}</em>): <strong>${COMP_OPTS[item.correct]}</strong></span><span class="ans-explanation">– ${item.explanation}</span></div>`;
+  });
+  const a2=document.getElementById('ex2Ans'); a2.innerHTML=h2; a2.classList.add('show');
+
+  // Ex3
+  let h3='<h4>📝 Giải thích Exercise 3:</h4>';
+  ex3Data.forEach((item,i)=>{
+    total++;
+    const s=mcqSel[`ex3_${i}`]; const ok=s===item.correct; if(ok)score++;
+    for(let j=0;j<ADV_OPTS.length;j++){const b=document.getElementById(`ex3_${i}_${j}`);if(!b)continue;b.disabled=true;b.classList.remove('selected');if(j===item.correct)b.classList.add('correct-ans');else if(j===s&&!ok)b.classList.add('wrong-ans');}
+    h3+=`<div class="ans-row"><span class="${ok?'ans-correct':'ans-wrong'}">${ok?'✅':'❌'} Câu ${i+1} (<em>${item.underlined}</em>): <strong>${ADV_OPTS[item.correct]}</strong></span><span class="ans-explanation">– ${item.explanation}</span></div>`;
+  });
+  const a3=document.getElementById('ex3Ans'); a3.innerHTML=h3; a3.classList.add('show');
+
+  // Ex4
+  let h4='<h4>📝 Giải thích Exercise 4:</h4>';
+  ex4Data.forEach(block=>{
+    h4+=`<div style="margin-top:10px;font-weight:600;color:var(--blue-dark)">${block.num}. ${block.sentence}</div>`;
+    block.parts.forEach(p=>{
+      total++;
+      const el=document.getElementById(p.id);
+      const ok=el?.value===p.answer;
+      if(ok)score++; if(el){el.classList.add(ok?'correct':'wrong');el.disabled=true;}
+      h4+=`<div class="ans-row" style="margin-left:12px"><span class="${ok?'ans-correct':'ans-wrong'}">${ok?'✅':'❌'} "${p.label}": <strong>${p.answer}</strong></span><span class="ans-explanation">– ${p.explanation}</span></div>`;
+    });
+  });
+  const a4=document.getElementById('ex4Ans'); a4.innerHTML=h4; a4.classList.add('show');
+
+  const fb=document.getElementById('globalFeedback');
+  document.getElementById('scoreDisplay').textContent=`${score} / ${total}`;
+  fb.classList.add('show'); fb.scrollIntoView({behavior:'smooth',block:'start'});
+  updateProgress();
+}
+
+// ── RESET ─────────────────────────────────────────────────────────────────────
+function resetAll(){
+  Object.keys(mcqSel).forEach(k=>delete mcqSel[k]);
+  document.getElementById('globalFeedback').classList.remove('show');
+  ['ex2Ans','ex3Ans','ex4Ans'].forEach(id=>{const el=document.getElementById(id);el.classList.remove('show');el.innerHTML='';});
+  renderEx2();renderEx3();renderEx4();
+  updateProgress();
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+renderEx2();renderEx3();renderEx4();
+updateProgress();
+</script>
+</body>
+</html>

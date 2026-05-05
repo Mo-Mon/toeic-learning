@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Section 3: Các Mẫu Câu (2) – Bài Tập Tiếng Anh</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#ffffff;--blue:#1a6fc4;--blue-light:#e8f1fb;--blue-mid:#4d9de0;--blue-dark:#0d4a8a;--text:#1a1a2e;--text-muted:#6b7280;--border:#dde6f5;--correct:#16a34a;--correct-bg:#dcfce7;--wrong:#dc2626;--wrong-bg:#fee2e2;--neutral-bg:#f8faff;--shadow:0 2px 16px rgba(26,111,196,0.08);}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Be Vietnam Pro',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+  header{background:linear-gradient(135deg,var(--blue-dark) 0%,var(--blue) 60%,var(--blue-mid) 100%);color:#fff;padding:36px 24px 28px;text-align:center;position:relative;overflow:hidden;}
+  header::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 70% 30%,rgba(255,255,255,0.08) 0%,transparent 60%);}
+  header .badge{display:inline-block;background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.3);border-radius:20px;padding:4px 16px;font-size:12px;font-weight:500;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;}
+  header h1{font-family:'Playfair Display',serif;font-size:clamp(24px,5vw,38px);font-weight:700;line-height:1.2;margin-bottom:8px;}
+  header p{font-size:14px;opacity:0.85;}
+  .progress-wrap{background:var(--blue-light);padding:14px 24px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10;}
+  .progress-label{font-size:13px;font-weight:600;color:var(--blue);white-space:nowrap;}
+  .progress-bar{flex:1;height:8px;background:#d1dff5;border-radius:99px;overflow:hidden;}
+  .progress-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--blue-mid));border-radius:99px;transition:width 0.4s ease;}
+  .progress-count{font-size:13px;font-weight:600;color:var(--blue);white-space:nowrap;}
+  main{max-width:820px;margin:0 auto;padding:28px 16px 60px;}
+  .exercise-card{background:var(--bg);border:1.5px solid var(--border);border-radius:16px;margin-bottom:24px;overflow:hidden;box-shadow:var(--shadow);transition:box-shadow 0.2s;}
+  .exercise-card:hover{box-shadow:0 4px 24px rgba(26,111,196,0.13);}
+  .exercise-header{background:var(--blue-light);border-bottom:1.5px solid var(--border);padding:14px 20px;display:flex;align-items:center;gap:12px;}
+  .ex-num{background:var(--blue);color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0;}
+  .ex-title{font-size:15px;font-weight:600;color:var(--blue-dark);}
+  .exercise-body{padding:20px;}
+  .hint{font-size:13px;color:var(--text-muted);margin-bottom:16px;font-style:italic;}
+  .info-box{background:var(--blue-light);border:1.5px solid var(--blue-mid);border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:13px;color:var(--blue-dark);line-height:1.9;}
+  .info-box strong{font-size:14px;display:block;margin-bottom:6px;}
+  .struct-tag{display:inline-block;background:var(--blue);color:#fff;border-radius:6px;padding:2px 10px;font-size:12px;font-weight:700;margin:2px 3px;}
+  .fill-blank{display:inline-block;border:none;border-bottom:2px solid var(--blue-mid);outline:none;background:transparent;font-family:'Be Vietnam Pro',sans-serif;font-size:15px;color:var(--blue-dark);padding:2px 6px;min-width:120px;transition:border-color 0.2s;}
+  .fill-blank:focus{border-color:var(--blue);}
+  .fill-blank.correct{border-color:var(--correct);background:var(--correct-bg);border-radius:4px 4px 0 0;}
+  .fill-blank.wrong{border-color:var(--wrong);background:var(--wrong-bg);border-radius:4px 4px 0 0;}
+  .fill-row{margin-bottom:13px;font-size:15px;line-height:2;}
+  .textarea-ans{width:100%;border:1.5px solid var(--blue-mid);border-radius:10px;outline:none;padding:12px 14px;font-family:'Be Vietnam Pro',sans-serif;font-size:15px;color:var(--text);resize:vertical;min-height:70px;transition:border-color 0.2s;}
+  .textarea-ans:focus{border-color:var(--blue);}
+  .textarea-ans.correct{border-color:var(--correct);background:var(--correct-bg);}
+  .textarea-ans.wrong{border-color:var(--wrong);background:var(--wrong-bg);}
+  .mcq-question{margin-bottom:20px;}
+  .mcq-question+.mcq-question{border-top:1px solid var(--border);padding-top:20px;}
+  .mcq-sentence{font-weight:500;margin-bottom:10px;font-size:15px;}
+  .options{display:flex;flex-direction:column;gap:8px;}
+  .option-btn{display:flex;align-items:center;gap:10px;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;background:var(--neutral-bg);cursor:pointer;font-family:'Be Vietnam Pro',sans-serif;font-size:14px;color:var(--text);transition:all 0.18s;text-align:left;}
+  .option-btn:hover:not(:disabled){border-color:var(--blue);background:var(--blue-light);}
+  .option-btn.selected{border-color:var(--blue);background:var(--blue-light);}
+  .option-btn.correct-ans{border-color:var(--correct);background:var(--correct-bg);color:var(--correct);font-weight:600;}
+  .option-btn.wrong-ans{border-color:var(--wrong);background:var(--wrong-bg);color:var(--wrong);font-weight:600;}
+  .option-btn:disabled{cursor:default;}
+  .option-dot{width:20px;height:20px;border-radius:50%;border:2px solid #c5d4ec;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;transition:all 0.18s;}
+  .option-btn.correct-ans .option-dot{border-color:var(--correct);background:var(--correct);color:#fff;}
+  .option-btn.wrong-ans .option-dot{border-color:var(--wrong);background:var(--wrong);color:#fff;}
+  .option-btn.selected .option-dot{border-color:var(--blue);background:var(--blue);color:#fff;}
+  /* Ex2 match */
+  .match-row{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap;}
+  .match-sentence{flex:1;min-width:200px;font-size:14px;font-weight:500;font-style:italic;}
+  .match-arrow{color:var(--blue-mid);font-weight:700;}
+  .prep-select{border:none;border-bottom:2px solid var(--blue-mid);outline:none;background:transparent;font-family:'Be Vietnam Pro',sans-serif;font-size:13px;color:var(--blue-dark);padding:3px 6px;cursor:pointer;min-width:200px;}
+  .prep-select:focus{border-color:var(--blue);}
+  .prep-select.correct{border-color:var(--correct);background:var(--correct-bg);border-radius:4px 4px 0 0;}
+  .prep-select.wrong{border-color:var(--wrong);background:var(--wrong-bg);border-radius:4px 4px 0 0;}
+  /* Ex4/5 error */
+  .error-card{background:var(--neutral-bg);border:1.5px solid var(--border);border-radius:10px;padding:14px;margin-bottom:14px;}
+  .error-original{font-size:13px;color:var(--text-muted);margin-bottom:6px;}
+  .rewrite-hint{font-size:13px;color:var(--blue-dark);margin-bottom:6px;font-weight:500;}
+  .answer-section{background:var(--neutral-bg);border:1.5px solid var(--border);border-radius:12px;padding:14px 16px;margin-top:14px;font-size:14px;display:none;}
+  .answer-section.show{display:block;}
+  .answer-section h4{color:var(--blue-dark);font-size:14px;margin-bottom:8px;}
+  .ans-row{margin-bottom:7px;}
+  .ans-correct{color:var(--correct);font-weight:600;}
+  .ans-wrong{color:var(--wrong);}
+  .ans-explanation{color:var(--text-muted);font-size:13px;margin-left:6px;}
+  .global-feedback{background:var(--blue-light);border:2px solid var(--blue);border-radius:16px;padding:24px;margin-bottom:28px;text-align:center;display:none;}
+  .global-feedback.show{display:block;}
+  .global-feedback .score{font-size:40px;font-weight:700;color:var(--blue);}
+  .global-feedback .score-label{font-size:15px;color:var(--text-muted);margin-top:4px;}
+  .btn-primary{background:linear-gradient(135deg,var(--blue-dark),var(--blue));color:#fff;border:none;border-radius:12px;padding:14px 36px;font-family:'Be Vietnam Pro',sans-serif;font-size:16px;font-weight:600;cursor:pointer;box-shadow:0 4px 16px rgba(26,111,196,0.3);transition:all 0.2s;display:block;margin:0 auto;}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 22px rgba(26,111,196,0.4);}
+  .btn-reset{background:transparent;color:var(--blue);border:1.5px solid var(--blue);border-radius:12px;padding:12px 28px;font-family:'Be Vietnam Pro',sans-serif;font-size:15px;font-weight:600;cursor:pointer;display:block;margin:12px auto 0;transition:all 0.2s;}
+  .btn-reset:hover{background:var(--blue-light);}
+  .submit-area{padding:8px 0 4px;text-align:center;}
+  @media(max-width:600px){.exercise-body{padding:14px;}.match-row{flex-direction:column;gap:4px;}}
+</style>
+</head>
+<body>
+<header>
+  <div class="badge">Prep.vn – Tiếng Anh</div>
+  <h1>Section 3: Các Mẫu Câu (2)</h1>
+  <p>Hoàn thành tất cả bài tập rồi bấm "Chấm bài" để xem đáp án chi tiết</p>
+</header>
+<div class="progress-wrap">
+  <span class="progress-label">Tiến độ</span>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+  <span class="progress-count" id="progressCount">0 / 0</span>
+</div>
+<main>
+  <div class="global-feedback" id="globalFeedback">
+    <div class="score" id="scoreDisplay">0/0</div>
+    <div class="score-label">Điểm số của bạn</div>
+  </div>
+
+  <!-- Ex1 -->
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">1</div><div class="ex-title">Những câu khẳng định sau là ĐÚNG (True) hay SAI (False)?</div></div>
+    <div class="exercise-body">
+      <div class="info-box">
+        <strong>📌 Các cấu trúc trọng tâm:</strong>
+        <span class="struct-tag">There + be + N</span>
+        <span class="struct-tag">It + be + adj + for N + to do sth</span>
+        <span class="struct-tag">It + be + time + to do sth</span>
+        <span class="struct-tag">It + be + time + S + did sth</span>
+        <span class="struct-tag">It + take + sb + time + to do sth</span>
+      </div>
+      <div id="ex1Container"></div>
+      <div class="answer-section" id="ex1Ans"></div>
+    </div>
+  </div>
+
+  <!-- Ex2 -->
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">2</div><div class="ex-title">Nối câu với cấu trúc tương ứng</div></div>
+    <div class="exercise-body">
+      <div id="ex2Container"></div>
+      <div class="answer-section" id="ex2Ans"></div>
+    </div>
+  </div>
+
+  <!-- Ex3 -->
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">3</div><div class="ex-title">Chọn đáp án chính xác nhất để hoàn thành các câu sau</div></div>
+    <div class="exercise-body">
+      <div id="ex3Container"></div>
+      <div class="answer-section" id="ex3Ans"></div>
+    </div>
+  </div>
+
+  <!-- Ex4 -->
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">4</div><div class="ex-title">Tìm lỗi sai trong mỗi câu (chọn A/B/C/D)</div></div>
+    <div class="exercise-body">
+      <div id="ex4Container"></div>
+      <div class="answer-section" id="ex4Ans"></div>
+    </div>
+  </div>
+
+  <!-- Ex5 -->
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">5</div><div class="ex-title">Sửa lại những lỗi sai ở Exercise 4 (viết lại câu đúng)</div></div>
+    <div class="exercise-body">
+      <div id="ex5Container"></div>
+      <div class="answer-section" id="ex5Ans"></div>
+    </div>
+  </div>
+
+  <!-- Ex6 -->
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">6</div><div class="ex-title">Viết lại những câu sau dựa vào gợi ý cho sẵn</div></div>
+    <div class="exercise-body">
+      <div id="ex6Container"></div>
+      <div class="answer-section" id="ex6Ans"></div>
+    </div>
+  </div>
+
+  <div class="submit-area">
+    <button class="btn-primary" onclick="submitAll()">🎯 Chấm bài &amp; Xem giải thích</button>
+    <button class="btn-reset" onclick="resetAll()">↺ Làm lại từ đầu</button>
+  </div>
+</main>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────────
+
+const ex1Data = [
+  { statement:'Đằng sau cấu trúc "There + (be)" sẽ là một danh từ hoặc cụm danh từ.', correct:0, explanation:'ĐÚNG. Sau "There + be" luôn là danh từ/cụm danh từ (real subject). VD: There are many books. There is a dog.' },
+  { statement:'Trong cấu trúc "There (be)", động từ to be sẽ được chia theo chủ ngữ.', correct:0, explanation:'ĐÚNG. "be" chia theo danh từ đứng sau nó (real subject). VD: There IS a cat. There ARE two cats.' },
+  { statement:'Cấu trúc "There (be)" có tồn tại ở dạng tiếp diễn "There is being."', correct:1, explanation:'SAI. "There + be" KHÔNG có dạng tiếp diễn "There is being". Đây là cấu trúc không tồn tại trong tiếng Anh chuẩn.' },
+  { statement:'Để đưa ra tính chất của một hành động nào đó, chúng ta sẽ sử dụng mẫu câu "It + (be) + adj + for N + to do something."', correct:0, explanation:'ĐÚNG. VD: It is difficult for me to learn English. → dùng để nói về tính chất của hành động.' },
+  { statement:'Cấu trúc "It + (be) + time + S + to do something" là cấu dúng đúng về mặt ngữ pháp.', correct:1, explanation:'SAI. Cấu trúc đúng là: "It + be + time + S + V(quá khứ đơn)" hoặc "It + be + time + to do sth". Không dùng "S + to do sth" sau time trực tiếp.' },
+  { statement:'Để nói chúng ta mất bao lâu để làm một điều gì, chúng ta sẽ sử dụng cấu trúc "It + (take) + someone + time + to do something."', correct:0, explanation:'ĐÚNG. VD: It takes me 30 minutes to walk to school. "take" chia theo thì của câu.' },
+];
+
+const ex2Structures = ['There + (be) + N','It + (be) + time + to do sth','It + (be) + time + S + did sth','It + (be) + adj thời tiết','It + (be) + thời gian','It + (be) + adj + for N + to do sth'];
+
+const ex2Data = [
+  { sentence:"It is 6 o'clock now.", answer:'It + (be) + thời gian', explanation:'"It is 6 o\'clock" → It + be + thời gian cụ thể.' },
+  { sentence:'There are many old books on the bookshelves.', answer:'There + (be) + N', explanation:'"There are + N" → cấu trúc There + be + danh từ.' },
+  { sentence:'It is unhealthy to stay up late.', answer:'It + (be) + adj + for N + to do sth', explanation:'"It is unhealthy to stay up late" → It + be + adj (+ for N) + to do sth. "for N" có thể được lược bỏ.' },
+  { sentence:'It is sunny today.', answer:'It + (be) + adj thời tiết', explanation:'"It is sunny" → It + be + tính từ thời tiết.' },
+  { sentence:'It is time to clean up our room.', answer:'It + (be) + time + to do sth', explanation:'"It is time to clean up" → It + be + time + to-infinitive.' },
+  { sentence:"It is time we went home now, it's getting late.", answer:'It + (be) + time + S + did sth', explanation:'"It is time we went" → It + be + time + S + V(quá khứ đơn) – diễn tả đã đến lúc phải làm gì đó.' },
+];
+
+const ex3Data = [
+  { sentence:"It's ___ to keep this key somewhere safe.", options:['A. importance','B. important','C. imported','D. import'], correct:1, explanation:'Sau "It + be" cần tính từ: "important" (adj). "importance" là danh từ, "imported" là tính từ/quá khứ phân từ (nghĩa khác), "import" là động từ.' },
+  { sentence:'The road is closed. ___ an accident.', options:['A. It is','B. It was','C. There is','D. There are'], correct:2, explanation:'"There is an accident" → There + be + N đơn số. Dùng "there is" để thông báo sự tồn tại của tai nạn.' },
+  { sentence:'How long ___ you to travel from home to work?', options:['A. does there take','B. do it takes','C. does it take','D. do there takes'], correct:2, explanation:'"How long does it take + sb + to do sth?" – cấu trúc cố định. "it" là chủ ngữ giả, "does" vì ngôi thứ 3 số ít.' },
+  { sentence:"It's time you ___ your homework.", options:['A. finish','B. to finish','C. finished','D. finishing'], correct:2, explanation:'"It\'s time + S + V(quá khứ đơn)" → "finished". Cấu trúc này dùng V2 sau chủ ngữ.' },
+  { sentence:'___ a table and four chairs in the room.', options:['A. There is','B. There are','C. They are','D. It is'], correct:1, explanation:'"There are a table and four chairs" → nhiều vật → "There are" (số nhiều). "a table AND four chairs" = nhiều hơn 1.' },
+  { sentence:'The field trip is happening tomorrow, so there ___ a lot of students coming here.', options:['A. are','B. are being','C. will being','D. will be'], correct:3, explanation:'"tomorrow" → tương lai → "will be". "There + be" KHÔNG có dạng tiếp diễn "are being".' },
+  { sentence:'___ Sunday! We should go out to relax a bit.', options:['A. This is','B. It is','C. That','D. It'], correct:1, explanation:'"It is Sunday" → It + be + ngày trong tuần. "It" được dùng để nói về ngày, thời gian, thời tiết.' },
+  { sentence:"It's time ___ home now, we have a lot of things to do.", options:['A. to go','B. went','C. going','D. go'], correct:0, explanation:'"It\'s time + to-infinitive" → "to go". (Khác với "It\'s time + S + V2" cần có chủ ngữ sau "time").' },
+];
+
+const ex4Data = [
+  { sentence:'There (A) are a (B) motorcycle and three (C) cars (D) on the road right now.', options:['A. are','B. motorcycle','C. cars','D. on the road'], correct:0, explanation:'"a motorcycle and three cars" → danh sách nhiều thứ (số nhiều) → dùng "are". Nhưng khi liệt kê, "be" chia theo N đầu tiên: "a motorcycle" số ít → "There IS a motorcycle and three cars". Lỗi: "are" phải là "is".' },
+  { sentence:'(A) Was there (B) many people at (C) the club (D) yesterday?', options:['A. Was','B. many people','C. the club','D. yesterday'], correct:0, explanation:'"many people" số nhiều → "Were there many people" (không phải "Was"). Lỗi: "Was" phải là "Were".' },
+  { sentence:'(A) They took me more than 5 hours (B) to clean up the room and (C) do other housework (D) last Saturday.', options:['A. They','B. to clean up','C. do','D. last Saturday'], correct:0, explanation:'Cấu trúc "It takes sb time to do sth" → chủ ngữ giả phải là "It", không phải "They". Lỗi: "They" → "It".' },
+  { sentence:"(A) It's rainy outside. (B) It's time we (C) going back to (D) the store.", options:["A. It's","B. It's time","C. going","D. the store"], correct:2, explanation:'"It\'s time + S + V2(quá khứ đơn)" → "It\'s time we went back". "going" sai vì phải dùng quá khứ đơn. Lỗi: "going" → "went".' },
+  { sentence:'The cafe is (A) noisy right now. There (B) are being a lot of people (C) sitting here and chatting (D) with their friends.', options:['A. noisy','B. are being','C. sitting','D. with their friends'], correct:1, explanation:'"There + be" KHÔNG có dạng tiếp diễn. "are being" sai hoàn toàn → phải là "are". Lỗi: "are being" → "are".' },
+];
+
+const ex5Data = [
+  { original:'There are a motorcycle and three cars on the road right now.', answer:'There is a motorcycle and three cars on the road right now.', alts:[], explanation:'"a motorcycle" (số ít) đứng trước → "There is" (chia theo N đầu tiên trong danh sách).' },
+  { original:'Was there many people at the club yesterday?', answer:'Were there many people at the club yesterday?', alts:[], explanation:'"many people" số nhiều → "Were there many people?"' },
+  { original:'They took me more than 5 hours to clean up the room and do other housework last Saturday.', answer:'It took me more than 5 hours to clean up the room and do other housework last Saturday.', alts:[], explanation:'Cấu trúc "It takes/took + sb + time + to do sth" → "It took me". Dùng quá khứ đơn vì "last Saturday".' },
+  { original:"It's rainy outside. It's time we going back to the store.", answer:"It's rainy outside. It's time we went back to the store.", alts:[], explanation:'"It\'s time + S + V(quá khứ đơn)" → "went back".' },
+  { original:'The cafe is noisy right now. There are being a lot of people sitting here and chatting with their friends.', answer:'The cafe is noisy right now. There are a lot of people sitting here and chatting with their friends.', alts:[], explanation:'"There + be" không có dạng tiếp diễn → "are" (không có "being").' },
+];
+
+const ex6Data = [
+  { original:'Some parts of King Lear are extremely difficult to understand.', hint:'___ some parts of King Lear.', answer:'It is extremely difficult to understand some parts of King Lear.', alts:['It is extremely difficult to understand some parts of King Lear'], explanation:'Dùng cấu trúc "It + be + adj + to do sth": It is extremely difficult to understand some parts of King Lear.' },
+  { original:'I only spent an hour by train to go to Brighton from London.', hint:'___.', answer:'It only took me an hour by train to go to Brighton from London.', alts:['It only took me an hour to go to Brighton from London by train.','It took me only an hour by train to go to Brighton from London.'], explanation:'Cấu trúc "It takes sb time to do sth": It only took me an hour (by train) to go to Brighton from London.' },
+  { original:'When we got to the cinema, the cinema had a very long queue outside.', hint:'There ___ outside when we got to the cinema.', answer:'There was a very long queue outside when we got to the cinema.', alts:['There was a long queue outside when we got to the cinema.'], explanation:'"There + be + N" → "There was a very long queue outside when we got to the cinema."' },
+  { original:'The time now is 12am. I think we should go back home.', hint:'It ___. It ___.',  answer:'It is 12am. It is time we went back home.', alts:['It is 12am. It is time to go back home.','It is midnight. It is time we went home.'], explanation:'"It is + thời gian" + "It is time + S + V2 (went back home)".' },
+  { original:'To fall asleep like that is stupid.', hint:'It ___.', answer:'It is stupid to fall asleep like that.', alts:['It is stupid to fall asleep like that.'], explanation:'Dùng "it" thay thế chủ ngữ dài: It + be + adj + to do sth.' },
+];
+
+// ── RENDER ────────────────────────────────────────────────────────────────────
+const mcqSel = {};
+
+function renderEx1(){
+  const c=document.getElementById('ex1Container');
+  c.innerHTML=ex1Data.map((item,i)=>
+    `<div class="mcq-question">
+      <div class="mcq-sentence">${i+1}. ${item.statement}</div>
+      <div class="options">
+        <button class="option-btn" id="ex1_${i}_0" onclick="sel('ex1',${i},0,2)"><span class="option-dot">A</span>A. True</button>
+        <button class="option-btn" id="ex1_${i}_1" onclick="sel('ex1',${i},1,2)"><span class="option-dot">B</span>B. False</button>
+      </div>
+    </div>`
+  ).join('');
+}
+
+function renderEx2(){
+  const c=document.getElementById('ex2Container');
+  c.innerHTML=ex2Data.map((item,i)=>
+    `<div class="match-row">
+      <span class="match-sentence">"${item.sentence}"</span>
+      <span class="match-arrow">→</span>
+      <select class="prep-select" id="ex2_${i}" onchange="updateProgress()">
+        <option value="">-- chọn cấu trúc --</option>
+        ${ex2Structures.map(s=>`<option value="${s}">${s}</option>`).join('')}
+      </select>
+    </div>`
+  ).join('');
+}
+
+function renderEx3(){
+  const c=document.getElementById('ex3Container');
+  c.innerHTML=ex3Data.map((item,i)=>
+    `<div class="mcq-question">
+      <div class="mcq-sentence">${i+1}. <em>${item.sentence}</em></div>
+      <div class="options">${item.options.map((opt,j)=>
+        `<button class="option-btn" id="ex3_${i}_${j}" onclick="sel('ex3',${i},${j},${item.options.length})">
+          <span class="option-dot">${opt[0]}</span>${opt}</button>`
+      ).join('')}</div>
+    </div>`
+  ).join('');
+}
+
+function renderEx4(){
+  const c=document.getElementById('ex4Container');
+  c.innerHTML=ex4Data.map((item,i)=>
+    `<div class="mcq-question">
+      <div class="mcq-sentence">${i+1}. <em>${item.sentence}</em></div>
+      <div class="options">${item.options.map((opt,j)=>
+        `<button class="option-btn" id="ex4_${i}_${j}" onclick="sel('ex4',${i},${j},${item.options.length})">
+          <span class="option-dot">${opt[0]}</span>${opt}</button>`
+      ).join('')}</div>
+    </div>`
+  ).join('');
+}
+
+function renderEx5(){
+  const c=document.getElementById('ex5Container');
+  c.innerHTML=ex5Data.map((item,i)=>
+    `<div class="error-card">
+      <div class="error-original">📌 Câu gốc (có lỗi): <em>${item.original}</em></div>
+      <textarea class="textarea-ans" id="ex5_${i}" placeholder="Viết lại câu đúng..." rows="2"></textarea>
+    </div>`
+  ).join('');
+  c.querySelectorAll('.textarea-ans').forEach(el=>el.addEventListener('input',updateProgress));
+}
+
+function renderEx6(){
+  const c=document.getElementById('ex6Container');
+  c.innerHTML=ex6Data.map((item,i)=>
+    `<div class="error-card">
+      <div class="error-original">📌 Câu gốc: <em>${item.original}</em></div>
+      <div class="rewrite-hint">→ Gợi ý: ${item.hint}</div>
+      <textarea class="textarea-ans" id="ex6_${i}" placeholder="Viết lại câu theo gợi ý..." rows="2"></textarea>
+    </div>`
+  ).join('');
+  c.querySelectorAll('.textarea-ans').forEach(el=>el.addEventListener('input',updateProgress));
+}
+
+function sel(prefix,qi,oi,total){
+  for(let j=0;j<total;j++) document.getElementById(`${prefix}_${qi}_${j}`)?.classList.remove('selected');
+  document.getElementById(`${prefix}_${qi}_${oi}`)?.classList.add('selected');
+  mcqSel[`${prefix}_${qi}`]=oi; updateProgress();
+}
+
+// ── PROGRESS ──────────────────────────────────────────────────────────────────
+function countAnswered(){
+  let filled=0,total=0;
+  ex1Data.forEach((_,i)=>{total++;if(mcqSel[`ex1_${i}`]!==undefined)filled++;});
+  ex2Data.forEach((_,i)=>{total++;if(document.getElementById(`ex2_${i}`)?.value)filled++;});
+  ex3Data.forEach((_,i)=>{total++;if(mcqSel[`ex3_${i}`]!==undefined)filled++;});
+  ex4Data.forEach((_,i)=>{total++;if(mcqSel[`ex4_${i}`]!==undefined)filled++;});
+  ex5Data.forEach((_,i)=>{total++;if(document.getElementById(`ex5_${i}`)?.value.trim())filled++;});
+  ex6Data.forEach((_,i)=>{total++;if(document.getElementById(`ex6_${i}`)?.value.trim())filled++;});
+  return{filled,total};
+}
+function updateProgress(){
+  const{filled,total}=countAnswered();
+  document.getElementById('progressFill').style.width=(filled/total*100)+'%';
+  document.getElementById('progressCount').textContent=`${filled} / ${total}`;
+}
+
+// ── SUBMIT ────────────────────────────────────────────────────────────────────
+function norm(s){return s.trim().toLowerCase().replace(/[?.!]/g,'').replace(/\s+/g,' ');}
+function flexOk(val,item){
+  const u=norm(val);
+  if(u===norm(item.answer))return true;
+  if(item.alts&&item.alts.some(a=>u===norm(a)))return true;
+  return false;
+}
+
+function submitAll(){
+  let score=0,total=0;
+
+  // Ex1
+  let h1='<h4>📝 Giải thích Exercise 1:</h4>';
+  ex1Data.forEach((item,i)=>{
+    total++;
+    const s=mcqSel[`ex1_${i}`];const ok=s===item.correct;if(ok)score++;
+    for(let j=0;j<2;j++){const b=document.getElementById(`ex1_${i}_${j}`);if(!b)continue;b.disabled=true;b.classList.remove('selected');if(j===item.correct)b.classList.add('correct-ans');else if(j===s&&!ok)b.classList.add('wrong-ans');}
+    h1+=`<div class="ans-row"><span class="${ok?'ans-correct':'ans-wrong'}">${ok?'✅':'❌'} Câu ${i+1}: <strong>${item.correct===0?'True':'False'}</strong></span><span class="ans-explanation">– ${item.explanation}</span></div>`;
+  });
+  const a1=document.getElementById('ex1Ans');a1.innerHTML=h1;a1.classList.add('show');
+
+  // Ex2
+  let h2='<h4>📝 Giải thích Exercise 2:</h4>';
+  ex2Data.forEach((item,i)=>{
+    total++;
+    const el=document.getElementById(`ex2_${i}`);const ok=el?.value===item.answer;if(ok)score++;
+    if(el){el.classList.add(ok?'correct':'wrong');el.disabled=true;}
+    h2+=`<div class="ans-row"><span class="${ok?'ans-correct':'ans-wrong'}">${ok?'✅':'❌'} "${item.sentence}" → <strong>${item.answer}</strong></span><span class="ans-explanation">– ${item.explanation}</span></div>`;
+  });
+  const a2=document.getElementById('ex2Ans');a2.innerHTML=h2;a2.classList.add('show');
+
+  // Ex3
+  let h3='<h4>📝 Giải thích Exercise 3:</h4>';
+  ex3Data.forEach((item,i)=>{
+    total++;
+    const s=mcqSel[`ex3_${i}`];const ok=s===item.correct;if(ok)score++;
+    for(let j=0;j<item.options.length;j++){const b=document.getElementById(`ex3_${i}_${j}`);if(!b)continue;b.disabled=true;b.classList.remove('selected');if(j===item.correct)b.classList.add('correct-ans');else if(j===s&&!ok)b.classList.add('wrong-ans');}
+    h3+=`<div class="ans-row"><span class="${ok?'ans-correct':'ans-wrong'}">${ok?'✅':'❌'} Câu ${i+1}: <strong>${item.options[item.correct]}</strong></span><span class="ans-explanation">– ${item.explanation}</span></div>`;
+  });
+  const a3=document.getElementById('ex3Ans');a3.innerHTML=h3;a3.classList.add('show');
+
+  // Ex4
+  let h4='<h4>📝 Giải thích Exercise 4 (lỗi sai):</h4>';
+  ex4Data.forEach((item,i)=>{
+    total++;
+    const s=mcqSel[`ex4_${i}`];const ok=s===item.correct;if(ok)score++;
+    for(let j=0;j<item.options.length;j++){const b=document.getElementById(`ex4_${i}_${j}`);if(!b)continue;b.disabled=true;b.classList.remove('selected');if(j===item.correct)b.classList.add('correct-ans');else if(j===s&&!ok)b.classList.add('wrong-ans');}
+    h4+=`<div class="ans-row"><span class="${ok?'ans-correct':'ans-wrong'}">${ok?'✅':'❌'} Câu ${i+1}: Lỗi sai là <strong>${item.options[item.correct]}</strong></span><span class="ans-explanation">– ${item.explanation}</span></div>`;
+  });
+  const a4=document.getElementById('ex4Ans');a4.innerHTML=h4;a4.classList.add('show');
+
+  // Ex5
+  let h5='<h4>📝 Giải thích Exercise 5:</h4>';
+  ex5Data.forEach((item,i)=>{
+    total++;
+    const ta=document.getElementById(`ex5_${i}`);const ok=flexOk(ta?.value||'',item);if(ok)score++;
+    if(ta)ta.classList.add(ok?'correct':'wrong');
+    h5+=`<div class="ans-row"><span class="${ok?'ans-correct':'ans-wrong'}">${ok?'✅':'❌'} Câu ${i+1}: <strong>${item.answer}</strong></span><span class="ans-explanation">– ${item.explanation}</span></div>`;
+  });
+  const a5=document.getElementById('ex5Ans');a5.innerHTML=h5;a5.classList.add('show');
+
+  // Ex6
+  let h6='<h4>📝 Giải thích Exercise 6:</h4>';
+  ex6Data.forEach((item,i)=>{
+    total++;
+    const ta=document.getElementById(`ex6_${i}`);const ok=flexOk(ta?.value||'',item);if(ok)score++;
+    if(ta)ta.classList.add(ok?'correct':'wrong');
+    const altStr=item.alts.length?` (hoặc: ${item.alts.join(' / ')})`:'';
+    h6+=`<div class="ans-row"><span class="${ok?'ans-correct':'ans-wrong'}">${ok?'✅':'❌'} Câu ${i+1}: <strong>${item.answer}</strong>${altStr}</span><span class="ans-explanation">– ${item.explanation}</span></div>`;
+  });
+  const a6=document.getElementById('ex6Ans');a6.innerHTML=h6;a6.classList.add('show');
+
+  const fb=document.getElementById('globalFeedback');
+  document.getElementById('scoreDisplay').textContent=`${score} / ${total}`;
+  fb.classList.add('show');fb.scrollIntoView({behavior:'smooth',block:'start'});
+  updateProgress();
+}
+
+// ── RESET ─────────────────────────────────────────────────────────────────────
+function resetAll(){
+  Object.keys(mcqSel).forEach(k=>delete mcqSel[k]);
+  document.getElementById('globalFeedback').classList.remove('show');
+  ['ex1Ans','ex2Ans','ex3Ans','ex4Ans','ex5Ans','ex6Ans'].forEach(id=>{const el=document.getElementById(id);el.classList.remove('show');el.innerHTML='';});
+  renderEx1();renderEx2();renderEx3();renderEx4();renderEx5();renderEx6();
+  updateProgress();
+}
+
+renderEx1();renderEx2();renderEx3();renderEx4();renderEx5();renderEx6();
+updateProgress();
+</script>
+</body>
+</html>
