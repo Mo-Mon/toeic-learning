@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Section 4: Vị Trí Trạng Từ – Bài Tập Tiếng Anh</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #ffffff;
+    --blue: #1a6fc4;
+    --blue-light: #e8f1fb;
+    --blue-mid: #4d9de0;
+    --blue-dark: #0d4a8a;
+    --text: #1a1a2e;
+    --text-muted: #6b7280;
+    --border: #dde6f5;
+    --correct: #16a34a;
+    --correct-bg: #dcfce7;
+    --wrong: #dc2626;
+    --wrong-bg: #fee2e2;
+    --neutral-bg: #f8faff;
+    --shadow: 0 2px 16px rgba(26,111,196,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Be Vietnam Pro', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  header {
+    background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue) 60%, var(--blue-mid) 100%);
+    color: #fff; padding: 36px 24px 28px; text-align: center; position: relative; overflow: hidden;
+  }
+  header::before { content:''; position:absolute; inset:0; background:radial-gradient(circle at 70% 30%,rgba(255,255,255,0.08) 0%,transparent 60%); }
+  header .badge { display:inline-block; background:rgba(255,255,255,0.18); border:1px solid rgba(255,255,255,0.3); border-radius:20px; padding:4px 16px; font-size:12px; font-weight:500; letter-spacing:1px; text-transform:uppercase; margin-bottom:12px; }
+  header h1 { font-family:'Playfair Display',serif; font-size:clamp(24px,5vw,38px); font-weight:700; line-height:1.2; margin-bottom:8px; }
+  header p { font-size:14px; opacity:0.85; }
+
+  .progress-wrap { background:var(--blue-light); padding:14px 24px; display:flex; align-items:center; gap:12px; border-bottom:1px solid var(--border); position:sticky; top:0; z-index:10; }
+  .progress-label { font-size:13px; font-weight:600; color:var(--blue); white-space:nowrap; }
+  .progress-bar { flex:1; height:8px; background:#d1dff5; border-radius:99px; overflow:hidden; }
+  .progress-fill { height:100%; background:linear-gradient(90deg,var(--blue),var(--blue-mid)); border-radius:99px; transition:width 0.4s ease; }
+  .progress-count { font-size:13px; font-weight:600; color:var(--blue); white-space:nowrap; }
+
+  main { max-width:820px; margin:0 auto; padding:28px 16px 60px; }
+
+  .exercise-card { background:var(--bg); border:1.5px solid var(--border); border-radius:16px; margin-bottom:24px; overflow:hidden; box-shadow:var(--shadow); transition:box-shadow 0.2s; }
+  .exercise-card:hover { box-shadow:0 4px 24px rgba(26,111,196,0.13); }
+  .exercise-header { background:var(--blue-light); border-bottom:1.5px solid var(--border); padding:14px 20px; display:flex; align-items:center; gap:12px; }
+  .ex-num { background:var(--blue); color:#fff; width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; flex-shrink:0; }
+  .ex-title { font-size:15px; font-weight:600; color:var(--blue-dark); }
+  .exercise-body { padding:20px; }
+  .hint { font-size:13px; color:var(--text-muted); margin-bottom:16px; font-style:italic; }
+
+  .fill-blank { display:inline-block; border:none; border-bottom:2px solid var(--blue-mid); outline:none; background:transparent; font-family:'Be Vietnam Pro',sans-serif; font-size:15px; color:var(--blue-dark); padding:2px 6px; min-width:110px; transition:border-color 0.2s; }
+  .fill-blank:focus { border-color:var(--blue); }
+  .fill-blank.correct { border-color:var(--correct); background:var(--correct-bg); border-radius:4px 4px 0 0; }
+  .fill-blank.wrong   { border-color:var(--wrong);   background:var(--wrong-bg);   border-radius:4px 4px 0 0; }
+  .fill-row { margin-bottom:14px; font-size:15px; line-height:1.9; }
+
+  /* MCQ */
+  .mcq-question { margin-bottom:20px; }
+  .mcq-question + .mcq-question { border-top:1px solid var(--border); padding-top:20px; }
+  .mcq-sentence { font-weight:500; margin-bottom:10px; font-size:15px; }
+  .options { display:flex; flex-direction:column; gap:8px; }
+  .option-btn { display:flex; align-items:center; gap:10px; padding:10px 14px; border:1.5px solid var(--border); border-radius:10px; background:var(--neutral-bg); cursor:pointer; font-family:'Be Vietnam Pro',sans-serif; font-size:14px; color:var(--text); transition:all 0.18s; text-align:left; }
+  .option-btn:hover:not(:disabled) { border-color:var(--blue); background:var(--blue-light); }
+  .option-btn.selected { border-color:var(--blue); background:var(--blue-light); }
+  .option-btn.correct-ans { border-color:var(--correct); background:var(--correct-bg); color:var(--correct); font-weight:600; }
+  .option-btn.wrong-ans   { border-color:var(--wrong);   background:var(--wrong-bg);   color:var(--wrong);   font-weight:600; }
+  .option-btn:disabled { cursor:default; }
+  .option-dot { width:20px; height:20px; border-radius:50%; border:2px solid #c5d4ec; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; transition:all 0.18s; }
+  .option-btn.correct-ans .option-dot { border-color:var(--correct); background:var(--correct); color:#fff; }
+  .option-btn.wrong-ans   .option-dot { border-color:var(--wrong);   background:var(--wrong);   color:#fff; }
+  .option-btn.selected .option-dot    { border-color:var(--blue); background:var(--blue); color:#fff; }
+
+  /* Ex1 table-style classify */
+  .classify-table { width:100%; border-collapse:collapse; margin-bottom:8px; }
+  .classify-table th { background:var(--blue); color:#fff; padding:10px 12px; font-size:13px; text-align:left; }
+  .classify-table td { padding:10px 12px; border-bottom:1px solid var(--border); font-size:14px; vertical-align:middle; }
+  .classify-table tr:last-child td { border-bottom:none; }
+  .classify-table tr:nth-child(even) td { background:var(--neutral-bg); }
+  .pos-label { font-weight:600; color:var(--blue-dark); }
+
+  /* Ex2 sort table */
+  .sort-table { width:100%; border-collapse:collapse; margin-bottom:4px; }
+  .sort-table th { background:var(--blue-dark); color:#fff; padding:9px 12px; font-size:13px; }
+  .sort-table td { padding:9px 12px; border:1px solid var(--border); font-size:14px; vertical-align:middle; }
+  .sort-table .q-num { background:var(--blue); color:#fff; border-radius:50%; width:24px; height:24px; display:inline-flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; }
+
+  .answer-section { background:var(--neutral-bg); border:1.5px solid var(--border); border-radius:12px; padding:14px 16px; margin-top:14px; font-size:14px; display:none; }
+  .answer-section.show { display:block; }
+  .answer-section h4 { color:var(--blue-dark); font-size:14px; margin-bottom:8px; }
+  .ans-row { margin-bottom:7px; }
+  .ans-correct { color:var(--correct); font-weight:600; }
+  .ans-wrong   { color:var(--wrong); }
+  .ans-explanation { color:var(--text-muted); font-size:13px; margin-left:8px; }
+
+  .global-feedback { background:var(--blue-light); border:2px solid var(--blue); border-radius:16px; padding:24px; margin-bottom:28px; text-align:center; display:none; }
+  .global-feedback.show { display:block; }
+  .global-feedback .score { font-size:40px; font-weight:700; color:var(--blue); }
+  .global-feedback .score-label { font-size:15px; color:var(--text-muted); margin-top:4px; }
+
+  .btn-primary { background:linear-gradient(135deg,var(--blue-dark),var(--blue)); color:#fff; border:none; border-radius:12px; padding:14px 36px; font-family:'Be Vietnam Pro',sans-serif; font-size:16px; font-weight:600; cursor:pointer; box-shadow:0 4px 16px rgba(26,111,196,0.3); transition:all 0.2s; display:block; margin:0 auto; }
+  .btn-primary:hover { transform:translateY(-2px); box-shadow:0 6px 22px rgba(26,111,196,0.4); }
+  .btn-reset { background:transparent; color:var(--blue); border:1.5px solid var(--blue); border-radius:12px; padding:12px 28px; font-family:'Be Vietnam Pro',sans-serif; font-size:15px; font-weight:600; cursor:pointer; display:block; margin:12px auto 0; transition:all 0.2s; }
+  .btn-reset:hover { background:var(--blue-light); }
+  .submit-area { padding:8px 0 4px; text-align:center; }
+
+  /* Ex1 fill dropdown */
+  .pos-select { border:none; border-bottom:2px solid var(--blue-mid); outline:none; background:transparent; font-family:'Be Vietnam Pro',sans-serif; font-size:14px; color:var(--blue-dark); padding:3px 6px; cursor:pointer; min-width:160px; }
+  .pos-select:focus { border-color:var(--blue); }
+  .pos-select.correct { border-color:var(--correct); background:var(--correct-bg); border-radius:4px 4px 0 0; }
+  .pos-select.wrong   { border-color:var(--wrong);   background:var(--wrong-bg);   border-radius:4px 4px 0 0; }
+
+  @media(max-width:600px){ .exercise-body{padding:14px;} .sort-table,.classify-table{font-size:12px;} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="badge">Prep.vn – Tiếng Anh</div>
+  <h1>Section 4: Vị Trí Trạng Từ</h1>
+  <p>Hoàn thành tất cả bài tập rồi bấm "Chấm bài" để xem đáp án chi tiết</p>
+</header>
+
+<div class="progress-wrap">
+  <span class="progress-label">Tiến độ</span>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+  <span class="progress-count" id="progressCount">0 / 0</span>
+</div>
+
+<main>
+  <div class="global-feedback" id="globalFeedback">
+    <div class="score" id="scoreDisplay">0/0</div>
+    <div class="score-label">Điểm số của bạn</div>
+  </div>
+
+  <!-- Exercise 1.1 -->
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">1</div><div class="ex-title">Exercise 1.1: Điền vào chỗ trống để hoàn thành bảng tổng hợp về vị trí trạng từ</div></div>
+    <div class="exercise-body">
+      <table class="classify-table">
+        <tr><th>Vị trí</th><th>Trạng từ chỉ loại</th></tr>
+        <tr>
+          <td class="pos-label">FRONT POSITION<br><small style="font-weight:400;color:var(--text-muted)">(Vị trí đầu câu)</small></td>
+          <td><select class="pos-select" id="ex1_1" onchange="updateProgress()">
+            <option value="">-- chọn loại --</option>
+            <option>Thời gian</option><option>Cách thức</option><option>Mức độ</option><option>Tần suất</option><option>Địa điểm</option>
+          </select></td>
+        </tr>
+        <tr>
+          <td class="pos-label" rowspan="3">MID POSITION<br><small style="font-weight:400;color:var(--text-muted)">(Vị trí giữa câu)</small></td>
+          <td><select class="pos-select" id="ex1_2" onchange="updateProgress()">
+            <option value="">-- chọn loại --</option>
+            <option>Thời gian</option><option>Cách thức</option><option>Mức độ</option><option>Tần suất</option><option>Địa điểm</option>
+          </select></td>
+        </tr>
+        <tr><td><select class="pos-select" id="ex1_3" onchange="updateProgress()">
+            <option value="">-- chọn loại --</option>
+            <option>Thời gian</option><option>Cách thức</option><option>Mức độ</option><option>Tần suất</option><option>Địa điểm</option>
+          </select></td></tr>
+        <tr><td><select class="pos-select" id="ex1_4" onchange="updateProgress()">
+            <option value="">-- chọn loại --</option>
+            <option>Thời gian</option><option>Cách thức</option><option>Mức độ</option><option>Tần suất</option><option>Địa điểm</option>
+          </select></td></tr>
+        <tr>
+          <td class="pos-label" rowspan="3">END POSITION<br><small style="font-weight:400;color:var(--text-muted)">(Vị trí cuối câu)</small></td>
+          <td><select class="pos-select" id="ex1_5" onchange="updateProgress()">
+            <option value="">-- chọn loại --</option>
+            <option>Thời gian</option><option>Cách thức</option><option>Mức độ</option><option>Tần suất</option><option>Địa điểm</option>
+          </select></td>
+        </tr>
+        <tr><td><select class="pos-select" id="ex1_6" onchange="updateProgress()">
+            <option value="">-- chọn loại --</option>
+            <option>Thời gian</option><option>Cách thức</option><option>Mức độ</option><option>Tần suất</option><option>Địa điểm</option>
+          </select></td></tr>
+        <tr><td><select class="pos-select" id="ex1_7" onchange="updateProgress()">
+            <option value="">-- chọn loại --</option>
+            <option>Thời gian</option><option>Cách thức</option><option>Mức độ</option><option>Tần suất</option><option>Địa điểm</option>
+          </select></td></tr>
+      </table>
+      <div class="answer-section" id="ex1Ans"></div>
+    </div>
+  </div>
+
+  <!-- Exercise 1.2 -->
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">2</div><div class="ex-title">Exercise 1.2: Sắp xếp theo thứ tự đúng các trạng từ khi cùng nằm cuối câu</div></div>
+    <div class="exercise-body">
+      <p class="hint">💡 Câu: <em>They walked slowly around the coast every day in the afternoon.</em> — hãy xác định loại của từng trạng từ 2, 3, 4 theo đúng thứ tự.</p>
+      <table class="sort-table">
+        <tr><th>Câu</th><th>Trạng từ</th><th>Loại trạng từ là gì?</th></tr>
+        <tr>
+          <td><span class="q-num">1</span></td>
+          <td>trạng từ 1</td>
+          <td><select class="pos-select" id="ex12_1" onchange="updateProgress()">
+            <option value="">-- chọn --</option>
+            <option>Cách thức</option><option>Nơi chốn</option><option>Tần suất</option><option>Thời gian</option>
+          </select></td>
+        </tr>
+        <tr>
+          <td><span class="q-num">2</span></td>
+          <td>trạng từ 2</td>
+          <td><select class="pos-select" id="ex12_2" onchange="updateProgress()">
+            <option value="">-- chọn --</option>
+            <option>Cách thức</option><option>Nơi chốn</option><option>Tần suất</option><option>Thời gian</option>
+          </select></td>
+        </tr>
+        <tr>
+          <td><span class="q-num">3</span></td>
+          <td>trạng từ 3</td>
+          <td><select class="pos-select" id="ex12_3" onchange="updateProgress()">
+            <option value="">-- chọn --</option>
+            <option>Cách thức</option><option>Nơi chốn</option><option>Tần suất</option><option>Thời gian</option>
+          </select></td>
+        </tr>
+        <tr>
+          <td><span class="q-num">4</span></td>
+          <td>trạng từ 4</td>
+          <td><select class="pos-select" id="ex12_4" onchange="updateProgress()">
+            <option value="">-- chọn --</option>
+            <option>Cách thức</option><option>Nơi chốn</option><option>Tần suất</option><option>Thời gian</option>
+          </select></td>
+        </tr>
+      </table>
+      <div class="answer-section" id="ex12Ans"></div>
+    </div>
+  </div>
+
+  <!-- Exercise 2 -->
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">3</div><div class="ex-title">Exercise 2: Xác định trạng từ IN HOA là trạng từ chỉ gì?</div></div>
+    <div class="exercise-body">
+      <div id="ex2Container"></div>
+      <div class="answer-section" id="ex2Ans"></div>
+    </div>
+  </div>
+
+  <!-- Exercise 3 -->
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">4</div><div class="ex-title">Exercise 3: Trạng từ IN HOA đang ở vị trí nào trong câu?</div></div>
+    <div class="exercise-body">
+      <div id="ex3Container"></div>
+      <div class="answer-section" id="ex3Ans"></div>
+    </div>
+  </div>
+
+  <!-- Exercise 4 -->
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">5</div><div class="ex-title">Exercise 4: Sắp xếp các trạng từ trong ngoặc cho đúng thứ tự</div></div>
+    <div class="exercise-body">
+      <div id="ex4Container"></div>
+      <div class="answer-section" id="ex4Ans"></div>
+    </div>
+  </div>
+
+  <!-- Exercise 5 -->
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">6</div><div class="ex-title">Exercise 5: Viết lại câu sao cho đúng (trạng từ đang đặt sai vị trí)</div></div>
+    <div class="exercise-body">
+      <div id="ex5Container"></div>
+      <div class="answer-section" id="ex5Ans"></div>
+    </div>
+  </div>
+
+  <!-- Exercise 6 -->
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">7</div><div class="ex-title">Exercise 6: Viết lại câu sao cho nghĩa không thay đổi (dùng trạng từ)</div></div>
+    <div class="exercise-body">
+      <p class="hint">💡 Ví dụ: Clare is a slow driver. → <strong style="color:var(--blue)">Clare drives slowly.</strong></p>
+      <div id="ex6Container"></div>
+      <div class="answer-section" id="ex6Ans"></div>
+    </div>
+  </div>
+
+  <div class="submit-area">
+    <button class="btn-primary" onclick="submitAll()">🎯 Chấm bài &amp; Xem giải thích</button>
+    <button class="btn-reset" onclick="resetAll()">↺ Làm lại từ đầu</button>
+  </div>
+</main>
+
+<script>
+// ─── DATA ─────────────────────────────────────────────────────────────────────
+
+const ex1Data = [
+  { id:'ex1_1', answer:'Thời gian', explanation:'FRONT POSITION chỉ chứa trạng từ thời gian (time). VD: Yesterday, I went...).' },
+  { id:'ex1_2', answer:'Cách thức', explanation:'MID POSITION có thể chứa trạng từ cách thức (manner).' },
+  { id:'ex1_3', answer:'Mức độ',    explanation:'MID POSITION có thể chứa trạng từ mức độ (degree). VD: very, always, never...' },
+  { id:'ex1_4', answer:'Tần suất',  explanation:'MID POSITION có thể chứa trạng từ tần suất (frequency). VD: always, often...' },
+  { id:'ex1_5', answer:'Cách thức', explanation:'END POSITION có thể chứa trạng từ cách thức (manner).' },
+  { id:'ex1_6', answer:'Thời gian', explanation:'END POSITION có thể chứa trạng từ thời gian (time).' },
+  { id:'ex1_7', answer:'Địa điểm',  explanation:'END POSITION có thể chứa trạng từ địa điểm (place).' },
+];
+
+const ex12Data = [
+  { id:'ex12_1', adv:'slowly',           answer:'Cách thức', explanation:'"slowly" = chậm chạp → chỉ cách thức (manner).' },
+  { id:'ex12_2', adv:'around the coast', answer:'Nơi chốn',  explanation:'"around the coast" chỉ địa điểm/nơi chốn (place).' },
+  { id:'ex12_3', adv:'every day',        answer:'Tần suất',  explanation:'"every day" chỉ tần suất (frequency).' },
+  { id:'ex12_4', adv:'in the afternoon', answer:'Thời gian', explanation:'"in the afternoon" chỉ thời gian (time).' },
+];
+
+const ex2Data = [
+  { sentence:'I <strong>QUICKLY</strong> ran towards the bus.', adv:'QUICKLY', answer:'Trạng từ chỉ cách thức', explanation:'"quickly" = nhanh chóng → cách thức thực hiện hành động chạy.' },
+  { sentence:'I am <strong>VERY</strong> excited about the project.', adv:'VERY', answer:'Trạng từ chỉ mức độ', explanation:'"very" = rất → chỉ mức độ, bổ nghĩa cho tính từ "excited".' },
+  { sentence:"He doesn't <strong>ALWAYS</strong> like to do the dishes.", adv:'ALWAYS', answer:'Trạng từ chỉ tần suất', explanation:'"always" = luôn luôn → chỉ tần suất.' },
+  { sentence:"I'm flying to Edinburgh <strong>TOMORROW</strong>.", adv:'TOMORROW', answer:'Trạng từ chỉ thời gian', explanation:'"tomorrow" = ngày mai → chỉ thời gian.' },
+  { sentence:'He played <strong>BRILLIANTLY</strong>.', adv:'BRILLIANTLY', answer:'Trạng từ chỉ cách thức', explanation:'"brilliantly" = một cách xuất sắc → chỉ cách thức.' },
+  { sentence:'The government has <strong>OCCASIONALLY</strong> been forced to change its mind.', adv:'OCCASIONALLY', answer:'Trạng từ chỉ tần suất', explanation:'"occasionally" = đôi lúc → chỉ tần suất.' },
+  { sentence:"<strong>TODAY</strong>, I'm going to clean the house.", adv:'TODAY', answer:'Trạng từ chỉ thời gian', explanation:'"today" = hôm nay → chỉ thời gian.' },
+  { sentence:'The problem has been <strong>CAREFULLY</strong> studied.', adv:'CAREFULLY', answer:'Trạng từ chỉ cách thức', explanation:'"carefully" = cẩn thận → chỉ cách thức.' },
+  { sentence:'Please come over <strong>HERE</strong>.', adv:'HERE', answer:'Trạng từ chỉ địa điểm', explanation:'"here" = ở đây → chỉ địa điểm.' },
+];
+
+const ex2Options = ['Trạng từ chỉ cách thức','Trạng từ chỉ mức độ','Trạng từ chỉ tần suất','Trạng từ chỉ thời gian','Trạng từ chỉ địa điểm'];
+
+const ex3Data = [
+  { sentence:'I <strong>QUICKLY</strong> ran towards the bus.', adv:'QUICKLY', answer:'VỊ TRÍ GIỮA CÂU', explanation:'"QUICKLY" đứng trước động từ thường "ran" → vị trí giữa câu.' },
+  { sentence:'I am <strong>VERY</strong> excited about the project.', adv:'VERY', answer:'VỊ TRÍ GIỮA CÂU', explanation:'"VERY" đứng sau động từ to be "am" → vị trí giữa câu.' },
+  { sentence:"He doesn't <strong>ALWAYS</strong> like to do the dishes.", adv:'ALWAYS', answer:'VỊ TRÍ GIỮA CÂU', explanation:'"ALWAYS" đứng giữa trợ động từ "doesn\'t" và động từ chính "like" → vị trí giữa câu.' },
+  { sentence:'The government has <strong>OCCASIONALLY</strong> been forced to change its mind.', adv:'OCCASIONALLY', answer:'VỊ TRÍ GIỮA CÂU', explanation:'"OCCASIONALLY" khi có 2 trợ động từ trở lên, trạng từ đứng sau trợ động từ đầu tiên "has" → vị trí giữa câu.' },
+  { sentence:'The problem has been <strong>CAREFULLY</strong> studied.', adv:'CAREFULLY', answer:'VỊ TRÍ GIỮA CÂU', explanation:'"CAREFULLY" chỉ cách thức, đứng sau tất cả các trợ động từ → vị trí giữa câu.' },
+  { sentence:"<strong>TODAY</strong>, I'm going to clean the house.", adv:'TODAY', answer:'VỊ TRÍ ĐẦU CÂU', explanation:'"TODAY" đứng đầu câu → vị trí đầu câu (front position).' },
+  { sentence:"I'm flying to Edinburgh <strong>TOMORROW</strong>.", adv:'TOMORROW', answer:'VỊ TRÍ CUỐI CÂU', explanation:'"TOMORROW" đứng cuối câu → vị trí cuối câu (end position).' },
+  { sentence:'He played <strong>BRILLIANTLY</strong>.', adv:'BRILLIANTLY', answer:'VỊ TRÍ CUỐI CÂU', explanation:'"BRILLIANTLY" đứng sau động từ "played" ở cuối câu → vị trí cuối câu.' },
+  { sentence:'Please come over <strong>HERE</strong>.', adv:'HERE', answer:'VỊ TRÍ CUỐI CÂU', explanation:'"HERE" đứng cuối câu → vị trí cuối câu.' },
+];
+
+const ex3Options = ['VỊ TRÍ ĐẦU CÂU','VỊ TRÍ GIỮA CÂU','VỊ TRÍ CUỐI CÂU'];
+
+const ex4Data = [
+  { sentence:'I study ___ . (every evening/ hard/ in the library)', answer:'hard in the library every evening', explanation:'Thứ tự cuối câu: Cách thức (hard) → Nơi chốn (in the library) → Tần suất/Thời gian (every evening).' },
+  { sentence:'You can only drive ___ . (on a highway/ during rush hour/ slowly)', answer:'slowly on a highway during rush hour', explanation:'Cách thức (slowly) → Nơi chốn (on a highway) → Thời gian (during rush hour).' },
+  { sentence:'It is difficult to focus ___ . (at a public place/ intensively)', answer:'intensively at a public place', explanation:'Cách thức (intensively) → Nơi chốn (at a public place).' },
+  { sentence:'I usually walk ___ . (after a meal/ gently/ around the neighborhood)', answer:'gently around the neighborhood after a meal', explanation:'Cách thức (gently) → Nơi chốn (around the neighborhood) → Thời gian (after a meal).' },
+];
+
+const ex5Data = [
+  { wrong:'Often I watch TV in the evening.', answer:'I often watch TV in the evening.', explanation:'"often" là trạng từ tần suất → phải đứng ở vị trí giữa câu, trước động từ thường "watch".' },
+  { wrong:'Where at the weekend do you go?', answer:'Where do you go at the weekend?', explanation:'"at the weekend" là trạng từ thời gian → thường đứng cuối câu hỏi.' },
+  { wrong:'My family has always on a farm lived.', answer:'My family has always lived on a farm.', explanation:'"always" phải đứng giữa trợ động từ "has" và động từ chính "lived". "on a farm" là địa điểm → cuối câu.' },
+  { wrong:'You should every six months go to the dentist.', answer:'Every six months, you should go to the dentist.', explanation:'"every six months" là trạng từ thời gian → có thể đứng đầu câu (front) hoặc cuối câu, không đứng giữa "should" và "go".' },
+  { wrong:'You always have been such a nice guy.', answer:'You have always been such a nice guy.', explanation:'"always" phải đứng sau trợ động từ "have", trước động từ chính "been": have always been.' },
+];
+
+const ex6Data = [
+  { sentence:'My parents are frequent travellers.', answer:'My parents travel frequently.', explanation:'"frequent" (adj) → "frequently" (adv). Đặt sau động từ "travel" ở vị trí cuối câu.' },
+  { sentence:'Denise is a fast runner.', answer:'Denise runs fast.', explanation:'"fast" vừa là tính từ vừa là trạng từ (không thêm -ly). Đặt sau động từ "runs".' },
+  { sentence:'Antonio is a skillful painter.', answer:'Antonio paints skillfully.', explanation:'"skillful" (adj) → "skillfully" (adv). Đặt sau động từ "paints".' },
+  { sentence:'My aunt is a quiet speaker.', answer:'My aunt speaks quietly.', explanation:'"quiet" (adj) → "quietly" (adv). Đặt sau động từ "speaks".' },
+  { sentence:'Emelda and Maureen are brilliant cooks.', answer:'Emelda and Maureen cook brilliantly.', explanation:'"brilliant" (adj) → "brilliantly" (adv). Đặt sau động từ "cook".' },
+];
+
+// ─── RENDER ───────────────────────────────────────────────────────────────────
+const mcqSelections = {};
+
+function renderEx2() {
+  const c = document.getElementById('ex2Container');
+  c.innerHTML = ex2Data.map((item, i) =>
+    `<div class="mcq-question" id="ex2_q${i}">
+      <div class="mcq-sentence">${i+1}. ${item.sentence}</div>
+      <div class="options">${ex2Options.map((opt, j) =>
+        `<button class="option-btn" id="ex2_${i}_${j}" onclick="selectMCQ('ex2',${i},${j},${ex2Options.length})">
+          <span class="option-dot">${String.fromCharCode(65+j)}</span>${opt}
+        </button>`
+      ).join('')}</div>
+    </div>`
+  ).join('');
+}
+
+function renderEx3() {
+  const c = document.getElementById('ex3Container');
+  c.innerHTML = ex3Data.map((item, i) =>
+    `<div class="mcq-question" id="ex3_q${i}">
+      <div class="mcq-sentence">${i+1}. ${item.sentence}</div>
+      <div class="options">${ex3Options.map((opt, j) =>
+        `<button class="option-btn" id="ex3_${i}_${j}" onclick="selectMCQ('ex3',${i},${j},${ex3Options.length})">
+          <span class="option-dot">${String.fromCharCode(65+j)}</span>${opt}
+        </button>`
+      ).join('')}</div>
+    </div>`
+  ).join('');
+}
+
+function renderEx4() {
+  const c = document.getElementById('ex4Container');
+  c.innerHTML = ex4Data.map((item, i) =>
+    `<div class="fill-row">
+      <strong>${i+1}.</strong> ${item.sentence.replace('___',
+        `<input class="fill-blank" id="ex4_${i}" placeholder="sắp xếp trạng từ..." style="min-width:320px" autocomplete="off">`
+      )}
+    </div>`
+  ).join('');
+  document.querySelectorAll('#ex4Container .fill-blank').forEach(el => el.addEventListener('input', updateProgress));
+}
+
+function renderEx5() {
+  const c = document.getElementById('ex5Container');
+  c.innerHTML = ex5Data.map((item, i) =>
+    `<div class="fill-row">
+      <div style="font-size:13px;color:var(--text-muted);margin-bottom:4px">❌ <em>${item.wrong}</em></div>
+      <div>✏️ <input class="fill-blank" id="ex5_${i}" placeholder="Viết lại câu đúng..." style="min-width:340px" autocomplete="off"></div>
+    </div>`
+  ).join('');
+  document.querySelectorAll('#ex5Container .fill-blank').forEach(el => el.addEventListener('input', updateProgress));
+}
+
+function renderEx6() {
+  const c = document.getElementById('ex6Container');
+  c.innerHTML = ex6Data.map((item, i) =>
+    `<div class="fill-row">
+      <div style="font-size:14px;margin-bottom:4px">📌 <em>${item.sentence}</em></div>
+      <div>⇒ <input class="fill-blank" id="ex6_${i}" placeholder="Viết lại bằng trạng từ..." style="min-width:320px" autocomplete="off"></div>
+    </div>`
+  ).join('');
+  document.querySelectorAll('#ex6Container .fill-blank').forEach(el => el.addEventListener('input', updateProgress));
+}
+
+function selectMCQ(prefix, qIdx, optIdx, total) {
+  for (let j = 0; j < total; j++) document.getElementById(`${prefix}_${qIdx}_${j}`)?.classList.remove('selected');
+  document.getElementById(`${prefix}_${qIdx}_${optIdx}`)?.classList.add('selected');
+  mcqSelections[`${prefix}_${qIdx}`] = optIdx;
+  updateProgress();
+}
+
+// ─── PROGRESS ─────────────────────────────────────────────────────────────────
+function countAnswered() {
+  let filled = 0, total = 0;
+  ex1Data.forEach(b => { total++; if (document.getElementById(b.id)?.value) filled++; });
+  ex12Data.forEach(b => { total++; if (document.getElementById(b.id)?.value) filled++; });
+  ex2Data.forEach((_, i) => { total++; if (mcqSelections[`ex2_${i}`] !== undefined) filled++; });
+  ex3Data.forEach((_, i) => { total++; if (mcqSelections[`ex3_${i}`] !== undefined) filled++; });
+  ex4Data.forEach((_, i) => { total++; if (document.getElementById(`ex4_${i}`)?.value.trim()) filled++; });
+  ex5Data.forEach((_, i) => { total++; if (document.getElementById(`ex5_${i}`)?.value.trim()) filled++; });
+  ex6Data.forEach((_, i) => { total++; if (document.getElementById(`ex6_${i}`)?.value.trim()) filled++; });
+  return { filled, total };
+}
+function updateProgress() {
+  const { filled, total } = countAnswered();
+  document.getElementById('progressFill').style.width = (filled / total * 100) + '%';
+  document.getElementById('progressCount').textContent = `${filled} / ${total}`;
+}
+
+// ─── SUBMIT ───────────────────────────────────────────────────────────────────
+function norm(s) { return s.trim().toLowerCase().replace(/\s+/g,' '); }
+
+function submitAll() {
+  let score = 0, total = 0;
+
+  // Ex1.1
+  let ex1Html = '<h4>📝 Giải thích Exercise 1.1:</h4>';
+  const posLabels = ['FRONT – Trạng từ chỉ','MID – Trạng từ chỉ (2)','MID – Trạng từ chỉ (3)','MID – Trạng từ chỉ (4)','END – Trạng từ chỉ (5)','END – Trạng từ chỉ (6)','END – Trạng từ chỉ (7)'];
+  ex1Data.forEach((b, i) => {
+    total++;
+    const el = document.getElementById(b.id);
+    const ok = el?.value === b.answer;
+    if (ok) score++;
+    if (el) { el.classList.add(ok ? 'correct' : 'wrong'); el.disabled = true; }
+    ex1Html += `<div class="ans-row"><span class="${ok?'ans-correct':'ans-wrong'}">${ok?'✅':'❌'} ${posLabels[i]}: <strong>${b.answer}</strong></span><span class="ans-explanation">– ${b.explanation}</span></div>`;
+  });
+  const a1 = document.getElementById('ex1Ans'); a1.innerHTML = ex1Html; a1.classList.add('show');
+
+  // Ex1.2
+  let ex12Html = '<h4>📝 Giải thích Exercise 1.2 – They walked slowly around the coast every day in the afternoon:</h4>';
+  ex12Data.forEach(b => {
+    total++;
+    const el = document.getElementById(b.id);
+    const ok = el?.value === b.answer;
+    if (ok) score++;
+    if (el) { el.classList.add(ok ? 'correct' : 'wrong'); el.disabled = true; }
+    ex12Html += `<div class="ans-row"><span class="${ok?'ans-correct':'ans-wrong'}">${ok?'✅':'❌'} <em>${b.adv}</em>: <strong>${b.answer}</strong></span><span class="ans-explanation">– ${b.explanation}</span></div>`;
+  });
+  const a12 = document.getElementById('ex12Ans'); a12.innerHTML = ex12Html; a12.classList.add('show');
+
+  // Ex2
+  let ex2Html = '<h4>📝 Giải thích Exercise 2:</h4>';
+  ex2Data.forEach((item, i) => {
+    total++;
+    const sel = mcqSelections[`ex2_${i}`];
+    const correctIdx = ex2Options.indexOf(item.answer);
+    const ok = sel === correctIdx;
+    if (ok) score++;
+    for (let j = 0; j < ex2Options.length; j++) {
+      const btn = document.getElementById(`ex2_${i}_${j}`);
+      if (!btn) continue;
+      btn.disabled = true; btn.classList.remove('selected');
+      if (j === correctIdx) btn.classList.add('correct-ans');
+      else if (j === sel && !ok) btn.classList.add('wrong-ans');
+    }
+    ex2Html += `<div class="ans-row"><span class="${ok?'ans-correct':'ans-wrong'}">${ok?'✅':'❌'} Câu ${i+1} (<em>${item.adv}</em>): <strong>${item.answer}</strong></span><span class="ans-explanation">– ${item.explanation}</span></div>`;
+  });
+  const a2 = document.getElementById('ex2Ans'); a2.innerHTML = ex2Html; a2.classList.add('show');
+
+  // Ex3
+  let ex3Html = '<h4>📝 Giải thích Exercise 3:</h4>';
+  ex3Data.forEach((item, i) => {
+    total++;
+    const sel = mcqSelections[`ex3_${i}`];
+    const correctIdx = ex3Options.indexOf(item.answer);
+    const ok = sel === correctIdx;
+    if (ok) score++;
+    for (let j = 0; j < ex3Options.length; j++) {
+      const btn = document.getElementById(`ex3_${i}_${j}`);
+      if (!btn) continue;
+      btn.disabled = true; btn.classList.remove('selected');
+      if (j === correctIdx) btn.classList.add('correct-ans');
+      else if (j === sel && !ok) btn.classList.add('wrong-ans');
+    }
+    ex3Html += `<div class="ans-row"><span class="${ok?'ans-correct':'ans-wrong'}">${ok?'✅':'❌'} Câu ${i+1} (<em>${item.adv}</em>): <strong>${item.answer}</strong></span><span class="ans-explanation">– ${item.explanation}</span></div>`;
+  });
+  const a3 = document.getElementById('ex3Ans'); a3.innerHTML = ex3Html; a3.classList.add('show');
+
+  // Ex4
+  let ex4Html = '<h4>📝 Giải thích Exercise 4:</h4>';
+  ex4Data.forEach((item, i) => {
+    total++;
+    const inp = document.getElementById(`ex4_${i}`);
+    const ok = norm(inp?.value||'') === norm(item.answer);
+    if (ok) score++;
+    if (inp) inp.classList.add(ok ? 'correct' : 'wrong');
+    ex4Html += `<div class="ans-row"><span class="${ok?'ans-correct':'ans-wrong'}">${ok?'✅':'❌'} Câu ${i+1}: <strong>${item.answer}</strong></span><span class="ans-explanation">– ${item.explanation}</span></div>`;
+  });
+  const a4 = document.getElementById('ex4Ans'); a4.innerHTML = ex4Html; a4.classList.add('show');
+
+  // Ex5
+  let ex5Html = '<h4>📝 Giải thích Exercise 5:</h4>';
+  ex5Data.forEach((item, i) => {
+    total++;
+    const inp = document.getElementById(`ex5_${i}`);
+    const userVal = norm(inp?.value||'');
+    const ok = userVal === norm(item.answer) ||
+      (i===3 && (userVal === norm('Every six months, you should go to the dentist.') || userVal === norm('You should go to the dentist every six months.')));
+    if (ok) score++;
+    if (inp) inp.classList.add(ok ? 'correct' : 'wrong');
+    ex5Html += `<div class="ans-row"><span class="${ok?'ans-correct':'ans-wrong'}">${ok?'✅':'❌'} Câu ${i+1}: <strong>${item.answer}</strong></span><span class="ans-explanation">– ${item.explanation}</span></div>`;
+  });
+  const a5 = document.getElementById('ex5Ans'); a5.innerHTML = ex5Html; a5.classList.add('show');
+
+  // Ex6
+  let ex6Html = '<h4>📝 Giải thích Exercise 6:</h4>';
+  ex6Data.forEach((item, i) => {
+    total++;
+    const inp = document.getElementById(`ex6_${i}`);
+    const ok = norm(inp?.value||'') === norm(item.answer);
+    if (ok) score++;
+    if (inp) inp.classList.add(ok ? 'correct' : 'wrong');
+    ex6Html += `<div class="ans-row"><span class="${ok?'ans-correct':'ans-wrong'}">${ok?'✅':'❌'} Câu ${i+1}: <strong>${item.answer}</strong></span><span class="ans-explanation">– ${item.explanation}</span></div>`;
+  });
+  const a6 = document.getElementById('ex6Ans'); a6.innerHTML = ex6Html; a6.classList.add('show');
+
+  const fb = document.getElementById('globalFeedback');
+  document.getElementById('scoreDisplay').textContent = `${score} / ${total}`;
+  fb.classList.add('show');
+  fb.scrollIntoView({ behavior:'smooth', block:'start' });
+  updateProgress();
+}
+
+// ─── RESET ────────────────────────────────────────────────────────────────────
+function resetAll() {
+  Object.keys(mcqSelections).forEach(k => delete mcqSelections[k]);
+  document.getElementById('globalFeedback').classList.remove('show');
+  ['ex1Ans','ex12Ans','ex2Ans','ex3Ans','ex4Ans','ex5Ans','ex6Ans'].forEach(id => {
+    const el = document.getElementById(id); el.classList.remove('show'); el.innerHTML = '';
+  });
+  // re-enable selects
+  ex1Data.forEach(b => { const el=document.getElementById(b.id); if(el){el.value='';el.disabled=false;el.className='pos-select';} });
+  ex12Data.forEach(b => { const el=document.getElementById(b.id); if(el){el.value='';el.disabled=false;el.className='pos-select';} });
+  renderEx2(); renderEx3(); renderEx4(); renderEx5(); renderEx6();
+  updateProgress();
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+renderEx2(); renderEx3(); renderEx4(); renderEx5(); renderEx6();
+updateProgress();
+</script>
+</body>
+</html>

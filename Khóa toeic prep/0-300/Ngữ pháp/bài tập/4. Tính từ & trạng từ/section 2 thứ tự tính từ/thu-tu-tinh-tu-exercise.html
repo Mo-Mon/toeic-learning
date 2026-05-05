@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Section 2: Thứ Tự Tính Từ – Bài Tập Tiếng Anh</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #ffffff;
+    --blue: #1a6fc4;
+    --blue-light: #e8f1fb;
+    --blue-mid: #4d9de0;
+    --blue-dark: #0d4a8a;
+    --text: #1a1a2e;
+    --text-muted: #6b7280;
+    --border: #dde6f5;
+    --correct: #16a34a;
+    --correct-bg: #dcfce7;
+    --wrong: #dc2626;
+    --wrong-bg: #fee2e2;
+    --neutral-bg: #f8faff;
+    --shadow: 0 2px 16px rgba(26,111,196,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Be Vietnam Pro', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  header {
+    background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue) 60%, var(--blue-mid) 100%);
+    color: #fff;
+    padding: 36px 24px 28px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 70% 30%, rgba(255,255,255,0.08) 0%, transparent 60%);
+  }
+  header .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 4px 16px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(24px, 5vw, 38px);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+  header p { font-size: 14px; opacity: 0.85; }
+
+  .progress-wrap {
+    background: var(--blue-light);
+    padding: 14px 24px;
+    display: flex; align-items: center; gap: 12px;
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; z-index: 10;
+  }
+  .progress-label { font-size: 13px; font-weight: 600; color: var(--blue); white-space: nowrap; }
+  .progress-bar { flex: 1; height: 8px; background: #d1dff5; border-radius: 99px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--blue), var(--blue-mid)); border-radius: 99px; transition: width 0.4s ease; }
+  .progress-count { font-size: 13px; font-weight: 600; color: var(--blue); white-space: nowrap; }
+
+  main { max-width: 820px; margin: 0 auto; padding: 28px 16px 60px; }
+
+  .exercise-card {
+    background: var(--bg);
+    border: 1.5px solid var(--border);
+    border-radius: 16px;
+    margin-bottom: 24px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: box-shadow 0.2s;
+  }
+  .exercise-card:hover { box-shadow: 0 4px 24px rgba(26,111,196,0.13); }
+  .exercise-header {
+    background: var(--blue-light);
+    border-bottom: 1.5px solid var(--border);
+    padding: 14px 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .ex-num {
+    background: var(--blue);
+    color: #fff;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700; flex-shrink: 0;
+  }
+  .ex-title { font-size: 15px; font-weight: 600; color: var(--blue-dark); }
+  .exercise-body { padding: 20px; }
+
+  .hint { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; font-style: italic; }
+
+  /* Order rule banner */
+  .order-rule {
+    background: var(--blue-light);
+    border: 1.5px solid var(--blue-mid);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 18px;
+    font-size: 13px;
+    color: var(--blue-dark);
+  }
+  .order-rule strong { display: block; margin-bottom: 6px; font-size: 14px; }
+  .order-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .order-tag {
+    background: var(--blue);
+    color: #fff;
+    border-radius: 6px;
+    padding: 3px 10px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .order-arrow { color: var(--blue-mid); font-weight: 700; align-self: center; }
+
+  .fill-blank {
+    display: inline-block;
+    border: none; border-bottom: 2px solid var(--blue-mid);
+    outline: none; background: transparent;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 15px; color: var(--blue-dark);
+    padding: 2px 6px; min-width: 110px;
+    transition: border-color 0.2s;
+  }
+  .fill-blank:focus { border-color: var(--blue); }
+  .fill-blank.correct { border-color: var(--correct); background: var(--correct-bg); border-radius: 4px 4px 0 0; }
+  .fill-blank.wrong   { border-color: var(--wrong);   background: var(--wrong-bg);   border-radius: 4px 4px 0 0; }
+
+  .fill-row { margin-bottom: 12px; font-size: 15px; line-height: 1.8; }
+
+  /* Ex1 classify */
+  .classify-row { margin-bottom: 10px; font-size: 15px; display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+  .classify-label { color: var(--blue-dark); font-weight: 600; min-width: 260px; }
+  .classify-inputs { display: flex; gap: 6px; flex-wrap: wrap; }
+
+  /* MCQ */
+  .mcq-question { margin-bottom: 22px; }
+  .mcq-question + .mcq-question { border-top: 1px solid var(--border); padding-top: 20px; }
+  .mcq-sentence { font-weight: 500; margin-bottom: 10px; font-size: 15px; }
+  .options { display: flex; flex-direction: column; gap: 8px; }
+  .option-btn {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    background: var(--neutral-bg);
+    cursor: pointer;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 14px; color: var(--text);
+    transition: all 0.18s; text-align: left;
+  }
+  .option-btn:hover:not(:disabled) { border-color: var(--blue); background: var(--blue-light); }
+  .option-btn.selected { border-color: var(--blue); background: var(--blue-light); }
+  .option-btn.correct-ans { border-color: var(--correct); background: var(--correct-bg); color: var(--correct); font-weight: 600; }
+  .option-btn.wrong-ans   { border-color: var(--wrong);   background: var(--wrong-bg);   color: var(--wrong);   font-weight: 600; }
+  .option-btn:disabled { cursor: default; }
+  .option-dot {
+    width: 20px; height: 20px; border-radius: 50%;
+    border: 2px solid #c5d4ec; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700;
+    transition: all 0.18s;
+  }
+  .option-btn.correct-ans .option-dot { border-color: var(--correct); background: var(--correct); color: #fff; }
+  .option-btn.wrong-ans   .option-dot { border-color: var(--wrong);   background: var(--wrong);   color: #fff; }
+  .option-btn.selected .option-dot    { border-color: var(--blue); background: var(--blue); color: #fff; }
+
+  .answer-section {
+    background: var(--neutral-bg);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-top: 14px;
+    font-size: 14px;
+    display: none;
+  }
+  .answer-section.show { display: block; }
+  .answer-section h4 { color: var(--blue-dark); font-size: 14px; margin-bottom: 8px; }
+  .ans-row { margin-bottom: 6px; }
+  .ans-correct { color: var(--correct); font-weight: 600; }
+  .ans-wrong   { color: var(--wrong); }
+  .ans-explanation { color: var(--text-muted); font-size: 13px; margin-left: 8px; }
+
+  .global-feedback {
+    background: var(--blue-light);
+    border: 2px solid var(--blue);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 28px;
+    text-align: center;
+    display: none;
+  }
+  .global-feedback.show { display: block; }
+  .global-feedback .score { font-size: 40px; font-weight: 700; color: var(--blue); }
+  .global-feedback .score-label { font-size: 15px; color: var(--text-muted); margin-top: 4px; }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--blue-dark), var(--blue));
+    color: #fff;
+    border: none; border-radius: 12px;
+    padding: 14px 36px;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 16px; font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(26,111,196,0.3);
+    transition: all 0.2s;
+    display: block; margin: 0 auto;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(26,111,196,0.4); }
+  .btn-primary:active { transform: translateY(0); }
+  .btn-reset {
+    background: transparent; color: var(--blue);
+    border: 1.5px solid var(--blue);
+    border-radius: 12px; padding: 12px 28px;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 15px; font-weight: 600;
+    cursor: pointer; display: block; margin: 12px auto 0;
+    transition: all 0.2s;
+  }
+  .btn-reset:hover { background: var(--blue-light); }
+
+  .submit-area { padding: 8px 0 4px; text-align: center; }
+
+  @media (max-width: 600px) {
+    .exercise-body { padding: 14px; }
+    .classify-row { flex-direction: column; gap: 4px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="badge">Prep.vn – Tiếng Anh</div>
+  <h1>Section 2: Thứ Tự Tính Từ</h1>
+  <p>Hoàn thành tất cả bài tập rồi bấm "Chấm bài" để xem đáp án chi tiết</p>
+</header>
+
+<div class="progress-wrap">
+  <span class="progress-label">Tiến độ</span>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+  <span class="progress-count" id="progressCount">0 / 0</span>
+</div>
+
+<main>
+
+  <div class="global-feedback" id="globalFeedback">
+    <div class="score" id="scoreDisplay">0/0</div>
+    <div class="score-label">Điểm số của bạn</div>
+  </div>
+
+  <!-- Exercise 1 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <div class="ex-num">1</div>
+      <div class="ex-title">Phân loại và điền các tính từ vào loại tính từ thích hợp (chỉ điền 1 tính từ/ô)</div>
+    </div>
+    <div class="exercise-body">
+      <div class="order-rule">
+        <strong>📌 Bảng từ cho sẵn:</strong>
+        <div class="order-tags">
+          <span class="order-tag">pretty</span><span class="order-tag">large</span><span class="order-tag">wonderful</span><span class="order-tag">red</span><span class="order-tag">Chinese</span>
+          <span class="order-tag">blue</span><span class="order-tag">round</span><span class="order-tag">young</span><span class="order-tag">wooden</span><span class="order-tag">British</span>
+          <span class="order-tag">paper</span><span class="order-tag">plastic</span><span class="order-tag">long</span><span class="order-tag">sports</span>
+        </div>
+      </div>
+      <div id="ex1Container"></div>
+      <div class="answer-section" id="ex1Ans"></div>
+    </div>
+  </div>
+
+  <!-- Exercise 2 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <div class="ex-num">2</div>
+      <div class="ex-title">Sắp xếp các tính từ sau theo đúng thứ tự</div>
+    </div>
+    <div class="exercise-body">
+      <div class="order-rule">
+        <strong>📌 Thứ tự tính từ chuẩn:</strong>
+        <div class="order-tags">
+          <span class="order-tag">Opinion</span><span class="order-arrow">→</span>
+          <span class="order-tag">Size</span><span class="order-arrow">→</span>
+          <span class="order-tag">Age</span><span class="order-arrow">→</span>
+          <span class="order-tag">Shape</span><span class="order-arrow">→</span>
+          <span class="order-tag">Colour</span><span class="order-arrow">→</span>
+          <span class="order-tag">Origin</span><span class="order-arrow">→</span>
+          <span class="order-tag">Material</span><span class="order-arrow">→</span>
+          <span class="order-tag">Purpose</span><span class="order-arrow">→</span>
+          <span class="order-tag">Noun</span>
+        </div>
+      </div>
+      <div id="ex2Container"></div>
+      <div class="answer-section" id="ex2Ans"></div>
+    </div>
+  </div>
+
+  <!-- Exercise 3 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <div class="ex-num">3</div>
+      <div class="ex-title">Viết lại câu bằng cách sắp xếp tính từ trong ngoặc đơn vào vị trí phù hợp</div>
+    </div>
+    <div class="exercise-body">
+      <p class="hint">💡 Ví dụ: One day, a time ago, (long, fine) → <strong style="color:var(--blue)">One fine day, a long time ago,</strong></p>
+      <div id="ex3Container"></div>
+      <div class="answer-section" id="ex3Ans"></div>
+    </div>
+  </div>
+
+  <!-- Exercise 4 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <div class="ex-num">4</div>
+      <div class="ex-title">Sắp xếp các từ trong thông báo thanh lý đồ đạc theo đúng thứ tự</div>
+    </div>
+    <div class="exercise-body">
+      <p class="hint">💡 Ví dụ: round/table/plastic/big/a → <strong style="color:var(--blue)">a big round plastic table</strong></p>
+      <div id="ex4Container"></div>
+      <div class="answer-section" id="ex4Ans"></div>
+    </div>
+  </div>
+
+  <!-- Exercise 5 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <div class="ex-num">5</div>
+      <div class="ex-title">Sắp xếp từ trong các câu sau để tạo thành câu đúng</div>
+    </div>
+    <div class="exercise-body">
+      <div id="ex5Container"></div>
+      <div class="answer-section" id="ex5Ans"></div>
+    </div>
+  </div>
+
+  <!-- Exercise 6 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <div class="ex-num">6</div>
+      <div class="ex-title">Chọn đáp án đúng (A, B, C, D) – thứ tự tính từ</div>
+    </div>
+    <div class="exercise-body">
+      <div id="ex6Container"></div>
+      <div class="answer-section" id="ex6Ans"></div>
+    </div>
+  </div>
+
+  <div class="submit-area">
+    <button class="btn-primary" onclick="submitAll()">🎯 Chấm bài &amp; Xem giải thích</button>
+    <button class="btn-reset" onclick="resetAll()">↺ Làm lại từ đầu</button>
+  </div>
+
+</main>
+
+<script>
+// ─── DATA ─────────────────────────────────────────────────────────────────────
+
+const ex1Data = [
+  { label: "1. Tính từ chỉ quan điểm - OPINION", count: 2, answers: ["pretty", "wonderful"] },
+  { label: "2. Tính từ chỉ kích thước - SIZE", count: 2, answers: ["large", "long"] },
+  { label: "3. Tính từ chỉ tuổi tác - AGE", count: 1, answers: ["young"] },
+  { label: "4. Tính từ chỉ hình dạng - SHAPE", count: 1, answers: ["round"] },
+  { label: "5. Tính từ chỉ màu sắc - COLOUR", count: 2, answers: ["red", "blue"] },
+  { label: "6. Tính từ chỉ nguồn gốc - ORIGIN", count: 2, answers: ["Chinese", "British"] },
+  { label: "7. Tính từ chỉ chất liệu - MATERIAL", count: 3, answers: ["wooden", "paper", "plastic"] },
+  { label: "8. Tính từ chỉ mục đích - PURPOSE", count: 1, answers: ["sports"] },
+];
+
+const ex1Explanations = [
+  '"pretty" (xinh đẹp) và "wonderful" (tuyệt vời) diễn tả quan điểm/đánh giá chủ quan.',
+  '"large" (lớn) và "long" (dài) diễn tả kích thước/độ dài.',
+  '"young" (trẻ) diễn tả tuổi tác.',
+  '"round" (tròn) diễn tả hình dạng.',
+  '"red" (đỏ) và "blue" (xanh dương) diễn tả màu sắc.',
+  '"Chinese" (Trung Quốc) và "British" (Anh) diễn tả nguồn gốc/quốc tịch.',
+  '"wooden" (gỗ), "paper" (giấy), "plastic" (nhựa) diễn tả chất liệu làm nên vật.',
+  '"sports" (thể thao) diễn tả mục đích sử dụng (sports car, sports bag...).',
+];
+
+const ex2Data = [
+  { words: "hair/long/black", answer: "long black hair", explanation: 'Size (long) → Colour (black) → Noun (hair). "Long black hair".' },
+  { words: "an/old/chair/wooden", answer: "an old wooden chair", explanation: 'Age (old) → Material (wooden) → Noun (chair). "An old wooden chair".' },
+  { words: "an/book/interesting/old", answer: "an interesting old book", explanation: 'Opinion (interesting) → Age (old) → Noun (book). "An interesting old book".' },
+  { words: "a/house/beautiful/modern", answer: "a beautiful modern house", explanation: 'Opinion (beautiful) → Age/style (modern) → Noun (house). "A beautiful modern house".' },
+  { words: "student/a/friendly/Vietnamese", answer: "a friendly Vietnamese student", explanation: 'Opinion (friendly) → Origin (Vietnamese) → Noun (student). "A friendly Vietnamese student".' },
+  { words: "brown/cup/German/huge/a/glass", answer: "a huge brown German glass cup", explanation: 'Size (huge) → Colour (brown) → Origin (German) → Material (glass) → Noun (cup). "A huge brown German glass cup".' },
+];
+
+const ex3Data = [
+  { prompt: 'a girl (beautiful, little)', answer: 'a beautiful little girl', explanation: 'Opinion (beautiful) → Size (little) → Noun (girl).' },
+  { prompt: 'in a coat (red, long)', answer: 'in a long red coat', explanation: 'Size (long) → Colour (red) → Noun (coat).' },
+  { prompt: 'was walking through a forest (dark)', answer: 'was walking through a dark forest', explanation: '"dark" là tính từ chỉ màu/ánh sáng, đứng trước "forest".' },
+  { prompt: 'with a bag (big, yellow)', answer: 'with a big yellow bag', explanation: 'Size (big) → Colour (yellow) → Noun (bag).' },
+  { prompt: 'of apples (red, wonderful)', answer: 'of wonderful red apples', explanation: 'Opinion (wonderful) → Colour (red) → Noun (apples).' },
+  { prompt: 'to see her grandmother. (old)', answer: 'to see her old grandmother.', explanation: '"old" là tính từ chỉ tuổi tác, đứng trước "grandmother".' },
+  { prompt: 'She saw a wolf (big)', answer: 'She saw a big wolf', explanation: '"big" là tính từ chỉ kích thước, đứng trước "wolf".' },
+  { prompt: 'with teeth (white, long)', answer: 'with long white teeth', explanation: 'Size (long) → Colour (white) → Noun (teeth).' },
+  { prompt: 'under a tree. (tall, green)', answer: 'under a tall green tree.', explanation: 'Size (tall) → Colour (green) → Noun (tree).' },
+  { prompt: 'The house is for sale. (cute, little)', answer: 'The cute little house is for sale.', explanation: 'Opinion (cute) → Size (little) → Noun (house). Tính từ đứng trước "house".' },
+  { prompt: 'I need a watch. (Swiss, new)', answer: 'I need a new Swiss watch.', explanation: 'Age/condition (new) → Origin (Swiss) → Noun (watch).' },
+  { prompt: "I'm going to buy some roses. (nice, red)", answer: "I'm going to buy some nice red roses.", explanation: 'Opinion (nice) → Colour (red) → Noun (roses).' },
+];
+
+const ex4Data = [
+  { words: "curtains/long/some/Indian", answer: "some long Indian curtains", explanation: 'Size (long) → Origin (Indian) → Noun (curtains). "some long Indian curtains".' },
+  { words: "black/metal/chair/a/comfortable", answer: "a comfortable black metal chair", explanation: 'Opinion (comfortable) → Colour (black) → Material (metal) → Noun (chair).' },
+  { words: "oil/Dutch/beautiful/painting/a", answer: "a beautiful Dutch oil painting", explanation: 'Opinion (beautiful) → Origin (Dutch) → Material/type (oil) → Noun (painting).' },
+  { words: "huge/wardrobe/wooden/a(n)", answer: "a huge wooden wardrobe", explanation: 'Size (huge) → Material (wooden) → Noun (wardrobe).' },
+  { words: "a/carpet/little/lovely/round", answer: "a lovely little round carpet", explanation: 'Opinion (lovely) → Size (little) → Shape (round) → Noun (carpet).' },
+  { words: "Peruvian/a/square/bedcover", answer: "a square Peruvian bedcover", explanation: 'Shape (square) → Origin (Peruvian) → Noun (bedcover).' },
+];
+
+const ex5Data = [
+  { words: "wedding/dress/she/long/wore/white/a", answer: "She wore a long white wedding dress.", explanation: 'Size (long) → Colour (white) → Purpose (wedding) → Noun (dress). Chủ ngữ "She" đứng đầu câu.' },
+  { words: "woman/English/is/an/young/intelligent/this", answer: "This is an intelligent young English woman.", explanation: 'Opinion (intelligent) → Age (young) → Origin (English) → Noun (woman).' },
+  { words: "is/bag/this/sleeping/black/a/new", answer: "This is a new black sleeping bag.", explanation: 'Age/condition (new) → Colour (black) → Purpose (sleeping) → Noun (bag).' },
+  { words: "pink/she/house/bought/big/beautiful/a", answer: "She bought a beautiful big pink house.", explanation: 'Opinion (beautiful) → Size (big) → Colour (pink) → Noun (house).' },
+  { words: "gave/dinosaur/him/she/cute/small/a/plastic", answer: "She gave him a cute small plastic dinosaur.", explanation: 'Opinion (cute) → Size (small) → Material (plastic) → Noun (dinosaur).' },
+];
+
+const ex6Data = [
+  {
+    sentence: 'They say he\'s a _____ student for his age.',
+    options: ['A. tall mature brilliant', 'B. mature brilliant tall', 'C. brilliant tall mature', 'D. tall brilliant mature'],
+    correct: 2,
+    explanations: [
+      '"tall mature brilliant": Size → Age → Opinion – sai thứ tự (Opinion phải đứng đầu).',
+      '"mature brilliant tall": Age → Opinion → Size – sai thứ tự hoàn toàn.',
+      '"brilliant tall mature": Opinion (brilliant) → Size (tall) → Age (mature) – ĐÚNG thứ tự chuẩn.',
+      '"tall brilliant mature": Size → Opinion → Age – sai (Opinion phải trước Size).',
+    ]
+  },
+  {
+    sentence: 'The speaker is a _____ professor.',
+    options: ['A. old short American kind', 'B. kind short old American', 'C. American kind old short', 'D. kind American short old'],
+    correct: 1,
+    explanations: [
+      '"old short American kind": Age→Size→Origin→Opinion – sai (Opinion đứng đầu).',
+      '"kind short old American": Opinion (kind) → Size (short) → Age (old) → Origin (American) – ĐÚNG thứ tự chuẩn.',
+      '"American kind old short": Origin→Opinion→Age→Size – sai hoàn toàn.',
+      '"kind American short old": Opinion→Origin→Size→Age – sai (Size phải trước Origin).',
+    ]
+  },
+  {
+    sentence: 'My sister lives in a _____ apartment.',
+    options: ['A. nice wooden new', 'B. new nice wooden', 'C. nice new wooden', 'D. wooden nice new'],
+    correct: 2,
+    explanations: [
+      '"nice wooden new": Opinion→Material→Age – sai (Age trước Material).',
+      '"new nice wooden": Age→Opinion→Material – sai (Opinion đứng đầu).',
+      '"nice new wooden": Opinion (nice) → Age (new) → Material (wooden) – ĐÚNG thứ tự chuẩn.',
+      '"wooden nice new": Material→Opinion→Age – sai hoàn toàn.',
+    ]
+  },
+  {
+    sentence: 'My cousin bought a _____ bowl.',
+    options: ['A. blue ancient lovely small', 'B. lovely blue small ancient', 'C. small blue ancient lovely', 'D. lovely small ancient blue'],
+    correct: 3,
+    explanations: [
+      '"blue ancient lovely small": Colour→Age→Opinion→Size – sai (Opinion đứng đầu).',
+      '"lovely blue small ancient": Opinion→Colour→Size→Age – sai (Size trước Colour).',
+      '"small blue ancient lovely": Size→Colour→Age→Opinion – sai (Opinion đứng đầu).',
+      '"lovely small ancient blue": Opinion (lovely) → Size (small) → Age (ancient) → Colour (blue) – ĐÚNG thứ tự chuẩn.',
+    ]
+  },
+  {
+    sentence: 'They visited a _____ building with their children.',
+    options: ['A. beautiful big traditional Vietnamese', 'B. Vietnamese delicious big traditional', 'C. traditional delicious big Vietnamese', 'D. big delicious traditional Vietnamese'],
+    correct: 0,
+    explanations: [
+      '"beautiful big traditional Vietnamese": Opinion (beautiful) → Size (big) → Age/style (traditional) → Origin (Vietnamese) – ĐÚNG thứ tự chuẩn.',
+      '"Vietnamese delicious big traditional": Origin đứng đầu – sai.',
+      '"traditional delicious big Vietnamese": Age→Opinion→Size→Origin – sai.',
+      '"big delicious traditional Vietnamese": Size→Opinion→Age→Origin – sai (Opinion đứng đầu).',
+    ]
+  },
+  {
+    sentence: 'She is doing extremely well in her _____ graduate course.',
+    options: ['A. intensive one-year English', 'B. one-year English intensive', 'C. intensive English one-year', 'D. English intensive one-year'],
+    correct: 0,
+    explanations: [
+      '"intensive one-year English": Opinion/manner (intensive) → Duration (one-year) → Origin/language (English) – ĐÚNG. "Intensive" = opinion/qualifier đứng đầu.',
+      '"one-year English intensive": Duration→Origin→Opinion – sai.',
+      '"intensive English one-year": Opinion→Origin→Duration – sai (Duration trước Origin khi cùng nhóm modifier).',
+      '"English intensive one-year": Origin→Opinion→Duration – sai.',
+    ]
+  },
+  {
+    sentence: 'During the winter I like having a _____ house.',
+    options: ['A. pretty small red wooden', 'B. wooden pretty small red', 'C. small pretty red wooden', 'D. red wooden pretty small'],
+    correct: 0,
+    explanations: [
+      '"pretty small red wooden": Opinion (pretty) → Size (small) → Colour (red) → Material (wooden) – ĐÚNG thứ tự chuẩn.',
+      '"wooden pretty small red": Material đứng đầu – sai.',
+      '"small pretty red wooden": Size→Opinion→Colour→Material – sai (Opinion đứng đầu).',
+      '"red wooden pretty small": Colour→Material→Opinion→Size – sai hoàn toàn.',
+    ]
+  },
+];
+
+// ─── RENDER ───────────────────────────────────────────────────────────────────
+
+function renderEx1() {
+  const c = document.getElementById('ex1Container');
+  c.innerHTML = ex1Data.map((item, i) => {
+    const inputs = Array.from({length: item.count}, (_, j) =>
+      `<input class="fill-blank" id="ex1_${i}_${j}" placeholder="tính từ..." autocomplete="off" style="min-width:90px">`
+    ).join(' ');
+    return `<div class="classify-row">
+      <span class="classify-label">${item.label}:</span>
+      <span class="classify-inputs">${inputs}</span>
+    </div>`;
+  }).join('');
+  c.querySelectorAll('.fill-blank').forEach(el => el.addEventListener('input', updateProgress));
+}
+
+function renderEx2() {
+  const c = document.getElementById('ex2Container');
+  c.innerHTML = ex2Data.map((item, i) =>
+    `<div class="fill-row">
+      <strong>${i+1}.</strong> <span style="color:var(--text-muted)">${item.words}</span> &nbsp;→&nbsp;
+      <input class="fill-blank" id="ex2_${i}" placeholder="Sắp xếp lại..." style="min-width:240px" autocomplete="off">
+    </div>`
+  ).join('');
+  c.querySelectorAll('.fill-blank').forEach(el => el.addEventListener('input', updateProgress));
+}
+
+function renderEx3() {
+  const c = document.getElementById('ex3Container');
+  c.innerHTML = ex3Data.map((item, i) =>
+    `<div class="fill-row">
+      <strong>${i+1}.</strong> <span style="color:var(--text-muted)">${item.prompt}</span> &nbsp;→&nbsp;
+      <input class="fill-blank" id="ex3_${i}" placeholder="Viết lại..." style="min-width:280px" autocomplete="off">
+    </div>`
+  ).join('');
+  c.querySelectorAll('.fill-blank').forEach(el => el.addEventListener('input', updateProgress));
+}
+
+function renderEx4() {
+  const c = document.getElementById('ex4Container');
+  c.innerHTML = ex4Data.map((item, i) =>
+    `<div class="fill-row">
+      <strong>${i+1}.</strong> <span style="color:var(--text-muted)">${item.words}</span> &nbsp;→&nbsp;
+      <input class="fill-blank" id="ex4_${i}" placeholder="Sắp xếp lại..." style="min-width:260px" autocomplete="off">
+    </div>`
+  ).join('');
+  c.querySelectorAll('.fill-blank').forEach(el => el.addEventListener('input', updateProgress));
+}
+
+function renderEx5() {
+  const c = document.getElementById('ex5Container');
+  c.innerHTML = ex5Data.map((item, i) =>
+    `<div class="fill-row">
+      <strong>${i+1}.</strong> <span style="color:var(--text-muted); font-size:13px">${item.words}</span><br>
+      &nbsp;&nbsp;&nbsp;→&nbsp;
+      <input class="fill-blank" id="ex5_${i}" placeholder="Viết câu hoàn chỉnh..." style="min-width:320px" autocomplete="off">
+    </div>`
+  ).join('');
+  c.querySelectorAll('.fill-blank').forEach(el => el.addEventListener('input', updateProgress));
+}
+
+function renderEx6() {
+  const c = document.getElementById('ex6Container');
+  c.innerHTML = ex6Data.map((item, i) =>
+    `<div class="mcq-question" id="ex6_q${i}">
+      <div class="mcq-sentence">${i+1}. <em>${item.sentence}</em></div>
+      <div class="options">${item.options.map((opt, j) =>
+        `<button class="option-btn" id="ex6_${i}_${j}" onclick="selectMCQ('ex6',${i},${j},${item.options.length})">
+          <span class="option-dot">${String.fromCharCode(65+j)}</span>${opt}
+        </button>`
+      ).join('')}</div>
+    </div>`
+  ).join('');
+}
+
+// ─── MCQ ──────────────────────────────────────────────────────────────────────
+const mcqSelections = {};
+
+function selectMCQ(prefix, qIdx, optIdx, total) {
+  for (let j = 0; j < total; j++) {
+    const btn = document.getElementById(`${prefix}_${qIdx}_${j}`);
+    if (btn) btn.classList.remove('selected');
+  }
+  const chosen = document.getElementById(`${prefix}_${qIdx}_${optIdx}`);
+  if (chosen) chosen.classList.add('selected');
+  mcqSelections[`${prefix}_${qIdx}`] = optIdx;
+  updateProgress();
+}
+
+// ─── PROGRESS ─────────────────────────────────────────────────────────────────
+function countAnswered() {
+  let filled = 0, total = 0;
+  ex1Data.forEach((item, i) => {
+    item.answers.forEach((_, j) => { total++; if (document.getElementById(`ex1_${i}_${j}`)?.value.trim()) filled++; });
+  });
+  ex2Data.forEach((_, i) => { total++; if (document.getElementById(`ex2_${i}`)?.value.trim()) filled++; });
+  ex3Data.forEach((_, i) => { total++; if (document.getElementById(`ex3_${i}`)?.value.trim()) filled++; });
+  ex4Data.forEach((_, i) => { total++; if (document.getElementById(`ex4_${i}`)?.value.trim()) filled++; });
+  ex5Data.forEach((_, i) => { total++; if (document.getElementById(`ex5_${i}`)?.value.trim()) filled++; });
+  ex6Data.forEach((_, i) => { total++; if (mcqSelections[`ex6_${i}`] !== undefined) filled++; });
+  return { filled, total };
+}
+
+function updateProgress() {
+  const { filled, total } = countAnswered();
+  document.getElementById('progressFill').style.width = (filled / total * 100) + '%';
+  document.getElementById('progressCount').textContent = `${filled} / ${total}`;
+}
+
+// ─── SUBMIT ───────────────────────────────────────────────────────────────────
+function norm(s) { return s.trim().toLowerCase().replace(/\s+/g, ' '); }
+
+function submitAll() {
+  let score = 0, total = 0;
+
+  // Ex1
+  const ex1AnsEl = document.getElementById('ex1Ans');
+  let ex1Html = '<h4>📝 Giải thích Exercise 1:</h4>';
+  ex1Data.forEach((item, i) => {
+    const userVals = item.answers.map((_, j) => norm(document.getElementById(`ex1_${i}_${j}`)?.value || ''));
+    const correctSet = item.answers.map(a => a.toLowerCase());
+    item.answers.forEach((ans, j) => {
+      total++;
+      const inp = document.getElementById(`ex1_${i}_${j}`);
+      // Accept any of the valid answers for this category in any slot
+      const userV = userVals[j];
+      const isOk = correctSet.includes(userV);
+      if (isOk) { score++; inp.classList.add('correct'); }
+      else inp.classList.add('wrong');
+    });
+    ex1Html += `<div class="ans-row">
+      <span class="ans-correct">✅ ${item.label}: <strong>${item.answers.join(', ')}</strong></span>
+      <span class="ans-explanation">– ${ex1Explanations[i]}</span>
+    </div>`;
+  });
+  ex1AnsEl.innerHTML = ex1Html;
+  ex1AnsEl.classList.add('show');
+
+  // Ex2
+  const ex2AnsEl = document.getElementById('ex2Ans');
+  let ex2Html = '<h4>📝 Giải thích Exercise 2:</h4>';
+  ex2Data.forEach((item, i) => {
+    total++;
+    const inp = document.getElementById(`ex2_${i}`);
+    const correct = norm(inp.value) === norm(item.answer);
+    if (correct) { score++; inp.classList.add('correct'); } else inp.classList.add('wrong');
+    ex2Html += `<div class="ans-row">
+      <span class="${correct ? 'ans-correct' : 'ans-wrong'}">${correct ? '✅' : '❌'} Câu ${i+1}: <em>${item.answer}</em></span>
+      <span class="ans-explanation">– ${item.explanation}</span>
+    </div>`;
+  });
+  ex2AnsEl.innerHTML = ex2Html;
+  ex2AnsEl.classList.add('show');
+
+  // Ex3
+  const ex3AnsEl = document.getElementById('ex3Ans');
+  let ex3Html = '<h4>📝 Giải thích Exercise 3:</h4>';
+  ex3Data.forEach((item, i) => {
+    total++;
+    const inp = document.getElementById(`ex3_${i}`);
+    const correct = norm(inp.value) === norm(item.answer);
+    if (correct) { score++; inp.classList.add('correct'); } else inp.classList.add('wrong');
+    ex3Html += `<div class="ans-row">
+      <span class="${correct ? 'ans-correct' : 'ans-wrong'}">${correct ? '✅' : '❌'} ${i+1}: <em>${item.answer}</em></span>
+      <span class="ans-explanation">– ${item.explanation}</span>
+    </div>`;
+  });
+  ex3AnsEl.innerHTML = ex3Html;
+  ex3AnsEl.classList.add('show');
+
+  // Ex4
+  const ex4AnsEl = document.getElementById('ex4Ans');
+  let ex4Html = '<h4>📝 Giải thích Exercise 4:</h4>';
+  ex4Data.forEach((item, i) => {
+    total++;
+    const inp = document.getElementById(`ex4_${i}`);
+    const correct = norm(inp.value) === norm(item.answer);
+    if (correct) { score++; inp.classList.add('correct'); } else inp.classList.add('wrong');
+    ex4Html += `<div class="ans-row">
+      <span class="${correct ? 'ans-correct' : 'ans-wrong'}">${correct ? '✅' : '❌'} ${i+1}: <em>${item.answer}</em></span>
+      <span class="ans-explanation">– ${item.explanation}</span>
+    </div>`;
+  });
+  ex4AnsEl.innerHTML = ex4Html;
+  ex4AnsEl.classList.add('show');
+
+  // Ex5
+  const ex5AnsEl = document.getElementById('ex5Ans');
+  let ex5Html = '<h4>📝 Giải thích Exercise 5:</h4>';
+  ex5Data.forEach((item, i) => {
+    total++;
+    const inp = document.getElementById(`ex5_${i}`);
+    const correct = norm(inp.value) === norm(item.answer);
+    if (correct) { score++; inp.classList.add('correct'); } else inp.classList.add('wrong');
+    ex5Html += `<div class="ans-row">
+      <span class="${correct ? 'ans-correct' : 'ans-wrong'}">${correct ? '✅' : '❌'} Câu ${i+1}: <em>${item.answer}</em></span>
+      <span class="ans-explanation">– ${item.explanation}</span>
+    </div>`;
+  });
+  ex5AnsEl.innerHTML = ex5Html;
+  ex5AnsEl.classList.add('show');
+
+  // Ex6
+  const ex6AnsEl = document.getElementById('ex6Ans');
+  let ex6Html = '<h4>📝 Giải thích Exercise 6:</h4>';
+  ex6Data.forEach((item, i) => {
+    total++;
+    const sel = mcqSelections[`ex6_${i}`];
+    const correct = sel === item.correct;
+    if (correct) score++;
+    for (let j = 0; j < item.options.length; j++) {
+      const btn = document.getElementById(`ex6_${i}_${j}`);
+      if (!btn) continue;
+      btn.disabled = true;
+      btn.classList.remove('selected');
+      if (j === item.correct) btn.classList.add('correct-ans');
+      else if (j === sel && !correct) btn.classList.add('wrong-ans');
+    }
+    ex6Html += `<div class="ans-row">
+      <span class="${correct ? 'ans-correct' : 'ans-wrong'}">${correct ? '✅' : '❌'} Câu ${i+1}: Đáp án đúng là <strong>${item.options[item.correct]}</strong></span>
+    </div>`;
+    item.explanations.forEach((exp, j) => {
+      ex6Html += `<div class="ans-row" style="margin-left:16px">
+        <span class="${j===item.correct ? 'ans-correct' : ''}">${item.options[j].substring(0,1)}.</span>
+        <span class="ans-explanation">– ${exp}</span>
+      </div>`;
+    });
+  });
+  ex6AnsEl.innerHTML = ex6Html;
+  ex6AnsEl.classList.add('show');
+
+  const fb = document.getElementById('globalFeedback');
+  document.getElementById('scoreDisplay').textContent = `${score} / ${total}`;
+  fb.classList.add('show');
+  fb.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  updateProgress();
+}
+
+// ─── RESET ────────────────────────────────────────────────────────────────────
+function resetAll() {
+  Object.keys(mcqSelections).forEach(k => delete mcqSelections[k]);
+  document.getElementById('globalFeedback').classList.remove('show');
+  ['ex1Ans','ex2Ans','ex3Ans','ex4Ans','ex5Ans','ex6Ans'].forEach(id => {
+    const el = document.getElementById(id);
+    el.classList.remove('show'); el.innerHTML = '';
+  });
+  renderEx1(); renderEx2(); renderEx3(); renderEx4(); renderEx5(); renderEx6();
+  updateProgress();
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+renderEx1(); renderEx2(); renderEx3(); renderEx4(); renderEx5(); renderEx6();
+updateProgress();
+</script>
+</body>
+</html>

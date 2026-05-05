@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Section 5: So Sánh Tính Từ / Trạng Từ – Bài Tập Tiếng Anh</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #ffffff;
+    --blue: #1a6fc4;
+    --blue-light: #e8f1fb;
+    --blue-mid: #4d9de0;
+    --blue-dark: #0d4a8a;
+    --text: #1a1a2e;
+    --text-muted: #6b7280;
+    --border: #dde6f5;
+    --correct: #16a34a;
+    --correct-bg: #dcfce7;
+    --wrong: #dc2626;
+    --wrong-bg: #fee2e2;
+    --neutral-bg: #f8faff;
+    --shadow: 0 2px 16px rgba(26,111,196,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Be Vietnam Pro', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  header {
+    background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue) 60%, var(--blue-mid) 100%);
+    color: #fff; padding: 36px 24px 28px; text-align: center; position: relative; overflow: hidden;
+  }
+  header::before { content:''; position:absolute; inset:0; background:radial-gradient(circle at 70% 30%,rgba(255,255,255,0.08) 0%,transparent 60%); }
+  header .badge { display:inline-block; background:rgba(255,255,255,0.18); border:1px solid rgba(255,255,255,0.3); border-radius:20px; padding:4px 16px; font-size:12px; font-weight:500; letter-spacing:1px; text-transform:uppercase; margin-bottom:12px; }
+  header h1 { font-family:'Playfair Display',serif; font-size:clamp(24px,5vw,38px); font-weight:700; line-height:1.2; margin-bottom:8px; }
+  header p { font-size:14px; opacity:0.85; }
+
+  .progress-wrap { background:var(--blue-light); padding:14px 24px; display:flex; align-items:center; gap:12px; border-bottom:1px solid var(--border); position:sticky; top:0; z-index:10; }
+  .progress-label { font-size:13px; font-weight:600; color:var(--blue); white-space:nowrap; }
+  .progress-bar { flex:1; height:8px; background:#d1dff5; border-radius:99px; overflow:hidden; }
+  .progress-fill { height:100%; background:linear-gradient(90deg,var(--blue),var(--blue-mid)); border-radius:99px; transition:width 0.4s ease; }
+  .progress-count { font-size:13px; font-weight:600; color:var(--blue); white-space:nowrap; }
+
+  main { max-width:820px; margin:0 auto; padding:28px 16px 60px; }
+
+  .exercise-card { background:var(--bg); border:1.5px solid var(--border); border-radius:16px; margin-bottom:24px; overflow:hidden; box-shadow:var(--shadow); transition:box-shadow 0.2s; }
+  .exercise-card:hover { box-shadow:0 4px 24px rgba(26,111,196,0.13); }
+  .exercise-header { background:var(--blue-light); border-bottom:1.5px solid var(--border); padding:14px 20px; display:flex; align-items:center; gap:12px; }
+  .ex-num { background:var(--blue); color:#fff; width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:700; flex-shrink:0; }
+  .ex-title { font-size:15px; font-weight:600; color:var(--blue-dark); }
+  .exercise-body { padding:20px; }
+  .hint { font-size:13px; color:var(--text-muted); margin-bottom:16px; font-style:italic; }
+
+  .info-box { background:var(--blue-light); border:1.5px solid var(--blue-mid); border-radius:10px; padding:12px 16px; margin-bottom:18px; font-size:13px; color:var(--blue-dark); }
+  .info-box strong { display:block; margin-bottom:4px; font-size:14px; }
+
+  .fill-blank { display:inline-block; border:none; border-bottom:2px solid var(--blue-mid); outline:none; background:transparent; font-family:'Be Vietnam Pro',sans-serif; font-size:15px; color:var(--blue-dark); padding:2px 6px; min-width:110px; transition:border-color 0.2s; }
+  .fill-blank:focus { border-color:var(--blue); }
+  .fill-blank.correct { border-color:var(--correct); background:var(--correct-bg); border-radius:4px 4px 0 0; }
+  .fill-blank.wrong   { border-color:var(--wrong);   background:var(--wrong-bg);   border-radius:4px 4px 0 0; }
+  .fill-row { margin-bottom:12px; font-size:15px; line-height:1.8; }
+
+  /* Comparison table rows */
+  .comp-group { margin-bottom:18px; }
+  .comp-group-title { font-size:13px; font-weight:700; color:var(--blue); background:var(--blue-light); border-radius:6px; padding:4px 10px; display:inline-block; margin-bottom:10px; }
+  .comp-row { display:flex; align-items:baseline; gap:10px; margin-bottom:10px; flex-wrap:wrap; }
+  .comp-base { font-weight:600; min-width:90px; font-size:15px; }
+  .comp-inputs { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+  .comp-sep { color:var(--text-muted); font-size:13px; }
+
+  /* MCQ */
+  .mcq-question { margin-bottom:22px; }
+  .mcq-question + .mcq-question { border-top:1px solid var(--border); padding-top:20px; }
+  .mcq-sentence { font-weight:500; margin-bottom:10px; font-size:15px; }
+  .options { display:flex; flex-direction:column; gap:8px; }
+  .option-btn { display:flex; align-items:center; gap:10px; padding:10px 14px; border:1.5px solid var(--border); border-radius:10px; background:var(--neutral-bg); cursor:pointer; font-family:'Be Vietnam Pro',sans-serif; font-size:14px; color:var(--text); transition:all 0.18s; text-align:left; }
+  .option-btn:hover:not(:disabled) { border-color:var(--blue); background:var(--blue-light); }
+  .option-btn.selected { border-color:var(--blue); background:var(--blue-light); }
+  .option-btn.correct-ans { border-color:var(--correct); background:var(--correct-bg); color:var(--correct); font-weight:600; }
+  .option-btn.wrong-ans   { border-color:var(--wrong);   background:var(--wrong-bg);   color:var(--wrong);   font-weight:600; }
+  .option-btn:disabled { cursor:default; }
+  .option-dot { width:20px; height:20px; border-radius:50%; border:2px solid #c5d4ec; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; transition:all 0.18s; }
+  .option-btn.correct-ans .option-dot { border-color:var(--correct); background:var(--correct); color:#fff; }
+  .option-btn.wrong-ans   .option-dot { border-color:var(--wrong);   background:var(--wrong);   color:#fff; }
+  .option-btn.selected .option-dot    { border-color:var(--blue); background:var(--blue); color:#fff; }
+
+  /* Matching ex7 */
+  .match-row { display:flex; align-items:center; gap:10px; margin-bottom:12px; flex-wrap:wrap; }
+  .match-sentence { flex:1; min-width:200px; font-size:14px; background:var(--neutral-bg); border:1.5px solid var(--border); border-radius:8px; padding:10px 12px; }
+  .match-arrow { color:var(--blue-mid); font-size:18px; font-weight:700; }
+  .match-error-select { border:none; border-bottom:2px solid var(--blue-mid); outline:none; background:transparent; font-family:'Be Vietnam Pro',sans-serif; font-size:14px; color:var(--blue-dark); padding:4px 6px; cursor:pointer; max-width:260px; }
+  .match-error-select.correct { border-color:var(--correct); background:var(--correct-bg); border-radius:4px 4px 0 0; }
+  .match-error-select.wrong   { border-color:var(--wrong);   background:var(--wrong-bg);   border-radius:4px 4px 0 0; }
+
+  .answer-section { background:var(--neutral-bg); border:1.5px solid var(--border); border-radius:12px; padding:14px 16px; margin-top:14px; font-size:14px; display:none; }
+  .answer-section.show { display:block; }
+  .answer-section h4 { color:var(--blue-dark); font-size:14px; margin-bottom:8px; }
+  .ans-row { margin-bottom:6px; }
+  .ans-correct { color:var(--correct); font-weight:600; }
+  .ans-wrong   { color:var(--wrong); }
+  .ans-explanation { color:var(--text-muted); font-size:13px; margin-left:8px; }
+
+  .global-feedback { background:var(--blue-light); border:2px solid var(--blue); border-radius:16px; padding:24px; margin-bottom:28px; text-align:center; display:none; }
+  .global-feedback.show { display:block; }
+  .global-feedback .score { font-size:40px; font-weight:700; color:var(--blue); }
+  .global-feedback .score-label { font-size:15px; color:var(--text-muted); margin-top:4px; }
+
+  .btn-primary { background:linear-gradient(135deg,var(--blue-dark),var(--blue)); color:#fff; border:none; border-radius:12px; padding:14px 36px; font-family:'Be Vietnam Pro',sans-serif; font-size:16px; font-weight:600; cursor:pointer; box-shadow:0 4px 16px rgba(26,111,196,0.3); transition:all 0.2s; display:block; margin:0 auto; }
+  .btn-primary:hover { transform:translateY(-2px); box-shadow:0 6px 22px rgba(26,111,196,0.4); }
+  .btn-reset { background:transparent; color:var(--blue); border:1.5px solid var(--blue); border-radius:12px; padding:12px 28px; font-family:'Be Vietnam Pro',sans-serif; font-size:15px; font-weight:600; cursor:pointer; display:block; margin:12px auto 0; transition:all 0.2s; }
+  .btn-reset:hover { background:var(--blue-light); }
+  .submit-area { padding:8px 0 4px; text-align:center; }
+
+  /* Passage ex2 & ex6 */
+  .passage { font-size:15px; line-height:2; background:var(--neutral-bg); border:1.5px solid var(--border); border-radius:10px; padding:16px; margin-bottom:4px; }
+
+  @media(max-width:600px){ .exercise-body{padding:14px;} .comp-row{flex-direction:column;gap:4px;} .match-row{flex-direction:column;} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="badge">Prep.vn – Tiếng Anh</div>
+  <h1>Section 5: So Sánh Tính Từ / Trạng Từ</h1>
+  <p>Hoàn thành tất cả bài tập rồi bấm "Chấm bài" để xem đáp án chi tiết</p>
+</header>
+
+<div class="progress-wrap">
+  <span class="progress-label">Tiến độ</span>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+  <span class="progress-count" id="progressCount">0 / 0</span>
+</div>
+
+<main>
+  <div class="global-feedback" id="globalFeedback">
+    <div class="score" id="scoreDisplay">0/0</div>
+    <div class="score-label">Điểm số của bạn</div>
+  </div>
+
+  <!-- Exercise 2 -->
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">2</div><div class="ex-title">Điền tính từ thích hợp từ bảng vào chỗ trống trong đoạn văn</div></div>
+    <div class="exercise-body">
+      <div class="info-box"><strong>📌 Từ cho sẵn:</strong> colder &nbsp;|&nbsp; expensive &nbsp;|&nbsp; fastest &nbsp;|&nbsp; smaller &nbsp;|&nbsp; better &nbsp;|&nbsp; difficult &nbsp;|&nbsp; hardest</div>
+      <div class="passage" id="ex2Passage"></div>
+      <div class="answer-section" id="ex2Ans"></div>
+    </div>
+  </div>
+
+  <!-- Exercise 3 -->
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">3</div><div class="ex-title">Viết dạng so sánh hơn và so sánh nhất của các tính từ sau</div></div>
+    <div class="exercise-body">
+      <p class="hint">💡 Ví dụ: cold → <strong style="color:var(--blue)">colder, the coldest</strong> &nbsp;|&nbsp; famous → <strong style="color:var(--blue)">more famous, the most famous</strong></p>
+      <div id="ex3Container"></div>
+      <div class="answer-section" id="ex3Ans"></div>
+    </div>
+  </div>
+
+  <!-- Exercise 4 -->
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">4</div><div class="ex-title">Chọn đáp án đúng</div></div>
+    <div class="exercise-body">
+      <div id="ex4Container"></div>
+      <div class="answer-section" id="ex4Ans"></div>
+    </div>
+  </div>
+
+  <!-- Exercise 5 -->
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">5</div><div class="ex-title">Viết dạng so sánh hơn và so sánh nhất của các trạng từ sau</div></div>
+    <div class="exercise-body">
+      <p class="hint">💡 Ví dụ: low → <strong style="color:var(--blue)">lower, the lowest</strong></p>
+      <div id="ex5Container"></div>
+      <div class="answer-section" id="ex5Ans"></div>
+    </div>
+  </div>
+
+  <!-- Exercise 6 -->
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">6</div><div class="ex-title">Hoàn thành đoạn văn với dạng so sánh hơn (dùng -er, more hoặc less)</div></div>
+    <div class="exercise-body">
+      <div class="passage" id="ex6Passage"></div>
+      <div class="answer-section" id="ex6Ans"></div>
+    </div>
+  </div>
+
+  <!-- Exercise 7 -->
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">7</div><div class="ex-title">Nối câu sai với loại lỗi tương ứng</div></div>
+    <div class="exercise-body">
+      <div id="ex7Container"></div>
+      <div class="answer-section" id="ex7Ans"></div>
+    </div>
+  </div>
+
+  <!-- Exercise 8 -->
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">8</div><div class="ex-title">Viết lại các câu sai cho đúng</div></div>
+    <div class="exercise-body">
+      <div id="ex8Container"></div>
+      <div class="answer-section" id="ex8Ans"></div>
+    </div>
+  </div>
+
+  <div class="submit-area">
+    <button class="btn-primary" onclick="submitAll()">🎯 Chấm bài &amp; Xem giải thích</button>
+    <button class="btn-reset" onclick="resetAll()">↺ Làm lại từ đầu</button>
+  </div>
+</main>
+
+<script>
+// ─── DATA ─────────────────────────────────────────────────────────────────────
+
+const ex2Blanks = [
+  { id:'ex2_0', answer:'hardest',   hint:'(superlative: hard)',   explanation:'"the hardest year" – so sánh nhất vì nói về năm tệ nhất trong cuộc đời.' },
+  { id:'ex2_1', answer:'colder',    hint:'(comparative: cold)',   explanation:'"colder than Greece" – so sánh hơn với "than".' },
+  { id:'ex2_2', answer:'smaller',   hint:'(comparative: small)',  explanation:'"smaller than my house" – so sánh hơn với "than".' },
+  { id:'ex2_3', answer:'expensive', hint:'(superlative: expensive)', explanation:'"the most expensive thing" – so sánh nhất (most + tính từ dài).' },
+  { id:'ex2_4', answer:'difficult', hint:'(comparative: difficult)', explanation:'"more difficult than I thought" – so sánh hơn (more + tính từ dài).' },
+  { id:'ex2_5', answer:'better',    hint:'(comparative: good)',   explanation:'"getting better" – so sánh hơn bất quy tắc: good → better.' },
+];
+
+const ex2Text = `Last year was the <input class="fill-blank" id="ex2_0" placeholder="..." style="min-width:90px"> year of my life. I moved to England and had to find a new job. England is <input class="fill-blank" id="ex2_1" placeholder="..." style="min-width:80px"> than Greece and it rains a lot too. I had to buy a jacket and some new boots. I live in a flat in the centre of town. It is <input class="fill-blank" id="ex2_2" placeholder="..." style="min-width:90px"> than my house in Greece but more comfortable. I work in a restaurant in the town centre. The food is the most <input class="fill-blank" id="ex2_3" placeholder="..." style="min-width:100px"> thing in town but it is also really delicious. The job is more <input class="fill-blank" id="ex2_4" placeholder="..." style="min-width:100px"> than I thought but I am getting <input class="fill-blank" id="ex2_5" placeholder="..." style="min-width:80px"> at it.`;
+
+const ex3Groups = [
+  {
+    title: 'Loại thường – thêm -er / -est',
+    items: [
+      { base:'rich',     comp:'richer',      sup:'the richest',      exp:'Thêm -er/-est thông thường.' },
+      { base:'small',    comp:'smaller',     sup:'the smallest',     exp:'Thêm -er/-est thông thường.' },
+      { base:'green',    comp:'greener',     sup:'the greenest',     exp:'Thêm -er/-est thông thường.' },
+    ]
+  },
+  {
+    title: 'Kết thúc bằng phụ âm + nguyên âm + phụ âm – nhân đôi phụ âm cuối',
+    items: [
+      { base:'fat',      comp:'fatter',      sup:'the fattest',      exp:'Nhân đôi "t": fat → fatter, fattest.' },
+      { base:'hot',      comp:'hotter',      sup:'the hottest',      exp:'Nhân đôi "t": hot → hotter, hottest.' },
+      { base:'big',      comp:'bigger',      sup:'the biggest',      exp:'Nhân đôi "g": big → bigger, biggest.' },
+      { base:'wet',      comp:'wetter',      sup:'the wettest',      exp:'Nhân đôi "t": wet → wetter, wettest.' },
+      { base:'new',      comp:'newer',       sup:'the newest',       exp:'"new" kết thúc bằng 2 nguyên âm + phụ âm, không nhân đôi → newer, newest.' },
+    ]
+  },
+  {
+    title: 'Kết thúc bằng -e – chỉ thêm -r / -st',
+    items: [
+      { base:'safe',     comp:'safer',       sup:'the safest',       exp:'Kết thúc -e: chỉ thêm -r/-st.' },
+      { base:'strange',  comp:'stranger',    sup:'the strangest',    exp:'Kết thúc -e: chỉ thêm -r/-st.' },
+    ]
+  },
+  {
+    title: 'Kết thúc bằng -y – đổi -y thành -ier / -iest',
+    items: [
+      { base:'lazy',     comp:'lazier',      sup:'the laziest',      exp:'Đuôi -y → -ier/-iest.' },
+      { base:'sleepy',   comp:'sleepier',    sup:'the sleepiest',    exp:'Đuôi -y → -ier/-iest.' },
+      { base:'friendly', comp:'friendlier',  sup:'the friendliest',  exp:'Đuôi -y → -ier/-iest.' },
+    ]
+  },
+  {
+    title: 'Từ dài – dùng more / the most',
+    items: [
+      { base:'careful',    comp:'more careful',    sup:'the most careful',    exp:'Từ 2 âm tiết trở lên (không tận -y): more/most.' },
+      { base:'beautiful',  comp:'more beautiful',  sup:'the most beautiful',  exp:'Từ dài: more/most.' },
+      { base:'intelligent',comp:'more intelligent',sup:'the most intelligent',exp:'Từ dài: more/most.' },
+      { base:'dangerous',  comp:'more dangerous',  sup:'the most dangerous',  exp:'Từ dài: more/most.' },
+    ]
+  },
+];
+
+const ex4Data = [
+  { sentence:'The _____ building I saw in Paris was the Eiffel Tower.', options:['A. tall','B. taller','C. tallest'], correct:2, explanation:'"The … building I saw" → đang nói về một vật nổi bật nhất trong nhóm → so sánh nhất: the tallest.' },
+  { sentence:'Anita is _____ than all the girls in my class.', options:['A. smart','B. smarter','C. smartest'], correct:1, explanation:'Có "than" → so sánh hơn: smarter.' },
+  { sentence:"It's _____ today than yesterday.", options:['A. hot','B. hotter','C. hottest'], correct:1, explanation:'Có "than" → so sánh hơn: hotter (nhân đôi "t").' },
+  { sentence:'This ring was the _____ jewelry in the shop.', options:['A. expensive','B. more expensive','C. most expensive'], correct:2, explanation:'"the … in the shop" → so sánh nhất với từ dài: the most expensive.' },
+  { sentence:'This book is _____ than that one.', options:['A. heavy','B. heavier','C. the heaviest'], correct:1, explanation:'Có "than" → so sánh hơn, đuôi -y → heavier.' },
+  { sentence:'All of my friends are nice, and Sarah is certainly _____.', options:['A. nice the','B. nicer','C. the nicest'], correct:2, explanation:'"All of my friends" → so sánh nhất trong nhóm: the nicest.' },
+];
+
+const ex5Groups = [
+  {
+    title: 'Trạng từ ngắn – thêm -er / -est',
+    items: [
+      { base:'late',   comp:'later',          sup:'the latest',          exp:'Trạng từ ngắn kết thúc -e: thêm -r/-st.' },
+      { base:'fast',   comp:'faster',         sup:'the fastest',         exp:'Trạng từ ngắn: thêm -er/-est.' },
+      { base:'hard',   comp:'harder',         sup:'the hardest',         exp:'Trạng từ ngắn: thêm -er/-est.' },
+      { base:'quick',  comp:'more quickly',   sup:'the most quickly',    exp:'"quick" dùng dạng trạng từ "quickly" → more/most quickly.' },
+    ]
+  },
+  {
+    title: 'Trạng từ dài – so sánh hơn/nhất với MORE',
+    items: [
+      { base:'slowly',   comp:'more slowly',   sup:'the most slowly',   exp:'Trạng từ dài: more/most slowly.' },
+      { base:'fluently', comp:'more fluently', sup:'the most fluently', exp:'Trạng từ dài: more/most fluently.' },
+    ]
+  },
+  {
+    title: 'Trạng từ dài – so sánh hơn/nhất với LESS',
+    items: [
+      { base:'seriously',  comp:'less seriously',  sup:'the least seriously',  exp:'So sánh mức độ thấp hơn: less/least seriously.' },
+      { base:'beautifully',comp:'less beautifully',sup:'the least beautifully',exp:'So sánh mức độ thấp hơn: less/least beautifully.' },
+    ]
+  },
+  {
+    title: 'Ngoại lệ (bất quy tắc)',
+    items: [
+      { base:'well',  comp:'better', sup:'the best',   exp:'well → better → the best (bất quy tắc).' },
+      { base:'badly', comp:'worse',  sup:'the worst',  exp:'badly → worse → the worst (bất quy tắc).' },
+      { base:'far',   comp:'farther / further', sup:'the farthest / the furthest', exp:'far → farther/further → the farthest/furthest (cả hai đều chấp nhận).' },
+    ]
+  },
+];
+
+const ex6Blanks = [
+  { id:'ex6_0', answer:'busier',        hint:'BUSY',       explanation:'busy → busier (đuôi -y → -ier).' },
+  { id:'ex6_1', answer:'harder',        hint:'HARD',       explanation:'hard → harder (thêm -er).' },
+  { id:'ex6_2', answer:'less efficient',hint:'EFFICIENT',  explanation:'Ý nghĩa tiêu cực → less efficient (kém hiệu quả hơn).' },
+  { id:'ex6_3', answer:'fatter',        hint:'FAT',        explanation:'fat → fatter (nhân đôi "t").' },
+  { id:'ex6_4', answer:'slower',        hint:'SLOW',       explanation:'slow → slower (thêm -er).' },
+  { id:'ex6_5', answer:'fitter',        hint:'FIT',        explanation:'fit → fitter (nhân đôi "t").' },
+  { id:'ex6_6', answer:'healthier',     hint:'HEALTHY',    explanation:'healthy → healthier (đuôi -y → -ier).' },
+  { id:'ex6_7', answer:'less stressed', hint:'STRESSED',   explanation:'Ý nghĩa tích cực (bớt căng thẳng) → less stressed.' },
+  { id:'ex6_8', answer:'more quickly',  hint:'QUICK',      explanation:'quickly → more quickly (trạng từ dài).' },
+  { id:'ex6_9', answer:'more efficiently', hint:'EFFICIENT', explanation:'efficiently → more efficiently (trạng từ dài).' },
+];
+
+const ex6Text = `Do you find that you're getting <input class="fill-blank" id="ex6_0" placeholder="BUSY" style="min-width:80px"> every day? You're working <input class="fill-blank" id="ex6_1" placeholder="HARD" style="min-width:75px"> than ever, but you're getting <input class="fill-blank" id="ex6_2" placeholder="EFFICIENT" style="min-width:130px">? You've never got time to get to the gym and you're getting <input class="fill-blank" id="ex6_3" placeholder="FAT" style="min-width:70px"> and <input class="fill-blank" id="ex6_4" placeholder="SLOW" style="min-width:75px">? Then try our new, improved Treadmill Workstation. The new version is guaranteed to make you <input class="fill-blank" id="ex6_5" placeholder="FIT" style="min-width:70px"> and <input class="fill-blank" id="ex6_6" placeholder="HEALTHY" style="min-width:90px">. It'll help you feel <input class="fill-blank" id="ex6_7" placeholder="STRESSED" style="min-width:115px"> out. It'll help you work <input class="fill-blank" id="ex6_8" placeholder="QUICK" style="min-width:120px"> and <input class="fill-blank" id="ex6_9" placeholder="EFFICIENT" style="min-width:155px">. You'll love it. Your boss will love it. Buy now!`;
+
+const ex7Data = [
+  { sentence:'Among all of my friends, Jane is taller.', correct:0 },
+  { sentence:'Indian food is hoter and spicier than Vietnamese food.', correct:1 },
+  { sentence:'Sport is more interesting politics.', correct:2 },
+  { sentence:"It's a very large company. It was largest company in the town.", correct:3 },
+  { sentence:'The CD is the more expensive than the cassette.', correct:4 },
+  { sentence:'Kim, Kate and Jo all sing well, but Kate sings the most beautiful.', correct:5 },
+];
+
+const ex7Errors = [
+  'Sai cấu trúc so sánh hơn (thiếu than)',
+  'Lỗi chính tả',
+  'Sai cấu trúc so sánh hơn (thiếu than sau interesting)',
+  'Sai cấu trúc so sánh nhất (thiếu the)',
+  'Nhầm lẫn so sánh hơn và so sánh nhất (thừa the)',
+  'Nhầm lẫn sử dụng tính từ và trạng từ trong so sánh',
+];
+
+const ex7Explanations = [
+  '"Jane is taller" cần "than" + đối tượng so sánh: "taller than all my other friends".',
+  '"hoter" sai chính tả: hot nhân đôi "t" → hotter.',
+  '"more interesting politics" thiếu "than": "more interesting than politics".',
+  '"largest company" thiếu mạo từ "the": "the largest company".',
+  '"the more expensive" sai: so sánh hơn không dùng "the" → "more expensive than the cassette".',
+  '"the most beautiful" là tính từ, nhưng cần trạng từ bổ nghĩa cho động từ "sings": "the most beautifully".',
+];
+
+const ex8Data = [
+  { wrong:'Among all of my friends, Jane is taller.',          answer:'Among all of my friends, Jane is the tallest.',          explanation:'Nói về người nổi bật nhất trong nhóm ("all of my friends") → dùng so sánh nhất: the tallest.' },
+  { wrong:'Indian food is hoter and spicier than Vietnamese food.', answer:'Indian food is hotter and spicier than Vietnamese food.', explanation:'"hoter" sai chính tả: hot → hotter (nhân đôi t).' },
+  { wrong:'Sport is more interesting politics.',               answer:'Sport is more interesting than politics.',                explanation:'So sánh hơn cần "than" trước đối tượng: more interesting than politics.' },
+  { wrong:'It was largest company in the town.',              answer:'It was the largest company in the town.',                  explanation:'So sánh nhất phải có mạo từ "the": the largest company.' },
+  { wrong:'The CD is the more expensive than the cassette.',  answer:'The CD is more expensive than the cassette.',              explanation:'So sánh hơn không dùng "the": more expensive than (không có "the").' },
+  { wrong:'Kim, Kate and Jo all sing well, but Kate sings the most beautiful.', answer:'Kim, Kate and Jo all sing well, but Kate sings the most beautifully.', explanation:'"sings" là động từ → cần trạng từ: the most beautifully (không phải tính từ beautiful).' },
+];
+
+// ─── RENDER ───────────────────────────────────────────────────────────────────
+
+function renderEx2() {
+  document.getElementById('ex2Passage').innerHTML = ex2Text;
+  document.querySelectorAll('#ex2Passage .fill-blank').forEach(el => el.addEventListener('input', updateProgress));
+}
+
+function renderEx3() {
+  const c = document.getElementById('ex3Container');
+  c.innerHTML = ex3Groups.map(g =>
+    `<div class="comp-group">
+      <div class="comp-group-title">${g.title}</div>
+      ${g.items.map((item, i) => {
+        const gid = g.title.replace(/\s+/g,'_').substring(0,10) + i;
+        return `<div class="comp-row">
+          <span class="comp-base">${item.base}</span>
+          <span class="comp-sep">→</span>
+          <div class="comp-inputs">
+            <input class="fill-blank" id="ex3c_${gid}" placeholder="so sánh hơn..." style="min-width:160px" autocomplete="off">
+            <span class="comp-sep">,</span>
+            <input class="fill-blank" id="ex3s_${gid}" placeholder="so sánh nhất..." style="min-width:180px" autocomplete="off">
+          </div>
+        </div>`;
+      }).join('')}
+    </div>`
+  ).join('');
+  document.querySelectorAll('#ex3Container .fill-blank').forEach(el => el.addEventListener('input', updateProgress));
+}
+
+function renderEx4() {
+  const c = document.getElementById('ex4Container');
+  c.innerHTML = ex4Data.map((item, i) =>
+    `<div class="mcq-question" id="ex4_q${i}">
+      <div class="mcq-sentence">${i+1}. <em>${item.sentence}</em></div>
+      <div class="options">${item.options.map((opt, j) =>
+        `<button class="option-btn" id="ex4_${i}_${j}" onclick="selectMCQ('ex4',${i},${j},${item.options.length})">
+          <span class="option-dot">${String.fromCharCode(65+j)}</span>${opt}
+        </button>`
+      ).join('')}</div>
+    </div>`
+  ).join('');
+}
+
+function renderEx5() {
+  const c = document.getElementById('ex5Container');
+  c.innerHTML = ex5Groups.map(g =>
+    `<div class="comp-group">
+      <div class="comp-group-title">${g.title}</div>
+      ${g.items.map((item, i) => {
+        const gid = g.title.replace(/\s+/g,'_').substring(0,10) + i;
+        return `<div class="comp-row">
+          <span class="comp-base">${item.base}</span>
+          <span class="comp-sep">→</span>
+          <div class="comp-inputs">
+            <input class="fill-blank" id="ex5c_${gid}" placeholder="so sánh hơn..." style="min-width:160px" autocomplete="off">
+            <span class="comp-sep">,</span>
+            <input class="fill-blank" id="ex5s_${gid}" placeholder="so sánh nhất..." style="min-width:200px" autocomplete="off">
+          </div>
+        </div>`;
+      }).join('')}
+    </div>`
+  ).join('');
+  document.querySelectorAll('#ex5Container .fill-blank').forEach(el => el.addEventListener('input', updateProgress));
+}
+
+function renderEx6() {
+  document.getElementById('ex6Passage').innerHTML = ex6Text;
+  document.querySelectorAll('#ex6Passage .fill-blank').forEach(el => el.addEventListener('input', updateProgress));
+}
+
+function renderEx7() {
+  const c = document.getElementById('ex7Container');
+  const opts = ex7Errors.map((e, i) => `<option value="${i}">${e}</option>`).join('');
+  c.innerHTML = ex7Data.map((item, i) =>
+    `<div class="match-row">
+      <div class="match-sentence">${i+1}. <em>${item.sentence}</em></div>
+      <span class="match-arrow">→</span>
+      <select class="match-error-select" id="ex7_${i}" onchange="updateProgress()">
+        <option value="">-- chọn loại lỗi --</option>
+        ${opts}
+      </select>
+    </div>`
+  ).join('');
+}
+
+function renderEx8() {
+  const c = document.getElementById('ex8Container');
+  c.innerHTML = ex8Data.map((item, i) =>
+    `<div class="fill-row">
+      <div style="font-size:13px;color:var(--text-muted);margin-bottom:4px">❌ <em>${item.wrong}</em></div>
+      <div>✏️ <input class="fill-blank" id="ex8_${i}" placeholder="Viết lại câu đúng..." style="min-width:360px" autocomplete="off"></div>
+    </div>`
+  ).join('');
+  document.querySelectorAll('#ex8Container .fill-blank').forEach(el => el.addEventListener('input', updateProgress));
+}
+
+// ─── MCQ ──────────────────────────────────────────────────────────────────────
+const mcqSelections = {};
+function selectMCQ(prefix, qIdx, optIdx, total) {
+  for (let j = 0; j < total; j++) document.getElementById(`${prefix}_${qIdx}_${j}`)?.classList.remove('selected');
+  document.getElementById(`${prefix}_${qIdx}_${optIdx}`)?.classList.add('selected');
+  mcqSelections[`${prefix}_${qIdx}`] = optIdx;
+  updateProgress();
+}
+
+// ─── PROGRESS ─────────────────────────────────────────────────────────────────
+function getEx3Ids() {
+  const ids = [];
+  ex3Groups.forEach(g => g.items.forEach((_, i) => {
+    const gid = g.title.replace(/\s+/g,'_').substring(0,10) + i;
+    ids.push(`ex3c_${gid}`, `ex3s_${gid}`);
+  }));
+  return ids;
+}
+function getEx5Ids() {
+  const ids = [];
+  ex5Groups.forEach(g => g.items.forEach((_, i) => {
+    const gid = g.title.replace(/\s+/g,'_').substring(0,10) + i;
+    ids.push(`ex5c_${gid}`, `ex5s_${gid}`);
+  }));
+  return ids;
+}
+
+function countAnswered() {
+  let filled = 0, total = 0;
+  ex2Blanks.forEach(b => { total++; if (document.getElementById(b.id)?.value.trim()) filled++; });
+  getEx3Ids().forEach(id => { total++; if (document.getElementById(id)?.value.trim()) filled++; });
+  ex4Data.forEach((_, i) => { total++; if (mcqSelections[`ex4_${i}`] !== undefined) filled++; });
+  getEx5Ids().forEach(id => { total++; if (document.getElementById(id)?.value.trim()) filled++; });
+  ex6Blanks.forEach(b => { total++; if (document.getElementById(b.id)?.value.trim()) filled++; });
+  ex7Data.forEach((_, i) => { total++; if (document.getElementById(`ex7_${i}`)?.value !== '') filled++; });
+  ex8Data.forEach((_, i) => { total++; if (document.getElementById(`ex8_${i}`)?.value.trim()) filled++; });
+  return { filled, total };
+}
+
+function updateProgress() {
+  const { filled, total } = countAnswered();
+  document.getElementById('progressFill').style.width = (filled / total * 100) + '%';
+  document.getElementById('progressCount').textContent = `${filled} / ${total}`;
+}
+
+// ─── SUBMIT ───────────────────────────────────────────────────────────────────
+function norm(s) { return s.trim().toLowerCase().replace(/\s+/g,' '); }
+
+function checkAndMark(id, answer) {
+  const inp = document.getElementById(id);
+  if (!inp) return false;
+  const ok = norm(inp.value) === norm(answer);
+  inp.classList.add(ok ? 'correct' : 'wrong');
+  return ok;
+}
+
+function submitAll() {
+  let score = 0, total = 0;
+
+  // Ex2
+  let ex2Html = '<h4>📝 Giải thích Exercise 2:</h4>';
+  ex2Blanks.forEach(b => {
+    total++;
+    if (checkAndMark(b.id, b.answer)) score++;
+    ex2Html += `<div class="ans-row"><span class="${norm(document.getElementById(b.id)?.value||'')===norm(b.answer)?'ans-correct':'ans-wrong'}">${norm(document.getElementById(b.id)?.value||'')===norm(b.answer)?'✅':'❌'} ${b.hint} → <strong>${b.answer}</strong></span><span class="ans-explanation">– ${b.explanation}</span></div>`;
+  });
+  const ex2A = document.getElementById('ex2Ans'); ex2A.innerHTML = ex2Html; ex2A.classList.add('show');
+
+  // Ex3
+  let ex3Html = '<h4>📝 Giải thích Exercise 3:</h4>';
+  ex3Groups.forEach(g => {
+    ex3Html += `<div style="margin-top:10px"><strong style="color:var(--blue-dark)">${g.title}</strong></div>`;
+    g.items.forEach((item, i) => {
+      const gid = g.title.replace(/\s+/g,'_').substring(0,10) + i;
+      total += 2;
+      const okC = checkAndMark(`ex3c_${gid}`, item.comp);
+      const okS = checkAndMark(`ex3s_${gid}`, item.sup);
+      if (okC) score++; if (okS) score++;
+      ex3Html += `<div class="ans-row"><span class="${okC&&okS?'ans-correct':'ans-wrong'}">${okC&&okS?'✅':'❌'} ${item.base} → <strong>${item.comp}</strong>, <strong>${item.sup}</strong></span><span class="ans-explanation">– ${item.exp}</span></div>`;
+    });
+  });
+  const ex3A = document.getElementById('ex3Ans'); ex3A.innerHTML = ex3Html; ex3A.classList.add('show');
+
+  // Ex4
+  let ex4Html = '<h4>📝 Giải thích Exercise 4:</h4>';
+  ex4Data.forEach((item, i) => {
+    total++;
+    const sel = mcqSelections[`ex4_${i}`];
+    const ok = sel === item.correct;
+    if (ok) score++;
+    for (let j = 0; j < item.options.length; j++) {
+      const btn = document.getElementById(`ex4_${i}_${j}`);
+      if (!btn) continue;
+      btn.disabled = true; btn.classList.remove('selected');
+      if (j === item.correct) btn.classList.add('correct-ans');
+      else if (j === sel && !ok) btn.classList.add('wrong-ans');
+    }
+    ex4Html += `<div class="ans-row"><span class="${ok?'ans-correct':'ans-wrong'}">${ok?'✅':'❌'} Câu ${i+1}: <strong>${item.options[item.correct]}</strong></span><span class="ans-explanation">– ${item.explanation}</span></div>`;
+  });
+  const ex4A = document.getElementById('ex4Ans'); ex4A.innerHTML = ex4Html; ex4A.classList.add('show');
+
+  // Ex5
+  let ex5Html = '<h4>📝 Giải thích Exercise 5:</h4>';
+  ex5Groups.forEach(g => {
+    ex5Html += `<div style="margin-top:10px"><strong style="color:var(--blue-dark)">${g.title}</strong></div>`;
+    g.items.forEach((item, i) => {
+      const gid = g.title.replace(/\s+/g,'_').substring(0,10) + i;
+      total += 2;
+      const okC = checkAndMark(`ex5c_${gid}`, item.comp);
+      const okS = checkAndMark(`ex5s_${gid}`, item.sup);
+      if (okC) score++; if (okS) score++;
+      ex5Html += `<div class="ans-row"><span class="${okC&&okS?'ans-correct':'ans-wrong'}">${okC&&okS?'✅':'❌'} ${item.base} → <strong>${item.comp}</strong>, <strong>${item.sup}</strong></span><span class="ans-explanation">– ${item.exp}</span></div>`;
+    });
+  });
+  const ex5A = document.getElementById('ex5Ans'); ex5A.innerHTML = ex5Html; ex5A.classList.add('show');
+
+  // Ex6
+  let ex6Html = '<h4>📝 Giải thích Exercise 6:</h4>';
+  ex6Blanks.forEach(b => {
+    total++;
+    if (checkAndMark(b.id, b.answer)) score++;
+    const ok = norm(document.getElementById(b.id)?.value||'') === norm(b.answer);
+    ex6Html += `<div class="ans-row"><span class="${ok?'ans-correct':'ans-wrong'}">${ok?'✅':'❌'} (${b.hint}) → <strong>${b.answer}</strong></span><span class="ans-explanation">– ${b.explanation}</span></div>`;
+  });
+  const ex6A = document.getElementById('ex6Ans'); ex6A.innerHTML = ex6Html; ex6A.classList.add('show');
+
+  // Ex7
+  let ex7Html = '<h4>📝 Giải thích Exercise 7:</h4>';
+  ex7Data.forEach((item, i) => {
+    total++;
+    const sel = document.getElementById(`ex7_${i}`);
+    const ok = sel && parseInt(sel.value) === item.correct;
+    if (ok) score++;
+    if (sel) { sel.disabled = true; sel.classList.add(ok ? 'correct' : 'wrong'); }
+    ex7Html += `<div class="ans-row"><span class="${ok?'ans-correct':'ans-wrong'}">${ok?'✅':'❌'} Câu ${i+1}: <strong>${ex7Errors[item.correct]}</strong></span><span class="ans-explanation">– ${ex7Explanations[i]}</span></div>`;
+  });
+  const ex7A = document.getElementById('ex7Ans'); ex7A.innerHTML = ex7Html; ex7A.classList.add('show');
+
+  // Ex8
+  let ex8Html = '<h4>📝 Giải thích Exercise 8:</h4>';
+  ex8Data.forEach((item, i) => {
+    total++;
+    const ok = checkAndMark(`ex8_${i}`, item.answer);
+    if (ok) score++;
+    ex8Html += `<div class="ans-row"><span class="${ok?'ans-correct':'ans-wrong'}">${ok?'✅':'❌'} Câu ${i+1}: <em>${item.answer}</em></span><span class="ans-explanation">– ${item.explanation}</span></div>`;
+  });
+  const ex8A = document.getElementById('ex8Ans'); ex8A.innerHTML = ex8Html; ex8A.classList.add('show');
+
+  const fb = document.getElementById('globalFeedback');
+  document.getElementById('scoreDisplay').textContent = `${score} / ${total}`;
+  fb.classList.add('show');
+  fb.scrollIntoView({ behavior:'smooth', block:'start' });
+  updateProgress();
+}
+
+// ─── RESET ────────────────────────────────────────────────────────────────────
+function resetAll() {
+  Object.keys(mcqSelections).forEach(k => delete mcqSelections[k]);
+  document.getElementById('globalFeedback').classList.remove('show');
+  ['ex2Ans','ex3Ans','ex4Ans','ex5Ans','ex6Ans','ex7Ans','ex8Ans'].forEach(id => {
+    const el = document.getElementById(id); el.classList.remove('show'); el.innerHTML = '';
+  });
+  renderEx2(); renderEx3(); renderEx4(); renderEx5(); renderEx6(); renderEx7(); renderEx8();
+  updateProgress();
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+renderEx2(); renderEx3(); renderEx4(); renderEx5(); renderEx6(); renderEx7(); renderEx8();
+updateProgress();
+</script>
+</body>
+</html>

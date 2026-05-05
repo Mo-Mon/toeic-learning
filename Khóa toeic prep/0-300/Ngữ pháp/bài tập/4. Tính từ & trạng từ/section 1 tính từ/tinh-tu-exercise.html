@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Section 1: Tính Từ – Bài Tập Tiếng Anh</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #ffffff;
+    --blue: #1a6fc4;
+    --blue-light: #e8f1fb;
+    --blue-mid: #4d9de0;
+    --blue-dark: #0d4a8a;
+    --text: #1a1a2e;
+    --text-muted: #6b7280;
+    --border: #dde6f5;
+    --correct: #16a34a;
+    --correct-bg: #dcfce7;
+    --wrong: #dc2626;
+    --wrong-bg: #fee2e2;
+    --neutral-bg: #f8faff;
+    --shadow: 0 2px 16px rgba(26,111,196,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Be Vietnam Pro', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* Header */
+  header {
+    background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue) 60%, var(--blue-mid) 100%);
+    color: #fff;
+    padding: 36px 24px 28px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 70% 30%, rgba(255,255,255,0.08) 0%, transparent 60%);
+  }
+  header .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 4px 16px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(24px, 5vw, 38px);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+  header p { font-size: 14px; opacity: 0.85; }
+
+  /* Progress bar */
+  .progress-wrap {
+    background: var(--blue-light);
+    padding: 14px 24px;
+    display: flex; align-items: center; gap: 12px;
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; z-index: 10;
+  }
+  .progress-label { font-size: 13px; font-weight: 600; color: var(--blue); white-space: nowrap; }
+  .progress-bar { flex: 1; height: 8px; background: #d1dff5; border-radius: 99px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--blue), var(--blue-mid)); border-radius: 99px; transition: width 0.4s ease; }
+  .progress-count { font-size: 13px; font-weight: 600; color: var(--blue); white-space: nowrap; }
+
+  /* Main */
+  main { max-width: 820px; margin: 0 auto; padding: 28px 16px 60px; }
+
+  /* Section card */
+  .exercise-card {
+    background: var(--bg);
+    border: 1.5px solid var(--border);
+    border-radius: 16px;
+    margin-bottom: 24px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: box-shadow 0.2s;
+  }
+  .exercise-card:hover { box-shadow: 0 4px 24px rgba(26,111,196,0.13); }
+  .exercise-header {
+    background: var(--blue-light);
+    border-bottom: 1.5px solid var(--border);
+    padding: 14px 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .ex-num {
+    background: var(--blue);
+    color: #fff;
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700; flex-shrink: 0;
+  }
+  .ex-title { font-size: 15px; font-weight: 600; color: var(--blue-dark); }
+  .exercise-body { padding: 20px; }
+
+  /* Hint */
+  .hint { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; font-style: italic; }
+
+  /* Fill-blank input */
+  .fill-row { margin-bottom: 12px; line-height: 1.8; font-size: 15px; }
+  .fill-row .sentence { margin-bottom: 4px; }
+  .fill-blank {
+    display: inline-block;
+    border: none; border-bottom: 2px solid var(--blue-mid);
+    outline: none; background: transparent;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 15px; color: var(--blue-dark);
+    padding: 2px 6px; min-width: 110px;
+    transition: border-color 0.2s;
+  }
+  .fill-blank:focus { border-color: var(--blue); }
+  .fill-blank.correct { border-color: var(--correct); background: var(--correct-bg); border-radius: 4px 4px 0 0; }
+  .fill-blank.wrong   { border-color: var(--wrong);   background: var(--wrong-bg);   border-radius: 4px 4px 0 0; }
+
+  /* MCQ */
+  .mcq-question { font-size: 15px; margin-bottom: 14px; line-height: 1.6; }
+  .mcq-question + .mcq-question { margin-top: 20px; border-top: 1px solid var(--border); padding-top: 20px; }
+  .mcq-sentence { font-weight: 500; margin-bottom: 10px; }
+  .options { display: flex; flex-direction: column; gap: 8px; }
+  .option-btn {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    background: var(--neutral-bg);
+    cursor: pointer;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 14px; color: var(--text);
+    transition: all 0.18s; text-align: left;
+  }
+  .option-btn:hover:not(:disabled) { border-color: var(--blue); background: var(--blue-light); }
+  .option-btn.selected { border-color: var(--blue); background: var(--blue-light); }
+  .option-btn.correct-ans { border-color: var(--correct); background: var(--correct-bg); color: var(--correct); font-weight: 600; }
+  .option-btn.wrong-ans   { border-color: var(--wrong);   background: var(--wrong-bg);   color: var(--wrong);   font-weight: 600; }
+  .option-btn:disabled { cursor: default; }
+  .option-dot {
+    width: 20px; height: 20px; border-radius: 50%;
+    border: 2px solid #c5d4ec; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700;
+    transition: all 0.18s;
+  }
+  .option-btn.correct-ans .option-dot { border-color: var(--correct); background: var(--correct); color: #fff; }
+  .option-btn.wrong-ans   .option-dot { border-color: var(--wrong);   background: var(--wrong);   color: #fff; }
+  .option-btn.selected .option-dot    { border-color: var(--blue); background: var(--blue); color: #fff; }
+
+  /* Verb + Adj matching */
+  .matching-row { margin-bottom: 14px; font-size: 15px; line-height: 1.7; }
+  select.verb-select, select.adj-select {
+    border: none; border-bottom: 2px solid var(--blue-mid);
+    background: transparent; outline: none;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 15px; color: var(--blue-dark);
+    padding: 2px 4px; cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  select.verb-select:focus, select.adj-select:focus { border-color: var(--blue); }
+  select.correct { border-color: var(--correct); background: var(--correct-bg); border-radius: 4px 4px 0 0; }
+  select.wrong   { border-color: var(--wrong);   background: var(--wrong-bg);   border-radius: 4px 4px 0 0; }
+
+  /* Feedback box */
+  .feedback-box {
+    margin-top: 14px; padding: 14px 16px;
+    border-radius: 10px; font-size: 14px; line-height: 1.7;
+    display: none;
+  }
+  .feedback-box.show { display: block; }
+  .feedback-box.correct-fb { background: var(--correct-bg); border: 1.5px solid #86efac; color: #15803d; }
+  .feedback-box.wrong-fb   { background: var(--wrong-bg);   border: 1.5px solid #fca5a5; color: #991b1b; }
+  .feedback-box .fb-title  { font-weight: 700; margin-bottom: 4px; font-size: 15px; }
+  .feedback-box .fb-answer { font-weight: 600; color: var(--blue-dark); }
+
+  /* Global feedback after submit */
+  .global-feedback {
+    background: var(--blue-light);
+    border: 2px solid var(--blue);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 28px;
+    text-align: center;
+    display: none;
+  }
+  .global-feedback.show { display: block; }
+  .global-feedback .score { font-size: 40px; font-weight: 700; color: var(--blue); }
+  .global-feedback .score-label { font-size: 15px; color: var(--text-muted); margin-top: 4px; }
+
+  /* Buttons */
+  .btn-primary {
+    background: linear-gradient(135deg, var(--blue-dark), var(--blue));
+    color: #fff;
+    border: none; border-radius: 12px;
+    padding: 14px 36px;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 16px; font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(26,111,196,0.3);
+    transition: all 0.2s;
+    display: block; margin: 0 auto;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 22px rgba(26,111,196,0.4); }
+  .btn-primary:active { transform: translateY(0); }
+  .btn-reset {
+    background: transparent; color: var(--blue);
+    border: 1.5px solid var(--blue);
+    border-radius: 12px; padding: 12px 28px;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: 15px; font-weight: 600;
+    cursor: pointer; display: block; margin: 12px auto 0;
+    transition: all 0.2s;
+  }
+  .btn-reset:hover { background: var(--blue-light); }
+
+  /* Answer key section */
+  .answer-section {
+    background: var(--neutral-bg);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-top: 14px;
+    font-size: 14px;
+    display: none;
+  }
+  .answer-section.show { display: block; }
+  .answer-section h4 { color: var(--blue-dark); font-size: 14px; margin-bottom: 8px; }
+  .ans-row { margin-bottom: 6px; }
+  .ans-correct { color: var(--correct); font-weight: 600; }
+  .ans-wrong   { color: var(--wrong); }
+  .ans-explanation { color: var(--text-muted); font-size: 13px; margin-left: 8px; }
+
+  /* Ex3 specific */
+  .ex3-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 10px; font-size: 15px; flex-wrap: wrap; }
+  .ex3-sentence { flex: 1; min-width: 200px; }
+  .ex3-inputs { display: flex; gap: 6px; flex-wrap: wrap; }
+
+  /* Ex5 specific */
+  .ex5-row { margin-bottom: 12px; font-size: 15px; }
+
+  /* Ex4 checkboxes */
+  .word-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+  .word-check {
+    display: flex; align-items: center; gap: 7px;
+    padding: 8px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px; background: var(--neutral-bg);
+    cursor: pointer; font-size: 14px; transition: all 0.18s;
+    user-select: none;
+  }
+  .word-check:hover { border-color: var(--blue); background: var(--blue-light); }
+  .word-check input { display: none; }
+  .word-check.checked { border-color: var(--blue); background: var(--blue-light); color: var(--blue-dark); font-weight: 600; }
+  .word-check.correct-check { border-color: var(--correct); background: var(--correct-bg); color: var(--correct); }
+  .word-check.wrong-check   { border-color: var(--wrong);   background: var(--wrong-bg);   color: var(--wrong); }
+
+  .submit-area { padding: 8px 0 4px; text-align: center; }
+
+  @media (max-width: 600px) {
+    .exercise-body { padding: 14px; }
+    .ex3-row { flex-direction: column; gap: 4px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="badge">Prep.vn – Tiếng Anh</div>
+  <h1>Section 1: Tính Từ</h1>
+  <p>Hoàn thành tất cả bài tập rồi bấm "Chấm bài" để xem đáp án chi tiết</p>
+</header>
+
+<div class="progress-wrap">
+  <span class="progress-label">Tiến độ</span>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+  <span class="progress-count" id="progressCount">0 / 0</span>
+</div>
+
+<main>
+
+  <div class="global-feedback" id="globalFeedback">
+    <div class="score" id="scoreDisplay">0/0</div>
+    <div class="score-label">Điểm số của bạn</div>
+  </div>
+
+  <!-- Exercise 3 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <div class="ex-num">3</div>
+      <div class="ex-title">Xác định và điền tính từ trong mỗi câu sau vào ô trống bên cạnh</div>
+    </div>
+    <div class="exercise-body">
+      <p class="hint">💡 Gợi ý: dựa vào vị trí của tính từ trong câu (trước danh từ hoặc sau động từ liên kết)</p>
+      <div id="ex3Container"></div>
+      <div class="answer-section" id="ex3Ans"></div>
+    </div>
+  </div>
+
+  <!-- Exercise 4 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <div class="ex-num">4</div>
+      <div class="ex-title">Chọn tất cả các tính từ trong danh sách sau</div>
+    </div>
+    <div class="exercise-body">
+      <div class="word-grid" id="ex4Container"></div>
+      <div class="answer-section" id="ex4Ans"></div>
+    </div>
+  </div>
+
+  <!-- Exercise 5 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <div class="ex-num">5</div>
+      <div class="ex-title">Điền tính từ trong ngoặc vào vị trí thích hợp trong câu</div>
+    </div>
+    <div class="exercise-body">
+      <p class="hint">💡 Ví dụ: It's very <strong style="color:var(--blue)">hot</strong> in the summer.</p>
+      <div id="ex5Container"></div>
+      <div class="answer-section" id="ex5Ans"></div>
+    </div>
+  </div>
+
+  <!-- Exercise 6 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <div class="ex-num">6</div>
+      <div class="ex-title">Chọn 1 trong 4 từ/cụm từ được gạch chân có chứa lỗi sai</div>
+    </div>
+    <div class="exercise-body">
+      <div id="ex6Container"></div>
+      <div class="answer-section" id="ex6Ans"></div>
+    </div>
+  </div>
+
+  <!-- Exercise 7 -->
+  <div class="exercise-card">
+    <div class="exercise-header">
+      <div class="ex-num">7</div>
+      <div class="ex-title">Hoàn thành câu: chọn động từ và tính từ phù hợp từ bảng</div>
+    </div>
+    <div class="exercise-body">
+      <p class="hint">💡 Verbs: feel, look, seem, smell, sound, taste &nbsp;|&nbsp; Adjectives: awful, nervous, interesting, nice, upset, wet</p>
+      <p class="hint" style="margin-bottom:12px">Ví dụ: Helen <strong style="color:var(--blue)">seemed upset</strong> this morning.</p>
+      <div id="ex7Container"></div>
+      <div class="answer-section" id="ex7Ans"></div>
+    </div>
+  </div>
+
+  <div class="submit-area">
+    <button class="btn-primary" onclick="submitAll()">🎯 Chấm bài & Xem giải thích</button>
+    <button class="btn-reset" onclick="resetAll()">↺ Làm lại từ đầu</button>
+  </div>
+
+</main>
+
+<script>
+// ─── DATA ─────────────────────────────────────────────────────────────────────
+
+const ex3Data = [
+  { sentence: "There is an empty room over there.", answers: ["empty"] },
+  { sentence: "It's a hot summer.", answers: ["hot"] },
+  { sentence: "You are so kind.", answers: ["kind"] },
+  { sentence: "This park is clean and green.", answers: ["clean", "green"] },
+  { sentence: "I think these eggs are rotten.", answers: ["rotten"] },
+  { sentence: "James was absent because he was ill.", answers: ["absent", "ill"] },
+  { sentence: "We are all bored. There isn't anything to do.", answers: ["bored"] },
+];
+
+const ex3Explanations = [
+  '"empty" là tính từ, đứng trước danh từ "room" (attributive adjective).',
+  '"hot" là tính từ, đứng trước danh từ "summer" (attributive adjective).',
+  '"kind" là tính từ, đứng sau động từ liên kết "are" (predicative adjective).',
+  '"clean" và "green" đều là tính từ, đứng sau động từ liên kết "is".',
+  '"rotten" là tính từ, đứng sau động từ liên kết "are".',
+  '"absent" đứng sau "was" (predicative); "ill" đứng sau "was" (predicative). Cả hai là tính từ.',
+  '"bored" là tính từ, đứng sau động từ liên kết "are".',
+];
+
+const ex4Words = [
+  { word: "beautiful", isAdj: true },
+  { word: "run", isAdj: false },
+  { word: "happy", isAdj: true },
+  { word: "quickly", isAdj: false },
+  { word: "cold", isAdj: true },
+  { word: "eaten", isAdj: false },
+  { word: "tall", isAdj: true },
+  { word: "kindness", isAdj: false },
+  { word: "ancient", isAdj: true },
+  { word: "freedom", isAdj: false },
+  { word: "tired", isAdj: true },
+  { word: "think", isAdj: false },
+];
+
+const ex5Data = [
+  {
+    original: "These puppies are very. (sweet)",
+    adjective: "sweet",
+    answer: "These puppies are very sweet.",
+    explanation: '"sweet" là tính từ, đứng sau động từ liên kết "are" và trạng từ "very". Không thể để trống sau "very".'
+  },
+  {
+    original: "They live in a house. (large)",
+    adjective: "large",
+    answer: "They live in a large house.",
+    explanation: '"large" là tính từ, phải đứng trước danh từ "house" (attributive position): a large house.'
+  },
+  {
+    original: "Many people have no home. (poor)",
+    adjective: "poor",
+    answer: "Many poor people have no home.",
+    explanation: '"poor" là tính từ, phải đứng trước danh từ "people" để bổ nghĩa cho "people": Many poor people.'
+  },
+  {
+    original: "The company is giving away gifts to its customers. (free)",
+    adjective: "free",
+    answer: "The company is giving away free gifts to its customers.",
+    explanation: '"free" là tính từ, phải đứng trước danh từ "gifts": free gifts.'
+  },
+  {
+    original: "The climbers are climbing up a mountain. (high)",
+    adjective: "high",
+    answer: "The climbers are climbing up a high mountain.",
+    explanation: '"high" là tính từ, phải đứng trước danh từ "mountain": a high mountain.'
+  },
+];
+
+const ex6Data = [
+  {
+    sentence: "Ann is an intelligence student.",
+    options: ["A. Ann", "B. is", "C. intelligence", "D. student"],
+    correct: 2,
+    explanations: [
+      '"Ann" là chủ ngữ – đúng về vị trí và chức năng.',
+      '"is" là động từ liên kết – đúng.',
+      '"intelligence" là DANH TỪ, không phải tính từ. Phải dùng tính từ "intelligent" để bổ nghĩa cho danh từ "student": an intelligent student.',
+      '"student" là danh từ – đúng.'
+    ]
+  },
+  {
+    sentence: "I saw some beautifuls pictures.",
+    options: ["A. I", "B. saw", "C. beautifuls", "D. pictures"],
+    correct: 2,
+    explanations: [
+      '"I" là đại từ chủ ngữ – đúng.',
+      '"saw" là động từ quá khứ – đúng.',
+      'Tính từ trong tiếng Anh KHÔNG có dạng số nhiều. "beautifuls" sai; phải là "beautiful" (không thêm "s").',
+      '"pictures" là danh từ số nhiều – đúng.'
+    ]
+  },
+  {
+    sentence: "Alex needs batteries new for his camera.",
+    options: ["A. needs", "B. new", "C. for", "D. camera"],
+    correct: 1,
+    explanations: [
+      '"needs" là động từ – đúng.',
+      'Tính từ phải đứng TRƯỚC danh từ, không đứng sau. "batteries new" sai; phải là "new batteries".',
+      '"for" là giới từ – đúng.',
+      '"camera" là danh từ – đúng.'
+    ]
+  },
+  {
+    sentence: "I put the happy of my family above other things.",
+    options: ["A. put", "B. happy", "C. family", "D. things"],
+    correct: 1,
+    explanations: [
+      '"put" là động từ – đúng.',
+      '"happy" là tính từ, không thể đứng sau mạo từ "the" làm danh từ. Phải dùng danh từ "happiness": the happiness of my family.',
+      '"family" là danh từ – đúng.',
+      '"things" là danh từ – đúng.'
+    ]
+  },
+];
+
+const ex7Data = [
+  {
+    sentence: "I can't eat this. I've just tried it and it ___.",
+    verbOptions: ["", "feel", "look", "seem", "smell", "sound", "taste"],
+    adjOptions: ["", "awful", "nervous", "interesting", "nice", "upset", "wet"],
+    correctVerb: "tastes",
+    correctVerbKey: "taste",
+    correctAdj: "awful",
+    explanation: '"taste" dùng cho thức ăn/đồ uống. "awful" = tệ/kinh khủng → thức ăn có vị tệ. "It tastes awful."'
+  },
+  {
+    sentence: "It's normal to ___ before an exam or an interview.",
+    verbOptions: ["", "feel", "look", "seem", "smell", "sound", "taste"],
+    adjOptions: ["", "awful", "nervous", "interesting", "nice", "upset", "wet"],
+    correctVerb: "feel",
+    correctVerbKey: "feel",
+    correctAdj: "nervous",
+    explanation: '"feel" diễn tả cảm xúc. "nervous" = hồi hộp/lo lắng → cảm thấy hồi hộp trước khi thi. "feel nervous"'
+  },
+  {
+    sentence: "What beautiful flowers! They ___ too.",
+    verbOptions: ["", "feel", "look", "seem", "smell", "sound", "taste"],
+    adjOptions: ["", "awful", "nervous", "interesting", "nice", "upset", "wet"],
+    correctVerb: "smell",
+    correctVerbKey: "smell",
+    correctAdj: "nice",
+    explanation: '"smell" dùng cho mùi hương. "nice" = dễ chịu → hoa có mùi thơm dễ chịu. "They smell nice."'
+  },
+  {
+    sentence: "You ___. Have you been out in the rain?",
+    verbOptions: ["", "feel", "look", "seem", "smell", "sound", "taste"],
+    adjOptions: ["", "awful", "nervous", "interesting", "nice", "upset", "wet"],
+    correctVerb: "look",
+    correctVerbKey: "look",
+    correctAdj: "wet",
+    explanation: '"look" diễn tả ngoại hình nhìn thấy bằng mắt. "wet" = ướt → trông bạn có vẻ ướt. "You look wet."'
+  },
+  {
+    sentence: "James told me about his new job. It ___ – much better than his old job.",
+    verbOptions: ["", "feel", "look", "seem", "smell", "sound", "taste"],
+    adjOptions: ["", "awful", "nervous", "interesting", "nice", "upset", "wet"],
+    correctVerb: "sounds",
+    correctVerbKey: "sound",
+    correctAdj: "interesting",
+    explanation: '"sound" dùng khi nghe ai đó kể và bạn có ấn tượng. "interesting" = thú vị → nghe có vẻ thú vị. "It sounds interesting."'
+  },
+];
+
+// ─── RENDER ───────────────────────────────────────────────────────────────────
+
+function renderEx3() {
+  const c = document.getElementById('ex3Container');
+  c.innerHTML = ex3Data.map((item, i) => {
+    const inputs = item.answers.map((_, j) =>
+      `<input class="fill-blank" id="ex3_${i}_${j}" placeholder="tính từ..." autocomplete="off">`
+    ).join(' ');
+    return `<div class="ex3-row">
+      <span class="ex3-sentence">${item.sentence}</span>
+      <span class="ex3-inputs">${inputs}</span>
+    </div>`;
+  }).join('');
+  c.querySelectorAll('.fill-blank').forEach(el => el.addEventListener('input', updateProgress));
+}
+
+function renderEx4() {
+  const c = document.getElementById('ex4Container');
+  c.innerHTML = ex4Words.map((w, i) =>
+    `<label class="word-check" id="ex4_lbl_${i}" onclick="toggleCheck(${i})">
+      <input type="checkbox" id="ex4_${i}">
+      ${w.word}
+    </label>`
+  ).join('');
+}
+
+function toggleCheck(i) {
+  const lbl = document.getElementById(`ex4_lbl_${i}`);
+  const inp = document.getElementById(`ex4_${i}`);
+  inp.checked = !inp.checked;
+  lbl.classList.toggle('checked', inp.checked);
+  updateProgress();
+}
+
+function renderEx5() {
+  const c = document.getElementById('ex5Container');
+  c.innerHTML = ex5Data.map((item, i) =>
+    `<div class="ex5-row">
+      <strong>(${item.adjective})</strong> &nbsp;
+      <input class="fill-blank" id="ex5_${i}" placeholder="Viết lại câu hoàn chỉnh..." style="min-width:340px" autocomplete="off">
+    </div>`
+  ).join('');
+  c.querySelectorAll('.fill-blank').forEach(el => el.addEventListener('input', updateProgress));
+}
+
+function renderEx6() {
+  const c = document.getElementById('ex6Container');
+  c.innerHTML = ex6Data.map((item, i) =>
+    `<div class="mcq-question" id="ex6_q${i}">
+      <div class="mcq-sentence">${i+1}. <em>${item.sentence}</em></div>
+      <div class="options">${item.options.map((opt, j) =>
+        `<button class="option-btn" id="ex6_${i}_${j}" onclick="selectMCQ('ex6',${i},${j},${item.options.length})">
+          <span class="option-dot">${String.fromCharCode(65+j)}</span>${opt}
+        </button>`
+      ).join('')}</div>
+    </div>`
+  ).join('');
+}
+
+function renderEx7() {
+  const c = document.getElementById('ex7Container');
+  c.innerHTML = ex7Data.map((item, i) => {
+    const vOpts = item.verbOptions.map(v => `<option value="${v}">${v}</option>`).join('');
+    const aOpts = item.adjOptions.map(a => `<option value="${a}">${a}</option>`).join('');
+    return `<div class="matching-row">
+      ${item.sentence.replace('___',
+        `<select class="verb-select" id="ex7v_${i}" onchange="updateProgress()">${vOpts}</select>
+         <select class="adj-select" id="ex7a_${i}" onchange="updateProgress()">${aOpts}</select>`
+      )}
+    </div>`;
+  }).join('');
+}
+
+// ─── MCQ SELECT ───────────────────────────────────────────────────────────────
+const mcqSelections = {};
+
+function selectMCQ(prefix, qIdx, optIdx, total) {
+  for (let j = 0; j < total; j++) {
+    const btn = document.getElementById(`${prefix}_${qIdx}_${j}`);
+    if (btn) btn.classList.remove('selected');
+  }
+  const chosen = document.getElementById(`${prefix}_${qIdx}_${optIdx}`);
+  if (chosen) chosen.classList.add('selected');
+  mcqSelections[`${prefix}_${qIdx}`] = optIdx;
+  updateProgress();
+}
+
+// ─── PROGRESS ─────────────────────────────────────────────────────────────────
+function countAnswered() {
+  let filled = 0, total = 0;
+  // ex3
+  ex3Data.forEach((item, i) => {
+    item.answers.forEach((_, j) => {
+      total++;
+      if (document.getElementById(`ex3_${i}_${j}`)?.value.trim()) filled++;
+    });
+  });
+  // ex4 (at least 1 checked)
+  total++;
+  if (document.querySelectorAll('#ex4Container input:checked').length > 0) filled++;
+  // ex5
+  ex5Data.forEach((_, i) => {
+    total++;
+    if (document.getElementById(`ex5_${i}`)?.value.trim()) filled++;
+  });
+  // ex6
+  ex6Data.forEach((_, i) => {
+    total++;
+    if (mcqSelections[`ex6_${i}`] !== undefined) filled++;
+  });
+  // ex7
+  ex7Data.forEach((_, i) => {
+    total += 2;
+    if (document.getElementById(`ex7v_${i}`)?.value) filled++;
+    if (document.getElementById(`ex7a_${i}`)?.value) filled++;
+  });
+  return { filled, total };
+}
+
+function updateProgress() {
+  const { filled, total } = countAnswered();
+  document.getElementById('progressFill').style.width = (filled / total * 100) + '%';
+  document.getElementById('progressCount').textContent = `${filled} / ${total}`;
+}
+
+// ─── SUBMIT ───────────────────────────────────────────────────────────────────
+function submitAll() {
+  let score = 0, total = 0;
+
+  // --- Ex3 ---
+  const ex3AnsEl = document.getElementById('ex3Ans');
+  let ex3Html = '<h4>📝 Giải thích Exercise 3:</h4>';
+  ex3Data.forEach((item, i) => {
+    item.answers.forEach((ans, j) => {
+      total++;
+      const inp = document.getElementById(`ex3_${i}_${j}`);
+      const userVal = inp.value.trim().toLowerCase();
+      const correct = userVal === ans.toLowerCase();
+      if (correct) { score++; inp.classList.add('correct'); }
+      else inp.classList.add('wrong');
+    });
+    ex3Html += `<div class="ans-row">
+      <span class="${allCorrect(item.answers, i) ? 'ans-correct' : 'ans-wrong'}">
+        ${allCorrect(item.answers, i) ? '✅' : '❌'} Câu ${i+1}: ${item.answers.join(', ')}
+      </span>
+      <span class="ans-explanation">– ${ex3Explanations[i]}</span>
+    </div>`;
+  });
+  ex3AnsEl.innerHTML = ex3Html;
+  ex3AnsEl.classList.add('show');
+
+  // --- Ex4 ---
+  const ex4AnsEl = document.getElementById('ex4Ans');
+  let ex4Correct = 0, ex4Total = ex4Words.length;
+  let ex4Html = '<h4>📝 Giải thích Exercise 4:</h4>';
+  ex4Words.forEach((w, i) => {
+    total++;
+    const checked = document.getElementById(`ex4_${i}`).checked;
+    const lbl = document.getElementById(`ex4_lbl_${i}`);
+    lbl.style.pointerEvents = 'none';
+    if (checked === w.isAdj) { score++; ex4Correct++; lbl.classList.add('correct-check'); }
+    else lbl.classList.add('wrong-check');
+  });
+  ex4Html += `<div class="ans-row">Các tính từ đúng: <span class="ans-correct">${ex4Words.filter(w=>w.isAdj).map(w=>w.word).join(', ')}</span></div>`;
+  ex4Html += `<div class="ans-row ans-explanation">Tính từ mô tả đặc điểm/tính chất của danh từ. Những từ còn lại: "run/think" là động từ, "quickly" là trạng từ (đuôi -ly), "eaten" là quá khứ phân từ của động từ, "kindness/freedom" là danh từ (đuôi -ness, -dom).</div>`;
+  ex4AnsEl.innerHTML = ex4Html;
+  ex4AnsEl.classList.add('show');
+
+  // --- Ex5 ---
+  const ex5AnsEl = document.getElementById('ex5Ans');
+  let ex5Html = '<h4>📝 Giải thích Exercise 5:</h4>';
+  ex5Data.forEach((item, i) => {
+    total++;
+    const inp = document.getElementById(`ex5_${i}`);
+    const userVal = inp.value.trim().toLowerCase();
+    const correct = userVal === item.answer.toLowerCase();
+    if (correct) { score++; inp.classList.add('correct'); }
+    else inp.classList.add('wrong');
+    ex5Html += `<div class="ans-row">
+      <span class="${correct ? 'ans-correct' : 'ans-wrong'}">${correct ? '✅' : '❌'} Đáp án: <em>${item.answer}</em></span>
+      <span class="ans-explanation">– ${item.explanation}</span>
+    </div>`;
+  });
+  ex5AnsEl.innerHTML = ex5Html;
+  ex5AnsEl.classList.add('show');
+
+  // --- Ex6 ---
+  const ex6AnsEl = document.getElementById('ex6Ans');
+  let ex6Html = '<h4>📝 Giải thích Exercise 6:</h4>';
+  ex6Data.forEach((item, i) => {
+    total++;
+    const sel = mcqSelections[`ex6_${i}`];
+    const correct = sel === item.correct;
+    if (correct) score++;
+    for (let j = 0; j < item.options.length; j++) {
+      const btn = document.getElementById(`ex6_${i}_${j}`);
+      if (!btn) continue;
+      btn.disabled = true;
+      btn.classList.remove('selected');
+      if (j === item.correct) btn.classList.add('correct-ans');
+      else if (j === sel && !correct) btn.classList.add('wrong-ans');
+    }
+    ex6Html += `<div class="ans-row">
+      <span class="${correct ? 'ans-correct' : 'ans-wrong'}">${correct ? '✅' : '❌'} Câu ${i+1}: Đáp án đúng là <strong>${item.options[item.correct]}</strong></span>
+    </div>`;
+    item.explanations.forEach((exp, j) => {
+      ex6Html += `<div class="ans-row" style="margin-left:16px">
+        <span class="${j===item.correct ? 'ans-correct' : ''}">${item.options[j]}</span>
+        <span class="ans-explanation">– ${exp}</span>
+      </div>`;
+    });
+  });
+  ex6AnsEl.innerHTML = ex6Html;
+  ex6AnsEl.classList.add('show');
+
+  // --- Ex7 ---
+  const ex7AnsEl = document.getElementById('ex7Ans');
+  let ex7Html = '<h4>📝 Giải thích Exercise 7:</h4>';
+  ex7Data.forEach((item, i) => {
+    total += 2;
+    const vEl = document.getElementById(`ex7v_${i}`);
+    const aEl = document.getElementById(`ex7a_${i}`);
+    const userV = vEl.value.toLowerCase();
+    const userA = aEl.value.toLowerCase();
+    const vCorrect = userV === item.correctVerbKey;
+    const aCorrect = userA === item.correctAdj.toLowerCase();
+    if (vCorrect) score++;
+    if (aCorrect) score++;
+    vEl.classList.add(vCorrect ? 'correct' : 'wrong');
+    aEl.classList.add(aCorrect ? 'correct' : 'wrong');
+    vEl.disabled = true; aEl.disabled = true;
+    const bothOk = vCorrect && aCorrect;
+    ex7Html += `<div class="ans-row">
+      <span class="${bothOk ? 'ans-correct' : 'ans-wrong'}">${bothOk ? '✅' : '❌'} Câu ${i+1}: <strong>${item.correctVerb} ${item.correctAdj}</strong></span>
+      <span class="ans-explanation">– ${item.explanation}</span>
+    </div>`;
+  });
+  ex7AnsEl.innerHTML = ex7Html;
+  ex7AnsEl.classList.add('show');
+
+  // Global
+  const fb = document.getElementById('globalFeedback');
+  document.getElementById('scoreDisplay').textContent = `${score} / ${total}`;
+  fb.classList.add('show');
+  fb.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  updateProgress();
+}
+
+function allCorrect(answers, rowIdx) {
+  return answers.every((ans, j) => {
+    const inp = document.getElementById(`ex3_${rowIdx}_${j}`);
+    return inp && inp.value.trim().toLowerCase() === ans.toLowerCase();
+  });
+}
+
+// ─── RESET ────────────────────────────────────────────────────────────────────
+function resetAll() {
+  Object.keys(mcqSelections).forEach(k => delete mcqSelections[k]);
+  document.getElementById('globalFeedback').classList.remove('show');
+  ['ex3Ans','ex4Ans','ex5Ans','ex6Ans','ex7Ans'].forEach(id => {
+    const el = document.getElementById(id);
+    el.classList.remove('show'); el.innerHTML = '';
+  });
+  renderEx3(); renderEx4(); renderEx5(); renderEx6(); renderEx7();
+  updateProgress();
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+renderEx3(); renderEx4(); renderEx5(); renderEx6(); renderEx7();
+updateProgress();
+</script>
+</body>
+</html>
