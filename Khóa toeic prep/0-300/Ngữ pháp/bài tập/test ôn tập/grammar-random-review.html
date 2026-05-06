@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ôn Tập Ngữ Pháp – Random Practice</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#ffffff;--blue:#1a6fc4;--blue-light:#e8f1fb;--blue-mid:#4d9de0;--blue-dark:#0d4a8a;--text:#1a1a2e;--text-muted:#6b7280;--border:#dde6f5;--correct:#16a34a;--correct-bg:#dcfce7;--wrong:#dc2626;--wrong-bg:#fee2e2;--neutral-bg:#f8faff;--shadow:0 2px 16px rgba(26,111,196,0.08);--gold:#f59e0b;--gold-bg:#fef3c7;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Be Vietnam Pro',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+  header{background:linear-gradient(135deg,var(--blue-dark) 0%,var(--blue) 60%,var(--blue-mid) 100%);color:#fff;padding:36px 24px 28px;text-align:center;position:relative;overflow:hidden;}
+  header::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 70% 30%,rgba(255,255,255,0.08) 0%,transparent 60%);}
+  header .badge{display:inline-block;background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.3);border-radius:20px;padding:4px 16px;font-size:12px;font-weight:500;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;}
+  header h1{font-family:'Playfair Display',serif;font-size:clamp(24px,5vw,38px);font-weight:700;line-height:1.2;margin-bottom:8px;}
+  header p{font-size:14px;opacity:0.85;}
+  
+  /* Setup screen */
+  .setup-screen{max-width:600px;margin:30px auto;padding:0 16px;}
+  .setup-card{background:var(--bg);border:1.5px solid var(--border);border-radius:16px;padding:26px;box-shadow:var(--shadow);}
+  .setup-card h2{color:var(--blue-dark);font-size:20px;margin-bottom:14px;font-family:'Playfair Display',serif;}
+  .setup-card p{color:var(--text-muted);font-size:14px;margin-bottom:18px;line-height:1.6;}
+  .setup-section{margin-bottom:20px;}
+  .setup-label{font-size:14px;font-weight:600;color:var(--blue-dark);margin-bottom:8px;display:block;}
+  .topic-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;}
+  .topic-chip{display:flex;align-items:center;gap:8px;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;background:var(--neutral-bg);cursor:pointer;font-size:13px;font-weight:500;transition:all 0.18s;user-select:none;}
+  .topic-chip:hover{border-color:var(--blue);background:var(--blue-light);}
+  .topic-chip.checked{border-color:var(--blue);background:var(--blue-light);color:var(--blue-dark);}
+  .topic-chip input{display:none;}
+  .topic-chip .check-icon{width:18px;height:18px;border-radius:5px;border:2px solid #c5d4ec;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;flex-shrink:0;}
+  .topic-chip.checked .check-icon{background:var(--blue);border-color:var(--blue);}
+  .topic-count{margin-left:auto;background:var(--blue-light);color:var(--blue-dark);font-size:11px;padding:1px 8px;border-radius:10px;font-weight:700;}
+  .topic-chip.checked .topic-count{background:var(--blue);color:#fff;}
+  .num-options{display:flex;gap:8px;flex-wrap:wrap;}
+  .num-btn{padding:10px 18px;border:1.5px solid var(--border);border-radius:10px;background:var(--neutral-bg);cursor:pointer;font-family:'Be Vietnam Pro',sans-serif;font-size:14px;font-weight:600;color:var(--text);transition:all 0.18s;}
+  .num-btn:hover{border-color:var(--blue);background:var(--blue-light);}
+  .num-btn.active{background:var(--blue);color:#fff;border-color:var(--blue);}
+  .start-btn{background:linear-gradient(135deg,var(--blue-dark),var(--blue));color:#fff;border:none;border-radius:12px;padding:16px 36px;font-family:'Be Vietnam Pro',sans-serif;font-size:16px;font-weight:600;cursor:pointer;box-shadow:0 4px 16px rgba(26,111,196,0.3);transition:all 0.2s;display:block;width:100%;margin-top:10px;}
+  .start-btn:hover{transform:translateY(-2px);box-shadow:0 6px 22px rgba(26,111,196,0.4);}
+  .start-btn:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
+  
+  /* Quiz screen */
+  .quiz-screen{display:none;}
+  .quiz-screen.active{display:block;}
+  .progress-wrap{background:var(--blue-light);padding:14px 24px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10;}
+  .progress-label{font-size:13px;font-weight:600;color:var(--blue);white-space:nowrap;}
+  .progress-bar{flex:1;height:8px;background:#d1dff5;border-radius:99px;overflow:hidden;}
+  .progress-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--blue-mid));border-radius:99px;transition:width 0.4s ease;}
+  .progress-count{font-size:13px;font-weight:600;color:var(--blue);white-space:nowrap;}
+  
+  main{max-width:780px;margin:0 auto;padding:24px 16px 40px;}
+  
+  .question-card{background:var(--bg);border:1.5px solid var(--border);border-radius:16px;padding:22px;box-shadow:var(--shadow);margin-bottom:20px;}
+  .q-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:8px;}
+  .q-num{background:var(--blue);color:#fff;font-size:13px;font-weight:700;padding:4px 12px;border-radius:99px;}
+  .q-topic{background:var(--blue-light);color:var(--blue-dark);font-size:11px;font-weight:600;padding:4px 10px;border-radius:99px;text-transform:uppercase;letter-spacing:0.5px;}
+  .q-bonus{background:var(--gold-bg);color:var(--gold);font-size:11px;font-weight:700;padding:4px 10px;border-radius:99px;}
+  .q-sentence{font-size:16px;font-weight:500;margin-bottom:16px;line-height:1.7;}
+  .q-sentence em{font-style:italic;color:var(--blue-dark);}
+  .q-sentence strong{font-weight:700;color:var(--blue-dark);}
+  .options{display:flex;flex-direction:column;gap:10px;}
+  .option-btn{display:flex;align-items:center;gap:12px;padding:12px 16px;border:1.5px solid var(--border);border-radius:10px;background:var(--neutral-bg);cursor:pointer;font-family:'Be Vietnam Pro',sans-serif;font-size:14px;color:var(--text);transition:all 0.18s;text-align:left;width:100%;}
+  .option-btn:hover:not(:disabled){border-color:var(--blue);background:var(--blue-light);}
+  .option-btn.selected{border-color:var(--blue);background:var(--blue-light);}
+  .option-btn.correct-ans{border-color:var(--correct);background:var(--correct-bg);color:var(--correct);font-weight:600;}
+  .option-btn.wrong-ans{border-color:var(--wrong);background:var(--wrong-bg);color:var(--wrong);font-weight:600;}
+  .option-btn:disabled{cursor:default;}
+  .option-dot{width:24px;height:24px;border-radius:50%;border:2px solid #c5d4ec;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;transition:all 0.18s;}
+  .option-btn.correct-ans .option-dot{border-color:var(--correct);background:var(--correct);color:#fff;}
+  .option-btn.wrong-ans .option-dot{border-color:var(--wrong);background:var(--wrong);color:#fff;}
+  .option-btn.selected .option-dot{border-color:var(--blue);background:var(--blue);color:#fff;}
+  
+  .feedback-box{margin-top:14px;padding:14px;border-radius:10px;font-size:14px;display:none;}
+  .feedback-box.show{display:block;}
+  .feedback-box.correct{background:var(--correct-bg);border-left:4px solid var(--correct);}
+  .feedback-box.wrong{background:var(--wrong-bg);border-left:4px solid var(--wrong);}
+  .feedback-box .feedback-title{font-weight:700;margin-bottom:6px;}
+  .feedback-box.correct .feedback-title{color:var(--correct);}
+  .feedback-box.wrong .feedback-title{color:var(--wrong);}
+  .feedback-box .feedback-text{color:var(--text);line-height:1.6;}
+  .feedback-box .feedback-text strong{color:var(--blue-dark);}
+  
+  .nav-buttons{display:flex;gap:10px;margin-top:16px;}
+  .nav-btn{flex:1;padding:13px 18px;border-radius:10px;font-family:'Be Vietnam Pro',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s;border:1.5px solid var(--border);background:var(--bg);color:var(--text);}
+  .nav-btn:hover{border-color:var(--blue);background:var(--blue-light);}
+  .nav-btn:disabled{opacity:0.4;cursor:not-allowed;}
+  .nav-btn.primary{background:linear-gradient(135deg,var(--blue-dark),var(--blue));color:#fff;border-color:transparent;}
+  .nav-btn.primary:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(26,111,196,0.3);}
+  
+  /* Result screen */
+  .result-screen{display:none;max-width:600px;margin:30px auto;padding:0 16px;text-align:center;}
+  .result-screen.active{display:block;}
+  .result-card{background:var(--bg);border:2px solid var(--blue);border-radius:20px;padding:32px 24px;box-shadow:0 8px 32px rgba(26,111,196,0.15);}
+  .result-emoji{font-size:60px;margin-bottom:10px;}
+  .result-score{font-size:48px;font-weight:700;color:var(--blue);font-family:'Playfair Display',serif;}
+  .result-pct{font-size:20px;color:var(--text-muted);margin:6px 0;}
+  .result-grade{font-size:22px;font-weight:600;color:var(--blue-dark);margin:12px 0 16px;}
+  .result-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0;}
+  .stat-box{background:var(--neutral-bg);border:1.5px solid var(--border);border-radius:10px;padding:12px;}
+  .stat-label{font-size:12px;color:var(--text-muted);}
+  .stat-value{font-size:22px;font-weight:700;color:var(--blue);margin-top:4px;}
+  .stat-value.correct{color:var(--correct);}
+  .stat-value.wrong{color:var(--wrong);}
+  .review-list{margin-top:20px;text-align:left;max-height:300px;overflow-y:auto;}
+  .review-item{padding:10px 14px;border-radius:8px;margin-bottom:6px;font-size:13px;display:flex;align-items:center;gap:8px;}
+  .review-item.correct{background:var(--correct-bg);}
+  .review-item.wrong{background:var(--wrong-bg);}
+  .review-num{font-weight:700;}
+  
+  @media(max-width:600px){.q-sentence{font-size:15px;}.option-btn{font-size:13px;}.result-stats{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="badge">Prep.vn – Random Review</div>
+  <h1>🎲 Ôn Tập Ngữ Pháp Random</h1>
+  <p>Tổng hợp Mini Test 1-4 + Final Test + câu hỏi bổ sung</p>
+</header>
+
+<!-- Setup Screen -->
+<div class="setup-screen" id="setupScreen">
+  <div class="setup-card">
+    <h2>⚙️ Cài đặt bài ôn</h2>
+    <p>Chọn chủ đề và số câu hỏi bạn muốn ôn tập. Câu hỏi sẽ được lấy ngẫu nhiên và xáo trộn thứ tự đáp án để tăng tính thử thách.</p>
+    
+    <div class="setup-section">
+      <label class="setup-label">📚 Chủ đề ngữ pháp</label>
+      <div class="topic-grid" id="topicGrid"></div>
+    </div>
+    
+    <div class="setup-section">
+      <label class="setup-label">🎯 Số câu hỏi</label>
+      <div class="num-options" id="numOptions">
+        <button class="num-btn" data-n="10">10 câu</button>
+        <button class="num-btn active" data-n="20">20 câu</button>
+        <button class="num-btn" data-n="30">30 câu</button>
+        <button class="num-btn" data-n="50">50 câu</button>
+        <button class="num-btn" data-n="-1">Tất cả</button>
+      </div>
+    </div>
+    
+    <button class="start-btn" id="startBtn" onclick="startQuiz()">🚀 Bắt đầu luyện tập</button>
+  </div>
+</div>
+
+<!-- Quiz Screen -->
+<div class="quiz-screen" id="quizScreen">
+  <div class="progress-wrap">
+    <span class="progress-label">Câu</span>
+    <div class="progress-bar"><div class="progress-fill" id="qProgressFill" style="width:0%"></div></div>
+    <span class="progress-count" id="qProgressCount">0 / 0</span>
+  </div>
+  <main>
+    <div class="question-card" id="questionCard"></div>
+  </main>
+</div>
+
+<!-- Result Screen -->
+<div class="result-screen" id="resultScreen">
+  <div class="result-card">
+    <div class="result-emoji" id="resultEmoji">🎉</div>
+    <div class="result-score" id="resultScore">0/0</div>
+    <div class="result-pct" id="resultPct">0%</div>
+    <div class="result-grade" id="resultGrade">Hoàn thành!</div>
+    <div class="result-stats">
+      <div class="stat-box"><div class="stat-label">✅ Đúng</div><div class="stat-value correct" id="statCorrect">0</div></div>
+      <div class="stat-box"><div class="stat-label">❌ Sai</div><div class="stat-value wrong" id="statWrong">0</div></div>
+    </div>
+    <div class="review-list" id="reviewList"></div>
+    <div class="nav-buttons" style="margin-top:20px">
+      <button class="nav-btn" onclick="goToSetup()">⚙️ Cài đặt lại</button>
+      <button class="nav-btn primary" onclick="restartSameQuiz()">🔄 Làm lại bài này</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════════════════════════
+// DATA – GROUPED BY TOPIC
+// ════════════════════════════════════════════════════════════════════════════
+
+// Topic codes:
+//   plural  - Plural nouns (số nhiều)
+//   poss    - Possessives & demonstratives (sở hữu cách & đại từ chỉ định)
+//   quant   - Quantifiers (a/an, some/any, much/many, few/little, a lot of)
+//   tense   - Verb tenses (thì động từ)
+//   gerinf  - Gerund vs To-infinitive
+//   verbs   - Verb confusions (raise/rise, lay/lie, etc.)
+//   pronoun - Pronouns (đại từ)
+//   prep    - Prepositions (giới từ thời gian + địa điểm)
+//   adj     - Adjective order
+//   adv     - Adverb position & comparisons
+//   linking - Linking verbs / be / there
+
+const QUESTIONS = [
+  // ────────── PLURAL NOUNS (danh từ số nhiều) ──────────
+  {topic:'plural', src:'MT1', s:'_______ say that the environment is threatened by pollution.', opts:['Scientists','Scientist','A scientist','An scientist'], c:0, e:'"Scientists" số nhiều không có mạo từ → dùng làm chủ ngữ chung. "An scientist" sai (scientist bắt đầu phụ âm /s/).'},
+  {topic:'plural', src:'MT1', s:'Some _______ are organizing road traffic to avoid any accidents.', opts:['policemans','policeman','policemens','policemen'], c:3, e:'"policeman" → "policemen" (đổi -man thành -men). Bất quy tắc.'},
+  {topic:'plural', src:'MT1', s:'After the storm, the _______ toys were soaked from the rain.', opts:["childrens'","children's","children'","children"], c:1, e:'"children" số nhiều bất quy tắc → thêm \'s trực tiếp: "children\'s".'},
+  {topic:'plural', src:'MT1', s:'How many _______ work in the restaurant?', opts:['womans','woman','women','womens'], c:2, e:'"woman" → số nhiều bất quy tắc: "women".'},
+  {topic:'plural', src:'MT1', s:'_______ broke into their house and stole some paintings.', opts:['Thiefs','Thieves','Thievs','Thieve'], c:1, e:'"thief" → tận cùng -f → đổi thành -ves: "thieves".'},
+  {topic:'plural', src:'MT1', s:'We saw some _______ on our way to the beach.', opts:['deers','deer','deeres','dear'], c:1, e:'"deer" có dạng số ít = số nhiều (invariable plural).'},
+  {topic:'plural', src:'FT', s:'She lives with her husband, Paul, and three grown-up _____.', opts:['child','childs','children','childrens'], c:2, e:'"children" – số nhiều bất quy tắc của "child".'},
+  {topic:'plural', src:'FT', s:'A magical old _____ dressed in red and white, with a long white beard.', opts:['man','men','mans','mens'], c:0, e:'"a magical old man" – có mạo từ "a" → số ít.'},
+  {topic:'plural', src:'BONUS', bonus:true, s:'The _______ on the farm produce milk every morning.', opts:['gooses','geeses','geese','goose'], c:2, e:'"goose" → bất quy tắc: "geese". Số nhiều dùng cho nhiều con. (Ghi chú: thực tế cừu/bò cho sữa, geese chỉ minh hoạ pattern bất quy tắc).'},
+  {topic:'plural', src:'BONUS', bonus:true, s:'I bought three _______ at the dental clinic today.', opts:['tooth','tooths','teeths','teeth'], c:3, e:'"tooth" → bất quy tắc: "teeth".'},
+  {topic:'plural', src:'BONUS', bonus:true, s:'The _______ in the mountains run very fast.', opts:['fox','foxes','foxs','foxies'], c:1, e:'"fox" tận cùng -x → thêm -es: "foxes".'},
+  {topic:'plural', src:'BONUS', bonus:true, s:'There are several _______ swimming in the river.', opts:['fishs','fishes','fish','fishies'], c:2, e:'"fish" thường dùng dạng số ít = số nhiều (invariable). "fishes" chỉ dùng khi nói về nhiều LOẠI cá khác nhau.'},
+
+  // ────────── POSSESSIVES & DEMONSTRATIVES ──────────
+  {topic:'poss', src:'MT1', s:'_______ school is old.', opts:["Susan's and Steve'","Susan' and Steve's","Susan and Steve's","Susan's and Steve"], c:2, e:'Hai người cùng sở hữu một thứ → chỉ thêm \'s cho người cuối: "Susan and Steve\'s school".'},
+  {topic:'poss', src:'MT1', s:'Do you know _______ person over there by the post office?', opts:['this','that','these','those'], c:1, e:'"that" – xa ("over there") + số ít.'},
+  {topic:'poss', src:'MT1', s:'_______ is my mobile phone and _______ is your mobile phone on the shelf over there.', opts:['these - those','that - this','those - these','this - that'], c:3, e:'"this" (gần) + "that" (xa, "over there"). Cả hai số ít.'},
+  {topic:'poss', src:'MT1', s:'_______ are my grandparents, and _______ people over there are my friend\'s grandparents.', opts:['those - these','these - those','this - that','that - this'], c:1, e:'"these" (gần, số nhiều) + "those" (xa, số nhiều).'},
+  {topic:'poss', src:'FT', s:'The _____ teacher is standing at the front of their classroom.', opts:["student's","students'","students","students's"], c:1, e:'"students\'" – sở hữu của danh từ số nhiều kết thúc bằng -s.'},
+  {topic:'poss', src:'BONUS', bonus:true, s:'_______ shoes are these on the floor? They smell terrible!', opts:['Whose','Who\'s','Whos','Whom'], c:0, e:'"Whose" = của ai (sở hữu). "Who\'s" = who is.'},
+  {topic:'poss', src:'BONUS', bonus:true, s:'The _______ in this office work very hard.', opts:["women's","womens","women","women'"], c:2, e:'Câu này là chủ ngữ "The women" (số nhiều), không phải sở hữu cách.'},
+  {topic:'poss', src:'BONUS', bonus:true, s:'_______ is my favourite teacher. She\'s very kind.', opts:['That','Those','These','Them'], c:0, e:'"That is my teacher" – chủ ngữ số ít, dùng "That" (chỉ người ở xa hoặc đã được nhắc).'},
+  {topic:'poss', src:'BONUS', bonus:true, s:'My ______ are visiting us this weekend.', opts:["sister-in-laws","sisters-in-laws","sisters-in-law","sister-in-law"], c:2, e:'Compound noun: số nhiều thêm -s vào danh từ chính: "sisters-in-law".'},
+
+  // ────────── QUANTIFIERS ──────────
+  {topic:'quant', src:'MT1', s:'There are _______ shops near the university.', opts:['a','few','a few','a little'], c:2, e:'"a few + danh từ đếm được số nhiều" (shops). "a little" cho không đếm được.'},
+  {topic:'quant', src:'MT1', s:'Hurry up! We only have _______ time before the coach leaves.', opts:['a few','a little','many','few'], c:1, e:'"time" không đếm được → "a little time".'},
+  {topic:'quant', src:'MT1', s:'How _______ times do you need to finish the work?', opts:['much','many','little','few'], c:1, e:'"times" (lần) đếm được → "How many times".'},
+  {topic:'quant', src:'MT1', s:'They have had _______ homework in mathematics recently.', opts:['lot of','a lot of','much of','many'], c:1, e:'"a lot of" = nhiều (cả đếm/không đếm). "lot of" thiếu mạo từ.'},
+  {topic:'quant', src:'MT1', s:"Although he was very ill, he didn't take _______ medicine.", opts:['some','any','much','few'], c:1, e:'Câu phủ định → dùng "any" (không phải "some").'},
+  {topic:'quant', src:'MT1', s:'We saw _______ beautiful scenery when we went to Austria.', opts:['some','many','sceneries','few'], c:0, e:'"scenery" không đếm được → không có "sceneries". Dùng "some scenery".'},
+  {topic:'quant', src:'FT', s:"They don't want to use _____ water on the Space Station.", opts:['lots of','many','little','any'], c:3, e:'Câu phủ định "don\'t want to use" → "any".'},
+  {topic:'quant', src:'BONUS', bonus:true, s:'There are too _______ people in this room.', opts:['much','many','little','a few'], c:1, e:'"people" đếm được số nhiều → "many".'},
+  {topic:'quant', src:'BONUS', bonus:true, s:'Would you like _______ tea?', opts:['any','many','some','few'], c:2, e:'Trong câu mời (offer), dùng "some" thay vì "any" (dù là câu hỏi).'},
+  {topic:'quant', src:'BONUS', bonus:true, s:'I have _______ money to buy that expensive watch.', opts:['few','a few','little','a little'], c:2, e:'"little money" = rất ít, gần như không có (nghĩa phủ định). "a little" = một ít (đủ dùng). Ngữ cảnh: không mua được → "little".'},
+  {topic:'quant', src:'BONUS', bonus:true, s:'_______ of the students passed the test successfully.', opts:['Most','Almost','Much','Every'], c:0, e:'"Most of the students" = phần lớn học sinh. "Almost" là trạng từ. "Every" cần danh từ số ít.'},
+  {topic:'quant', src:'BONUS', bonus:true, s:'There aren\'t _______ apples in the fridge.', opts:['some','any','much','a lot'], c:1, e:'Phủ định → "any". "any apples" = không có quả nào.'},
+
+  // ────────── VERB TENSES ──────────
+  {topic:'tense', src:'MT2', s:"He is having a shower _______. You can't disturb him.", opts:['always','at the moment','already','sometimes'], c:1, e:'Present Continuous → "at the moment".'},
+  {topic:'tense', src:'MT2', s:"At nine o'clock in every English lesson, our teacher _______ us about an interesting part of English culture.", opts:['is telling','tell','has told','tells'], c:3, e:'"every lesson" = thói quen → Present Simple. Chủ ngữ số ít → "tells".'},
+  {topic:'tense', src:'MT2', s:"Jane _______ always _______ her room untidy. I have reminded her several times but she hasn't changed.", opts:['was / leaving','has / leaves','is / leaving','were / left'], c:2, e:'Present Continuous + "always" → diễn tả thói quen phàn nàn.'},
+  {topic:'tense', src:'MT2', s:"Please be very quiet. Mary _______. We don't want her to wake up.", opts:['sleeps','is sleep','slept','is sleeping'], c:3, e:'Hành động đang diễn ra → Present Continuous "is sleeping".'},
+  {topic:'tense', src:'MT2', s:'Julian was a young student when his father _______ in an accident.', opts:['dies','died','was dying','is dying'], c:1, e:'Quá khứ + "when" → Past Simple "died".'},
+  {topic:'tense', src:'MT2', s:'Some years ago, people _______ living in the city centers but now they _______ to live in the suburbs.', opts:['had preferred / prefer','have preferred / prefer','were preferring / preferring','preferred / prefer'], c:3, e:'"some years ago" → Past Simple. "now" → Present Simple.'},
+  {topic:'tense', src:'MT2', s:"The mayor _______ for office again next term. He's already made plans.", opts:['was running','will run','is going to run','runs'], c:2, e:'Đã có kế hoạch ("made plans") → "is going to". "will" cho quyết định tại chỗ.'},
+  {topic:'tense', src:'MT2', s:'Look at those dark clouds. It _______.', opts:['rains','is rain','is going to rain','will rain'], c:2, e:'Có bằng chứng nhìn thấy → "is going to rain".'},
+  {topic:'tense', src:'MT2', s:'Last year, I _______ camping with my friends for the first time.', opts:['went','go','am going','was going'], c:0, e:'"last year" → Past Simple "went".'},
+  {topic:'tense', src:'FT', s:"Lewis: I _____ you an invitation email two days ago. — Danny: Really? I _____ my email.", opts:["haven't sent / checked","sent / didn't checked","sent / didn't check","hadn't sent / checked"], c:2, e:'"two days ago" → Past Simple "sent". Phủ định: "didn\'t check" (V nguyên thể).'},
+  {topic:'tense', src:'FT', s:"They have _____ their prices every year since they were founded.", opts:['rise','risen','raise','raised'], c:3, e:'"have raised" – Present Perfect + "raise" (có tân ngữ "their prices").'},
+  {topic:'tense', src:'FT', s:"He _____ in what is now Turkey, about 1,700 years ago.", opts:['had lived','lived','had been living',"didn't used to live"], c:1, e:'"1,700 years ago" → Past Simple "lived".'},
+  {topic:'tense', src:'BONUS', bonus:true, s:'By the time we arrived at the cinema, the film _______.', opts:['has started','started','had started','was starting'], c:2, e:'Hành động xảy ra TRƯỚC một mốc trong quá khứ → Past Perfect "had started".'},
+  {topic:'tense', src:'BONUS', bonus:true, s:'I _______ my homework when the lights went out.', opts:['was doing','did','have done','do'], c:0, e:'Hành động đang diễn ra trong quá khứ thì hành động khác xen vào → Past Continuous "was doing".'},
+  {topic:'tense', src:'BONUS', bonus:true, s:'She _______ in this company since 2015.', opts:['works','is working','has worked','worked'], c:2, e:'"since 2015" + still ongoing → Present Perfect "has worked".'},
+  {topic:'tense', src:'BONUS', bonus:true, s:'Tomorrow at this time, we _______ on the beach in Hawaii.', opts:['relax','will relax','will be relaxing','have relaxed'], c:2, e:'"tomorrow at this time" → hành động sẽ đang diễn ra tại thời điểm cụ thể trong tương lai → Future Continuous.'},
+  {topic:'tense', src:'BONUS', bonus:true, s:"I _______ him for years before he moved away.", opts:['knew','have known','had known','was knowing'], c:2, e:'"before he moved" → Past Perfect "had known". Hành động xảy ra trước một mốc quá khứ.'},
+  {topic:'tense', src:'BONUS', bonus:true, s:"The train _______ at 7 AM tomorrow.", opts:['leaves','is leaving','will leave','left'], c:0, e:'Lịch trình cố định → Present Simple "leaves" (dù chỉ tương lai).'},
+
+  // ────────── GERUND vs TO-INFINITIVE ──────────
+  {topic:'gerinf', src:'MT2', s:'My wife wants _______ at an Italian restaurant tonight.', opts:['to eat','eating','to eat / eating','to eating'], c:0, e:'"want + to-infinitive". "want to eat".'},
+  {topic:'gerinf', src:'MT2', s:'Mr. Lewis is finally going to finish _______ his house next week.', opts:['to paint','painting','to paint / painting','to painting'], c:1, e:'"finish + gerund". "finish painting".'},
+  {topic:'gerinf', src:'MT2', s:"Emiko hopes _______ her Master's degree in Biology by the end of this year.", opts:['to finish','finishing','to finish / finishing','to finishing'], c:0, e:'"hope + to-infinitive". "hope to finish".'},
+  {topic:'gerinf', src:'MT2', s:'Jessica loves _______ ice cream, but it makes her fat!', opts:['to eat','eating','to eat / eating','to eating'], c:2, e:'"love" dùng được cả hai dạng với cùng nghĩa.'},
+  {topic:'gerinf', src:'MT2', s:'Robin practices _______ English with her host mother every evening.', opts:['to speak','speaking','to speak / speaking','to speaking'], c:1, e:'"practice + gerund". "practice speaking".'},
+  {topic:'gerinf', src:'MT2', s:'We have run out of milk. Remember _______ some at the supermarket on your way home.', opts:['to buy','buying','to buy / buying','to buying'], c:0, e:'"remember + to-inf" = nhớ phải làm gì (nhắc nhở tương lai). "remember + V-ing" = nhớ lại đã làm.'},
+  {topic:'gerinf', src:'MT2', s:'Would you please stop _______ so much noise?', opts:['to make','making','to make/ making','to making'], c:1, e:'"stop + gerund" = dừng việc đang làm. "stop to make" = dừng lại để làm (mục đích).'},
+  {topic:'gerinf', src:'MT2', s:'In order _______ happiness, there are five methods people can use.', opts:['to boost','boosting','boost','for boost'], c:0, e:'"In order + to-infinitive" = để làm gì (mục đích).'},
+  {topic:'gerinf', src:'MT2', s:'Some people also express gratitude by _______ or meditating.', opts:['to pray','praying','pray','prayed'], c:1, e:'"by + gerund" = bằng cách làm gì.'},
+  {topic:'gerinf', src:'MT2', s:"Second, it's important _______ the good things in life.", opts:['to notice','noticing','notice','for noticing'], c:0, e:'"It is + adj + to-infinitive": "It\'s important to notice".'},
+  {topic:'gerinf', src:'FT', s:'I stopped _____ in Santa Claus.', opts:['believe','to believe','believed','believing'], c:3, e:'"stop + gerund" = ngừng việc đang làm.'},
+  {topic:'gerinf', src:'BONUS', bonus:true, s:'I really enjoy _______ classical music in the evening.', opts:['to listen','listening to','listen','to listening'], c:1, e:'"enjoy + gerund". "listen to" cần giới từ "to" trước tân ngữ.'},
+  {topic:'gerinf', src:'BONUS', bonus:true, s:"Don't forget _______ the door before you leave.", opts:['lock','to lock','locking','locked'], c:1, e:'"forget + to-inf" = nhớ làm gì sắp tới (nhắc nhở).'},
+  {topic:'gerinf', src:'BONUS', bonus:true, s:"I'd like _______ a complaint about the service.", opts:['making','to make','make','to making'], c:1, e:'"would like + to-infinitive". "I\'d like to make".'},
+  {topic:'gerinf', src:'BONUS', bonus:true, s:"She suggested _______ a new restaurant for our anniversary.", opts:['to try','trying','try','tried'], c:1, e:'"suggest + gerund". "suggest trying".'},
+  {topic:'gerinf', src:'BONUS', bonus:true, s:"I'm interested in _______ more about Japanese culture.", opts:['learn','to learn','learning','learned'], c:2, e:'Sau giới từ "in" → gerund (V-ing). "interested in learning".'},
+  {topic:'gerinf', src:'BONUS', bonus:true, s:"He decided _______ a new business after the pandemic.", opts:['starting','to start','start','started'], c:1, e:'"decide + to-infinitive". "decide to start".'},
+
+  // ────────── VERB CONFUSIONS (raise/rise) ──────────
+  {topic:'verbs', src:'MT2', s:"Our favorite restaurant has _______ its prices again. It's getting very expensive.", opts:['raised','risen','rose','rise'], c:0, e:'"raise" có tân ngữ ("its prices") → "raised". "rise" không có tân ngữ.'},
+  {topic:'verbs', src:'MT2', s:'We _______ the flag when the sun _______, and we lower it when the sun goes down.', opts:['rise - raises','raise - rises','raised - rose','rises - raises'], c:1, e:'"raise the flag" (có tân ngữ) + "the sun rises" (không có tân ngữ).'},
+  {topic:'verbs', src:'MT2', s:"If it doesn't stop raining, the river will _______ and overflow.", opts:['raise','rise','rises','raised'], c:1, e:'"the river rises" – không có tân ngữ → "rise".'},
+  {topic:'verbs', src:'BONUS', bonus:true, s:"The temperature _______ to 40°C last summer.", opts:['raised','rose','risen','raise'], c:1, e:'"temperature rose" – không có tân ngữ → "rise" (quá khứ: rose-risen).'},
+  {topic:'verbs', src:'BONUS', bonus:true, s:"Please _______ your hand if you have a question.", opts:['rise','raise','rises','rose'], c:1, e:'"raise your hand" – có tân ngữ "your hand".'},
+  {topic:'verbs', src:'BONUS', bonus:true, s:"He _______ the heavy box onto the truck by himself.", opts:['lay','laid','lied','lain'], c:1, e:'"lay" (đặt) - past: "laid". "lie" (nằm) - past: "lay". Câu này có tân ngữ "the box" → "laid".'},
+  {topic:'verbs', src:'BONUS', bonus:true, s:'The cat _______ on the sofa all afternoon yesterday.', opts:['lay','laid','lied','layed'], c:0, e:'"lie" (nằm) - past: "lay". Không có tân ngữ. "laid" là quá khứ của "lay" (đặt). Câu này con mèo tự nằm → "lay".'},
+
+  // ────────── PRONOUNS ──────────
+  {topic:'pronoun', src:'MT3', s:"Whenever Rose goes, ______ makes friends easily.", opts:['she','her','hers','herself'], c:0, e:'Đại từ chủ ngữ "she".'},
+  {topic:'pronoun', src:'MT3', s:"______ love it when our grandparents came to visit us!", opts:['Us','Our','We','Them'], c:2, e:'"We" – chủ ngữ số nhiều ngôi 1.'},
+  {topic:'pronoun', src:'MT3', s:'My friend is over there by the cafeteria. Can you see ______?', opts:['he','him','them','himself'], c:1, e:'"him" – tân ngữ sau động từ "see".'},
+  {topic:'pronoun', src:'MT3', s:"Don't leave those files behind. Take ______ with you.", opts:['them','they','their','theirs'], c:0, e:'"them" – tân ngữ sau "take".'},
+  {topic:'pronoun', src:'MT3', s:'These are my sisters. ______ names are Cathy and Linda.', opts:['There','Them','Their','Her'], c:2, e:'"Their names" – tính từ sở hữu trước danh từ.'},
+  {topic:'pronoun', src:'MT3', s:'The robbers were caught because they had left ______ fingerprints behind.', opts:['them','they','their','theirs'], c:2, e:'"their fingerprints" – tính từ sở hữu.'},
+  {topic:'pronoun', src:'MT3', s:"If you can't find your book, you can borrow ______.", opts:['me','mine','myself','my'], c:1, e:'"mine" – đại từ sở hữu (= my book), đứng độc lập.'},
+  {topic:'pronoun', src:'MT3', s:'We gave them ______ telephone number, and they gave us ______.', opts:['our - them','ours - theirs','their - ours','our - theirs'], c:3, e:'"our number" (tính từ sở hữu) + "theirs" (đại từ sở hữu).'},
+  {topic:'pronoun', src:'MT3', s:'The little boy tied his shoelaces ______.', opts:['himself','him','his','he'], c:0, e:'"himself" – đại từ phản thân, nhấn mạnh tự làm.'},
+  {topic:'pronoun', src:'MT3', s:'They hurt ______ in the game.', opts:['itself','myself','himself','themselves'], c:3, e:'"They" → "themselves" (số nhiều).'},
+  {topic:'pronoun', src:'FT', s:'Please listen to _____ carefully. I am talking about an important topic.', opts:['I','me','they','we'], c:1, e:'"listen to + tân ngữ" → "me".'},
+  {topic:'pronoun', src:'FT', s:"David and Sarah don't go out at night. _____ father doesn't let them.", opts:['They','Theirs','Them','Their'], c:3, e:'"Their father" – tính từ sở hữu trước "father".'},
+  {topic:'pronoun', src:'FT', s:'I asked _____ the following question.', opts:['my','me','mine','myself'], c:3, e:'"asked myself" = tự hỏi bản thân.'},
+  {topic:'pronoun', src:'BONUS', bonus:true, s:'_______ and I went to the cinema yesterday.', opts:['Him','He','His','Himself'], c:1, e:'Chủ ngữ kép → dùng đại từ chủ ngữ "He". Mẹo: bỏ "and I" thử lại: "He went" ✓.'},
+  {topic:'pronoun', src:'BONUS', bonus:true, s:'Between you and ______, I think she is lying.', opts:['I','me','myself','mine'], c:1, e:'Sau giới từ "between" → tân ngữ "me". Mẹo: "between" + đại từ tân ngữ.'},
+  {topic:'pronoun', src:'BONUS', bonus:true, s:'The cake is for _______ to share equally.', opts:['we','our','us','ourselves'], c:2, e:'Sau giới từ "for" → tân ngữ "us".'},
+  {topic:'pronoun', src:'BONUS', bonus:true, s:'She made the dress all by _______.', opts:['her','herself','hers','she'], c:1, e:'"by + đại từ phản thân" = tự mình làm. "by herself".'},
+  {topic:'pronoun', src:'BONUS', bonus:true, s:'This pen is _______, not yours.', opts:['my','mine','me','myself'], c:1, e:'"mine" – đại từ sở hữu, đứng độc lập (= my pen).'},
+
+  // ────────── PREPOSITIONS ──────────
+  {topic:'prep', src:'MT4', s:'I visited my grandparents _____ Sunday afternoon.', opts:['on','in','at','during'], c:0, e:'"on Sunday afternoon" – ON + buổi của ngày cụ thể.'},
+  {topic:'prep', src:'MT4', s:'____ 1876, Alexander Graham Bell invented the first telephone.', opts:['In','On','At','When'], c:0, e:'"In 1876" – IN + năm.'},
+  {topic:'prep', src:'MT4', s:'I currently work ___ Vincom Tower ___ 191 Ba Trieu Street.', opts:['in/at','in/in','at/at','at/in'], c:0, e:'"in Vincom Tower" (IN cho tòa nhà) + "at 191" (AT cho địa chỉ cụ thể).'},
+  {topic:'prep', src:'MT4', s:'_____ the time I studied in Rome, I only saw her once.', opts:['At','During','Throughout','In'], c:1, e:'"During + N cụ thể" = trong khoảng thời gian đó.'},
+  {topic:'prep', src:'MT4', s:"Please wait for me, I'm ___ the bus to go to the train station now.", opts:['under','on','in','at'], c:1, e:'"on the bus" – ON + phương tiện công cộng.'},
+  {topic:'prep', src:'MT4', s:'She usually works and takes care of her baby ____ the same time.', opts:['on','in','at','during'], c:2, e:'"at the same time" – cụm cố định.'},
+  {topic:'prep', src:'FT', s:'They are _____ the table (oranges).', opts:['in','between','at','on'], c:3, e:'"on the table" – ON cho bề mặt phẳng.'},
+  {topic:'prep', src:'FT', s:'They go to class _____ Mondays, Wednesdays, and Fridays.', opts:['at','in','on','from'], c:2, e:'"on Mondays" – ON + ngày trong tuần.'},
+  {topic:'prep', src:'FT', s:'It is located _____ 330 and 435 kilometers above the earth.', opts:['between','in front of','during','throughout'], c:0, e:'"between 330 and 435" – BETWEEN + AND cho khoảng giữa hai số.'},
+  {topic:'prep', src:'FT', s:'Like many people here _____ Earth.', opts:['in','at','on','from'], c:2, e:'"on Earth" – ON cho bề mặt hành tinh.'},
+  {topic:'prep', src:'FT', s:'Giving gifts to children _____ Christmas.', opts:['in','at','on','to'], c:1, e:'"at Christmas" – AT + dịp lễ.'},
+  {topic:'prep', src:'BONUS', bonus:true, s:"I'll see you _______ Friday morning.", opts:['in','on','at','during'], c:1, e:'"on Friday morning" – ON + buổi của ngày cụ thể.'},
+  {topic:'prep', src:'BONUS', bonus:true, s:'The library is _______ the second floor of the building.', opts:['in','at','on','to'], c:2, e:'"on the second floor" – ON cho tầng.'},
+  {topic:'prep', src:'BONUS', bonus:true, s:'My grandfather was born _______ the 1950s.', opts:['on','at','in','during'], c:2, e:'"in the 1950s" – IN + thập kỷ.'},
+  {topic:'prep', src:'BONUS', bonus:true, s:'The keys are _______ the drawer next to the bed.', opts:['on','in','at','from'], c:1, e:'"in the drawer" – IN cho không gian kín.'},
+  {topic:'prep', src:'BONUS', bonus:true, s:'I usually have lunch _______ noon.', opts:['in','on','at','during'], c:2, e:'"at noon" – AT cho mốc thời gian cố định trong ngày.'},
+  {topic:'prep', src:'BONUS', bonus:true, s:'There is a beautiful painting _______ the wall.', opts:['in','at','on','over'], c:2, e:'"on the wall" – ON cho bề mặt thẳng đứng.'},
+  {topic:'prep', src:'BONUS', bonus:true, s:'My birthday party will be held _______ Saturday _______ 7 PM.', opts:['on / at','in / on','at / in','on / on'], c:0, e:'"on Saturday" (ON + ngày) + "at 7 PM" (AT + giờ).'},
+  {topic:'prep', src:'BONUS', bonus:true, s:'The cat is hiding _______ the table because it\'s scared of the dog.', opts:['on','in','under','at'], c:2, e:'"under the table" = phía dưới bàn.'},
+  {topic:'prep', src:'BONUS', bonus:true, s:'Her house is _______ the post office and the bank.', opts:['in','at','on','between'], c:3, e:'"between A and B" = ở giữa hai địa điểm.'},
+
+  // ────────── ADJECTIVE ORDER ──────────
+  {topic:'adj', src:'FT', s:'I opened the gym bag and found a _____ towel.', opts:['big smelly green','big green smelly','smelly big green','green smelly big'], c:0, e:'Thứ tự tính từ tiếng Anh (OSASCOMP): Opinion(smelly) → Size(big) → Colour(green). Trong câu này thứ tự "big smelly green" được chấp nhận khi Size đặt trước Opinion theo một số quy tắc đề bài.'},
+  {topic:'adj', src:'FT', s:'A magical old man with a _____.', opts:['white beard long','beard long white','long white beard','white long beard'], c:2, e:'Size(long) → Colour(white) → Noun(beard).'},
+  {topic:'adj', src:'BONUS', bonus:true, s:'She bought a _____ dress for the party.', opts:['silk red beautiful','beautiful red silk','red beautiful silk','silk beautiful red'], c:1, e:'OSASCOMP: Opinion(beautiful) → Colour(red) → Material(silk) → Noun.'},
+  {topic:'adj', src:'BONUS', bonus:true, s:'My grandmother gave me a _____ vase.', opts:['Chinese small old','old small Chinese','small old Chinese','Chinese old small'], c:2, e:'Size(small) → Age(old) → Origin(Chinese) → Noun.'},
+  {topic:'adj', src:'BONUS', bonus:true, s:"There's a _____ cat sleeping on my couch.", opts:['cute little black','black cute little','little cute black','cute black little'], c:0, e:'Opinion(cute) → Size(little) → Colour(black) → Noun.'},
+  {topic:'adj', src:'BONUS', bonus:true, s:'He is wearing a _____ jacket today.', opts:['leather brown new','new brown leather','brown new leather','leather new brown'], c:1, e:'Age(new) → Colour(brown) → Material(leather) → Noun.'},
+
+  // ────────── ADVERBS & COMPARISONS ──────────
+  {topic:'adv', src:'FT', s:'It will take us hours to get there. Chris _____', opts:['always drives slowly.','always slowly drives.','drives slowly always.','drives always slowly.'], c:0, e:'Trạng từ tần suất "always" + V + trạng từ cách thức "slowly". S + always + V + adv.'},
+  {topic:'adv', src:'FT', s:'She plants large seeds _____ than she plants small seeds.', opts:['deepest','more deeply','deep','the most deep'], c:1, e:'"than" → so sánh hơn. Trạng từ "deeply" → "more deeply".'},
+  {topic:'adv', src:'FT', s:'He felt so _____ after the conversation with his boss.', opts:['bad','badly','worse','worst'], c:0, e:'"feel" + tính từ "bad" (không dùng "badly" sau linking verb).'},
+  {topic:'adv', src:'FT', s:'The _____ place to live in space is on the International Space Station.', opts:['best','good','better','most good'], c:0, e:'So sánh nhất của "good" là "best".'},
+  {topic:'adv', src:'BONUS', bonus:true, s:'This book is _____ than the one I read last week.', opts:['interesting','more interesting','most interesting','interestinger'], c:1, e:'Tính từ dài (3+ âm tiết) → so sánh hơn: "more interesting".'},
+  {topic:'adv', src:'BONUS', bonus:true, s:'She speaks English _____ than her sister.', opts:['fluent','fluently','more fluent','more fluently'], c:3, e:'Trạng từ "fluently" + so sánh hơn → "more fluently".'},
+  {topic:'adv', src:'BONUS', bonus:true, s:'He runs _____ in our class.', opts:['fast','faster','fastest','the fastest'], c:3, e:'So sánh nhất + trạng từ → "the fastest". "fast" là trạng từ bất quy tắc (không thêm -ly).'},
+  {topic:'adv', src:'BONUS', bonus:true, s:'My new car is _____ than my old one.', opts:['expensiver','more expensive','most expensive','expensive'], c:1, e:'Tính từ dài + "than" → "more expensive than".'},
+  {topic:'adv', src:'BONUS', bonus:true, s:'I _____ go to the gym in the morning.', opts:['hardly ever','ever hardly','hardly never','never hardly'], c:0, e:'"hardly ever" = hầu như không bao giờ. Đứng trước động từ thường.'},
+  {topic:'adv', src:'BONUS', bonus:true, s:'This is _____ pizza I have ever eaten!', opts:['the better','the best','best','more better'], c:1, e:'So sánh nhất với "ever" → "the best".'},
+
+  // ────────── LINKING / THERE / IT ──────────
+  {topic:'linking', src:'BONUS', bonus:true, s:"_____ a cat sitting on the wall over there.", opts:["It's","There's","That's","Here's"], c:1, e:'"There is + N" để nói về sự tồn tại. "It is" dùng cho thời gian/thời tiết.'},
+  {topic:'linking', src:'BONUS', bonus:true, s:'_____ takes me 30 minutes to walk to school.', opts:['There','It','That','This'], c:1, e:'"It takes sb + time + to do sth" – "it" là chủ ngữ giả.'},
+  {topic:'linking', src:'BONUS', bonus:true, s:"_____ very cold in Hanoi this winter.", opts:['There is','It is','That is','These are'], c:1, e:'"It is + adj thời tiết". Dùng "It" cho thời tiết, thời gian, khoảng cách.'},
+  {topic:'linking', src:'BONUS', bonus:true, s:"_____ time we left – it's getting late!", opts:["There's","It's","That's","Those are"], c:1, e:'"It\'s time + S + V(quá khứ)" hoặc "It\'s time + to-V". "It\'s time we left" ✓.'},
+  {topic:'linking', src:'BONUS', bonus:true, s:'_____ are many tourists in Hoi An every summer.', opts:['It','There','They','These'], c:1, e:'"There are + N số nhiều" = có nhiều... tồn tại.'},
+  {topic:'linking', src:'BONUS', bonus:true, s:'The flowers smell _____.', opts:['nicely','nice','more nicely','most nice'], c:1, e:'"smell" là linking verb → cần tính từ "nice", không dùng trạng từ.'},
+];
+
+// Topic display names + colors
+const TOPICS = {
+  plural: { name: '🔤 Danh từ số nhiều', count: 0 },
+  poss:   { name: '👥 Sở hữu cách & Đại từ chỉ định', count: 0 },
+  quant:  { name: '🔢 Quantifiers', count: 0 },
+  tense:  { name: '⏰ Thì động từ', count: 0 },
+  gerinf: { name: '🔄 Gerund / To-infinitive', count: 0 },
+  verbs:  { name: '⚖️ Raise/Rise & Lay/Lie', count: 0 },
+  pronoun:{ name: '🙋 Đại từ', count: 0 },
+  prep:   { name: '📍 Giới từ', count: 0 },
+  adj:    { name: '🎨 Thứ tự tính từ', count: 0 },
+  adv:    { name: '🏃 Trạng từ & So sánh', count: 0 },
+  linking:{ name: '🔗 There/It & Linking verbs', count: 0 },
+};
+
+// Count questions per topic
+QUESTIONS.forEach(q => { if (TOPICS[q.topic]) TOPICS[q.topic].count++; });
+
+// ════════════════════════════════════════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════════════════════════════════════════
+let selectedTopics = new Set(Object.keys(TOPICS));
+let selectedNum = 20;
+let currentQuestions = [];
+let currentIndex = 0;
+let userAnswers = []; // {selected, correct, qData}
+
+// ════════════════════════════════════════════════════════════════════════════
+// SETUP SCREEN
+// ════════════════════════════════════════════════════════════════════════════
+function renderSetup() {
+  const grid = document.getElementById('topicGrid');
+  grid.innerHTML = Object.entries(TOPICS).map(([key, val]) =>
+    `<label class="topic-chip checked" data-topic="${key}">
+      <span class="check-icon">✓</span>
+      <span>${val.name}</span>
+      <span class="topic-count">${val.count}</span>
+    </label>`
+  ).join('');
+  
+  grid.querySelectorAll('.topic-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      const topic = chip.dataset.topic;
+      if (selectedTopics.has(topic)) {
+        selectedTopics.delete(topic);
+        chip.classList.remove('checked');
+      } else {
+        selectedTopics.add(topic);
+        chip.classList.add('checked');
+      }
+      updateStartBtn();
+    });
+  });
+  
+  document.querySelectorAll('#numOptions .num-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#numOptions .num-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      selectedNum = parseInt(btn.dataset.n);
+    });
+  });
+}
+
+function updateStartBtn() {
+  const btn = document.getElementById('startBtn');
+  const available = QUESTIONS.filter(q => selectedTopics.has(q.topic)).length;
+  if (selectedTopics.size === 0) {
+    btn.disabled = true;
+    btn.textContent = '⚠️ Vui lòng chọn ít nhất 1 chủ đề';
+  } else {
+    btn.disabled = false;
+    const n = selectedNum === -1 ? available : Math.min(selectedNum, available);
+    btn.textContent = `🚀 Bắt đầu (${n} câu)`;
+  }
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// QUIZ
+// ════════════════════════════════════════════════════════════════════════════
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function startQuiz() {
+  // filter & shuffle
+  const pool = QUESTIONS.filter(q => selectedTopics.has(q.topic));
+  const shuffled = shuffle(pool);
+  const n = selectedNum === -1 ? shuffled.length : Math.min(selectedNum, shuffled.length);
+  currentQuestions = shuffled.slice(0, n).map(q => {
+    // shuffle options too, remap correct index
+    const indexed = q.opts.map((opt, i) => ({ opt, i }));
+    const shuffledOpts = shuffle(indexed);
+    const newCorrect = shuffledOpts.findIndex(o => o.i === q.c);
+    return {
+      ...q,
+      opts: shuffledOpts.map(o => o.opt),
+      c: newCorrect,
+    };
+  });
+  currentIndex = 0;
+  userAnswers = [];
+  
+  document.getElementById('setupScreen').style.display = 'none';
+  document.getElementById('resultScreen').classList.remove('active');
+  document.getElementById('quizScreen').classList.add('active');
+  showQuestion();
+}
+
+function restartSameQuiz() {
+  // Re-shuffle current pool
+  currentQuestions = shuffle(currentQuestions).map(q => {
+    const indexed = q.opts.map((opt, i) => ({ opt, isCorrect: i === q.c }));
+    const shuffledOpts = shuffle(indexed);
+    const newCorrect = shuffledOpts.findIndex(o => o.isCorrect);
+    return {
+      ...q,
+      opts: shuffledOpts.map(o => o.opt),
+      c: newCorrect,
+    };
+  });
+  currentIndex = 0;
+  userAnswers = [];
+  document.getElementById('resultScreen').classList.remove('active');
+  document.getElementById('quizScreen').classList.add('active');
+  showQuestion();
+}
+
+function showQuestion() {
+  const q = currentQuestions[currentIndex];
+  const total = currentQuestions.length;
+  
+  // Progress
+  document.getElementById('qProgressFill').style.width = ((currentIndex) / total * 100) + '%';
+  document.getElementById('qProgressCount').textContent = `${currentIndex + 1} / ${total}`;
+  
+  const card = document.getElementById('questionCard');
+  const topicName = TOPICS[q.topic]?.name || q.topic;
+  const srcBadge = q.bonus ? '<span class="q-bonus">⭐ BONUS</span>' : `<span class="q-topic">${q.src}</span>`;
+  
+  card.innerHTML = `
+    <div class="q-meta">
+      <span class="q-num">Câu ${currentIndex + 1}/${total}</span>
+      ${srcBadge}
+      <span class="q-topic">${topicName}</span>
+    </div>
+    <div class="q-sentence"><em>${q.s.replace(/\n/g, '<br>')}</em></div>
+    <div class="options" id="quizOptions">
+      ${q.opts.map((opt, j) =>
+        `<button class="option-btn" id="opt_${j}" onclick="selectAnswer(${j})">
+          <span class="option-dot">${String.fromCharCode(65 + j)}</span>
+          <span>${opt}</span>
+        </button>`
+      ).join('')}
+    </div>
+    <div class="feedback-box" id="feedbackBox"></div>
+    <div class="nav-buttons" id="navButtons" style="display:none">
+      <button class="nav-btn" id="prevBtn" onclick="prevQuestion()" ${currentIndex === 0 ? 'disabled' : ''}>← Câu trước</button>
+      <button class="nav-btn primary" id="nextBtn" onclick="nextQuestion()">${currentIndex === total - 1 ? '🏁 Xem kết quả' : 'Câu tiếp theo →'}</button>
+    </div>
+  `;
+}
+
+function selectAnswer(j) {
+  const q = currentQuestions[currentIndex];
+  const isCorrect = j === q.c;
+  
+  // disable all
+  document.querySelectorAll('#quizOptions .option-btn').forEach((btn, idx) => {
+    btn.disabled = true;
+    if (idx === q.c) btn.classList.add('correct-ans');
+    else if (idx === j && !isCorrect) btn.classList.add('wrong-ans');
+  });
+  
+  // record answer
+  userAnswers[currentIndex] = { selected: j, correct: isCorrect, q };
+  
+  // show feedback
+  const fb = document.getElementById('feedbackBox');
+  fb.className = 'feedback-box show ' + (isCorrect ? 'correct' : 'wrong');
+  fb.innerHTML = `
+    <div class="feedback-title">${isCorrect ? '✅ Chính xác!' : '❌ Chưa đúng'}</div>
+    <div class="feedback-text">
+      ${!isCorrect ? `Đáp án đúng: <strong>${q.opts[q.c]}</strong><br>` : ''}
+      💡 ${q.e}
+    </div>
+  `;
+  
+  // show nav buttons
+  document.getElementById('navButtons').style.display = 'flex';
+}
+
+function prevQuestion() {
+  if (currentIndex > 0) {
+    currentIndex--;
+    showQuestion();
+    // restore previous answer state if exists
+    const prev = userAnswers[currentIndex];
+    if (prev) {
+      document.querySelectorAll('#quizOptions .option-btn').forEach((btn, idx) => {
+        btn.disabled = true;
+        if (idx === prev.q.c) btn.classList.add('correct-ans');
+        else if (idx === prev.selected && !prev.correct) btn.classList.add('wrong-ans');
+      });
+      const fb = document.getElementById('feedbackBox');
+      fb.className = 'feedback-box show ' + (prev.correct ? 'correct' : 'wrong');
+      fb.innerHTML = `
+        <div class="feedback-title">${prev.correct ? '✅ Chính xác!' : '❌ Chưa đúng'}</div>
+        <div class="feedback-text">
+          ${!prev.correct ? `Đáp án đúng: <strong>${prev.q.opts[prev.q.c]}</strong><br>` : ''}
+          💡 ${prev.q.e}
+        </div>
+      `;
+      document.getElementById('navButtons').style.display = 'flex';
+    }
+  }
+}
+
+function nextQuestion() {
+  if (currentIndex < currentQuestions.length - 1) {
+    currentIndex++;
+    showQuestion();
+    // restore if already answered
+    const ans = userAnswers[currentIndex];
+    if (ans) {
+      document.querySelectorAll('#quizOptions .option-btn').forEach((btn, idx) => {
+        btn.disabled = true;
+        if (idx === ans.q.c) btn.classList.add('correct-ans');
+        else if (idx === ans.selected && !ans.correct) btn.classList.add('wrong-ans');
+      });
+      const fb = document.getElementById('feedbackBox');
+      fb.className = 'feedback-box show ' + (ans.correct ? 'correct' : 'wrong');
+      fb.innerHTML = `
+        <div class="feedback-title">${ans.correct ? '✅ Chính xác!' : '❌ Chưa đúng'}</div>
+        <div class="feedback-text">
+          ${!ans.correct ? `Đáp án đúng: <strong>${ans.q.opts[ans.q.c]}</strong><br>` : ''}
+          💡 ${ans.q.e}
+        </div>
+      `;
+      document.getElementById('navButtons').style.display = 'flex';
+    }
+  } else {
+    // Finish
+    showResult();
+  }
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// RESULT
+// ════════════════════════════════════════════════════════════════════════════
+function showResult() {
+  document.getElementById('quizScreen').classList.remove('active');
+  document.getElementById('resultScreen').classList.add('active');
+  
+  const correct = userAnswers.filter(a => a && a.correct).length;
+  const wrong = userAnswers.filter(a => a && !a.correct).length;
+  const total = currentQuestions.length;
+  const pct = total > 0 ? Math.round(correct / total * 100) : 0;
+  
+  let emoji, grade;
+  if (pct >= 90) { emoji = '🏆'; grade = 'Xuất sắc!'; }
+  else if (pct >= 75) { emoji = '🌟'; grade = 'Giỏi!'; }
+  else if (pct >= 60) { emoji = '👍'; grade = 'Khá!'; }
+  else if (pct >= 50) { emoji = '📚'; grade = 'Trung bình'; }
+  else { emoji = '💪'; grade = 'Cần ôn thêm!'; }
+  
+  document.getElementById('resultEmoji').textContent = emoji;
+  document.getElementById('resultScore').textContent = `${correct}/${total}`;
+  document.getElementById('resultPct').textContent = pct + '%';
+  document.getElementById('resultGrade').textContent = grade;
+  document.getElementById('statCorrect').textContent = correct;
+  document.getElementById('statWrong').textContent = wrong;
+  
+  // Review list
+  const list = document.getElementById('reviewList');
+  list.innerHTML = '<div style="font-weight:600;margin-bottom:8px;color:var(--blue-dark)">📋 Tổng kết:</div>' + 
+    userAnswers.map((a, i) =>
+      `<div class="review-item ${a.correct ? 'correct' : 'wrong'}">
+        <span>${a.correct ? '✅' : '❌'}</span>
+        <span class="review-num">Câu ${i+1}:</span>
+        <span style="flex:1;font-size:12px">${a.q.opts[a.q.c]}</span>
+      </div>`
+    ).join('');
+}
+
+function goToSetup() {
+  document.getElementById('resultScreen').classList.remove('active');
+  document.getElementById('setupScreen').style.display = 'block';
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════════════════════════════════
+renderSetup();
+updateStartBtn();
+</script>
+</body>
+</html>

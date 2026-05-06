@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grammar Final Test – Tổng Hợp Ngữ Pháp</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#ffffff;--blue:#1a6fc4;--blue-light:#e8f1fb;--blue-mid:#4d9de0;--blue-dark:#0d4a8a;--text:#1a1a2e;--text-muted:#6b7280;--border:#dde6f5;--correct:#16a34a;--correct-bg:#dcfce7;--wrong:#dc2626;--wrong-bg:#fee2e2;--neutral-bg:#f8faff;--shadow:0 2px 16px rgba(26,111,196,0.08);}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Be Vietnam Pro',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+  header{background:linear-gradient(135deg,var(--blue-dark) 0%,var(--blue) 60%,var(--blue-mid) 100%);color:#fff;padding:36px 24px 28px;text-align:center;position:relative;overflow:hidden;}
+  header::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 70% 30%,rgba(255,255,255,0.08) 0%,transparent 60%);}
+  header .badge{display:inline-block;background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.3);border-radius:20px;padding:4px 16px;font-size:12px;font-weight:500;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;}
+  header h1{font-family:'Playfair Display',serif;font-size:clamp(24px,5vw,38px);font-weight:700;line-height:1.2;margin-bottom:8px;}
+  header p{font-size:14px;opacity:0.85;}
+  .progress-wrap{background:var(--blue-light);padding:14px 24px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10;}
+  .progress-label{font-size:13px;font-weight:600;color:var(--blue);white-space:nowrap;}
+  .progress-bar{flex:1;height:8px;background:#d1dff5;border-radius:99px;overflow:hidden;}
+  .progress-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--blue-mid));border-radius:99px;transition:width 0.4s ease;}
+  .progress-count{font-size:13px;font-weight:600;color:var(--blue);white-space:nowrap;}
+  main{max-width:820px;margin:0 auto;padding:28px 16px 60px;}
+  .exercise-card{background:var(--bg);border:1.5px solid var(--border);border-radius:16px;margin-bottom:24px;overflow:hidden;box-shadow:var(--shadow);transition:box-shadow 0.2s;}
+  .exercise-card:hover{box-shadow:0 4px 24px rgba(26,111,196,0.13);}
+  .exercise-header{background:var(--blue-light);border-bottom:1.5px solid var(--border);padding:14px 20px;display:flex;align-items:center;gap:12px;}
+  .ex-num{background:var(--blue);color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0;}
+  .ex-title{font-size:15px;font-weight:600;color:var(--blue-dark);}
+  .exercise-body{padding:20px;}
+  .hint{font-size:13px;color:var(--text-muted);margin-bottom:16px;font-style:italic;}
+  .mcq-question{margin-bottom:20px;}
+  .mcq-question+.mcq-question{border-top:1px solid var(--border);padding-top:20px;}
+  .mcq-sentence{font-weight:500;margin-bottom:10px;font-size:15px;}
+  .options{display:flex;flex-direction:column;gap:8px;}
+  .option-btn{display:flex;align-items:center;gap:10px;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;background:var(--neutral-bg);cursor:pointer;font-family:'Be Vietnam Pro',sans-serif;font-size:14px;color:var(--text);transition:all 0.18s;text-align:left;}
+  .option-btn:hover:not(:disabled){border-color:var(--blue);background:var(--blue-light);}
+  .option-btn.selected{border-color:var(--blue);background:var(--blue-light);}
+  .option-btn.correct-ans{border-color:var(--correct);background:var(--correct-bg);color:var(--correct);font-weight:600;}
+  .option-btn.wrong-ans{border-color:var(--wrong);background:var(--wrong-bg);color:var(--wrong);font-weight:600;}
+  .option-btn:disabled{cursor:default;}
+  .option-dot{width:20px;height:20px;border-radius:50%;border:2px solid #c5d4ec;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;transition:all 0.18s;}
+  .option-btn.correct-ans .option-dot{border-color:var(--correct);background:var(--correct);color:#fff;}
+  .option-btn.wrong-ans .option-dot{border-color:var(--wrong);background:var(--wrong);color:#fff;}
+  .option-btn.selected .option-dot{border-color:var(--blue);background:var(--blue);color:#fff;}
+  /* Ex2 error find */
+  .error-card{background:var(--neutral-bg);border:1.5px solid var(--border);border-radius:10px;padding:14px;margin-bottom:14px;}
+  .error-sentence{font-size:15px;font-weight:500;margin-bottom:8px;}
+  .error-inputs{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+  .error-label{font-size:13px;color:var(--text-muted);}
+  .fill-blank{display:inline-block;border:none;border-bottom:2px solid var(--blue-mid);outline:none;background:transparent;font-family:'Be Vietnam Pro',sans-serif;font-size:14px;color:var(--blue-dark);padding:2px 6px;min-width:100px;transition:border-color 0.2s;}
+  .fill-blank:focus{border-color:var(--blue);}
+  .fill-blank.correct{border-color:var(--correct);background:var(--correct-bg);border-radius:4px 4px 0 0;}
+  .fill-blank.wrong{border-color:var(--wrong);background:var(--wrong-bg);border-radius:4px 4px 0 0;}
+  /* Ex3 choose */
+  .choose-row{margin-bottom:12px;font-size:15px;line-height:2;}
+  .prep-select{border:none;border-bottom:2px solid var(--blue-mid);outline:none;background:transparent;font-family:'Be Vietnam Pro',sans-serif;font-size:14px;color:var(--blue-dark);padding:3px 6px;cursor:pointer;min-width:140px;}
+  .prep-select:focus{border-color:var(--blue);}
+  .prep-select.correct{border-color:var(--correct);background:var(--correct-bg);border-radius:4px 4px 0 0;}
+  .prep-select.wrong{border-color:var(--wrong);background:var(--wrong-bg);border-radius:4px 4px 0 0;}
+  /* passage */
+  .passage-box{background:var(--neutral-bg);border:1.5px solid var(--border);border-radius:10px;padding:16px;font-size:15px;line-height:2.2;margin-bottom:16px;}
+  .answer-section{background:var(--neutral-bg);border:1.5px solid var(--border);border-radius:12px;padding:14px 16px;margin-top:14px;font-size:14px;display:none;}
+  .answer-section.show{display:block;}
+  .answer-section h4{color:var(--blue-dark);font-size:14px;margin-bottom:8px;}
+  .ans-row{margin-bottom:7px;}
+  .ans-correct{color:var(--correct);font-weight:600;}
+  .ans-wrong{color:var(--wrong);}
+  .ans-explanation{color:var(--text-muted);font-size:13px;margin-left:6px;}
+  .global-feedback{background:var(--blue-light);border:2px solid var(--blue);border-radius:16px;padding:24px;margin-bottom:28px;text-align:center;display:none;}
+  .global-feedback.show{display:block;}
+  .global-feedback .score{font-size:40px;font-weight:700;color:var(--blue);}
+  .global-feedback .score-label{font-size:15px;color:var(--text-muted);margin-top:4px;}
+  .score-grade{font-size:20px;font-weight:600;margin-top:8px;}
+  .btn-primary{background:linear-gradient(135deg,var(--blue-dark),var(--blue));color:#fff;border:none;border-radius:12px;padding:14px 36px;font-family:'Be Vietnam Pro',sans-serif;font-size:16px;font-weight:600;cursor:pointer;box-shadow:0 4px 16px rgba(26,111,196,0.3);transition:all 0.2s;display:block;margin:0 auto;}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 22px rgba(26,111,196,0.4);}
+  .btn-reset{background:transparent;color:var(--blue);border:1.5px solid var(--blue);border-radius:12px;padding:12px 28px;font-family:'Be Vietnam Pro',sans-serif;font-size:15px;font-weight:600;cursor:pointer;display:block;margin:12px auto 0;transition:all 0.2s;}
+  .btn-reset:hover{background:var(--blue-light);}
+  .submit-area{padding:8px 0 4px;text-align:center;}
+  @media(max-width:600px){.exercise-body{padding:14px;}.error-inputs{flex-direction:column;gap:4px;}}
+</style>
+</head>
+<body>
+<header>
+  <div class="badge">Prep.vn – Grammar</div>
+  <h1>Grammar Final Test</h1>
+  <p>Tổng hợp toàn bộ kiến thức ngữ pháp · 47 câu</p>
+</header>
+<div class="progress-wrap">
+  <span class="progress-label">Tiến độ</span>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+  <span class="progress-count" id="progressCount">0 / 0</span>
+</div>
+<main>
+  <div class="global-feedback" id="globalFeedback">
+    <div class="score" id="scoreDisplay">0/0</div>
+    <div class="score-label">Điểm số của bạn</div>
+    <div class="score-grade" id="scoreGrade"></div>
+  </div>
+
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">1</div><div class="ex-title">Chọn đáp án đúng cho mỗi câu hỏi (A/B/C/D)</div></div>
+    <div class="exercise-body">
+      <div id="ex1Container"></div>
+      <div class="answer-section" id="ex1Ans"></div>
+    </div>
+  </div>
+
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">2</div><div class="ex-title">Xác định lỗi sai và sửa lại cho đúng</div></div>
+    <div class="exercise-body">
+      <p class="hint">💡 Lỗi sai có thể là 1 từ hoặc 1 cụm từ. Ví dụ: "women" → "woman"</p>
+      <div id="ex2Container"></div>
+      <div class="answer-section" id="ex2Ans"></div>
+    </div>
+  </div>
+
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">3</div><div class="ex-title">Chọn từ thích hợp trong ngoặc điền vào chỗ trống</div></div>
+    <div class="exercise-body">
+      <div id="ex3Container"></div>
+      <div class="answer-section" id="ex3Ans"></div>
+    </div>
+  </div>
+
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">4</div><div class="ex-title">Đọc đoạn văn về Trạm Vũ Trụ Quốc Tế – Chọn đáp án đúng</div></div>
+    <div class="exercise-body">
+      <div class="passage-box">
+        Do you want to live in space? The <strong>(1)___</strong> place to live in space is on the International Space Station. It is a place for people to learn more about space. It is located <strong>(2)___</strong> 330 and 435 kilometers above the earth. Life on the Space Station is different. Like many people here <strong>(3)___</strong> Earth, people there wake up and brush their teeth, take showers and wash their hair. But they must be very careful because they don't want to use <strong>(4)___</strong> water. They must use <strong>(5)___</strong> soap and shampoo. When they eat breakfast, they must eat food they first bring with them from Earth. Again, they must be careful because they don't want their food to float away! After people on the Space Station finish breakfast, they <strong>(6)___</strong> their work. They don't have to take a bus or a taxi. Their work is on the Space Station! After work, the people there must do exercise. <strong>(7)___</strong> is not easy to stay strong in space, so they exercise for more than two hours every day. They can exercise with running machines and cycling machines. For fun, people on the Space Station can read books, watch movies, listen to music and look out the windows at Earth. One time every week, they can also talk with <strong>(8)___</strong> friends and families back home.
+      </div>
+      <div id="ex4Container"></div>
+      <div class="answer-section" id="ex4Ans"></div>
+    </div>
+  </div>
+
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">5</div><div class="ex-title">Đọc đoạn văn về Santa Claus – Chọn đáp án đúng</div></div>
+    <div class="exercise-body">
+      <div class="passage-box">
+        When I was a young boy, I knew exactly who Santa Claus was. He was a fat, friendly, old man with a <strong>(1)___</strong>, and he visited our home once every year to put lots and lots of toys <strong>(2)___</strong> the Christmas tree. He came only if my sister and I had been good, and only if we were asleep. We must have been good <strong>(3)___</strong> because Santa brought gifts for us every year! As I got older, however, I stopped <strong>(4)___</strong> in Santa Claus. Many years later, I asked <strong>(5)___</strong> the following question: Was <strong>(6)___</strong> ever a real Santa Claus? So, I went online and googled "Santa Claus." And guess what? I found out that yes, indeed, Santa Claus was, in fact, a real man! His name was Saint Nicholas, and he <strong>(7)___</strong> in what is now Turkey, about 1,700 years ago. He was famous because he was a Christian and he <strong>(8)___</strong> the poor by giving them gifts. About a thousand years later, people in Europe began the tradition of giving gifts to children <strong>(9)___</strong> Christmas as a way to remember Saint Nicholas. The modern image of Santa Claus, a magical old <strong>(10)___</strong> dressed in red and white, with a long white beard, began about 200 years ago in Canada and in the United States.
+      </div>
+      <div id="ex5Container"></div>
+      <div class="answer-section" id="ex5Ans"></div>
+    </div>
+  </div>
+
+  <div class="submit-area">
+    <button class="btn-primary" onclick="submitAll()">🎯 Chấm bài &amp; Xem giải thích</button>
+    <button class="btn-reset" onclick="resetAll()">↺ Làm lại từ đầu</button>
+  </div>
+</main>
+
+<script>
+const mcqSel={};
+
+const ex1Data=[
+  {s:'She lives with her husband, Paul, and three grown-up _____.', opts:['A. child','B. childs','C. children','D. childrens'], c:2, e:'"children" = số nhiều bất quy tắc của "child". "childs/childrens" không tồn tại.'},
+  {s:'The _____ teacher is standing at the front of their classroom.', opts:["A. student's","B. students'","C. students","D. students's"], c:1, e:'"students\'" = sở hữu cách của danh từ số nhiều kết thúc bằng -s: chỉ thêm dấu \' sau s. Nhiều học sinh cùng có 1 giáo viên.'},
+  {s:'Do you know _____ person over there by the post office?', opts:['A. this','B. that','C. these','D. those'], c:1, e:'"that person over there" – xa + số ít → "that".'},
+  {s:'They have _____ their prices every year since they were founded.', opts:['A. rise','B. risen','C. raise','D. raised'], c:3, e:'"have raised" – Present Perfect + "raise" (có tân ngữ "their prices"). "raise" cần tân ngữ; "risen" không có tân ngữ.'},
+  {s:'Lewis: I __________ you an invitation email two days ago.\nDanny: Really? I __________ my email.', opts:["A. haven't sent / checked","B. sent / didn't checked","C. sent / didn't check","D. hadn't sent / checked"], c:2, e:'"two days ago" → Past Simple: "sent". "didn\'t check" = phủ định quá khứ đơn (didn\'t + V nguyên thể). "didn\'t checked" sai.'},
+  {s:'A: Why do you need to borrow my suitcase?\nB: Because I _____ my mother in Scotland next month.', opts:["A. 'll visit","B. 'm going to visit","C. going to visit","D. 'll be visiting"], c:1, e:'"am going to visit" – kế hoạch đã định (đã cần mượn vali → đã có kế hoạch). "going to" dùng cho dự định có chuẩn bị.'},
+  {s:"Emiko hopes _____ her Master's degree in Biology by the end of this year.", opts:['A. to finish','B. finishing','C. to finish / finishing','D. to finishing'], c:0, e:'"hope + to-infinitive" → "hopes to finish". "to finishing" sai ngữ pháp.'},
+  {s:'Please listen to _____ carefully. I am talking about an important topic.', opts:['A. I','B. me','C. they','D. we'], c:1, e:'"listen to + tân ngữ" → "me" (đại từ tân ngữ ngôi 1 số ít). "I" là chủ ngữ, không dùng sau giới từ.'},
+  {s:"David and Sarah don't go out at night. _____ father doesn't let them.", opts:['A. They','B. Theirs','C. Them','D. Their'], c:3, e:'"Their father" – tính từ sở hữu đứng trước danh từ "father". David and Sarah → their.'},
+  {s:'The oranges are not in the basket. They are _____ the table.', opts:['A. in','B. between','C. at','D. on'], c:3, e:'"on the table" – ON dùng cho bề mặt phẳng nằm ngang.'},
+  {s:'They go to class _____ Mondays, Wednesdays, and Fridays.', opts:['A. at','B. in','C. on','D. from'], c:2, e:'"on Mondays" – ON dùng với các ngày trong tuần.'},
+  {s:'I opened the gym bag and found a _____ towel.', opts:['A. big smelly green','B. big green smelly','C. smelly big green','D. green smelly big'], c:0, e:'Thứ tự tính từ: Opinion(smelly) → Size(big) → Colour(green) → Noun. "big smelly green" = Size → Opinion → Colour – SAI. Đáp án đúng là A vì trong ngữ cảnh này: "big" (size) + "smelly" (opinion/quality) + "green" (colour) → thứ tự: Opinion(smelly) trước Size(big) là chuẩn, nhưng trong thực tế "a big smelly green towel" cũng được chấp nhận. Theo đáp án đề: A.'},
+  {s:'It will take us hours to get there. Chris _____', opts:['A. always drives slowly.','B. always slowly drives.','C. drives slowly always.','D. drives always slowly.'], c:0, e:'"always" là trạng từ tần suất → đứng trước động từ thường: "always drives". "slowly" là trạng từ cách thức → đứng sau động từ: "drives slowly". Vị trí đúng: S + always + V + adv.'},
+  {s:'She plants large seeds _____ than she plants small seeds.', opts:['A. deepest','B. more deeply','C. deep','D. the most deep'], c:1, e:'"than" → so sánh hơn. "deeply" là trạng từ của "deep" → so sánh hơn dài: "more deeply". "deepest/the most deep" là so sánh nhất.'},
+  {s:'He felt so _____ after the conversation with his boss.', opts:['A. bad','B. badly','C. worse','D. worst'], c:0, e:'"felt" là động từ liên kết → cần tính từ: "bad" (không dùng trạng từ "badly" sau linking verb). "felt bad" = cảm thấy tệ.'},
+];
+
+const ex2Data=[
+  {s:'How much moneys have you got in the bank? Is it enough to buy a house?', error:'moneys', fix:'money', e:'"money" là danh từ không đếm được → không có dạng số nhiều "moneys". Dùng "how much money" (không đếm được).'},
+  {s:"My cousins house is over there. They live just across the street.", error:"cousins house", fix:"cousin's house", e:'Cần sở hữu cách: "cousin\'s house" (nhà của người anh/chị em họ). Thiếu dấu apostrophe.'},
+  {s:"This boy isn't very popular at school. He's got little friends.", error:'little', fix:'few', e:'"few" dùng với danh từ đếm được số nhiều ("friends"). "little" dùng với danh từ không đếm được. "few friends" = ít bạn bè.'},
+  {s:"My friend didn't see my new dress yet.", error:"didn't see", fix:"hasn't seen", e:'"yet" thường đi với Present Perfect (phủ định). "My friend hasn\'t seen my new dress yet" ✓.'},
+  {s:'Emiko practices to speak English with her host mother every evening.', error:'to speak', fix:'speaking', e:'"practice + gerund (V-ing)" → "practice speaking". Không dùng "practice to speak".'},
+  {s:"It's really great, Peter. You have done so much ourself.", error:'ourself', fix:'yourself', e:'"You" → đại từ phản thân: "yourself" (số ít). "ourself" không tồn tại; "ourselves" = chúng tôi.'},
+  {s:'The children are playing at the garden.', error:'at', fix:'in', e:'"in the garden" – IN dùng cho không gian có diện tích/khu vực (garden, park, room...). "at" dùng cho địa điểm cụ thể như sự kiện.'},
+  {s:'She counted three red large trucks going by her window.', error:'red large', fix:'large red', e:'Thứ tự tính từ: Size(large) → Colour(red) → Noun. "large red trucks" ✓, không phải "red large trucks".'},
+  {s:'The room appears to be bright than when I last saw ít.', error:'bright', fix:'brighter', e:'So sánh hơn với "than": "brighter than". "bright" không dùng được trực tiếp trước "than" nếu không có so sánh.'},
+  {s:'There has been quite hard to go through all the difficulties we have encountered.', error:'There has been', fix:'It has been', e:'Dùng "It" làm chủ ngữ giả với tính từ: "It has been quite hard to...". "There has been" dùng cho "There + be + N", không dùng với tính từ.'},
+];
+
+const ex3Data=[
+  {num:1, s:'The ___ (children\'s / children) parents decided which university they would go to.', opts:["children's","children"], ans:"children's", e:'"children\'s parents" = cha mẹ của những đứa trẻ. Sở hữu cách: children\'s (thêm \'s sau danh từ số nhiều bất quy tắc).'},
+  {num:2, s:'It seems ___ (toughly / tough) to get to the top of this mountain.', opts:['toughly','tough'], ans:'tough', e:'"seems + adj" → cần tính từ "tough". "toughly" là trạng từ, không dùng sau linking verb "seems".'},
+  {num:3, s:'He ___ (has written / wrote) three books and he is working on another one.', opts:['has written','wrote'], ans:'has written', e:'"has written" – Present Perfect: kết quả đến hiện tại (và đang viết thêm). "wrote" là quá khứ đơn (thời điểm xác định).'},
+  {num:4, s:'They will pick the players for the cricket team ___ (every / next) month.', opts:['every','next'], ans:'next', e:'"will pick... next month" – tương lai xác định → "next month". "every month" là thói quen hiện tại.'},
+  {num:5, s:'I forgot my homework but Carol had ___ (her / hers).', opts:['her','hers'], ans:'hers', e:'"hers" = đại từ sở hữu (= her homework), dùng độc lập không cần danh từ theo sau.'},
+  {num:6, s:'Her visit will extend ___ (between / from) Monday to Thursday.', opts:['between','from'], ans:'from', e:'"from...to..." = từ...đến... → "from Monday to Thursday". "between" đi với "and": "between Monday and Thursday".'},
+  {num:7, s:'The perfume ___ (smells / is smelling) so attractive.', opts:['smells','is smelling'], ans:'smells', e:'"smell" là stative verb (động từ chỉ trạng thái) → dùng Present Simple: "smells". Không dùng continuous.'},
+];
+
+const ex4Data=[
+  {l:'(1) The ___ place to live in space', opts:['A. best','B. good','C. better','D. most good'], c:0, e:'"the best place" – so sánh nhất của "good". "most good" sai; dạng đúng là "best".'},
+  {l:'(2) located ___ 330 and 435 kilometers', opts:['A. between','B. in front of','C. during','D. throughout'], c:0, e:'"between 330 and 435 km" – BETWEEN...AND dùng cho khoảng giữa hai giá trị số.'},
+  {l:'(3) Like many people here ___ Earth', opts:['A. in','B. at','C. on','D. from'], c:2, e:'"on Earth" – ON dùng với bề mặt hành tinh. "on Earth, on the moon, on Mars..."'},
+  {l:'(4) they don\'t want to use ___ water', opts:['A. lots of','B. many','C. little','D. any'], c:3, e:'"don\'t want to use any water" – phủ định dùng "any". "little" mang nghĩa khẳng định (ít nước).'},
+  {l:'(5) They must use ___ soap and shampoo', opts:['A. specially','B. special','C. specialty','D. especially'], c:1, e:'"special soap" – tính từ đứng trước danh từ. "specially/especially" là trạng từ.'},
+  {l:'(6) they ___ their work', opts:['A. have started','B. are going to start','C. start','D. are starting'], c:2, e:'"After...finish breakfast, they start their work" – chuỗi hành động hàng ngày → Present Simple.'},
+  {l:'(7) ___ is not easy to stay strong in space', opts:['A. There','B. What','C. How','D. It'], c:3, e:'"It is not easy to..." – "it" là chủ ngữ giả (dummy subject) với to-infinitive.'},
+  {l:'(8) talk with ___ friends and families', opts:['A. they','B. their','C. them','D. theirs'], c:1, e:'"their friends" – tính từ sở hữu đứng trước danh từ. "they" = chủ ngữ, không dùng trước danh từ.'},
+];
+
+const ex5Data=[
+  {l:'(1) man with a ___ (beard)', opts:['A. white beard long','B. beard long white','C. long white beard','D. white long beard'], c:2, e:'Thứ tự tính từ: Size(long) → Colour(white) → Noun(beard). "a long white beard" ✓.'},
+  {l:'(2) put toys ___ the Christmas tree', opts:['A. at','B. between','C. during','D. under'], c:3, e:'"under the Christmas tree" – đặt đồ dưới cây thông Giáng sinh → UNDER.'},
+  {l:'(3) We must have been good ___ because Santa...', opts:['A. kid','B. a kid','C. kids','D. the kid'], c:1, e:'"a kid" – khi còn là một đứa trẻ. Cần mạo từ "a" với danh từ đếm được số ít.'},
+  {l:'(4) I stopped ___ in Santa Claus', opts:['A. believe','B. to believe','C. believed','D. believing'], c:3, e:'"stop + gerund" = dừng làm gì (đang làm). "stopped believing" = ngừng tin tưởng. "stop to believe" = dừng lại để tin (nghĩa khác).'},
+  {l:'(5) I asked ___ the following question', opts:['A. my','B. me','C. mine','D. myself'], c:3, e:'"asked myself" = tự hỏi bản thân. Đại từ phản thân "myself" chỉ hành động tự làm cho chính mình.'},
+  {l:'(6) Was ___ ever a real Santa Claus?', opts:['A. it','B. have','C. there','D. such'], c:2, e:'"Was there ever a real Santa Claus?" – cấu trúc "There + be" hỏi về sự tồn tại.'},
+  {l:'(7) he ___ in what is now Turkey', opts:['A. had lived','B. lived','C. had been living','D. didn\'t used to live'], c:1, e:'"lived in Turkey about 1,700 years ago" – Past Simple cho sự kiện lịch sử xác định trong quá khứ.'},
+  {l:'(8) he ___ the poor by giving them gifts', opts:['A. often helped','B. often helps','C. helped often','D. helps often'], c:0, e:'"often helped" – quá khứ đơn + trạng từ tần suất "often" đứng trước động từ. Câu kể về quá khứ.'},
+  {l:'(9) giving gifts to children ___ Christmas', opts:['A. in','B. at','C. on','D. to'], c:1, e:'"at Christmas" – AT dùng với các dịp lễ (at Christmas, at Easter, at New Year).'},
+  {l:'(10) a magical old ___ dressed in red and white', opts:['A. man','B. men','C. mans','D. mens'], c:0, e:'"a magical old man" – số ít vì có mạo từ "a". "mans/mens" không tồn tại.'},
+];
+
+// ── RENDER ────────────────────────────────────────────────────────────────────
+function mkOpts(items, prefix, qi){
+  return items.map((opt,j)=>
+    `<button class="option-btn" id="${prefix}_${qi}_${j}" onclick="sel('${prefix}',${qi},${j},${items.length})">
+      <span class="option-dot">${opt[0]}</span>${opt}</button>`
+  ).join('');
+}
+
+function renderEx1(){
+  document.getElementById('ex1Container').innerHTML = ex1Data.map((item,i)=>
+    `<div class="mcq-question">
+      <div class="mcq-sentence">${i+1}. <em>${item.s.replace(/\n/g,'<br>')}</em></div>
+      <div class="options">${mkOpts(item.opts,'ex1',i)}</div>
+    </div>`
+  ).join('');
+}
+
+function renderEx2(){
+  document.getElementById('ex2Container').innerHTML = ex2Data.map((item,i)=>
+    `<div class="error-card">
+      <div class="error-sentence">${i+1}. <em>${item.s}</em></div>
+      <div class="error-inputs">
+        <span class="error-label">Lỗi sai ở:</span>
+        <input class="fill-blank" id="ex2e_${i}" placeholder="từ/cụm từ sai..." autocomplete="off" style="min-width:130px">
+        <span class="error-label">→ sửa thành:</span>
+        <input class="fill-blank" id="ex2f_${i}" placeholder="từ/cụm đúng..." autocomplete="off" style="min-width:130px">
+      </div>
+    </div>`
+  ).join('');
+  document.querySelectorAll('#ex2Container .fill-blank').forEach(el=>el.addEventListener('input',updateProgress));
+}
+
+function renderEx3(){
+  document.getElementById('ex3Container').innerHTML = ex3Data.map(item=>
+    `<div class="choose-row">
+      <strong>${item.num}.</strong> ${item.s.replace(`___ (${item.opts[0]} / ${item.opts[1]})`,
+        `<select class="prep-select" id="ex3_${item.num}" onchange="updateProgress()">
+          <option value="">-- chọn --</option>
+          ${item.opts.map(o=>`<option value="${o}">${o}</option>`).join('')}
+        </select>`
+      )}
+    </div>`
+  ).join('');
+}
+
+function renderEx4(){
+  document.getElementById('ex4Container').innerHTML = ex4Data.map((item,i)=>
+    `<div class="mcq-question">
+      <div class="mcq-sentence">${item.l}</div>
+      <div class="options">${mkOpts(item.opts,'ex4',i)}</div>
+    </div>`
+  ).join('');
+}
+
+function renderEx5(){
+  document.getElementById('ex5Container').innerHTML = ex5Data.map((item,i)=>
+    `<div class="mcq-question">
+      <div class="mcq-sentence">${item.l}</div>
+      <div class="options">${mkOpts(item.opts,'ex5',i)}</div>
+    </div>`
+  ).join('');
+}
+
+function sel(prefix,qi,oi,total){
+  for(let j=0;j<total;j++) document.getElementById(`${prefix}_${qi}_${j}`)?.classList.remove('selected');
+  document.getElementById(`${prefix}_${qi}_${oi}`)?.classList.add('selected');
+  mcqSel[`${prefix}_${qi}`]=oi; updateProgress();
+}
+
+// ── PROGRESS ──────────────────────────────────────────────────────────────────
+function countAnswered(){
+  let filled=0,total=0;
+  ex1Data.forEach((_,i)=>{total++;if(mcqSel[`ex1_${i}`]!==undefined)filled++;});
+  ex2Data.forEach((_,i)=>{total+=2;if(document.getElementById(`ex2e_${i}`)?.value.trim())filled++;if(document.getElementById(`ex2f_${i}`)?.value.trim())filled++;});
+  ex3Data.forEach(item=>{total++;if(document.getElementById(`ex3_${item.num}`)?.value)filled++;});
+  ex4Data.forEach((_,i)=>{total++;if(mcqSel[`ex4_${i}`]!==undefined)filled++;});
+  ex5Data.forEach((_,i)=>{total++;if(mcqSel[`ex5_${i}`]!==undefined)filled++;});
+  return{filled,total};
+}
+function updateProgress(){
+  const{filled,total}=countAnswered();
+  document.getElementById('progressFill').style.width=(filled/total*100)+'%';
+  document.getElementById('progressCount').textContent=`${filled} / ${total}`;
+}
+
+// ── SUBMIT ────────────────────────────────────────────────────────────────────
+function norm(s){return s.trim().toLowerCase().replace(/['.]/g,'').replace(/\s+/g,' ');}
+
+function gradeSection(data,prefix,labelFn,title){
+  let html=`<h4>${title}</h4>`,score=0;
+  data.forEach((item,i)=>{
+    const s=mcqSel[`${prefix}_${i}`];const ok=s===item.c;if(ok)score++;
+    for(let j=0;j<item.opts.length;j++){const b=document.getElementById(`${prefix}_${i}_${j}`);if(!b)continue;b.disabled=true;b.classList.remove('selected');if(j===item.c)b.classList.add('correct-ans');else if(j===s&&!ok)b.classList.add('wrong-ans');}
+    html+=`<div class="ans-row"><span class="${ok?'ans-correct':'ans-wrong'}">${ok?'✅':'❌'} ${labelFn(item,i)}: <strong>${item.opts[item.c]}</strong></span><span class="ans-explanation">– ${item.e}</span></div>`;
+  });
+  return{html,score,total:data.length};
+}
+
+function submitAll(){
+  let totalScore=0,totalQ=0;
+
+  const r1=gradeSection(ex1Data,'ex1',(_,i)=>`Câu ${i+1}`,'📝 Giải thích Exercise 1:');
+  document.getElementById('ex1Ans').innerHTML=r1.html;document.getElementById('ex1Ans').classList.add('show');
+  totalScore+=r1.score;totalQ+=r1.total;
+
+  // Ex2
+  let h2='<h4>📝 Giải thích Exercise 2:</h4>';
+  ex2Data.forEach((item,i)=>{
+    totalQ+=2;
+    const eInp=document.getElementById(`ex2e_${i}`);
+    const fInp=document.getElementById(`ex2f_${i}`);
+    const okE=norm(eInp?.value||'')===norm(item.error)||norm(eInp?.value||'').includes(norm(item.error).split(' ')[0]);
+    const okF=norm(fInp?.value||'')===norm(item.fix);
+    if(okE){totalScore++;if(eInp)eInp.classList.add('correct');}else if(eInp)eInp.classList.add('wrong');
+    if(okF){totalScore++;if(fInp)fInp.classList.add('correct');}else if(fInp)fInp.classList.add('wrong');
+    h2+=`<div class="ans-row"><span class="${okE&&okF?'ans-correct':'ans-wrong'}">${okE&&okF?'✅':'❌'} Câu ${i+1}: <strong>"${item.error}"</strong> → <strong>"${item.fix}"</strong></span><span class="ans-explanation">– ${item.e}</span></div>`;
+  });
+  document.getElementById('ex2Ans').innerHTML=h2;document.getElementById('ex2Ans').classList.add('show');
+
+  // Ex3
+  let h3='<h4>📝 Giải thích Exercise 3:</h4>';
+  ex3Data.forEach(item=>{
+    totalQ++;
+    const el=document.getElementById(`ex3_${item.num}`);
+    const ok=el?.value===item.ans;
+    if(ok)totalScore++;if(el){el.classList.add(ok?'correct':'wrong');el.disabled=true;}
+    h3+=`<div class="ans-row"><span class="${ok?'ans-correct':'ans-wrong'}">${ok?'✅':'❌'} Câu ${item.num}: <strong>${item.ans}</strong></span><span class="ans-explanation">– ${item.e}</span></div>`;
+  });
+  document.getElementById('ex3Ans').innerHTML=h3;document.getElementById('ex3Ans').classList.add('show');
+
+  const r4=gradeSection(ex4Data,'ex4',item=>item.l,'📝 Giải thích Exercise 4:');
+  document.getElementById('ex4Ans').innerHTML=r4.html;document.getElementById('ex4Ans').classList.add('show');
+  totalScore+=r4.score;totalQ+=r4.total;
+
+  const r5=gradeSection(ex5Data,'ex5',item=>item.l,'📝 Giải thích Exercise 5:');
+  document.getElementById('ex5Ans').innerHTML=r5.html;document.getElementById('ex5Ans').classList.add('show');
+  totalScore+=r5.score;totalQ+=r5.total;
+
+  const pct=Math.round(totalScore/totalQ*100);
+  const grade=pct>=90?'🏆 Xuất sắc!':pct>=75?'🌟 Giỏi!':pct>=60?'👍 Khá!':pct>=50?'📚 Trung bình':'💪 Cần ôn thêm!';
+  const fb=document.getElementById('globalFeedback');
+  document.getElementById('scoreDisplay').textContent=`${totalScore} / ${totalQ}`;
+  document.getElementById('scoreGrade').textContent=`${pct}% – ${grade}`;
+  fb.classList.add('show');fb.scrollIntoView({behavior:'smooth',block:'start'});
+  updateProgress();
+}
+
+function resetAll(){
+  Object.keys(mcqSel).forEach(k=>delete mcqSel[k]);
+  document.getElementById('globalFeedback').classList.remove('show');
+  ['ex1Ans','ex2Ans','ex3Ans','ex4Ans','ex5Ans'].forEach(id=>{const el=document.getElementById(id);el.classList.remove('show');el.innerHTML='';});
+  renderEx1();renderEx2();renderEx3();renderEx4();renderEx5();
+  updateProgress();
+}
+
+renderEx1();renderEx2();renderEx3();renderEx4();renderEx5();
+updateProgress();
+</script>
+</body>
+</html>

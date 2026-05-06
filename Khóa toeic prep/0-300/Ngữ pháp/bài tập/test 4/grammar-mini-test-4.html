@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grammar Mini Test 4 – Giới Từ</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#ffffff;--blue:#1a6fc4;--blue-light:#e8f1fb;--blue-mid:#4d9de0;--blue-dark:#0d4a8a;--text:#1a1a2e;--text-muted:#6b7280;--border:#dde6f5;--correct:#16a34a;--correct-bg:#dcfce7;--wrong:#dc2626;--wrong-bg:#fee2e2;--neutral-bg:#f8faff;--shadow:0 2px 16px rgba(26,111,196,0.08);}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Be Vietnam Pro',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+  header{background:linear-gradient(135deg,var(--blue-dark) 0%,var(--blue) 60%,var(--blue-mid) 100%);color:#fff;padding:36px 24px 28px;text-align:center;position:relative;overflow:hidden;}
+  header::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 70% 30%,rgba(255,255,255,0.08) 0%,transparent 60%);}
+  header .badge{display:inline-block;background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.3);border-radius:20px;padding:4px 16px;font-size:12px;font-weight:500;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;}
+  header h1{font-family:'Playfair Display',serif;font-size:clamp(24px,5vw,38px);font-weight:700;line-height:1.2;margin-bottom:8px;}
+  header p{font-size:14px;opacity:0.85;}
+  .progress-wrap{background:var(--blue-light);padding:14px 24px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10;}
+  .progress-label{font-size:13px;font-weight:600;color:var(--blue);white-space:nowrap;}
+  .progress-bar{flex:1;height:8px;background:#d1dff5;border-radius:99px;overflow:hidden;}
+  .progress-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--blue-mid));border-radius:99px;transition:width 0.4s ease;}
+  .progress-count{font-size:13px;font-weight:600;color:var(--blue);white-space:nowrap;}
+  main{max-width:820px;margin:0 auto;padding:28px 16px 60px;}
+  .exercise-card{background:var(--bg);border:1.5px solid var(--border);border-radius:16px;margin-bottom:24px;overflow:hidden;box-shadow:var(--shadow);transition:box-shadow 0.2s;}
+  .exercise-card:hover{box-shadow:0 4px 24px rgba(26,111,196,0.13);}
+  .exercise-header{background:var(--blue-light);border-bottom:1.5px solid var(--border);padding:14px 20px;display:flex;align-items:center;gap:12px;}
+  .ex-num{background:var(--blue);color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0;}
+  .ex-title{font-size:15px;font-weight:600;color:var(--blue-dark);}
+  .exercise-body{padding:20px;}
+  .hint{font-size:13px;color:var(--text-muted);margin-bottom:16px;font-style:italic;}
+  .mcq-question{margin-bottom:20px;}
+  .mcq-question+.mcq-question{border-top:1px solid var(--border);padding-top:20px;}
+  .mcq-sentence{font-weight:500;margin-bottom:10px;font-size:15px;}
+  .options{display:flex;flex-direction:column;gap:8px;}
+  .option-btn{display:flex;align-items:center;gap:10px;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;background:var(--neutral-bg);cursor:pointer;font-family:'Be Vietnam Pro',sans-serif;font-size:14px;color:var(--text);transition:all 0.18s;text-align:left;}
+  .option-btn:hover:not(:disabled){border-color:var(--blue);background:var(--blue-light);}
+  .option-btn.selected{border-color:var(--blue);background:var(--blue-light);}
+  .option-btn.correct-ans{border-color:var(--correct);background:var(--correct-bg);color:var(--correct);font-weight:600;}
+  .option-btn.wrong-ans{border-color:var(--wrong);background:var(--wrong-bg);color:var(--wrong);font-weight:600;}
+  .option-btn:disabled{cursor:default;}
+  .option-dot{width:20px;height:20px;border-radius:50%;border:2px solid #c5d4ec;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;transition:all 0.18s;}
+  .option-btn.correct-ans .option-dot{border-color:var(--correct);background:var(--correct);color:#fff;}
+  .option-btn.wrong-ans .option-dot{border-color:var(--wrong);background:var(--wrong);color:#fff;}
+  .option-btn.selected .option-dot{border-color:var(--blue);background:var(--blue);color:#fff;}
+  /* passage */
+  .passage-box{background:var(--neutral-bg);border:1.5px solid var(--border);border-radius:10px;padding:16px;font-size:15px;line-height:2.2;margin-bottom:16px;}
+  /* map */
+  .map-wrap{background:var(--neutral-bg);border:1.5px solid var(--border);border-radius:10px;padding:16px;margin-bottom:18px;overflow-x:auto;}
+  .map-grid{display:grid;gap:3px;width:fit-content;margin:0 auto;}
+  .map-cell{display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;border-radius:4px;text-align:center;line-height:1.2;padding:4px;}
+  .mc-bank{background:#e74c3c;color:#fff;width:80px;height:50px;}
+  .mc-police{background:#3498db;color:#fff;width:80px;height:50px;}
+  .mc-store{background:#27ae60;color:#fff;width:80px;height:50px;}
+  .mc-post{background:#9b59b6;color:#fff;width:80px;height:50px;}
+  .mc-drug{background:#e67e22;color:#fff;width:80px;height:50px;}
+  .mc-movie{background:#1abc9c;color:#fff;width:80px;height:50px;}
+  .mc-school{background:#f39c12;color:#fff;width:80px;height:50px;}
+  .mc-rest{background:#e91e8c;color:#fff;width:80px;height:50px;}
+  .mc-lib{background:#16a085;color:#fff;width:50px;height:110px;font-size:10px;}
+  .mc-hosp{background:#c0392b;color:#fff;width:50px;height:110px;}
+  .mc-train{background:#7f8c8d;color:#fff;width:80px;height:50px;}
+  .mc-church{background:#8e44ad;color:#fff;width:80px;height:50px;}
+  .mc-street{background:transparent;color:var(--blue-dark);font-size:10px;font-weight:600;writing-mode:vertical-rl;width:20px;height:110px;text-align:center;}
+  .mc-road{background:#ecf0f1;color:var(--text-muted);font-size:10px;font-weight:600;width:260px;height:20px;display:flex;align-items:center;justify-content:center;}
+  .mc-empty{background:transparent;width:80px;height:50px;}
+  /* fill blank */
+  .fill-blank{display:inline-block;border:none;border-bottom:2px solid var(--blue-mid);outline:none;background:transparent;font-family:'Be Vietnam Pro',sans-serif;font-size:15px;color:var(--blue-dark);padding:2px 6px;min-width:220px;transition:border-color 0.2s;}
+  .fill-blank:focus{border-color:var(--blue);}
+  .fill-blank.correct{border-color:var(--correct);background:var(--correct-bg);border-radius:4px 4px 0 0;}
+  .fill-blank.wrong{border-color:var(--wrong);background:var(--wrong-bg);border-radius:4px 4px 0 0;}
+  .fill-row{margin-bottom:14px;font-size:15px;line-height:2;}
+  .answer-section{background:var(--neutral-bg);border:1.5px solid var(--border);border-radius:12px;padding:14px 16px;margin-top:14px;font-size:14px;display:none;}
+  .answer-section.show{display:block;}
+  .answer-section h4{color:var(--blue-dark);font-size:14px;margin-bottom:8px;}
+  .ans-row{margin-bottom:7px;}
+  .ans-correct{color:var(--correct);font-weight:600;}
+  .ans-wrong{color:var(--wrong);}
+  .ans-explanation{color:var(--text-muted);font-size:13px;margin-left:6px;}
+  .global-feedback{background:var(--blue-light);border:2px solid var(--blue);border-radius:16px;padding:24px;margin-bottom:28px;text-align:center;display:none;}
+  .global-feedback.show{display:block;}
+  .global-feedback .score{font-size:40px;font-weight:700;color:var(--blue);}
+  .global-feedback .score-label{font-size:15px;color:var(--text-muted);margin-top:4px;}
+  .btn-primary{background:linear-gradient(135deg,var(--blue-dark),var(--blue));color:#fff;border:none;border-radius:12px;padding:14px 36px;font-family:'Be Vietnam Pro',sans-serif;font-size:16px;font-weight:600;cursor:pointer;box-shadow:0 4px 16px rgba(26,111,196,0.3);transition:all 0.2s;display:block;margin:0 auto;}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 22px rgba(26,111,196,0.4);}
+  .btn-reset{background:transparent;color:var(--blue);border:1.5px solid var(--blue);border-radius:12px;padding:12px 28px;font-family:'Be Vietnam Pro',sans-serif;font-size:15px;font-weight:600;cursor:pointer;display:block;margin:12px auto 0;transition:all 0.2s;}
+  .btn-reset:hover{background:var(--blue-light);}
+  .submit-area{padding:8px 0 4px;text-align:center;}
+  @media(max-width:600px){.exercise-body{padding:14px;}}
+</style>
+</head>
+<body>
+<header>
+  <div class="badge">Prep.vn – Grammar</div>
+  <h1>Grammar Mini Test 4</h1>
+  <p>Giới từ thời gian · Giới từ địa điểm · Tìm lỗi sai · Đọc hiểu · Bản đồ</p>
+</header>
+<div class="progress-wrap">
+  <span class="progress-label">Tiến độ</span>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+  <span class="progress-count" id="progressCount">0 / 0</span>
+</div>
+<main>
+  <div class="global-feedback" id="globalFeedback">
+    <div class="score" id="scoreDisplay">0/0</div>
+    <div class="score-label">Điểm số của bạn</div>
+  </div>
+
+  <!-- Ex1 -->
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">1</div><div class="ex-title">Chọn đáp án đúng để hoàn thành câu (A/B/C/D)</div></div>
+    <div class="exercise-body">
+      <div id="ex1Container"></div>
+      <div class="answer-section" id="ex1Ans"></div>
+    </div>
+  </div>
+
+  <!-- Ex2 -->
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">2</div><div class="ex-title">Chọn phần gạch chân có lỗi sai (A/B/C/D)</div></div>
+    <div class="exercise-body">
+      <div id="ex2Container"></div>
+      <div class="answer-section" id="ex2Ans"></div>
+    </div>
+  </div>
+
+  <!-- Ex3 -->
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">3</div><div class="ex-title">Đọc đoạn văn và chọn đáp án đúng cho mỗi chỗ trống</div></div>
+    <div class="exercise-body">
+      <div class="passage-box">
+        Last year, I spent my vacation <strong>(9)___</strong> Danang. I traveled with some friends of mine. We started off our journey on Saturday morning and we arrived at the beach <strong>(10)___</strong> 8am. We immediately went to swim and then we had some sandwiches and salad <strong>(11)___</strong> lunchtime <strong>(12)___</strong> a local restaurant. Because the restaurant is near the amusement park, we decided to go there to play some outdoor games. After that, we went to the hotel, which is located <strong>(13)___</strong> the north of the beach, to check in at 2pm. We took a quick nap and <strong>(14)___</strong> the evening, we had a lot of seafood for dinner and we went to a nearby pub to have some drinks. <strong>(15)___</strong> the journey, we took a lot of photos and had a great time together. It was memorable and I hope to travel with them again.
+      </div>
+      <div id="ex3Container"></div>
+      <div class="answer-section" id="ex3Ans"></div>
+    </div>
+  </div>
+
+  <!-- Ex4 -->
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">4</div><div class="ex-title">Nhìn bản đồ và viết câu mô tả vị trí theo gợi ý</div></div>
+    <div class="exercise-body">
+      <!-- Map -->
+      <div class="map-wrap">
+        <div style="text-align:center;margin-bottom:8px;font-size:12px;font-weight:700;color:var(--blue-dark)">🗺️ BẢN ĐỒ THÀNH PHỐ</div>
+        <table style="border-collapse:collapse;margin:0 auto;font-size:11px;">
+          <tr>
+            <td style="width:55px"></td>
+            <td colspan="3" style="text-align:center;padding:4px 0;font-weight:700;color:var(--blue-dark)">Main Street</td>
+            <td style="width:55px"></td>
+          </tr>
+          <tr>
+            <td rowspan="3" style="width:55px;text-align:center;vertical-align:middle;writing-mode:vertical-lr;font-weight:700;color:var(--blue-dark);font-size:10px;padding:4px;">First Street →</td>
+            <td style="background:#e74c3c;color:#fff;padding:8px 6px;text-align:center;font-weight:700;border:1px solid #ccc;width:80px">BANK</td>
+            <td style="background:#3498db;color:#fff;padding:8px 6px;text-align:center;font-weight:700;border:1px solid #ccc;width:80px">POLICE STATION</td>
+            <td style="background:#27ae60;color:#fff;padding:8px 6px;text-align:center;font-weight:700;border:1px solid #ccc;width:80px">STORE</td>
+            <td rowspan="3" style="width:55px;text-align:center;vertical-align:middle;writing-mode:vertical-lr;font-weight:700;color:var(--blue-dark);font-size:10px;padding:4px;">← Second Street</td>
+          </tr>
+          <tr>
+            <td style="background:#9b59b6;color:#fff;padding:8px 6px;text-align:center;font-weight:700;border:1px solid #ccc">POST OFFICE</td>
+            <td style="background:#e67e22;color:#fff;padding:8px 6px;text-align:center;font-weight:700;border:1px solid #ccc">DRUG STORE</td>
+            <td style="background:#1abc9c;color:#fff;padding:8px 6px;text-align:center;font-weight:700;border:1px solid #ccc">MOVIE THEATER</td>
+          </tr>
+          <tr>
+            <td style="background:#f39c12;color:#fff;padding:8px 6px;text-align:center;font-weight:700;border:1px solid #ccc">SCHOOL</td>
+            <td style="background:#e91e8c;color:#fff;padding:8px 6px;text-align:center;font-weight:700;border:1px solid #ccc">RESTAURANT</td>
+            <td style="background:#c0392b;color:#fff;padding:8px 6px;text-align:center;font-weight:700;border:1px solid #ccc;vertical-align:middle" rowspan="1">HOSPITAL</td>
+          </tr>
+          <tr>
+            <td colspan="5" style="text-align:center;padding:4px 0;font-weight:700;color:var(--blue-dark)">Central Avenue</td>
+          </tr>
+          <tr>
+            <td style="background:#16a085;color:#fff;padding:8px 6px;text-align:center;font-weight:700;border:1px solid #ccc">LIBRARY</td>
+            <td style="background:#7f8c8d;color:#fff;padding:8px 6px;text-align:center;font-weight:700;border:1px solid #ccc">TRAIN STATION</td>
+            <td colspan="2" style="background:#8e44ad;color:#fff;padding:8px 6px;text-align:center;font-weight:700;border:1px solid #ccc">CHURCH</td>
+            <td></td>
+          </tr>
+        </table>
+      </div>
+      <p class="hint">💡 Dùng các giới từ: between, next to, opposite, on, in front of, behind, near...</p>
+      <div id="ex4Container"></div>
+      <div class="answer-section" id="ex4Ans"></div>
+    </div>
+  </div>
+
+  <div class="submit-area">
+    <button class="btn-primary" onclick="submitAll()">🎯 Chấm bài &amp; Xem giải thích</button>
+    <button class="btn-reset" onclick="resetAll()">↺ Làm lại từ đầu</button>
+  </div>
+</main>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────────
+
+const ex1Data = [
+  { sentence:'I visited my grandparents _____ Sunday afternoon.', options:['A. on','B. in','C. at','D. during'], correct:0, explanation:'"on Sunday afternoon" – ON dùng với buổi cụ thể của một ngày (on Sunday morning/afternoon/evening).' },
+  { sentence:'____ 1876, Alexander Graham Bell invented the first telephone.', options:['A. In','B. On','C. At','D. When'], correct:0, explanation:'"In 1876" – IN dùng với năm.' },
+  { sentence:'I currently work ___ Vincom Tower ___ 191 Ba Trieu Street.', options:['A. in/at','B. in/in','C. at/at','D. at/in'], correct:0, explanation:'"work in Vincom Tower" (IN cho tòa nhà/không gian lớn) + "at 191 Ba Trieu Street" (AT cho địa chỉ cụ thể).' },
+  { sentence:'_____ the time I studied in Rome, I only saw her once.', options:['A. At','B. During','C. Throughout','D. In'], correct:1, explanation:'"During the time I studied in Rome" = trong khoảng thời gian học ở Rome (một giai đoạn cụ thể). DURING + N cụ thể.' },
+  { sentence:"Please wait for me, I'm ___ the bus to go to the train station now.", options:['A. under','B. on','C. in','D. at'], correct:1, explanation:'"on the bus" – ON dùng với phương tiện công cộng (bus/train/plane).' },
+  { sentence:'As a working-from-home mother, she usually works and takes care of her baby ____ the same time.', options:['A. on','B. in','C. at','D. during'], correct:2, explanation:'"at the same time" = cùng một lúc – cụm thành ngữ cố định với AT.' },
+];
+
+const ex2Data = [
+  {
+    sentence:'He was (A) in France (B) to pursue his master degree (C) between August 2018 to (D) September 2020.',
+    options:['A. in','B. to','C. between','D. September 2020'],
+    correct:2,
+    explanation:'"between...and..." là cụm cố định, không dùng "between...to...". Sửa: "between August 2018 to" → "between August 2018 and September 2020" hoặc "from August 2018 to September 2020".'
+  },
+  {
+    sentence:'The bank is (A) at the right (B) of the French restaurant, (C) next to the supermarket and (D) opposite the bookstore.',
+    options:['A. at','B. of','C. next to','D. opposite'],
+    correct:0,
+    explanation:'"at the right" sai – cụm đúng là "on the right (of)" = ở phía bên phải. Sửa: "at" → "on".'
+  },
+];
+
+const ex3Data = [
+  { label:'(9) spent my vacation ___ Danang', options:['A. on','B. in','C. at','D. from'], correct:1, explanation:'"in Danang" – IN dùng với tên thành phố.' },
+  { label:'(10) arrived at the beach ___ 8am', options:['A. in','B. on','C. at','D. through'], correct:2, explanation:'"at 8am" – AT dùng với giờ cụ thể.' },
+  { label:'(11) sandwiches and salad ___ lunchtime', options:['A. at','B. on','C. in','D. Ø'], correct:0, explanation:'"at lunchtime" – AT dùng với các mốc thời gian cố định trong ngày (lunchtime, midnight, noon).' },
+  { label:'(12) sandwiches and salad ___ a local restaurant', options:['A. in','B. at','C. on','D. Ø'], correct:1, explanation:'"at a local restaurant" – AT cho địa điểm cụ thể như nhà hàng, quán.' },
+  { label:'(13) hotel located ___ the north of the beach', options:['A. in','B. at','C. on','D. Ø'], correct:0, explanation:'"in the north of" – IN dùng với phương hướng chính (north/south/east/west).' },
+  { label:'(14) ___ the evening, we had a lot of seafood', options:['A. in','B. at','C. on','D. Ø'], correct:0, explanation:'"in the evening" – IN dùng với các buổi trong ngày (in the morning/afternoon/evening). Khác với "on Sunday evening" (ON + buổi cụ thể của ngày cụ thể).' },
+  { label:'(15) ___ the journey, we took a lot of photos', options:['A. During','B. Throughout','C. Under','D. After'], correct:0, explanation:'"During the journey" = trong suốt chuyến đi. DURING + danh từ cụ thể chỉ khoảng thời gian.' },
+];
+
+const ex4Data = [
+  {
+    prompt:'Police station / bank / store',
+    template:'The police station is ___.',
+    answer:'between the bank and the store',
+    alts:['between the bank and the store.'],
+    explanation:'Nhìn bản đồ: Police Station nằm giữa Bank (trái) và Store (phải) → between the bank and the store.'
+  },
+  {
+    prompt:'Library / First Street',
+    template:'The library ___.',
+    answer:'is on First Street',
+    alts:['is on First Street.','is located on First Street'],
+    explanation:'Library nằm trên First Street → is on First Street.'
+  },
+  {
+    prompt:'Restaurant / hospital',
+    template:'The restaurant ___.',
+    answer:'is next to the hospital',
+    alts:['is next to the hospital.','is opposite the hospital','is beside the hospital'],
+    explanation:'Restaurant nằm bên cạnh Hospital → is next to the hospital.'
+  },
+  {
+    prompt:'Drug store / post office',
+    template:'The drug store ___.',
+    answer:'is next to the post office',
+    alts:['is next to the post office.','is beside the post office','is next to the Post Office'],
+    explanation:'Drug Store nằm ngay bên cạnh Post Office → is next to the post office.'
+  },
+  {
+    prompt:'Movie theatre / restaurant',
+    template:'The movie theatre ___.',
+    answer:'is opposite the restaurant',
+    alts:['is opposite the restaurant.','is next to the drug store','is in front of the restaurant'],
+    explanation:'Movie Theater nằm đối diện/gần Restaurant (phụ thuộc cách đọc bản đồ) → is opposite the restaurant.'
+  },
+];
+
+// ── RENDER ────────────────────────────────────────────────────────────────────
+const mcqSel = {};
+
+function mkOpts(items, prefix, qi){
+  return items.map((opt,j)=>
+    `<button class="option-btn" id="${prefix}_${qi}_${j}" onclick="sel('${prefix}',${qi},${j},${items.length})">
+      <span class="option-dot">${opt[0]}</span>${opt}</button>`
+  ).join('');
+}
+
+function renderEx1(){
+  document.getElementById('ex1Container').innerHTML = ex1Data.map((item,i)=>
+    `<div class="mcq-question">
+      <div class="mcq-sentence">${i+1}. <em>${item.sentence}</em></div>
+      <div class="options">${mkOpts(item.options,'ex1',i)}</div>
+    </div>`
+  ).join('');
+}
+
+function renderEx2(){
+  document.getElementById('ex2Container').innerHTML = ex2Data.map((item,i)=>
+    `<div class="mcq-question">
+      <div class="mcq-sentence">${i+1}. ${item.sentence}</div>
+      <div class="options">${mkOpts(item.options,'ex2',i)}</div>
+    </div>`
+  ).join('');
+}
+
+function renderEx3(){
+  document.getElementById('ex3Container').innerHTML = ex3Data.map((item,i)=>
+    `<div class="mcq-question">
+      <div class="mcq-sentence">${item.label}</div>
+      <div class="options">${mkOpts(item.options,'ex3',i)}</div>
+    </div>`
+  ).join('');
+}
+
+function renderEx4(){
+  document.getElementById('ex4Container').innerHTML = ex4Data.map((item,i)=>
+    `<div class="fill-row">
+      <div style="font-size:13px;color:var(--text-muted);margin-bottom:4px">📍 <em>${item.prompt}</em></div>
+      <div>${item.template.replace('___',`<input class="fill-blank" id="ex4_${i}" placeholder="điền giới từ..." autocomplete="off">`)}</div>
+    </div>`
+  ).join('');
+  document.querySelectorAll('#ex4Container .fill-blank').forEach(el=>el.addEventListener('input',updateProgress));
+}
+
+function sel(prefix,qi,oi,total){
+  for(let j=0;j<total;j++) document.getElementById(`${prefix}_${qi}_${j}`)?.classList.remove('selected');
+  document.getElementById(`${prefix}_${qi}_${oi}`)?.classList.add('selected');
+  mcqSel[`${prefix}_${qi}`]=oi; updateProgress();
+}
+
+// ── PROGRESS ──────────────────────────────────────────────────────────────────
+function countAnswered(){
+  let filled=0,total=0;
+  ex1Data.forEach((_,i)=>{total++;if(mcqSel[`ex1_${i}`]!==undefined)filled++;});
+  ex2Data.forEach((_,i)=>{total++;if(mcqSel[`ex2_${i}`]!==undefined)filled++;});
+  ex3Data.forEach((_,i)=>{total++;if(mcqSel[`ex3_${i}`]!==undefined)filled++;});
+  ex4Data.forEach((_,i)=>{total++;if(document.getElementById(`ex4_${i}`)?.value.trim())filled++;});
+  return{filled,total};
+}
+function updateProgress(){
+  const{filled,total}=countAnswered();
+  document.getElementById('progressFill').style.width=(filled/total*100)+'%';
+  document.getElementById('progressCount').textContent=`${filled} / ${total}`;
+}
+
+// ── SUBMIT ────────────────────────────────────────────────────────────────────
+function norm(s){return s.trim().toLowerCase().replace(/[.!?]/g,'').replace(/\s+/g,' ');}
+
+function gradeSection(data, prefix, labelFn, title){
+  let html=`<h4>${title}</h4>`, score=0;
+  data.forEach((item,i)=>{
+    const s=mcqSel[`${prefix}_${i}`]; const ok=s===item.correct; if(ok)score++;
+    for(let j=0;j<item.options.length;j++){
+      const b=document.getElementById(`${prefix}_${i}_${j}`);
+      if(!b)continue; b.disabled=true; b.classList.remove('selected');
+      if(j===item.correct)b.classList.add('correct-ans');
+      else if(j===s&&!ok)b.classList.add('wrong-ans');
+    }
+    html+=`<div class="ans-row"><span class="${ok?'ans-correct':'ans-wrong'}">${ok?'✅':'❌'} ${labelFn(item,i)}: <strong>${item.options[item.correct]}</strong></span><span class="ans-explanation">– ${item.explanation}</span></div>`;
+  });
+  return{html,score,total:data.length};
+}
+
+function submitAll(){
+  let totalScore=0,totalQ=0;
+
+  const r1=gradeSection(ex1Data,'ex1',(_,i)=>`Câu ${i+1}`,'📝 Giải thích Exercise 1:');
+  document.getElementById('ex1Ans').innerHTML=r1.html; document.getElementById('ex1Ans').classList.add('show');
+  totalScore+=r1.score; totalQ+=r1.total;
+
+  const r2=gradeSection(ex2Data,'ex2',(_,i)=>`Câu ${i+1}`,'📝 Giải thích Exercise 2:');
+  document.getElementById('ex2Ans').innerHTML=r2.html; document.getElementById('ex2Ans').classList.add('show');
+  totalScore+=r2.score; totalQ+=r2.total;
+
+  const r3=gradeSection(ex3Data,'ex3',(item)=>item.label,'📝 Giải thích Exercise 3:');
+  document.getElementById('ex3Ans').innerHTML=r3.html; document.getElementById('ex3Ans').classList.add('show');
+  totalScore+=r3.score; totalQ+=r3.total;
+
+  // Ex4
+  let h4='<h4>📝 Giải thích Exercise 4:</h4>'; let s4=0;
+  ex4Data.forEach((item,i)=>{
+    totalQ++;
+    const inp=document.getElementById(`ex4_${i}`);
+    const userVal=norm(inp?.value||'');
+    const ok=userVal===norm(item.answer)||item.alts.map(a=>norm(a)).includes(userVal)||userVal.includes(norm(item.answer).split(' ').slice(1).join(' '));
+    if(ok){s4++;totalScore++;} if(inp)inp.classList.add(ok?'correct':'wrong');
+    h4+=`<div class="ans-row"><span class="${ok?'ans-correct':'ans-wrong'}">${ok?'✅':'❌'} Câu ${i+1}: <strong>${item.answer}</strong></span><span class="ans-explanation">– ${item.explanation}</span></div>`;
+  });
+  document.getElementById('ex4Ans').innerHTML=h4; document.getElementById('ex4Ans').classList.add('show');
+
+  const fb=document.getElementById('globalFeedback');
+  document.getElementById('scoreDisplay').textContent=`${totalScore} / ${totalQ}`;
+  fb.classList.add('show'); fb.scrollIntoView({behavior:'smooth',block:'start'});
+  updateProgress();
+}
+
+// ── RESET ─────────────────────────────────────────────────────────────────────
+function resetAll(){
+  Object.keys(mcqSel).forEach(k=>delete mcqSel[k]);
+  document.getElementById('globalFeedback').classList.remove('show');
+  ['ex1Ans','ex2Ans','ex3Ans','ex4Ans'].forEach(id=>{const el=document.getElementById(id);el.classList.remove('show');el.innerHTML='';});
+  renderEx1();renderEx2();renderEx3();renderEx4();
+  updateProgress();
+}
+
+renderEx1();renderEx2();renderEx3();renderEx4();
+updateProgress();
+</script>
+</body>
+</html>

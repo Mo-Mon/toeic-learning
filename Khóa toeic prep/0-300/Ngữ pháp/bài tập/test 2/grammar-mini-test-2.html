@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grammar Mini Test 2 – Bài Tập Tiếng Anh</title>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#ffffff;--blue:#1a6fc4;--blue-light:#e8f1fb;--blue-mid:#4d9de0;--blue-dark:#0d4a8a;--text:#1a1a2e;--text-muted:#6b7280;--border:#dde6f5;--correct:#16a34a;--correct-bg:#dcfce7;--wrong:#dc2626;--wrong-bg:#fee2e2;--neutral-bg:#f8faff;--shadow:0 2px 16px rgba(26,111,196,0.08);}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Be Vietnam Pro',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+  header{background:linear-gradient(135deg,var(--blue-dark) 0%,var(--blue) 60%,var(--blue-mid) 100%);color:#fff;padding:36px 24px 28px;text-align:center;position:relative;overflow:hidden;}
+  header::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 70% 30%,rgba(255,255,255,0.08) 0%,transparent 60%);}
+  header .badge{display:inline-block;background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.3);border-radius:20px;padding:4px 16px;font-size:12px;font-weight:500;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;}
+  header h1{font-family:'Playfair Display',serif;font-size:clamp(24px,5vw,38px);font-weight:700;line-height:1.2;margin-bottom:8px;}
+  header p{font-size:14px;opacity:0.85;}
+  .progress-wrap{background:var(--blue-light);padding:14px 24px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10;}
+  .progress-label{font-size:13px;font-weight:600;color:var(--blue);white-space:nowrap;}
+  .progress-bar{flex:1;height:8px;background:#d1dff5;border-radius:99px;overflow:hidden;}
+  .progress-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--blue-mid));border-radius:99px;transition:width 0.4s ease;}
+  .progress-count{font-size:13px;font-weight:600;color:var(--blue);white-space:nowrap;}
+  main{max-width:820px;margin:0 auto;padding:28px 16px 60px;}
+  .exercise-card{background:var(--bg);border:1.5px solid var(--border);border-radius:16px;margin-bottom:24px;overflow:hidden;box-shadow:var(--shadow);transition:box-shadow 0.2s;}
+  .exercise-card:hover{box-shadow:0 4px 24px rgba(26,111,196,0.13);}
+  .exercise-header{background:var(--blue-light);border-bottom:1.5px solid var(--border);padding:14px 20px;display:flex;align-items:center;gap:12px;}
+  .ex-num{background:var(--blue);color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0;}
+  .ex-title{font-size:15px;font-weight:600;color:var(--blue-dark);}
+  .exercise-body{padding:20px;}
+  .hint{font-size:13px;color:var(--text-muted);margin-bottom:16px;font-style:italic;}
+  .info-box{background:var(--blue-light);border:1.5px solid var(--blue-mid);border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:13px;color:var(--blue-dark);line-height:1.9;}
+  .info-box strong{font-size:14px;display:block;margin-bottom:4px;}
+  .struct-tag{display:inline-block;background:var(--blue);color:#fff;border-radius:6px;padding:2px 10px;font-size:12px;font-weight:700;margin:2px 3px;}
+  .mcq-question{margin-bottom:20px;}
+  .mcq-question+.mcq-question{border-top:1px solid var(--border);padding-top:20px;}
+  .mcq-sentence{font-weight:500;margin-bottom:10px;font-size:15px;}
+  .options{display:flex;flex-direction:column;gap:8px;}
+  .option-btn{display:flex;align-items:center;gap:10px;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;background:var(--neutral-bg);cursor:pointer;font-family:'Be Vietnam Pro',sans-serif;font-size:14px;color:var(--text);transition:all 0.18s;text-align:left;}
+  .option-btn:hover:not(:disabled){border-color:var(--blue);background:var(--blue-light);}
+  .option-btn.selected{border-color:var(--blue);background:var(--blue-light);}
+  .option-btn.correct-ans{border-color:var(--correct);background:var(--correct-bg);color:var(--correct);font-weight:600;}
+  .option-btn.wrong-ans{border-color:var(--wrong);background:var(--wrong-bg);color:var(--wrong);font-weight:600;}
+  .option-btn:disabled{cursor:default;}
+  .option-dot{width:20px;height:20px;border-radius:50%;border:2px solid #c5d4ec;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;transition:all 0.18s;}
+  .option-btn.correct-ans .option-dot{border-color:var(--correct);background:var(--correct);color:#fff;}
+  .option-btn.wrong-ans .option-dot{border-color:var(--wrong);background:var(--wrong);color:#fff;}
+  .option-btn.selected .option-dot{border-color:var(--blue);background:var(--blue);color:#fff;}
+  /* passage box for Ex3 */
+  .passage-box{background:var(--neutral-bg);border:1.5px solid var(--border);border-radius:10px;padding:16px;font-size:15px;line-height:2.2;margin-bottom:16px;}
+  .answer-section{background:var(--neutral-bg);border:1.5px solid var(--border);border-radius:12px;padding:14px 16px;margin-top:14px;font-size:14px;display:none;}
+  .answer-section.show{display:block;}
+  .answer-section h4{color:var(--blue-dark);font-size:14px;margin-bottom:8px;}
+  .ans-row{margin-bottom:7px;}
+  .ans-correct{color:var(--correct);font-weight:600;}
+  .ans-wrong{color:var(--wrong);}
+  .ans-explanation{color:var(--text-muted);font-size:13px;margin-left:6px;}
+  .global-feedback{background:var(--blue-light);border:2px solid var(--blue);border-radius:16px;padding:24px;margin-bottom:28px;text-align:center;display:none;}
+  .global-feedback.show{display:block;}
+  .global-feedback .score{font-size:40px;font-weight:700;color:var(--blue);}
+  .global-feedback .score-label{font-size:15px;color:var(--text-muted);margin-top:4px;}
+  .btn-primary{background:linear-gradient(135deg,var(--blue-dark),var(--blue));color:#fff;border:none;border-radius:12px;padding:14px 36px;font-family:'Be Vietnam Pro',sans-serif;font-size:16px;font-weight:600;cursor:pointer;box-shadow:0 4px 16px rgba(26,111,196,0.3);transition:all 0.2s;display:block;margin:0 auto;}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 6px 22px rgba(26,111,196,0.4);}
+  .btn-reset{background:transparent;color:var(--blue);border:1.5px solid var(--blue);border-radius:12px;padding:12px 28px;font-family:'Be Vietnam Pro',sans-serif;font-size:15px;font-weight:600;cursor:pointer;display:block;margin:12px auto 0;transition:all 0.2s;}
+  .btn-reset:hover{background:var(--blue-light);}
+  .submit-area{padding:8px 0 4px;text-align:center;}
+  @media(max-width:600px){.exercise-body{padding:14px;}}
+</style>
+</head>
+<body>
+<header>
+  <div class="badge">Prep.vn – Grammar</div>
+  <h1>Grammar Mini Test 2</h1>
+  <p>Thì động từ · To-infinitive / Gerund · Raise vs Rise · Đọc hiểu</p>
+</header>
+<div class="progress-wrap">
+  <span class="progress-label">Tiến độ</span>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+  <span class="progress-count" id="progressCount">0 / 0</span>
+</div>
+<main>
+  <div class="global-feedback" id="globalFeedback">
+    <div class="score" id="scoreDisplay">0/0</div>
+    <div class="score-label">Điểm số của bạn</div>
+  </div>
+
+  <!-- Ex1 -->
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">1</div><div class="ex-title">Chọn đáp án đúng – Thì động từ (Verb Tenses)</div></div>
+    <div class="exercise-body">
+      <div class="info-box">
+        <strong>📌 Các thì trọng tâm:</strong>
+        <span class="struct-tag">Present Simple</span>
+        <span class="struct-tag">Present Continuous</span>
+        <span class="struct-tag">Past Simple</span>
+        <span class="struct-tag">be going to</span>
+        <span class="struct-tag">will</span>
+      </div>
+      <div id="ex1Container"></div>
+      <div class="answer-section" id="ex1Ans"></div>
+    </div>
+  </div>
+
+  <!-- Ex2 -->
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">2</div><div class="ex-title">Chọn đáp án đúng – To-infinitive / Gerund / Raise vs Rise</div></div>
+    <div class="exercise-body">
+      <div class="info-box">
+        <strong>📌 Lưu ý:</strong>
+        <span class="struct-tag">V + to-inf</span> want, hope, plan, decide, remember (tương lai)…
+        <span class="struct-tag">V + gerund</span> finish, love, practice, stop, enjoy, by…
+        <span class="struct-tag">raise</span> = nâng (cần tân ngữ) &nbsp;|&nbsp;
+        <span class="struct-tag">rise</span> = tăng/mọc (không cần tân ngữ)
+      </div>
+      <div id="ex2Container"></div>
+      <div class="answer-section" id="ex2Ans"></div>
+    </div>
+  </div>
+
+  <!-- Ex3 -->
+  <div class="exercise-card">
+    <div class="exercise-header"><div class="ex-num">3</div><div class="ex-title">Đọc đoạn văn về hạnh phúc – Chọn To-infinitive hoặc Gerund</div></div>
+    <div class="exercise-body">
+      <div class="passage-box">
+        In order <strong>(1)___</strong> happiness, there are five methods people can use. First, <strong>(2)___</strong> grateful can improve our sense of well-being. Some people also express gratitude by <strong>(3)___</strong> or meditating. Second, it's important <strong>(4)___</strong> the good things in life. Finally, <strong>(5)___</strong> acts of kindness is one of the most important methods of increasing happiness.
+      </div>
+      <div id="ex3Container"></div>
+      <div class="answer-section" id="ex3Ans"></div>
+    </div>
+  </div>
+
+  <div class="submit-area">
+    <button class="btn-primary" onclick="submitAll()">🎯 Chấm bài &amp; Xem giải thích</button>
+    <button class="btn-reset" onclick="resetAll()">↺ Làm lại từ đầu</button>
+  </div>
+</main>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────────
+
+const ex1Data = [
+  {
+    sentence:'He is having a shower _______. You can\'t disturb him.',
+    options:['A. always','B. at the moment','C. already','D. sometimes'],
+    correct:1,
+    explanation:'"is having" = Present Continuous → dùng với "at the moment" (ngay lúc này). "always/sometimes" thường đi với Present Simple; "already" đi với Present Perfect.'
+  },
+  {
+    sentence:'At nine o\'clock in every English lesson, our teacher _______ us about an interesting part of English culture.',
+    options:['A. is telling','B. tell','C. has told','D. tells'],
+    correct:3,
+    explanation:'"every English lesson" = thói quen, lịch trình → Present Simple: "tells". Chủ ngữ "teacher" số ít → "tells" (thêm -s).'
+  },
+  {
+    sentence:"Jane _______ always _______ her room untidy. I have reminded her several times but she hasn't changed.",
+    options:['A. was / leaving','B. has / leaves','C. is / leaving','D. were / left'],
+    correct:2,
+    explanation:'"is always leaving" = Present Continuous với "always" → diễn tả thói quen gây khó chịu/phàn nàn. Cấu trúc: S + is/am/are + always + V-ing.'
+  },
+  {
+    sentence:'Please be very quiet. Mary _______. We don\'t want her to wake up.',
+    options:['A. sleeps','B. is sleep','C. slept','D. is sleeping'],
+    correct:3,
+    explanation:'"Please be quiet" + "right now" → hành động đang diễn ra: Present Continuous "is sleeping". "is sleep" sai cú pháp.'
+  },
+  {
+    sentence:'Julian was a young student when his father _______ in an accident.',
+    options:['A. dies','B. died','C. was dying','D. is dying'],
+    correct:1,
+    explanation:'"when... was a young student" → thời điểm trong quá khứ → "died" (Past Simple). Hành động xảy ra đột ngột.'
+  },
+  {
+    sentence:'Is your cousin _______ move to another apartment?',
+    options:['A. going','B. going to','C. will','D. has gone'],
+    correct:1,
+    explanation:'"going to + V" → kế hoạch tương lai. Cấu trúc: S + is/am/are + going to + V. "Is your cousin going to move?" ✓'
+  },
+  {
+    sentence:'Some years ago, people _______ living in the city centers but now they _______ to live in the suburbs.',
+    options:['A. had preferred / prefer','B. have preferred / prefer','C. were preferring / preferring','D. preferred / prefer'],
+    correct:3,
+    explanation:'"some years ago" → quá khứ đơn: "preferred". "now" → hiện tại đơn: "prefer". Đáp án D: "preferred / prefer".'
+  },
+  {
+    sentence:"The mayor _______ for office again next term. He's already made plans.",
+    options:['A. was running','B. will run','C. is going to run','D. runs'],
+    correct:2,
+    explanation:'"He\'s already made plans" → kế hoạch đã định sẵn → "is going to run". "will" dùng khi quyết định tại chỗ, còn "going to" dùng khi đã có kế hoạch từ trước.'
+  },
+  {
+    sentence:'Look at those dark clouds. It _______.',
+    options:['A. rains','B. is rain','C. is going to rain','D. will rain'],
+    correct:2,
+    explanation:'"Look at those dark clouds" = dấu hiệu nhìn thấy được → dự đoán dựa trên bằng chứng → "is going to rain". "will" dùng cho dự đoán không có bằng chứng.'
+  },
+  {
+    sentence:'Last year, I _______ camping with my friends for the first time.',
+    options:['A. went','B. go','C. am going','D. was going'],
+    correct:0,
+    explanation:'"last year" + "for the first time" → sự kiện hoàn tất trong quá khứ → Past Simple: "went".'
+  },
+];
+
+const ex2Data = [
+  {
+    sentence:'My wife wants _______ at an Italian restaurant tonight.',
+    options:['A. to eat','B. eating','C. to eat / eating'],
+    correct:0,
+    explanation:'"want + to-infinitive" → cấu trúc cố định. "want to eat" ✓. ("want eating" không đúng)'
+  },
+  {
+    sentence:"Mr. Lewis is finally going to finish _______ his house next week.",
+    options:['A. to paint','B. painting','C. to paint / painting'],
+    correct:1,
+    explanation:'"finish + gerund (V-ing)" → cấu trúc cố định. "finish painting" ✓. Không dùng "finish to paint".'
+  },
+  {
+    sentence:"Emiko hopes _______ her Master's degree in Biology by the end of this year.",
+    options:['A. to finish','B. finishing','C. to finish / finishing'],
+    correct:0,
+    explanation:'"hope + to-infinitive" → cấu trúc cố định. "hope to finish" ✓.'
+  },
+  {
+    sentence:'Jessica loves _______ ice cream, but it makes her fat!',
+    options:['A. to eat','B. eating','C. to eat / eating'],
+    correct:2,
+    explanation:'"love" có thể dùng cả to-infinitive và gerund với nghĩa như nhau: "loves to eat" = "loves eating". Đáp án C: to eat / eating.'
+  },
+  {
+    sentence:'Robin practices _______ English with her host mother every evening.',
+    options:['A. to speak','B. speaking','C. to speak / speaking'],
+    correct:1,
+    explanation:'"practice + gerund (V-ing)" → cấu trúc cố định. "practice speaking" ✓.'
+  },
+  {
+    sentence:'We have run out of milk. Remember _______ some at the supermarket on your way home.',
+    options:['A. to buy','B. buying','C. to buy / buying'],
+    correct:0,
+    explanation:'"remember + to-infinitive" = nhớ phải làm gì (hành động chưa xảy ra, nhắc nhở tương lai). "remember buying" = nhớ lại việc đã làm (hành động đã xảy ra). Ở đây là nhắc mua sữa → "to buy".'
+  },
+  {
+    sentence:'Would you please stop _______ so much noise?',
+    options:['A. to make','B. making','C. to make/ making'],
+    correct:1,
+    explanation:'"stop + gerund" = dừng làm gì (đang làm). "stop making noise" ✓. "stop to make" = dừng lại để làm gì (mục đích).'
+  },
+  {
+    sentence:"Our favorite restaurant has _______ its prices again. It's getting very expensive.",
+    options:['A. raised','B. risen'],
+    correct:0,
+    explanation:'"raise" (nội động từ có tân ngữ) = nâng, tăng cái gì đó. "raised its prices" ✓ (có tân ngữ "its prices"). "rise" không có tân ngữ.'
+  },
+  {
+    sentence:'We _______ the flag when the sun _______, and we lower it when the sun goes down.',
+    options:['A. rise - raises','B. raise - rises'],
+    correct:1,
+    explanation:'"raise the flag" (có tân ngữ "the flag") + "the sun rises" (không có tân ngữ, "the sun" là chủ ngữ). Đáp án B: raise - rises.'
+  },
+  {
+    sentence:"If it doesn't stop raining, the river will _______ and overflow.",
+    options:['A. raise','B. rise'],
+    correct:1,
+    explanation:'"the river rises" = con sông dâng lên (tự nhiên, không cần tân ngữ) → "rise". "raise" cần tân ngữ nên không dùng được ở đây.'
+  },
+];
+
+const ex3Data = [
+  {
+    label:'(1) In order _______ happiness',
+    options:['A. to boost','B. boosting'],
+    correct:0,
+    explanation:'"In order + to-infinitive" = để làm gì → cấu trúc cố định chỉ mục đích. "In order to boost happiness" ✓.'
+  },
+  {
+    label:'(2) _______ grateful can improve our sense of well-being',
+    options:['A. to be','B. being'],
+    correct:1,
+    explanation:'Gerund làm chủ ngữ câu: "Being grateful can improve..." = Việc biết ơn có thể... "Being" ✓. (to be grateful cũng đúng nhưng "Being" tự nhiên hơn với nghĩa chủ ngữ chung)'
+  },
+  {
+    label:'(3) express gratitude by _______ or meditating',
+    options:['A. to pray','B. praying'],
+    correct:1,
+    explanation:'"by + gerund" = bằng cách làm gì → cấu trúc cố định. "by praying or meditating" ✓.'
+  },
+  {
+    label:"(4) it's important _______ the good things in life",
+    options:['A. to notice','B. noticing'],
+    correct:0,
+    explanation:'"It\'s important + to-infinitive" = cấu trúc It + be + adj + to do sth. "it\'s important to notice" ✓.'
+  },
+  {
+    label:'(5) _______ acts of kindness is one of the most important methods',
+    options:['A. to commit','B. committing'],
+    correct:1,
+    explanation:'Gerund làm chủ ngữ: "Committing acts of kindness is..." = Thực hiện các hành động tử tế là... "Committing" ✓.'
+  },
+];
+
+// ── RENDER ────────────────────────────────────────────────────────────────────
+const mcqSel = {};
+
+function mkOpts(items, prefix, qi){
+  return items.map((opt,j)=>
+    `<button class="option-btn" id="${prefix}_${qi}_${j}" onclick="sel('${prefix}',${qi},${j},${items.length})">
+      <span class="option-dot">${opt[0]}</span>${opt}</button>`
+  ).join('');
+}
+
+function renderEx1(){
+  document.getElementById('ex1Container').innerHTML = ex1Data.map((item,i)=>
+    `<div class="mcq-question">
+      <div class="mcq-sentence">${i+1}. <em>${item.sentence}</em></div>
+      <div class="options">${mkOpts(item.options,'ex1',i)}</div>
+    </div>`
+  ).join('');
+}
+
+function renderEx2(){
+  document.getElementById('ex2Container').innerHTML = ex2Data.map((item,i)=>
+    `<div class="mcq-question">
+      <div class="mcq-sentence">${i+1}. <em>${item.sentence}</em></div>
+      <div class="options">${mkOpts(item.options,'ex2',i)}</div>
+    </div>`
+  ).join('');
+}
+
+function renderEx3(){
+  document.getElementById('ex3Container').innerHTML = ex3Data.map((item,i)=>
+    `<div class="mcq-question">
+      <div class="mcq-sentence">${item.label}</div>
+      <div class="options">${mkOpts(item.options,'ex3',i)}</div>
+    </div>`
+  ).join('');
+}
+
+function sel(prefix,qi,oi,total){
+  for(let j=0;j<total;j++) document.getElementById(`${prefix}_${qi}_${j}`)?.classList.remove('selected');
+  document.getElementById(`${prefix}_${qi}_${oi}`)?.classList.add('selected');
+  mcqSel[`${prefix}_${qi}`]=oi; updateProgress();
+}
+
+// ── PROGRESS ──────────────────────────────────────────────────────────────────
+function countAnswered(){
+  let filled=0, total=ex1Data.length+ex2Data.length+ex3Data.length;
+  ex1Data.forEach((_,i)=>{if(mcqSel[`ex1_${i}`]!==undefined)filled++;});
+  ex2Data.forEach((_,i)=>{if(mcqSel[`ex2_${i}`]!==undefined)filled++;});
+  ex3Data.forEach((_,i)=>{if(mcqSel[`ex3_${i}`]!==undefined)filled++;});
+  return{filled,total};
+}
+function updateProgress(){
+  const{filled,total}=countAnswered();
+  document.getElementById('progressFill').style.width=(filled/total*100)+'%';
+  document.getElementById('progressCount').textContent=`${filled} / ${total}`;
+}
+
+// ── SUBMIT ────────────────────────────────────────────────────────────────────
+function gradeSection(data, prefix, labelFn, title){
+  let html=`<h4>${title}</h4>`, score=0;
+  data.forEach((item,i)=>{
+    const s=mcqSel[`${prefix}_${i}`]; const ok=s===item.correct; if(ok)score++;
+    for(let j=0;j<item.options.length;j++){
+      const b=document.getElementById(`${prefix}_${i}_${j}`);
+      if(!b)continue; b.disabled=true; b.classList.remove('selected');
+      if(j===item.correct)b.classList.add('correct-ans');
+      else if(j===s&&!ok)b.classList.add('wrong-ans');
+    }
+    html+=`<div class="ans-row"><span class="${ok?'ans-correct':'ans-wrong'}">${ok?'✅':'❌'} ${labelFn(item,i)}: <strong>${item.options[item.correct]}</strong></span><span class="ans-explanation">– ${item.explanation}</span></div>`;
+  });
+  return{html,score,total:data.length};
+}
+
+function submitAll(){
+  let totalScore=0, totalQ=0;
+
+  const r1=gradeSection(ex1Data,'ex1',(_,i)=>`Câu ${i+1}`,'📝 Giải thích Exercise 1:');
+  document.getElementById('ex1Ans').innerHTML=r1.html; document.getElementById('ex1Ans').classList.add('show');
+  totalScore+=r1.score; totalQ+=r1.total;
+
+  const r2=gradeSection(ex2Data,'ex2',(_,i)=>`Câu ${i+1}`,'📝 Giải thích Exercise 2:');
+  document.getElementById('ex2Ans').innerHTML=r2.html; document.getElementById('ex2Ans').classList.add('show');
+  totalScore+=r2.score; totalQ+=r2.total;
+
+  const r3=gradeSection(ex3Data,'ex3',(item)=>item.label,'📝 Giải thích Exercise 3:');
+  document.getElementById('ex3Ans').innerHTML=r3.html; document.getElementById('ex3Ans').classList.add('show');
+  totalScore+=r3.score; totalQ+=r3.total;
+
+  const fb=document.getElementById('globalFeedback');
+  document.getElementById('scoreDisplay').textContent=`${totalScore} / ${totalQ}`;
+  fb.classList.add('show'); fb.scrollIntoView({behavior:'smooth',block:'start'});
+  updateProgress();
+}
+
+// ── RESET ─────────────────────────────────────────────────────────────────────
+function resetAll(){
+  Object.keys(mcqSel).forEach(k=>delete mcqSel[k]);
+  document.getElementById('globalFeedback').classList.remove('show');
+  ['ex1Ans','ex2Ans','ex3Ans'].forEach(id=>{const el=document.getElementById(id);el.classList.remove('show');el.innerHTML='';});
+  renderEx1(); renderEx2(); renderEx3();
+  updateProgress();
+}
+
+renderEx1(); renderEx2(); renderEx3();
+updateProgress();
+</script>
+</body>
+</html>
