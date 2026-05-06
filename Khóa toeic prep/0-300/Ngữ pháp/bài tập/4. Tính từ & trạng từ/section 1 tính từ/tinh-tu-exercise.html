@@ -571,7 +571,7 @@ function renderEx5() {
   const c = document.getElementById('ex5Container');
   c.innerHTML = ex5Data.map((item, i) =>
     `<div class="ex5-row">
-      <strong>(${item.adjective})</strong> &nbsp;
+      <strong>${item.original}</strong> &nbsp;
       <input class="fill-blank" id="ex5_${i}" placeholder="Viết lại câu hoàn chỉnh..." style="min-width:340px" autocomplete="off">
     </div>`
   ).join('');
